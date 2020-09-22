@@ -3,17 +3,18 @@
 
 require_once("vendor/autoload.php");
 
-$app = new \Slim\Slim();
+use \Slim\Slim;
+use \Sbc\Page;
+
+$app = new Slim();
 
 $app->config('debug', true);
 
 $app->get('/', function() {
 
-	$sql  = new Sbc\DB\sql();
+	$page = new Page();
 
-	$results = $sql->select("SELECT * FROM tb_professor");
-    
-	echo json_encode($results);
+	$page->setTpl("index");
 
 });
 
