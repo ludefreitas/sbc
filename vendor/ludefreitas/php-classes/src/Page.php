@@ -4,12 +4,15 @@
 namespace Sbc;
 
 use Rain\Tpl;
+use Sbc\Model\User;
 
 class Page {
 
 	private $tpl;
 	private $options = [];
 	private $defaults = [
+		"header"=>true,
+		"footer"=>true,
 		"data"=>[]
 	];
 
@@ -28,9 +31,14 @@ class Page {
 
 		$this->tpl = new Tpl;
 
+		if(isset($_SESSION[User::SESSION])) 
+		{ 
+			$this->tpl->assign("user", $_SESSION[User::SESSION]);
+		}
+
 		$this->setData($this->options["data"]);
 
-		$this->tpl->draw("header");
+		if($this->options["header"] === true) $this->tpl->draw("header");
 
 	}
 
@@ -51,7 +59,7 @@ class Page {
 
 	public function __destruct(){
 
-		$this->tpl->draw("footer");
+		if($this->options["footer"] === true) $this->tpl->draw("footer");
 		
 	}
 }
