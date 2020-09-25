@@ -53,7 +53,7 @@ class User extends Model {
 			(bool)$_SESSION[User::SESSION]["inadmin"] !== $inadmin
 		)
 		{
-			header("Location: /admin/login");
+			header("Location: /prof/login");
 			exit;
 		}
 	}
@@ -61,6 +61,90 @@ class User extends Model {
 	public static function logout()
 	{
 		$_SESSION[User::SESSION] = NULL;
+	}
+
+
+	public static function listAll()
+	{
+
+		$sql = new Sql();
+
+		return $sql->select("
+			SELECT * FROM tb_users a 
+			INNER JOIN tb_persons b 
+			using(idperson) 
+			ORDER BY b.desperson");
+	}
+	
+	public function save()
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("CALL sp_users_save(:desperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin, :isprof)", array(
+			":desperson"=>utf8_decode($this->getdesperson()),
+			":deslogin"=>$this->getdeslogin(),
+			":despassword"=>User::getPasswordHash($this->getdespassword()),
+			":desemail"=>$this->getdesemail(),
+			":nrphone"=>$this->getnrphone(),
+			":inadmin"=>$this->getinadmin(),
+			":isprof"=>$this->getisprof()
+		));
+
+		$this->setData($results[0]);
+	}
+
+	public function get($iduser)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_users a INNER JOIN tb_persons b USING(idperson) WHERE a.iduser = :iduser", array(
+			":iduser"=>$iduser
+		));
+
+		$this->setData($results[0]);
+		
+	}
+
+	public function update()
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("CALL sp_usersupdate_save(:iduser, :desperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin, :isprof)", array(
+			":iduser"=>$this->getiduser(),
+			":desperson"=>utf8_decode($this->getdesperson()),
+			":deslogin"=>$this->getdeslogin(),
+			":despassword"=>$this->getdespassword(),
+			//":despassword"=>User::getPasswordHash($this->getdespassword()),
+			":desemail"=>$this->getdesemail(),
+			":nrphone"=>$this->getnrphone(),
+			":inadmin"=>$this->getinadmin(),
+			":isprof"=>$this->getisprof()
+		));
+
+		$this->setData($results[0]);
+	}
+
+	public function delete()
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("CALL sp_users_delete(:iduser)", array(
+			":iduser"=>$this->getiduser()
+		));
+	}
+
+
+
+
+
+	public static function getPasswordHash($password)
+	{
+
+		return password_hash($password, PASSWORD_DEFAULT, [
+			'cost'=>12
+		]);
+
 	}
 
 }

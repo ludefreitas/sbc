@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?php if(!class_exists('Rain\Tpl')){exit;}?><!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -33,7 +33,7 @@
   <div class="login-box-body">
     <p class="login-box-msg">Faça o login para iniciar sua sessão</p>
 
-    <form action="/admin/login" method="post">
+    <form action="/professor/login" method="post">
       <div class="form-group has-feedback">
         <input type="text" class="form-control" placeholder="Login" name="login">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
