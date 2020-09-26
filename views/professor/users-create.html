@@ -55,6 +55,10 @@
                 <input type="checkbox" name="isprof" value="1"> Acesso de Professor
               </label>
             </div>
+            <div class="checkbox">
+                <input type="checkbox" name="status" value="1" hidden="" >
+            </div>
+            </div>
           </div>
           <!-- /.box-body -->
           <div class="box-footer">

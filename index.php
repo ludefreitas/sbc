@@ -18,7 +18,6 @@ $app->get('/', function() {
 	$page = new Page();
 
 	$page->setTpl("index");
-
 });
 
 $app->get('/professor', function() {
@@ -28,7 +27,6 @@ $app->get('/professor', function() {
 	$page = new PageAdmin();
 
 	$page->setTpl("index");
-
 });
 
 $app->get('/professor/login', function() {
@@ -39,7 +37,6 @@ $app->get('/professor/login', function() {
 	]);
 
 	$page->setTpl("login");
-
 });
 
 $app->post('/professor/login', function() {
@@ -48,19 +45,17 @@ $app->post('/professor/login', function() {
 
 	header("Location: /professor");
 	exit;
-
 });
 
 $app->get('/professor/logout', function(){
 
 	User::logout();
+
 	session_destroy();
 
 	header("Location: /professor/login");
 	exit;
-
 });
-
 
 // Rota para listar todos usuários da classe 
 $app->get('/professor/users', function() {
@@ -84,7 +79,6 @@ $app->get('/professor/users/create', function() {
 	$page = new PageAdmin();
 
 	$page->setTpl("users-create");
-
 });
 
 $app->get('/professor/users/:iduser/delete', function($iduser) {
@@ -99,9 +93,7 @@ $app->get('/professor/users/:iduser/delete', function($iduser) {
 
 	header("LOcation: /professor/users");
 	exit();
-
 });
-
 
 $app->get('/professor/users/:iduser', function($iduser) {
 
@@ -116,7 +108,6 @@ $app->get('/professor/users/:iduser', function($iduser) {
 	$page->setTpl("users-update", array(
 		"user"=>$user->getValues()
 	));
-
 });
 
 $app->post('/professor/users/create', function() {
@@ -127,6 +118,7 @@ $app->post('/professor/users/create', function() {
 
 	$_POST["inadmin"] = (isset($_POST["inadmin"]))?1:0;
 	$_POST["isprof"] = (isset($_POST["isprof"]))?1:0;
+	$_POST["status"] = 1;
 
 	//$_POST['despassword'] = User::getPasswordHash($_POST['despassword']);
 
@@ -136,8 +128,6 @@ $app->post('/professor/users/create', function() {
 
 	header("Location: /professor/users");
 	exit();
-
-
 });
 
 $app->post('/professor/users/:iduser', function($iduser) {
@@ -148,11 +138,12 @@ $app->post('/professor/users/:iduser', function($iduser) {
 
 	$_POST["inadmin"] = (isset($_POST["inadmin"]))?1:0;
 	$_POST["isprof"] = (isset($_POST["isprof"]))?1:0;
+	$_POST["status"] = (isset($_POST["status"]))?1:0;
 
 	$user->get((int)$iduser);
 
 	$user->setData($_POST);
-
+	
 	$user->update();
 
 	header("Location: /professor/users");
@@ -161,4 +152,4 @@ $app->post('/professor/users/:iduser', function($iduser) {
 
 $app->run();
 
- ?>
+?>

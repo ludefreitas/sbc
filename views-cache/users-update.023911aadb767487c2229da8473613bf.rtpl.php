@@ -46,6 +46,11 @@
                 <input type="checkbox" name="inadmin" value="1" <?php if( $user["isprof"] == 1 ){ ?>checked<?php } ?>> Acesso de Professor
               </label>
             </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="status" value="1" <?php if( $user["status"] == 1 ){ ?>checked<?php } ?>> Ativar usuário
+              </label>
+            </div>
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
