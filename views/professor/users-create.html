@@ -8,7 +8,7 @@
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
     <li><a href="/professor/users">Usuários</a></li>
-    <li class="active"><a href="/admin/users/create">Cadastrar</a></li>
+    <li class="active"><a href="/professor/users/create">Cadastrar</a></li>
   </ol>
 </section>
 

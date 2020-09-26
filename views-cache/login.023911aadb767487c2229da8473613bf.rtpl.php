@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>CursosEsportivos | SBC</title>
+  <title>Cursos Esportivos | SBC</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -27,7 +27,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="/res/admin/index2.html"><b>Cursos</b>Esportivos<b>SBC</b></a>
+    <a href="/res/admin/index2.html"><b>Cursos</b> Esportivos<b> SBC</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
@@ -67,8 +67,8 @@
     </div>
     <!-- /.social-auth-links -->
 
-    <a href="#">Esqueci minha senha</a><br>
-    <a href="register.html" class="text-center">Cadastre-se</a>
+    <a href="/professor/forgot">Esqueci minha senha</a><br>
+    <a href="#" class="text-center">Cadastre-se</a>
 
   </div>
   <!-- /.login-box-body -->

@@ -11,16 +11,16 @@ use \Sbc\Model\User;
 
 $app = new Slim();
 
-$app->config('debug', true);
+$app->config('ebug', true);
 
-$app->get('/', function() {
+$app->get("/", function() {
 
 	$page = new Page();
 
 	$page->setTpl("index");
 });
 
-$app->get('/professor', function() {
+$app->get("/professor", function() {
 
 	User::verifyLogin();
 
@@ -29,7 +29,7 @@ $app->get('/professor', function() {
 	$page->setTpl("index");
 });
 
-$app->get('/professor/login', function() {
+$app->get("/professor/login", function() {
 
 	$page = new PageAdmin([
 		"header"=>false,
@@ -39,7 +39,7 @@ $app->get('/professor/login', function() {
 	$page->setTpl("login");
 });
 
-$app->post('/professor/login', function() {
+$app->post("/professor/login", function() {
 
 	User::login($_POST["login"], $_POST["password"]);
 
@@ -47,7 +47,7 @@ $app->post('/professor/login', function() {
 	exit;
 });
 
-$app->get('/professor/logout', function(){
+$app->get("/professor/logout", function(){
 
 	User::logout();
 
@@ -58,7 +58,7 @@ $app->get('/professor/logout', function(){
 });
 
 // Rota para listar todos usuários da classe 
-$app->get('/professor/users', function() {
+$app->get("/professor/users", function() {
 
 	User::verifyLogin();
 	// na linha abaixo retorna um array com todos os dados do usuário
@@ -72,7 +72,7 @@ $app->get('/professor/users', function() {
 	));
 });
 
-$app->get('/professor/users/create', function() {
+$app->get("/professor/users/create", function() {
 
 	User::verifyLogin();
 
@@ -81,7 +81,7 @@ $app->get('/professor/users/create', function() {
 	$page->setTpl("users-create");
 });
 
-$app->get('/professor/users/:iduser/delete', function($iduser) {
+$app->get("/professor/users/:iduser/delete", function($iduser) {
 
 	User::verifyLogin();
 
@@ -91,11 +91,11 @@ $app->get('/professor/users/:iduser/delete', function($iduser) {
 
 	$user->delete();
 
-	header("LOcation: /professor/users");
+	header("Location: /professor/users");
 	exit();
 });
 
-$app->get('/professor/users/:iduser', function($iduser) {
+$app->get("/professor/users/:iduser", function($iduser) {
 
 	User::verifyLogin();
 
@@ -110,7 +110,7 @@ $app->get('/professor/users/:iduser', function($iduser) {
 	));
 });
 
-$app->post('/professor/users/create', function() {
+$app->post("/professor/users/create", function() {
 
 	User::verifyLogin();
 
@@ -130,7 +130,7 @@ $app->post('/professor/users/create', function() {
 	exit();
 });
 
-$app->post('/professor/users/:iduser', function($iduser) {
+$app->post("/professor/users/:iduser", function($iduser) {
 
 	User::verifyLogin();
 
@@ -149,6 +149,74 @@ $app->post('/professor/users/:iduser', function($iduser) {
 	header("Location: /professor/users");
 	exit();
 });
+
+$app->get("/professor/forgot", function() {
+
+	$page = new PageAdmin([
+		"header"=>false,
+		"footer"=>false
+	]);
+
+	$page->setTpl("forgot");
+});
+
+$app->post("/professor/forgot", function(){
+
+	$user = User::getForgot($_POST["email"]);
+
+	header("Location: /professor/forgot/sent");
+	exit();
+});
+
+$app->get("/professor/forgot/sent", function() {
+
+	$page = new PageAdmin([
+		"header"=>false,
+		"footer"=>false
+	]);
+
+	$page->setTpl("forgot-sent");
+});
+
+$app->get("/professor/forgot/reset", function() {
+
+	$user = User::validForgotDecrypt($_GET["code"]);
+
+	$page = new PageAdmin([
+		"header"=>false,
+		"footer"=>false
+	]);
+
+	$page->setTpl("forgot-reset", array(
+		"name"=>$user["desperson"],
+		"code"=>$_GET["code"]
+	));
+});
+
+$app->post("/professor/forgot/reset", function() {
+
+	$forgot = User::validForgotDecrypt($_POST["code"]);
+
+	User::setForgotUsed($forgot["idrecovery"]);
+
+	$user = new User();
+
+	$user->get((int)$forgot["iduser"]);
+
+	$user->setPassword($_POST["password"]);
+
+	$page = new PageAdmin([
+		"header"=>false,
+		"footer"=>false
+	]);
+
+	$page->setTpl("forgot-reset-success");
+
+	
+});
+
+
+
 
 $app->run();
 
