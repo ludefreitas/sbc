@@ -10,7 +10,7 @@ class User extends Model {
 
 	const SESSION = "User";
 	const SECRET = ""; Colocar nas "" secret com 16 caracters;
-	const SECRET_IV = ""; Colocar nas "" secret com 16 caracters + _IV;
+	const SECRET_IV = ""; //Colocar nas "" secret com 16 caracters + _IV;
 
 	public function login($login, $password){
 
@@ -93,9 +93,6 @@ class User extends Model {
 			":isprof"=>$this->getisprof(),
 			":status"=>$this->getstatus()
 		));
-
-		//var_dump($results);
-		//exit();
 
 		$this->setData($results[0]);
 	}
