@@ -1,0 +1,1 @@
+<?php if(!class_exists('Rain\Tpl')){exit;}?><li><a href="/faixaetaria/7">Primeira Infância</a></li><li><a href="/faixaetaria/10">Infância</a></li><li><a href="/faixaetaria/5">Criança</a></li><li><a href="/faixaetaria/6">Adolescente</a></li><li><a href="/faixaetaria/1">idoso</a></li><li><a href="/faixaetaria/4">Adulto Jovem</a></li>

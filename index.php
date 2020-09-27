@@ -298,9 +298,24 @@ $app->post("/professor/faixaetaria/:idfxetaria", function($idfxetaria) {
 	$faixaetaria->save();
 
 	header("Location: /professor/faixaetaria");
-	exit();	
-	
+	exit();		
 });
+
+$app->get("/faixaetaria/:idfxetaria", function($idfxetaria) {
+
+	$faixaetaria = new Faixaetaria();
+
+	$faixaetaria->get((int)$idfxetaria);
+
+	$page = new Page();
+
+	$page->setTpl("faixaetaria", [
+		'faixaetaria'=>$faixaetaria->getValues(),
+		'modalidades'=>[]
+	]);	
+
+});
+
 
 $app->run();
 

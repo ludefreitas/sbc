@@ -29,11 +29,7 @@
                     <div class="footer-menu">
                         <h2 class="footer-wid-title">Modalidades</h2>
                         <ul>
-                            <li><a href="#">Modalidade Um</a></li>
-                            <li><a href="#">Modalidade Dois</a></li>
-                            <li><a href="#">Modalidade Três</a></li>
-                            <li><a href="#">Modalidade Quarto</a></li>
-                            <li><a href="#">Modalidade Cinco</a></li>
+                            <?php require $this->checkTemplate("faixaetaria-menu");?>                            
                         </ul>                        
                     </div>
                 </div>
