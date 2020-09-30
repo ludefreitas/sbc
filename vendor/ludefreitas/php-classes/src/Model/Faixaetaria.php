@@ -33,15 +33,29 @@ class Faixaetaria extends Model {
 
 	}
 
+	public function Update()
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("CALL sp_faixaetaria_update(:idfxetaria, :descrfxetaria, :initidade, :fimidade)", array(
+			":idfxetaria"=>$this->getidfxetaria(),
+			":descrfxetaria"=>$this->getdescrfxetaria(),
+			":initidade"=>$this->getinitidade(),
+			":fimidade"=>$this->getfimidade()
+		));
+
+		$this->setData($results[0]);
+
+		Faixaetaria::updateFile();
+
+	}
+
 	public function get($idfxetaria)
 	{
 
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT * 
-			FROM tb_fxetaria 
-			WHERE idfxetaria = :idfxetaria", 
-			[':idfxetaria'=>$idfxetaria 
+		$results = $sql->select("SELECT * FROM tb_fxetaria WHERE idfxetaria = :idfxetaria", [':idfxetaria'=>$idfxetaria 
 		]);
 
 		$this->setData($results[0]);
@@ -73,10 +87,6 @@ class Faixaetaria extends Model {
 	}
 
 }
-
-
-
-
 
 
 ?>

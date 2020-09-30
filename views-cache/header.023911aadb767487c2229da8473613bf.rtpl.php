@@ -7,7 +7,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Cursos Esportivos | SBC</title>
+  <title>Admin Cursos Esportivos | SBC</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -258,6 +258,9 @@ desired effect
         <!-- Optionally, you can add icons to the links -->
         <li>
           <li><a href="/professor/users"><i class="fa fa-users"></i> <span>Todos usuários</span></a></li>
+        </li>
+        <li>
+          <a href="/professor/modalidade"><i class="fa fa-link"></i> <span>Modalidades</span></a>
         </li>
         <li>
           <a href="/professor/faixaetaria"><i class="fa fa-link"></i> <span>Faixa Etária</span></a>

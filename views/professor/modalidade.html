@@ -1,0 +1,70 @@
+
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Lista de Modalidades
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active"><a href="/professor/modalidade">Modalidade</a></li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="row">
+  	<div class="col-md-12">
+  		<div class="box box-primary">
+            
+            <div class="box-header">
+              <a href="/professor/modalidade/create" class="btn btn-success">Cadastrar Modalidade</a>
+            </div>
+
+            <div class="box-body no-padding">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+
+                    <th>Modalidade</th>
+                    <th>Descrição</th>
+                    <th>Gênero</th>
+                    <th>Programa</th>
+                    <th>Origem</th>
+                    <th>Tipo</th>
+                    <th>Faixa Etária</th>
+                    <th>Data do registro</th>                    
+
+                  </tr>
+                </thead>
+                <tbody>
+                  {loop="$modalidade"}
+                  <tr>
+                    <td>{$value.nomemodal}</td>
+                    <td>{$value.descmodal}</td>
+                    <td>{$value.genemodal}</td>
+                    <td>{$value.programodal}</td>
+                    <td>{$value.origmodal}</td>
+                    <td>{$value.tipomodal}</td>
+                    <td>{$value.initidade} a {$value.fimidade} anos - {$value.descrfxetaria}</td>
+                    <td>{$value.dtregister}</td>
+                               
+                    <td>
+                      <a href="/professor/modalidade/{$value.idmodal}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
+                      <a href="/professor/modalidade/{$value.idmodal}/delete" onclick="return confirm('Deseja realmente excluir esta faixa etária de {$value.nomemodal}?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
+                    </td>
+                  </tr>
+                  {/loop}
+                </tbody>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+  	</div>
+  </div>
+
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

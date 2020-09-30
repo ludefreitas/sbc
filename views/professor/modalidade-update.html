@@ -1,0 +1,80 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Editar Modalidade 
+  </h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="row">
+  	<div class="col-md-12">
+  		<div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Editar Modalidade </h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form role="form" action="/professor/modalidade/{$modalidade.idmodal}" method="post" enctype="multipart/form-data">
+
+          <div class="box-body">
+
+            <div class="form-group">
+              <label for="nomemodal">Nome</label>
+              <input type="text" class="form-control" id="nomemodal" name="nomemodal" placeholder="Digite o nome da Modalidade" value="{$modalidade.nomemodal}">
+            </div>
+
+            <div class="form-group">
+              <label for="descmodal">Descrição</label>
+              <input type="text" class="form-control" id="descmodal" name="descmodal" placeholder="Descreva a modalidade" value="{$modalidade.descmodal}">
+            </div>
+
+            <div class="form-group">
+              <label for="genemodal">Gênero</label>
+              <input type="text" class="form-control" id="genemodal" name="genemodal" placeholder="Informe o gênero da modalidade" value="{$modalidade.genemodal}">
+            </div>
+
+            <div class="form-group">
+              <label for="programodal">Programa</label>
+              <input type="text" class="form-control" id="programodal" name="programodal" placeholder="Informe qual é o programa" value="{$modalidade.programodal}">
+            </div>
+
+            <div class="form-group">
+              <label for="origmodal">Origem</label>
+              <input type="text" class="form-control" id="origmodal" name="origmodal" placeholder="Informe a origem da modalidade" value="{$modalidade.origmodal}">
+            </div>
+
+            <div class="form-group">
+              <label for="tipomodal">Tipo</label>
+              <input type="text" class="form-control" id="tipomodal" name="tipomodal" placeholder="Informe qual o tipo da modalidade" value="{$modalidade.tipomodal}">
+            </div>
+            <div class="form-group">
+                <label for="modalidade">Faixa Etária</label>
+                <select class="form-control" name="idfxetaria">
+                 
+                {loop="$faixaetaria"}
+                    <option {if="$value.idfxetaria === $modalidade.idfxetaria"}selected="selected"{/if} value="{$value.idfxetaria}">{$value.initidade} a {$value.fimidade} anos - {$value.descrfxetaria}</option>
+                {/loop}
+                
+                </select>
+            </div>   
+
+          </div>          
+             
+            
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+        </form>
+      </div>
+  	</div>
+  </div>
+
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

@@ -30,6 +30,7 @@
                     <th>Idade inicial</th>
                     <th>Idade Final</th>
                     <th>Descrição da Faixa Etária</th>
+                    <th>Data do Registro</th>
                     <th style="width: 140px">&nbsp;</th>
                   </tr>
                 </thead>
@@ -39,6 +40,7 @@
                     <td>{$value.initidade}</td>
                     <td>{$value.fimidade}</td>
                     <td>{$value.descrfxetaria}</td>
+                    <td>{$value.dtregister}</td>
                     <td>
                       <a href="/professor/faixaetaria/{$value.idfxetaria}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
                       <a href="/professor/faixaetaria/{$value.idfxetaria}/delete" onclick="return confirm('Deseja realmente excluir esta faixa etária de {$value.descrfxetaria}?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>

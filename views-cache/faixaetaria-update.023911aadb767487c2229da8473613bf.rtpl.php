@@ -3,7 +3,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Lista de Faixa Etária
+    Editar faixa etária <?php echo htmlspecialchars( $faixaetaria["descrfxetaria"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
   </h1>
 </section>
 
@@ -14,7 +14,7 @@
   	<div class="col-md-12">
   		<div class="box box-primary">
         <div class="box-header with-border">
-          <h3 class="box-title">Editar Faixa Etária</h3>
+          <h3 class="box-title">Editar Faixa Etária  </h3>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
