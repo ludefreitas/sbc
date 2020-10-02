@@ -9,6 +9,8 @@ use \Sbc\Page;
 use \Sbc\PageAdmin;
 use \Sbc\Model\User;
 use \Sbc\Model\Faixaetaria;
+use \Sbc\Model\Modalidade;
+use \Sbc\Model\Local;
 
 $app = new Slim();
 
@@ -19,6 +21,7 @@ require_once("admin.php");
 require_once("admin-faixaetarias.php");
 require_once("admin-users.php");
 require_once("admin-modalidades.php");
+require_once("admin-local.php");
 
 
 
