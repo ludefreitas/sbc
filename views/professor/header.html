@@ -209,7 +209,7 @@ desired effect
                   <a href="#" class="btn btn-default btn-flat">adminile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="/professor/logout" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="/professor/logout" class="btn btn-default btn-flat">Sair</a>
                 </div>
               </li>
             </ul>
@@ -258,6 +258,9 @@ desired effect
         <!-- Optionally, you can add icons to the links -->
         <li>
           <li><a href="/professor/users"><i class="fa fa-users"></i> <span>Todos usuários</span></a></li>
+        </li>
+        <li>
+          <a href="/professor/local"><i class="fa fa-link"></i> <span>Crec´s</span></a>
         </li>
         <li>
           <a href="/professor/modalidade"><i class="fa fa-link"></i> <span>Modalidades</span></a>

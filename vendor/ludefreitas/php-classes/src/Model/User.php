@@ -9,8 +9,8 @@ use \Sbc\Mailer;
 class User extends Model {
 
 	const SESSION = "User";
-	const SECRET = "CursosSbc_Sercret"; //Colocar nas "" secret com 16 caracters;
-	const SECRET_IV = "CursosSbc_Sercret_IV"; //Colocar nas "" secret com 16 caracters + _IV;
+	const SECRET = ""; //Colocar nas "" secret com 16 caracters;
+	const SECRET_IV = ""; //Colocar nas "" secret com 16 caracters + _IV;
 
 	public function login($login, $password){
 

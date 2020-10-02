@@ -33,7 +33,7 @@ class Faixaetaria extends Model {
 
 	}
 
-	public function Update()
+	public function update()
 	{
 		$sql = new Sql();
 
