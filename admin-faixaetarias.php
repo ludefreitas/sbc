@@ -81,7 +81,7 @@ $app->post("/professor/faixaetaria/:idfxetaria", function($idfxetaria) {
 
 	$faixaetaria->setData($_POST);
 
-	$faixaetaria->update();
+	$faixaetaria->save();
 
 	header("Location: /professor/faixaetaria");
 	exit();		

@@ -81,7 +81,7 @@ $app->post("/professor/local/:idlocal", function($idlocal) {
 
 	$local->setData($_POST);
 
-	$local->update();
+	$local->save();
 
 	header("Location: /professor/local");
 	exit();		

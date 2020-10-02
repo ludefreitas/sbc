@@ -16,6 +16,7 @@ class Faixaetaria extends Model {
 		return $sql->select("SELECT * FROM tb_fxetaria ORDER BY initidade");
 	}	
 
+	// esta função é usada para salvar e editar faixa etaria
 	public function save()
 	{
 		$sql = new Sql();
@@ -33,23 +34,7 @@ class Faixaetaria extends Model {
 
 	}
 
-	public function update()
-	{
-		$sql = new Sql();
-
-		$results = $sql->select("CALL sp_faixaetaria_update(:idfxetaria, :descrfxetaria, :initidade, :fimidade)", array(
-			":idfxetaria"=>$this->getidfxetaria(),
-			":descrfxetaria"=>$this->getdescrfxetaria(),
-			":initidade"=>$this->getinitidade(),
-			":fimidade"=>$this->getfimidade()
-		));
-
-		$this->setData($results[0]);
-
-		Faixaetaria::updateFile();
-
-	}
-
+	
 	public function get($idfxetaria)
 	{
 

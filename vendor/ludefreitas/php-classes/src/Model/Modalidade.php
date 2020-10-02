@@ -20,33 +20,12 @@ class Modalidade extends Model {
 			ORDER BY a.nomemodal");
 
 		}	
-
+	// esta função é usada para salvar e editar local
 	public function save()
 	{
 		$sql = new Sql();
 
 		$results = $sql->select("CALL sp_modalidade_save(:idmodal, :nomemodal, :descmodal, :genemodal, :programodal, :origmodal, :tipomodal, :idfxetaria)", array(
-			":idmodal"=>$this->getidmodal(),
-			":nomemodal"=>$this->getnomemodal(),
-			":descmodal"=>$this->getdescmodal(),
-			":genemodal"=>$this->getgenemodal(),
-			":programodal"=>$this->getprogramodal(),
-			":origmodal"=>$this->getorigmodal(),
-			":tipomodal"=>$this->gettipomodal(),
-			":idfxetaria"=>$this->getidfxetaria()
-		));
-
-		$this->setData($results[0]);
-
-		//Modalidade::updateFile();
-
-	}
-
-	public function update()
-	{
-		$sql = new Sql();
-
-		$results = $sql->select("CALL sp_modalidade_update(:idmodal, :nomemodal, :descmodal, :genemodal, :programodal, :origmodal, :tipomodal, :idfxetaria)", array(
 			":idmodal"=>$this->getidmodal(),
 			":nomemodal"=>$this->getnomemodal(),
 			":descmodal"=>$this->getdescmodal(),

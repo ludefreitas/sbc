@@ -87,36 +87,25 @@ $app->post("/professor/modalidade/:idmodal", function($idmodal) {
 
 	$modalidade->setData($_POST);
 
-	$modalidade->update();
+	$modalidade->save();
 
 	header("Location: /professor/modalidade");
-	exit();
-
-	
+	exit();	
 });
 
+$app->get("/modalidade/:idmodal", function($idmodal) {
 
+	$modalidade = new Modalidade();
 
+	$modalidade->get((int)$idmodal);
 
+	$page = new Page();
 
+	$page->setTpl("modalidade", [
+		'modalidade'=>$modalidade->getValues(),
+	]);	
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+});
 
 
 
