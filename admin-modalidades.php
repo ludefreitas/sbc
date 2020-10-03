@@ -1,6 +1,7 @@
 <?php
 
 use \Sbc\PageAdmin;
+use \Sbc\Page;
 use \Sbc\Model\User;
 use \Sbc\Model\Modalidade;
 use \Sbc\Model\Faixaetaria;
@@ -102,7 +103,7 @@ $app->get("/modalidade/:idmodal", function($idmodal) {
 	$page = new Page();
 
 	$page->setTpl("modalidade", [
-		'modalidade'=>$modalidade->getValues(),
+		'modalidade'=>$modalidade->getValues()
 	]);	
 
 });

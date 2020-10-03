@@ -268,6 +268,9 @@ desired effect
         <li>
           <a href="/professor/faixaetaria"><i class="fa fa-link"></i> <span>Faixa Etária</span></a>
         </li>
+        <li>
+          <a href="/professor/horario"><i class="fa fa-link"></i> <span>Horários</span></a>
+        </li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
             <span class="pull-right-container">

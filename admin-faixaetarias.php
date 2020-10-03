@@ -1,5 +1,6 @@
 <?php
 
+use \Sbc\Page;
 use \Sbc\PageAdmin;
 use \Sbc\Model\User;
 use \Sbc\Model\Faixaetaria;
@@ -96,8 +97,7 @@ $app->get("/faixaetaria/:idfxetaria", function($idfxetaria) {
 	$page = new Page();
 
 	$page->setTpl("faixaetaria", [
-		'faixaetaria'=>$faixaetaria->getValues(),
-		'modalidades'=>[]
+		'faixaetaria'=>$faixaetaria->getValues()
 	]);	
 
 });

@@ -96,7 +96,7 @@ $app->get("/local/:idlocal", function($idlocal) {
 	$page = new Page();
 
 	$page->setTpl("local", [
-		'local'=>$local->getValues(),
+		'local'=>$local->getValues()
 	]);	
 
 });

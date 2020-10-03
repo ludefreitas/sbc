@@ -27,9 +27,25 @@
                 
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-menu">
-                        <h2 class="footer-wid-title">Modalidades</h2>
+                        <h2 class="footer-wid-title">Faixa Etária</h2>
                         <ul>
                             <?php require $this->checkTemplate("faixaetaria-menu");?>                            
+                        </ul>                        
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h2 class="footer-wid-title">Modalidades</h2>
+                        <ul>
+                            <?php require $this->checkTemplate("modalidade-menu");?>                            
+                        </ul>                        
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h2 class="footer-wid-title">Crec´s</h2>
+                        <ul>
+                            <?php require $this->checkTemplate("local-menu");?>                            
                         </ul>                        
                     </div>
                 </div>
