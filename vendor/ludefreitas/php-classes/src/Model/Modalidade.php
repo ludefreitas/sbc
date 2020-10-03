@@ -20,7 +20,7 @@ class Modalidade extends Model {
 			ORDER BY a.nomemodal");
 
 		}	
-	// esta função é usada para salvar e editar local
+	// esta função é usada para salvar e editar Modalidade
 	public function save()
 	{
 		$sql = new Sql();

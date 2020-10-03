@@ -1,0 +1,72 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Editar Espaço 
+  </h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="row">
+  	<div class="col-md-12">
+  		<div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Editar Espaço </h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form role="form" action="/professor/espaco/{$espaco.idespaco}" method="post" enctype="multipart/form-data">
+
+          <div class="box-body">
+
+            <div class="form-group">
+              <label for="nomeespaco">Nome do espaço</label>
+              <input type="text" class="form-control" id="nomeespaco" name="nomeespaco" placeholder="Nome da espaco" value="{$espaco.nomeespaco}"> 
+            </div>
+            <div class="form-group">
+              <label for="descespaco">Descrição do espaço</label>
+              <input type="text" class="form-control" id="descespaco" name="descespaco" placeholder="Descreva a espaco" value="{$espaco.descespaco}">
+            </div>
+            <div class="form-group">
+              <label for="areaespaco">Área do espaço</label>
+              <input type="number" class="form-control" id="areaespaco" name="areaespaco" placeholder="Informe o gênero da espaço" value="{$espaco.areaespaco}">
+            </div>
+            <div class="form-group">
+              <label for="observacao">Observação</label>
+              <input type="text" class="form-control" id="observacao" name="observacao" placeholder="Informe qual é o programa" value="{$espaco.observacao}">
+            </div>    
+            <div class="form-group">
+              <label for="espaco">Local</label>
+                <select class="form-control" name="idlocal">                       
+                  {loop="$local"}
+                    <option {if="$value.idlocal === $espaco.idlocal"}selected="selected"{/if} value="{$value.idlocal}">{$value.apelidolocal}</option>
+                  {/loop}
+                </select>
+            </div>
+            <div class="form-group">
+              <label for="espaco">Horários</label>
+                <select class="form-control" name="idhorario">   
+                  {loop="$horario"}
+                  <option {{if="$value.idhorario === $espaco.idhorario"}selected="selected"{/if} value="{$value.idhorario}">{$value.horainicio} ás {$value.horatermino} - {$value.periodo}</option>
+                  {/loop}                           
+                </select>
+          </div> 
+        </div>          
+             
+            
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+        </form>
+      </div>
+  	</div>
+  </div>
+
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

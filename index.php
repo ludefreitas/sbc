@@ -12,6 +12,8 @@ use \Sbc\Model\Faixaetaria;
 use \Sbc\Model\Modalidade;
 use \Sbc\Model\Local;
 use \Sbc\Model\Horario;
+use \Sbc\Model\Espaco;
+
 
 
 $app = new Slim();
@@ -25,6 +27,8 @@ require_once("admin-users.php");
 require_once("admin-modalidades.php");
 require_once("admin-local.php");
 require_once("admin-horario.php");
+require_once("admin-espaco.php");
+
 
 
 

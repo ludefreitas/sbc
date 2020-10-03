@@ -271,6 +271,9 @@ desired effect
         <li>
           <a href="/professor/horario"><i class="fa fa-link"></i> <span>Horários</span></a>
         </li>
+        <li>
+          <a href="/professor/espaco"><i class="fa fa-link"></i> <span>Espaços</span></a>
+        </li>        
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
             <span class="pull-right-container">
