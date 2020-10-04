@@ -13,12 +13,13 @@ class Horario extends Model {
 	{
 		$sql = new Sql();
 
-		return $sql->select("SELECT * FROM tb_horario ORDER BY idhorario");
+		return $sql->select("SELECT * FROM tb_horario ORDER BY diasemana, horainicio");
 	}	
 
 	// esta função é usada para salvar e editar Horario
 	public function save()
 	{
+
 		$sql = new Sql();
 
 		$results = $sql->select("CALL sp_horario_save(:idhorario, :horainicio, :horatermino, :diasemana, :periodo)", array(
@@ -34,7 +35,6 @@ class Horario extends Model {
 		Horario::updateFile();
 
 	}
-
 	
 	public function get($idhorario)
 	{

@@ -20,7 +20,7 @@
       <div class="box box-success">
         <div class="box-header with-border">
           <h3 class="box-title">Nova Crec</h3>
-        </div>
+                  </div>
         <!-- /.box-header -->
         <!-- form start -->
         <form role="form" action="/professor/local/create" method="post">
@@ -35,7 +35,7 @@
             </div>
             <div class="form-group">
               <label for="cep">Cep</label>
-              <input type="text" class="form-control" id="cep" name="cep" placeholder="Informe o Cep de onde está localizado o Crec">
+              <input type="number" class="form-control" id="cep" name="cep" placeholder="Informe o Cep de onde está localizado o Crec">
             </div>
             <div class="form-group">
               <label for="rua">Rua</label>

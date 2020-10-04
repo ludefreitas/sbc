@@ -38,7 +38,7 @@ class Modalidade extends Model {
 
 		$this->setData($results[0]);
 
-		//Modalidade::updateFile();
+		Modalidade::updateFile();
 
 	}
 
@@ -47,7 +47,7 @@ class Modalidade extends Model {
 
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT * FROM tb_modalidade WHERE idmodal = :idmodal", [
+		$results = $sql->select("SELECT * FROM tb_modalidade INNER JOIN tb_fxetaria USING(idfxetaria) WHERE idmodal = :idmodal", [
 			':idmodal'=>$idmodal 
 		]);
 
@@ -63,7 +63,7 @@ class Modalidade extends Model {
 			':idmodal'=>$this->getidmodal()
 		]);		
 
-		//Modalidade::updateFile();
+		Modalidade::updateFile();
 	}
 
 	// atualiza lista de modalidade no site (no rodapé) modalidade-menu.html

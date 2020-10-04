@@ -39,7 +39,7 @@ class Espaco extends Model {
 
 		$this->setData($results[0]);
 
-		//espaco::updateFile();
+		Espaco::updateFile();
 
 	}
 
@@ -64,7 +64,7 @@ class Espaco extends Model {
 			':idespaco'=>$this->getidespaco()
 		]);		
 
-		//espaco::updateFile();
+		Espaco::updateFile();
 	}
 
 	// atualiza lista de espaco no site (no rodapé) espaco-menu.html

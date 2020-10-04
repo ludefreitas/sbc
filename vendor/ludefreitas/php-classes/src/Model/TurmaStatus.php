@@ -5,14 +5,14 @@ namespace Sbc\Model;
 use \Sbc\DB\Sql;
 use \Sbc\Model;
 
-class TumaStatus extends Model {
+class TurmaStatus extends Model {
 
-	const COMPLETA = 1;		
-	const NAO HA VAGAS = 2;
-	const NAO INICIADA = 3;
-	const EXCLUIDA = 4;
-	const INICIADA = 6;	
-	const MATRICULA EM ANDAMENTO = 7;
+	//const "COMPLETA" = 1;		
+	//const "NAO HA VAGAS" = 2;
+	//const "NAO INICIADA" = 3;
+	//const "EXCLUIDA" = 4;
+	//const "INICIADA" = 6;	
+	//const "MATRICULA EM ANDAMENTO" = 7;
 
 
 	public static function listAll()

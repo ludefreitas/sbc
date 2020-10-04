@@ -1,3 +1,1 @@
-<?php if(!class_exists('Rain\Tpl')){exit;}?><li><a href="#">moddalidada 1</a></li>
-<li><a href="#">moddalidada 2</a></li>
-<li><a href="#">moddalidada 3</a></li>
+<?php if(!class_exists('Rain\Tpl')){exit;}?><li><a href="/modalidade/14">Handebol</a></li><li><a href="/modalidade/2">Natação</a></li>

@@ -19,7 +19,7 @@
   	<div class="col-md-12">
   		<div class="box box-success">
         <div class="box-header with-border">
-          <h3 class="box-title">Novo Espaços</h3>
+          <h3 class="box-title">Novo Espaço</h3>
         </div>
         <!-- /.box-header -->
         <!-- form start --><form role="form" action="/professor/espaco/create" method="post">
@@ -35,14 +35,14 @@
             </div>
             <div class="form-group">
               <label for="areaespaco">Área do espaço</label>
-              <input type="number" class="form-control" id="areaespaco" name="areaespaco" placeholder="Informe o gênero da espaço">
+              <input type="number" class="form-control" id="areaespaco" name="areaespaco" placeholder="Informe a área do espaço">
             </div>
             <div class="form-group">
               <label for="observacao">Observação</label>
-              <input type="text" class="form-control" id="observacao" name="observacao" placeholder="Informe qual é o programa">
+              <input type="text" class="form-control" id="observacao" name="observacao" placeholder="Observação: quadra coberta... sala com espelho... acessível...">
             </div>    
             <div class="form-group">
-              <label for="espaco">Local</label>
+              <label for="local">Local</label>
                 <select class="form-control" name="idlocal">     
                   <?php $counter1=-1;  if( isset($local) && ( is_array($local) || $local instanceof Traversable ) && sizeof($local) ) foreach( $local as $key1 => $value1 ){ $counter1++; ?>
                   <option <?php if( $value1["idlocal"] ){ ?>selected="selected"<?php } ?> value="<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>

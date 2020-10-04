@@ -1,0 +1,106 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Lista de Trumas
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="/professor/turma">Turma</a></li>
+    <!--<li class="active"><a href="/professor/turma/create">Cadastrar</a></li>-->
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="row">
+  	<div class="col-md-12">
+  		<div class="box box-success">
+        <div class="box-header with-border">
+          <h3 class="box-title">Nova Turma</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start --><form role="form" action="/professor/turma/create" method="post">
+          <div class="box-body">
+
+            <div class="form-group">
+              <label for="descturma">Descrição da turma</label>
+              <input type="text" class="form-control" id="descturma" name="descturma" placeholder="Descreva a turma">
+            </div>
+            <div class="form-group">
+              <label for="temporada">Temporada</label>
+              <input type="text" class="form-control" id="temporada" name="temporada" placeholder="Informe qual a temporada da turma">
+            </div>
+            
+            <div class="form-group">
+              <label for="turma">Professor</label>
+                <select class="form-control" name="iduser">     
+                  {loop="$user"}
+                  <option {if="$value.iduser"}selected="selected"{/if} value="{$value.iduser}">{$value.desperson}</option>
+                  {/loop}                            
+                </select>
+            </div>
+            <div class="form-group">
+              <label for="turma">Modalidade</label>
+                <select class="form-control" name="idmodal">     
+                  {loop="$modalidade"}
+                  <option {if="$value.idmodal"}selected="selected"{/if} value="{$value.idmodal}">{$value.nomemodal}</option>
+                  {/loop}                            
+                </select>
+            </div>
+            <div class="form-group">
+              <label for="turma">Espaço - Crec</label>
+                <select class="form-control" name="idespaco">     
+                  {loop="$espaco"}
+                  <option {if="$value.idespaco"}selected="selected"{/if} value="{$value.idespaco}">{$value.apelidolocal} - {$value.nomeespaco}</option>
+                  {/loop}                            
+                </select>
+            </div>
+            <div class="form-group">
+              <label for="turma">Status</label>
+                <select class="form-control" name="idturmastatus">     
+                  {loop="$turmastatus"}
+                  <option {if="$value.idturmastatus"}selected="selected"{/if} value="{$value.idturmastatus}">{$value.desstatus}</option>
+                  {/loop}                            
+                </select>
+            </div><div class="form-group">
+              <label for="turma">Vagas</label>
+              <input type="number" class="form-control" id="vagas" name="vagas" placeholder="Informe a quantidade de vagas">
+            </div>
+            <div class="form-group">
+              <label for="turma">Nº inicial de inscritos</label>
+              <input type="number" class="form-control" id="numinicialinscritos" name="numinicialinscritos" placeholder="informe a quantidade inicial de inscritos">
+            </div>
+            <div class="form-group">
+              <label for="turma">Início das inscrições</label>
+              <input type="date" class="form-control" id="dtinicinscricao" name="dtinicinscricao" placeholder="Informe a data do início das inscrições">
+            </div>
+            <div class="form-group">
+              <label for="turma">Fim das inscrições</label>
+              <input type="date" class="form-control" id="dtterminscricao" name="dtterminscricao" placeholder="Informe a data do término das inscrições">
+            </div>
+            <div class="form-group">
+              <label for="turma">Início das matrículas</label>
+              <input type="date" class="form-control" id="dtinicmatricula" name="dtinicmatricula" placeholder="Informe a data do início das matrículas">
+            </div>
+            <div class="form-group">
+              <label for="turma">Fim das matrículas</label>
+              <input type="date" class="form-control" id="dttermmatricula" name="dttermmatricula" placeholder="Informe a data do término das matrículas">
+            </div>    
+
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <button type="submit" class="btn btn-success">Cadastrar</button>
+          </div>
+        </form>
+      </div>
+  	</div>
+  </div>
+
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

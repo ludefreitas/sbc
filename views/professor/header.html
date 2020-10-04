@@ -273,7 +273,10 @@ desired effect
         </li>
         <li>
           <a href="/professor/espaco"><i class="fa fa-link"></i> <span>Espaços</span></a>
-        </li>        
+        </li>  
+        <li>
+          <a href="/professor/turma"><i class="fa fa-link"></i> <span>Turmas</span></a>
+        </li>              
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
             <span class="pull-right-container">

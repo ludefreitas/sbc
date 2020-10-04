@@ -37,7 +37,7 @@ class Local extends Model {
 
 		$this->setData($results[0]);
 
-		//Local::updateFile();
+		Local::updateFile();
 	}
 
 	public function get($idlocal)
@@ -60,7 +60,7 @@ class Local extends Model {
 			':idlocal'=>$this->getidlocal()
 		]);		
 
-		//Local::updateFile();
+		Local::updateFile();
 	}
 
 	// atualiza lista de Locais etária no site (no rodapé) local-menu.html
@@ -71,7 +71,7 @@ class Local extends Model {
 		$html = [];
 
 		foreach ($local as $row) {
-			array_push($html, '<li><a href="/local/'.$row['idlocal'].'">'.$row['nome'].'</a></li>');
+			array_push($html, '<li><a href="/local/'.$row['idlocal'].'">'.$row['apelidolocal'].'</a></li>');
 		}
 		file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."local-menu.html", implode('', $html));
 	}

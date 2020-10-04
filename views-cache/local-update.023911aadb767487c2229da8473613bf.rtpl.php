@@ -31,7 +31,7 @@
             </div>
             <div class="form-group">
               <label for="cep">Cep</label>
-              <input type="text" class="form-control" id="cep" name="cep" placeholder="Informe o Cep de onde está localizado o Crec" value="<?php echo htmlspecialchars( $local["cep"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+              <input type="number" class="form-control" id="cep" name="cep" placeholder="Informe o Cep de onde está localizado o Crec" value="<?php echo htmlspecialchars( $local["cep"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
             <div class="form-group">
               <label for="rua">Rua</label>
