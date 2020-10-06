@@ -37,7 +37,7 @@
                             <?php $counter1=-1;  if( isset($horarioNotRelated) && ( is_array($horarioNotRelated) || $horarioNotRelated instanceof Traversable ) && sizeof($horarioNotRelated) ) foreach( $horarioNotRelated as $key1 => $value1 ){ $counter1++; ?>
                             <tr>
                             <td><?php echo htmlspecialchars( $value1["idhorario"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                            <td><?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ás <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                            <td><?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ás <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                             <td>
                                 <a href="/professor/espaco/<?php echo htmlspecialchars( $espaco["idespaco"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/horario/<?php echo htmlspecialchars( $value1["idhorario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/add" class="btn btn-primary btn-xs pull-right"><i class="fa fa-arrow-right"></i> Adicionar</a>
                             </td>
@@ -60,7 +60,7 @@
                         <thead>
                             <tr>
                             <th style="width: 10px">#</th>
-                            <th>Horários</th>
+                            <th>Horários da Piscina</th>
                             <th style="width: 240px">&nbsp;</th>
                             </tr>
                         </thead>

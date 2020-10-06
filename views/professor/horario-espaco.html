@@ -37,7 +37,7 @@
                             {loop="$horarioNotRelated"}
                             <tr>
                             <td>{$value.idhorario}</td>
-                            <td>{$value.horainicio} ás {$value.horatermino} {$value.diasemana}</td>
+                            <td>{$value.diasemana} - {$value.horainicio} ás {$value.horatermino}</td>
                             <td>
                                 <a href="/professor/espaco/{$espaco.idespaco}/horario/{$value.idhorario}/add" class="btn btn-primary btn-xs pull-right"><i class="fa fa-arrow-right"></i> Adicionar</a>
                             </td>

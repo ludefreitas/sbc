@@ -87,6 +87,62 @@ class Espaco extends Model {
 		file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."espaco-menu.html", implode('', $html));
 	}
 
-}
+	public function getHorario($related = true)
+	{
+		$sql = new Sql();
 
+		if ($related === true) {
+
+			return $sql->select("
+				SELECT * FROM tb_horario WHERE idhorario IN(
+					SELECT a.idhorario
+					FROM tb_horario a
+					INNER JOIN tb_horarioespaco b ON a.idhorario = b.idhorario
+					WHERE b.idespaco = :idespaco ORDER BY a.diasemana
+				);
+			", [
+				':idespaco'=>$this->getidespaco()
+			]);
+
+		} else {
+
+			return $sql->select("
+				SELECT * FROM tb_horario WHERE idhorario NOT IN(
+					SELECT a.idhorario
+					FROM tb_horario a
+					INNER JOIN tb_horarioespaco b ON a.idhorario = b.idhorario
+					WHERE b.idespaco = :idespaco ORDER BY a.diasemana
+				);
+			", [
+				':idespaco'=>$this->getidespaco()
+			]);
+		}
+	}
+
+	public function addHorario(Horario $horario)
+	{
+
+		$sql = new Sql();
+
+		$sql->query("INSERT INTO tb_horarioespaco (idespaco, idhorario) VALUES(:idespaco, :idhorario)", [
+			':idespaco'=>$this->getidespaco(),
+			':idhorario'=>$horario->getidhorario()
+		]);
+
+	}
+
+	public function removeHorario(Horario $horario)
+	{
+
+		$sql = new Sql();
+
+		$sql->query("DELETE FROM tb_horarioespaco WHERE idespaco = :idespaco AND idhorario = :idhorario", [
+			':idespaco'=>$this->getidespaco(),
+			':idhorario'=>$horario->getidhorario()
+		]);
+
+	}
+
+
+}
 ?>

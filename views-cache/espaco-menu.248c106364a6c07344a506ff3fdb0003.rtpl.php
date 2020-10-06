@@ -1,1 +1,1 @@
-<?php if(!class_exists('Rain\Tpl')){exit;}?><li><a href="/espaco/6">Piscina</a></li><li><a href="/espaco/5">Piscina</a></li><li><a href="/espaco/4">Piscina</a></li><li><a href="/espaco/2">Quadra</a></li>
+<?php if(!class_exists('Rain\Tpl')){exit;}?><li><a href="/espaco/9">Piscina</a></li>
