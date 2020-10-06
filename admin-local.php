@@ -3,6 +3,7 @@
 use \Sbc\PageAdmin;
 use \Sbc\Model\User;
 use \Sbc\Model\Local;
+use \Sbc\Page;
 
 $app->get("/professor/local", function() {
 

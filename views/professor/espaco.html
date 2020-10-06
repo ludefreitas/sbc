@@ -19,18 +19,15 @@
   		<div class="box box-primary">
             
             <div class="box-header">
-              <a href="/professor/espaco/create" class="btn btn-success">Cadastrar Espaço</a>
+              <a href="/professor/espaco/create" class="btn btn-success">Cadastrar Novo Espaço</a>
             </div>
 
             <div class="box-body no-padding">
               <table class="table table-striped">
                 <thead>
                   <tr>
-
                     <th>Espaco</th>
                     <th>Descrição</th>
-                    <th>Local</th>
-                    <th>Horários</th>
                     <th>Àrea(m²)</th>
                     <th>Observação</th>
                   </tr>
@@ -40,13 +37,12 @@
                   <tr>
                     <td>{$value.nomeespaco}</td>
                     <td>{$value.descespaco}</td>
-                    <td>{$value.apelidolocal}</td>
-                    <td>{$value.horainicio} ás {$value.horatermino} - {$value.periodo}</td>
                     <td>{$value.areaespaco}</td>
                     <td>{$value.observacao}</td>                                
                     <td>
+                      <a href="/professor/espaco/{$value.idespaco}/horario" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> Horários</a>
                       <a href="/professor/espaco/{$value.idespaco}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
-                      <a href="/professor/espaco/{$value.idespaco}/delete" onclick="return confirm('Deseja realmente excluir o espaço {$value.nomeespaco} {$value.horainicio} ás {$value.horatermino} - {$value.periodo}?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
+                      <a href="/professor/espaco/{$value.idespaco}/delete" onclick="return confirm('Deseja realmente excluir o espaço {$value.nomeespaco}?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
                     </td>
                   </tr>
                   {/loop}

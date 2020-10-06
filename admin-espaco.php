@@ -4,9 +4,6 @@ use \Sbc\PageAdmin;
 use \Sbc\Page;
 use \Sbc\Model\User;
 use \Sbc\Model\Espaco;
-use \Sbc\Model\Local;
-use \Sbc\Model\Horario;
-
 
 $app->get("/professor/espaco", function() {
 
@@ -25,15 +22,9 @@ $app->get("/professor/espaco/create", function() {
 
 	User::verifyLogin();
 
-	$local = Local::listAll();
-	$horario = Horario::listAll();
-
 	$page = new PageAdmin();
 
-	$page->setTpl("espaco-create", array(
-		'local'=>$local,
-		'horario'=>$horario
-	));
+	$page->setTpl("espaco-create");
 });
 
 $app->post("/professor/espaco/create", function() {
@@ -77,9 +68,7 @@ $app->get("/professor/espaco/:idespaco", function($idespaco) {
 	$page = new PageAdmin();
 
 	$page->setTpl("espaco-update", array(
-		'espaco'=>$espaco->getValues(),
-		'local'=>Local::listAll(),
-		'horario'=>Horario::listAll()
+		'espaco'=>$espaco->getValues()
 	));
 });
 
@@ -109,6 +98,28 @@ $app->get("/espaco/:idespaco", function($idespaco) {
 
 	$page->setTpl("espaco", [
 		'espaco'=>$espaco->getValues()
+	]);	
+
+});
+
+$app->get("/professor/espaco/:idespaco/horario", function($idespaco) {
+
+	User::verifyLogin();
+
+	$espaco = new Espaco();
+
+	$espaco->get((int)$idespaco);
+
+	$page = new PageAdmin();
+
+	//var_dump($page);	exit();
+
+
+
+	$page->setTpl("horario-espaco", [
+		'espaco'=>$espaco->getValues(),
+		'horarioRelated'=> [],
+		'horarioNotRelated'=>[]
 	]);	
 
 });

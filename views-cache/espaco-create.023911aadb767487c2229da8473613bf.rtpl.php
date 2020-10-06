@@ -7,13 +7,12 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="/professor/espaco">Espaço</a></li>
+    <li><a href="/professor/espaco">Novo Espaço</a></li>
     <!--<li class="active"><a href="/professor/espaco/create">Cadastrar</a></li>-->
   </ol>
 </section>
 
 <!-- Main content -->
-<section class="content">
 
   <div class="row">
   	<div class="col-md-12">
@@ -24,7 +23,6 @@
         <!-- /.box-header -->
         <!-- form start --><form role="form" action="/professor/espaco/create" method="post">
           <div class="box-body">
-
             <div class="form-group">
               <label for="nomeespaco">Nome do espaço</label>
               <input type="text" class="form-control" id="nomeespaco" name="nomeespaco" placeholder="Nome da espaco">
@@ -40,23 +38,7 @@
             <div class="form-group">
               <label for="observacao">Observação</label>
               <input type="text" class="form-control" id="observacao" name="observacao" placeholder="Observação: quadra coberta... sala com espelho... acessível...">
-            </div>    
-            <div class="form-group">
-              <label for="local">Local</label>
-                <select class="form-control" name="idlocal">     
-                  <?php $counter1=-1;  if( isset($local) && ( is_array($local) || $local instanceof Traversable ) && sizeof($local) ) foreach( $local as $key1 => $value1 ){ $counter1++; ?>
-                  <option <?php if( $value1["idlocal"] ){ ?>selected="selected"<?php } ?> value="<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
-                  <?php } ?>                            
-                </select>
-            </div>
-            <div class="form-group">
-              <label for="espaco">Local</label>
-                <select class="form-control" name="idhorario">   
-                  <?php $counter1=-1;  if( isset($horario) && ( is_array($horario) || $horario instanceof Traversable ) && sizeof($horario) ) foreach( $horario as $key1 => $value1 ){ $counter1++; ?>
-                  <option <?php if( $value1["idhorario"] ){ ?>selected="selected"<?php } ?> value="<?php echo htmlspecialchars( $value1["idhorario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ás <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["periodo"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
-                  <?php } ?>                           
-                </select>
-          </div> 
+            </div>  
               
           </div>
           <!-- /.box-body -->

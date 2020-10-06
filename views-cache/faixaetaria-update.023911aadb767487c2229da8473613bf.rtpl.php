@@ -3,7 +3,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Editar faixa etária <?php echo htmlspecialchars( $faixaetaria["descrfxetaria"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+    Lista de Faixa Etária
   </h1>
 </section>
 
@@ -14,7 +14,7 @@
   	<div class="col-md-12">
   		<div class="box box-primary">
         <div class="box-header with-border">
-          <h3 class="box-title">Editar Faixa Etária  </h3>
+          <h3 class="box-title">Editar Faixa Etária</h3>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
@@ -22,11 +22,11 @@
           <div class="box-body">
             <div class="form-group">
               <label for="initidade">Idade inicial</label>
-              <input type="text" class="form-control" id="initidade" name="initidade" placeholder="Digite a idade inicial" value="<?php echo htmlspecialchars( $faixaetaria["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+              <input type="number" class="form-control" id="initidade" name="initidade" placeholder="Digite a idade inicial" value="<?php echo htmlspecialchars( $faixaetaria["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
             <div class="form-group">
               <label for="fimidade">Idade Final</label>
-              <input type="text" class="form-control" id="fimidade" name="fimidade" placeholder="Digite a idade final" value="<?php echo htmlspecialchars( $faixaetaria["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+              <input type="number" class="form-control" id="fimidade" name="fimidade" placeholder="Digite a idade final" value="<?php echo htmlspecialchars( $faixaetaria["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
             <div class="form-group">
               <label for="descrfxetaria">Descrição da Faixa Etária</label>

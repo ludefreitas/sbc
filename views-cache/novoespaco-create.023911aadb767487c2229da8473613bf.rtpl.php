@@ -1,4 +1,4 @@
-<!-- Content Wrapper. Contains page content -->
+<?php if(!class_exists('Rain\Tpl')){exit;}?><!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -7,12 +7,13 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="/professor/espaco">Novo Espaço</a></li>
+    <li><a href="/professor/novoespaco">Novo Espaço</a></li>
     <!--<li class="active"><a href="/professor/espaco/create">Cadastrar</a></li>-->
   </ol>
 </section>
 
 <!-- Main content -->
+<section class="content">
 
   <div class="row">
   	<div class="col-md-12">
@@ -21,8 +22,9 @@
           <h3 class="box-title">Novo Espaço</h3>
         </div>
         <!-- /.box-header -->
-        <!-- form start --><form role="form" action="/professor/espaco/create" method="post">
+        <!-- form start --><form role="form" action="/professor/novoespaco/create" method="post">
           <div class="box-body">
+
             <div class="form-group">
               <label for="nomeespaco">Nome do espaço</label>
               <input type="text" class="form-control" id="nomeespaco" name="nomeespaco" placeholder="Nome da espaco">

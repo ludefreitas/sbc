@@ -26,9 +26,9 @@
               <table class="table table-striped">
                 <thead>
                   <tr>
+                    <th>Dias da semana</th>
                     <th>Hora de início</th>
                     <th>Hora de término</th>
-                    <th>Dias da semana</th>
                     <th>Período</th>
                     <th style="width: 140px">&nbsp;</th>
                   </tr>
@@ -36,9 +36,9 @@
                 <tbody>                  
                     {loop="$horario"}
                     <tr>
+                    <td>{$value.diasemana}</td>
                     <td>{$value.horainicio}</td>
                     <td>{$value.horatermino}</td>
-                    <td>{$value.diasemana}</td>
                     <td>{$value.periodo}</td>
                     <td>
                       <a href="/professor/horario/{$value.idhorario}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>

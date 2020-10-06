@@ -30,10 +30,6 @@ require_once("admin-horario.php");
 require_once("admin-espaco.php");
 require_once("admin-turma.php");
 
-
-
-
-
 $app->run();
 
 ?>

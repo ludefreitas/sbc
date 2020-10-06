@@ -14,7 +14,7 @@
   	<div class="col-md-12">
   		<div class="box box-primary">
         <div class="box-header with-border">
-          <h3 class="box-title">Editar Espaço </h3>
+          <h3 class="box-title">Editar Novo Espaço </h3>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
@@ -37,23 +37,9 @@
             <div class="form-group">
               <label for="observacao">Observação</label>
               <input type="text" class="form-control" id="observacao" name="observacao" placeholder="Quadra coberta... Acessível... Salão com espelho..." value="{$espaco.observacao}">
-            </div>    
-            <div class="form-group">
-              <label for="espaco">Local</label>
-                <select class="form-control" name="idlocal">                       
-                  {loop="$local"}
-                    <option {if="$value.idlocal === $espaco.idlocal"}selected="selected"{/if} value="{$value.idlocal}">{$value.apelidolocal}</option>
-                  {/loop}
-                </select>
-            </div>
-            <div class="form-group">
-              <label for="espaco">Horários</label>
-                <select class="form-control" name="idhorario">   
-                  {loop="$horario"}
-                  <option {{if="$value.idhorario === $espaco.idhorario"}selected="selected"{/if} value="{$value.idhorario}">{$value.horainicio} ás {$value.horatermino} - {$value.periodo}</option>
-                  {/loop}                           
-                </select>
-          </div> 
+            </div>   
+            
+            
         </div>          
              
             

@@ -13,7 +13,7 @@ class Local extends Model {
 	{
 		$sql = new Sql();
 
-		return $sql->select("SELECT * FROM tb_local ORDER BY nomelocal");
+		return $sql->select("SELECT * FROM tb_local ORDER BY apelidolocal");
 	}	
 
 	// esta função é usada para salvar e editar local

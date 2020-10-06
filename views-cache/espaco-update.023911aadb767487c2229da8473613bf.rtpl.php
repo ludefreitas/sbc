@@ -14,7 +14,7 @@
   	<div class="col-md-12">
   		<div class="box box-primary">
         <div class="box-header with-border">
-          <h3 class="box-title">Editar Espaço </h3>
+          <h3 class="box-title">Editar Novo Espaço </h3>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
@@ -37,23 +37,9 @@
             <div class="form-group">
               <label for="observacao">Observação</label>
               <input type="text" class="form-control" id="observacao" name="observacao" placeholder="Quadra coberta... Acessível... Salão com espelho..." value="<?php echo htmlspecialchars( $espaco["observacao"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-            </div>    
-            <div class="form-group">
-              <label for="espaco">Local</label>
-                <select class="form-control" name="idlocal">                       
-                  <?php $counter1=-1;  if( isset($local) && ( is_array($local) || $local instanceof Traversable ) && sizeof($local) ) foreach( $local as $key1 => $value1 ){ $counter1++; ?>
-                    <option <?php if( $value1["idlocal"] === $espaco["idlocal"] ){ ?>selected="selected"<?php } ?> value="<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
-                  <?php } ?>
-                </select>
-            </div>
-            <div class="form-group">
-              <label for="espaco">Horários</label>
-                <select class="form-control" name="idhorario">   
-                  <?php $counter1=-1;  if( isset($horario) && ( is_array($horario) || $horario instanceof Traversable ) && sizeof($horario) ) foreach( $horario as $key1 => $value1 ){ $counter1++; ?>
-                  <option {<?php if( $value1["idhorario"] === $espaco["idhorario"] ){ ?>selected="selected"<?php } ?> value="<?php echo htmlspecialchars( $value1["idhorario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ás <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["periodo"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
-                  <?php } ?>                           
-                </select>
-          </div> 
+            </div>   
+            
+            
         </div>          
              
             

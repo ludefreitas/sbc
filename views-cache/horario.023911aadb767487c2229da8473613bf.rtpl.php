@@ -26,9 +26,9 @@
               <table class="table table-striped">
                 <thead>
                   <tr>
+                    <th>Dias da semana</th>
                     <th>Hora de início</th>
                     <th>Hora de término</th>
-                    <th>Dias da semana</th>
                     <th>Período</th>
                     <th style="width: 140px">&nbsp;</th>
                   </tr>
@@ -36,9 +36,9 @@
                 <tbody>                  
                     <?php $counter1=-1;  if( isset($horario) && ( is_array($horario) || $horario instanceof Traversable ) && sizeof($horario) ) foreach( $horario as $key1 => $value1 ){ $counter1++; ?>
                     <tr>
+                    <td><?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                     <td><?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                     <td><?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                    <td><?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                     <td><?php echo htmlspecialchars( $value1["periodo"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                     <td>
                       <a href="/professor/horario/<?php echo htmlspecialchars( $value1["idhorario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>

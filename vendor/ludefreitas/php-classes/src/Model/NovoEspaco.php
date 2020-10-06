@@ -6,7 +6,7 @@ use \Sbc\DB\Sql;
 use \Sbc\Model;
 use \Sbc\Mailer;
 
-class Espaco extends Model {
+class NovoEspaco extends Model {
 
 
 	public static function listAll()
@@ -46,7 +46,7 @@ class Espaco extends Model {
 
 		$this->setData($results[0]);
 
-		Espaco::updateFile();
+		NovoEspaco::updateFile();
 
 	}
 
@@ -71,7 +71,7 @@ class Espaco extends Model {
 			':idespaco'=>$this->getidespaco()
 		]);		
 
-		Espaco::updateFile();
+		NovoEspaco::updateFile();
 	}
 
 	// atualiza lista de espaco no site (no rodapé) espaco-menu.html
@@ -82,9 +82,9 @@ class Espaco extends Model {
 		$html = [];
 
 		foreach ($espaco as $row) {
-			array_push($html, '<li><a href="/espaco/'.$row['idespaco'].'">'.$row['nomeespaco'].'</a></li>');
+			array_push($html, '<li><a href="/novoespaco/'.$row['idespaco'].'">'.$row['nomeespaco'].'</a></li>');
 		}
-		file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."espaco-menu.html", implode('', $html));
+		file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."novoespaco-menu.html", implode('', $html));
 	}
 
 }

@@ -257,10 +257,13 @@ desired effect
         <li class="header">HEADER</li>
         <!-- Optionally, you can add icons to the links -->
         <li>
-          <li><a href="/professor/users"><i class="fa fa-users"></i> <span>Todos usuários</span></a></li>
+          <li><a href="/professor/users"><i class="fa fa-users"></i> <span>Usuários</span></a></li>
+          <li>
+          <li><a href="/professor/users"><i class="fa fa-users"></i> <span>Professores</span></a></li>
+        </li>
         </li>
         <li>
-          <a href="/professor/local"><i class="fa fa-link"></i> <span>Crec´s</span></a>
+          <a href="/professor/local"><i class="fa fa-link"></i> <span>Crecs</span></a>
         </li>
         <li>
           <a href="/professor/modalidade"><i class="fa fa-link"></i> <span>Modalidades</span></a>
@@ -271,7 +274,7 @@ desired effect
         <li>
           <a href="/professor/horario"><i class="fa fa-link"></i> <span>Horários</span></a>
         </li>
-        <li>
+                <li>
           <a href="/professor/espaco"><i class="fa fa-link"></i> <span>Espaços</span></a>
         </li>  
         <li>

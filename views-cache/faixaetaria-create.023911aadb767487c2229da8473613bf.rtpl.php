@@ -8,7 +8,7 @@
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
     <li><a href="/professor/faixaetaria">Faixa Etária</a></li>
-    <li class="active"><a href="/professor/faixaetaria/create">Cadastrar</a></li>
+    <!--<li class="active"><a href="/professor/faixaetaria/create">Cadastrar</a></li>-->
   </ol>
 </section>
 
@@ -27,11 +27,11 @@
           <div class="box-body">
             <div class="form-group">
               <label for="initidade">Idade inicial</label>
-              <input type="text" class="form-control" id="initidade" name="initidade" placeholder="Informe a idade inicial">
+              <input type="number" class="form-control" id="initidade" name="initidade" placeholder="Informe a idade inicial">
             </div>
             <div class="form-group">
               <label for="fimidade">Idade final</label>
-              <input type="text" class="form-control" id="fimidade" name="fimidade" placeholder="Informe a idade final">
+              <input type="number" class="form-control" id="fimidade" name="fimidade" placeholder="Informe a idade final">
             </div>
             <div class="form-group">
               <label for="descrfxetaria">Descrição da Faixa Etária</label>
