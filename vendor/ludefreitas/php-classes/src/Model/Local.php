@@ -76,6 +76,66 @@ class Local extends Model {
 		file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."local-menu.html", implode('', $html));
 	}
 
+	public function getEspaco($related = true)
+	{
+		$sql = new Sql();
+
+		if ($related === true) {
+
+			return $sql->select("
+				SELECT * 
+					FROM tb_espaco 
+		        	WHERE idespaco 
+			    	IN( 
+			    		SELECT a.idespaco
+						FROM tb_espaco a
+		   				INNER JOIN tb_espacolocal b 
+		           		ON a.idespaco = b.idespaco
+			    		WHERE b.idlocal = :idlocal ORDER BY a.nomeespaco
+			    	);", [
+						':idlocal'=>$this->getidlocal()
+					]);
+
+		} else {
+
+			return $sql->select("
+				SELECT * 
+					FROM tb_espaco 
+		        	WHERE idespaco 
+			    	NOT IN( 
+			    		SELECT a.idespaco
+						FROM tb_espaco a
+		   				INNER JOIN tb_espacolocal b 
+		           		ON a.idespaco = b.idespaco
+			    		WHERE b.idlocal = :idlocal ORDER BY a.nomeespaco
+			    	);", [
+						':idlocal'=>$this->getidlocal()
+					]);
+		}
+	}
+
+	public function addEspaco(Espaco $espaco)
+	{
+
+		$sql = new Sql();
+
+		$sql->query("INSERT INTO tb_espacolocal (idlocal, idespaco) VALUES(:idlocal, :idespaco)", [
+			':idlocal'=>$this->getidlocal(),
+			':idespaco'=>$espaco->getidespaco()
+		]);
+
+	}
+
+	public function removeEspaco(Espaco $espaco)
+	{
+
+		$sql = new Sql();
+
+		$sql->query("DELETE FROM tb_espacolocal WHERE idlocal = :idlocal AND idespaco = :idespaco", [
+			':idlocal'=>$this->getidlocal(),
+			':idespaco'=>$espaco->getidespaco()
+		]);
+	}
 }
 
 

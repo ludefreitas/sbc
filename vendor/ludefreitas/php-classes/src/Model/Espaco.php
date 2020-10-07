@@ -13,7 +13,7 @@ class Espaco extends Model {
 	{
 		$sql = new Sql();
 
-		return $sql->select("SELECT * FROM tb_novoespaco ORDER BY nomeespaco");
+		return $sql->select("SELECT * FROM tb_espaco ORDER BY nomeespaco");
 
 	}	
 	/*
@@ -36,7 +36,7 @@ class Espaco extends Model {
 	{
 		$sql = new Sql();
 
-		$results = $sql->select("CALL sp_novoespaco_save(:idespaco, :nomeespaco, :descespaco, :observacao, :areaespaco)", array(
+		$results = $sql->select("CALL sp_espaco_save(:idespaco, :nomeespaco, :descespaco, :observacao, :areaespaco)", array(
 			":idespaco"=>$this->getidespaco(),
 			":nomeespaco"=>$this->getnomeespaco(),
 			":descespaco"=>$this->getdescespaco(),
@@ -55,7 +55,7 @@ class Espaco extends Model {
 
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT * FROM tb_novoespaco WHERE idespaco = :idespaco", [
+		$results = $sql->select("SELECT * FROM tb_espaco WHERE idespaco = :idespaco", [
 			':idespaco'=>$idespaco 
 		]);
 
@@ -67,7 +67,7 @@ class Espaco extends Model {
 	{
 		$sql = new Sql();
 
-		$results = $sql->select("DELETE FROM tb_novoespaco WHERE idespaco = :idespaco", [
+		$results = $sql->select("DELETE FROM tb_espaco WHERE idespaco = :idespaco", [
 			':idespaco'=>$this->getidespaco()
 		]);		
 
@@ -77,7 +77,7 @@ class Espaco extends Model {
 	// atualiza lista de espaco no site (no rodapé) espaco-menu.html
 	public static function updateFile()	
 	{
-		$espaco = NovoEspaco::listAll();
+		$espaco = Espaco::listAll();
 
 		$html = [];
 

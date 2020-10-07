@@ -3,6 +3,8 @@
 use \Sbc\PageAdmin;
 use \Sbc\Model\User;
 use \Sbc\Model\Local;
+use \Sbc\Model\Espaco;
+
 use \Sbc\Page;
 
 $app->get("/professor/local", function() {
@@ -101,6 +103,72 @@ $app->get("/local/:idlocal", function($idlocal) {
 	]);	
 
 });
+
+$app->get("/professor/local/:idlocal/espaco", function($idlocal) {
+
+	User::verifyLogin();
+
+	$local = new Local();
+
+	$local->get((int)$idlocal);
+
+	$page = new PageAdmin();	
+
+	$page->setTpl("espaco-local", [
+		'local'=>$local->getValues(),
+		'espacoRelated'=> $local->getEspaco(true),
+		'espacoNotRelated'=>$local->getEspaco(false)
+	]);	
+});
+
+$app->get("/professor/local/:idlocal/espaco/:idespaco/add", function($idlocal, $idespaco) {
+
+	User::verifyLogin();
+
+	$local = new Local();
+
+	$local->get((int)$idlocal);
+
+	$espaco = new Espaco();
+
+	$espaco->get((int)$idespaco);
+
+	$local->addEspaco($espaco);
+
+	header("Location: /professor/local/".$idlocal."/espaco");
+	exit;
+});
+
+$app->get("/professor/local/:idlocal/espaco/:idespaco/remove", function($idlocal, $idespaco) {
+
+	User::verifyLogin();
+
+	$local = new Local();
+
+	$local->get((int)$idlocal);
+
+	$espaco = new Espaco();
+
+	$espaco->get((int)$idespaco);
+
+	$local->removeEspaco($espaco);
+
+	header("Location: /professor/local/".$idlocal."/espaco");
+	exit;
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ?>

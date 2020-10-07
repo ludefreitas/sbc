@@ -90,7 +90,6 @@ $app->post("/professor/espaco/:idespaco", function($idespaco) {
 	exit();	
 });
 
-
 $app->get("/professor/espaco/:idespaco/horario", function($idespaco) {
 
 	User::verifyLogin();

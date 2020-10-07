@@ -51,7 +51,7 @@
         <div class="col-md-6">
             <div class="box box-success">
                 <div class="box-header with-border">
-                <h3 class="box-title">Horários do Espaço <?php echo htmlspecialchars( $espaco["nomeespaco"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h3>
+                <h3 class="box-title">Horários para <?php echo htmlspecialchars( $espaco["nomeespaco"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
@@ -60,7 +60,7 @@
                         <thead>
                             <tr>
                             <th style="width: 10px">#</th>
-                            <th>Horários da Piscina</th>
+                            <th>Horários da <?php echo htmlspecialchars( $espaco["nomeespaco"], ENT_COMPAT, 'UTF-8', FALSE ); ?></th>
                             <th style="width: 240px">&nbsp;</th>
                             </tr>
                         </thead>

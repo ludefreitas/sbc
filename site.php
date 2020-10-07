@@ -4,6 +4,8 @@ use \Sbc\Page;
 use \Sbc\Model\Turma;
 use \Sbc\Model\Espaco;
 use \Sbc\Model\Horario;
+use \Sbc\Model\Local;
+
 
 
 
@@ -30,6 +32,21 @@ $app->get("/espaco/:idespaco", function($idespaco) {
 	$page->setTpl("espaco", [
 		'espaco'=>$espaco->getValues(),
 		'horario'=>$espaco->getHorario()
+	]);	
+
+});
+
+$app->get("/local/:idlocal", function($idlocal) {
+
+	$local = new Local();
+
+	$local->get((int)$idlocal);
+
+	$page = new Page();
+
+	$page->setTpl("local", [
+		'local'=>$local->getValues(),
+		'espaco'=>$local->getEspaco()
 	]);	
 
 });
