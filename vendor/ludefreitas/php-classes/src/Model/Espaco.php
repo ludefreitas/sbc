@@ -13,7 +13,14 @@ class Espaco extends Model {
 	{
 		$sql = new Sql();
 
-		return $sql->select("SELECT * FROM tb_espaco ORDER BY nomeespaco");
+		return $sql->select("
+			SELECT * 
+			FROM tb_espaco
+			INNER JOIN tb_local
+			using(idlocal)
+			INNER JOIN tb_horario
+			using(idhorario)
+			ORDER BY nomeespaco");
 
 	}	
 	/*
@@ -36,8 +43,10 @@ class Espaco extends Model {
 	{
 		$sql = new Sql();
 
-		$results = $sql->select("CALL sp_espaco_save(:idespaco, :nomeespaco, :descespaco, :observacao, :areaespaco)", array(
+		$results = $sql->select("CALL sp_espaco_save(:idespaco, :idlocal, :idhorario, :nomeespaco, :descespaco, :observacao, :areaespaco)", array(
 			":idespaco"=>$this->getidespaco(),
+			":idlocal"=>$this->getidlocal(),
+			":idhorario"=>$this->getidhorario(),
 			":nomeespaco"=>$this->getnomeespaco(),
 			":descespaco"=>$this->getdescespaco(),
 			":observacao"=>$this->getobservacao(),
@@ -117,6 +126,8 @@ class Espaco extends Model {
 				':idespaco'=>$this->getidespaco()
 			]);
 		}
+
+		
 	}
 
 	public function addHorario(Horario $horario)

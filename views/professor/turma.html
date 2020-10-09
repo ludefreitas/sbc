@@ -26,29 +26,31 @@
               <table class="table table-striped">
                 <thead>
                   <tr>
-                    <th>Descrição da turma</th>
-                    <th>Temporada</th>
-                    <th>Modalidade</th>
-                    <th>Qtde Vagas</th>
-                    <th>Horários</th>
-                    <th>Inicio das Inscrições</th>
-                    <th>Fim das inscrições</th>
-                    <th>Inicio das Matrículas</th>
-                    <th>Fim das Matrículas</th>
+                    <th>Descrição da turma</th>                    
+                    <th>Modalidade</th>  
+                    <th>Professor</th>                  
+                    <th>Crec</th>
+                    <th>Espaço</th>
+                    <th>Início / Término / Dia Semana</th>
+                    <th>Status</th>
+                    <th >Qtde Vagas</th>
+                    <th>Número de inscitos</th>
+                    
                   </tr>
                 </thead>
-                <tbody>
+                <tbody>                  
                   {loop="$turma"}
                   <tr>
                     <td>{$value.descturma}</td>
-                    <td>{$value.temporada}</td>
-                    <td>{$value.descmodal}</td>
+                    <td>{$value.nomemodal} - {$value.descrfxetaria} - {$value.initidade} a {$value.fimidade} anos</td>
+                    <td>{$value.deslogin}</td>
+                    <td>{$value.apelidolocal}</td>
+                    <td>{$value.nomeespaco}</td>
+                    <td>{$value.horainicio} ás {$value.horatermino} - {$value.diasemana}</td>
+                    <td>{$value.desstatus}</td>
                     <td>{$value.vagas}</td>
-                    <td>{$value.horainicio} ás {$value.horatermino} - {$value.periodo}</td>
-                    <td>{$value.dtinicinscricao}</td>
-                    <td>{$value.dtterminscricao}</td>    
-                    <td>{$value.dtinicmatricula}</td>
-                    <td>{$value.dttermmatricula}</td>                                                            
+                    <td>{$value.numinscritos}</td>
+                    
                     <td>
                       <a href="/professor/turma/{$value.idturma}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
                       <a href="/professor/turma/{$value.idturma}/delete" onclick="return confirm('Deseja realmente excluir a turma de {$value.descturma} {$value.horainicio} ás {$value.horatermino} - {$value.periodo}?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>

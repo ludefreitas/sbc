@@ -38,8 +38,25 @@
             <div class="form-group">
               <label for="observacao">Observação</label>
               <input type="text" class="form-control" id="observacao" name="observacao" placeholder="Observação: quadra coberta... sala com espelho... acessível...">
-            </div>  
-              
+            </div>
+            <div class="form-group">
+              <label for="idhorario">Horário</label>
+              <select class="form-control" name="idhorario">
+              <option selected="selected">Selecione Horário</option>                          
+                <?php $counter1=-1;  if( isset($horario) && ( is_array($horario) || $horario instanceof Traversable ) && sizeof($horario) ) foreach( $horario as $key1 => $value1 ){ $counter1++; ?>
+                <option value="<?php echo htmlspecialchars( $value1["idhorario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                <?php } ?>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="idlocal">CREC</label>
+              <select class="form-control" name="idlocal"> 
+                 <option selected="selected">Selecione CREC</option>
+                  <?php $counter1=-1;  if( isset($local) && ( is_array($local) || $local instanceof Traversable ) && sizeof($local) ) foreach( $local as $key1 => $value1 ){ $counter1++; ?>
+                 <option  value="<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                  <?php } ?>
+              </select>
+            </div>                           
           </div>
           <!-- /.box-body -->
           <div class="box-footer">

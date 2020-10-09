@@ -37,7 +37,28 @@
             <div class="form-group">
               <label for="observacao">Observação</label>
               <input type="text" class="form-control" id="observacao" name="observacao" placeholder="Quadra coberta... Acessível... Salão com espelho..." value="{$espaco.observacao}">
-            </div>   
+            </div> 
+            <div class="form-group">
+                <label for="horario">Horário</label>
+                <select class="form-control" name="idhorario">
+                 
+                {loop="$horario"}
+                    <option {if="$value.idhorario === $espaco.idhorario"}selected="selected"{/if} value="{$value.idhorario}">{$value.diasemana} - {$value.horainicio} às {$value.horatermino}</option>
+                {/loop}
+                
+                </select>
+            </div> 
+            <div class="form-group">
+                <label for="local">Crec</label>
+                <select class="form-control" name="idlocal">
+                 
+                {loop="$local"}
+                    <option {if="$value.idlocal === $espaco.idlocal"}selected="selected"{/if} value="{$value.idlocal}">{$value.apelidolocal} - {$value.nomelocal}</option>
+                {/loop}
+                
+                </select>
+            </div>     
+  
             
             
         </div>          

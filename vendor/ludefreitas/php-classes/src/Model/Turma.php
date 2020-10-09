@@ -20,16 +20,23 @@ class Turma extends Model {
 			using(idmodal)
 			INNER JOIN tb_espaco d
 			using(idespaco)
-			INNER JOIN tb_turmastatus e
+			INNER JOIN tb_local e
+			using(idlocal)
+			INNER JOIN tb_turmastatus f
 			using(idturmastatus)
+			INNER JOIN tb_horario g
+			using(idhorario)
+			INNER JOIN tb_fxetaria h
+			using(idfxetaria)
+			-- INNER JOIN tb_persons h
+			-- using(iduser)
 			ORDER BY a.descturma");
 	}	
 	// esta função é usada para salvar e editar turma
 	public function save()
 	{
 		$sql = new Sql();
-		
-		$results = $sql->select("CALL sp_turma_save(:idturma, :idmodal, :idespaco, :iduser, :idturmastatus, :descturma, :vagas, :temporada, :numinicialinscritos, :dtinicinscricao, :dtterminscricao, :dtinicmatricula, :dttermmatricula)", array(
+		$results = $sql->select("CALL sp_turma_save(:idturma, :idmodal, :idespaco, :iduser, :idturmastatus, :descturma, :vagas, :numinscritos)", array(
 			":idturma"=>$this->getidturma(),
 			":idmodal"=>$this->getidmodal(),
 			":idespaco"=>$this->getidespaco(),
@@ -37,12 +44,7 @@ class Turma extends Model {
 			":idturmastatus"=>$this->getidturmastatus(),
 			":descturma"=>$this->getdescturma(),
 			":vagas"=>$this->getvagas(),
-			":temporada"=>$this->gettemporada(),
-			":numinicialinscritos"=>$this->getnuminicialinscritos(),
-			":dtinicinscricao"=>$this->getdtinicinscricao(),
-			":dtterminscricao"=>$this->getdtterminscricao(),
-			":dtinicmatricula"=>$this->getdtinicmatricula(),
-			":dttermmatricula"=>$this->getdttermmatricula()			
+			":numinscritos"=>$this->getnuminscritos(),
 		));	
 
 		$this->setData($results[0]);
@@ -62,8 +64,14 @@ class Turma extends Model {
 			using(idmodal)
 			INNER JOIN tb_espaco d
 			using(idespaco)
-			INNER JOIN tb_turmastatus e
+			INNER JOIN tb_local e
+			using(idlocal)
+			INNER JOIN tb_turmastatus f
 			using(idturmastatus)
+			INNER JOIN tb_horario g
+			using(idhorario)			
+			INNER JOIN tb_fxetaria h
+			using(idfxetaria)
 			WHERE idturma = :idturma", [
 			':idturma'=>$idturma 
 		]);

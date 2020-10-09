@@ -83,33 +83,39 @@ class Local extends Model {
 		if ($related === true) {
 
 			return $sql->select("
-				SELECT * 
-					FROM tb_espaco 
-		        	WHERE idespaco 
-			    	IN( 
-			    		SELECT a.idespaco
-						FROM tb_espaco a
-		   				INNER JOIN tb_espacolocal b 
-		           		ON a.idespaco = b.idespaco
-			    		WHERE b.idlocal = :idlocal ORDER BY a.nomeespaco
-			    	);", [
-						':idlocal'=>$this->getidlocal()
+				   SELECT * FROM tb_espaco c 
+					   INNER JOIN tb_horarioespaco d 
+					   ON c.idespaco = d.idespaco 
+					   INNER JOIN tb_horario e 
+					   ON d.idhorario = e.idhorario
+			           WHERE c.idespaco 
+				    	    IN( 
+				    		SELECT a.idespaco
+							FROM tb_espaco a
+			   				INNER JOIN tb_espacolocal b 
+			           		ON a.idespaco = b.idespaco
+				    		WHERE b.idlocal = :idlocal ORDER BY a.nomeespaco
+				    	);", [
+							':idlocal'=>$this->getidlocal()
 					]);
 
 		} else {
 
 			return $sql->select("
-				SELECT * 
-					FROM tb_espaco 
-		        	WHERE idespaco 
-			    	NOT IN( 
-			    		SELECT a.idespaco
-						FROM tb_espaco a
-		   				INNER JOIN tb_espacolocal b 
-		           		ON a.idespaco = b.idespaco
-			    		WHERE b.idlocal = :idlocal ORDER BY a.nomeespaco
-			    	);", [
-						':idlocal'=>$this->getidlocal()
+				SELECT * FROM tb_espaco c 
+					   INNER JOIN tb_horarioespaco d 
+					   ON c.idespaco = d.idespaco 
+					   INNER JOIN tb_horario e 
+					   ON d.idhorario = e.idhorario
+			           WHERE c.idespaco 
+				    	NOT IN( 
+				    		SELECT a.idespaco
+							FROM tb_espaco a
+			   				INNER JOIN tb_espacolocal b 
+			           		ON a.idespaco = b.idespaco
+				    		WHERE b.idlocal = :idlocal ORDER BY a.nomeespaco
+				    	);", [
+							':idlocal'=>$this->getidlocal()
 					]);
 		}
 	}

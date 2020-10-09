@@ -8,7 +8,6 @@ use \Sbc\Model\Local;
 use \Sbc\Model\Horario;
 use \Sbc\Model\Modalidade;
 use \Sbc\Model\TurmaStatus;
-
 use \Sbc\Model\Turma;
 
 $app->get("/professor/turma", function() {
@@ -29,9 +28,9 @@ $app->get("/professor/turma/create", function() {
 	User::verifyLogin();
 
 	$local = Local::listAll();
-	$espaco = Espaco::listAll();
+	//$espaco = Espaco::listAll();
 	$user = User::listAll();
-	$horario = Horario::listAll();
+	//$horario = Horario::listAll();
 	$modalidade = Modalidade::listAll();
 	$turmastatus = TurmaStatus::listAll();
 
@@ -39,10 +38,10 @@ $app->get("/professor/turma/create", function() {
 
 	$page->setTpl("turma-create", array(
 		'local'=>$local,
-		'horario'=>$horario,
+		//'horario'=>$horario,
 		'user'=>$user,
 		'modalidade'=>$modalidade,
-		'espaco'=>$espaco,
+		'espaco'=>Espaco::listAll(),
 		'turmastatus'=>$turmastatus
 	));
 });
@@ -89,9 +88,10 @@ $app->get("/professor/turma/:idturma", function($idturma) {
 
 	$page->setTpl("turma-update", array(
 		'turma'=>$turma->getValues(),
-		'local'=>Local::listAll(),
-		'horario'=>Horario::listAll(),
-		'user'=>User::listAll()
+		'turmastatus'=>TurmaStatus::listAll(),
+		'modalidade'=>Modalidade::listAll(),
+		'users'=>User::listAll(),
+		'espaco'=>Espaco::listAll()
 	));
 });
 

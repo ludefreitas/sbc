@@ -3,7 +3,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Editar Espaço 
+    Editar Turma 
   </h1>
 </section>
 
@@ -18,72 +18,59 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" action="/professor/espaco/{$espaco.idespaco}" method="post" enctype="multipart/form-data">
+        <form role="form" action="/professor/turma/{$turma.idturma}" method="post" enctype="multipart/form-data">
 
-          <div class="box-body">            
-          <div class="form-group">
+          <div class="box-body">    
+            <div class="form-group">
               <label for="descturma">Descrição da turma</label>
               <input type="text" class="form-control" id="descturma" name="descturma" placeholder="Descreva a turma"value="{$turma.descturma}">
             </div>
             <div class="form-group">
-              <label for="temporada">Temporada</label>
-              <input type="text" class="form-control" id="temporada" name="temporada" placeholder="Informe qual a temporada da turma" value="{$turma.temporada}">
-            </div>
+              <label for="turma">Modalidade</label>
+                <select class="form-control" name="idmodal">     
+                  {loop="$modalidade"}
+                  <option {if="$value.idmodal === $turma.idmodal"}selected="selected"{/if} value="{$value.idmodal}">{$value.nomemodal} - {$value.descrfxetaria} - {$value.initidade} a {$value.fimidade} anos</option>
+                  {/loop}                            
+                </select>
+            </div>            
             <div class="form-group">
               <label for="modalidade">Professor</label>
                 <select class="form-control" name="iduser">     
                   {loop="$users"}
-                  <option {if="$value.iduser"}selected="selected"{/if} value="{$value.iduser}">{$value.desperson}</option>
+                  <option {if="$value.iduser === $turma.iduser"}selected="selected"{/if} value="{$value.iduser}">{$value.deslogin}</option>
                   {/loop}                            
                 </select>
             </div>
             <div class="form-group">
-              <label for="modalidade">Modalidade</label>
-                <select class="form-control" name="idmodal">     
-                  {loop="$modalidade"}
-                  <option {if="$value.idmodal"}selected="selected"{/if} value="{$value.idmodal}">{$value.nomemodal}</option>
-                  {/loop}                            
-                </select>
-            </div>
-            <div class="form-group">
-              <label for="espaco">Espaço - Crec</label>
+              <label for="turma">Espaço - Crec</label>
                 <select class="form-control" name="idespaco">     
                   {loop="$espaco"}
-                  <option {if="$value.idespaco"}selected="selected"{/if} value="{$value.idespaco}">{$value.nomespaco} - {$value.apelidolocal}</option>
+                  <option {if="$value.idespaco === $turma.idespaco"}selected="selected"{/if} value="{$value.idespaco}">{$value.nomeespaco} - {$value.horainicio} às {$value.horatermino} - {$value.apelidolocal}</option>
                   {/loop}                            
                 </select>
             </div>
+
             <div class="form-group">
-              <label for="turmastatus">Status</label>
-                <select class="form-control" name="idturmastatus">     
+              <label for="turma">Status</label>
+                <select class="form-control" name="idturmastatus"> 
+
                   {loop="$turmastatus"}
-                  <option {if="$value.idturmastatus"}selected="selected"{/if} value="{$value.idturmastatus}">{$value.desstatus}</option>
+                  <option {if="$value.idturmastatus === $turma.idturmastatus"}selected="selected"{/if} value="{$value.idturmastatus}">{$value.desstatus}</option>
                   {/loop}                            
                 </select>
-            </div><div class="form-group">
+            </div>
+
+            
+           <div class="form-group">
               <label for="turma">Vagas</label>
               <input type="number" class="form-control" id="vagas" name="vagas" placeholder="Informe a quantidade de vagas" value="{$turma.vagas}">
             </div>
+
             <div class="form-group">
               <label for="turma">Nº inicial de inscritos</label>
-              <input type="number" class="form-control" id="numinicialinscritos" name="numinicialinscritos" placeholder="informe a quantidade inicial de inscritos" value="{$turma.numinicialinscritos}">
+              <input type="number" class="form-control" id="numinscritos" name="numinscritos" placeholder="informe a quantidade inicial de inscritos" value="{$turma.numinscritos}">
             </div>
-            <div class="form-group">
-              <label for="turma">Início das inscrições</label>
-              <input type="date" class="form-control" id="dtinicinscricao" name="dtinicinscricao" placeholder="Informe a data do início das inscrições">
-            </div>
-            <div class="form-group">
-              <label for="turma">Fim das inscrições</label>
-              <input type="date" class="form-control" id="dtterminscricao" name="dtterminscricao" placeholder="Informe a data do término das inscrições" value="{$turma.dtterminscricao}">
-            </div>
-            <div class="form-group">
-              <label for="turma">Início das matrículas</label>
-              <input type="date" class="form-control" id="dtinicmatricula" name="dtinicmatricula" placeholder="Informe a data do início das matrículas" value="{$turma.dtinicmatricula}">
-            </div>
-            <div class="form-group">
-              <label for="turma">Fim das matrículas</label>
-              <input type="date" class="form-control" id="dttermmatricula" name="dttermmatricula" placeholder="Informe a data do término das matrículas" value="{$turma.dttermmatricula}">
-            </div> 
+            
 
 
 

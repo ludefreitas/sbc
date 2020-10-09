@@ -24,6 +24,19 @@ class TurmaStatus extends Model {
 
 	}
 
+	public function get($idturmastatus)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_turmastatus WHERE idturmastatus = :idturmastatus", [
+			':idturmastatus'=>$idturmastatus 
+		]);
+
+		$this->setData($results[0]);
+		
+	}
+
 }
 
 ?>
