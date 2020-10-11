@@ -14,6 +14,8 @@ use \Sbc\Model\Local;
 use \Sbc\Model\Horario;
 use \Sbc\Model\Espaco;
 use \Sbc\Model\Turma;
+use \Sbc\Model\Temporada;
+
 
 
 $app = new Slim();
@@ -29,6 +31,8 @@ require_once("admin-local.php");
 require_once("admin-horario.php");
 require_once("admin-espaco.php");
 require_once("admin-turma.php");
+require_once("admin-temporada.php");
+
 
 $app->run();
 

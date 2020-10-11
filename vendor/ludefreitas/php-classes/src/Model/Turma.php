@@ -28,8 +28,15 @@ class Turma extends Model {
 			using(idhorario)
 			INNER JOIN tb_fxetaria h
 			using(idfxetaria)
-			-- INNER JOIN tb_persons h
-			-- using(iduser)
+            INNER JOIN tb_turmatemporada i            
+			using(idturma)
+            INNER JOIN tb_temporada j           
+			using(idtemporada)   
+            INNER JOIN tb_statustemporada k          
+			using(idstatustemporada)
+            -- INNER JOIN tb_persons l
+			-- using(iduser)            
+			WHERE idstatustemporada = 3
 			ORDER BY a.descturma");
 	}	
 	// esta função é usada para salvar e editar turma

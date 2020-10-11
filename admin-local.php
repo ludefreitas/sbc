@@ -104,6 +104,8 @@ $app->get("/local/:idlocal", function($idlocal) {
 
 });
 
+
+/*
 $app->get("/professor/local/:idlocal/espaco", function($idlocal) {
 
 	User::verifyLogin();
@@ -157,18 +159,6 @@ $app->get("/professor/local/:idlocal/espaco/:idespaco/remove", function($idlocal
 	exit;
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
+*/
 
 ?>

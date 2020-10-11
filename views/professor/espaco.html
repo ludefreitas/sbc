@@ -27,7 +27,8 @@
                 <thead>
                   <tr>
                     <th>Espaco</th>
-                    <th>Descrição</th>
+                    <th>Horário</th>
+                    <th>Descrição</th>                    
                     <th>Àrea(m²)</th>
                     <th>Observação</th>
                   </tr>
@@ -36,6 +37,7 @@
                   {loop="$espaco"}
                   <tr>
                     <td>{$value.nomeespaco}</td>
+                    <td>{$value.diasemana} - {$value.horainicio} ás {$value.horatermino}</td>
                     <td>{$value.descespaco}</td>
                     <td>{$value.areaespaco}</td>
                     <td>{$value.observacao}</td>                                

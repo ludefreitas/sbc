@@ -1,0 +1,67 @@
+
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Lista de Temporadas
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active"><a href="/professor/Temporada">Temporada</a></li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="row">
+  	<div class="col-md-12">
+  		<div class="box box-primary">
+            
+            <div class="box-header">
+              <a href="/professor/temporada/create" class="btn btn-success">Criar nova temporada</a>
+            </div>
+
+            <div class="box-body no-padding">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Temporada</th>
+                    <th>Status Temporada</th>
+                    <th>Data Icicio das Inscrição</th>
+                    <th>Data Fim das Inscrição</th>
+                    <th>Data Icicio das Matrícula</th>
+                    <th>Data Fim das Matrícula</th>
+                    <th style="width: 240px">&nbsp;</th>
+                  </tr>
+                </thead>
+
+
+                <tbody>
+                  {loop="$temporada"}
+                  <tr>
+                    <td>{$value.desctemporada}</td>
+                    <td>{$value.descstatustemporada}</td>
+                    <td>{$value.dtinicinscricao}</td>
+                    <td>{$value.dtterminscricao}</td>
+                    <td>{$value.dtinicmatricula}</td>
+                    <td>{$value.dttermmatricula}</td>                                
+                    <td>
+                    <a href="/professor/temporada/{$value.idtemporada}/turma" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> Turmas</a>                  
+                      <a href="/professor/temporada/{$value.idtemporada}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
+                      <a href="/professor/temporada/{$value.idtemporada}/delete" onclick="return confirm('Deseja realmente excluir temporada {$value.desctemporada}?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
+                    </td>
+                  </tr>
+                  {/loop}
+                </tbody>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+  	</div>
+  </div>
+
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

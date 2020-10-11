@@ -20,24 +20,10 @@ class Espaco extends Model {
 			using(idlocal)
 			INNER JOIN tb_horario
 			using(idhorario)
-			ORDER BY nomeespaco");
+			ORDER BY nomeespaco, diasemana, horainicio");
 
 	}	
-	/*
-	public static function listAll()
-	{
-		$sql = new Sql();
-
-		return $sql->select("SELECT * 
-			FROM tb_espaco a 
-			INNER JOIN tb_local b
-			using(idlocal)
-			INNER JOIN tb_horario c
-			using(idhorario)
-			ORDER BY a.nomeespaco");
-
-		}	  
-	*/
+	
 	// esta função é usada para salvar e editar Espaço
 	public function save()
 	{

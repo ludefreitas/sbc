@@ -266,6 +266,9 @@ desired effect
           <a href="/professor/local"><i class="fa fa-link"></i> <span>Crecs</span></a>
         </li>
         <li>
+          <a href="/professor/temporada"><i class="fa fa-link"></i> <span>Temporada</span></a>
+        </li>
+        <li>
           <a href="/professor/modalidade"><i class="fa fa-link"></i> <span>Modalidades</span></a>
         </li>
         <li>

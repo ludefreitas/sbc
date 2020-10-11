@@ -11,12 +11,17 @@ use \Sbc\Model\Local;
 
 $app->get("/", function() {
 
-	$page = new Page();
+	$turma = Turma::listAll();
+	//var_dump($turma);
+	//exit();
 
-	//$turma = new Turma::listAll();
+	$page = new Page();	
+
 
 	$page->setTpl("index", [
-		'turmas'=>Turma::checkList($turma)
+		//'turma'=>Turma::checkList($turma)
+		'turma'=>$turma
+		//'turma'=>$turma->getValues()
 	]);
 });
 

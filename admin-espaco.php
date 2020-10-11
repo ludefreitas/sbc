@@ -106,6 +106,7 @@ $app->post("/professor/espaco/:idespaco", function($idespaco) {
 	exit();	
 });
 
+/*
 $app->get("/professor/espaco/:idespaco/horario", function($idespaco) {
 
 	User::verifyLogin();
@@ -159,20 +160,8 @@ $app->get("/professor/espaco/:idespaco/horario/:idhorario/remove", function($ide
 
 	header("Location: /professor/espaco/".$idespaco."/horario");
 	exit;
-
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
+*/
 
 ?>
