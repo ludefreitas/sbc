@@ -259,7 +259,7 @@ desired effect
         <li>
           <li><a href="/professor/users"><i class="fa fa-users"></i> <span>Usuários</span></a></li>
           <li>
-          <li><a href="/professor/users"><i class="fa fa-users"></i> <span>Professores</span></a></li>
+          <li><a href="/professor/prof"><i class="fa fa-users"></i> <span>Professores</span></a></li>
         </li>
         </li>
         <li>

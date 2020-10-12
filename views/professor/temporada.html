@@ -26,6 +26,7 @@
               <table class="table table-striped">
                 <thead>
                   <tr>
+                    <th>ID</th>
                     <th>Temporada</th>
                     <th>Status Temporada</th>
                     <th>Data Icicio das Inscrição</th>
@@ -40,6 +41,7 @@
                 <tbody>
                   {loop="$temporada"}
                   <tr>
+                    <td>{$value.idstatustemporada}</td>
                     <td>{$value.desctemporada}</td>
                     <td>{$value.descstatustemporada}</td>
                     <td>{$value.dtinicinscricao}</td>

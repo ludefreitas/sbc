@@ -7,22 +7,16 @@ use \Sbc\Model\Horario;
 use \Sbc\Model\Local;
 
 
+$app->get('/', function() {
 
+	$turma = Turma::listAllTurmaTemporada();
 
-$app->get("/", function() {
-
-	$turma = Turma::listAll();
-	//var_dump($turma);
-	//exit();
-
-	$page = new Page();	
-
+	$page = new Page();
 
 	$page->setTpl("index", [
-		//'turma'=>Turma::checkList($turma)
-		'turma'=>$turma
-		//'turma'=>$turma->getValues()
+		'turma'=>Turma::checkList($turma)
 	]);
+
 });
 
 

@@ -37,7 +37,7 @@
               <label for="modalidade">Professor</label>
                 <select class="form-control" name="iduser">     
                   {loop="$users"}
-                  <option {if="$value.iduser === $turma.iduser"}selected="selected"{/if} value="{$value.iduser}">{$value.deslogin}</option>
+                  <option {if="$value.iduser === $turma.iduser"}selected="selected"{/if} value="{$value.iduser}">{$value.desperson}</option>
                   {/loop}                            
                 </select>
             </div>

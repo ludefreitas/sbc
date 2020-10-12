@@ -16,6 +16,33 @@ class Turma extends Model {
 			FROM tb_turma a 
 			INNER JOIN tb_users b
 			using(iduser)
+			INNER JOIN tb_persons i
+			using(idperson)
+			INNER JOIN tb_modalidade c
+			using(idmodal)
+			INNER JOIN tb_espaco d
+			using(idespaco)
+			INNER JOIN tb_local e
+			using(idlocal)
+			INNER JOIN tb_turmastatus f
+			using(idturmastatus)
+			INNER JOIN tb_horario g
+			using(idhorario)
+			INNER JOIN tb_fxetaria h
+			using(idfxetaria)            
+			ORDER BY a.descturma");
+	}
+
+	public static function listAllTurmaTemporada()
+	{
+		$sql = new Sql();
+
+		return $sql->select("SELECT * 
+			FROM tb_turma a 
+			INNER JOIN tb_users b
+			using(iduser)
+			INNER JOIN tb_persons l
+			using(idperson)
 			INNER JOIN tb_modalidade c
 			using(idmodal)
 			INNER JOIN tb_espaco d
@@ -34,11 +61,27 @@ class Turma extends Model {
 			using(idtemporada)   
             INNER JOIN tb_statustemporada k          
 			using(idstatustemporada)
-            -- INNER JOIN tb_persons l
-			-- using(iduser)            
-			WHERE idstatustemporada = 3
+      		WHERE idstatustemporada = 3
 			ORDER BY a.descturma");
-	}	
+	}
+
+
+	public static function checkList($list)
+	{
+
+		foreach ($list as &$row) {
+			
+			$p = new Turma();
+			$p->setData($row);
+			$row = $p->getValues();
+
+		}
+
+		return $list;
+
+	}
+
+
 	// esta função é usada para salvar e editar turma
 	public function save()
 	{

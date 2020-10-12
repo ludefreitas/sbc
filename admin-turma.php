@@ -29,7 +29,7 @@ $app->get("/professor/turma/create", function() {
 
 	$local = Local::listAll();
 	//$espaco = Espaco::listAll();
-	$user = User::listAll();
+	$user = User::listAllProf();
 	//$horario = Horario::listAll();
 	$modalidade = Modalidade::listAll();
 	$turmastatus = TurmaStatus::listAll();
@@ -90,7 +90,7 @@ $app->get("/professor/turma/:idturma", function($idturma) {
 		'turma'=>$turma->getValues(),
 		'turmastatus'=>TurmaStatus::listAll(),
 		'modalidade'=>Modalidade::listAll(),
-		'users'=>User::listAll(),
+		'users'=>User::listAllProf(),
 		'espaco'=>Espaco::listAll()
 	));
 });

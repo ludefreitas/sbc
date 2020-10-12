@@ -19,6 +19,20 @@ $app->get("/professor/users", function() {
 	));
 });
 
+$app->get("/professor/prof", function() {
+
+	User::verifyLogin();
+	// na linha abaixo retorna um array com todos os dados do usuário
+	$users = User::listAllProf();
+	// carrega uma pagina das páginas do admin
+	$page = new PageAdmin();
+
+	// envia para a página o array retornado pelo listAll
+	$page->setTpl("prof", array( // aqui temos um array com muitos arrays
+		"users"=>$users
+	));
+});
+
 $app->get("/professor/users/create", function() {
 
 	User::verifyLogin();

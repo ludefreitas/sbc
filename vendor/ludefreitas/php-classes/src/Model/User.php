@@ -78,6 +78,18 @@ class User extends Model {
 			using(idperson) 
 			ORDER BY b.desperson");
 	}
+	public static function listAllProf()
+	{
+
+		$sql = new Sql();
+
+		return $sql->select("
+			SELECT * FROM tb_users a 
+			INNER JOIN tb_persons b 
+			using(idperson) 
+			WHERE isprof = 1;
+			ORDER BY b.desperson");
+	}
 	
 	public function save()
 	{

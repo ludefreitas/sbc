@@ -43,7 +43,7 @@
             </div>
             <div class="checkbox">
               <label>
-                <input type="checkbox" name="inadmin" value="1" <?php if( $user["isprof"] == 1 ){ ?>checked<?php } ?>> Acesso de Professor
+                <input type="checkbox" name="isprof" value="1" <?php if( $user["isprof"] == 1 ){ ?>checked<?php } ?>> Acesso de Professor
               </label>
             </div>
             <div class="checkbox">

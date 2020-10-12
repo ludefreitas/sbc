@@ -20,25 +20,8 @@
         <!-- form start -->
         <form role="form" action="/professor/turma/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post" enctype="multipart/form-data">
 
-          <div class="box-body">
-
-
-
-
-
-
-            
-            
-            
-            
-            
-            
-
-
-
-
-
-          <div class="form-group">
+          <div class="box-body">    
+            <div class="form-group">
               <label for="descturma">Descrição da turma</label>
               <input type="text" class="form-control" id="descturma" name="descturma" placeholder="Descreva a turma"value="<?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
@@ -54,7 +37,7 @@
               <label for="modalidade">Professor</label>
                 <select class="form-control" name="iduser">     
                   <?php $counter1=-1;  if( isset($users) && ( is_array($users) || $users instanceof Traversable ) && sizeof($users) ) foreach( $users as $key1 => $value1 ){ $counter1++; ?>
-                  <option <?php if( $value1["iduser"] === $turma["iduser"] ){ ?>selected="selected"<?php } ?> value="<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["deslogin"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                  <option <?php if( $value1["iduser"] === $turma["iduser"] ){ ?>selected="selected"<?php } ?> value="<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
                   <?php } ?>                            
                 </select>
             </div>
