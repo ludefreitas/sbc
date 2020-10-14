@@ -40,10 +40,10 @@
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul>
-                            <li><a href="#"><i class="fa fa-user"></i> Minha Conta</a></li>
-                            <li><a href="#"><i class="fa fa-heart"></i> Minha Família</a></li>
-                            <li><a href="#"><i class="fa fa-users"></i> Minhas Inscrições</a></li>
-                            <li><a href="#"><i class="fa fa-lock"></i> Login</a></li>
+                            <li><a href="/meusdaddos"><i class="fa fa-user"></i> Minha Conta</a></li>
+                            <li><a href="/pessoas"><i class="fa fa-heart"></i> Minha Família</a></li>
+                            <li><a href="/inscricoes"><i class="fa fa-users"></i> Minhas Inscrições</a></li>
+                            <li><a href="/login"><i class="fa fa-lock"></i> Login</a></li>
                         </ul>
                     </div>
                 </div>
@@ -84,7 +84,7 @@
                 
                 <div class="col-sm-6">
                     <div class="shopping-item">
-                        <a href="carrinho.html">Minhas Mátriculas<span class="cart-amunt"></span> <i class="fa fa-user"></i> <span class="product-count">5</span></a>
+                        <a href="/inscricoes">Minhas Mátriculas<span class="cart-amunt"></span> <i class="fa fa-user"></i> <span class="product-count">5</span></a>
                     </div>
                 </div>
             </div>
@@ -104,10 +104,10 @@
                 </div> 
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
+                        <li class="active"><a href="/">Home</a></li>
                         <li><a href="#">Cursos</a></li>
                         <li><a href="#">Incsrições</a></li>
-                        <li><a href="#">Crec's</a></li>
+                        <li><a href="#">Crecs</a></li>
                         <li><a href="#">Modalidades</a></li>
                     </ul>
                 </div>  

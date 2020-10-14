@@ -19,6 +19,54 @@ $app->get('/', function() {
 
 });
 
+// TESTE 
+$app->get('/login', function() {
+
+
+	$page = new Page([
+		'header'=>false,
+		'footer'=>false
+	]);
+
+	$page->setTpl("login");
+
+});
+
+
+$app->get("/local/:idlocal", function($idlocal){
+
+	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
+
+	$local = new Turma();
+
+	$local->get((int)$idlocal);
+
+	$pagination = $local->getTurmaPage($page);
+
+	$pages = [];
+
+	$espaco->setPhoto($_FILES["file"]);
+
+	for ($i=1; $i <= $pagination['pages']; $i++) { 
+		array_push($pages, [
+			'link'=>'/local/'.$local->getidlocal().'?page='.$i,
+			'page'=>$i
+		]);
+	}
+
+	//var_dump($pagination["data"]);
+	//exit();
+	$page = new Page();
+
+	$page->setTpl("local", [
+		'local'=>$local->getValues(),
+		'turma'=>$pagination["data"],
+		'pages'=>$pages,
+		'espaco'=>$espaco
+	]);
+
+});
+
 
 $app->get("/espaco/:idespaco", function($idespaco) {
 

@@ -177,7 +177,7 @@ class Temporada extends Model {
 			]);
 		}		
 	}
-
+	
 	public function addTurma(Turma $turma)
 	{
 

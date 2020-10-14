@@ -51,7 +51,7 @@
                         </ul>                        
                     </div>
                 </div>
-                
+                <!--
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-menu">
                         <h2 class="footer-wid-title">Espaço</h2>
@@ -60,7 +60,7 @@
                         </ul>                        
                     </div>
                 </div>
-                
+                -->
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-newsletter">
                         <h2 class="footer-wid-title">Newsletter</h2>
@@ -82,7 +82,7 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="copyright">
-                        <p>&copy; 2017 Curos Esportivos SBC. <a href="http://www.cursosesportivossbc.com.br" target="_blank">cursosesportivossbc.com.br</a></p>
+                        <p>&copy; 2017 Cursos Esportivos SBC. <a href="http://www.cursosesportivossbc.com.br" target="_blank">cursosesportivossbc.com.br</a></p>
                     </div>
                 </div>
                 

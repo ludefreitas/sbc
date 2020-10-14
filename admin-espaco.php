@@ -106,6 +106,25 @@ $app->post("/professor/espaco/:idespaco", function($idespaco) {
 	exit();	
 });
 
+$app->post("/admin/espaco/:idespaco", function($idespaco){
+
+	User::verifyLogin();
+
+	$espaco = new Espaco();
+
+	$espaco->get((int)$idespaco);
+
+	$espaco->setData($_POST);
+
+	$espaco->save();
+
+	$espaco->setPhoto($_FILES["file"]);
+
+	header('Location: /admin/espaco');
+	exit;
+
+});
+
 /*
 $app->get("/professor/espaco/:idespaco/horario", function($idespaco) {
 

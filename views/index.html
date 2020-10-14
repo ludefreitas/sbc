@@ -100,9 +100,13 @@
                         <h2 class="section-title">Cursos</h2>
                         <div class="product-carousel">
                             {loop="$turma"}
+                            
                             <div class="single-product">
-                
-                                <h2><a href="#">{$value.descturma} {$value.descrfxetaria} no {$value.apelidolocal} - {$value.diasemana} das {$value.horainicio} às {$value.horatermino} com o professor: {$value.desperson} - {$value.desstatus} </a></h2>
+                                <div class="product-upper">
+                              <img src="/res/site/img/orquideas.jpg" alt="">
+                             </div>
+                                
+                                <h2><a href="#">{$value.descturma} {$value.descrfxetaria} no {$value.apelidolocal} - {$value.diasemana} das {$value.horainicio} às {$value.horatermino} com o professor(a): {$value.desperson} - Turma {$value.desstatus} </a></h2>
                                 
                                 <div class="product-carousel-price">
                                     <ins></ins>
