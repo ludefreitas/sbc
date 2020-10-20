@@ -6,7 +6,7 @@ use \Sbc\Model\User;
 use \Sbc\Model\Espaco;
 use \Sbc\Model\Local;
 use \Sbc\Model\Horario;
-use \Sbc\Model\Modalidade;
+use \Sbc\Model\Atividade;
 use \Sbc\Model\TurmaStatus;
 use \Sbc\Model\Turma;
 
@@ -31,7 +31,7 @@ $app->get("/professor/turma/create", function() {
 	//$espaco = Espaco::listAll();
 	$user = User::listAllProf();
 	//$horario = Horario::listAll();
-	$modalidade = Modalidade::listAll();
+	$atividade = Atividade::listAll();
 	$turmastatus = TurmaStatus::listAll();
 
 	$page = new PageAdmin();
@@ -40,7 +40,7 @@ $app->get("/professor/turma/create", function() {
 		'local'=>$local,
 		//'horario'=>$horario,
 		'user'=>$user,
-		'modalidade'=>$modalidade,
+		'atividade'=>$atividade,
 		'espaco'=>Espaco::listAll(),
 		'turmastatus'=>$turmastatus
 	));
@@ -89,7 +89,7 @@ $app->get("/professor/turma/:idturma", function($idturma) {
 	$page->setTpl("turma-update", array(
 		'turma'=>$turma->getValues(),
 		'turmastatus'=>TurmaStatus::listAll(),
-		'modalidade'=>Modalidade::listAll(),
+		'atividade'=>Atividade::listAll(),
 		'users'=>User::listAllProf(),
 		'espaco'=>Espaco::listAll()
 	));

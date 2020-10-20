@@ -16,12 +16,10 @@ $app->get('/', function() {
 	$page->setTpl("index", [
 		'turma'=>Turma::checkList($turma)
 	]);
-
 });
 
 // TESTE 
 $app->get('/login', function() {
-
 
 	$page = new Page([
 		'header'=>false,
@@ -29,7 +27,6 @@ $app->get('/login', function() {
 	]);
 
 	$page->setTpl("login");
-
 });
 
 
@@ -37,7 +34,7 @@ $app->get("/local/:idlocal", function($idlocal){
 
 	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
 
-	$local = new Turma();
+	$local = new Local();
 
 	$local->get((int)$idlocal);
 
@@ -45,7 +42,7 @@ $app->get("/local/:idlocal", function($idlocal){
 
 	$pages = [];
 
-	$espaco->setPhoto($_FILES["file"]);
+	//$espaco->setPhoto($_FILES["file"]);
 
 	for ($i=1; $i <= $pagination['pages']; $i++) { 
 		array_push($pages, [
@@ -53,16 +50,13 @@ $app->get("/local/:idlocal", function($idlocal){
 			'page'=>$i
 		]);
 	}
-
-	//var_dump($pagination["data"]);
-	//exit();
 	$page = new Page();
 
 	$page->setTpl("local", [
 		'local'=>$local->getValues(),
 		'turma'=>$pagination["data"],
-		'pages'=>$pages,
-		'espaco'=>$espaco
+		'pages'=>$pages
+		//'espaco'=>$espaco
 	]);
 
 });

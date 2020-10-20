@@ -32,10 +32,10 @@
             
             <div class="form-group">
               <label for="turma">Modalidade</label>
-                <select class="form-control" name="idmodal">
-                <option>Selecione a modalidade e faixa etária</option>           
-                  {loop="$modalidade"}
-                  <option value="{$value.idmodal}">{$value.nomemodal} - {$value.descrfxetaria} - {$value.initidade} a {$value.fimidade} anos</option>
+                <select class="form-control" name="idativ">
+                <option>Selecione a atividade e faixa etária</option>           
+                  {loop="$atividade"}
+                  <option value="{$value.idativ}">{$value.nomeativ} - {$value.descrfxetaria} - {$value.initidade} a {$value.fimidade} anos</option>
                   {/loop}                            
                 </select>
             </div>

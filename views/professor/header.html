@@ -256,6 +256,19 @@ desired effect
       <ul class="sidebar-menu">
         <li class="header">HEADER</li>
         <!-- Optionally, you can add icons to the links -->
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>Usuários</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="/professor/users"><i class="fa fa-users"></i>Todos Usuários</a></li>
+            <li><a href="/professor/prof"><i class="fa fa-users"></i>Professores</a></li>
+            <li><a href="#">Clientes</a></li>
+            <li><a href="#">Alunos</a></li>
+          </ul>
+        </li>
         <li>
           <li><a href="/professor/users"><i class="fa fa-users"></i> <span>Usuários</span></a></li>
           <li>
@@ -269,7 +282,7 @@ desired effect
           <a href="/professor/temporada"><i class="fa fa-link"></i> <span>Temporada</span></a>
         </li>
         <li>
-          <a href="/professor/modalidade"><i class="fa fa-link"></i> <span>Modalidades</span></a>
+          <a href="/professor/atividade"><i class="fa fa-link"></i> <span>Atividades</span></a>
         </li>
         <li>
           <a href="/professor/faixaetaria"><i class="fa fa-link"></i> <span>Faixa Etária</span></a>

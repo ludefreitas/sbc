@@ -18,8 +18,8 @@ class Turma extends Model {
 			using(iduser)
 			INNER JOIN tb_persons i
 			using(idperson)
-			INNER JOIN tb_modalidade c
-			using(idmodal)
+			INNER JOIN tb_atividade c
+			using(idativ)
 			INNER JOIN tb_espaco d
 			using(idespaco)
 			INNER JOIN tb_local e
@@ -43,8 +43,8 @@ class Turma extends Model {
 			using(iduser)
 			INNER JOIN tb_persons l
 			using(idperson)
-			INNER JOIN tb_modalidade c
-			using(idmodal)
+			INNER JOIN tb_atividade c
+			using(idativ)
 			INNER JOIN tb_espaco d
 			using(idespaco)
 			INNER JOIN tb_local e
@@ -86,9 +86,9 @@ class Turma extends Model {
 	public function save()
 	{
 		$sql = new Sql();
-		$results = $sql->select("CALL sp_turma_save(:idturma, :idmodal, :idespaco, :iduser, :idturmastatus, :descturma, :vagas, :numinscritos)", array(
+		$results = $sql->select("CALL sp_turma_save(:idturma, :idativ, :idespaco, :iduser, :idturmastatus, :descturma, :vagas, :numinscritos)", array(
 			":idturma"=>$this->getidturma(),
-			":idmodal"=>$this->getidmodal(),
+			":idativ"=>$this->getidativ(),
 			":idespaco"=>$this->getidespaco(),
 			":iduser"=>$this->getiduser(),
 			":idturmastatus"=>$this->getidturmastatus(),
@@ -110,8 +110,8 @@ class Turma extends Model {
 			FROM tb_turma a 
 			INNER JOIN tb_users b
 			using(iduser)
-			INNER JOIN tb_modalidade c
-			using(idmodal)
+			INNER JOIN tb_atividade c
+			using(idativ)
 			INNER JOIN tb_espaco d
 			using(idespaco)
 			INNER JOIN tb_local e
@@ -152,7 +152,7 @@ class Turma extends Model {
 		}
 		file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."turma-menu.html", implode('', $html));
 	}
-
+	/*
 	public function getTurmaPage($page = 1, $itemsPerPage = 3)
 	{
 
@@ -162,18 +162,18 @@ class Turma extends Model {
 
 		$results = $sql->select("
 
-			SELECT SQL_CALC_FOUND_ROWS *
+			SELECT *
 			FROM tb_turma a
 			INNER JOIN tb_turmatemporada b ON a.idturma = b.idturma
-            INNER JOIN tb_espaco c ON a.idespaco = c.idespaco
+            INNER JOIN tb_espaco c ON c.idespaco = a.idespaco
             INNER JOIN tb_horario d ON c.idhorario = d.idhorario
-            INNER JOIN tb_modalidade e ON a.idmodal = e.idmodal
+            INNER JOIN tb_atividade e ON a.idativ = e.idativ
             INNER JOIN tb_fxetaria f ON e.idfxetaria = f.idfxetaria
 			INNER JOIN tb_users g ON a.iduser = g.iduser
 			INNER JOIN tb_persons h ON g.idperson = h.idperson
             INNER JOIN tb_espaco i ON a.idespaco = i.idespaco
-			INNER JOIN tb_local j ON c.idlocal = j.idlocal
-			WHERE c.idlocal = :idlocal
+			INNER JOIN tb_local j ON j.idlocal = c.idlocal
+			WHERE j.idlocal = :idlocal
 			LIMIT $start, $itemsPerPage;
 			
 		", [
@@ -188,6 +188,7 @@ class Turma extends Model {
 			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
 		];
 	}
+	*/
 }
 
 ?>

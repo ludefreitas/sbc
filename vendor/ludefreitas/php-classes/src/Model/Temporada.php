@@ -29,8 +29,8 @@ class Temporada extends Model {
 			FROM tb_turma a 
 			INNER JOIN tb_users b
 			using(iduser)
-			INNER JOIN tb_modalidade c
-			using(idmodal)
+			INNER JOIN tb_atividade c
+			using(idativ)
 			INNER JOIN tb_espaco d
 			using(idespaco)
 			INNER JOIN tb_local e
@@ -132,8 +132,8 @@ class Temporada extends Model {
 
 			return $sql->select("
 				SELECT * FROM tb_turma
-				INNER JOIN tb_modalidade 
-				using(idmodal)
+				INNER JOIN tb_atividade 
+				using(idativ)
                 INNER JOIN tb_espaco 
 				using(idespaco)
                 INNER JOIN tb_users 
@@ -156,8 +156,8 @@ class Temporada extends Model {
 
 			return $sql->select("
 				SELECT * FROM tb_turma
-				INNER JOIN tb_modalidade 
-				using(idmodal)
+				INNER JOIN tb_atividade 
+				using(idativ)
                 INNER JOIN tb_espaco 
 				using(idespaco)
                 INNER JOIN tb_users 

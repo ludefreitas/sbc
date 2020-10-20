@@ -61,8 +61,9 @@
 			</div>
         -->
 			<!-- ./Slider -->
+
     </div> <!-- End slider area -->
-    
+    <!--
     <div class="promo-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
@@ -89,7 +90,7 @@
                 </div>
             </div>
         </div>
-    </div> <!-- End promo area -->
+    </div>  End promo area -->
     
     <div class="maincontent-area">
         <div class="zigzag-bottom"></div>

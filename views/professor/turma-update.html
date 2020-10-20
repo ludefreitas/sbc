@@ -27,14 +27,14 @@
             </div>
             <div class="form-group">
               <label for="turma">Modalidade</label>
-                <select class="form-control" name="idmodal">     
-                  {loop="$modalidade"}
-                  <option {if="$value.idmodal === $turma.idmodal"}selected="selected"{/if} value="{$value.idmodal}">{$value.nomemodal} - {$value.descrfxetaria} - {$value.initidade} a {$value.fimidade} anos</option>
+                <select class="form-control" name="idativ">     
+                  {loop="$atividade"}
+                  <option {if="$value.idativ === $turma.idativ"}selected="selected"{/if} value="{$value.idativ}">{$value.nomeativ} - {$value.descrfxetaria} - {$value.initidade} a {$value.fimidade} anos</option>
                   {/loop}                            
                 </select>
             </div>            
             <div class="form-group">
-              <label for="modalidade">Professor</label>
+              <label for="atividade">Professor</label>
                 <select class="form-control" name="iduser">     
                   {loop="$users"}
                   <option {if="$value.iduser === $turma.iduser"}selected="selected"{/if} value="{$value.iduser}">{$value.desperson}</option>
