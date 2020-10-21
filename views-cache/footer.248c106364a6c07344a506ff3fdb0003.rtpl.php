@@ -36,9 +36,9 @@
                 -->
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-menu">
-                        <h2 class="footer-wid-title">Modalidades</h2>
+                        <h2 class="footer-wid-title">Atividades</h2>
                         <ul>
-                            <?php require $this->checkTemplate("modalidade-menu");?>                            
+                            <?php require $this->checkTemplate("atividade-menu");?>                            
                         </ul>                        
                     </div>
                 </div>

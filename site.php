@@ -5,6 +5,8 @@ use \Sbc\Model\Turma;
 use \Sbc\Model\Espaco;
 use \Sbc\Model\Horario;
 use \Sbc\Model\Local;
+use \Sbc\Model\Atividade;
+
 
 
 $app->get('/', function() {
@@ -89,6 +91,25 @@ $app->get("/local/:idlocal", function($idlocal) {
 		'local'=>$local->getValues(),
 		'espaco'=>$local->getEspaco()
 	]);	
+
+});
+
+$app->get("/atividade/:idativ", function($idativ){
+
+	$atividade = new Atividade();
+
+	$atividade->getFromId($idativ);
+
+	//var_dump($atividade);
+	//exit();
+
+	$page = new Page();
+
+	$page->setTpl("atividade-detail", [
+		'atividade'=>$atividade->getValues(),
+		// Implementar método
+		//'local'=>$atividade->getLocal()
+	]);
 
 });
 
