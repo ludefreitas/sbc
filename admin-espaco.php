@@ -18,7 +18,7 @@ $app->get("/professor/espaco", function() {
 	$page = new PageAdmin();
 
 	$page->setTpl("espaco", array(
-		'espaco'=>$espaco
+		'espaco'=>Espaco::checkList($espaco)
 	));
 });
 

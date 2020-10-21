@@ -107,6 +107,8 @@ $app->post("/professor/turma/:idturma", function($idturma) {
 
 	$turma->save();
 
+	$turma->setPhoto($_FILES["file"]);
+
 	header("Location: /professor/turma");
 	exit();	
 });

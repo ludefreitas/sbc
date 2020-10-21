@@ -16,6 +16,21 @@ class Horario extends Model {
 		return $sql->select("SELECT * FROM tb_horario ORDER BY diasemana, horainicio, horatermino");
 	}	
 
+	public static function checkList($list)
+	{
+
+		foreach ($list as &$row) {
+			
+			$p = new Horario();
+			$p->setData($row);
+			$row = $p->getValues();
+
+		}
+
+		return $list;
+
+	}
+
 	// esta função é usada para salvar e editar Horario
 	public function save()
 	{

@@ -15,7 +15,7 @@ $app->get("/professor/atividade", function() {
 	$page = new PageAdmin();
 
 	$page->setTpl("atividade", array(
-		'atividade'=>$atividade
+		'atividade'=>Atividade::checkList($atividade)
 	));
 });
 

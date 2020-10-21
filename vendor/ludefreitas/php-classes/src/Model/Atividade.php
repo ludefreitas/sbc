@@ -20,6 +20,21 @@ class Atividade extends Model {
 			ORDER BY a.nomeativ");
 
 		}	
+
+		public static function checkList($list)
+	{
+
+		foreach ($list as &$row) {
+			
+			$p = new Atividade();
+			$p->setData($row);
+			$row = $p->getValues();
+
+		}
+
+		return $list;
+
+	}
 	// esta função é usada para salvar e editar Atividade
 	public function save()
 	{

@@ -14,7 +14,7 @@
   	<div class="col-md-12">
   		<div class="box box-primary">
         <div class="box-header with-border">
-          <h3 class="box-title">Editar Espaço </h3>
+          <h3 class="box-title">Editar Turma </h3>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
@@ -27,14 +27,14 @@
             </div>
             <div class="form-group">
               <label for="turma">Modalidade</label>
-                <select class="form-control" name="idmodal">     
-                  <?php $counter1=-1;  if( isset($modalidade) && ( is_array($modalidade) || $modalidade instanceof Traversable ) && sizeof($modalidade) ) foreach( $modalidade as $key1 => $value1 ){ $counter1++; ?>
-                  <option <?php if( $value1["idmodal"] === $turma["idmodal"] ){ ?>selected="selected"<?php } ?> value="<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["nomemodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["descrfxetaria"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> a <?php echo htmlspecialchars( $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> anos</option>
+                <select class="form-control" name="idativ">     
+                  <?php $counter1=-1;  if( isset($atividade) && ( is_array($atividade) || $atividade instanceof Traversable ) && sizeof($atividade) ) foreach( $atividade as $key1 => $value1 ){ $counter1++; ?>
+                  <option <?php if( $value1["idativ"] === $turma["idativ"] ){ ?>selected="selected"<?php } ?> value="<?php echo htmlspecialchars( $value1["idativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["nomeativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["descrfxetaria"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> a <?php echo htmlspecialchars( $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> anos</option>
                   <?php } ?>                            
                 </select>
             </div>            
             <div class="form-group">
-              <label for="modalidade">Professor</label>
+              <label for="atividade">Professor</label>
                 <select class="form-control" name="iduser">     
                   <?php $counter1=-1;  if( isset($users) && ( is_array($users) || $users instanceof Traversable ) && sizeof($users) ) foreach( $users as $key1 => $value1 ){ $counter1++; ?>
                   <option <?php if( $value1["iduser"] === $turma["iduser"] ){ ?>selected="selected"<?php } ?> value="<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
@@ -70,6 +70,15 @@
               <label for="turma">Nº inicial de inscritos</label>
               <input type="number" class="form-control" id="numinscritos" name="numinscritos" placeholder="informe a quantidade inicial de inscritos" value="<?php echo htmlspecialchars( $turma["numinscritos"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
+            <div class="form-group">
+              <label for="file">Foto</label>
+              <input type="file" class="form-control" id="file" name="file" value="<?php echo htmlspecialchars( $turma["desphoto"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+              <div class="box box-widget">
+                <div class="box-body">
+                  <img class="img-responsive" id="image-preview" src="<?php echo htmlspecialchars( $turma["desphoto"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" alt="Photo">
+                </div>
+              </div>
+            </div>   
             
 
 

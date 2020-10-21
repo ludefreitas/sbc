@@ -23,6 +23,21 @@ class Espaco extends Model {
 			ORDER BY nomeespaco, diasemana, horainicio");
 
 	}	
+
+	public static function checkList($list)
+	{
+
+		foreach ($list as &$row) {
+			
+			$p = new Espaco();
+			$p->setData($row);
+			$row = $p->getValues();
+
+		}
+
+		return $list;
+
+	}
 	
 	// esta função é usada para salvar e editar Espaço
 	public function save()
@@ -139,7 +154,7 @@ class Espaco extends Model {
 		]);
 
 	}
-
+	
 	public function checkPhoto()
 	{
 
@@ -163,7 +178,7 @@ class Espaco extends Model {
 		return $this->setdesphoto($url);
 
 	}
-
+	
 	public function getValues()
 	{
 

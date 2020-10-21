@@ -7,8 +7,6 @@ use \Sbc\Model\Horario;
 use \Sbc\Model\Local;
 use \Sbc\Model\Atividade;
 
-
-
 $app->get('/', function() {
 
 	$turma = Turma::listAllTurmaTemporada();
@@ -45,6 +43,7 @@ $app->get("/local/:idlocal", function($idlocal){
 	$pages = [];
 
 	//$espaco->setPhoto($_FILES["file"]);
+
 
 	for ($i=1; $i <= $pagination['pages']; $i++) { 
 		array_push($pages, [

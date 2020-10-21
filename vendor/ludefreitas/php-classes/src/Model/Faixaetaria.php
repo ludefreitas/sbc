@@ -16,6 +16,21 @@ class Faixaetaria extends Model {
 		return $sql->select("SELECT * FROM tb_fxetaria ORDER BY initidade, fimidade");
 	}	
 
+	public static function checkList($list)
+	{
+
+		foreach ($list as &$row) {
+			
+			$p = new Faixaetaria();
+			$p->setData($row);
+			$row = $p->getValues();
+
+		}
+
+		return $list;
+
+	}
+
 	// esta função é usada para salvar e editar faixa etaria
 	public function save()
 	{

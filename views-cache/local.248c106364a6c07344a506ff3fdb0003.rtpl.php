@@ -20,7 +20,7 @@
             <div class="col-md-3 col-sm-6">
                 <div class="single-shop-product">
                     <div class="product-upper">
-                        <img src="/res/site/img/orquideas.jpg" alt="">
+                            <img class="img-responsive" id="image-preview" src="<?php echo htmlspecialchars( $value1["desphoto"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" alt="Photo">
                     </div>
                     <h2><a href="/atividade/<?php echo htmlspecialchars( $value1["idativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
 

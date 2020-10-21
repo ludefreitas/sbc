@@ -14,7 +14,7 @@
   	<div class="col-md-12">
   		<div class="box box-primary">
         <div class="box-header with-border">
-          <h3 class="box-title">Editar Espaço </h3>
+          <h3 class="box-title">Editar Turma </h3>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
@@ -70,6 +70,15 @@
               <label for="turma">Nº inicial de inscritos</label>
               <input type="number" class="form-control" id="numinscritos" name="numinscritos" placeholder="informe a quantidade inicial de inscritos" value="{$turma.numinscritos}">
             </div>
+            <div class="form-group">
+              <label for="file">Foto</label>
+              <input type="file" class="form-control" id="file" name="file" value="{$turma.desphoto}">
+              <div class="box box-widget">
+                <div class="box-body">
+                  <img class="img-responsive" id="image-preview" src="{$turma.desphoto}" alt="Photo">
+                </div>
+              </div>
+            </div>   
             
 
 
