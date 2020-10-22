@@ -5,7 +5,13 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-about-us">
                         <h2>Cursos Esportivos SBC</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus vero quam laborum quas alias dolores blanditiis iusto consequatur, modi aliquid eveniet eligendi iure eaque ipsam iste, pariatur omnis sint! Suscipit, debitis, quisquam. Laborum commodi veritatis magni at?</p>
+                            <p>
+                                O Programa “Hora do Treino” oferece cursos de iniciação esportiva, direcionados às crianças e adolescentes, com idade entre 7 e 17 anos, e compreende a iniciação esportiva nas modalidades de futsal, vôlei, basquete, handebol, judô, karatê, badminton entre outros.
+
+                                Para o público adulto, a partir dos 18 anos de idade, as atividades desenvolvidas através do Programa “Corpo em Ação” compreendem a ginástica, dança, alongamento, yoga, tai chi chuan, pilates, zumba, ritmos, entre outras atividades para adultos e idosos.
+
+                                Elogiado pela comunidade, o PELC - Programa Esporte e Lazer da Cidade, também estará presente nos Centros Esportivos da cidade, oferecendo diferentes oficinas relacionadas tanto à prática de atividade física quanto atividades relacionadas aos demais conteúdos do lazer, tais como artesanato, dança, capoeira, dentre outros.
+                            </p>
                         <div class="footer-social">
                             <a href="https://www.facebook.com/hcodebr" target="_blank"><i class="fa fa-facebook"></i></a>
                             <a href="https://twitter.com/hcodebr" target="_blank"><i class="fa fa-twitter"></i></a>

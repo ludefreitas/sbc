@@ -112,5 +112,25 @@ $app->get("/atividade/:idativ", function($idativ){
 
 });
 
+$app->get("/turma/:idturma", function($idturma){
+
+	$turma = new Turma();
+
+	$turma->getFromId($idturma);
+
+	//var_dump($turma);
+	//exit();
+
+	$page = new Page();
+
+	$page->setTpl("turma-detail", [
+		'turma'=>$turma->getValues(),
+		// Implementar método
+		//'local'=>$turma->getLocal()
+	]);
+
+});
+
+
 
 ?>

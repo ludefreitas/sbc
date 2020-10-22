@@ -263,6 +263,44 @@ class Turma extends Model {
 
 	}
 
+	public function getFromId($idturma)
+	{
+
+		$sql = new Sql();
+
+		$rows = $sql->select(
+			"SELECT * FROM tb_turma 
+			INNER JOIN 	tb_users USING(iduser)
+			INNER JOIN 	tb_persons USING(idperson)	
+			INNER JOIN tb_atividade USING(idativ) 
+			INNER JOIN tb_fxetaria USING(idfxetaria)
+			INNER JOIN tb_espaco USING(idespaco) 
+			INNER JOIN tb_horario USING(idhorario) 
+			INNER JOIN tb_local USING(idlocal) 
+			WHERE idturma = :idturma LIMIT 1", [
+			':idturma'=>$idturma
+		]);
+
+		$this->setData($rows[0]);
+
+	}
+
+	public function getLocal()
+	{
+		$sql = new Sql();
+
+		return $sql->select("
+			SELECT * FROM tb_local a 
+			INNER JOIN tb_espaco b ON a.idlocal = b.idlocal 
+			INNER JOIN tb_turma c ON b.idespaco = c.idespaco 
+			INNER JOIN tb_atividade d ON c.idativ = d.idativ 
+ 			WHERE b.idturma = :idturma
+		", [
+			':idturma'=>$this->getidturma()
+		]);
+
+	}
+
 }
 
 ?>

@@ -21,10 +21,12 @@
                     </div>
                     
                     <div class="row">
+                       
+
                         <div class="col-sm-6">
                             <div class="atividade-images">
                                 <div class="atividade-main-img">
-                                    <img src="">
+                                    <img src="<?php echo htmlspecialchars( $atividade["desphoto"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                                 </div>
                             </div>
                         </div>
