@@ -3,9 +3,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Admin Cursos SBC
-        <small>Olá seja Bem vindo!</small>
+        Administração dos Cursos Esportivos SBC </br>
       </h1>
+      <h3>
+        Olá! <?php echo htmlspecialchars( $user["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, seja Bem vindo!
+      </h3>
       <ol class="breadcrumb">
         <li><a href="/professor"><i class="fa fa-dashboard"></i> Level</a></li>
         <li class="active">Here</li>

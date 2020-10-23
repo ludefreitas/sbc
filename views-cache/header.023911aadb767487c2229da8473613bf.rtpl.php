@@ -58,7 +58,7 @@ desired effect
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="/" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>LT</span>
       <!-- logo for regular state and mobile devices -->
@@ -82,7 +82,7 @@ desired effect
               <span class="label label-success">4</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">You have 4 messages</li>
+              <li class="header">Você tem 4 menssagens</li>
               <li>
                 <!-- inner menu: contains the messages -->
                 <ul class="menu">
@@ -90,11 +90,11 @@ desired effect
                     <a href="#">
                       <div class="pull-left">
                         <!-- User Image -->
-                        <img src="/res/admin/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                        <img src="/res/admin/dist/img/user9-160x120.jpg" class="img-circle" alt="User Image">
                       </div>
                       <!-- Message title and timestamp -->
                       <h4>
-                        Support Team
+                        Equipe de suporte
                         <small><i class="fa fa-clock-o"></i> 5 mins</small>
                       </h4>
                       <!-- The message -->
@@ -105,7 +105,7 @@ desired effect
                 </ul>
                 <!-- /.menu -->
               </li>
-              <li class="footer"><a href="#">See All Messages</a></li>
+              <li class="footer"><a href="#">Todas mensagens</a></li>
             </ul>
           </li>
           <!-- /.messages-menu -->
@@ -118,19 +118,19 @@ desired effect
               <span class="label label-warning">10</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">You have 10 notifications</li>
+              <li class="header">Você tem 10 notificações</li>
               <li>
                 <!-- Inner Menu: contains the notifications -->
                 <ul class="menu">
                   <li><!-- start notification -->
                     <a href="#">
-                      <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                      <i class="fa fa-users text-aqua"></i> 05 membros online agora
                     </a>
                   </li>
                   <!-- end notification -->
                 </ul>
               </li>
-              <li class="footer"><a href="#">View all</a></li>
+              <li class="footer"><a href="#">Ver todos</a></li>
             </ul>
           </li>
           <!-- Tasks Menu -->
@@ -141,7 +141,7 @@ desired effect
               <span class="label label-danger">9</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">You have 9 tasks</li>
+              <li class="header">Você tem 9 tarefas/li>
               <li>
                 <!-- Inner menu: contains the tasks -->
                 <ul class="menu">
@@ -149,7 +149,7 @@ desired effect
                     <a href="#">
                       <!-- Task title and progress text -->
                       <h3>
-                        Design some buttons
+                        Progresso
                         <small class="pull-right">20%</small>
                       </h3>
                       <!-- The progress bar -->
@@ -165,7 +165,7 @@ desired effect
                 </ul>
               </li>
               <li class="footer">
-                <a href="#">View all tasks</a>
+                <a href="#">Todas tarefas</a>
               </li>
             </ul>
           </li>
@@ -174,31 +174,31 @@ desired effect
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
-              <img src="/res/admin/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+              <img src="/res/admin/dist/img/user9-160x120.jpg" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs"><?php echo htmlspecialchars( $user["deslogin"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
+              <span class="hidden-xs"><?php echo htmlspecialchars( $user["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
               <li class="user-header">
-                <img src="/res/admin/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="/res/admin/dist/img/user9-160x120.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  <?php echo htmlspecialchars( $user["deslogin"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - Web Developer
-                  <small>Member since Nov. 2012</small>
+                  <?php echo htmlspecialchars( $user["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - Web Developer
+                  <small>Membro desde Set. 2020</small>
                 </p>
               </li>
               <!-- Menu Body -->
               <li class="user-body">
                 <div class="row">
                   <div class="col-xs-4 text-center">
-                    <a href="#">Followers</a>
+                    <a href="#">Seguidores</a>
                   </div>
                   <div class="col-xs-4 text-center">
-                    <a href="#">Sales</a>
+                    <a href="#">Meus alunos</a>
                   </div>
                   <div class="col-xs-4 text-center">
-                    <a href="#">Friends</a>
+                    <a href="#">Minhas Turmas</a>
                   </div>
                 </div>
                 <!-- /.row -->
@@ -206,7 +206,7 @@ desired effect
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">adminile</a>
+                  <a href="/" class="btn btn-default btn-flat">Site</a>
                 </div>
                 <div class="pull-right">
                   <a href="/professor/logout" class="btn btn-default btn-flat">Sair</a>
@@ -231,10 +231,10 @@ desired effect
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="/res/admin/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img src="/res/admin/dist/img/user9-160x120.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p><?php echo htmlspecialchars( $user["deslogin"], ENT_COMPAT, 'UTF-8', FALSE ); ?></p>
+          <p><?php echo htmlspecialchars( $user["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></p>
           <!-- Status -->
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
@@ -254,10 +254,10 @@ desired effect
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu">
-        <li class="header">HEADER</li>
+        <li class="header">LISTAR / CRIAR / EDITAR </li>
         <!-- Optionally, you can add icons to the links -->
         <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Usuários</span>
+          <a href="#"><i class="fa fa-users"></i> <span>Usuários</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -265,37 +265,42 @@ desired effect
           <ul class="treeview-menu">
             <li><a href="/professor/users"><i class="fa fa-users"></i>Todos Usuários</a></li>
             <li><a href="/professor/prof"><i class="fa fa-users"></i>Professores</a></li>
-            <li><a href="#">Clientes</a></li>
-            <li><a href="#">Alunos</a></li>
+            <li><a href="#"><i class="fa fa-users"></i>Clientes</a></li>
+            <li><a href="#"><i class="fa fa-users"></i>Alunos</a></li>
           </ul>
-        </li>
+        </li> 
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>Temporada</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="/professor"><i class="fa fa-link"></i> <span>2020</span></a></li> 
+            <li><a href="/professor/temporada"><i class="fa fa-link"></i> <span>2021</span></a></li> 
+          </ul>
+        </li>       
+        
         <li>
-          <li><a href="/professor/users"><i class="fa fa-users"></i> <span>Usuários</span></a></li>
-          <li>
-          <li><a href="/professor/prof"><i class="fa fa-users"></i> <span>Professores</span></a></li>
-        </li>
+          <a href="/professor/turma"><i class="fa fa-link"></i> <span>Turmas</span></a>
+        </li>              
+        <li>
+          <a href="/professor/atividade"><i class="fa fa-link"></i> <span>Atividades</span></a>
         </li>
         <li>
           <a href="/professor/local"><i class="fa fa-link"></i> <span>Crecs</span></a>
         </li>
         <li>
-          <a href="/professor/temporada"><i class="fa fa-link"></i> <span>Temporada</span></a>
-        </li>
-        <li>
-          <a href="/professor/atividade"><i class="fa fa-link"></i> <span>Atividades</span></a>
-        </li>
+          <a href="/professor/espaco"><i class="fa fa-link"></i> <span>Espaços</span></a>
+        </li>  
         <li>
           <a href="/professor/faixaetaria"><i class="fa fa-link"></i> <span>Faixa Etária</span></a>
         </li>
         <li>
           <a href="/professor/horario"><i class="fa fa-link"></i> <span>Horários</span></a>
         </li>
-                <li>
-          <a href="/professor/espaco"><i class="fa fa-link"></i> <span>Espaços</span></a>
-        </li>  
-        <li>
-          <a href="/professor/turma"><i class="fa fa-link"></i> <span>Turmas</span></a>
-        </li>              
+        
+        
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
             <span class="pull-right-container">

@@ -9,13 +9,45 @@ $app->get("/professor/users", function() {
 
 	User::verifyLogin();
 	// na linha abaixo retorna um array com todos os dados do usuário
-	$users = User::listAll();
+
+	$search = (isset($_GET['search'])) ? $_GET['search'] : "";
+
+	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
+
+	if ($search != '') {
+
+		$pagination = User::getPageSearch($search, $page);
+
+	} else {
+
+		$pagination = User::getPage($page);
+
+	}
+
+	$pages = [];
+
+	for ($x = 0; $x < $pagination['pages']; $x++)
+	{
+
+		array_push($pages, [
+			'href'=>'/professor/users?'.http_build_query([
+				'page'=>$x+1,
+				'search'=>$search
+			]),
+			'text'=>$x+1
+		]);
+
+	}
+
+	//$users = User::listAll();
 	// carrega uma pagina das páginas do admin
 	$page = new PageAdmin();
 
 	// envia para a página o array retornado pelo listAll
 	$page->setTpl("users", array( // aqui temos um array com muitos arrays
-		"users"=>$users
+		"users"=>$pagination['data'],
+		"search"=>$search,
+		"pages"=>$pages
 	));
 });
 

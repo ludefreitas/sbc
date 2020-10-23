@@ -16,8 +16,6 @@
             <div class="col-md-12">
                 <div class="turma-content-right">
                     <div class="turma-breadcroumb">
-                        <a href="/">Home</a>  /
-                        <a href=""><?php echo htmlspecialchars( $turma["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a>
                     </div>
                     
                     <div class="row">

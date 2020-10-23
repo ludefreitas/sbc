@@ -16,19 +16,19 @@ class Turma extends Model {
 			FROM tb_turma a 
 			INNER JOIN tb_users b
 			using(iduser)
-			INNER JOIN tb_persons i
+			INNER JOIN tb_persons c
 			using(idperson)
-			INNER JOIN tb_atividade c
+			INNER JOIN tb_atividade d
 			using(idativ)
-			INNER JOIN tb_espaco d
+			INNER JOIN tb_espaco e
 			using(idespaco)
-			INNER JOIN tb_local e
+			INNER JOIN tb_local f
 			using(idlocal)
-			INNER JOIN tb_turmastatus f
+			INNER JOIN tb_turmastatus g
 			using(idturmastatus)
-			INNER JOIN tb_horario g
+			INNER JOIN tb_horario h
 			using(idhorario)
-			INNER JOIN tb_fxetaria h
+			INNER JOIN tb_fxetaria i
 			using(idfxetaria)            
 			ORDER BY a.descturma");
 	}
@@ -41,25 +41,25 @@ class Turma extends Model {
 			FROM tb_turma a 
 			INNER JOIN tb_users b
 			using(iduser)
-			INNER JOIN tb_persons l
+			INNER JOIN tb_persons c
 			using(idperson)
-			INNER JOIN tb_atividade c
+			INNER JOIN tb_atividade d
 			using(idativ)
-			INNER JOIN tb_espaco d
+			INNER JOIN tb_espaco e
 			using(idespaco)
-			INNER JOIN tb_local e
+			INNER JOIN tb_local f
 			using(idlocal)
-			INNER JOIN tb_turmastatus f
+			INNER JOIN tb_turmastatus g
 			using(idturmastatus)
-			INNER JOIN tb_horario g
+			INNER JOIN tb_horario h
 			using(idhorario)
-			INNER JOIN tb_fxetaria h
+			INNER JOIN tb_fxetaria i
 			using(idfxetaria)
-            INNER JOIN tb_turmatemporada i            
+            INNER JOIN tb_turmatemporada j            
 			using(idturma)
-            INNER JOIN tb_temporada j           
+            INNER JOIN tb_temporada k          
 			using(idtemporada)   
-            INNER JOIN tb_statustemporada k          
+            INNER JOIN tb_statustemporada l          
 			using(idstatustemporada)
       		WHERE idstatustemporada = 3
 			ORDER BY a.descturma");
@@ -298,6 +298,98 @@ class Turma extends Model {
 		", [
 			':idturma'=>$this->getidturma()
 		]);
+
+	}
+
+	public static function getPage($page = 1, $itemsPerPage = 5)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_turma a 
+			INNER JOIN tb_users b
+			using(iduser)
+			INNER JOIN tb_persons c
+			using(idperson)
+			INNER JOIN tb_atividade d
+			using(idativ)
+			INNER JOIN tb_espaco e
+			using(idespaco)
+			INNER JOIN tb_local f
+			using(idlocal)
+			INNER JOIN tb_turmastatus g
+			using(idturmastatus)
+			INNER JOIN tb_horario h
+			using(idhorario)
+			INNER JOIN tb_fxetaria i
+			using(idfxetaria)            
+			ORDER BY a.descturma
+			LIMIT $start, $itemsPerPage;
+		");
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+
+	public static function getPageSearch($search, $page = 1, $itemsPerPage = 5)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_turma a 
+			INNER JOIN tb_users b
+			using(iduser)
+			INNER JOIN tb_persons c
+			using(idperson)
+			INNER JOIN tb_atividade d
+			using(idativ)
+			INNER JOIN tb_espaco e
+			using(idespaco)
+			INNER JOIN tb_local f
+			using(idlocal)
+			INNER JOIN tb_turmastatus g
+			using(idturmastatus)
+			INNER JOIN tb_horario h
+			using(idhorario)
+			INNER JOIN tb_fxetaria i
+			using(idfxetaria)            
+			WHERE a.descturma LIKE :search 
+			OR b.deslogin LIKE :search
+			OR c.desperson LIKE :search
+			OR d.descativ LIKE :search
+			OR e.nomeespaco LIKE :search
+			OR f.apelidolocal LIKE :search
+			OR g.desstatus LIKE :search
+			OR h.horainicio LIKE :search
+			OR h.periodo LIKE :search
+			OR i.descrfxetaria LIKE :search							
+			ORDER BY a.descturma
+			LIMIT $start, $itemsPerPage;
+		", [
+			':search'=>'%'.$search.'%'
+		]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
 
 	}
 

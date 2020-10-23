@@ -40,9 +40,9 @@
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul>
-                            <li><a href="/meusdaddos"><i class="fa fa-user"></i> Minha Conta</a></li>
-                            <li><a href="/pessoas"><i class="fa fa-heart"></i> Minha Família</a></li>
-                            <li><a href="/inscricoes"><i class="fa fa-users"></i> Minhas Inscrições</a></li>
+                            <li><a href="/"><i class="fa fa-user"></i> Minha Conta</a></li>
+                            <li><a href="/"><i class="fa fa-heart"></i> Minha Família</a></li>
+                            <li><a href="/"><i class="fa fa-users"></i> Minhas Inscrições</a></li>
                             <li><a href="/login"><i class="fa fa-lock"></i> Login</a></li>
                         </ul>
                     </div>
