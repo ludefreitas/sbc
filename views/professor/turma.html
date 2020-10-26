@@ -40,7 +40,7 @@
                 <thead>
                   <tr>
                     <th>Descrição da turma</th>                    
-                    <th>Modalidade</th>  
+                    <th>Faixa Etária</th>  
                     <th>Professor</th>                  
                     <th>Crec</th>
                     <th>Espaço</th>
@@ -54,12 +54,12 @@
                 <tbody>                  
                   {loop="$turma"}
                   <tr>
-                    <td>{$value.descturma}</td>
-                    <td>{$value.descrfxetaria} - {$value.initidade} a {$value.fimidade} anos</td>
+                    <td>{$value.descturma}</br>{$value.desctemporada}</td>
+                    <td>{$value.descrfxetaria} </br> {$value.initidade} a {$value.fimidade} anos</td>
                     <td>{$value.desperson}</td>
                     <td>{$value.apelidolocal}</td>
                     <td>{$value.nomeespaco}</td>
-                    <td> {$value.periodo} - {$value.horainicio} ás {$value.horatermino} - {$value.diasemana}</td>
+                    <td> {$value.periodo} - {$value.horainicio} ás {$value.horatermino} </br> {$value.diasemana}</td>
                     <td>{$value.desstatus}</td>
                     <td>{$value.vagas}</td>
                     <td>{$value.numinscritos}</td>

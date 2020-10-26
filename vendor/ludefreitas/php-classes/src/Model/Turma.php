@@ -311,22 +311,29 @@ class Turma extends Model {
 		$results = $sql->select("
 			SELECT SQL_CALC_FOUND_ROWS *
 			FROM tb_turma a 
-			INNER JOIN tb_users b
-			using(iduser)
+			INNER JOIN tb_users b 
+			USING(iduser)
 			INNER JOIN tb_persons c
-			using(idperson)
+			USING(idperson)
 			INNER JOIN tb_atividade d
-			using(idativ)
+			USING(idativ)
 			INNER JOIN tb_espaco e
-			using(idespaco)
+			USING(idespaco)
 			INNER JOIN tb_local f
-			using(idlocal)
+			USING(idlocal)
 			INNER JOIN tb_turmastatus g
-			using(idturmastatus)
+			USING(idturmastatus)
 			INNER JOIN tb_horario h
-			using(idhorario)
+			USING(idhorario)
 			INNER JOIN tb_fxetaria i
-			using(idfxetaria)            
+			USING(idfxetaria) 
+			INNER JOIN tb_turmatemporada 
+			USING(idturma)
+            INNER JOIN tb_temporada 
+            USING(idtemporada)   
+            INNER JOIN tb_statustemporada 
+            USING(idstatustemporada)
+      		WHERE idstatustemporada = 3            
 			ORDER BY a.descturma
 			LIMIT $start, $itemsPerPage;
 		");
@@ -352,22 +359,28 @@ class Turma extends Model {
 			SELECT SQL_CALC_FOUND_ROWS *
 			FROM tb_turma a 
 			INNER JOIN tb_users b
-			using(iduser)
+			USING(iduser)
 			INNER JOIN tb_persons c
-			using(idperson)
+			USING(idperson)
 			INNER JOIN tb_atividade d
-			using(idativ)
+			USING(idativ)
 			INNER JOIN tb_espaco e
-			using(idespaco)
+			USING(idespaco)
 			INNER JOIN tb_local f
-			using(idlocal)
+			USING(idlocal)
 			INNER JOIN tb_turmastatus g
-			using(idturmastatus)
+			USING(idturmastatus)
 			INNER JOIN tb_horario h
-			using(idhorario)
+			USING(idhorario)
 			INNER JOIN tb_fxetaria i
-			using(idfxetaria)            
-			WHERE a.descturma LIKE :search 
+			USING(idfxetaria) 
+			INNER JOIN tb_turmatemporada 
+			USING(idturma)
+            INNER JOIN tb_temporada 
+            USING(idtemporada)   
+            INNER JOIN tb_statustemporada 
+            USING(idstatustemporada)
+      		WHERE a.descturma LIKE :search 
 			OR b.deslogin LIKE :search
 			OR c.desperson LIKE :search
 			OR d.descativ LIKE :search

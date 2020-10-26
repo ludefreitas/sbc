@@ -141,7 +141,7 @@ desired effect
               <span class="label label-danger">9</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">Você tem 9 tarefas/li>
+              <li class="header">Você tem 9 tarefas</li>
               <li>
                 <!-- Inner menu: contains the tasks -->
                 <ul class="menu">
@@ -241,6 +241,7 @@ desired effect
       </div>
 
       <!-- search form (Optional) -->
+      <!--
       <form action="#" method="get" class="sidebar-form">
         <div class="input-group">
           <input type="text" name="q" class="form-control" placeholder="Search...">
@@ -250,6 +251,7 @@ desired effect
               </span>
         </div>
       </form>
+      -->
       <!-- /.search form -->
 
       <!-- Sidebar Menu -->
@@ -266,20 +268,21 @@ desired effect
             <li><a href="/professor/users"><i class="fa fa-users"></i>Todos Usuários</a></li>
             <li><a href="/professor/prof"><i class="fa fa-users"></i>Professores</a></li>
             <li><a href="#"><i class="fa fa-users"></i>Clientes</a></li>
-            <li><a href="#"><i class="fa fa-users"></i>Alunos</a></li>
+            <li><a href="#"><i class="fa fa-users"></i>Alunos</a></li>          
           </ul>
         </li> 
         <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Temporada</span>
+          <a href="/professor/temporada"><i class="fa fa-users"></i> <span>Temporada</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="/professor"><i class="fa fa-link"></i> <span>2020</span></a></li> 
-            <li><a href="/professor/temporada"><i class="fa fa-link"></i> <span>2021</span></a></li> 
+             <li><a href="/professor/temporada"><i class="fa fa-users"></i>Todas Temporadas</a></li>          
+            {include="admin-temporada-menu"}
           </ul>
-        </li>       
+        </li> 
+        
         
         <li>
           <a href="/professor/turma"><i class="fa fa-link"></i> <span>Turmas</span></a>
@@ -298,20 +301,7 @@ desired effect
         </li>
         <li>
           <a href="/professor/horario"><i class="fa fa-link"></i> <span>Horários</span></a>
-        </li>
-        
-        
-        <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#">Link in level 2</a></li>
-            <li><a href="#">Link in level 2</a></li>
-          </ul>
-        </li>
+        </li>       
       </ul>
       <!-- /.sidebar-menu -->
     </section>

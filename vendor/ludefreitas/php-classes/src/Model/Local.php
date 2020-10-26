@@ -178,33 +178,7 @@ class Local extends Model {
 			':idlocal'=>$this->getidlocal(),
 			':idespaco'=>$espaco->getidespaco()
 		]);
-	}
-
-	/*
-	public function checkPhoto()
-	{
-
-		if (file_exists(
-			$_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 
-			"res" . DIRECTORY_SEPARATOR . 
-			"site" . DIRECTORY_SEPARATOR . 
-			"img" . DIRECTORY_SEPARATOR . 
-			"turma" . DIRECTORY_SEPARATOR . 
-			$this->getidproduct() . ".jpg"
-			)) {
-
-			$url = "/res/site/img/turma/" . $this->getidproduct() . ".jpg";
-
-		} else {
-
-			$url = "/res/site/img/turma.jpg";
-
-		}
-
-		return $this->setdesphoto($url);
-
-	}
-	*/
+	}	
 }
 
 

@@ -6,17 +6,39 @@ use \Sbc\Model\Espaco;
 use \Sbc\Model\Horario;
 use \Sbc\Model\Local;
 use \Sbc\Model\Atividade;
+use \Sbc\Model\Temporada;
+
 
 $app->get('/', function() {
 
 	$turma = Turma::listAllTurmaTemporada();
+	
+	$page = new Page();
+    
+	$page->setTpl("index", [
+		'turma'=>Turma::checkList($turma),
+		//'temporada'=>$turma->getTemporada()
+
+	]);
+});
+/*
+$app->get("/temporada/:idtemporada", function($idtemporada) {
+
+	$turma = Turma::listAllTurmaTemporada();
+
+	$temporada = new Temporada();
+
+	$temporada->get((int)$idtemporada);
 
 	$page = new Page();
 
-	$page->setTpl("index", [
-		'turma'=>Turma::checkList($turma)
-	]);
+	$page->setTpl("turma", [
+		'turma'=>Turma::checkList($turma),
+		'temporada'=>$temporada
+	]);	
+
 });
+*/
 
 // TESTE 
 $app->get('/login', function() {
@@ -30,6 +52,45 @@ $app->get('/login', function() {
 });
 
 
+$app->get("/temporada/:idtemporada", function($idtemporada){
+
+	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
+
+	$temporada = new Temporada();
+
+	$temporada->get((int)$idtemporada);
+
+
+	$pagination = $temporada->getTurmaTemporadaPage($page);	
+
+	$pages = [];
+
+	for ($i=1; $i <= $pagination['pages']; $i++) { 
+		array_push($pages, [
+			'link'=>'/temporada/'.$temporada->getidtemporada().'?page='.$i,
+			'page'=>$i
+		]);
+	}
+	$page = new Page();
+
+	$page->setTpl("temporada", [
+		'temporada'=>$temporada->getValues(),
+		'turma'=>$pagination["data"],
+		'pages'=>$pages
+	]);
+});
+
+$app->get("/locais", function() {
+
+	$locais = Local::listAll();
+
+	$page = new Page();
+
+	$page->setTpl("locais", array(
+		'locais'=>$locais
+	));
+});
+
 $app->get("/local/:idlocal", function($idlocal){
 
 	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
@@ -41,9 +102,6 @@ $app->get("/local/:idlocal", function($idlocal){
 	$pagination = $local->getTurmaPage($page);
 
 	$pages = [];
-
-	//$espaco->setPhoto($_FILES["file"]);
-
 
 	for ($i=1; $i <= $pagination['pages']; $i++) { 
 		array_push($pages, [
@@ -57,9 +115,7 @@ $app->get("/local/:idlocal", function($idlocal){
 		'local'=>$local->getValues(),
 		'turma'=>$pagination["data"],
 		'pages'=>$pages
-		//'espaco'=>$espaco
 	]);
-
 });
 
 

@@ -1,0 +1,1 @@
+<?php if(!class_exists('Rain\Tpl')){exit;}?><li><a href="/temporada/2">2020</a></li><li><a href="/temporada/3">2021</a></li>

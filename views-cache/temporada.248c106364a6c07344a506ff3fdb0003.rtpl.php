@@ -3,8 +3,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="product-bit-title text-center">
-                    <h2><?php echo htmlspecialchars( $local["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h2>
-                    <h4><?php echo htmlspecialchars( $local["nomelocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h4>
+                    <h2> Temporada - <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h2>
                 </div>
             </div>
         </div>

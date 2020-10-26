@@ -107,7 +107,7 @@
                         <li class="active"><a href="/">Home</a></li>
                         <li><a href="#">Cursos</a></li>
                         <li><a href="#">Incsrições</a></li>
-                        <li><a href="#">Crecs</a></li>
+                        <li><a href="/locais">Crecs</a></li>
                         <li><a href="#">Modalidades</a></li>
                     </ul>
                 </div>  
