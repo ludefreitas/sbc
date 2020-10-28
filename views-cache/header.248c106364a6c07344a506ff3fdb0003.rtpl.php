@@ -78,13 +78,13 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="logo">
-                        <h1><a href="#"><img src="res/site/img/corpoacao.png"></a></h1>
+                        <h1><a href="/"><img src="res/site/img/corpoacao.png"></a></h1>
                     </div>
                 </div>
                 
                 <div class="col-sm-6">
                     <div class="shopping-item">
-                        <a href="/inscricoes">Minhas Mátriculas<span class="cart-amunt"></span> <i class="fa fa-user"></i> <span class="product-count">5</span></a>
+                        <a href="/cart">Inscrições a Confirmar<span class="cart-amunt"></span> <i class="fa fa-user"></i> <span class="product-count">5</span></a>
                     </div>
                 </div>
             </div>

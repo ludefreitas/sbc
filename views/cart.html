@@ -1,0 +1,119 @@
+
+<div class="product-big-title-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product-bit-title text-center">
+                    <h2>Inscrições a Confirmar</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- End Page title area -->
+
+<div class="single-product-area">
+    <div class="zigzag-bottom"></div>
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-md-12">
+                <div class="product-content-right">
+                    <div class="woocommerce">
+
+                        <form action="/checkout">
+                            
+                            {if="$error != ''"}
+                            <div class="alert alert-danger" role="alert">
+                            {$error}
+                            </div>
+                            {/if}
+
+                            <table cellspacing="0" class="shop_table cart">
+                                <thead>
+                                    <tr>
+                                        <th class="product-remove">Excluir<br>Inscrição</th>
+                                        <th class="product-thumbnail">&nbsp;</th>
+                                        <th class="product-name">Turma</th>
+                                         <th class="product-quantity">Local</th>
+                                         <th class="product-quantity">Horário </th>
+                                        <th class="product-price">Faixa Etária</th>
+                                       
+                                        <th class="product-subtotal">Professor(a)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {loop="$turma"}
+                                    <tr class="cart_item">
+                                        <td class="product-remove">
+                                            <a title="Remove this item" class="remove" href="/cart/{$value.idturma}/remove">X</a> 
+                                        </td>
+
+                                        <td class="product-thumbnail">
+                                            <a href="/turma/{$value.idturma}"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="{$value.desphoto}"></a>
+                                        </td>                                       
+                                        
+
+                                        <td class="product-name">
+                                            <a href="/turma/{$value.idturma}">{$value.descativ} <br> <br> {$value.periodo}</a> 
+                                        </td>
+
+                                        <td class="product-name">
+                                            <span class="amount"> {$value.apelidolocal} <br> {$value.rua}, Nº {$value.numero} <br> {$value.bairro} </span> 
+                                        </td>
+                                        <td class="product-name">
+                                            <span class="amount"> {$value.diasemana} <br>{$value.horainicio} às {$value.horatermino} </span> 
+                                        </td>
+
+
+                                        <td class="product-name">
+                                            <span class="amount">{$value.initidade} a {$value.fimidade} <br> {$value.descrfxetaria}</span> 
+                                        </td>
+
+                                        
+                                        
+
+                                        <td class="product-name">
+                                            <span class="amount">{$value.desperson} </span> 
+                                        </td>
+                                    </tr>
+                                    {/loop}
+                                </tbody>
+                            </table>
+
+                            <div class="cart-collaterals">
+
+                                <div class="cross-sells">
+
+                                    <h2>Selecione a Pessoa</h2>
+                                    
+                                    <div class="coupon">
+                                        <label>Pessoa</label>
+                                        <input type="text" placeholder="00000-000" value="{$cart.idpess}" id="nomepess" class="input-text" name="idpess">
+
+                                        <h1>Criar Classe Pessoa para Fazer Inscrição </h1>
+                                        <input type="submit" formmethod="post" formaction="/cart/" value="increver" class="button">
+                                    </div>
+
+                                </div>
+                                
+                                 </div>
+
+                            <div class="pull-right">
+                                <input type="submit" value="Finalizar Inscrição" name="proceed" class="checkout-button button alt wc-forward">
+                            </div>
+
+                        </form>
+
+                    </div>                        
+                </div>                    
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+                                                                            
+                                       

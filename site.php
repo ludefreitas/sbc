@@ -7,6 +7,8 @@ use \Sbc\Model\Horario;
 use \Sbc\Model\Local;
 use \Sbc\Model\Atividade;
 use \Sbc\Model\Temporada;
+use \Sbc\Model\Cart;
+
 
 
 $app->get('/', function() {
@@ -21,24 +23,6 @@ $app->get('/', function() {
 
 	]);
 });
-/*
-$app->get("/temporada/:idtemporada", function($idtemporada) {
-
-	$turma = Turma::listAllTurmaTemporada();
-
-	$temporada = new Temporada();
-
-	$temporada->get((int)$idtemporada);
-
-	$page = new Page();
-
-	$page->setTpl("turma", [
-		'turma'=>Turma::checkList($turma),
-		'temporada'=>$temporada
-	]);	
-
-});
-*/
 
 // TESTE 
 $app->get('/login', function() {
@@ -49,6 +33,66 @@ $app->get('/login', function() {
 	]);
 
 	$page->setTpl("login");
+});
+
+
+$app->get("/cart", function(){
+
+	$cart = Cart::getFromSession();
+
+	$page = new Page();
+
+	$page->setTpl("cart", [
+		'cart'=>$cart->getValues(),
+		'turma'=>$cart->getTurma(),
+		'error'=>Cart::getMsgError()
+	]);
+
+});
+
+$app->get("/cart/:idturma/add", function($idturma){
+
+	$turma = new Turma();
+
+	$turma->get((int)$idturma);
+
+	$cart = Cart::getFromSession();
+
+	$cart->addTurma($turma);
+	
+	header("Location: /cart");
+	exit;
+
+});
+
+$app->get("/cart/:idturma/minus", function($idturma){
+
+	$turma = new Turma();
+
+	$turma->get((int)$idturma);
+
+	$cart = Cart::getFromSession();
+
+	$cart->removeTurma($turma);
+
+	header("Location: /cart");
+	exit;
+
+});
+
+$app->get("/cart/:idturma/remove", function($idturma){
+
+	$turma = new Turma();
+
+	$turma->get((int)$idturma);
+
+	$cart = Cart::getFromSession();
+
+	$cart->removeTurma($turma, true);
+
+	header("Location: /cart");
+	exit;
+
 });
 
 
