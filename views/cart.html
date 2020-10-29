@@ -88,19 +88,27 @@
                                     
                                     <div class="coupon">
                                         <label>Pessoa</label>
-                                        <input type="text" placeholder="00000-000" value="{$cart.idpess}" id="nomepess" class="input-text" name="idpess">
+                                        <select class="form-control" name="idpess">
+                                                 
+                                                {loop="$pessoa"}
+                                                    <option {if="$value.idpess === $espaco.idpess"}selected="selected"{/if} value="{$value.idpess}">{$value.nomepess} - {$value.dtnasc} às {$value.numcpf}</option>
+                                                {/loop}
+                                                
+                                                </select>
 
-                                        <h1>Criar Classe Pessoa para Fazer Inscrição </h1>
-                                        <input type="submit" formmethod="post" formaction="/cart/" value="increver" class="button">
+                                        <div>&nbsp;</div>
+                                        <a href="/pessoa-create">Cadastrar nova pessoa</a>
+                                        
+                                        <div class="pull-right">
+                                <input type="submit" value="Finalizar Inscrição" name="proceed" class="checkout-button button alt wc-forward">
+                            </div>
                                     </div>
 
                                 </div>
                                 
                                  </div>
 
-                            <div class="pull-right">
-                                <input type="submit" value="Finalizar Inscrição" name="proceed" class="checkout-button button alt wc-forward">
-                            </div>
+                            
 
                         </form>
 

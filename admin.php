@@ -102,12 +102,8 @@ $app->post("/professor/forgot/reset", function() {
 		"footer"=>false
 	]);
 
-	$page->setTpl("forgot-reset-success");
-
-	
+	$page->setTpl("forgot-reset-success");	
 });
-
-
 
 
 ?>

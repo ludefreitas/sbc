@@ -88,19 +88,27 @@
                                     
                                     <div class="coupon">
                                         <label>Pessoa</label>
-                                        <input type="text" placeholder="00000-000" value="<?php echo htmlspecialchars( $cart["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" id="nomepess" class="input-text" name="idpess">
+                                        <select class="form-control" name="idpess">
+                                                 
+                                                <?php $counter1=-1;  if( isset($pessoa) && ( is_array($pessoa) || $pessoa instanceof Traversable ) && sizeof($pessoa) ) foreach( $pessoa as $key1 => $value1 ){ $counter1++; ?>
+                                                    <option <?php if( $value1["idpess"] === $espaco["idpess"] ){ ?>selected="selected"<?php } ?> value="<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["dtnasc"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                                                <?php } ?>
+                                                
+                                                </select>
 
-                                        <h1>Criar Classe Pessoa para Fazer Inscrição </h1>
-                                        <input type="submit" formmethod="post" formaction="/cart/" value="increver" class="button">
+                                        <div>&nbsp;</div>
+                                        <a href="/pessoa-create">Cadastrar nova pessoa</a>
+                                        
+                                        <div class="pull-right">
+                                <input type="submit" value="Finalizar Inscrição" name="proceed" class="checkout-button button alt wc-forward">
+                            </div>
                                     </div>
 
                                 </div>
                                 
                                  </div>
 
-                            <div class="pull-right">
-                                <input type="submit" value="Finalizar Inscrição" name="proceed" class="checkout-button button alt wc-forward">
-                            </div>
+                            
 
                         </form>
 

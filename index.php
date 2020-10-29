@@ -25,6 +25,7 @@ $app = new Slim();
 $app->config('ebug', true);
 
 require_once("site.php");
+require_once("functions.php");
 require_once("admin.php");
 require_once("admin-faixaetarias.php");
 require_once("admin-users.php");
