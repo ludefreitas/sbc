@@ -1,6 +1,7 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?> 
 <div class="product-big-title-area">
     <div class="container">
+        
         <div class="row">
             <div class="col-md-12">
                 <div class="product-bit-title text-center">
@@ -11,11 +12,18 @@
     </div>
 </div>
 
+
 <div class="single-product-area">
+
     <div class="zigzag-bottom"></div>
     <div class="container">
-        <div class="row">                
+        <div class="row"> 
+
               <div class="col-md-6">
+                <div class="alert alert-info">
+            <a class="btn btn-success" href="/user/pessoas" role="button">Meus dependentes</a>
+        </div>
+
                 
                 <?php if( $errorRegister != '' ){ ?>
                 <div class="alert alert-danger">
@@ -23,17 +31,17 @@
                 </div>
                 <?php } ?>
 
-                <form id="register-form-wrap" action="/register" class="register" method="post">
+                <form id="register-form-wrap" action="/registerpessoa" class="register" method="post">
                     <h2>Cadastrar Nova Pessoa</h2>
                     <p class="form-row form-row-first">
-                        <label for="nome">Nome Completo <span class="required">*</span>
+                        <label for="nomepess">Nome Completo <span class="required">*</span>
                         </label>
-                        <input type="text" id="nome" name="name" class="input-text" value="<?php echo htmlspecialchars( $registerValues["name"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                        <input type="text" id="nomepess" name="nomepess" class="input-text" value="<?php echo htmlspecialchars( $registerValues["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                     </p>
                     <p class="form-row form-row-first">
-                        <label for="email">Data do Nascimento <span class="required">*</span>
+                        <label for="dtnasc">Data do Nascimento <span class="required">*</span>
                         </label>
-                        <input type="date" id="email" name="email" class="input-text" value="<?php echo htmlspecialchars( $registerValues["dtnasc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                        <input type="date" id="dtnasc" name="dtnasc" class="input-text" value="<?php echo htmlspecialchars( $registerValues["dtnasc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                     </p>
                     <p class="form-row form-row-first">
                         <label for="sexo">Sexo

@@ -1,0 +1,88 @@
+
+<div class="product-big-title-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product-bit-title text-center">
+                    <h2>Meus Dependentes</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="single-product-area">
+    {loop="$pessoas"}         
+
+    <div class="container">
+
+        <div class="row">
+
+            
+            <div class="">
+                
+                <div class="cart-collaterals">
+                    <h2>{$value.idpess} - {$value.nomepess}</h2>
+                </div>
+
+                <table class="table">
+                    <thead>
+                        <tr>                            
+                            <th>Idade</th>
+                            <th>Data Nasc</th>
+                            <th>Sexo</th>
+                            <th>CPF</th>
+                            <th>RG</th>
+                            <th>SUS</th>
+                            <th>Vuln. Social</th>
+                             <th>CadUnico</th>  
+                            <th>Nome da Mãe</th>
+                            <th>CPF da mãe</th>
+                            <th>Nome da pai</th>
+                            <th>CPF da pai</th>  
+                            <td style="width:222px;">
+                                <a class="btn btn-primary" href="#" role="button">Editar</a>
+                            </td>                                                      
+                        </tr>
+                    </thead>
+                    
+                    <tbody>                       
+                        <tr>
+                            <td>{$value.dtnasc}</td>
+                            <td>{$value.dtnasc}</td>
+                            <td>{$value.sexo}</td>
+                            <td>{$value.numcpf}</td>
+                            <td>{$value.numrg}</td>
+                            <td>{$value.numsus}</td>
+                            <td>{$value.vulnsocial}</td>
+                            <td>{$value.cadunico}</td>
+                            <td>{$value.nomemae}</td>
+                            <td>{$value.cpfmae}</td>
+                            <td>{$value.nomepai}</td>
+                            <td>{$value.cpfpai}</td>
+                             <td style="width:222px;">
+                                <form action="post" name="idpess">
+                                <a class="btn btn-danger"  href="/user/{$value.idpess}/status" role="button">Excluir</a>
+                                </form>
+                            </td>                            
+                        </tr>                             
+                        <tr>
+                           
+                        
+                        </tr>                       
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {else}
+<div class="alert alert-info">
+ Nenhuma pessoa encontrada.
+
+</div>
+<div class="alert alert">
+ <a class="btn btn-success" href="/pessoa-create" role="button">Cadastrar pessoa</a>
+ 
+</div>
+{/loop}
+</div>

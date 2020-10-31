@@ -1,4 +1,4 @@
-<!-- Content Wrapper. Contains page content -->
+<?php if(!class_exists('Rain\Tpl')){exit;}?><!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -34,45 +34,45 @@
               <label for="turma">Modalidade</label>
                 <select class="form-control" name="idmodal">
                 <option>Selecione a modalidade</option>           
-                  {loop="$modalidade"}
-                  <option value="{$value.idmodal}">{$value.descmodal} </option>
-                  {/loop}                            
+                  <?php $counter1=-1;  if( isset($modalidade) && ( is_array($modalidade) || $modalidade instanceof Traversable ) && sizeof($modalidade) ) foreach( $modalidade as $key1 => $value1 ){ $counter1++; ?>
+                  <option value="<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </option>
+                  <?php } ?>                            
                 </select>
             </div>
             <div class="form-group">
               <label for="turma">Atividade</label>
                 <select class="form-control" name="idativ">
                 <option>Selecione a atividade e faixa etária</option>           
-                  {loop="$atividade"}
-                  <option value="{$value.idativ}">{$value.nomeativ} - {$value.descrfxetaria} - {$value.initidade} a {$value.fimidade} anos</option>
-                  {/loop}                            
+                  <?php $counter1=-1;  if( isset($atividade) && ( is_array($atividade) || $atividade instanceof Traversable ) && sizeof($atividade) ) foreach( $atividade as $key1 => $value1 ){ $counter1++; ?>
+                  <option value="<?php echo htmlspecialchars( $value1["idativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["nomeativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["descrfxetaria"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> a <?php echo htmlspecialchars( $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> anos</option>
+                  <?php } ?>                            
                 </select>
             </div>
             <div class="form-group">
               <label for="turma">Professor</label>
                 <select class="form-control" name="iduser">
                 <option>Selecione o professor</option>       
-                  {loop="$user"}
-                  <option value="{$value.iduser}">{$value.desperson}</option>
-                  {/loop}                            
+                  <?php $counter1=-1;  if( isset($user) && ( is_array($user) || $user instanceof Traversable ) && sizeof($user) ) foreach( $user as $key1 => $value1 ){ $counter1++; ?>
+                  <option value="<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                  <?php } ?>                            
                 </select>
             </div>
             <div class="form-group">
               <label for="turma">Espaço - Crec</label>
                 <select class="form-control" name="idespaco">
                 <option>Selecione o Crec, o espaço e os horários</option>    
-                  {loop="$espaco"}
-                  <option value="{$value.idespaco}">{$value.apelidolocal} - {$value.nomeespaco} - {$value.diasemana} - {$value.horainicio} às {$value.horatermino} </option>
-                  {/loop}                            
+                  <?php $counter1=-1;  if( isset($espaco) && ( is_array($espaco) || $espaco instanceof Traversable ) && sizeof($espaco) ) foreach( $espaco as $key1 => $value1 ){ $counter1++; ?>
+                  <option value="<?php echo htmlspecialchars( $value1["idespaco"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["nomeespaco"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </option>
+                  <?php } ?>                            
                 </select>
             </div>
             <div class="form-group">
               <label for="turma">Status</label>
                 <select class="form-control" name="idturmastatus"> 
                 <option>Selecione o Status</option>
-                  {loop="$turmastatus"}
-                  <option value="{$value.idturmastatus}">{$value.desstatus}</option>
-                  {/loop}                            
+                  <?php $counter1=-1;  if( isset($turmastatus) && ( is_array($turmastatus) || $turmastatus instanceof Traversable ) && sizeof($turmastatus) ) foreach( $turmastatus as $key1 => $value1 ){ $counter1++; ?>
+                  <option value="<?php echo htmlspecialchars( $value1["idturmastatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["desstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                  <?php } ?>                            
                 </select>
             </div><div class="form-group">
               <label for="turma">Vagas</label>

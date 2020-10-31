@@ -16,6 +16,8 @@ use \Sbc\Model\Espaco;
 use \Sbc\Model\Turma;
 use \Sbc\Model\Temporada;
 use \Sbc\Model\Cart;
+use \Sbc\Model\Modalidade;
+
 
 
 
@@ -35,7 +37,7 @@ require_once("admin-horario.php");
 require_once("admin-espaco.php");
 require_once("admin-turma.php");
 require_once("admin-temporada.php");
-
+require_once("admin-modalidade.php");
 $app->run();
 
 ?>

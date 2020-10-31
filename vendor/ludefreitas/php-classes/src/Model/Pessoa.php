@@ -27,7 +27,7 @@ class Pessoa extends Model {
 	{
 		$sql = new Sql();
 
-		$results = $sql->select("CALL sp_pessoa_save(:idpess, :iduser, :nomepess, :dtnasc, :sexo, :numcpf, :numrg, :numsus, :vulnsocial, :cadunico, :nomemae, :cpfmae, :nomepai, :cpfpai, :status)", array(
+		$results = $sql->select("CALL sp_pessoa_save(:idpess, :iduser, :nomepess, :dtnasc, :sexo, :numcpf, :numrg, :numsus, :vulnsocial, :cadunico, :nomemae, :cpfmae, :nomepai, :cpfpai, :statuspessoa, :dtalteracao)", array(
 			":idpess"=>$this->getidpess(),
 			":iduser"=>$this->getiduser(),
 			":nomepess"=>$this->getnomepess(),
@@ -42,27 +42,34 @@ class Pessoa extends Model {
 			":cpfmae"=>$this->getcpfmae(),
 			":nomepai"=>$this->getnomepai(),
 			":cpfpai"=>$this->getcpfpai(),
-			":status"=>$this->getstatus()
+			":statuspessoa"=>$this->getstatuspessoa(),
+			":dtalteracao"=>$this->getdtalteraca()
 		));	
 
-		$this->setData($results[0]);
+		if (count($results) > 0) {
 
-		Pessoa::updateFile();
+			$this->setData($results[0]);
+
+			Pessoa::updateFile();
+
+		}
 	}
 
-	public function get($idpess)
+	public function get(int $idpess)
 	{
+
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT * 
-			FROM tb_pessoa a 
-			INNER JOIN tb_users 
-			USING(iduser) 
-			WHERE idpess = :idpess", [
-			':idpess'=>$idpess 
-		]);
+		$results = $sql->select("SELECT * FROM tb_pessoa WHERE idpess = :idpess", array(
+			":idpess"=>$idpess			
+		));
 
-		$this->setData($results[0]);		
+		if (count($results) > 0) {
+
+			$this->setData($results[0]);
+
+		}		
+		
 	}
 
 	public function delete()
@@ -163,6 +170,53 @@ class Pessoa extends Model {
 		$_SESSION[User::ERROR_REGISTER] = NULL;
 
 	}
+
+	public static function checkCpfExist($numcpf)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_pessoa WHERE numcpf = :numcpf", [
+			':numcpf'=>$numcpf
+		]);
+
+		return (count($results) > 0);
+
+	}
+
+	public function getFromId($idpess)
+	{
+
+		$sql = new Sql();
+
+		$rows = $sql->select(
+			"SELECT * FROM tb_pessoa 
+			INNER JOIN 	tb_users USING(iduser)
+			
+			WHERE idpess = :idpess LIMIT 1", [
+			':idpess'=>$idpess
+		]);
+
+		$this->setData($rows[0]);
+	}
+	/*
+	public function setStatus(){
+
+		$statuspessoa = 0
+
+		$sql = new Sql();
+
+		$results = $sql->select(
+			"UPDATE tb_pessoa SET statuspessoa = :statuspessoa WHERE idpess = :pidpess", [
+			':idpess'=>$this->getidpess(),
+			':statuspessoa'=>$this->getstatuspessoa()			
+		]);
+
+		//$this->setData($results[0]);	
+
+	}
+	*/
+
 }
 
 ?>

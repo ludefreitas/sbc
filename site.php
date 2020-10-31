@@ -28,12 +28,17 @@ $app->get('/', function() {
 $app->get("/cart", function(){
 
 	$cart = Cart::getFromSession();
+	$user = User::getFromSession();
+	
+	//var_dump($user->getPessoas());
+	//exit();
 
 	$page = new Page();
 
 	$page->setTpl("cart", [
 		'cart'=>$cart->getValues(),
 		'turma'=>$cart->getTurma(),
+		'pessoa'=>$user->getPessoas(),
 		'error'=>Cart::getMsgError()
 	]);
 
@@ -272,6 +277,10 @@ $app->get("/logout", function(){
 
 	User::logout();
 
+	Cart::removeFromSession();
+	
+	session_regenerate_id();
+
 	header("Location: /login");
 	exit;
 
@@ -335,6 +344,65 @@ $app->post("/register", function(){
 
 });
 
+$app->get("/forgot", function() {
+
+	$page = new Page();
+
+	$page->setTpl("forgot");	
+
+});
+
+$app->post("/forgot", function($email){
+
+	$user = User::getForgot($_POST["email"], false);
+
+	header("Location: /forgot/sent");
+	exit;
+
+});
+
+$app->get("/forgot/sent", function(){
+
+	$page = new Page();
+
+	$page->setTpl("forgot-sent");	
+
+});
+
+
+$app->get("/forgot/reset", function(){
+
+	$user = User::validForgotDecrypt($_GET["code"]);
+
+	$page = new Page();
+
+	$page->setTpl("forgot-reset", array(
+		"name"=>$user["desperson"],
+		"code"=>$_GET["code"]
+	));
+
+});
+
+$app->post("/forgot/reset", function(){
+
+	$forgot = User::validForgotDecrypt($_POST["code"]);	
+
+	User::setFogotUsed($forgot["idrecovery"]);
+
+	$user = new User();
+
+	$user->get((int)$forgot["iduser"]);
+
+	$password = User::getPasswordHash($_POST["password"]);
+
+	$user->setPassword($password);
+
+	$page = new Page();
+
+	$page->setTpl("forgot-reset-success");
+
+});
+
 $app->get("/pessoa-create", function() {
 
 	User::verifyLogin(false);
@@ -344,9 +412,173 @@ $app->get("/pessoa-create", function() {
 	$page->setTpl("pessoa-create", [
 		'error'=>User::getError(),
 		'errorRegister'=>User::getErrorRegister(),
-		'registerValues'=>(isset($_SESSION['registerValues'])) ? $_SESSION['registerValues'] : ['name'=>'', 'email'=>'', 'phone'=>'', 'dtnasc'=>'', 'numcpf'=>'', 'numrg'=>'', 'numsus'=>'', 'cadunico'=>'', 'nomemae'=>'', 'cpfmae'=>'', 'nomepai'=>'', 'cpfpai'=>'']
+		'registerValues'=>(isset($_SESSION['registerValues'])) ? $_SESSION['registerValues'] : ['nomepess'=>'', 'dtnasc'=>'', 'numcpf'=>'', 'numrg'=>'', 'numsus'=>'', 'cadunico'=>'', 'nomemae'=>'', 'cpfmae'=>'', 'nomepai'=>'', 'cpfpai'=>'']
 	]);
 });
+
+$app->post("/registerpessoa", function(){
+
+	$_SESSION['registerValues'] = $_POST;
+
+	$iduser = (int)$_SESSION[User::SESSION]["iduser"];
+
+	if (!isset($_POST['nomepess']) || $_POST['nomepess'] == '') {
+
+		Pessoa::setErrorRegister("Preencha o nome completo da pessoa.");
+		header("Location: /pessoa-create");
+		exit;
+	}
+
+	if (!isset($_POST['dtnasc']) || $_POST['dtnasc'] == '') {
+
+		Pessoa::setErrorRegister("Preencha informe da data de nascimento.");
+		header("Location: /pessoa-create");
+		exit;
+	}
+
+	if (!isset($_POST['numcpf']) || $_POST['numcpf'] == '') {
+
+		Pessoa::setErrorRegister("Informe o número do CPF.");
+		header("Location: /pessoa-create");
+		exit;
+	}
+
+	if (Pessoa::checkCpfExist($_POST['numcpf']) === true) {
+
+		Pessoa::setErrorRegister("Este CPF pertence a outro usuário.");
+		header("Location: /pessoa-create");
+		exit;
+	}
+
+	if (!isset($_POST['numrg']) || $_POST['numrg'] == '') {
+
+		Pessoa::setErrorRegister("Informe o número do RG.");
+		header("Location: /pessoa-create");
+		exit;
+	}	
+
+	if (!isset($_POST['numsus']) || $_POST['numsus'] == '') {
+
+		Pessoa::setErrorRegister("Informe o número do Cartão do SUS.");
+		header("Location: /pessoa-create");
+		exit;
+	}	
+
+	if (!isset($_POST['cadunico']) || $_POST['cadunico'] == '') {
+
+		Pessoa::setErrorRegister("Informe o número do Cartão CadUnico.");
+		header("Location: /pessoa-create");
+		exit;
+	}
+
+	$pessoa = new Pessoa();
+
+	$pessoa->setData([
+		'iduser'=>$iduser, 		
+		'nomepess'=>$_POST['nomepess'],
+		'dtnasc'=>$_POST['dtnasc'],
+		'sexo'=>$_POST['sexo'],
+		'numcpf'=>$_POST['numcpf'],
+		'numrg'=>$_POST['numrg'],
+		'numsus'=>$_POST['numsus'],
+		'vulnsocial'=>$_POST['vulnsocial'],
+		'cadunico'=>$_POST['cadunico'],
+		'nomemae'=>$_POST['nomemae'],
+		'cpfmae'=>$_POST['cpfmae'],
+		'nomepai'=>$_POST['nomepai'],
+		'cpfpai'=>$_POST['cpfpai'],
+		'statuspessoa'=>1		
+	]);
+
+	//var_dump($pessoa);
+	//exit();
+
+	$pessoa->save();
+
+	header('Location: /checkout');
+	exit;
+
+});
+
+/*
+$app->get("/pessoa/:idpess/status", function($idpess) {
+
+	User::verifyLogin(false);
+
+	$pessoa = new Pessoa();
+
+	$pessoa->get((int)$idpess);
+
+	$pessoa->setStatus();
+
+	header("Location: /user-pessoas");
+	exit();	
+});
+*/
+$app->get("/user/:idpess/status", function($idpess){
+
+	User::verifyLogin(false);	
+
+	$pessoa = new Pessoa();
+
+	$pessoa->get((int)$idpess);
+
+	$pessoa->setData($_POST);
+
+	// setstatuspessoa --> 0 = pessoa não ativa   -  1 = pessoa ativa (default)
+	$pessoa->setstatuspessoa(0);
+
+	$pessoa->save();
+
+	Pessoa::setSuccess("Status atualizado.");
+
+	header("Location: /user/pessoas");
+	exit;
+
+});
+
+
+
+
+$app->get("/pessoa/:idpess", function($idpess){
+
+	User::verifyLogin(false);
+
+	$pessoa = new Pessoa();
+
+	$pessoa->getFromId($idpess);
+
+	//var_dump($pessoa);
+	//exit();
+
+	$page = new Page();
+
+	$page->setTpl("pessoa", [
+		'pessoa'=>$pessoa->getValues(),
+		// Implementar método
+		//'local'=>$user->getUser()
+	]);
+
+});
+
+
+$app->get("/user/pessoas", function(){
+
+	User::verifyLogin(false);
+
+	$user = User::getFromSession();
+
+	//var_dump($user->getPessoas());
+	//exit();
+
+	$page = new Page();
+
+	$page->setTpl("user-pessoas", [
+		'pessoas'=>$user->getPessoas()
+	]);
+
+});
+
 
 
 

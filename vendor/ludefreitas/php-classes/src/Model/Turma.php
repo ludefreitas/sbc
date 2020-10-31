@@ -29,7 +29,9 @@ class Turma extends Model {
 			INNER JOIN tb_horario h
 			using(idhorario)
 			INNER JOIN tb_fxetaria i
-			using(idfxetaria)            
+			using(idfxetaria)
+			INNER JOIN tb_modalidade J         
+			using(idmodal)            
 			ORDER BY a.descturma");
 	}
 
@@ -61,6 +63,8 @@ class Turma extends Model {
 			using(idtemporada)   
             INNER JOIN tb_statustemporada l          
 			using(idstatustemporada)
+			INNER JOIN tb_modalidade m         
+			using(idmodal)
       		WHERE idstatustemporada = 3
 			ORDER BY a.descturma");
 	}
@@ -122,6 +126,8 @@ class Turma extends Model {
 			using(idhorario)			
 			INNER JOIN tb_fxetaria h
 			using(idfxetaria)
+			INNER JOIN tb_modalidade i        
+			using(idmodal)
 			WHERE idturma = :idturma", [
 			':idturma'=>$idturma 
 		]);
@@ -276,7 +282,8 @@ class Turma extends Model {
 			INNER JOIN tb_fxetaria USING(idfxetaria)
 			INNER JOIN tb_espaco USING(idespaco) 
 			INNER JOIN tb_horario USING(idhorario) 
-			INNER JOIN tb_local USING(idlocal) 
+			INNER JOIN tb_local USING(idlocal)
+			INNER JOIN tb_modalidade USING(idmodal)
 			WHERE idturma = :idturma LIMIT 1", [
 			':idturma'=>$idturma
 		]);
@@ -333,6 +340,8 @@ class Turma extends Model {
             USING(idtemporada)   
             INNER JOIN tb_statustemporada 
             USING(idstatustemporada)
+            INNER JOIN tb_modalidade 
+            USING(idmodal)
       		WHERE idstatustemporada = 3            
 			ORDER BY a.descturma
 			LIMIT $start, $itemsPerPage;
@@ -374,12 +383,14 @@ class Turma extends Model {
 			USING(idhorario)
 			INNER JOIN tb_fxetaria i
 			USING(idfxetaria) 
-			INNER JOIN tb_turmatemporada 
+			INNER JOIN tb_turmatemporada j
 			USING(idturma)
-            INNER JOIN tb_temporada 
+            INNER JOIN tb_temporada k
             USING(idtemporada)   
-            INNER JOIN tb_statustemporada 
+            INNER JOIN tb_statustemporada l
             USING(idstatustemporada)
+            INNER JOIN tb_modalidade m
+            USING(idmodal)
       		WHERE a.descturma LIKE :search 
 			OR b.deslogin LIKE :search
 			OR c.desperson LIKE :search
@@ -389,7 +400,8 @@ class Turma extends Model {
 			OR g.desstatus LIKE :search
 			OR h.horainicio LIKE :search
 			OR h.periodo LIKE :search
-			OR i.descrfxetaria LIKE :search							
+			OR i.descrfxetaria LIKE :search	
+			OR m.descmodal LIKE :search													
 			ORDER BY a.descturma
 			LIMIT $start, $itemsPerPage;
 		", [

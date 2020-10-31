@@ -14,7 +14,6 @@ class Cart extends Model {
 
 	public static function getFromSession()
 	{
-
 		$cart = new Cart();
 
 		if (isset($_SESSION[Cart::SESSION]) && (int)$_SESSION[Cart::SESSION]['idcart'] > 0) {
@@ -44,7 +43,10 @@ class Cart extends Model {
 				$cart->save();
 
 				$cart->setToSession();
+
+
 			}
+
 		}
 
 		return $cart;
@@ -69,6 +71,11 @@ class Cart extends Model {
 			$this->setData($results[0]);
 
 		}
+	}
+
+	public static function removeFromSession(){
+
+		$_SESSION[Cart::SESSION] = NULL;
 	}	
 
 	public function get(int $idcart)

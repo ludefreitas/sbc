@@ -184,7 +184,7 @@ desired effect
                 <img src="/res/admin/dist/img/user9-160x120.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  <?php echo htmlspecialchars( $user["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - Web Developer
+                  <?php echo getUserName(); ?> - Web Developer
                   <small>Membro desde Set. 2020</small>
                 </p>
               </li>
@@ -234,7 +234,7 @@ desired effect
           <img src="/res/admin/dist/img/user9-160x120.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p><?php echo htmlspecialchars( $user["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></p>
+          <p><?php echo getUserName(); ?></p>
           <!-- Status -->
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>

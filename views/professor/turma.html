@@ -40,7 +40,8 @@
                 <thead>
                   <tr>
                     <th>Descrição da turma</th>                    
-                    <th>Faixa Etária</th>  
+                    <th>Modalidade</th>
+                    <th>Faixa Etária</th>    
                     <th>Professor</th>                  
                     <th>Crec</th>
                     <th>Espaço</th>
@@ -55,6 +56,7 @@
                   {loop="$turma"}
                   <tr>
                     <td>{$value.descturma}</br>{$value.desctemporada}</td>
+                     <td>{$value.descmodal}</td>
                     <td>{$value.descrfxetaria} </br> {$value.initidade} a {$value.fimidade} anos</td>
                     <td>{$value.desperson}</td>
                     <td>{$value.apelidolocal}</td>

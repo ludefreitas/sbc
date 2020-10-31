@@ -89,15 +89,15 @@
                                     <div class="coupon">
                                         <label>Pessoa</label>
                                         <select class="form-control" name="idpess">
-                                                 
+                                            <option>Selecione pessoa</option>                                   
                                                 {loop="$pessoa"}
-                                                    <option {if="$value.idpess === $espaco.idpess"}selected="selected"{/if} value="{$value.idpess}">{$value.nomepess} - {$value.dtnasc} às {$value.numcpf}</option>
+                                                    <option {if="$value.iduser === $user.iduser"}selected="selected"{/if} value="{$value.idpess}">{$value.nomepess}, nascido em {$value.dtnasc} CPF: {$value.numcpf}</option>
                                                 {/loop}
                                                 
                                                 </select>
 
                                         <div>&nbsp;</div>
-                                        <a href="/pessoa-create">Cadastrar nova pessoa</a>
+                                        <a href="/pessoa-create">Cadastrar uma nova pessoa</a>
                                         
                                         <div class="pull-right">
                                 <input type="submit" value="Finalizar Inscrição" name="proceed" class="checkout-button button alt wc-forward">

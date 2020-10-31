@@ -460,7 +460,38 @@ class User extends Model {
 
 	}
 
+	public function getPessoas()	{
+
+		$sql = new Sql();
+
+		$results = $sql->select(
+			"SELECT * FROM tb_pessoa a
+			-- INNER JOIN 	tb_users b using (iduser)
+			WHERE statuspessoa = 1 AND
+			iduser = :iduser", [
+			':iduser'=>$this->getiduser()
+		]);
+
+		return $results;
+	}
+
+	public function getFromId($iduser)
+	{
+
+		$sql = new Sql();
+
+		$rows = $sql->select(
+			"SELECT * FROM tb_pessoa 
+			INNER JOIN 	tb_users USING(iduser)
+			
+			WHERE iduser = :iduser ", [
+			':iduser'=>$iduser
+		]);
+
+		$this->setData($rows[0]);
+	}
 
 }
+
 
 ?>

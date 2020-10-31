@@ -13,10 +13,12 @@
                                 Elogiado pela comunidade, o PELC - Programa Esporte e Lazer da Cidade, também estará presente nos Centros Esportivos da cidade, oferecendo diferentes oficinas relacionadas tanto à prática de atividade física quanto atividades relacionadas aos demais conteúdos do lazer, tais como artesanato, dança, capoeira, dentre outros.
                             </p>
                         <div class="footer-social">
-                            <a href="https://www.facebook.com/hcodebr" target="_blank"><i class="fa fa-facebook"></i></a>
-                            <a href="https://twitter.com/hcodebr" target="_blank"><i class="fa fa-twitter"></i></a>
-                            <a href="https://www.youtube.com/channel/UCkIdw-EpY4r-poKQMVQ95-A" target="_blank"><i class="fa fa-youtube"></i></a>
+                            <a href="https://www.facebook.com/cursosesportivossbc" target="_blank"><i class="fa fa-facebook"></i></a>
+                            <a href="https://www.youtube.com/CursosEsportivosSbc" target="_blank"><i class="fa fa-youtube"></i></a>
+                            <a href="https://www.instagram.com/cursosesportivossbc/" target="_blank"><i class="fa fa-instagram"></i></a>
                         </div>
+
+                        
                     </div>
                 </div>
                 
