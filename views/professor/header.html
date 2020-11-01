@@ -291,6 +291,9 @@ desired effect
           <a href="/professor/atividade"><i class="fa fa-link"></i> <span>Atividades</span></a>
         </li>
         <li>
+          <a href="/professor/modalidades"><i class="fa fa-link"></i> <span>Modalidades</span></a>
+        </li>
+        <li>
           <a href="/professor/local"><i class="fa fa-link"></i> <span>Crecs</span></a>
         </li>
         <li>

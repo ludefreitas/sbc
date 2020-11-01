@@ -1,14 +1,13 @@
 
-<!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Lista de Modalidades
+    Lista de Atividades
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active"><a href="/professor/modalidades">Modalidades</a></li>
+    <li class="active"><a href="/professor/modalidade">Modalidade</a></li>
   </ol>
 </section>
 
@@ -27,31 +26,20 @@
               <table class="table table-striped">
                 <thead>
                   <tr>
-                    <th style="width: 10px">ID</th>
-                    <th>Nome da Modalidade</th>
+
                     <th>Descrição</th>
-                    <th>Faixa Etária</th>
-                    <th>Genero</th>
-                    <th>Programa</th>
-                    <th>Origem</th>
-                    <th>Tipo</th>
-                    <th style="width: 140px">&nbsp;</th>
+                    
+
                   </tr>
                 </thead>
                 <tbody>
                   {loop="$modalidades"}
                   <tr>
-                    <td>{$value.idmodal}</td>
-                    <td>{$value.nomemodal}</td>
-                    <td>{$value.descmodal}</td>
-                    <td>{$value.descrfxetaria}</td>
-                    <td>{$value.genemodal}</td>
-                    <td>{$value.programodal}</td>
-                    <td>{$value.origmodal}</td>
-                    <td>{$value.tipomodal}</td>
+                    <td>{$value.descmodal}</td>                    
+                               
                     <td>
                       <a href="/professor/modalidades/{$value.idmodal}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
-                      <a href="/professor/modalidades/{$value.idmodal}/delete" onclick="return confirm('Deseja realmente excluir esta a categoria {$value.nomemodal} ?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
+                      <a href="/professor/modalidades/{$value.idmodal}/delete" onclick="return confirm('Deseja realmente excluir a modalidade {$value.descmodal}?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
                     </td>
                   </tr>
                   {/loop}

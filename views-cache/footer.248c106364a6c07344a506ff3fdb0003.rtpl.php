@@ -22,6 +22,38 @@
                     </div>
                 </div>
                 
+                
+                
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h2 class="footer-wid-title">Crec´s</h2>
+                        <ul>
+                            <?php require $this->checkTemplate("local-menu");?>                            
+                        </ul>                        
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h2 class="footer-wid-title">Modalidades</h2>
+                        <ul>
+                            <?php require $this->checkTemplate("modalidade-menu");?>    
+                        
+                        </ul>                        
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h2 class="footer-wid-title">Temporada</h2>
+                        <ul>
+                            <?php require $this->checkTemplate("temporada-menu");?>                            
+                        </ul>                        
+                    </div>
+                </div>
+
+                
+                
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-menu">
                         <h2 class="footer-wid-title">Navegação </h2>
@@ -33,71 +65,13 @@
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <div class="footer-menu">
-                        <h2 class="footer-wid-title">Temporada</h2>
-                        <ul>
-                            <?php require $this->checkTemplate("temporada-menu");?>                            
-                        </ul>                        
-                    </div>
-                </div>
-                <!--
-                <div class="col-md-3 col-sm-6">
-                    <div class="footer-menu">
-                        <h2 class="footer-wid-title">Faixa Etária</h2>
-                        <ul>
-                            <?php require $this->checkTemplate("faixaetaria-menu");?>                            
-                        </ul>                        
-                    </div>
-                </div>
-                -->
-
-                <div class="col-md-3 col-sm-6">
-                    <div class="footer-menu">
-                        <h2 class="footer-wid-title">Modalidades</h2>
-                        <ul>
-                        <!--    <?php require $this->checkTemplate("atividade-menu");?>    -->
-                        <li>Basquetebol</li>                        
-                        <li>Badminton</li>
-                        <li>Ballet</li>
-                        <li>Futsal</li> 
-                        <li>Ginástica</li>                            
-                        <li>Handebol</li>
-                        <li>Hidroginástica</li>                         
-                        <li>Karatê</li> 
-                        <li>Natação</li>
-                        <li>Taekwndo</li>                                                
-                        <li>Voleibol</li>                                            
-                        </ul>                        
-                    </div>
-                </div>
-
-                <div class="col-md-3 col-sm-6">
-                    <div class="footer-menu">
-                        <h2 class="footer-wid-title">Crec´s</h2>
-                        <ul>
-                            <?php require $this->checkTemplate("local-menu");?>                            
-                        </ul>                        
-                    </div>
-                </div>
-                
-                <!--
-                <div class="col-md-3 col-sm-6">
-                    <div class="footer-menu">
-                        <h2 class="footer-wid-title">Espaço</h2>
-                        <ul>
-                            <?php require $this->checkTemplate("espaco-menu");?>                            
-                        </ul>                        
-                    </div>
-                </div>
-                -->
-                <div class="col-md-3 col-sm-6">
                     <div class="footer-newsletter">
-                        <h2 class="footer-wid-title">Newsletter</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus!</p>
+                        <h2 class="footer-wid-title">Fique Por Dentro !</h2>
+                        <p>Você pode se inscrever para receber notificação de novos cursos e eventos que irão acontecer nos Cursos Esportivos SBC. Insira seu e-mail abaixo.</p>
                         <div class="newsletter-form">
                             <form action="#">
-                                <input type="email" placeholder="Type your email">
-                                <input type="submit" value="Subscribe">
+                                <input type="email" placeholder="Digite seu e-mail">
+                                <input type="submit" value="Increver-se">
                             </form>
                         </div>
                     </div>

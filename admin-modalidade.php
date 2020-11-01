@@ -6,7 +6,7 @@ use \Sbc\Model\User;
 use \Sbc\Model\Modalidade;
 use \Sbc\Model\Faixaetaria;
 
-$app->get("/professor/modalidade", function() {
+$app->get("/professor/modalidades", function() {
 
 	User::verifyLogin();
 
@@ -14,21 +14,21 @@ $app->get("/professor/modalidade", function() {
 
 	$page = new PageAdmin();
 
-	$page->setTpl("modalidade", array(
-		'modalidade'=>Modalidade::checkList($modalidade)
+	$page->setTpl("modalidades", array(
+		'modalidades'=>Modalidade::checkList($modalidade)
 	));
 });
 
-$app->get("/professor/modalidade/create", function() {
+$app->get("/professor/modalidades/create", function() {
 
 	User::verifyLogin();
 
 	$page = new PageAdmin();
 
-	$page->setTpl("modalidade-create");
+	$page->setTpl("modalidades-create");
 });
 
-$app->post("/professor/modalidade/create", function() {
+$app->post("/professor/modalidades/create", function() {
 
 	User::verifyLogin();
 
@@ -38,11 +38,11 @@ $app->post("/professor/modalidade/create", function() {
 
 	$modalidade->save();
 
-	header("Location: /professor/modalidade");
+	header("Location: /professor/modalidades");
 	exit();	
 });
 
-$app->get("/professor/modalidade/:idmodal/delete", function($idmodal) {
+$app->get("/professor/modalidades/:idmodal/delete", function($idmodal) {
 
 	User::verifyLogin();
 
@@ -52,13 +52,13 @@ $app->get("/professor/modalidade/:idmodal/delete", function($idmodal) {
 
 	$modalidade->delete();
 
-	header("Location: /professor/modalidade");
+	header("Location: /professor/modalidades");
 	exit();
 	
 });
 
 
-$app->get("/professor/modalidade/:idmodal", function($idmodal) {
+$app->get("/professor/modalidades/:idmodal", function($idmodal) {
 
 	User::verifyLogin();
 
@@ -68,12 +68,12 @@ $app->get("/professor/modalidade/:idmodal", function($idmodal) {
 
 	$page = new PageAdmin();
 
-	$page->setTpl("modalidade-update", array(
-		'modalidade'=>$modalidade->getValues()
+	$page->setTpl("modalidades-update", array(
+		'modalidades'=>$modalidade->getValues()
 	));
 });
 
-$app->post("/professor/modalidade/:idmodal", function($idmodal) {
+$app->post("/professor/modalidades/:idmodal", function($idmodal) {
 
 	User::verifyLogin();
 
@@ -85,11 +85,11 @@ $app->post("/professor/modalidade/:idmodal", function($idmodal) {
 
 	$modalidade->save();
 
-	header("Location: /professor/modalidade");
+	header("Location: /professor/modalidades");
 	exit();	
 });
 
-$app->get("/modalidade/:idmodal", function($idmodal) {
+$app->get("/modalidades/:idmodal", function($idmodal) {
 
 	$modalidade = new Modalidade();
 
@@ -97,8 +97,8 @@ $app->get("/modalidade/:idmodal", function($idmodal) {
 
 	$page = new Page();
 
-	$page->setTpl("modalidade", [
-		'modalidade'=>$modalidade->getValues()
+	$page->setTpl("modalidades", [
+		'modalidades'=>$modalidade->getValues()
 	]);	
 
 });

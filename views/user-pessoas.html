@@ -36,10 +36,10 @@
                             <th>SUS</th>
                             <th>Vuln. Social</th>
                              <th>CadUnico</th>  
-                            <th>Nome da Mãe</th>
+                            <th>Nome da mãe</th>
                             <th>CPF da mãe</th>
-                            <th>Nome da pai</th>
-                            <th>CPF da pai</th>  
+                            <th>Nome do pai</th>
+                            <th>CPF do pai</th>  
                             <td style="width:222px;">
                                 <a class="btn btn-primary" href="#" role="button">Editar</a>
                             </td>                                                      
@@ -48,8 +48,8 @@
                     
                     <tbody>                       
                         <tr>
-                            <td>{$value.dtnasc}</td>
-                            <td>{$value.dtnasc}</td>
+                            <td>{function="calcularIdade($value.dtnasc)"}</td>
+                            <td>{function="formatDate($value.dtnasc)"}</td>
                             <td>{$value.sexo}</td>
                             <td>{$value.numcpf}</td>
                             <td>{$value.numrg}</td>
@@ -76,13 +76,13 @@
         </div>
     </div>
     {else}
-<div class="alert alert-info">
- Nenhuma pessoa encontrada.
+    <div class="alert alert-info">
+        Nenhuma pessoa encontrada.
 
-</div>
-<div class="alert alert">
- <a class="btn btn-success" href="/pessoa-create" role="button">Cadastrar pessoa</a>
+    </div>
+    <div class="alert alert">
+    <a class="btn btn-success" href="/pessoa-create" role="button">Cadastrar pessoa</a>
  
-</div>
-{/loop}
+    </div>
+    {/loop}
 </div>

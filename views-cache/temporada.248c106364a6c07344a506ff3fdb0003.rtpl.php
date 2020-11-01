@@ -32,7 +32,17 @@
                     </div>                       
                 </div>
             </div> 
-            <?php } ?>      
+            <?php }else{ ?>
+            <div class="alert alert-info">
+                Não há turmas abertas para esta Temporada.
+
+            </div>
+            <div class="alert alert">
+            <a class="btn btn-success" href="/" role="button">Voltara ao início</a>
+         
+            </div>
+            <?php } ?>
+    
 
         </div>
         

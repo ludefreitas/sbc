@@ -10,6 +10,7 @@ use \Sbc\Model\Temporada;
 use \Sbc\Model\Cart;
 use \Sbc\Model\Pessoa;
 use \Sbc\Model\User;
+use \Sbc\Model\Modalidade;
 
 
 $app->get('/', function() {
@@ -314,6 +315,14 @@ $app->post("/register", function(){
 
 	}
 
+	if (!isset($_POST['phone']) || $_POST['phone'] == '') {
+
+		User::setErrorRegister("Preencha o seu número de telefone.");
+		header("Location: /login");
+		exit;
+
+	}
+
 	if (User::checkLoginExist($_POST['email']) === true) {
 
 		User::setErrorRegister("Este endereço de e-mail já está sendo usado por outro usuário.");
@@ -339,6 +348,8 @@ $app->post("/register", function(){
 
 	User::login($_POST['email'], $_POST['password']);
 
+	$_SESSION['registerValues'] = NULL;
+
 	header('Location: /checkout');
 	exit;
 
@@ -352,7 +363,7 @@ $app->get("/forgot", function() {
 
 });
 
-$app->post("/forgot", function($email){
+$app->post("/forgot", function(){
 
 	$user = User::getForgot($_POST["email"], false);
 
@@ -369,7 +380,6 @@ $app->get("/forgot/sent", function(){
 
 });
 
-
 $app->get("/forgot/reset", function(){
 
 	$user = User::validForgotDecrypt($_GET["code"]);
@@ -385,9 +395,9 @@ $app->get("/forgot/reset", function(){
 
 $app->post("/forgot/reset", function(){
 
-	$forgot = User::validForgotDecrypt($_POST["code"]);	
+	$forgot = User::validForgotDecrypt($_POST["code"]);
 
-	User::setFogotUsed($forgot["idrecovery"]);
+	User::setForgotUsed($forgot["idrecovery"]);
 
 	$user = new User();
 
@@ -402,6 +412,69 @@ $app->post("/forgot/reset", function(){
 	$page->setTpl("forgot-reset-success");
 
 });
+
+$app->get("/profile", function(){
+
+	User::verifyLogin(false);
+
+	$user = User::getFromSession();
+
+	$page = new Page();
+
+	$page->setTpl("profile", [
+		'user'=>$user->getValues(),
+		'profileMsg'=>User::getSuccess(),
+		'profileError'=>User::getError()
+	]);
+});
+
+	$app->post("/profile", function(){
+
+	User::verifyLogin(false);
+
+	if (!isset($_POST['desperson']) || $_POST['desperson'] === '') {
+		User::setError("Preencha o seu nome.");
+		header('Location: /profile');
+		exit;
+	}
+
+	if (!isset($_POST['desemail']) || $_POST['desemail'] === '') {
+		User::setError("Preencha o seu e-mail.");
+		header('Location: /profile');
+		exit;
+	}
+
+	$user = User::getFromSession();
+
+	if ($_POST['desemail'] !== $user->getdesemail()) {
+
+		if (User::checkLoginExists($_POST['desemail']) === true) {
+
+			User::setError("Este endereço de e-mail já está cadastrado.");
+			header('Location: /profile');
+			exit;
+
+		}
+
+	}
+
+	$_POST['iduser'] = $user->getiduser();
+	$_POST['inadmin'] = $user->getinadmin();
+	$_POST['isprof'] = $user->getisprof();
+	$_POST['despassword'] = $user->getdespassword();
+	$_POST['deslogin'] = $_POST['desemail'];
+
+	$user->setData($_POST);
+
+	$user->update();
+
+	User::setSuccess("Dados alterados com sucesso!");
+
+	header('Location: /profile');
+	exit;
+
+});
+
 
 $app->get("/pessoa-create", function() {
 
@@ -500,21 +573,6 @@ $app->post("/registerpessoa", function(){
 
 });
 
-/*
-$app->get("/pessoa/:idpess/status", function($idpess) {
-
-	User::verifyLogin(false);
-
-	$pessoa = new Pessoa();
-
-	$pessoa->get((int)$idpess);
-
-	$pessoa->setStatus();
-
-	header("Location: /user-pessoas");
-	exit();	
-});
-*/
 $app->get("/user/:idpess/status", function($idpess){
 
 	User::verifyLogin(false);	
@@ -533,7 +591,7 @@ $app->get("/user/:idpess/status", function($idpess){
 	Pessoa::setSuccess("Status atualizado.");
 
 	header("Location: /user/pessoas");
-	exit;
+	exit();
 
 });
 
@@ -579,7 +637,45 @@ $app->get("/user/pessoas", function(){
 
 });
 
+$app->get("/modalidade/:idmodal", function($idmodal){
 
+	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
+
+	$modalidade = new Modalidade();
+
+	$modalidade->get((int)$idmodal);
+
+	$pagination = $modalidade->getTurmaPage($page);
+
+	$pages = [];
+
+	for ($i=1; $i <= $pagination['pages']; $i++) { 
+		array_push($pages, [
+			'link'=>'/modalidade/'.$modalidade->getidmodal().'?page='.$i,
+			'page'=>$i
+		]);
+	}
+	//var_dump($modalidades);
+	//exit();
+	$page = new Page();
+
+	$page->setTpl("modalidade", [
+		'modalidade'=>$modalidade->getValues(),
+		'turma'=>$pagination["data"],
+		'pages'=>$pages
+	]);
+});
+
+$app->get("/modalidades", function() {
+
+	$modalidades = Modalidade::listAll();
+
+	$page = new Page();
+
+	$page->setTpl("modalidades", array(
+		'modalidades'=>$modalidades
+	));
+});
 
 
 

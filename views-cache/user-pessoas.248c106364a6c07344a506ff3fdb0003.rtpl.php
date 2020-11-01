@@ -36,10 +36,10 @@
                             <th>SUS</th>
                             <th>Vuln. Social</th>
                              <th>CadUnico</th>  
-                            <th>Nome da Mãe</th>
+                            <th>Nome da mãe</th>
                             <th>CPF da mãe</th>
-                            <th>Nome da pai</th>
-                            <th>CPF da pai</th>  
+                            <th>Nome do pai</th>
+                            <th>CPF do pai</th>  
                             <td style="width:222px;">
                                 <a class="btn btn-primary" href="#" role="button">Editar</a>
                             </td>                                                      
@@ -48,8 +48,8 @@
                     
                     <tbody>                       
                         <tr>
-                            <td><?php echo htmlspecialchars( $value1["dtnasc"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                            <td><?php echo htmlspecialchars( $value1["dtnasc"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                            <td><?php echo calcularIdade($value1["dtnasc"]); ?></td>
+                            <td><?php echo formatDate($value1["dtnasc"]); ?></td>
                             <td><?php echo htmlspecialchars( $value1["sexo"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                             <td><?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                             <td><?php echo htmlspecialchars( $value1["numrg"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>

@@ -1,6 +1,6 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?><div class="slider-area">
         	<!-- Slider -->
-			<!--<div class="block-slider block-slider4">
+			<div class="block-slider block-slider4">
 				<ul class="" id="bxslider-home4">
 					<li><img src="res/site/img/natacao.png" alt="Slide">
 						<div class="caption-group">
@@ -30,7 +30,7 @@
 							<a class="caption button-radius" href="#"><span class="icon"></span>Increver-se</a>
 						</div>
 					</li>
-					<li><img src="res/site/img/natacao.png" alt="Slide">
+					<li><img src="res/site/img/pauliceia.png" alt="Slide">
 						<div class="caption-group">
 							<h2 class="caption title">
 								 Natação <span class="primary"><strong>Iniciação</strong></span>
@@ -39,7 +39,7 @@
 							<a class="caption button-radius" href="#"><span class="icon"></span>Increver-se</a>
 						</div>
 					</li>
-					<li><img src="res/site/img/voleibol.png" alt="Slide">
+					<li><img src="res/site/img/quadrapauliceia.png" alt="Slide">
 						<div class="caption-group">
 							<h2 class="caption title">
 								 Voleibol <span class="primary"><strong>Adolescente</strong></span>
@@ -48,7 +48,7 @@
 							<a class="caption button-radius" href="#"><span class="icon"></span>Increver-se</a>
 						</div>
 					</li>
-					<li><img src="res/site/img/hidroginastica.png" alt="Slide">
+					<li><img src="res/site/img/piscinabaetinha.png" alt="Slide">
 						<div class="caption-group">
 							<h2 class="caption title">
 								Hidroginástica <span class="primary"><strong>Funcional</strong></span>
@@ -59,7 +59,7 @@
 					</li>
 				</ul>
 			</div>
-        -->
+        
 			<!-- ./Slider -->
 
     </div> <!-- End slider area -->

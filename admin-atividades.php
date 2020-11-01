@@ -6,6 +6,7 @@ use \Sbc\Model\User;
 use \Sbc\Model\Atividade;
 use \Sbc\Model\Faixaetaria;
 
+/*
 $app->get("/professor/atividade", function() {
 
 	User::verifyLogin();
@@ -16,6 +17,53 @@ $app->get("/professor/atividade", function() {
 
 	$page->setTpl("atividade", array(
 		'atividade'=>Atividade::checkList($atividade)
+	));
+});
+*/
+
+$app->get("/professor/atividade", function() {
+
+	User::verifyLogin();
+	// na linha abaixo retorna um array com todos os dados do usuário
+
+	$search = (isset($_GET['search'])) ? $_GET['search'] : "";
+
+	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
+
+	if ($search != '') {
+
+		$pagination = Atividade::getPageSearch($search, $page);
+
+	} else {
+
+		$pagination = Atividade::getPage($page);
+
+	}
+
+	$pages = [];
+
+	for ($x = 0; $x < $pagination['pages']; $x++)
+	{
+
+		array_push($pages, [
+			'href'=>'/professor/atividade?'.http_build_query([
+				'page'=>$x+1,
+				'search'=>$search
+			]),
+			'text'=>$x+1
+		]);
+
+	}
+
+	//$users = User::listAll();
+	// carrega uma pagina das páginas do admin
+	$page = new PageAdmin();
+
+	// envia para a página o array retornado pelo listAll
+	$page->setTpl("atividade", array( // aqui temos um array com muitos arrays
+		"atividade"=>$pagination['data'],
+		"search"=>$search,
+		"pages"=>$pages
 	));
 });
 

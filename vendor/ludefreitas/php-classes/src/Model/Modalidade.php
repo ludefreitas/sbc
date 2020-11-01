@@ -106,6 +106,44 @@ class Modalidade extends Model {
 
 	}
 
+	public function getTurmaPage($page = 1, $itemsPerPage = 3)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_turma a
+			INNER JOIN tb_turmatemporada b ON a.idturma = b.idturma
+            INNER JOIN tb_espaco c ON c.idespaco = a.idespaco
+            INNER JOIN tb_horario d ON c.idhorario = d.idhorario
+            INNER JOIN tb_atividade e ON a.idativ = e.idativ
+            INNER JOIN tb_fxetaria f ON e.idfxetaria = f.idfxetaria
+			INNER JOIN tb_users g ON a.iduser = g.iduser
+			INNER JOIN tb_persons h ON g.idperson = h.idperson
+            INNER JOIN tb_espaco i ON a.idespaco = i.idespaco
+			INNER JOIN tb_local j ON j.idlocal = c.idlocal
+			INNER JOIN tb_modalidade k ON k.idmodal = a.idmodal
+			WHERE k.idmodal = :idmodal
+			LIMIT $start, $itemsPerPage;
+			
+		", [
+			':idmodal'=>$this->getidmodal()
+		]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>Turma::checkList($results),
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+	}
+
+
 }
 
 
