@@ -13,91 +13,97 @@
 </div>
 <div class="single-product-area">
 	<div class="zigzag-bottom"></div>
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="product-content-right">
-					<form action="/checkout" class="checkout" method="post" name="checkout">
-						<div id="customer_details" class="col2-set">
-							<div class="row">
-								<div class="col-md-12">
+	  	<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="product-content-right">
+						<form action="/checkout" class="checkout" method="post" name="checkout">
+							<div id="customer_details" class="col2-set">
+								<div class="row">
+									<div class="col-md-12">
 
-									<?php if( $error != '' ){ ?>
+										<?php if( $error != '' ){ ?>
 
-									<div class="alert alert-danger">
+										<div class="alert alert-danger">
 										<?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
 
-									</div>
-									<?php } ?>
-
+										</div>
+										<?php } ?>
 
 									
+										<!--
+											<div class="woocommerce-billing-fields">
 
-									<div class="woocommerce-billing-fields">
 
 
+												<h3>Confirme a Inscrição</h3>
 
-										<h3>Confirme a Inscrição</h3>
+											<label for="pessoa">Nome da pessoa que irá fazer esta aula</label>
+								            <input type="text" value="<?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php echo htmlspecialchars( $pessoa["dtnasc"], ENT_COMPAT, 'UTF-8', FALSE ); ?> -  <?php echo htmlspecialchars( $pessoa["sexo"], ENT_COMPAT, 'UTF-8', FALSE ); ?> " placeholder="<?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, {function='calcularIdade($pessoa.dtnasc)'} anos, <?php echo htmlspecialchars( $pessoa["sexo"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" id="idpess" name="idpess" class="input-text ">						         
 
-								                <label for="pessoa">Confirme quem irá fazer esta aula</label>
-								                <select class="form-control" name="idpess">
-								                 
-								                <?php $counter1=-1;  if( isset($pessoa) && ( is_array($pessoa) || $pessoa instanceof Traversable ) && sizeof($pessoa) ) foreach( $pessoa as $key1 => $value1 ){ $counter1++; ?>
-
-								                    <option <?php if( $value1["idpess"] === $espaco["idpess"] ){ ?>selected="selected"<?php } ?> value="<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["dtnasc"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
-								                <?php } ?>
-
-								                
-								                </select>
-											<div class="row">
+								            
 											
-										</div>									
+											</div>								
                                         
 										
-										<div class="clear"></div>
+											<div class="clear">
+											
+											</div>
+										-->
 										<h3 id="order_review_heading" style="margin-top:30px;">Detalhes da Inscrição</h3>
-										<label for="horario">Confirme a turma</label>
 										<div id="order_review" style="position: relative;">
 											<table class="shop_table">
 												<thead>
 													<tr>
-														<th class="product-name"><strong class="product-name">Turma</strong></th>
+														<th colspan="5" class="product-name">
+															<strong class="product-name">Nome do aluno: <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
 														</th>
+													
+													</tr>
+													<tr>
+														<td colspan="5" class="product-name"><strong class="product-name">Turma</strong>
+														</td>
+														
 													</tr>
 												</thead>
 												<tbody>
-                                                    
-													<tr class="cart_item">
-														<td class="product-name">
-														</td>											
-                                                    </tr>
-                                                   
-												</tbody>
+												<?php $counter1=-1;  if( isset($turma) && ( is_array($turma) || $turma instanceof Traversable ) && sizeof($turma) ) foreach( $turma as $key1 => $value1 ){ $counter1++; ?>
+
+												<tr class="cart_item">
+													<td class="product-name">
+													 	<?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <br> <?php echo htmlspecialchars( $value1["periodo"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+
+												    </td>											
+
+	                                        		<td class="product-name">
+	                                            		<?php echo htmlspecialchars( $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> a <?php echo htmlspecialchars( $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <br> <?php echo htmlspecialchars( $value1["descrfxetaria"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+
+	                                        		</td> 
+
+	                                        		<td class="product-name">
+	                                             		<span class="amount">Professor(a) <br><?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> 
+	                                       		 	</td> 
+
+	                                       		 	<td class="product-name">
+														<?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <br> <?php echo htmlspecialchars( $value1["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, Nº <?php echo htmlspecialchars( $value1["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <br>
+													</td>
+                                       			</tr>
+                                             	<?php } ?>
+
+                                             	</tbody>                                        
+												
 												<tfoot>
-													<tr class="product-name">
-														<th>Crec</th>
-														
-													</tr>
-													<tr class="product-name">
-														<th>Dia da Semana / Horário</th>
-														
-													</tr>
-													<tr class="product-name">
-														<th>Professor</th>
-														
+													<tr class="order-total">
+														<th colspan="5" ><input type="submit" data-value="Place order" value="Confirmar Inscrição" id="place_order" name="woocommerce_checkout_place_order" class="button alt"></th>
 													</tr>
 												</tfoot>
+												
 											</table>
-											
-											
-											<div id="payment">
-												<div class="form-row place-order">
-													<input type="submit" data-value="Place order" value="Continuar" id="place_order" name="woocommerce_checkout_place_order" class="button alt">
-												</div>
-												<div class="clear"></div>
-											</div>
+
 										</div>
 									</div>
+
+
 								</div>
 							</div>
 						</div>

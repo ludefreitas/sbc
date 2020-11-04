@@ -66,7 +66,7 @@ class User extends Model {
 
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT * FROM tb_users a INNER JOIN tb_persons b ON a.idperson = b.idperson WHERE a.deslogin = :LOGIN", array(
+		$results = $sql->select("SELECT * FROM tb_users INNER JOIN tb_persons using(idperson) where deslogin = :LOGIN", array(
 			":LOGIN"=>$login
 		));
 
@@ -124,10 +124,22 @@ class User extends Model {
 
 		$sql = new Sql();
 
-		return $sql->select("SELECT * FROM tb_users a 	INNER JOIN tb_persons b USING(idperson) ORDER BY b.desperson");
+		return $sql->select("SELECT * FROM tb_users a 	INNER JOIN tb_persons b using(idperson) ORDER BY b.desperson");
 	
 	}
 
+	public static function listAllProf()
+	{
+
+		$sql = new Sql();
+
+		return $sql->select("
+			SELECT * FROM tb_users a 
+			INNER JOIN tb_persons b 
+			using(idperson) 
+			WHERE isprof = 1;
+			ORDER BY b.desperson");
+	}
 	
 	public function save()
 	{
@@ -145,19 +157,6 @@ class User extends Model {
 		));
 
 		$this->setData($results[0]);
-	}
-
-	public static function listAllProf()
-	{
-
-		$sql = new Sql();
-
-		return $sql->select("
-			SELECT * FROM tb_users a 
-			INNER JOIN tb_persons b 
-			using(idperson) 
-			WHERE isprof = 1;
-			ORDER BY b.desperson");
 	}
 
 	public function get($iduser)
@@ -206,11 +205,18 @@ class User extends Model {
 		));
 	}
 
-	
+	public static function getPasswordHash($password)
+	{
+
+		return password_hash($password, PASSWORD_DEFAULT, [
+			'cost'=>12
+		]);
+
+	}
+
 	public static function getForgot($email, $inadmin = true)
 	{
      $sql = new Sql();
-
      $results = $sql->select("
          SELECT *
          FROM tb_persons a
@@ -219,13 +225,17 @@ class User extends Model {
      ", array(
          ":email"=>$email
      ));
+
      if (count($results) === 0)
      {
+
          throw new \Exception("Não foi possível recuperar a senha.");
+
      }
      else
      {
          $data = $results[0];
+
          $results2 = $sql->select("CALL sp_userspasswordsrecoveries_create(:iduser, :desip)", array(
              ":iduser"=>$data['iduser'],
              ":desip"=>$_SERVER['REMOTE_ADDR']
@@ -254,8 +264,6 @@ class User extends Model {
          }
      }
  }
-
-  
  public static function validForgotDecrypt($result)
  {
      $result = base64_decode($result);
@@ -286,9 +294,8 @@ class User extends Model {
          return $results[0];
      }
  }
- 
 
- 	public static function setForgotUsed($idrecovery)
+ public static function setForgotUsed($idrecovery)
 	{
 
 		$sql = new Sql();
@@ -306,13 +313,65 @@ class User extends Model {
 
 		$sql->query("UPDATE tb_users SET despassword = :password WHERE iduser = :iduser", array(
 			":password"=>$password,
-			//":password"=>User::getPasswordHash($password),
+			":password"=>User::getPasswordHash($password),
 			":iduser"=>$this->getiduser()
 		));
 
 	}
 
-	
+	public static function getPage($page = 1, $itemsPerPage = 5)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_users a 
+			INNER JOIN tb_persons b USING(idperson) 
+			ORDER BY b.desperson
+			LIMIT $start, $itemsPerPage;
+		");
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+
+	public static function getPageSearch($search, $page = 1, $itemsPerPage = 10)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_users a 
+			INNER JOIN tb_persons b USING(idperson)
+			WHERE b.desperson LIKE :search OR b.desemail = :search OR a.deslogin LIKE :search
+			ORDER BY b.desperson
+			LIMIT $start, $itemsPerPage;
+		", [
+			':search'=>'%'.$search.'%'
+		]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+
 	public static function setError($msg)
 	{
 
@@ -401,15 +460,6 @@ class User extends Model {
 
 	}
 
-	public static function getPasswordHash($password)
-	{
-
-		return password_hash($password, PASSWORD_DEFAULT, [
-			'cost'=>12
-		]);
-
-	}
-
 	public function getPessoas()	{
 
 		$sql = new Sql();
@@ -441,61 +491,7 @@ class User extends Model {
 		$this->setData($rows[0]);
 	}
 
-
-
-	public static function getPage($page = 1, $itemsPerPage = 5)
-	{
-
-		$start = ($page - 1) * $itemsPerPage;
-
-		$sql = new Sql();
-
-		$results = $sql->select("
-			SELECT SQL_CALC_FOUND_ROWS *
-			FROM tb_users a 
-			INNER JOIN tb_persons b USING(idperson) 
-			ORDER BY b.desperson
-			LIMIT $start, $itemsPerPage;
-		");
-
-		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
-
-		return [
-			'data'=>$results,
-			'total'=>(int)$resultTotal[0]["nrtotal"],
-			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
-		];
-
-	}
-
-	public static function getPageSearch($search, $page = 1, $itemsPerPage = 10)
-	{
-
-		$start = ($page - 1) * $itemsPerPage;
-
-		$sql = new Sql();
-
-		$results = $sql->select("
-			SELECT SQL_CALC_FOUND_ROWS *
-			FROM tb_users a 
-			INNER JOIN tb_persons b USING(idperson)
-			WHERE b.desperson LIKE :search OR b.desemail = :search OR a.deslogin LIKE :search
-			ORDER BY b.desperson
-			LIMIT $start, $itemsPerPage;
-		", [
-			':search'=>'%'.$search.'%'
-		]);
-
-		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
-
-		return [
-			'data'=>$results,
-			'total'=>(int)$resultTotal[0]["nrtotal"],
-			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
-		];
-
-	}
-
 }
+
 
 ?>

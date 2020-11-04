@@ -12,7 +12,6 @@ use \Sbc\Model\Pessoa;
 use \Sbc\Model\User;
 use \Sbc\Model\Modalidade;
 
-
 $app->get('/', function() {
 
 	$turma = Turma::listAllTurmaTemporada();
@@ -40,9 +39,65 @@ $app->get("/cart", function(){
 		'cart'=>$cart->getValues(),
 		'turma'=>$cart->getTurma(),
 		'pessoa'=>$user->getPessoas(),
-		'error'=>Cart::getMsgError()
+		'error'=>Cart::getMsgError(),
+		'msgError'=>Cart::getMsgError(),
+		'msgSuccess'=>Cart::getMsgSuccess()
 	]);
 
+});
+
+$app->post("/cart", function() {
+
+	User::verifyLogin(false);
+
+	$cart = new Cart();
+
+	$_POST['idcart'] = (int)$_SESSION[Cart::SESSION]["idcart"];
+	$_POST['iduser'] = (int)$_SESSION[User::SESSION]["iduser"];
+
+	//var_dump($_POST);
+	//exit();
+
+
+
+	$cart->setData($_POST);
+
+
+	$cart->save([
+		'idcart'=>$_POST['idcart'],
+		':iduser'=>$_POST['iduser'],		
+		':idpess'=>$_POST['idpess'],
+		':dessessionid'
+	]);
+
+	header("Location: /checkout");
+	exit();
+});
+
+$app->get("/checkout", function(){
+
+	User::verifyLogin(false);	
+
+	$cart = Cart::getFromSession();
+
+	$user = User::getFromSession();
+
+	$idpess = $_GET['idpess'];
+
+	//$idpess->getidpess();
+
+	$cart->save();
+		
+
+	$page = new Page();
+
+	$page->setTpl("checkout", [
+		'cart'=>$cart->getValues(),
+		//'pessoa'=>$cart->getPessoa(),
+		'pessoa'=>$pessoa->getValues(),
+		'turma'=>$cart->getTurma(),
+		'error'=>Cart::getError(),
+	]);
 });
 
 $app->get("/cart/:idturma/add", function($idturma){
@@ -53,7 +108,17 @@ $app->get("/cart/:idturma/add", function($idturma){
 
 	$cart = Cart::getFromSession();
 
-	$cart->addTurma($turma);
+	$idcart = (int)$_SESSION[Cart::SESSION]["idcart"];
+
+	if( Cart::cartIsEmpty($idcart) > 0){
+
+		var_dump("Você já selecionou uma turma! remova a atual para continuar.");
+		exit();
+
+	}else{
+				
+			$cart->addTurma($turma);
+	}		
 	
 	header("Location: /cart");
 	exit;
@@ -226,23 +291,6 @@ $app->get("/turma/:idturma", function($idturma){
 
 });
 
-$app->get("/checkout", function(){
-
-	User::verifyLogin(false);
-
-	$cart = Cart::getFromSession();
-
-	$pessoa = new Pessoa();
-
-	$page = new Page();
-
-	$page->setTpl("checkout", [
-		'cart'=>$cart->getValues(),
-		'pessoa'=>$pessoa->getValues(),
-		'error'=>Pessoa::getError()
-	]);
-
-});
 
 $app->get("/login", function(){
 
@@ -315,14 +363,6 @@ $app->post("/register", function(){
 
 	}
 
-	if (!isset($_POST['phone']) || $_POST['phone'] == '') {
-
-		User::setErrorRegister("Preencha o seu número de telefone.");
-		header("Location: /login");
-		exit;
-
-	}
-
 	if (User::checkLoginExist($_POST['email']) === true) {
 
 		User::setErrorRegister("Este endereço de e-mail já está sendo usado por outro usuário.");
@@ -348,8 +388,6 @@ $app->post("/register", function(){
 
 	User::login($_POST['email'], $_POST['password']);
 
-	$_SESSION['registerValues'] = NULL;
-
 	header('Location: /checkout');
 	exit;
 
@@ -363,7 +401,7 @@ $app->get("/forgot", function() {
 
 });
 
-$app->post("/forgot", function(){
+$app->post("/forgot", function($email){
 
 	$user = User::getForgot($_POST["email"], false);
 
@@ -380,6 +418,7 @@ $app->get("/forgot/sent", function(){
 
 });
 
+
 $app->get("/forgot/reset", function(){
 
 	$user = User::validForgotDecrypt($_GET["code"]);
@@ -395,9 +434,9 @@ $app->get("/forgot/reset", function(){
 
 $app->post("/forgot/reset", function(){
 
-	$forgot = User::validForgotDecrypt($_POST["code"]);
+	$forgot = User::validForgotDecrypt($_POST["code"]);	
 
-	User::setForgotUsed($forgot["idrecovery"]);
+	User::setFogotUsed($forgot["idrecovery"]);
 
 	$user = new User();
 
@@ -412,69 +451,6 @@ $app->post("/forgot/reset", function(){
 	$page->setTpl("forgot-reset-success");
 
 });
-
-$app->get("/profile", function(){
-
-	User::verifyLogin(false);
-
-	$user = User::getFromSession();
-
-	$page = new Page();
-
-	$page->setTpl("profile", [
-		'user'=>$user->getValues(),
-		'profileMsg'=>User::getSuccess(),
-		'profileError'=>User::getError()
-	]);
-});
-
-	$app->post("/profile", function(){
-
-	User::verifyLogin(false);
-
-	if (!isset($_POST['desperson']) || $_POST['desperson'] === '') {
-		User::setError("Preencha o seu nome.");
-		header('Location: /profile');
-		exit;
-	}
-
-	if (!isset($_POST['desemail']) || $_POST['desemail'] === '') {
-		User::setError("Preencha o seu e-mail.");
-		header('Location: /profile');
-		exit;
-	}
-
-	$user = User::getFromSession();
-
-	if ($_POST['desemail'] !== $user->getdesemail()) {
-
-		if (User::checkLoginExists($_POST['desemail']) === true) {
-
-			User::setError("Este endereço de e-mail já está cadastrado.");
-			header('Location: /profile');
-			exit;
-
-		}
-
-	}
-
-	$_POST['iduser'] = $user->getiduser();
-	$_POST['inadmin'] = $user->getinadmin();
-	$_POST['isprof'] = $user->getisprof();
-	$_POST['despassword'] = $user->getdespassword();
-	$_POST['deslogin'] = $_POST['desemail'];
-
-	$user->setData($_POST);
-
-	$user->update();
-
-	User::setSuccess("Dados alterados com sucesso!");
-
-	header('Location: /profile');
-	exit;
-
-});
-
 
 $app->get("/pessoa-create", function() {
 
@@ -573,6 +549,21 @@ $app->post("/registerpessoa", function(){
 
 });
 
+/*
+$app->get("/pessoa/:idpess/status", function($idpess) {
+
+	User::verifyLogin(false);
+
+	$pessoa = new Pessoa();
+
+	$pessoa->get((int)$idpess);
+
+	$pessoa->setStatus();
+
+	header("Location: /user-pessoas");
+	exit();	
+});
+*/
 $app->get("/user/:idpess/status", function($idpess){
 
 	User::verifyLogin(false);	
@@ -591,7 +582,7 @@ $app->get("/user/:idpess/status", function($idpess){
 	Pessoa::setSuccess("Status atualizado.");
 
 	header("Location: /user/pessoas");
-	exit();
+	exit;
 
 });
 
@@ -676,6 +667,9 @@ $app->get("/modalidades", function() {
 		'modalidades'=>$modalidades
 	));
 });
+
+
+
 
 
 

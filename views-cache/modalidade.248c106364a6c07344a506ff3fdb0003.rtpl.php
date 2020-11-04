@@ -35,15 +35,13 @@
             </div> 
            
              <?php }else{ ?>
-<div class="alert alert-info">
- Nenhuma turma encontrada para esta modallidade.
-
-</div>
-<div class="alert alert">
- <a class="btn btn-success" href="/" >Encontre uma atividade aqui!</a>
- 
-</div>
-<?php } ?>     
+            <div class="alert alert-info">
+                 Nenhuma turma encontrada para esta modallidade.
+            </div>
+            <div class="alert alert">
+                <a class="btn btn-success" href="/" >Encontre uma atividade aqui!</a>
+            </div>
+            <?php } ?>     
 
         </div>
         

@@ -11,6 +11,9 @@ class Cart extends Model {
 
 	const SESSION = "Cart";
 	const SESSION_ERROR = "CartError";
+	const ERROR = "CartError";
+	const ERROR_REGISTER = "CartErrorRegister";
+	const SUCCESS = "CartSucesss";	
 
 	public static function getFromSession()
 	{
@@ -174,35 +177,121 @@ class Cart extends Model {
 		return Turma::checkList($rows);
 
 	}
-	
 
-	public static function setMsgError($msg)
+	public function getPessoa()
 	{
 
-		$_SESSION[Cart::SESSION_ERROR] = $msg;
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT * 
+			FROM tb_pessoa a 
+            INNER JOIN tb_carts b ON b.idpess = a.idpess
+			WHERE b.idcart = :idcart
+			-- GROUP BY b.idturma, b.descturma
+			-- ORDER BY b.descturma
+		", [
+			':idcart'=>$this->getidcart()
+		]);
+
+		return $results[0];
+	}	
+
+	public static function setError($msg)
+	{
+		$_SESSION[Cart::ERROR] = $msg;
+
+	}
+	public static function getError()
+	{
+		$msg = (isset($_SESSION[Cart::ERROR]) && $_SESSION[Cart::ERROR]) ? $_SESSION[Cart::ERROR] : '';
+
+		Cart::clearError();
+
+		return $msg;
+	}
+
+	public static function clearError()
+	{
+		$_SESSION[Cart::ERROR] = NULL;
+	}
+
+	public static function setSuccess($msg)
+	{
+		$_SESSION[Cart::SUCCESS] = $msg;
+	}
+
+	public static function getSuccess()
+	{
+		$msg = (isset($_SESSION[Cart::SUCCESS]) && $_SESSION[Cart::SUCCESS]) ? $_SESSION[Cart::SUCCESS] : '';
+
+		Cart::clearSuccess();
+
+		return $msg;
+	}
+
+	public static function clearSuccess()
+	{
+
+		$_SESSION[Cart::SUCCESS] = NULL;
 
 	}
 
-	public static function getMsgError()
+
+	public static function setMsgError($msg)
 	{
+		$_SESSION[Cart::SESSION_ERROR] = $msg;
+	}
+
+	public static function getMsgError()	{
 
 		$msg = (isset($_SESSION[Cart::SESSION_ERROR])) ? $_SESSION[Cart::SESSION_ERROR] : "";
 
 		Cart::clearMsgError();
 
 		return $msg;
-
 	}
 
 	public static function clearMsgError()
 	{
-
 		$_SESSION[Cart::SESSION_ERROR] = NULL;
+	}
+
+	public static function setMsgSuccess($msg)
+	{
+		$_SESSION[Cart::SUCCESS] = $msg;
+	}
+
+	public static function getMsgSuccess()
+	{
+		$msg = (isset($_SESSION[Cart::SUCCESS]) && $_SESSION[Cart::SUCCESS]) ? $_SESSION[Cart::SUCCESS] : '';
+
+		Cart::clearMsgSuccess();
+
+		return $msg;
+	}
+
+	public static function clearMsgSuccess()
+	{
+
+		$_SESSION[Cart::SUCCESS] = NULL;
+
+	}
+
+	public static function cartIsEmpty($idcart)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_cartsturmas WHERE idcart = :idcart AND dtremoved IS NULL", [
+			':idcart'=>$idcart
+		]);
+
+		return (count($results) > 0);
 
 	}	
 
-	
-	
+
 
 }
 

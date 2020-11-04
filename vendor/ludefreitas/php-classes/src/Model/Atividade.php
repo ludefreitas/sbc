@@ -123,66 +123,6 @@ class Atividade extends Model {
 
 	}
 
-	public static function getPage($page = 1, $itemsPerPage = 10)
-	{
-
-		$start = ($page - 1) * $itemsPerPage;
-
-		$sql = new Sql();
-
-		$results = $sql->select("
-			SELECT SQL_CALC_FOUND_ROWS *
-			FROM tb_atividade a 
-			INNER JOIN tb_fxetaria b
-			using(idfxetaria)
-			ORDER BY a.nomeativ
-			LIMIT $start, $itemsPerPage;
-		");
-
-		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
-
-		return [
-			'data'=>$results,
-			'total'=>(int)$resultTotal[0]["nrtotal"],
-			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
-		];
-
-	}
-
-	public static function getPageSearch($search, $page = 1, $itemsPerPage = 5)
-	{
-
-		$start = ($page - 1) * $itemsPerPage;
-
-		$sql = new Sql();
-
-		$results = $sql->select("
-			SELECT SQL_CALC_FOUND_ROWS *
-			FROM tb_atividade a 
-			INNER JOIN tb_fxetaria b
-			using(idfxetaria)
-      		WHERE a.descativ LIKE :search 
-      		OR a.nomeativ LIKE :search
-			OR b.descrfxetaria LIKE :search
-			OR b.initidade LIKE :search
-			OR b.fimidade LIKE :search
-			ORDER BY a.descativ
-			LIMIT $start, $itemsPerPage;
-		", [
-			':search'=>'%'.$search.'%'
-		]);
-
-		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
-
-		return [
-			'data'=>$results,
-			'total'=>(int)$resultTotal[0]["nrtotal"],
-			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
-		];
-
-	}
-
-
 }
 
 
