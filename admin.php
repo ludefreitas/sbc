@@ -85,10 +85,9 @@ $app->get("/professor/forgot/reset", function() {
 	));
 });
 
-
 $app->post("/professor/forgot/reset", function() {
 
-	$forgot = User::validForgotDecrypt($_POST["code"]);	
+	$forgot = User::validForgotDecrypt($_POST["code"]);
 
 	User::setForgotUsed($forgot["idrecovery"]);
 
@@ -96,9 +95,7 @@ $app->post("/professor/forgot/reset", function() {
 
 	$user->get((int)$forgot["iduser"]);
 
-	$password = User::getPasswordHash($_POST["password"]);
-
-	$user->setPassword($password);
+	$user->setPassword($_POST["password"]);
 
 	$page = new PageAdmin([
 		"header"=>false,

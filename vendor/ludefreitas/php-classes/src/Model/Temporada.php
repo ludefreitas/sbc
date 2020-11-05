@@ -134,10 +134,10 @@ class Temporada extends Model {
 		$html = [];
 
 		foreach ($temporada as $row) {
-			array_push($html, '<li><a href="/temporada/'.$row['idtemporada'].'"><i class="fa fa-users"></i> Temporada - '.$row['desctemporada'].'</a></li>');
+			array_push($html, '<li><a href="/professor/temporada/'.$row['idtemporada'].'"><i class="fa fa-users"></i> Temporada - '.$row['desctemporada'].'</a></li>');
 
 		}
-		file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."professor".DIRECTORY_SEPARATOR."admin-temporada-menu.html", implode('', $html));
+		file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."professor".DIRECTORY_SEPARATOR."professor-temporada-menu.html", implode('', $html));
 	}
 
 	public function getTurmaTemporadaPage($page = 1, $itemsPerPage = 4)

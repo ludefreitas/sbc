@@ -58,8 +58,6 @@ $app->post("/cart", function() {
 	//var_dump($_POST);
 	//exit();
 
-
-
 	$cart->setData($_POST);
 
 
@@ -67,7 +65,7 @@ $app->post("/cart", function() {
 		'idcart'=>$_POST['idcart'],
 		':iduser'=>$_POST['iduser'],		
 		':idpess'=>$_POST['idpess'],
-		':dessessionid'
+		//':dessessionid'
 	]);
 
 	header("Location: /checkout");
@@ -76,27 +74,22 @@ $app->post("/cart", function() {
 
 $app->get("/checkout", function(){
 
-	User::verifyLogin(false);	
+	User::verifyLogin(false);
 
 	$cart = Cart::getFromSession();
 
-	$user = User::getFromSession();
+	$pessoa = new Pessoa();
 
-	$idpess = $_GET['idpess'];
-
-	//$idpess->getidpess();
-
-	$cart->save();
-		
+	//var_dump($cart->getidpess());
+	//exit();
 
 	$page = new Page();
 
 	$page->setTpl("checkout", [
 		'cart'=>$cart->getValues(),
-		//'pessoa'=>$cart->getPessoa(),
-		'pessoa'=>$pessoa->getValues(),
+		'pessoa'=>$cart->getPessoa(),
 		'turma'=>$cart->getTurma(),
-		'error'=>Cart::getError(),
+		'error'=>Pessoa::getError()
 	]);
 });
 
@@ -317,7 +310,7 @@ $app->post("/login", function(){
 
 	}
 
-	header("Location: /checkout");
+	header("Location: /cart");
 	exit;
 
 });

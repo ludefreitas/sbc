@@ -34,16 +34,19 @@
 
                             <table cellspacing="0" class="shop_table cart">
                                 <thead>
+                                      <?php $counter1=-1;  if( isset($turma) && ( is_array($turma) || $turma instanceof Traversable ) && sizeof($turma) ) foreach( $turma as $key1 => $value1 ){ $counter1++; ?>
+
                                     <tr>
                                         <th class="product-remove">Remover</th>
                                         <th class="product-thumbnail">&nbsp;</th>
                                         <th class="product-name">Turma</th>
                                          <th class="product-quantity">Local</th>
                                          <th class="product-quantity">Horário </th>
-                                        <th class="product-price">Faixa Etária</th>
-                                       
+                                        <th class="product-price">Faixa Etária</th>                          
                                         <th class="product-subtotal">Professor(a)</th>
                                     </tr>
+                                    <?php } ?>
+
                                 </thead>
                                 <tbody>
                                     <?php $counter1=-1;  if( isset($turma) && ( is_array($turma) || $turma instanceof Traversable ) && sizeof($turma) ) foreach( $turma as $key1 => $value1 ){ $counter1++; ?>
@@ -120,8 +123,7 @@
                                              <?php } ?>
 
                                             <div class="box-body">
-                                                <div class="form-group">
-                                                    <label for="desproduct">Status do Pedido</label>
+                                                <div class="form-group">                                            
                                                     <select class="form-control" name="idpess">
                                                         <?php $counter1=-1;  if( isset($pessoa) && ( is_array($pessoa) || $pessoa instanceof Traversable ) && sizeof($pessoa) ) foreach( $pessoa as $key1 => $value1 ){ $counter1++; ?>
 

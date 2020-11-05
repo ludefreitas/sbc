@@ -34,35 +34,39 @@
 										<!--
 											<div class="woocommerce-billing-fields">
 
-
-
 												<h3>Confirme a Inscrição</h3>
 
 											<label for="pessoa">Nome da pessoa que irá fazer esta aula</label>
-								            <input type="text" value="<?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php echo htmlspecialchars( $pessoa["dtnasc"], ENT_COMPAT, 'UTF-8', FALSE ); ?> -  <?php echo htmlspecialchars( $pessoa["sexo"], ENT_COMPAT, 'UTF-8', FALSE ); ?> " placeholder="<?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, {function='calcularIdade($pessoa.dtnasc)'} anos, <?php echo htmlspecialchars( $pessoa["sexo"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" id="idpess" name="idpess" class="input-text ">						         
-
-								            
+								            <input type="text" value="<?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php echo htmlspecialchars( $pessoa["dtnasc"], ENT_COMPAT, 'UTF-8', FALSE ); ?> -  <?php echo htmlspecialchars( $pessoa["sexo"], ENT_COMPAT, 'UTF-8', FALSE ); ?> " placeholder="<?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, {function='calcularIdade($pessoa.dtnasc)'} anos, <?php echo htmlspecialchars( $pessoa["sexo"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" id="idpess" name="idpess" class="input-text ">								            
 											
 											</div>								
                                         
-										
+										-->
 											<div class="clear">
 											
 											</div>
-										-->
+
 										<h3 id="order_review_heading" style="margin-top:30px;">Detalhes da Inscrição</h3>
 										<div id="order_review" style="position: relative;">
 											<table class="shop_table">
 												<thead>
 													<tr>
 														<th colspan="5" class="product-name">
-															<strong class="product-name">Nome do aluno: <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
+															Nome do aluno <strong class="product-name"> -  <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
 														</th>
 													
 													</tr>
 													<tr>
+														<?php $counter1=-1;  if( isset($turma) && ( is_array($turma) || $turma instanceof Traversable ) && sizeof($turma) ) foreach( $turma as $key1 => $value1 ){ $counter1++; ?>
+
 														<td colspan="5" class="product-name"><strong class="product-name">Turma</strong>
 														</td>
+														<?php }else{ ?>
+
+														<td colspan="5" class="product-name"><strong class="product-name">Não há turma para confirmar</strong>
+														</td>
+														<?php } ?>
+
 														
 													</tr>
 												</thead>
@@ -90,12 +94,26 @@
                                        			</tr>
                                              	<?php } ?>
 
+
                                              	</tbody>                                        
 												
 												<tfoot>
+													<?php $counter1=-1;  if( isset($turma) && ( is_array($turma) || $turma instanceof Traversable ) && sizeof($turma) ) foreach( $turma as $key1 => $value1 ){ $counter1++; ?>
+
 													<tr class="order-total">
-														<th colspan="5" ><input type="submit" data-value="Place order" value="Confirmar Inscrição" id="place_order" name="woocommerce_checkout_place_order" class="button alt"></th>
+														<th colspan="5" ><input type="submit" data-value="Place order" value="Confirmar Inscrição" id="place_order" name="woocommerce_checkout_place_order" class="button alt" disabled=""></th>
 													</tr>
+													<?php }else{ ?>
+
+													<tr class="order-total">
+														<td colspan="5" class="product-name"><strong class="product-name"><a href="/cart">Encontrar uma turma</a></strong>
+														</td>
+													</tr>
+													<?php } ?>
+
+													
+														
+													
 												</tfoot>
 												
 											</table>

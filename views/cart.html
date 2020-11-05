@@ -30,16 +30,17 @@
 
                             <table cellspacing="0" class="shop_table cart">
                                 <thead>
+                                      {loop="$turma"}
                                     <tr>
                                         <th class="product-remove">Remover</th>
                                         <th class="product-thumbnail">&nbsp;</th>
                                         <th class="product-name">Turma</th>
                                          <th class="product-quantity">Local</th>
                                          <th class="product-quantity">Horário </th>
-                                        <th class="product-price">Faixa Etária</th>
-                                       
+                                        <th class="product-price">Faixa Etária</th>                          
                                         <th class="product-subtotal">Professor(a)</th>
                                     </tr>
+                                    {/loop}
                                 </thead>
                                 <tbody>
                                     {loop="$turma"}
@@ -107,8 +108,7 @@
                                         <!--<form role="form" action="/cart/{$value.idpess}/insert" method="get">-->
                                              {/loop}
                                             <div class="box-body">
-                                                <div class="form-group">
-                                                    <label for="desproduct">Status do Pedido</label>
+                                                <div class="form-group">                                            
                                                     <select class="form-control" name="idpess">
                                                         {loop="$pessoa"}
                                                          <option {if="$value.iduser === $user.iduser"}selected="selected"{/if} value="{$value.idpess}">{$value.nomepess}, {function="calcularIdade($value.dtnasc)"} anos, {$value.sexo}</option>
