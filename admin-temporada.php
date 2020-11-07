@@ -102,6 +102,25 @@ $app->post("/professor/temporada/:idtemporada", function($idtemporada) {
 	exit();	
 });
 
+$app->get("/professor/turma-temporada/:idtemporada", function($idtemporada) {
+
+	User::verifyLogin();
+
+	$temporada = new Temporada();
+	$turma = new Turma();
+
+	$temporada->get((int)$idtemporada);	
+
+	//var_dump($temporada->getTurma(true)); exit();
+
+	$page = new PageAdmin();	
+
+	$page->setTpl("turmas-por-temporada", [
+		'temporada'=>$temporada->getValues(),
+		'turmaRelated'=>$temporada->getTurma(true),
+		//'turmaNotRelated'=>$temporada->getTurma(false)
+	]);	
+});
 
 $app->get("/professor/temporada/:idtemporada/turma", function($idtemporada) {
 
@@ -109,13 +128,9 @@ $app->get("/professor/temporada/:idtemporada/turma", function($idtemporada) {
 
 	$temporada = new Temporada();
 
-	$temporada->get((int)$idtemporada);
+	$temporada->get((int)$idtemporada);	
 
-	
-
-	$page = new PageAdmin();
-
-	
+	$page = new PageAdmin();	
 
 	$page->setTpl("turma-temporada", [
 		'temporada'=>$temporada->getValues(),

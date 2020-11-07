@@ -46,7 +46,7 @@
               <label for="idstatustemporada"> Status Temporada</label>
               <select class="form-control" name="idstatustemporada">
                 {loop="$statustemporada"}
-                <option {if="$value.idstatustemporada === $temporada.idstatustemporada"}selected="selected"{/if} value="{$value.idstatustemporada}">{$value.descstatustemporada} </option>
+                <option {if="$value.idstatustemporada === $temporada.idstatustemporada"}selected="selected"{/if} value="{$value.idstatustemporada}">{$value.idstatustemporada} - {$value.descstatustemporada} </option>
                 {/loop}
               </select>
             </div>

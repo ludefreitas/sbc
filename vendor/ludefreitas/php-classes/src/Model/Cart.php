@@ -186,8 +186,9 @@ class Cart extends Model {
 		$results = $sql->select("
 			SELECT * 
 			FROM tb_pessoa a 
-            INNER JOIN tb_carts b ON b.idpess = a.idpess
-			WHERE b.idcart = :idcart
+			INNER JOIN tb_users b ON b.iduser = a.iduser
+            INNER JOIN tb_carts c ON c.idpess = a.idpess
+			WHERE c.idcart = :idcart
 			-- GROUP BY b.idturma, b.descturma
 			-- ORDER BY b.descturma
 		", [

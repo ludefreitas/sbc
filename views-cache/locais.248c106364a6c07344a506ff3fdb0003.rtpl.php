@@ -1,8 +1,6 @@
- <div class="slider-area"> 
-
+<?php if(!class_exists('Rain\Tpl')){exit;}?><div class="slider-area">
         	<!-- Slider -->
-            <!--
-			<div class="block-slider block-slider4">
+			<!--<div class="block-slider block-slider4">
 				<ul class="" id="bxslider-home4">
 					<li><img src="res/site/img/natacao.png" alt="Slide">
 						<div class="caption-group">
@@ -60,12 +58,11 @@
 						</div>
 					</li>
 				</ul>
-			</div> 
-            -->
+			</div>
+        -->
 			<!-- ./Slider -->
 
-   </div> 
-    <!-- End slider area -->
+    </div> <!-- End slider area -->
     <!--
     <div class="promo-area">
         <div class="zigzag-bottom"></div>
@@ -93,54 +90,42 @@
                 </div>
             </div>
         </div>
-    </div>  
-    -->
-    <!--End promo area -->
-
-
+    </div>  End promo area -->
     
-<div class="maincontent-area">
-        <div class="zigzag-bottom">            
-        </div>
+    <div class="maincontent-area">
+        <div class="zigzag-bottom"></div>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <div class="latest-product">
-                        <h2 class="section-title">Cursos</h2>
+                        <h2 class="section-title">Crecs <br> Centros Esportivos, Recreativos e Culturais</h2>
                         <div class="product-carousel">
-                            {loop="$turma"}
+                            <?php $counter1=-1;  if( isset($locais) && ( is_array($locais) || $locais instanceof Traversable ) && sizeof($locais) ) foreach( $locais as $key1 => $value1 ){ $counter1++; ?>
+
                             
                             <div class="single-product">
                                 <div class="product-upper">
                              <!-- <img src="/res/site/img/orquideas.jpg" alt=""> -->
-                            <img class="img-responsive" id="image-preview" src="{$value.desphoto}" alt="Photo">
+                                              
 
                              </div>
+                             <div class="product-upper">
+                             <h2><a href="/local/<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><span><?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span> <br><?php echo htmlspecialchars( $value1["nomelocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?> das <?php echo htmlspecialchars( $value1["complemento"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $value1["bairro"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a></h2>                        
 
-                                <h2><a href="/turma/{$value.idturma}">{$value.descturma} {$value.descrfxetaria} no {$value.apelidolocal} - {$value.diasemana} das {$value.horainicio} às {$value.horatermino} com o professor(a): {$value.desperson} - Turma {$value.desstatus} </a></h2>
+                             </div>                       
+                                
+                                <div class="product-option-shop">
+                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/local/<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">Cursos Diponíveis</a>
+                            </div>                       
                             </div>
-                           {else}
-                            <div class="maincontent-area">                                
-                                <h2>Temporada  <br> não iniciada ): </h2>                               
+                            <?php } ?>
+
                             </div>
-                            <div class="maincontent-area">                             
-                                <h1>Lo_| _Aguarde  </h1>
-                            </div>
-                             <div class="maincontent-area"> 
-                                <h1>Em breve \o/ </h1>                              
-                            </div>
-                            <div class="maincontent-area">                              
-                                <h1>Novidades :) </h1>
-                            </div>
-                            
-                        {/loop}
-                       
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div> <!-- End main content area -->
+    </div> <!-- End main content area -->
     
     <div class="brands-area">
         <div class="zigzag-bottom"></div>

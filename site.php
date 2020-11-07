@@ -38,7 +38,7 @@ $app->get("/cart", function(){
 	$page->setTpl("cart", [
 		'cart'=>$cart->getValues(),
 		'turma'=>$cart->getTurma(),
-		'pessoa'=>$user->getPessoas(),
+		'pessoa'=>$cart->getPessoas(),
 		'error'=>Cart::getMsgError(),
 		'msgError'=>Cart::getMsgError(),
 		'msgSuccess'=>Cart::getMsgSuccess()
@@ -54,6 +54,7 @@ $app->post("/cart", function() {
 
 	$_POST['idcart'] = (int)$_SESSION[Cart::SESSION]["idcart"];
 	$_POST['iduser'] = (int)$_SESSION[User::SESSION]["iduser"];
+	$_POST['dessessionid'] = $_SESSION[Cart::SESSION]["dessessionid"];
 
 	//var_dump($_POST);
 	//exit();
@@ -65,7 +66,7 @@ $app->post("/cart", function() {
 		'idcart'=>$_POST['idcart'],
 		':iduser'=>$_POST['iduser'],		
 		':idpess'=>$_POST['idpess'],
-		//':dessessionid'
+		':dessessionid'=>$_POST['dessessionid']
 	]);
 
 	header("Location: /checkout");

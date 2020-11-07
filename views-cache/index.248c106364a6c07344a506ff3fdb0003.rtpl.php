@@ -1,6 +1,8 @@
-<?php if(!class_exists('Rain\Tpl')){exit;}?><div class="slider-area">
+<?php if(!class_exists('Rain\Tpl')){exit;}?> <div class="slider-area"> 
+
         	<!-- Slider -->
-			<!--<div class="block-slider block-slider4">
+            <!--
+			<div class="block-slider block-slider4">
 				<ul class="" id="bxslider-home4">
 					<li><img src="res/site/img/natacao.png" alt="Slide">
 						<div class="caption-group">
@@ -58,11 +60,12 @@
 						</div>
 					</li>
 				</ul>
-			</div>
-        -->
+			</div> 
+            -->
 			<!-- ./Slider -->
 
-    </div> <!-- End slider area -->
+   </div> 
+    <!-- End slider area -->
     <!--
     <div class="promo-area">
         <div class="zigzag-bottom"></div>
@@ -90,10 +93,15 @@
                 </div>
             </div>
         </div>
-    </div>  End promo area -->
+    </div>  
+    -->
+    <!--End promo area -->
+
+
     
-    <div class="maincontent-area">
-        <div class="zigzag-bottom"></div>
+<div class="maincontent-area">
+        <div class="zigzag-bottom">            
+        </div>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -112,14 +120,30 @@
 
                                 <h2><a href="/turma/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php echo htmlspecialchars( $value1["descrfxetaria"], ENT_COMPAT, 'UTF-8', FALSE ); ?> no <?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?> das <?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> com o professor(a): <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - Turma <?php echo htmlspecialchars( $value1["desstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </a></h2>
                             </div>
-                            <?php } ?>
+                           <?php }else{ ?>
 
+                            <div class="maincontent-area">                                
+                                <h2>Temporada  <br> não iniciada ): </h2>                               
                             </div>
+                            <div class="maincontent-area">                             
+                                <h1>Lo_| _Aguarde  </h1>
+                            </div>
+                             <div class="maincontent-area"> 
+                                <h1>Em breve \o/ </h1>                              
+                            </div>
+                            <div class="maincontent-area">                              
+                                <h1>Novidades :) </h1>
+                            </div>
+                            
+                        <?php } ?>
+
+                       
                     </div>
                 </div>
             </div>
         </div>
-    </div> <!-- End main content area -->
+    </div>
+</div> <!-- End main content area -->
     
     <div class="brands-area">
         <div class="zigzag-bottom"></div>

@@ -134,7 +134,7 @@ class Temporada extends Model {
 		$html = [];
 
 		foreach ($temporada as $row) {
-			array_push($html, '<li><a href="/professor/temporada/'.$row['idtemporada'].'"><i class="fa fa-users"></i> Temporada - '.$row['desctemporada'].'</a></li>');
+			array_push($html, '<li><a href="/professor/turma-temporada/'.$row['idtemporada'].'"><i class="fa fa-users"></i> Temporada - '.$row['desctemporada'].'</a></li>');
 
 		}
 		file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."professor".DIRECTORY_SEPARATOR."professor-temporada-menu.html", implode('', $html));
@@ -189,14 +189,22 @@ class Temporada extends Model {
 				SELECT * FROM tb_turma
 				INNER JOIN tb_atividade 
 				using(idativ)
+				INNER JOIN tb_modalidade
+				using(idmodal)   
+				INNER JOIN tb_fxetaria
+				using(idfxetaria)             
                 INNER JOIN tb_espaco 
 				using(idespaco)
                 INNER JOIN tb_users 
 				using(iduser) 
+				INNER JOIN tb_persons 
+				using(idperson) 
 				INNER JOIN tb_local 
 				using(idlocal)
 				INNER JOIN tb_horario 
-				using(idhorario)				
+				using(idhorario)
+				INNER JOIN tb_turmastatus 
+				using(idturmastatus) 				
 					WHERE idturma IN(
 					SELECT a.idturma
 					FROM tb_turma a
@@ -213,14 +221,22 @@ class Temporada extends Model {
 				SELECT * FROM tb_turma
 				INNER JOIN tb_atividade 
 				using(idativ)
+				INNER JOIN tb_modalidade
+				using(idmodal)   
+				INNER JOIN tb_fxetaria
+				using(idfxetaria)             
                 INNER JOIN tb_espaco 
 				using(idespaco)
                 INNER JOIN tb_users 
-				using(iduser) 	
+				using(iduser) 
+				INNER JOIN tb_persons 
+				using(idperson) 
 				INNER JOIN tb_local 
-				using(idlocal) 
+				using(idlocal)
 				INNER JOIN tb_horario 
-				using(idhorario)							
+				using(idhorario)
+				INNER JOIN tb_turmastatus 
+				using(idturmastatus) 							
 				WHERE idturma NOT IN(
 					SELECT a.idturma
 					FROM tb_turma a
@@ -256,6 +272,37 @@ class Temporada extends Model {
 		]);
 
 	}
+	/*
+	public function getFromId($idtemporada)
+	{
+
+		$sql = new Sql();
+
+		$rows = $sql->select(
+			"SELECT * 
+			FROM tb_turmatemporada b
+			INNER JOIN tb_turma a ON a.idturma = b.idturma
+            INNER JOIN tb_espaco c ON c.idespaco = a.idespaco
+            INNER JOIN tb_horario d ON c.idhorario = d.idhorario
+            INNER JOIN tb_atividade e ON a.idativ = e.idativ
+            INNER JOIN tb_fxetaria f ON e.idfxetaria = f.idfxetaria
+			INNER JOIN tb_users g ON a.iduser = g.iduser
+			INNER JOIN tb_persons h ON g.idperson = h.idperson
+            INNER JOIN tb_espaco i ON a.idespaco = i.idespaco
+			INNER JOIN tb_local j ON j.idlocal = c.idlocal
+			INNER JOIN tb_temporada k ON k.idtemporada = b.idtemporada
+			INNER JOIN tb_statustemporada l ON l.idstatustemporada = k.idstatustemporada
+			INNER JOIN tb_turmastatus m ON m.idturmastatus = a.idturmastatus
+			WHERE k.idtemporada = :idtemporada ORDER BY a.descturma
+			", [
+			':idtemporada'=>$idtemporada
+		]);
+
+		$this->setData($rows[0]);
+
+	}
+	*/
+
 
 
 }

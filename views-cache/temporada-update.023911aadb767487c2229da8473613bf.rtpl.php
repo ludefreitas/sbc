@@ -47,7 +47,7 @@
               <select class="form-control" name="idstatustemporada">
                 <?php $counter1=-1;  if( isset($statustemporada) && ( is_array($statustemporada) || $statustemporada instanceof Traversable ) && sizeof($statustemporada) ) foreach( $statustemporada as $key1 => $value1 ){ $counter1++; ?>
 
-                <option <?php if( $value1["idstatustemporada"] === $temporada["idstatustemporada"] ){ ?>selected="selected"<?php } ?> value="<?php echo htmlspecialchars( $value1["idstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["descstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </option>
+                <option <?php if( $value1["idstatustemporada"] === $temporada["idstatustemporada"] ){ ?>selected="selected"<?php } ?> value="<?php echo htmlspecialchars( $value1["idstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["idstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["descstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </option>
                 <?php } ?>
 
               </select>

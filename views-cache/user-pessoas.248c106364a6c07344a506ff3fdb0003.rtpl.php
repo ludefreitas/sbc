@@ -1,4 +1,5 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
+
 <div class="product-big-title-area">
     <div class="container">
         <div class="row">
@@ -29,27 +30,27 @@
                     <thead>
                         <tr>                            
                             <th>Idade</th>
-                            <!--<th>Data Nasc</th>-->
+                            <th>Data Nasc</th>
                             <th>Sexo</th>
                             <th>CPF</th>
                             <th>RG</th>
                             <th>SUS</th>
                             <th>Vuln. Social</th>
                              <th>CadUnico</th>  
-                            <th>Nome da mãe</th>
+                            <th>Nome da Mãe</th>
                             <th>CPF da mãe</th>
-                            <th>Nome do pai</th>
-                            <th>CPF do pai</th>  
+                            <th>Nome da pai</th>
+                            <th>CPF da pai</th>  
                             <td style="width:222px;">
-                                <a href="/profile/pessoa/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
+                                <a class="btn btn-primary" href="#" role="button">Editar</a>
                             </td>                                                      
                         </tr>
                     </thead>
                     
                     <tbody>                       
                         <tr>
-                            <td><?php echo calcularIdade($value1["dtnasc"]); ?></td>
-                           <!-- <td><?php echo formatDate($value1["dtnasc"]); ?></td>-->
+                            <td><?php echo htmlspecialchars( $value1["dtnasc"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                            <td><?php echo htmlspecialchars( $value1["dtnasc"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                             <td><?php echo htmlspecialchars( $value1["sexo"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                             <td><?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                             <td><?php echo htmlspecialchars( $value1["numrg"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
@@ -61,9 +62,8 @@
                             <td><?php echo htmlspecialchars( $value1["nomepai"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                             <td><?php echo htmlspecialchars( $value1["cpfpai"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                              <td style="width:222px;">
-                                <form action="post" name="idpess">                       
-
-                                    <a href="/pessoa/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/status" onclick="return confirm('Deseja realmente excluir o(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')" class="btn btn-danger btn-xs"> Excluir</a>
+                                <form action="post" name="idpess">
+                                <a class="btn btn-danger"  href="/user/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/status" role="button">Excluir</a>
                                 </form>
                             </td>                            
                         </tr>                             
@@ -77,13 +77,15 @@
         </div>
     </div>
     <?php }else{ ?>
-    <div class="alert alert-info">
-        Nenhuma pessoa encontrada.
 
-    </div>
-    <div class="alert alert">
-    <a class="btn btn-success" href="/pessoa-create" role="button">Cadastrar pessoa</a>
+<div class="alert alert-info">
+ Nenhuma pessoa encontrada.
+
+</div>
+<div class="alert alert">
+ <a class="btn btn-success" href="/pessoa-create" role="button">Cadastrar pessoa</a>
  
-    </div>
-    <?php } ?>
+</div>
+<?php } ?>
+
 </div>
