@@ -110,10 +110,11 @@
                                             <div class="box-body">
                                                 <div class="form-group">                                            
                                                     <select class="form-control" name="idpess">
+                                                         <option selected="selected" value="idpess=0">selecione uma pessoa</option>
                                                         {loop="$pessoa"}
-                                                         <option {if="$value.iduser === $user.iduser"}selected="selected"{/if} value="{$value.idpess}">{$value.nomepess}, {function="calcularIdade($value.dtnasc)"} anos, {$value.sexo}</option>
+                                                         <option {if="$value.iduser === $user.iduser"}{/if} value="{$value.idpess}">{$value.idpess} - {$value.nomepess}, {function="calcularIdade($value.dtnasc)"} anos, {$value.sexo}</option>
                                                         {else}
-                                                        <option>Não há pessoas cadastradas</option>
+                                                        <option value="0">Não há pessoas cadastradas</option>
                                                          {/loop}
                                                     </select>
                                                 </div>
@@ -125,20 +126,6 @@
                                             </div>
                                            
                                        <!-- </form> -->
-
-
-
-                                       <!-- <label>Pessoa</label>
-                                        <select class="form-control" name="idpess">
-                                            <option>Selecione pessoa</option>                                   
-                                            {loop="$pessoa"}
-                                             <option {if="$value.iduser === $user.iduser"}selected="selected"{/if} value="{$value.idpess}">{$value.nomepess}, {function="calcularIdade($value.dtnasc)"} anos, {$value.sexo}</option>
-                                            {else}
-                                             <option>Não há pessoas cadastradas</option>
-                                            {/loop}     
-                                         </select>
-                                     -->
-
 
 
                                         <div>&nbsp;</div>

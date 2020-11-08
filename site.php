@@ -29,16 +29,22 @@ $app->get("/cart", function(){
 
 	$cart = Cart::getFromSession();
 	$user = User::getFromSession();
-	
-	//var_dump($user->getPessoas());
+
+	//var_dump(Cart::cartIsEmpty($_SESSION[Cart::SESSION]['idcart']));
 	//exit();
+	
+	//if($_SESSION[User::SESSION] === NULL){	
+
+		//Cart::setMsgError("você precisa logar-se para selecionar uma pessoa e finalizar inscrição!");
+	//}
+
 
 	$page = new Page();
 
 	$page->setTpl("cart", [
 		'cart'=>$cart->getValues(),
 		'turma'=>$cart->getTurma(),
-		'pessoa'=>$cart->getPessoas(),
+		'pessoa'=>$user->getPessoas(),
 		'error'=>Cart::getMsgError(),
 		'msgError'=>Cart::getMsgError(),
 		'msgSuccess'=>Cart::getMsgSuccess()
@@ -50,27 +56,43 @@ $app->post("/cart", function() {
 
 	User::verifyLogin(false);
 
-	$cart = new Cart();
+	if(Cart::cartIsEmpty((int)$_SESSION[Cart::SESSION]['idcart']) === false){
 
-	$_POST['idcart'] = (int)$_SESSION[Cart::SESSION]["idcart"];
-	$_POST['iduser'] = (int)$_SESSION[User::SESSION]["iduser"];
-	$_POST['dessessionid'] = $_SESSION[Cart::SESSION]["dessessionid"];
+		Cart::setMsgError("Selecione uma turma! ");
+		header("Location: /cart");
+		exit();
+	}	
 
-	//var_dump($_POST);
-	//exit();
+	if($_POST['idpess'] <= 0){	
 
-	$cart->setData($_POST);
+		Cart::setMsgError("você precisa selecionar uma pessoa! ");
+		header("Location: /cart");
+		exit();
+
+	}else{
+
+		$cart = new Cart();
+
+		$_POST['idcart'] = (int)$_SESSION[Cart::SESSION]["idcart"];
+		$_POST['iduser'] = (int)$_SESSION[User::SESSION]["iduser"];
+		$_POST['dessessionid'] = $_SESSION[Cart::SESSION]["dessessionid"];
+
+		//var_dump($_POST);
+		//exit();
+
+		$cart->setData($_POST);
 
 
-	$cart->save([
-		'idcart'=>$_POST['idcart'],
-		':iduser'=>$_POST['iduser'],		
-		':idpess'=>$_POST['idpess'],
-		':dessessionid'=>$_POST['dessessionid']
-	]);
+		$cart->save([
+			'idcart'=>$_POST['idcart'],
+			':iduser'=>$_POST['iduser'],		
+			':idpess'=>$_POST['idpess'],
+			':dessessionid'=>$_POST['dessessionid']
+		]);
 
-	header("Location: /checkout");
-	exit();
+		header("Location: /checkout");
+		exit();
+	}
 });
 
 $app->get("/checkout", function(){
@@ -287,6 +309,12 @@ $app->get("/turma/:idturma", function($idturma){
 
 
 $app->get("/login", function(){
+
+	if($_SESSION[User::SESSION] !== NULL){
+
+		header("Location: /cart");
+		exit();
+	}
 
 	$page = new Page();
 
