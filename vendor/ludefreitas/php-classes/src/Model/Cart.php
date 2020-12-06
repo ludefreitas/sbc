@@ -163,7 +163,7 @@ class Cart extends Model {
             INNER JOIN tb_espaco c ON c.idespaco = b.idespaco
             INNER JOIN tb_atividade d ON d.idativ = b.idativ
 			INNER JOIN tb_fxetaria e ON e.idfxetaria = d.idfxetaria
-			INNER JOIN tb_horario f ON f.idhorario = c.idhorario
+			INNER JOIN tb_horario f ON f.idhorario = b.idhorario
 			INNER JOIN tb_local g ON g.idlocal = c.idlocal
 			INNER JOIN tb_users h ON h.iduser = b.iduser
 			INNER JOIN tb_persons i ON i.idperson = h.idperson

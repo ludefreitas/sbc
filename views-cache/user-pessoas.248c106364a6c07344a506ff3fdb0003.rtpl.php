@@ -1,5 +1,4 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
-
 <div class="product-big-title-area">
     <div class="container">
         <div class="row">
@@ -77,7 +76,6 @@
         </div>
     </div>
     <?php }else{ ?>
-
 <div class="alert alert-info">
  Nenhuma pessoa encontrada.
 
@@ -87,5 +85,4 @@
  
 </div>
 <?php } ?>
-
 </div>

@@ -460,7 +460,7 @@ class User extends Model {
 
 	}
 
-	public function getPessoas()	{
+	public function getPessoa()	{
 
 		$sql = new Sql();
 

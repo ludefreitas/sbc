@@ -30,13 +30,13 @@ $app->get("/cart", function(){
 	$cart = Cart::getFromSession();
 	$user = User::getFromSession();
 
-	//var_dump(Cart::cartIsEmpty($_SESSION[Cart::SESSION]['idcart']));
+	//var_dump(Cart::cartIsEmpty($_SESSION[Cart::SESSION]['iduser']));
 	//exit();
 	
-	//if($_SESSION[User::SESSION] === NULL){	
+	if($_SESSION[User::SESSION] === NULL){	
 
-		//Cart::setMsgError("você precisa logar-se para selecionar uma pessoa e finalizar inscrição!");
-	//}
+		Cart::setMsgError("você precisa logar-se para selecionar uma pessoa e finalizar inscrição!");
+	}
 
 
 	$page = new Page();
@@ -44,7 +44,7 @@ $app->get("/cart", function(){
 	$page->setTpl("cart", [
 		'cart'=>$cart->getValues(),
 		'turma'=>$cart->getTurma(),
-		'pessoa'=>$user->getPessoas(),
+		'pessoa'=>$user->getPessoa(),
 		'error'=>Cart::getMsgError(),
 		'msgError'=>Cart::getMsgError(),
 		'msgSuccess'=>Cart::getMsgSuccess()
@@ -65,7 +65,7 @@ $app->post("/cart", function() {
 
 	if($_POST['idpess'] <= 0){	
 
-		Cart::setMsgError("você precisa selecionar uma pessoa! ");
+		Cart::setMsgError("Selecione uma pessoa! ");
 		header("Location: /cart");
 		exit();
 
@@ -100,7 +100,26 @@ $app->get("/checkout", function(){
 
 	$pessoa = new Pessoa();
 
-	//var_dump($cart->getPessoa());
+	if(!isset($_SESSION[Cart::SESSION]['idturma']) || $_SESSION[Cart::SESSION]['idturma'] == '') {
+
+		Cart::setMsgError("Você precisa selecionar uma turma! ");
+		header("Location: /cart");
+		exit();
+
+	}
+
+	//if(!$_SESSION[Cart::SESSION]['idpess']){
+	if(!isset($_SESSION[Cart::SESSION]['idpess']) || $_SESSION[Cart::SESSION]['idpess'] == '') {
+
+		Cart::setMsgError("Você precisa selecionar uma pessoa! ");
+		header("Location: /cart");
+		exit();
+
+	}
+
+	
+
+	//var_dump($_SESSION[Cart::SESSION]['idpess']);
 	//exit();
 
 	$page = new Page();

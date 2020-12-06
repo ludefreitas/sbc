@@ -89,7 +89,7 @@ class Local extends Model {
 			FROM tb_turma a
 			INNER JOIN tb_turmatemporada b ON a.idturma = b.idturma
             INNER JOIN tb_espaco c ON c.idespaco = a.idespaco
-            INNER JOIN tb_horario d ON c.idhorario = d.idhorario
+            INNER JOIN tb_horario d ON d.idhorario = a.idhorario
             INNER JOIN tb_atividade e ON a.idativ = e.idativ
             INNER JOIN tb_fxetaria f ON e.idfxetaria = f.idfxetaria
 			INNER JOIN tb_users g ON a.iduser = g.iduser
@@ -123,8 +123,8 @@ class Local extends Model {
 				   SELECT * FROM tb_espaco c 
 					   INNER JOIN tb_horarioespaco d 
 					   ON c.idespaco = d.idespaco 
-					   INNER JOIN tb_horario e 
-					   ON d.idhorario = e.idhorario
+					   -- INNER JOIN tb_horario e 
+					   -- ON d.idhorario = e.idhorario
 			           WHERE c.idespaco 
 				    	    IN( 
 				    		SELECT a.idespaco
@@ -142,8 +142,8 @@ class Local extends Model {
 				SELECT * FROM tb_espaco c 
 					   INNER JOIN tb_horarioespaco d 
 					   ON c.idespaco = d.idespaco 
-					   INNER JOIN tb_horario e 
-					   ON d.idhorario = e.idhorario
+					   -- INNER JOIN tb_horario e 
+					   -- ON d.idhorario = e.idhorario
 			           WHERE c.idespaco 
 				    	NOT IN( 
 				    		SELECT a.idespaco

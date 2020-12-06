@@ -1227,14 +1227,14 @@ BEGIN
     
     UPDATE tb_turma
         SET idativ = pidativ,
-      idmodal = pidmodal,
-       idespaco = pidespaco,
-      idhorario = pidhorario,
-       iduser = piduser,
-    idturmastatus = pidturmastatus,
-          descturma = pdescturma,
-        vagas = pvagas,
-     numinscritos = pnuminscritos
+           idmodal = pidmodal,
+          idespaco = pidespaco,
+         idhorario = pidhorario,
+            iduser = piduser,
+     idturmastatus = pidturmastatus,
+         descturma = pdescturma,
+             vagas = pvagas,
+      numinscritos = pnuminscritos
             
      WHERE idturma = pidturma;
         
@@ -1319,25 +1319,79 @@ BEGIN
     WHERE iduser = piduser;
     
     UPDATE tb_persons
-    SET 
-    desperson = pdesperson,
-        desemail = pdesemail,
-        nrphone = pnrphone
-  WHERE idperson = vidperson;
+    SET desperson = pdesperson,
+         desemail = pdesemail,
+          nrphone = pnrphone
+   WHERE idperson = vidperson;
     
     UPDATE tb_users
-    SET
-    deslogin = pdeslogin,
-        despassword = pdespassword,
-        inadmin = pinadmin,
-        isprof = pisprof,
-        status = pstatus
-  WHERE iduser = piduser;
+    SET deslogin = pdeslogin,
+     despassword = pdespassword,
+         inadmin = pinadmin,
+          isprof = pisprof,
+          status = pstatus
+    WHERE iduser = piduser;
     
     SELECT * FROM tb_users a INNER JOIN tb_persons b USING(idperson) WHERE a.iduser = piduser;
     
 END$$
 DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_pessoa_save`(
+pidpess INT, 
+piduser INT,
+pnomepess VARCHAR(64),
+pdtnasc VARCHAR(16),
+psexo VARCHAR(16),
+pnumcpf VARCHAR(16),
+pnumrg VARCHAR(16),
+pnumsus VARCHAR(16),
+pvulnsocial INT,
+pnomemae VARCHAR(64),
+pcpfmae VARCHAR(16),
+pnomepai VARCHAR(64),
+pcpfpai VARCHAR(16),
+pstatuspessoa INT,
+pdtinclusao TIMESTAMP,
+pdtalteracao TIMESTAMP
+)
+BEGIN
+  
+  IF pidpess > 0 THEN
+    
+    UPDATE tb_pessoa
+        SET iduser = piduser,
+      nomepess = pnomepess,
+        dtnasc = pdtnasc,
+          sexo = psexo,
+        numcpf = pnumcpf,
+         numrg = pnumrg,
+        numsus = pnumsus,
+    vulnsocial = pvulnsocial,
+       nomemae = pnomemae,
+        cpfmae = pcpfmae,
+       nomepai = pnomepai,
+        cpfpai = pcpfpai,
+        status = pstatus,
+   dtalteracao = pdtalteracao
+            
+     WHERE idpess = pidpess;
+        
+    ELSE
+    
+        INSERT INTO tb_pessoa (iduser, nomepess, dtnasc, sexo, numcpf, numrg, numsus, vulnsocial, nomemae, cpfmae, nomepai, cpfpai, statuspessoa)
+        VALUES(piduser, pnomepess, pdtnasc, psexo, pnumcpf, pnumrg, pnumsus, pvulnsocial, pnomemae, pcpfmae, pnomepai, pcpfpai, pstatuspessoa);
+        
+        SET pidpess = LAST_INSERT_ID();
+        
+    END IF;
+    
+         SELECT * FROM tb_pessoa WHERE idpess = pidpess;
+    
+END$$
+DELIMITER ;
+
 
 
 
