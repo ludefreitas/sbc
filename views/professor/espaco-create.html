@@ -40,15 +40,6 @@
               <input type="text" class="form-control" id="observacao" name="observacao" placeholder="Observação: quadra coberta... sala com espelho... acessível...">
             </div>
             <div class="form-group">
-              <label for="idhorario">Horário</label>
-              <select class="form-control" name="idhorario">
-              <option selected="selected">Selecione Horário</option>                          
-                {loop="$horario"}
-                <option value="{$value.idhorario}">{$value.diasemana} - {$value.horainicio} às {$value.horatermino}</option>
-                {/loop}
-              </select>
-            </div>
-            <div class="form-group">
               <label for="idlocal">CREC</label>
               <select class="form-control" name="idlocal"> 
                  <option selected="selected">Selecione CREC</option>

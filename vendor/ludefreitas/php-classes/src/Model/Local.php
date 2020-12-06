@@ -179,6 +179,63 @@ class Local extends Model {
 			':idespaco'=>$espaco->getidespaco()
 		]);
 	}	
+
+	public static function getPage($page = 1, $itemsPerPage = 6)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_local
+			ORDER BY apelidolocal
+			LIMIT $start, $itemsPerPage;
+		");
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+
+	public static function getPageSearch($search, $page = 1, $itemsPerPage = 8)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS * 
+			FROM tb_local 
+			WHERE apelidolocal LIKE :search 
+			OR nomelocal LIKE :search 
+			OR rua LIKE :search
+			OR bairro LIKE :search	
+			OR telefone LIKE :search
+			OR cep LIKE :search		
+			ORDER BY apelidolocal
+			LIMIT $start, $itemsPerPage;
+		", [
+			':search'=>'%'.$search.'%'
+		]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+
 }
 
 

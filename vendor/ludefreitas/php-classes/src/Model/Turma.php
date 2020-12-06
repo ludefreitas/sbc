@@ -22,15 +22,17 @@ class Turma extends Model {
 			using(idativ)
 			INNER JOIN tb_espaco e
 			using(idespaco)
-			INNER JOIN tb_local f
-			using(idlocal)
-			INNER JOIN tb_turmastatus g
-			using(idturmastatus)
-			INNER JOIN tb_horario h
+			INNER JOIN tb_horario f
 			using(idhorario)
-			INNER JOIN tb_fxetaria i
+			INNER JOIN tb_local g
+			using(idlocal)
+			INNER JOIN tb_turmastatus h
+			using(idturmastatus)
+			INNER JOIN tb_horario i
+			using(idhorario)
+			INNER JOIN tb_fxetaria j
 			using(idfxetaria)
-			INNER JOIN tb_modalidade J         
+			INNER JOIN tb_modalidade k         
 			using(idmodal)            
 			ORDER BY a.descturma");
 	}
@@ -90,10 +92,12 @@ class Turma extends Model {
 	public function save()
 	{
 		$sql = new Sql();
-		$results = $sql->select("CALL sp_turma_save(:idturma, :idativ, :idespaco, :iduser, :idturmastatus, :descturma, :vagas, :numinscritos)", array(
-			":idturma"=>$this->getidturma(),
+		$results = $sql->select("CALL sp_turma_save(:idturma, :idativ, :idmodal, :idespaco, :idhorario, :iduser, :idturmastatus, :descturma, :vagas, :numinscritos)", array(
+			":idturma"=>$this->getidturma(),			
 			":idativ"=>$this->getidativ(),
+			":idmodal"=>$this->getidmodal(),
 			":idespaco"=>$this->getidespaco(),
+			":idhorario"=>$this->getidhorario(),
 			":iduser"=>$this->getiduser(),
 			":idturmastatus"=>$this->getidturmastatus(),
 			":descturma"=>$this->getdescturma(),
@@ -301,6 +305,7 @@ class Turma extends Model {
 			INNER JOIN tb_espaco b ON a.idlocal = b.idlocal 
 			INNER JOIN tb_turma c ON b.idespaco = c.idespaco 
 			INNER JOIN tb_atividade d ON c.idativ = d.idativ 
+			INNER JOIN tb_horario e ON a.idhorario = e.idhorario 
  			WHERE b.idturma = :idturma
 		", [
 			':idturma'=>$this->getidturma()
@@ -308,7 +313,7 @@ class Turma extends Model {
 
 	}
 
-	public static function getPage($page = 1, $itemsPerPage = 5)
+	public static function getPage($page = 1, $itemsPerPage = 8)
 	{
 
 		$start = ($page - 1) * $itemsPerPage;
@@ -316,33 +321,33 @@ class Turma extends Model {
 		$sql = new Sql();
 
 		$results = $sql->select("
-			SELECT SQL_CALC_FOUND_ROWS *
+			SELECT SQL_CALC_FOUND_ROWS * 
 			FROM tb_turma a 
-			INNER JOIN tb_users b 
-			USING(iduser)
+			INNER JOIN tb_users b
+			using(iduser)
 			INNER JOIN tb_persons c
-			USING(idperson)
+			using(idperson)
 			INNER JOIN tb_atividade d
-			USING(idativ)
+			using(idativ)
 			INNER JOIN tb_espaco e
-			USING(idespaco)
+			using(idespaco)
 			INNER JOIN tb_local f
-			USING(idlocal)
+			using(idlocal)
 			INNER JOIN tb_turmastatus g
-			USING(idturmastatus)
+			using(idturmastatus)
 			INNER JOIN tb_horario h
-			USING(idhorario)
+			using(idhorario)
 			INNER JOIN tb_fxetaria i
-			USING(idfxetaria) 
-			INNER JOIN tb_turmatemporada 
-			USING(idturma)
-            INNER JOIN tb_temporada 
-            USING(idtemporada)   
-            INNER JOIN tb_statustemporada 
-            USING(idstatustemporada)
-            INNER JOIN tb_modalidade 
-            USING(idmodal)
-      		WHERE idstatustemporada = 3            
+			using(idfxetaria)
+            -- INNER JOIN tb_turmatemporada j            
+			-- using(idturma)
+            -- INNER JOIN tb_temporada k          
+			-- using(idtemporada)   
+            -- INNER JOIN tb_statustemporada l          
+			-- using(idstatustemporada)
+			 INNER JOIN tb_modalidade m         
+			 using(idmodal)
+      		-- WHERE idstatustemporada = 3
 			ORDER BY a.descturma
 			LIMIT $start, $itemsPerPage;
 		");
@@ -357,6 +362,7 @@ class Turma extends Model {
 
 	}
 
+	
 	public static function getPageSearch($search, $page = 1, $itemsPerPage = 5)
 	{
 
@@ -383,18 +389,19 @@ class Turma extends Model {
 			USING(idhorario)
 			INNER JOIN tb_fxetaria i
 			USING(idfxetaria) 
-			INNER JOIN tb_turmatemporada j
-			USING(idturma)
-            INNER JOIN tb_temporada k
-            USING(idtemporada)   
-            INNER JOIN tb_statustemporada l
-            USING(idstatustemporada)
+			-- INNER JOIN tb_turmatemporada j
+			-- USING(idturma)
+            -- INNER JOIN tb_temporada k
+            -- USING(idtemporada)   
+            -- INNER JOIN tb_statustemporada l
+            -- USING(idstatustemporada)
             INNER JOIN tb_modalidade m
             USING(idmodal)
       		WHERE a.descturma LIKE :search 
 			OR b.deslogin LIKE :search
 			OR c.desperson LIKE :search
 			OR d.descativ LIKE :search
+			OR a.nomeativ LIKE :search 
 			OR e.nomeespaco LIKE :search
 			OR f.apelidolocal LIKE :search
 			OR g.desstatus LIKE :search

@@ -7,6 +7,7 @@ use \Sbc\Model\Espaco;
 
 use \Sbc\Page;
 
+/*
 $app->get("/professor/local", function() {
 
 	User::verifyLogin();
@@ -19,6 +20,54 @@ $app->get("/professor/local", function() {
 		'local'=>$local
 	));
 });
+*/
+
+$app->get("/professor/local", function() {
+
+	User::verifyLogin();
+	// na linha abaixo retorna um array com todos os dados do usuário
+
+	$search = (isset($_GET['search'])) ? $_GET['search'] : "";
+
+	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
+
+	if ($search != '') {
+
+		$pagination = Local::getPageSearch($search, $page);
+
+	} else {
+
+		$pagination = Local::getPage($page);
+
+	}
+
+	$pages = [];
+
+	for ($x = 0; $x < $pagination['pages']; $x++)
+	{
+
+		array_push($pages, [
+			'href'=>'/professor/local?'.http_build_query([
+				'page'=>$x+1,
+				'search'=>$search
+			]),
+			'text'=>$x+1
+		]);
+
+	}
+	//$local = Local::listAll();
+
+	// carrega uma pagina das páginas do admin
+	$page = new PageAdmin();
+
+	// envia para a página o array retornado pelo listAll
+	$page->setTpl("local", array( // aqui temos um array com muitos arrays
+		"local"=>$pagination['data'],
+		"search"=>$search,
+		"pages"=>$pages
+	));
+});
+
 
 $app->get("/professor/local/create", function() {
 

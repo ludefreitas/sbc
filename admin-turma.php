@@ -79,7 +79,7 @@ $app->get("/professor/turma/create", function() {
 	$local = Local::listAll();
 	//$espaco = Espaco::listAll();
 	$user = User::listAllProf();
-	//$horario = Horario::listAll();
+	$horario = Horario::listAll();
 	$atividade = Atividade::listAll();
 	$modalidade = Modalidade::listAll();
 	$turmastatus = TurmaStatus::listAll();
@@ -88,7 +88,7 @@ $app->get("/professor/turma/create", function() {
 
 	$page->setTpl("turma-create", array(
 		'local'=>$local,
-		//'horario'=>$horario,
+		'horario'=>$horario,
 		'user'=>$user,
 		'atividade'=>$atividade,
 		'modalidade'=>$modalidade,
@@ -144,6 +144,7 @@ $app->get("/professor/turma/:idturma", function($idturma) {
 		'atividade'=>Atividade::listAll(),
 		'modalidade'=>Modalidade::listAll(),
 		'users'=>User::listAllProf(),
+		'horario'=>Horario::listAll(),
 		'espaco'=>Espaco::listAll()
 	));
 });

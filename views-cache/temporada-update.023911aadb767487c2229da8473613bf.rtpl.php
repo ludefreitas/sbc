@@ -30,10 +30,13 @@
               <label for="dtinicinscricao"> Data de Início das Inscrições</label>
               <input type="date" class="form-control" id="dtinicinscricao" name="dtinicinscricao" value="<?php echo htmlspecialchars( $temporada["dtinicinscricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
+
+            
             <div class="form-group">
               <label for="dtterminscricao"> Data do Fim das Inscrições</label>
               <input type="date" class="form-control" id="dtterminscricao" name="dtterminscricao" value="<?php echo htmlspecialchars( $temporada["dtterminscricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
+
             <div class="form-group">
               <label for="dtinicmatricula"> Data de Início das Matrículas</label>
               <input type="date" class="form-control" id="dtinicmatricula" name="dtinicmatricula" value="<?php echo htmlspecialchars( $temporada["dtinicmatricula"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
@@ -46,10 +49,8 @@
               <label for="idstatustemporada"> Status Temporada</label>
               <select class="form-control" name="idstatustemporada">
                 <?php $counter1=-1;  if( isset($statustemporada) && ( is_array($statustemporada) || $statustemporada instanceof Traversable ) && sizeof($statustemporada) ) foreach( $statustemporada as $key1 => $value1 ){ $counter1++; ?>
-
                 <option <?php if( $value1["idstatustemporada"] === $temporada["idstatustemporada"] ){ ?>selected="selected"<?php } ?> value="<?php echo htmlspecialchars( $value1["idstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["idstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["descstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </option>
                 <?php } ?>
-
               </select>
             </div>
 

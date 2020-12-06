@@ -5,6 +5,7 @@ use \Sbc\PageAdmin;
 use \Sbc\Model\User;
 use \Sbc\Model\Horario;
 
+/*
 $app->get("/professor/horario", function() {
 
 	User::verifyLogin();
@@ -17,6 +18,54 @@ $app->get("/professor/horario", function() {
 		'horario'=>$horario
 	));
 });
+*/
+
+$app->get("/professor/horario", function() {
+
+	User::verifyLogin();
+	// na linha abaixo retorna um array com todos os dados do usuário
+
+	$search = (isset($_GET['search'])) ? $_GET['search'] : "";
+
+	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
+
+	if ($search != '') {
+
+		$pagination = Horario::getPageSearch($search, $page);
+
+	} else {
+
+		$pagination = Horario::getPage($page);
+
+	}
+
+	$pages = [];
+
+	for ($x = 0; $x < $pagination['pages']; $x++)
+	{
+
+		array_push($pages, [
+			'href'=>'/professor/horario?'.http_build_query([
+				'page'=>$x+1,
+				'search'=>$search
+			]),
+			'text'=>$x+1
+		]);
+
+	}
+	//$horario = Horario::listAll();
+
+	// carrega uma pagina das páginas do admin
+	$page = new PageAdmin();
+
+	// envia para a página o array retornado pelo listAll
+	$page->setTpl("horario", array( // aqui temos um array com muitos arrays
+		"horario"=>$pagination['data'],
+		"search"=>$search,
+		"pages"=>$pages
+	));
+});
+
 
 $app->get("/professor/horario/create", function() {
 

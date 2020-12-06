@@ -123,7 +123,7 @@ class Atividade extends Model {
 
 	}
 
-	public static function getPage($page = 1, $itemsPerPage = 5)
+	public static function getPage($page = 1, $itemsPerPage = 8)
 	{
 
 		$start = ($page - 1) * $itemsPerPage;
@@ -149,7 +149,7 @@ class Atividade extends Model {
 
 	}
 
-	public static function getPageSearch($search, $page = 1, $itemsPerPage = 10)
+	public static function getPageSearch($search, $page = 1, $itemsPerPage = 8)
 	{
 
 		$start = ($page - 1) * $itemsPerPage;
@@ -157,11 +157,12 @@ class Atividade extends Model {
 		$sql = new Sql();
 
 		$results = $sql->select("
-			SELECT * 
+			SELECT SQL_CALC_FOUND_ROWS * 
 			FROM tb_atividade a 
 			INNER JOIN tb_fxetaria b
 			using(idfxetaria)
-			WHERE a.nomeativ LIKE :search 
+			WHERE a.nomeativ LIKE :search
+			OR a.descativ LIKE :search 
 			OR a.geneativ LIKE :search 
 			OR a.origativ LIKE :search
 			OR a.prograativ LIKE :search

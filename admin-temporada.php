@@ -48,6 +48,9 @@ $app->post("/professor/temporada/create", function() {
 
 	$temporada->setData($_POST);
 
+	//var_dump($_POST);
+	//exit();
+
 	$temporada->save();
 
 	header("Location: /professor/temporada");

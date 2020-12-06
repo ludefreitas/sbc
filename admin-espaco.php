@@ -8,7 +8,7 @@ use \Sbc\Model\Horario;
 use \Sbc\Model\Local;
 
 
-
+/*
 $app->get("/professor/espaco", function() {
 
 	User::verifyLogin();
@@ -21,6 +21,54 @@ $app->get("/professor/espaco", function() {
 		'espaco'=>Espaco::checkList($espaco)
 	));
 });
+*/
+
+$app->get("/professor/espaco", function() {
+
+	User::verifyLogin();
+	// na linha abaixo retorna um array com todos os dados do usuário
+
+	$search = (isset($_GET['search'])) ? $_GET['search'] : "";
+
+	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
+
+	if ($search != '') {
+
+		$pagination = Espaco::getPageSearch($search, $page);
+
+	} else {
+
+		$pagination = Espaco::getPage($page);
+
+	}
+
+	$pages = [];
+
+	for ($x = 0; $x < $pagination['pages']; $x++)
+	{
+
+		array_push($pages, [
+			'href'=>'/professor/espaco?'.http_build_query([
+				'page'=>$x+1,
+				'search'=>$search
+			]),
+			'text'=>$x+1
+		]);
+
+	}
+	//$espaco = Espaco::listAll();
+
+	// carrega uma pagina das páginas do admin
+	$page = new PageAdmin();
+
+	// envia para a página o array retornado pelo listAll
+	$page->setTpl("espaco", array( // aqui temos um array com muitos arrays
+		"espaco"=>$pagination['data'],
+		"search"=>$search,
+		"pages"=>$pages
+	));
+});
+
 
 $app->get("/professor/espaco/create", function() {
 

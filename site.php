@@ -77,11 +77,7 @@ $app->post("/cart", function() {
 		$_POST['iduser'] = (int)$_SESSION[User::SESSION]["iduser"];
 		$_POST['dessessionid'] = $_SESSION[Cart::SESSION]["dessessionid"];
 
-		//var_dump($_POST);
-		//exit();
-
 		$cart->setData($_POST);
-
 
 		$cart->save([
 			'idcart'=>$_POST['idcart'],
@@ -100,10 +96,11 @@ $app->get("/checkout", function(){
 	User::verifyLogin(false);
 
 	$cart = Cart::getFromSession();
+	$user = User::getFromSession();
 
 	$pessoa = new Pessoa();
 
-	//var_dump($cart->getidpess());
+	//var_dump($cart->getPessoa());
 	//exit();
 
 	$page = new Page();
@@ -310,11 +307,13 @@ $app->get("/turma/:idturma", function($idturma){
 
 $app->get("/login", function(){
 
+	/*
 	if($_SESSION[User::SESSION] !== NULL){
 
 		header("Location: /cart");
 		exit();
-	}
+	}*/
+
 
 	$page = new Page();
 

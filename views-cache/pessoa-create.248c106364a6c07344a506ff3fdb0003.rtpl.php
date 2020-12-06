@@ -26,13 +26,10 @@
 
                 
                 <?php if( $errorRegister != '' ){ ?>
-
                 <div class="alert alert-danger">
                     <?php echo htmlspecialchars( $errorRegister, ENT_COMPAT, 'UTF-8', FALSE ); ?>
-
                 </div>
                 <?php } ?>
-
 
                 <form id="register-form-wrap" action="/registerpessoa" class="register" method="post">
                     <h2>Cadastrar Nova Pessoa</h2>

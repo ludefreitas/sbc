@@ -1,5 +1,4 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
-
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -41,7 +40,6 @@
 
                 <tbody>
                   <?php $counter1=-1;  if( isset($temporada) && ( is_array($temporada) || $temporada instanceof Traversable ) && sizeof($temporada) ) foreach( $temporada as $key1 => $value1 ){ $counter1++; ?>
-
                   <tr>
                     <td><?php echo htmlspecialchars( $value1["idstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                     <td><?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
@@ -57,7 +55,6 @@
                     </td>
                   </tr>
                   <?php } ?>
-
                 </tbody>
               </table>
             </div>

@@ -33,6 +33,8 @@ class Temporada extends Model {
 			using(idativ)
 			INNER JOIN tb_espaco d
 			using(idespaco)
+			INNER JOIN tb_horario m
+			using(idhorario)
 			INNER JOIN tb_local e
 			using(idlocal)
 			INNER JOIN tb_turmastatus f

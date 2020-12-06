@@ -101,7 +101,6 @@
                         <h2 class="section-title">Crecs <br> Centros Esportivos, Recreativos e Culturais</h2>
                         <div class="product-carousel">
                             <?php $counter1=-1;  if( isset($locais) && ( is_array($locais) || $locais instanceof Traversable ) && sizeof($locais) ) foreach( $locais as $key1 => $value1 ){ $counter1++; ?>
-
                             
                             <div class="single-product">
                                 <div class="product-upper">
@@ -119,7 +118,6 @@
                             </div>                       
                             </div>
                             <?php } ?>
-
                             </div>
                     </div>
                 </div>

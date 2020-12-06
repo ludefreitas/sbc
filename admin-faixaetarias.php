@@ -5,6 +5,7 @@ use \Sbc\PageAdmin;
 use \Sbc\Model\User;
 use \Sbc\Model\Faixaetaria;
 
+/*
 $app->get("/professor/faixaetaria", function() {
 
 	User::verifyLogin();
@@ -17,6 +18,54 @@ $app->get("/professor/faixaetaria", function() {
 		'faixaetaria'=>$faixaetaria
 	));
 });
+*/
+
+$app->get("/professor/faixaetaria", function() {
+
+	User::verifyLogin();
+	// na linha abaixo retorna um array com todos os dados do usuário
+
+	$search = (isset($_GET['search'])) ? $_GET['search'] : "";
+
+	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
+
+	if ($search != '') {
+
+		$pagination = Faixaetaria::getPageSearch($search, $page);
+
+	} else {
+
+		$pagination = Faixaetaria::getPage($page);
+
+	}
+
+	$pages = [];
+
+	for ($x = 0; $x < $pagination['pages']; $x++)
+	{
+
+		array_push($pages, [
+			'href'=>'/professor/faixaetaria?'.http_build_query([
+				'page'=>$x+1,
+				'search'=>$search
+			]),
+			'text'=>$x+1
+		]);
+
+	}
+	//$faixaetaria = Faixaetaria::listAll();
+
+	// carrega uma pagina das páginas do admin
+	$page = new PageAdmin();
+
+	// envia para a página o array retornado pelo listAll
+	$page->setTpl("faixaetaria", array( // aqui temos um array com muitos arrays
+		"faixaetaria"=>$pagination['data'],
+		"search"=>$search,
+		"pages"=>$pages
+	));
+});
+
 
 $app->get("/professor/faixaetaria/create", function() {
 

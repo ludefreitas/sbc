@@ -18,9 +18,7 @@ class Espaco extends Model {
 			FROM tb_espaco
 			INNER JOIN tb_local
 			using(idlocal)
-			INNER JOIN tb_horario
-			using(idhorario)
-			ORDER BY nomeespaco, diasemana, horainicio");
+			ORDER BY nomeespaco, apelidolocal");
 
 	}	
 
@@ -44,10 +42,9 @@ class Espaco extends Model {
 	{
 		$sql = new Sql();
 
-		$results = $sql->select("CALL sp_espaco_save(:idespaco, :idlocal, :idhorario, :nomeespaco, :descespaco, :observacao, :areaespaco)", array(
+		$results = $sql->select("CALL sp_espaco_save(:idespaco, :idlocal, :nomeespaco, :descespaco, :observacao, :areaespaco)", array(
 			":idespaco"=>$this->getidespaco(),
 			":idlocal"=>$this->getidlocal(),
-			":idhorario"=>$this->getidhorario(),
 			":nomeespaco"=>$this->getnomeespaco(),
 			":descespaco"=>$this->getdescespaco(),
 			":observacao"=>$this->getobservacao(),
@@ -96,7 +93,7 @@ class Espaco extends Model {
 		}
 		file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."espaco-menu.html", implode('', $html));
 	}
-
+	/*
 	public function getHorario($related = true)
 	{
 		$sql = new Sql();
@@ -130,7 +127,9 @@ class Espaco extends Model {
 
 		
 	}
+	*/
 
+	/*
 	public function addHorario(Horario $horario)
 	{
 
@@ -154,6 +153,7 @@ class Espaco extends Model {
 		]);
 
 	}
+	*/
 	
 	public function checkPhoto()
 	{
@@ -228,7 +228,68 @@ class Espaco extends Model {
 
 	}
 
+	public static function getPage($page = 1, $itemsPerPage = 8)
+	{
 
+		$start = ($page - 1) * $itemsPerPage;
 
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_espaco a
+			-- INNER JOIN tb_horario b
+			-- USING (idhorario)
+			INNER JOIN tb_local c
+			USING (idlocal)
+			ORDER BY a.nomeespaco
+			LIMIT $start, $itemsPerPage;
+		");
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+
+	public static function getPageSearch($search, $page = 1, $itemsPerPage = 8)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS * 
+			FROM tb_espaco a
+			-- INNER JOIN tb_horario b
+			-- USING (idhorario) 
+			INNER JOIN tb_local c
+			USING (idlocal)
+			WHERE a.nomeespaco LIKE :search 
+			OR a.descespaco LIKE :search 
+			OR a.areaespaco LIKE :search
+			-- OR b.diasemana LIKE :search	
+			-- OR b.horainicio LIKE :search			
+			-- OR b.horatermino LIKE :search
+			OR c.apelidolocal LIKE :search										
+			ORDER BY nomeespaco
+			LIMIT $start, $itemsPerPage;
+		", [
+			':search'=>'%'.$search.'%'
+		]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+	}
 }
 ?>
