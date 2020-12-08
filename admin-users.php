@@ -111,7 +111,7 @@ $app->post("/professor/users/create", function() {
 
 	$_POST["inadmin"] = (isset($_POST["inadmin"]))?1:0;
 	$_POST["isprof"] = (isset($_POST["isprof"]))?1:0;
-	$_POST["status"] = 1;
+	$_POST["statususer"] = 1;
 
 	//$_POST['despassword'] = User::getPasswordHash($_POST['despassword']);
 
@@ -131,7 +131,7 @@ $app->post("/professor/users/:iduser", function($iduser) {
 
 	$_POST["inadmin"] = (isset($_POST["inadmin"]))?1:0;
 	$_POST["isprof"] = (isset($_POST["isprof"]))?1:0;
-	$_POST["status"] = (isset($_POST["status"]))?1:0;
+	$_POST["statususer"] = (isset($_POST["statususer"]))?1:0;
 
 	$user->get((int)$iduser);
 

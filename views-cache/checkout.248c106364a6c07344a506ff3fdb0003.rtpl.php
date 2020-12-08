@@ -1,5 +1,4 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
-
 <div class="product-big-title-area">
 	<div class="container">
 		<div class="row">
@@ -23,13 +22,10 @@
 									<div class="col-md-12">
 
 										<?php if( $error != '' ){ ?>
-
 										<div class="alert alert-danger">
 										<?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
-
 										</div>
 										<?php } ?>
-
 									
 										<!--
 											<div class="woocommerce-billing-fields">
@@ -58,30 +54,24 @@
 													</tr>
 													<tr>
 														<?php $counter1=-1;  if( isset($turma) && ( is_array($turma) || $turma instanceof Traversable ) && sizeof($turma) ) foreach( $turma as $key1 => $value1 ){ $counter1++; ?>
-
 														<td colspan="5" class="product-name"><strong class="product-name">Turma</strong>
 														</td>
 														<?php }else{ ?>
-
 														<td colspan="5" class="product-name"><strong class="product-name">Não há turma para confirmar</strong>
 														</td>
 														<?php } ?>
-
 														
 													</tr>
 												</thead>
 												<tbody>
 												<?php $counter1=-1;  if( isset($turma) && ( is_array($turma) || $turma instanceof Traversable ) && sizeof($turma) ) foreach( $turma as $key1 => $value1 ){ $counter1++; ?>
-
 												<tr class="cart_item">
 													<td class="product-name">
 													 	<?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <br> <?php echo htmlspecialchars( $value1["periodo"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-
 												    </td>											
 
 	                                        		<td class="product-name">
 	                                            		<?php echo htmlspecialchars( $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> a <?php echo htmlspecialchars( $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <br> <?php echo htmlspecialchars( $value1["descrfxetaria"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-
 	                                        		</td> 
 
 	                                        		<td class="product-name">
@@ -94,25 +84,21 @@
                                        			</tr>
                                              	<?php } ?>
 
-
                                              	</tbody>                                        
 												
 												<tfoot>
 													<?php $counter1=-1;  if( isset($turma) && ( is_array($turma) || $turma instanceof Traversable ) && sizeof($turma) ) foreach( $turma as $key1 => $value1 ){ $counter1++; ?>
-
 													<tr class="order-total">
-														<th colspan="5" ><input type="submit" data-value="Place order" value="Confirmar Inscrição" id="place_order" name="woocommerce_checkout_place_order" class="button alt" disabled=""></th>
+														<th colspan="5" >
+															<input type="submit" data-value="Place order" value="Confirmar Inscrição" id="place_order" name="woocommerce_checkout_place_order" class="button alt" disabled="">
+														</th>
 													</tr>
 													<?php }else{ ?>
-
 													<tr class="order-total">
 														<td colspan="5" class="product-name"><strong class="product-name"><a href="/cart">Encontrar uma turma</a></strong>
 														</td>
 													</tr>
-													<?php } ?>
-
-													
-														
+													<?php } ?>													
 													
 												</tfoot>
 												

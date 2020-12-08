@@ -122,8 +122,8 @@
                                             <!-- /.box-body -->
                                             <div class="box-footer">
                                             
-                                             <!--<input type="submit" value="Selecionar Pessoa" id="pessoa" class="button alt" formaction="/cart" formmethod="post"> -->
-                                            </div>
+                                            <!-- <input type="submit" value="Selecionar Pessoa" id="pessoa" class="button alt" formaction="/cart" formmethod="post"> -->
+                                            </div> 
                                            
                                        <!-- </form> -->
 
@@ -132,7 +132,8 @@
                                         <a href="/pessoa-create">Cadastrar uma nova pessoa</a>
                                         
                                         <div class="pull-right">
-                                            <input type="submit" value="Finalizar Inscrição" name="proceed" class="checkout-button button alt wc-forward">
+                                            <input type="submit" value="Finalizar Inscrição" id="pessoa" class="button alt" formaction="/cart" formmethod="post"> 
+                                           <!-- <input type="submit" value="Finalizar Inscrição" name="proceed" class="checkout-button button alt wc-forward">-->
                                          </div>
                                     </div>
 

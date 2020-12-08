@@ -58,7 +58,7 @@ $app->post("/cart", function() {
 
 	if(Cart::cartIsEmpty((int)$_SESSION[Cart::SESSION]['idcart']) === false){
 
-		Cart::setMsgError("Selecione uma turma! ");
+		Cart::setMsgError("Selecione uma turma antes de finalizar! ");
 		header("Location: /cart");
 		exit();
 	}	
@@ -100,27 +100,26 @@ $app->get("/checkout", function(){
 
 	$pessoa = new Pessoa();
 
-	if(!isset($_SESSION[Cart::SESSION]['idturma']) || $_SESSION[Cart::SESSION]['idturma'] == '') {
-
-		Cart::setMsgError("Você precisa selecionar uma turma! ");
-		header("Location: /cart");
-		exit();
-
-	}
-
-	//if(!$_SESSION[Cart::SESSION]['idpess']){
-	if(!isset($_SESSION[Cart::SESSION]['idpess']) || $_SESSION[Cart::SESSION]['idpess'] == '') {
-
-		Cart::setMsgError("Você precisa selecionar uma pessoa! ");
-		header("Location: /cart");
-		exit();
-
-	}
-
-	
-
-	//var_dump($_SESSION[Cart::SESSION]['idpess']);
+	//var_dump(Cart::getFromSession());
 	//exit();
+
+
+	if($_SESSION[Cart::SESSION]['idcart'] === NULL){
+
+		Cart::setMsgError("Selecione uma turma e uma pessoa antes de finalizar! ");
+		header("Location: /cart");
+		exit();
+
+	}
+
+
+	if($_SESSION[Cart::SESSION]['idpess'] === NULL){
+
+		Cart::setMsgError("Selecione uma pessoa antes de finalizar! ");
+		header("Location: /cart");
+		exit();
+
+	}
 
 	$page = new Page();
 
@@ -416,7 +415,7 @@ $app->post("/register", function(){
 	$user->setData([
 		'inadmin'=>0,
 		'isprof'=>0,
-		'status'=>1,
+		'statususer'=>1,
 		'deslogin'=>$_POST['email'],
 		'desperson'=>$_POST['name'],
 		'desemail'=>$_POST['email'],
@@ -589,7 +588,7 @@ $app->post("/registerpessoa", function(){
 
 });
 
-/*
+
 $app->get("/pessoa/:idpess/status", function($idpess) {
 
 	User::verifyLogin(false);
@@ -598,12 +597,12 @@ $app->get("/pessoa/:idpess/status", function($idpess) {
 
 	$pessoa->get((int)$idpess);
 
-	$pessoa->setStatus();
+	$pessoa->setStatusPessoa();
 
 	header("Location: /user-pessoas");
 	exit();	
 });
-*/
+
 $app->get("/user/:idpess/status", function($idpess){
 
 	User::verifyLogin(false);	
@@ -615,7 +614,7 @@ $app->get("/user/:idpess/status", function($idpess){
 	$pessoa->setData($_POST);
 
 	// setstatuspessoa --> 0 = pessoa não ativa   -  1 = pessoa ativa (default)
-	$pessoa->setstatuspessoa(0);
+	$pessoa->setstatuspessoa();
 
 	$pessoa->save();
 
@@ -663,7 +662,7 @@ $app->get("/user/pessoas", function(){
 	$page = new Page();
 
 	$page->setTpl("user-pessoas", [
-		'pessoas'=>$user->getPessoas()
+		'pessoas'=>$user->getPessoa()
 	]);
 
 });
@@ -706,6 +705,83 @@ $app->get("/modalidades", function() {
 	$page->setTpl("modalidades", array(
 		'modalidades'=>$modalidades
 	));
+});
+
+$app->get("/profile", function(){
+
+	User::verifyLogin(false);
+
+	$user = User::getFromSession();
+
+	$page = new Page();
+
+	$page->setTpl("profile", [
+		'user'=>$user->getValues(),
+		'profileMsg'=>User::getSuccess(),
+		'profileError'=>User::getError()
+
+	]);
+});
+
+$app->post("/profile", function(){
+
+	User::verifyLogin(false);
+
+
+	if (!isset($_POST['desperson']) || $_POST['desperson'] ==='') {
+
+		User::setError("Preencha o seu nome completo.");
+		header("Location: /profile");
+		exit;
+	}
+
+	if (!isset($_POST['desemail']) || $_POST['desemail'] === '') {
+
+		User::setError("Informe o seu email.");
+		header("Location: /profile");
+		exit;
+	}
+
+	if (!isset($_POST['nrphone']) || $_POST['nrphone'] === '') {
+
+		User::setError("Informe o número do telefone.");
+		header("Location: /profile");
+		exit;
+	}	
+
+	$user = User::getFromSession();
+
+	if($_POST['desemail'] !== $user->getdesemail()){
+
+		if(User::checkLoginExist($_POST['desemail']) === true) {
+
+			User::setError("Este endereço de email já está cadastrado.");
+			header("Location: /profile");
+			exit;
+			
+		}
+	}
+
+	$_POST['iduser'] = $user->getiduser();
+	$_POST['inadmin'] = $user->getinadmin();
+	$_POST['isprof'] = $user->getisprof();
+	$_POST['statususer'] = $user->getstatususer();
+	$_POST['despassword'] = $user->getdespassword();
+	//$_POST['deslogin'] = $_POST['desemail'];
+
+	//var_dump($_POST);
+	//exit();	
+
+	$user->setData($_POST);
+
+	$user->update();
+
+	$_SESSION[User::SESSION] = $user->getValues();
+
+	User::getSuccess("Dados alterados com sucesso!");
+
+	header("Location: /profile");
+	exit();
 });
 
 

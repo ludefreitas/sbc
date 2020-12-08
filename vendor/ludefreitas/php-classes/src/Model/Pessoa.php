@@ -199,23 +199,23 @@ class Pessoa extends Model {
 
 		$this->setData($rows[0]);
 	}
-	/*
-	public function setStatus(){
+	
+	public function setStatusPessoa(){
 
-		$statuspessoa = 0
+		$novoStatusPessoa = 0;
 
 		$sql = new Sql();
 
 		$results = $sql->select(
 			"UPDATE tb_pessoa SET statuspessoa = :statuspessoa WHERE idpess = :pidpess", [
 			':idpess'=>$this->getidpess(),
-			':statuspessoa'=>$this->getstatuspessoa()			
+			':statuspessoa'=>$novoStatusPessoa			
 		]);
 
 		//$this->setData($results[0]);	
 
 	}
-	*/
+	
 
 }
 
