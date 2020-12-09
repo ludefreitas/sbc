@@ -140,6 +140,19 @@ class User extends Model {
 			WHERE isprof = 1;
 			ORDER BY b.desperson");
 	}
+
+	public static function listAllCliente()
+	{
+
+		$sql = new Sql();
+
+		return $sql->select("
+			SELECT * FROM tb_users a 
+			INNER JOIN tb_persons b 
+			using(idperson) 
+			WHERE isprof = 0 AND inadmin = 0;
+			ORDER BY b.desperson");
+	}
 	
 	public function save()
 	{
@@ -490,6 +503,102 @@ class User extends Model {
 
 		$this->setData($rows[0]);
 	}
+
+	public function getTurma($related = true)
+	{
+		$sql = new Sql();
+
+		if ($related === true) {
+
+			return $sql->select("
+				SELECT * FROM tb_turma
+				INNER JOIN tb_atividade 
+				using(idativ)
+				INNER JOIN tb_modalidade
+				using(idmodal)   
+				INNER JOIN tb_fxetaria
+				using(idfxetaria)             
+                INNER JOIN tb_espaco 
+				using(idespaco)
+                INNER JOIN tb_users 
+				using(iduser) 
+				INNER JOIN tb_persons 
+				using(idperson) 
+				INNER JOIN tb_local 
+				using(idlocal)
+				INNER JOIN tb_horario 
+				using(idhorario)
+				INNER JOIN tb_turmastatus 
+				using(idturmastatus) 				
+					WHERE idturma IN(
+					SELECT a.idturma
+					FROM tb_turma a
+					INNER JOIN tb_turmasuser b ON a.idturma = b.idturma
+					WHERE b.iduser = :iduser ORDER BY a.descturma
+				);
+			", [
+				':iduser'=>$this->getiduser()
+			]);
+
+		} else {
+
+			return $sql->select("
+				SELECT * FROM tb_turma
+				INNER JOIN tb_atividade 
+				using(idativ)
+				INNER JOIN tb_modalidade
+				using(idmodal)   
+				INNER JOIN tb_fxetaria
+				using(idfxetaria)             
+                INNER JOIN tb_espaco 
+				using(idespaco)
+                INNER JOIN tb_users 
+				using(iduser) 
+				INNER JOIN tb_persons 
+				using(idperson) 
+				INNER JOIN tb_local 
+				using(idlocal)
+				INNER JOIN tb_horario 
+				using(idhorario)
+				INNER JOIN tb_turmastatus 
+				using(idturmastatus) 							
+				WHERE idturma NOT IN(
+					SELECT a.idturma
+					FROM tb_turma a
+					INNER JOIN tb_turmasuser b ON a.idturma = b.idturma
+					WHERE b.iduser = :iduser ORDER BY a.descturma
+				);
+			", [
+				':iduser'=>$this->getiduser()
+			]);
+		}		
+	}
+
+
+	public function addTurma(Turma $turma)
+	{
+
+		$sql = new Sql();
+
+		$sql->query("INSERT INTO tb_turmasuser (iduser, idturma) VALUES(:iduser, :idturma)", [
+			':iduser'=>$this->getiduser(),
+			':idturma'=>$turma->getidturma()
+		]);
+
+	}
+
+	public function removeTurma(Turma $turma)
+	{
+
+		$sql = new Sql();
+
+		$sql->query("DELETE FROM tb_turmasuser WHERE iduser = :iduser AND idturma = :idturma", [
+			':iduser'=>$this->getiduser(),
+			':idturma'=>$turma->getidturma()
+		]);
+
+	}
+
 
 }
 

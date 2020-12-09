@@ -49,8 +49,6 @@
                     <td>{if="$value.statususer == 1"}Ativo{else}Inativo{/if}</td>
 
                     <td>
-                      <a href="/professor/users/{$value.iduser}/turma" class="btn btn-info btn-xs"><i class="fa fa-edit"></i> Sel.Turmas</a>
-                       <a href="/professor/turma-users/{$value.iduser}" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> Minhas turmas</a>
                       <a href="/professor/users/{$value.iduser}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
                       <a href="/professor/users/{$value.iduser}/delete" onclick="return confirm('Deseja realmente excluir o registro do(a) {$value.desperson}?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
                     </td>

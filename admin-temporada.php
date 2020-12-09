@@ -39,6 +39,20 @@ $app->get("/professor/temporada/create", function() {
 	));
 });
 
+$app->get("/professor/temporada/:idtemporada/delete", function($idtemporada) {
+
+	User::verifyLogin();
+
+	$temporada = new Temporada();
+
+	$temporada->get((int)$idtemporada);
+
+	$temporada->delete();
+
+	header("Location: /professor/temporada");
+	exit();	
+});
+
 
 $app->post("/professor/temporada/create", function() {
 
@@ -58,19 +72,7 @@ $app->post("/professor/temporada/create", function() {
 });
 
 
-$app->get("/professor/temporada/:idtemporada/delete", function($idtemporada) {
 
-	User::verifyLogin();
-
-	$temporada = new Temporada();
-
-	$temporada->get((int)$idtemporada);
-
-	$temporada->delete();
-
-	header("Location: /professor/temporada");
-	exit();	
-});
 
 $app->get("/professor/temporada/:idtemporada", function($idtemporada) {
 

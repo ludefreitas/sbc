@@ -56,7 +56,7 @@
               </label>
             </div>
             <div class="checkbox">
-                <input type="checkbox" name="status" value="1" hidden="" >
+                <input type="checkbox" name="statususer" value="1" hidden="" >
             </div>
             </div>
           </div>

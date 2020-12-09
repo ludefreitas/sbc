@@ -48,7 +48,7 @@
             </div>
             <div class="checkbox">
               <label>
-                <input type="checkbox" name="status" value="1" <?php if( $user["status"] == 1 ){ ?>checked<?php } ?>> Ativar usuário
+                <input type="checkbox" name="statususer" value="1" <?php if( $user["statususer"] == 1 ){ ?>checked<?php } ?>> Ativar usuário
               </label>
             </div>
           </div>

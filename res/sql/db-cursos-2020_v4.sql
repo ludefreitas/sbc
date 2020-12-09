@@ -563,7 +563,7 @@ CREATE TABLE `tb_pessoa` (
   `cpfmae` varchar(16) DEFAULT NULL,
   `nomepai` varchar(64) DEFAULT NULL,
   `cpfpai` varchar(16) DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `statuspessoa` tinyint(4) NOT NULL DEFAULT 1,
   `dtinclusao` timestamp NOT NULL DEFAULT current_timestamp(),
   `dtalteracao` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`idpess`),
@@ -593,7 +593,7 @@ CREATE TABLE `tb_sorteio` (
   `idstatussort` int(11) NOT NULL,
   `numsorteado` int(11) NOT NULL,
   `temporada` varchar(10) NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `statussort` tinyint(4) NOT NULL DEFAULT 1,
   `dtsorteio` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`idsorteio`),
   KEY `fk_sorteio_sorteiostatus_idx` (`idstatussort`),
@@ -826,7 +826,7 @@ CREATE TABLE `tb_users` (
   `despassword` varchar(256) NOT NULL,
   `inadmin` tinyint(4) NOT NULL DEFAULT 0,
   `isprof` tinyint(4) NOT NULL DEFAULT 0,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `statususer` tinyint(4) NOT NULL DEFAULT 1,
   `dtregister` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`iduser`),
   KEY `FK_users_persons_idx` (`idperson`),
@@ -903,6 +903,17 @@ LOCK TABLES `tb_userspasswordsrecoveries` WRITE;
 INSERT INTO `tb_userspasswordsrecoveries` VALUES (1,7,'127.0.0.1',NULL,'2020-09-26 17:51:34'),(2,7,'127.0.0.1',NULL,'2020-09-26 17:55:31'),(3,7,'127.0.0.1',NULL,'2020-09-26 17:56:49'),(4,11,'127.0.0.1',NULL,'2020-09-26 18:00:41'),(5,11,'127.0.0.1',NULL,'2020-09-26 18:02:27'),(6,11,'127.0.0.1',NULL,'2020-09-26 18:02:56'),(7,11,'127.0.0.1',NULL,'2020-09-26 18:15:06'),(8,11,'127.0.0.1',NULL,'2020-09-26 18:33:48'),(9,11,'127.0.0.1',NULL,'2020-09-26 18:37:19'),(10,11,'127.0.0.1',NULL,'2020-09-26 18:38:19'),(11,11,'127.0.0.1',NULL,'2020-09-26 18:41:52'),(12,11,'127.0.0.1',NULL,'2020-09-26 18:42:54'),(13,11,'127.0.0.1',NULL,'2020-09-26 18:44:06'),(14,11,'127.0.0.1',NULL,'2020-09-26 18:44:17'),(15,11,'127.0.0.1',NULL,'2020-09-26 18:44:56'),(16,11,'127.0.0.1',NULL,'2020-09-26 18:45:17'),(17,11,'127.0.0.1',NULL,'2020-09-26 18:49:06'),(18,11,'127.0.0.1',NULL,'2020-09-26 18:52:47'),(19,11,'127.0.0.1',NULL,'2020-09-26 19:07:34'),(20,11,'127.0.0.1',NULL,'2020-09-26 19:07:41'),(21,11,'127.0.0.1',NULL,'2020-09-26 19:12:15'),(22,11,'127.0.0.1',NULL,'2020-09-26 19:12:39'),(23,11,'127.0.0.1',NULL,'2020-09-26 19:13:45'),(24,11,'127.0.0.1',NULL,'2020-09-26 19:18:34'),(25,11,'127.0.0.1',NULL,'2020-09-26 19:19:53'),(26,11,'127.0.0.1',NULL,'2020-09-26 19:22:18'),(27,11,'127.0.0.1',NULL,'2020-09-26 19:25:36'),(28,11,'127.0.0.1',NULL,'2020-09-26 19:30:10'),(29,11,'127.0.0.1',NULL,'2020-09-26 19:32:34'),(30,11,'127.0.0.1',NULL,'2020-09-26 19:36:44'),(31,11,'127.0.0.1',NULL,'2020-09-26 20:36:15'),(32,11,'127.0.0.1','2020-09-26 19:39:14','2020-09-26 22:02:41'),(33,11,'127.0.0.1','2020-09-26 19:44:36','2020-09-26 22:42:55'),(34,11,'127.0.0.1','2020-12-01 16:51:36','2020-12-01 19:47:34');
 /*!40000 ALTER TABLE `tb_userspasswordsrecoveries` ENABLE KEYS */;
 UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `tb_turmasuser`;
+CREATE TABLE `tb_turmasuser` (
+  `iduser` int(11) NOT NULL,
+  `idturma` int(11) NOT NULL,
+  PRIMARY KEY (`iduser`,`idturma`),
+  KEY `fk_turmasuser_users_idx` (`iduser`),
+  CONSTRAINT `fk_turmasuser_temporada` FOREIGN KEY (`iduser`) REFERENCES `tb_users` (`iduser`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_turmasuser_users` FOREIGN KEY (`idturma`) REFERENCES `tb_turma` (`idturma`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -1261,7 +1272,7 @@ pdesemail VARCHAR(128),
 pnrphone BIGINT, 
 pinadmin TINYINT,
 pisprof TINYINT, 
-pstatus TINYINT
+pstatususer TINYINT
 )
 BEGIN
   
@@ -1272,8 +1283,8 @@ BEGIN
     
     SET vidperson = LAST_INSERT_ID();
     
-    INSERT INTO tb_users (idperson, deslogin, despassword, inadmin, isprof, status)
-    VALUES(vidperson, pdeslogin, pdespassword, pinadmin, pisprof, pstatus);
+    INSERT INTO tb_users (idperson, deslogin, despassword, inadmin, isprof, statususer)
+    VALUES(vidperson, pdeslogin, pdespassword, pinadmin, pisprof, pstatususer);
     
     SELECT * FROM tb_users a INNER JOIN tb_persons b USING(idperson) WHERE a.iduser = LAST_INSERT_ID();
     
@@ -1308,7 +1319,7 @@ pdesemail VARCHAR(128),
 pnrphone BIGINT, 
 pinadmin TINYINT,
 pisprof TINYINT,
-pstatus TINYINT
+pstatususer TINYINT
 )
 BEGIN
   
@@ -1319,18 +1330,20 @@ BEGIN
     WHERE iduser = piduser;
     
     UPDATE tb_persons
-    SET desperson = pdesperson,
-         desemail = pdesemail,
-          nrphone = pnrphone
-   WHERE idperson = vidperson;
+    SET 
+    desperson = pdesperson,
+        desemail = pdesemail,
+        nrphone = pnrphone
+  WHERE idperson = vidperson;
     
     UPDATE tb_users
-    SET deslogin = pdeslogin,
-     despassword = pdespassword,
-         inadmin = pinadmin,
-          isprof = pisprof,
-          status = pstatus
-    WHERE iduser = piduser;
+    SET
+    deslogin = pdeslogin,
+        despassword = pdespassword,
+        inadmin = pinadmin,
+        isprof = pisprof,
+        statususer = pstatususer
+  WHERE iduser = piduser;
     
     SELECT * FROM tb_users a INNER JOIN tb_persons b USING(idperson) WHERE a.iduser = piduser;
     
