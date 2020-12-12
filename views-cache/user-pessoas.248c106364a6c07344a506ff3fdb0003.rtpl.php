@@ -5,6 +5,7 @@
             <div class="col-md-12">
                 <div class="product-bit-title text-center">
                     <h2>Meus Dependentes</h2>
+
                 </div>
             </div>
         </div>
@@ -12,6 +13,11 @@
 </div>
 
 <div class="single-product-area">
+    <?php if( $errorRegister != '' ){ ?>
+    <div class="alert alert-danger">
+    <?php echo htmlspecialchars( $errorRegister, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+    </div>
+    <?php } ?>
     <?php $counter1=-1;  if( isset($pessoas) && ( is_array($pessoas) || $pessoas instanceof Traversable ) && sizeof($pessoas) ) foreach( $pessoas as $key1 => $value1 ){ $counter1++; ?>         
 
     <div class="container">

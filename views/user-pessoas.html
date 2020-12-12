@@ -5,6 +5,7 @@
             <div class="col-md-12">
                 <div class="product-bit-title text-center">
                     <h2>Meus Dependentes</h2>
+
                 </div>
             </div>
         </div>
@@ -12,6 +13,11 @@
 </div>
 
 <div class="single-product-area">
+    {if="$errorRegister != ''"}
+    <div class="alert alert-danger">
+    {$errorRegister}
+    </div>
+    {/if}
     {loop="$pessoas"}         
 
     <div class="container">

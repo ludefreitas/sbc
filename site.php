@@ -562,6 +562,8 @@ $app->post("/registerpessoa", function(){
 		exit;
 	}
 
+	$pessoa->getPessoaExist();
+
 	$pessoa = new Pessoa();
 
 	$pessoa->setData([
@@ -581,9 +583,6 @@ $app->post("/registerpessoa", function(){
 		'statuspessoa'=>1		
 	]);
 
-	//var_dump($pessoa);
-	//exit();
-
 	$pessoa->save();
 
 	header('Location: /checkout');
@@ -591,7 +590,7 @@ $app->post("/registerpessoa", function(){
 
 });
 
-
+/*
 $app->get("/pessoa/:idpess/status", function($idpess) {
 
 	User::verifyLogin(false);
@@ -605,6 +604,7 @@ $app->get("/pessoa/:idpess/status", function($idpess) {
 	header("Location: /user-pessoas");
 	exit();	
 });
+*/
 
 $app->get("/user/:idpess/status", function($idpess){
 
@@ -614,14 +614,14 @@ $app->get("/user/:idpess/status", function($idpess){
 
 	$pessoa->get((int)$idpess);
 
-	$pessoa->setData($_POST);
+	$_POST['statuspessoa'] = 0;
+	$_POST['idpess'] = $idpess;
 
-	// setstatuspessoa --> 0 = pessoa não ativa   -  1 = pessoa ativa (default)
-	$pessoa->setStatusPessoa();
+	$pessoa->setData($_POST);
 
 	$pessoa->save();
 
-	Pessoa::setSuccess("Status atualizado.");
+	Pessoa::setErrorRegister("Pessoa excluída com sucesso.");	
 
 	header("Location: /user/pessoas");
 	exit;
@@ -665,6 +665,7 @@ $app->get("/user/pessoas", function(){
 	$page = new Page();
 
 	$page->setTpl("user-pessoas", [
+		'errorRegister'=>User::getErrorRegister(),
 		'pessoas'=>$user->getPessoa()
 	]);
 

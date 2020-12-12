@@ -91,7 +91,7 @@ class Pessoa extends Model {
 		$html = [];
 
 		foreach ($pessoa as $row) {
-			array_push($html, '<li><a href="/pessoa/'.$row['idpess'].'">'.$row['nomepass'].'</a></li>');
+			array_push($html, '<li><a href="/pessoa/'.$row['idpess'].'">'.$row['nomepess'].'</a></li>');
 		}
 		file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."pessoa-menu.html", implode('', $html));
 	}
@@ -199,23 +199,29 @@ class Pessoa extends Model {
 
 		$this->setData($rows[0]);
 	}
-	
-	public function setStatusPessoa(){
 
-		$novoStatusPessoa = 0;
+
+	public function getPessoaExist()	{
 
 		$sql = new Sql();
 
 		$results = $sql->select(
-			"UPDATE tb_pessoa SET statuspessoa = :statuspessoa WHERE idpess = :pidpess", [
-			':idpess'=>$this->getidpess(),
-			':statuspessoa'=>$novoStatusPessoa			
+			"SELECT * FROM tb_pessoa a
+			INNER JOIN tb_users b using (iduser)
+			WHERE numcpf = :numcpf AND
+			iduser = :iduser", [
+			':iduser'=>$this->getiduser(),
+			':numcpf'=>$this->getnumcpf()
 		]);
 
-		//$this->setData($results[0]);	
+		return $results;
+
+		if(count($results) === 0)
+		{
+			throw new \Exception("Pessoa já existe deseja ativar?", 1);			
+		}
 
 	}
-	
 
 }
 
