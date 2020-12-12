@@ -3,11 +3,11 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Lista de Usuários
+    Lista de Professores
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active"><a href="/professor/users">Usuários</a></li>
+    <li class="active"><a href="/professor/prof">Professores</a></li>
   </ol>
 </section>
 
@@ -19,7 +19,7 @@
       <div class="box box-primary">
             
             <div class="box-header">
-              <a href="/professor/users/create" class="btn btn-success">Cadastrar Usuário</a>
+              <a href="/professor/users/create" class="btn btn-success">Cadastrar Professor</a>
             </div>
 
             <div class="box-body no-padding">
@@ -49,9 +49,9 @@
                     <td><?php if( $value1["statususer"] == 1 ){ ?>Ativo<?php }else{ ?>Inativo<?php } ?></td>
 
                     <td>
-                      <a href="/professor/users/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/turma" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Sel.Turmas</a>
+                      <a href="/professor/users/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/turma" class="btn btn-info btn-xs"><i class="fa fa-edit"></i> Sel.Turmas</a>
                        <a href="/professor/turma-users/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> Minhas turmas</a>
-                      <a href="/professor/users/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-info btn-xs"><i class="fa fa-edit"></i> Editar</a>
+                      <a href="/professor/users/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
                       <a href="/professor/users/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir o registro do(a) <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
                     </td>
                   </tr>

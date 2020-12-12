@@ -313,7 +313,7 @@ class Turma extends Model {
 
 	}
 
-	public static function getPage($page = 1, $itemsPerPage = 8)
+	public static function getPage($page = 1, $itemsPerPage = 5)
 	{
 
 		$start = ($page - 1) * $itemsPerPage;
@@ -348,7 +348,7 @@ class Turma extends Model {
 			 INNER JOIN tb_modalidade m         
 			 using(idmodal)
       		-- WHERE idstatustemporada = 3
-			ORDER BY a.descturma
+			ORDER BY a.descturma, h.horainicio, h.diasemana
 			LIMIT $start, $itemsPerPage;
 		");
 

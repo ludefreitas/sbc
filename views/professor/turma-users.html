@@ -36,14 +36,19 @@
                         <tbody>
                             {loop="$turmaNotRelated"}
                             <tr>
-                            <td>{$value.idturma}</td>
+                            <td>{$value.idturma} - {$value.iduser} </td>
                             <td>{$value.descturma} - {$value.apelidolocal} - {$value.nomeativ} - 
-                        {$value.diasemana} - {$value.horainicio} - {$value.horatermino}</td>
+                        {$value.diasemana} - {$value.horainicio} - {$value.horatermino} pro {$users.iduser}</td>
                             <td>
-                                <a href="/professor/users/{$users.iduser}/turma/{$value.idturma}/add" class="btn btn-primary btn-xs pull-right"><i class="fa fa-arrow-right"></i> Adicionar</a>
+                                <a href="/professor/users/{$users.iduser}/turma/{$value.idturma}/add" 
+
+                                 {if="{$value.iduser} === {$users.iduser}" onclick="return professorDaTurma()" }
+                               
+
+                                class="btn btn-primary btn-xs pull-right"><i class="fa fa-arrow-right"></i> Adicionar</a>
                             </td>
                             </tr>
-                            {/loop}
+                            {/loop}                            
                         </tbody>
                     </table>
                 </div>

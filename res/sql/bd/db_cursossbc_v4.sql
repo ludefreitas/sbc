@@ -64,7 +64,7 @@ CREATE TABLE `tb_carts` (
   KEY `FK_carts_pessoa_idx` (`idpess`),
   CONSTRAINT `fk_carts_pessoa` FOREIGN KEY (`idpess`) REFERENCES `tb_pessoa` (`idpess`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_carts_users` FOREIGN KEY (`iduser`) REFERENCES `tb_users` (`iduser`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +73,7 @@ CREATE TABLE `tb_carts` (
 
 LOCK TABLES `tb_carts` WRITE;
 /*!40000 ALTER TABLE `tb_carts` DISABLE KEYS */;
-INSERT INTO `tb_carts` VALUES (1,'4avd2mtd7setu6369ancuqfpfk',NULL,NULL),(2,'9bg4624sje7aqk1fuhn7ikvagh',NULL,NULL),(3,'20ofh5p7b94l6q24t85p25gjtj',1,NULL);
+INSERT INTO `tb_carts` VALUES (1,'4avd2mtd7setu6369ancuqfpfk',NULL,NULL),(2,'9bg4624sje7aqk1fuhn7ikvagh',NULL,NULL),(3,'20ofh5p7b94l6q24t85p25gjtj',1,NULL),(4,'0vkepdotbkad1cq9iov2027geq',1,NULL),(5,'mcilvsti8cftm64bjc9p8ipk3a',NULL,NULL),(6,'qbelpos126ridth2tdvf85pd83',1,1),(7,'pu1u6lkl6ilah5hh9ah4imu927',14,NULL),(8,'79gkbml6fcargcpmb2ss7ama22',15,NULL),(9,'4aoj68uqmujjm8r5boi9lg9ini',NULL,NULL),(10,'j61l9jbdcfsf4kdmbpqsg3qp7g',13,NULL),(11,'5hiq11nv80sn5qcdmt4os7pgsa',14,NULL),(12,'6lufhvu4h6hc9jbre538hiipfl',NULL,NULL);
 /*!40000 ALTER TABLE `tb_carts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -95,7 +95,7 @@ CREATE TABLE `tb_cartsturmas` (
   KEY `fk_cartsturmas_turma_idx` (`idturma`),
   CONSTRAINT `fk_cartsturmas_carts` FOREIGN KEY (`idcart`) REFERENCES `tb_carts` (`idcart`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_cartsturmas_turma` FOREIGN KEY (`idturma`) REFERENCES `tb_turma` (`idturma`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -104,6 +104,7 @@ CREATE TABLE `tb_cartsturmas` (
 
 LOCK TABLES `tb_cartsturmas` WRITE;
 /*!40000 ALTER TABLE `tb_cartsturmas` DISABLE KEYS */;
+INSERT INTO `tb_cartsturmas` VALUES (3,4,2,'2020-12-06 12:30:19','2020-12-06 15:07:11'),(4,4,2,NULL,'2020-12-06 15:40:53'),(5,5,2,'2020-12-06 12:59:38','2020-12-06 15:47:20'),(6,5,2,'2020-12-06 13:07:03','2020-12-06 16:04:42'),(7,5,2,'2020-12-06 14:02:33','2020-12-06 16:10:33'),(8,6,2,'2020-12-07 17:22:01','2020-12-07 20:17:20'),(9,6,2,'2020-12-07 18:02:56','2020-12-07 20:23:58'),(10,6,2,'2020-12-07 18:04:46','2020-12-07 21:04:35'),(11,6,2,NULL,'2020-12-07 21:05:05'),(12,9,2,NULL,'2020-12-08 03:51:31'),(13,12,5,NULL,'2020-12-12 01:11:04');
 /*!40000 ALTER TABLE `tb_cartsturmas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -159,7 +160,7 @@ CREATE TABLE `tb_espaco` (
   PRIMARY KEY (`idespaco`),
   KEY `fk_idespaco_local_idx` (`idlocal`),
   CONSTRAINT `fk_idespaco_local` FOREIGN KEY (`idlocal`) REFERENCES `tb_local` (`idlocal`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -168,7 +169,7 @@ CREATE TABLE `tb_espaco` (
 
 LOCK TABLES `tb_espaco` WRITE;
 /*!40000 ALTER TABLE `tb_espaco` DISABLE KEYS */;
-INSERT INTO `tb_espaco` VALUES (17,4,'Piscina','Piscina de Hidroginástica','Piscina coberta, aquecida exclusiva de hidroginástica',61.00),(18,6,'Qaudra','Quadra Poliesportiva','Quadra coberta com arquibancada',684.00);
+INSERT INTO `tb_espaco` VALUES (17,4,'Piscina','Piscina de Hidroginástica','Piscina coberta, aquecida exclusiva de hidroginástica',60.00),(18,6,'Quadra','Quadra','Quadra coberta com arquibancada',420.00),(19,10,'Quadra','Quadra Poliesportiva','Quadra coberta',420.00),(20,11,'Quadra','Quadra Poliesportiva','Quadra coberta com arquibancada',684.00),(21,11,'Sala','Sala para atividades diversas','Sala com espelhos e tatame',36.00),(22,14,'Mezanino','Sala para atividades diversas','Sala para atividades diversas em piso superior',42.00),(23,1,'Sala','Sala para atividades diversas','Sala com barras e espelhos',120.00),(24,1,'Sala de Judô','Sala para lutas','Sala para lutas com tatame',40.00),(25,1,'Quadra','Quadra externa','Quadra 1, externa, descoberta e sem arquibancada',460.00),(26,1,'Piscina','Piscina externa','Piscina 25m com capacidade de 1200l, externa com 5 raias,',125.00),(27,15,'Salão','Salão para atividades diversas','Salão espelhado',92.00),(28,5,'Quadra','Quadra Poliesportiva','Quadra coberta sem arquibancada',460.00),(29,4,'Quadra','Meia quadra','Meia quadra com cesto de basquete e arquibancada',220.00);
 /*!40000 ALTER TABLE `tb_espaco` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -399,7 +400,7 @@ CREATE TABLE `tb_local` (
 
 LOCK TABLES `tb_local` WRITE;
 /*!40000 ALTER TABLE `tb_local` DISABLE KEYS */;
-INSERT INTO `tb_local` VALUES (1,'Baetinha','Crec Deputado Odemir Furlan ','Rua Bauru','20','','Baeta Neves','São Bernardo do Campo','SP','(11)26309319',9751440),(3,'Baetão','Complexo Aquático do Estádio Municipal Giglio Portugal Pichinin','Rua Dona Julia Cezar Ferreira','270','','Baeta Neves','São Bernardo do Campo','SP','(11)43329816',9760300),(4,'Aquacentro - Demarchi','Centro de Reab. Fisiotep. Esportiva P/ Atletas e Pessoas com Def','R. Valdomiro Luis da Silva','279','','Jd. Nossa Sra. de Fátima','São Bernardo do Campo','SP','(11)41265600',9820340),(5,'Creeba','Centro Recreativo Esportivo Especial Luis Bonício','R. Benedeto Merson','35','','Bairro Assunção','São Bernardo do Campo','SP','43515940',9810340),(6,'Alves Dias','Ginásio de Esportes Atílio Pessoti','Av. Oswaldo Fregonezzi','101','','Alves Dias','São Bernardo do Campo','SP','41097469',9851015),(7,'Vila Marlene','Crec Otávio Edgar de Oliviera','Rua Continental','808','','Vila Marlene','São Bernardo do Campo','SP','(11)41292088',9750060),(8,'Vila São Pedro','Centro Esportivo Vila São Pedro','Rua Santo Antonio','300','','Vila São Pedro','São Bernardo do Campo','SP','(11)41392088',9781175),(9,'Orquídeas','Centro Esportivo Eder Simões Barbosa','Estrada do Poney Club','148','','Jardim das Orquídeas','São Bernardo do Campo','SP','(11)43362665',9853005),(10,'Areião','Centro de Convivência Dom Jorge Marcos Oliveira','Estrada da Pedra Branca','754','','Montanhão','São Bernardo do Campo','SP','(11)43399207',9792302),(11,'Centro Cultural Ferrazópolis','Centro Cultural Jácomo Guazelli','Rua Rosa Pacheco','201','','Ferrazópolis','São Bernardo do Campo','SP','41272324',9790330),(12,'Terra Nova','Ginásio Poliesportivo Rolando Marques','Rua Pastor Tito Rodrigues Linhares','03','','Terra Nova','São Bernardo do Campo','SP','41014267',9820710),(13,'Riacho Grande','Ginásio Poliesportivo João Soares Brasa','Rua Marcílio Conrado','500','','Riacho Grande','São Bernardo do Campo','SP','43975009',9830291),(14,'Centro de Convivência Ferrazópol','Centro de Convivência Mariana Benvinda da Costa','Rua Aureliano de Souza','6','','Ferrazópolis','São Bernardo do Campo','SP','41270771',0),(15,'Corintinha','Centro Esportivo Salim Tabet','Rua Guilherme Lorenzi','504','','Jardim Esmeralda','São Bernardo do Campo','SP','43300859',9851020),(16,'Jardim do Lago','Ginásio Poliesportivo José Vicente Lopes','Rua Ministro Nelson Hungria','450','','Jardim do Lago','São Bernardo do Campo','SP','(11)4357-6426',5690050),(17,'Jerusalém','Centro Esportivo Jerusalém','Rua Lázaro de Oliveira Leite','200','','Bairro Jerusalém','São Bernardo do Campo','SP','(11)43559700',9811375),(18,'Jardim Lavínia','Centro Esportivo Lavínia','Avenida Capitão Casa','1500','','Bairro dos Casa','São Bernardo do Campo','SP','(11)4125-5198',9812000),(19,'Meninos - Rudge Ramos','Meninos Futebol Clube','Avenida Caminho do Mar','3222','','Rudge Ramos','São Bernardo do Campo','SP','(11)4368-5203',9612000),(21,'Paulicéia','Centro Recreativo Esportivo Cultural Gentil Antiquera','Rua Francisco Alves','460','','Paulicéia','São Bernardo do Campo','SP','(11)4178-9455',9692000),(22,'Planalto','Centro Esportivo Roberto de Almeida Nunes','Rua Eunice Weaver','60','','Planalto','São Bernardo do Campo','SP','(11)4341-8445',9890080),(23,'Poliesportivo ','Ginásio Poliesportivo Municipal de São Bernardo do Campo','Avenida Kennedy','1155','','Bairro Anchieta','São Bernardo do Campo','SP','(11)4126-5600',9726253),(24,'Taboão','Ginásio de Esportes Benedito Pieralini Benaglia','Rua Alfredo Bernardo Leite','1287','','Taboão','s','São Bernardo do Campo','(11)4361-7622',0),(25,'Goldem Park','Salão da Igreja Nossa Senhora de Guadalupe','Rua Doze','3','','Golden Park','São Bernardo do Campo','SP','',0),(26,'Silvina','Comunidade Maria de Nazaré','Rua Araújo Viana','230','','Ferrazópolis','São Bernardo do Campo','SP','',0),(27,'Atletismo','Centro de Atletismo Oswaldo Terra da Silva','Tiradentes','1845','','Santa Terezinha','São Bernardo do Campo','SP','(11)4347-8203',9780265);
+INSERT INTO `tb_local` VALUES (1,'Baetinha','Crec Deputado Odemir Furlan ','Rua Bauru','20','','Baeta Neves','São Bernardo do Campo','SP','(11)26309319',9751440),(3,'Baetão','Complexo Aquático do Estádio Municipal Giglio Portugal Pichinin','Rua Dona Julia Cezar Ferreira','270','','Baeta Neves','São Bernardo do Campo','SP','(11)43329816',9760300),(4,'Aquacentro - Demarchi','Centro de Reab. Fisiotep. Esportiva P/ Atletas e Pessoas com Def','R. Valdomiro Luis da Silva','279','','Jd. Nossa Sra. de Fátima','São Bernardo do Campo','SP','(11)41265600',9820340),(5,'Creeba','Centro Recreativo Esportivo Especial Luis Bonício','R. Benedeto Merson','35','','Bairro Assunção','São Bernardo do Campo','SP','43515940',9810340),(6,'Alves Dias','Ginásio de Esportes Atílio Pessoti','Av. Oswaldo Fregonezzi','101','','Alves Dias','São Bernardo do Campo','SP','41097469',9851015),(7,'Vila Marlene','Crec Otávio Edgar de Oliviera','Rua Continental','808','','Vila Marlene','São Bernardo do Campo','SP','(11)41292088',9750060),(8,'Vila São Pedro','Centro Esportivo Vila São Pedro','Rua Santo Antonio','300','','Vila São Pedro','São Bernardo do Campo','SP','(11)41392088',9781175),(9,'Orquídeas','Centro Esportivo Eder Simões Barbosa','Estrada do Poney Club','148','','Jardim das Orquídeas','São Bernardo do Campo','SP','(11)43362665',9853005),(10,'Areião','Centro de Convivência Dom Jorge Marcos Oliveira','Estrada da Pedra Branca','754','','Montanhão','São Bernardo do Campo','SP','(11)43399207',9792302),(11,'Centro Cultural Ferrazópolis','Centro Cultural Jácomo Guazelli','Rua Rosa Pacheco','201','','Ferrazópolis','São Bernardo do Campo','SP','41272324',9790330),(12,'Terra Nova','Ginásio Poliesportivo Rolando Marques','Rua Pastor Tito Rodrigues Linhares','03','','Terra Nova','São Bernardo do Campo','SP','41014267',9820710),(13,'Riacho Grande','Ginásio Poliesportivo João Soares Brasa','Rua Marcílio Conrado','500','','Riacho Grande','São Bernardo do Campo','SP','43975009',9830291),(14,'Centro de Conviv.  Ferrazópolis','Centro de Convivência Mariana Benvinda da Costa','Rua Aureliano de Souza','6','','Ferrazópolis','São Bernardo do Campo','SP','41270771',0),(15,'Corintinha','Centro Esportivo Salim Tabet','Rua Guilherme Lorenzi','504','','Jardim Esmeralda','São Bernardo do Campo','SP','43300859',9851020),(16,'Jardim do Lago','Ginásio Poliesportivo José Vicente Lopes','Rua Ministro Nelson Hungria','450','','Jardim do Lago','São Bernardo do Campo','SP','(11)4357-6426',5690050),(17,'Jerusalém','Centro Esportivo Jerusalém','Rua Lázaro de Oliveira Leite','200','','Bairro Jerusalém','São Bernardo do Campo','SP','(11)43559700',9811375),(18,'Jardim Lavínia','Centro Esportivo Lavínia','Avenida Capitão Casa','1500','','Bairro dos Casa','São Bernardo do Campo','SP','(11)4125-5198',9812000),(19,'Meninos - Rudge Ramos','Meninos Futebol Clube','Avenida Caminho do Mar','3222','','Rudge Ramos','São Bernardo do Campo','SP','(11)4368-5203',9612000),(21,'Paulicéia','Centro Recreativo Esportivo Cultural Gentil Antiquera','Rua Francisco Alves','460','','Paulicéia','São Bernardo do Campo','SP','(11)4178-9455',9692000),(22,'Planalto','Centro Esportivo Roberto de Almeida Nunes','Rua Eunice Weaver','60','','Planalto','São Bernardo do Campo','SP','(11)4341-8445',9890080),(23,'Poliesportivo ','Ginásio Poliesportivo Municipal de São Bernardo do Campo','Avenida Kennedy','1155','','Bairro Anchieta','São Bernardo do Campo','SP','(11)4126-5600',9726253),(24,'Taboão','Ginásio de Esportes Benedito Pieralini Benaglia','Rua Alfredo Bernardo Leite','1287','','Taboão','s','São Bernardo do Campo','(11)4361-7622',0),(25,'Goldem Park','Salão da Igreja Nossa Senhora de Guadalupe','Rua Doze','3','','Golden Park','São Bernardo do Campo','SP','',0),(26,'Silvina','Comunidade Maria de Nazaré','Rua Araújo Viana','230','','Ferrazópolis','São Bernardo do Campo','SP','',0),(27,'Atletismo','Centro de Atletismo Oswaldo Terra da Silva','Tiradentes','1845','','Santa Terezinha','São Bernardo do Campo','SP','(11)4347-8203',9780265);
 /*!40000 ALTER TABLE `tb_local` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -528,7 +529,7 @@ CREATE TABLE `tb_persons` (
   `nrphone` bigint(20) DEFAULT NULL,
   `dtregister` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`idperson`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -537,7 +538,7 @@ CREATE TABLE `tb_persons` (
 
 LOCK TABLES `tb_persons` WRITE;
 /*!40000 ALTER TABLE `tb_persons` DISABLE KEYS */;
-INSERT INTO `tb_persons` VALUES (1,'Luciano Freitas','lulufreitas@gmail.com',2147483647,'2020-03-01 06:00:00'),(7,'Suporte','lulufreitas008@gmail.com',1112345678,'2020-05-15 19:10:27'),(11,'Leco','lulufreitas08@hotmail.com',98765432100000,'2020-09-26 18:00:05'),(12,'Luma','luma@email',98798798,'2020-09-26 18:14:38'),(13,'Lima','lima@email',24022222,'2020-12-01 19:16:29');
+INSERT INTO `tb_persons` VALUES (1,'Luciano Freitas','lulufreitas@gmail.com',2147483647,'2020-03-01 06:00:00'),(7,'Suporte','lulufreitas008@gmail.com',1112345678,'2020-05-15 19:10:27'),(11,'Leco','lulufreitas08@hotmail.com',987654321,'2020-09-26 18:00:05'),(12,'Luma','luma@email',98798798,'2020-09-26 18:14:38'),(13,'Lima','lima@email',900987789,'2020-12-01 19:16:29'),(14,'Laura','laura@email',900321123,'2020-12-08 00:22:42'),(15,'Lena','lena@email.com',11987987,'2020-12-08 00:49:33'),(19,'Lino','lino@email',0,'2020-12-11 22:58:48'),(20,'Lino','lino@email',909000101,'2020-12-11 22:59:17'),(21,'Lino','lino@email',909000101,'2020-12-11 23:09:29'),(22,'Leca','leca@email',908765432,'2020-12-11 23:22:16'),(23,'Luana','luana@email',907654321,'2020-12-11 23:23:10');
 /*!40000 ALTER TABLE `tb_persons` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -569,7 +570,7 @@ CREATE TABLE `tb_pessoa` (
   PRIMARY KEY (`idpess`),
   KEY `fk_pessoa_users_idx` (`iduser`),
   CONSTRAINT `fk_pessoa_users` FOREIGN KEY (`iduser`) REFERENCES `tb_users` (`iduser`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -578,6 +579,7 @@ CREATE TABLE `tb_pessoa` (
 
 LOCK TABLES `tb_pessoa` WRITE;
 /*!40000 ALTER TABLE `tb_pessoa` DISABLE KEYS */;
+INSERT INTO `tb_pessoa` VALUES (1,1,'Lenon','1997-02-13','Masculino','098098098','789789789','78768686876',1,NULL,'123321677','Lena','098098098','Leton',1,'2020-12-06 17:52:16','2020-12-06 17:52:16');
 /*!40000 ALTER TABLE `tb_pessoa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -748,7 +750,7 @@ CREATE TABLE `tb_turma` (
   CONSTRAINT `fk_turma_modalidade` FOREIGN KEY (`idmodal`) REFERENCES `tb_modalidade` (`idmodal`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_turma_turmastatus` FOREIGN KEY (`idturmastatus`) REFERENCES `tb_turmastatus` (`idturmastatus`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_turma_users` FOREIGN KEY (`iduser`) REFERENCES `tb_users` (`iduser`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -757,7 +759,7 @@ CREATE TABLE `tb_turma` (
 
 LOCK TABLES `tb_turma` WRITE;
 /*!40000 ALTER TABLE `tb_turma` DISABLE KEYS */;
-INSERT INTO `tb_turma` VALUES (2,1,6,17,5,12,3,'Hidro 3ª idade',35,0);
+INSERT INTO `tb_turma` VALUES (2,1,6,17,5,12,3,'Hidro 3ª idade',35,0),(3,2,6,17,6,12,3,'Hidroginástica',35,0),(4,2,6,17,7,12,3,'Hidroginástica',35,0),(5,2,6,17,8,12,3,'Hidroginástica',35,0),(6,1,6,17,13,13,3,'Hidro 3ª idade',35,0),(7,2,6,17,14,13,3,'Hidroginástica',35,0),(10,2,6,17,16,13,3,'Hidroginástica',35,0),(11,2,6,17,15,13,3,'Hidroginástica',35,0),(12,1,6,17,9,21,3,'Hidro 3ª idade',35,0),(13,2,6,17,10,21,3,'Hidroginástica',35,0),(14,2,6,17,11,21,3,'Hidroginástica',35,0),(15,2,6,17,12,21,3,'Hidroginástica',35,0);
 /*!40000 ALTER TABLE `tb_turma` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -787,6 +789,34 @@ INSERT INTO `tb_turmastatus` VALUES (1,'Completa','2020-04-01 06:00:00'),(2,'Nã
 UNLOCK TABLES;
 
 --
+-- Table structure for table `tb_turmasuser`
+--
+
+DROP TABLE IF EXISTS `tb_turmasuser`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_turmasuser` (
+  `iduser` int(11) NOT NULL,
+  `idturma` int(11) NOT NULL,
+  PRIMARY KEY (`iduser`,`idturma`),
+  KEY `fk_turmasuser_users_idx` (`iduser`),
+  KEY `fk_turmasuser_users` (`idturma`),
+  CONSTRAINT `fk_turmasuser_temporada` FOREIGN KEY (`iduser`) REFERENCES `tb_users` (`iduser`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_turmasuser_users` FOREIGN KEY (`idturma`) REFERENCES `tb_turma` (`idturma`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_turmasuser`
+--
+
+LOCK TABLES `tb_turmasuser` WRITE;
+/*!40000 ALTER TABLE `tb_turmasuser` DISABLE KEYS */;
+INSERT INTO `tb_turmasuser` VALUES (12,2),(13,2);
+/*!40000 ALTER TABLE `tb_turmasuser` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `tb_turmatemporada`
 --
 
@@ -809,6 +839,7 @@ CREATE TABLE `tb_turmatemporada` (
 
 LOCK TABLES `tb_turmatemporada` WRITE;
 /*!40000 ALTER TABLE `tb_turmatemporada` DISABLE KEYS */;
+INSERT INTO `tb_turmatemporada` VALUES (4,2),(4,3),(4,4),(4,5),(4,6),(4,7),(4,10);
 /*!40000 ALTER TABLE `tb_turmatemporada` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -831,7 +862,7 @@ CREATE TABLE `tb_users` (
   PRIMARY KEY (`iduser`),
   KEY `FK_users_persons_idx` (`idperson`),
   CONSTRAINT `fk_users_persons` FOREIGN KEY (`idperson`) REFERENCES `tb_persons` (`idperson`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -840,7 +871,7 @@ CREATE TABLE `tb_users` (
 
 LOCK TABLES `tb_users` WRITE;
 /*!40000 ALTER TABLE `tb_users` DISABLE KEYS */;
-INSERT INTO `tb_users` VALUES (1,1,'admin','$2y$12$YlooCyNvyTji8bPRcrfNfOKnVMmZA9ViM2A3IpFjmrpIbp5ovNmga',1,0,1,'2017-03-13 06:00:00'),(7,7,'suporte','$2y$12$HFjgUm/mk1RzTy4ZkJaZBe0Mc/BA2hQyoUckvm.lFa6TesjtNpiMe',1,1,0,'2017-03-15 19:10:27'),(11,11,'leco','$2y$12$QX7/h08v5HK/Ut05KmMuXe5F788W5.b9Oxyz1RfYY9r5BoqPV/5s.',0,0,0,'2020-09-26 18:00:05'),(12,12,'luma','$2y$12$kLt7L1BRnSaPOulvdwmfFuK5LAXUxop94SY7QAglEbBdJIqpkiseC',1,1,1,'2020-09-26 18:14:38'),(13,13,'lima','$2y$12$V7gprCwFq/VzTRlyjglqcOEvhOMVX69ncIXN4PTBCDgiPl40xu4Zm',1,1,1,'2020-12-01 19:16:29');
+INSERT INTO `tb_users` VALUES (1,1,'admin','$2y$12$YlooCyNvyTji8bPRcrfNfOKnVMmZA9ViM2A3IpFjmrpIbp5ovNmga',1,0,1,'2017-03-13 06:00:00'),(7,7,'suporte','$2y$12$HFjgUm/mk1RzTy4ZkJaZBe0Mc/BA2hQyoUckvm.lFa6TesjtNpiMe',1,0,0,'2017-03-15 19:10:27'),(11,11,'leco','$2y$12$QX7/h08v5HK/Ut05KmMuXe5F788W5.b9Oxyz1RfYY9r5BoqPV/5s.',1,1,1,'2020-09-26 18:00:05'),(12,12,'luma','$2y$12$kLt7L1BRnSaPOulvdwmfFuK5LAXUxop94SY7QAglEbBdJIqpkiseC',1,1,1,'2020-09-26 18:14:38'),(13,13,'lima','$2y$12$V7gprCwFq/VzTRlyjglqcOEvhOMVX69ncIXN4PTBCDgiPl40xu4Zm',1,1,1,'2020-12-01 19:16:29'),(14,14,'laura@email','$2y$12$bQM6Epf8iFE8.9VERPc8IOzieYv2IA0tucMjJYGfddkN5N6oSs9hO',0,0,1,'2020-12-08 00:22:42'),(18,18,'lena@email.com','$2y$12$I0Pv0q1nQpgXY4Wd8oEKz.1CXgwzSMpRVritT.ToDy/MX6uDaNkMS',0,0,1,'2020-12-08 03:24:01'),(19,21,'lino','$2y$12$t4rNDVn8udjS144o78jP6OMpd/p4IhaXSHEQW0ZfdfqX4sqtai/Au',1,1,1,'2020-12-11 23:09:29'),(20,22,'leca','$2y$12$1XMdikOCh1TGKHjcggeZYuAFXqLF78H3mhv3mnpQUo9Gwa10YEI/K',1,1,1,'2020-12-11 23:22:16'),(21,23,'luana','$2y$12$ee/3l3fHjplq4ZNkrSZhZ.GQWBntJGw2/0hKTzrtWX9iEZcTHSU2i',1,1,1,'2020-12-11 23:23:10');
 /*!40000 ALTER TABLE `tb_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -904,30 +935,19 @@ INSERT INTO `tb_userspasswordsrecoveries` VALUES (1,7,'127.0.0.1',NULL,'2020-09-
 /*!40000 ALTER TABLE `tb_userspasswordsrecoveries` ENABLE KEYS */;
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `tb_turmasuser`;
-CREATE TABLE `tb_turmasuser` (
-  `iduser` int(11) NOT NULL,
-  `idturma` int(11) NOT NULL,
-  PRIMARY KEY (`iduser`,`idturma`),
-  KEY `fk_turmasuser_users_idx` (`iduser`),
-  CONSTRAINT `fk_turmasuser_temporada` FOREIGN KEY (`iduser`) REFERENCES `tb_users` (`iduser`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_turmasuser_users` FOREIGN KEY (`idturma`) REFERENCES `tb_turma` (`idturma`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2020-12-06  0:09:00
-
-
-DELIMITER $$
+--
+-- Dumping routines for database 'db_cursossbc'
+--
+/*!50003 DROP PROCEDURE IF EXISTS `sp_atividade_save` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_atividade_save`(
 pidativ INT, 
 pnomeativ VARCHAR(64),
@@ -964,12 +984,22 @@ BEGIN
     
     SELECT * FROM tb_atividade WHERE idativ = pidativ;
     
-END$$
+END ;;
 DELIMITER ;
-
-DELIMITER $$
-
-
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_carts_save` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_carts_save`(
 pidcart INT,
 pdessessionid VARCHAR(64),
@@ -999,12 +1029,22 @@ BEGIN
     
     SELECT * FROM tb_carts WHERE idcart = pidcart;
 
-END$$
+END ;;
 DELIMITER ;
-
-DELIMITER $$
-
-
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_espaco_save` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_espaco_save`(
 pidespaco INT, 
 pidlocal INT, 
@@ -1037,10 +1077,22 @@ BEGIN
     
     SELECT * FROM tb_espaco WHERE idespaco = pidespaco;
     
-END$$
+END ;;
 DELIMITER ;
-
-DELIMITER $$
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_faixaetaria_save` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_faixaetaria_save`(
 pidfxetaria INT, 
 pdescrfxetaria VARCHAR(32),
@@ -1068,11 +1120,22 @@ BEGIN
     
     SELECT * FROM tb_fxetaria WHERE idfxetaria = pidfxetaria;
     
-END$$
+END ;;
 DELIMITER ;
-
-
-DELIMITER $$
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_horario_save` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_horario_save`(
 pidhorario INT, 
 phorainicio VARCHAR(8),
@@ -1102,11 +1165,22 @@ BEGIN
     
     SELECT * FROM tb_horario WHERE idhorario = pidhorario;
     
-END$$
+END ;;
 DELIMITER ;
-
-
-DELIMITER $$
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_local_save` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_local_save`(
 pidlocal INT, 
 papelidolocal VARCHAR(32),
@@ -1148,11 +1222,22 @@ BEGIN
     
     SELECT * FROM tb_local WHERE idlocal = pidlocal;
     
-END$$
+END ;;
 DELIMITER ;
-
-
-DELIMITER $$
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_modalidade_save` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_modalidade_save`(
 pidmodal INT, 
 pdescmodal VARCHAR(64)
@@ -1176,11 +1261,89 @@ BEGIN
     
     SELECT * FROM tb_modalidade WHERE idmodal = pidmodal;
     
-END$$
+END ;;
 DELIMITER ;
-
-
-DELIMITER $$
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_pessoa_save` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_pessoa_save`(
+pidpess INT, 
+piduser INT,
+pnomepess VARCHAR(64),
+pdtnasc VARCHAR(16),
+psexo VARCHAR(16),
+pnumcpf VARCHAR(16),
+pnumrg VARCHAR(16),
+pnumsus VARCHAR(16),
+pvulnsocial INT,
+pnomemae VARCHAR(64),
+pcpfmae VARCHAR(16),
+pnomepai VARCHAR(64),
+pcpfpai VARCHAR(16),
+pstatuspessoa INT,
+pdtinclusao TIMESTAMP,
+pdtalteracao TIMESTAMP
+)
+BEGIN
+  
+  IF pidpess > 0 THEN
+    
+    UPDATE tb_pessoa
+        SET iduser = piduser,
+      nomepess = pnomepess,
+        dtnasc = pdtnasc,
+          sexo = psexo,
+            numcpf = pnumcpf,
+             numrg = pnumrg,
+        numsus = pnumsus,
+    vulnsocial = pvulnsocial,
+           nomemae = pnomemae,
+            cpfmae = pcpfmae,
+       nomepai = pnomepai,
+            cpfpai = pcpfpai,
+            status = pstatus,
+     dtalteracao = pdtalteracao
+            
+     WHERE idpess = pidpess;
+        
+    ELSE
+    
+    INSERT INTO tb_pessoa (iduser, nomepess, dtnasc, sexo, numcpf, numrg, numsus, vulnsocial, nomemae, cpfmae, nomepai, cpfpai, statuspessoa)
+        VALUES(piduser, pnomepess, pdtnasc, psexo, pnumcpf, pnumrg, pnumsus, pvulnsocial, pnomemae, pcpfmae, pnomepai, pcpfpai, pstatuspessoa);
+        
+        SET pidpess = LAST_INSERT_ID();
+        
+    END IF;
+    
+    SELECT * FROM tb_pessoa WHERE idpess = pidpess;
+    
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_temporada_save` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_temporada_save`(
 pidtemporada INT,
 pdesctemporada VARCHAR(32),
@@ -1215,11 +1378,22 @@ BEGIN
     
     SELECT * FROM tb_temporada WHERE idtemporada = pidtemporada;
     
-END$$
+END ;;
 DELIMITER ;
-
-
-DELIMITER $$
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_turma_save` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_turma_save`(
 pidturma INT, 
 pidativ INT,
@@ -1238,14 +1412,14 @@ BEGIN
     
     UPDATE tb_turma
         SET idativ = pidativ,
-           idmodal = pidmodal,
-          idespaco = pidespaco,
-         idhorario = pidhorario,
-            iduser = piduser,
-     idturmastatus = pidturmastatus,
-         descturma = pdescturma,
-             vagas = pvagas,
-      numinscritos = pnuminscritos
+      idmodal = pidmodal,
+       idespaco = pidespaco,
+      idhorario = pidhorario,
+       iduser = piduser,
+    idturmastatus = pidturmastatus,
+          descturma = pdescturma,
+        vagas = pvagas,
+     numinscritos = pnuminscritos
             
      WHERE idturma = pidturma;
         
@@ -1260,39 +1434,22 @@ BEGIN
     
     SELECT * FROM tb_turma WHERE idturma = pidturma;
     
-END$$
+END ;;
 DELIMITER ;
-
-DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_users_save`(
-pdesperson VARCHAR(64), 
-pdeslogin VARCHAR(64), 
-pdespassword VARCHAR(256), 
-pdesemail VARCHAR(128), 
-pnrphone BIGINT, 
-pinadmin TINYINT,
-pisprof TINYINT, 
-pstatususer TINYINT
-)
-BEGIN
-  
-    DECLARE vidperson INT;
-    
-  INSERT INTO tb_persons (desperson, desemail, nrphone)
-    VALUES(pdesperson, pdesemail, pnrphone);
-    
-    SET vidperson = LAST_INSERT_ID();
-    
-    INSERT INTO tb_users (idperson, deslogin, despassword, inadmin, isprof, statususer)
-    VALUES(vidperson, pdeslogin, pdespassword, pinadmin, pisprof, pstatususer);
-    
-    SELECT * FROM tb_users a INNER JOIN tb_persons b USING(idperson) WHERE a.iduser = LAST_INSERT_ID();
-    
-END$$
-DELIMITER ;
-
-
-DELIMITER $$
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_userspasswordsrecoveries_create` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_userspasswordsrecoveries_create`(
 piduser INT,
 pdesip VARCHAR(45)
@@ -1305,11 +1462,22 @@ BEGIN
     SELECT * FROM tb_userspasswordsrecoveries
     WHERE idrecovery = LAST_INSERT_ID();
     
-END$$
+END ;;
 DELIMITER ;
-
-
-DELIMITER $$
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_usersupdate_save` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_usersupdate_save`(
 piduser INT,
 pdesperson VARCHAR(64), 
@@ -1347,74 +1515,60 @@ BEGIN
     
     SELECT * FROM tb_users a INNER JOIN tb_persons b USING(idperson) WHERE a.iduser = piduser;
     
-END$$
+END ;;
 DELIMITER ;
-
-DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_pessoa_save`(
-pidpess INT, 
-piduser INT,
-pnomepess VARCHAR(64),
-pdtnasc VARCHAR(16),
-psexo VARCHAR(16),
-pnumcpf VARCHAR(16),
-pnumrg VARCHAR(16),
-pnumsus VARCHAR(16),
-pvulnsocial INT,
-pnomemae VARCHAR(64),
-pcpfmae VARCHAR(16),
-pnomepai VARCHAR(64),
-pcpfpai VARCHAR(16),
-pstatuspessoa INT,
-pdtinclusao TIMESTAMP,
-pdtalteracao TIMESTAMP
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_users_save` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_users_save`(
+pdesperson VARCHAR(64), 
+pdeslogin VARCHAR(64), 
+pdespassword VARCHAR(256), 
+pdesemail VARCHAR(128), 
+pnrphone BIGINT, 
+pinadmin TINYINT,
+pisprof TINYINT, 
+pstatususer TINYINT
 )
 BEGIN
   
-  IF pidpess > 0 THEN
+    DECLARE vidperson INT;
     
-    UPDATE tb_pessoa
-        SET iduser = piduser,
-      nomepess = pnomepess,
-        dtnasc = pdtnasc,
-          sexo = psexo,
-        numcpf = pnumcpf,
-         numrg = pnumrg,
-        numsus = pnumsus,
-    vulnsocial = pvulnsocial,
-       nomemae = pnomemae,
-        cpfmae = pcpfmae,
-       nomepai = pnomepai,
-        cpfpai = pcpfpai,
-        status = pstatus,
-   dtalteracao = pdtalteracao
-            
-     WHERE idpess = pidpess;
-        
-    ELSE
+  INSERT INTO tb_persons (desperson, desemail, nrphone)
+    VALUES(pdesperson, pdesemail, pnrphone);
     
-        INSERT INTO tb_pessoa (iduser, nomepess, dtnasc, sexo, numcpf, numrg, numsus, vulnsocial, nomemae, cpfmae, nomepai, cpfpai, statuspessoa)
-        VALUES(piduser, pnomepess, pdtnasc, psexo, pnumcpf, pnumrg, pnumsus, pvulnsocial, pnomemae, pcpfmae, pnomepai, pcpfpai, pstatuspessoa);
-        
-        SET pidpess = LAST_INSERT_ID();
-        
-    END IF;
+    SET vidperson = LAST_INSERT_ID();
     
-         SELECT * FROM tb_pessoa WHERE idpess = pidpess;
+    INSERT INTO tb_users (idperson, deslogin, despassword, inadmin, isprof, statususer)
+    VALUES(vidperson, pdeslogin, pdespassword, pinadmin, pisprof, pstatususer);
     
-END$$
+    SELECT * FROM tb_users a INNER JOIN tb_persons b USING(idperson) WHERE a.iduser = LAST_INSERT_ID();
+    
+END ;;
 DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-
-
-
-
-
-
-
-
-
-
-
-
+-- Dump completed on 2020-12-12  0:32:38

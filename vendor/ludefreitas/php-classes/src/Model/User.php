@@ -61,18 +61,18 @@ class User extends Model {
 		}
 	}
 
-	public function login($login, $password)
+	public static function login($login, $password)
 	{
 
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT * FROM tb_users INNER JOIN tb_persons using(idperson) where deslogin = :LOGIN", array(
+		$results = $sql->select("SELECT * FROM tb_users a INNER JOIN tb_persons b ON a.idperson = b.idperson WHERE a.deslogin = :LOGIN", array(
 			":LOGIN"=>$login
 		));
 
 		if(count($results) === 0)
 		{
-			throw new Exception("Usuário inexistente ou senha inválida", 1);			
+			throw new \Exception("Usuário inexistente ou senha inválida", 1);			
 		}
 
 		$data = $results[0];
@@ -158,7 +158,7 @@ class User extends Model {
 	{
 		$sql = new Sql();
 
-		$results = $sql->select("CALL sp_users_save(:desperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin, :isprof, :estatususer)", array(
+		$results = $sql->select("CALL sp_users_save(:desperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin, :isprof, :statususer)", array(
 			":desperson"=>utf8_decode($this->getdesperson()),
 			":deslogin"=>$this->getdeslogin(),
 			":despassword"=>User::getPasswordHash($this->getdespassword()),
@@ -166,7 +166,7 @@ class User extends Model {
 			":nrphone"=>$this->getnrphone(),
 			":inadmin"=>$this->getinadmin(),
 			":isprof"=>$this->getisprof(),
-			":estatususer"=>$this->getestatususer()
+			":statususer"=>$this->getstatususer()
 		));
 
 		$this->setData($results[0]);
@@ -332,7 +332,7 @@ class User extends Model {
 
 	}
 
-	public static function getPage($page = 1, $itemsPerPage = 5)
+	public static function getPage($page = 1, $itemsPerPage = 10)
 	{
 
 		$start = ($page - 1) * $itemsPerPage;

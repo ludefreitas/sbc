@@ -354,6 +354,9 @@ $app->post("/login", function(){
 
 		User::setError($e->getMessage());
 
+		header("Location: /login");
+		exit;
+
 	}
 
 	header("Location: /cart");
@@ -614,7 +617,7 @@ $app->get("/user/:idpess/status", function($idpess){
 	$pessoa->setData($_POST);
 
 	// setstatuspessoa --> 0 = pessoa não ativa   -  1 = pessoa ativa (default)
-	$pessoa->setstatuspessoa();
+	$pessoa->setStatusPessoa();
 
 	$pessoa->save();
 

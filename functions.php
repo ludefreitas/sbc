@@ -44,7 +44,16 @@ function calcularIdade($date){
  
     return $year_diff;
 
-   }
+}
+
+function professorDaTurma(){
+
+
+        return alert("Esta turma não pertence a este professor");
+
+}
+
+
 
 
 

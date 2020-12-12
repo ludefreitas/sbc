@@ -59,11 +59,10 @@
     </form>
 
     <div class="social-auth-links text-center">
-      <p>Ou entre com sua conta do</p>
-      <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
-        Facebook</a>
-      <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
-        Google+</a>
+      <p><b>Entre com sua conta do</b></p>
+      <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i>
+        Facebook</a> <b>Ou</b>  
+      <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Google+</a>
     </div>
     <!-- /.social-auth-links -->
 

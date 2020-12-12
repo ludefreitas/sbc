@@ -111,21 +111,6 @@ $app->post("/professor/turma/create", function() {
 	exit();	
 });
 
-$app->get("/professor/turma/:idturma/delete", function($idturma) {
-
-	User::verifyLogin();
-
-	$turma = new Turma();
-
-	$turma->get((int)$idturma);
-
-	$turma->delete();
-
-	header("Location: /professor/turma");
-	exit();
-	
-});
-
 
 $app->get("/professor/turma/:idturma", function($idturma) {
 
@@ -161,10 +146,27 @@ $app->post("/professor/turma/:idturma", function($idturma) {
 
 	$turma->save();
 
-	$turma->setPhoto($_FILES["file"]);
+	if($_FILES["file"]["name"] !== "") $turma->setPhoto($_FILES["file"]);
+
+	//$turma->setPhoto($_FILES["file"]);
 
 	header("Location: /professor/turma");
 	exit();	
+});
+
+$app->get("/professor/turma/:idturma/delete", function($idturma) {
+
+	User::verifyLogin();
+
+	$turma = new Turma();
+
+	$turma->get((int)$idturma);
+
+	$turma->delete();
+
+	header("Location: /professor/turma");
+	exit();
+	
 });
 
 $app->get("/turma/:idturma", function($idturma) {
@@ -180,6 +182,8 @@ $app->get("/turma/:idturma", function($idturma) {
 	]);	
 
 });
+
+
 
 
 ?>
