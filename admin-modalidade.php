@@ -21,7 +21,6 @@ $app->get("/professor/modalidades", function() {
 });
 */
 
-
 $app->get("/professor/modalidades", function() {
 
 	User::verifyLogin();
@@ -55,14 +54,14 @@ $app->get("/professor/modalidades", function() {
 		]);
 
 	}
-	//$modalidades = Modalidade::listAll();
 
+	//$modalidade = modalidade::listAll();
 	// carrega uma pagina das páginas do admin
 	$page = new PageAdmin();
 
 	// envia para a página o array retornado pelo listAll
 	$page->setTpl("modalidades", array( // aqui temos um array com muitos arrays
-		"modalidades"=>$pagination['data'],
+		"modalidade"=>$pagination['data'],
 		"search"=>$search,
 		"pages"=>$pages
 	));
@@ -98,9 +97,9 @@ $app->get("/professor/modalidades/:idmodal/delete", function($idmodal) {
 
 	$modalidade = new Modalidade();
 
-	$modalidades->get((int)$idmodal);
+	$modalidade->get((int)$idmodal);
 
-	$modalidades->delete();
+	$modalidade->delete();
 
 	header("Location: /professor/modalidades");
 	exit();
@@ -112,14 +111,14 @@ $app->get("/professor/modalidades/:idmodal", function($idmodal) {
 
 	User::verifyLogin();
 
-	$modalidades = new Modalidade;
+	$modalidade = new Modalidade;
 
-	$modalidades->get((int)$idmodal);
+	$modalidade->get((int)$idmodal);
 
 	$page = new PageAdmin();
 
 	$page->setTpl("modalidades-update", array(
-		'modalidades'=>$modalidades->getValues()
+		'modalidade'=>$modalidade->getValues()
 	));
 });
 
@@ -127,13 +126,13 @@ $app->post("/professor/modalidades/:idmodal", function($idmodal) {
 
 	User::verifyLogin();
 
-	$modalidades = new Modalidade;
+	$modalidade = new Modalidade;
 
-	$modalidades->get((int)$idmodal);
+	$modalidade->get((int)$idmodal);
 
-	$modalidades->setData($_POST);
+	$modalidade->setData($_POST);
 
-	$modalidades->save();
+	$modalidade->save();
 
 	header("Location: /professor/modalidades");
 	exit();	
@@ -141,19 +140,17 @@ $app->post("/professor/modalidades/:idmodal", function($idmodal) {
 
 $app->get("/modalidades/:idmodal", function($idmodal) {
 
-	$modalidades = new Modalidade();
+	$modalidade = new Modalidade();
 
-	$modalidades->get((int)$idmodal);
+	$modalidade->get((int)$idmodal);
 
 	$page = new Page();
 
 	$page->setTpl("modalidades", [
-		'modalidades'=>$modalidades->getValues()
+		'modalidade'=>$modalidade->getValues()
 	]);	
 
 });
-
-
 
 
 ?>

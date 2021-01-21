@@ -33,8 +33,6 @@ class Temporada extends Model {
 			using(idativ)
 			INNER JOIN tb_espaco d
 			using(idespaco)
-			INNER JOIN tb_horario m
-			using(idhorario)
 			INNER JOIN tb_local e
 			using(idlocal)
 			INNER JOIN tb_turmastatus f
@@ -155,7 +153,7 @@ class Temporada extends Model {
 			FROM tb_turma a
 			INNER JOIN tb_turmatemporada b ON a.idturma = b.idturma
             INNER JOIN tb_espaco c ON c.idespaco = a.idespaco
-            INNER JOIN tb_horario d ON d.idhorario = a.idhorario
+            INNER JOIN tb_horario d ON c.idhorario = d.idhorario
             INNER JOIN tb_atividade e ON a.idativ = e.idativ
             INNER JOIN tb_fxetaria f ON e.idfxetaria = f.idfxetaria
 			INNER JOIN tb_users g ON a.iduser = g.iduser
@@ -285,7 +283,7 @@ class Temporada extends Model {
 			FROM tb_turmatemporada b
 			INNER JOIN tb_turma a ON a.idturma = b.idturma
             INNER JOIN tb_espaco c ON c.idespaco = a.idespaco
-            INNER JOIN tb_horario d ON a.idhorario = d.idhorario
+            INNER JOIN tb_horario d ON c.idhorario = d.idhorario
             INNER JOIN tb_atividade e ON a.idativ = e.idativ
             INNER JOIN tb_fxetaria f ON e.idfxetaria = f.idfxetaria
 			INNER JOIN tb_users g ON a.iduser = g.iduser

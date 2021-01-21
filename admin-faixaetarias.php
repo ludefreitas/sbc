@@ -5,21 +5,6 @@ use \Sbc\PageAdmin;
 use \Sbc\Model\User;
 use \Sbc\Model\Faixaetaria;
 
-/*
-$app->get("/professor/faixaetaria", function() {
-
-	User::verifyLogin();
-
-	$faixaetaria = Faixaetaria::listAll();
-
-	$page = new PageAdmin();
-
-	$page->setTpl("faixaetaria", array(
-		'faixaetaria'=>$faixaetaria
-	));
-});
-*/
-
 $app->get("/professor/faixaetaria", function() {
 
 	User::verifyLogin();
@@ -65,7 +50,6 @@ $app->get("/professor/faixaetaria", function() {
 		"pages"=>$pages
 	));
 });
-
 
 $app->get("/professor/faixaetaria/create", function() {
 

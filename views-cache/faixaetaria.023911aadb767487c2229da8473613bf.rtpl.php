@@ -1,4 +1,5 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
+
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -48,6 +49,7 @@
                 </thead>
                 <tbody>
                   <?php $counter1=-1;  if( isset($faixaetaria) && ( is_array($faixaetaria) || $faixaetaria instanceof Traversable ) && sizeof($faixaetaria) ) foreach( $faixaetaria as $key1 => $value1 ){ $counter1++; ?>
+
                   <tr>
                     <td><?php echo htmlspecialchars( $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                     <td><?php echo htmlspecialchars( $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
@@ -59,6 +61,7 @@
                     </td>
                   </tr>
                   <?php } ?>
+
                 </tbody>
               </table>
             </div>
@@ -66,8 +69,10 @@
             <div class="box-footer clearfix">
               <ul class="pagination pagination-sm no-margin pull-right">
                 <?php $counter1=-1;  if( isset($pages) && ( is_array($pages) || $pages instanceof Traversable ) && sizeof($pages) ) foreach( $pages as $key1 => $value1 ){ $counter1++; ?>
+
                 <li><a href="<?php echo htmlspecialchars( $value1["href"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["text"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a></li>
                 <?php } ?>
+
               </ul>
             </div>
             <button type="button" onclick="window.print()" class="btn btn-primary pull-right" style="margin-right: 5px;">

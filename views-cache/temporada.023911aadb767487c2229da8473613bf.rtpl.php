@@ -1,4 +1,5 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
+
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -40,14 +41,15 @@
 
                 <tbody>
                   <?php $counter1=-1;  if( isset($temporada) && ( is_array($temporada) || $temporada instanceof Traversable ) && sizeof($temporada) ) foreach( $temporada as $key1 => $value1 ){ $counter1++; ?>
+
                   <tr>
-                    <td><?php echo htmlspecialchars( $value1["idstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                    <td><?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                     <td><?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                     <td><?php echo htmlspecialchars( $value1["descstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                    <td><?php echo htmlspecialchars( $value1["dtinicinscricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                    <td><?php echo htmlspecialchars( $value1["dtterminscricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                    <td><?php echo htmlspecialchars( $value1["dtinicmatricula"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                    <td><?php echo htmlspecialchars( $value1["dttermmatricula"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>                                
+                    <td><?php echo formatDateHour($value1["dtinicinscricao"]); ?></td>
+                    <td><?php echo formatDateHour($value1["dtterminscricao"]); ?></td>
+                    <td><?php echo formatDateHour($value1["dtinicmatricula"]); ?></td>
+                    <td><?php echo formatDateHour($value1["dttermmatricula"]); ?></td>
                     <td>
                     <a href="/professor/temporada/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/turma" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> Turmas</a>                  
                       <a href="/professor/temporada/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
@@ -55,6 +57,7 @@
                     </td>
                   </tr>
                   <?php } ?>
+
                 </tbody>
               </table>
             </div>

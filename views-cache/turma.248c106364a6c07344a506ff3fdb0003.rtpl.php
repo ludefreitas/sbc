@@ -1,9 +1,9 @@
-<div class="product-big-title-area">
+<?php if(!class_exists('Rain\Tpl')){exit;}?><div class="product-big-title-area">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="product-bit-title text-center">
-                    <h2>{$espaco.nomeespaco}</h2>
+                    <h2><?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h2>
                 </div>
             </div>
         </div>
@@ -14,23 +14,23 @@
     <div class="zigzag-bottom"></div>
     <div class="container">
         <div class="row">
-            {loop="$horario"}
+            
             <div class="col-md-3 col-sm-6">
                 <div class="single-shop-product">
                     <div class="product-upper">
+                        <img src="/res/site/img/orquideas.jpg" alt="">
                     </div>
-                    <h2><a href="">{$value.diasemana}</a></h2>
-                    <div class="product-carousel-price">
-                        <ins>{$value.horainicio}</ins> às <ins>{$value.horatermino}</ins>
-                    </div>  
-                    
+                    <h2><a href="">
+                        <?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $turma["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $turma["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $turma["temporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $turma["numinicialinscritos"], ENT_COMPAT, 'UTF-8', FALSE ); ?> a <?php echo htmlspecialchars( $turma["dtinicinscricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $turma["dtterminscricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $turma["dtinicmatricula"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $turma["dttermmatricula"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - 
+                    </a></h2> 
+
+                                     
                     <div class="product-option-shop">
-                        <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="#">Increver-se</a>
+                        <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/turma/<?php echo htmlspecialchars( $value["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/add">Inscrever-se</a>
                     </div>                       
                 </div>
-            </div>
-            {/loop}           
-            
+            </div>       
+
         </div>
         
         <div class="row">

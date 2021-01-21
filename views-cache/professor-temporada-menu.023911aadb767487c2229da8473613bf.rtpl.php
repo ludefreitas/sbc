@@ -1,1 +1,1 @@
-<?php if(!class_exists('Rain\Tpl')){exit;}?><li><a href="/professor/turma-temporada/5"><i class="fa fa-users"></i> Temporada - 2020</a></li><li><a href="/professor/turma-temporada/4"><i class="fa fa-users"></i> Temporada - 2021</a></li>
+<?php if(!class_exists('Rain\Tpl')){exit;}?><li><a href="/professor/turma-temporada/6"><i class="fa fa-users"></i> Temporada - 2019</a></li><li><a href="/professor/turma-temporada/5"><i class="fa fa-users"></i> Temporada - 2020</a></li><li><a href="/professor/turma-temporada/4"><i class="fa fa-users"></i> Temporada - 2021</a></li>

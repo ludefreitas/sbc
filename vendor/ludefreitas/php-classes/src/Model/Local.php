@@ -76,6 +76,45 @@ class Local extends Model {
 		file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."local-menu.html", implode('', $html));
 	}
 	
+	public function getTurmaLocalPage($page = 1, $itemsPerPage = 4)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_turma a
+			INNER JOIN tb_modalidade b ON b.idmodal = a.idmodal
+            INNER JOIN tb_espaco c ON c.idespaco = a.idespaco
+            INNER JOIN tb_horario d ON d.idhorario = a.idhorario
+            INNER JOIN tb_atividade e ON a.idativ = e.idativ
+            INNER JOIN tb_fxetaria f ON e.idfxetaria = f.idfxetaria
+			INNER JOIN tb_users g ON a.iduser = g.iduser
+			INNER JOIN tb_persons h ON g.idperson = h.idperson
+            INNER JOIN tb_espaco i ON a.idespaco = i.idespaco
+			INNER JOIN tb_local j ON j.idlocal = c.idlocal
+			INNER JOIN tb_turmastatus m ON m.idturmastatus = a.idturmastatus
+			WHERE j.idlocal = :idlocal
+			ORDER BY a.descturma
+			LIMIT $start, $itemsPerPage;
+			
+		", [
+			':idlocal'=>$this->getidlocal()
+		]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>Turma::checkList($results),
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+	}
+	
+	/*
 	public function getTurmaPage($page = 1, $itemsPerPage = 3)
 	{
 
@@ -89,7 +128,7 @@ class Local extends Model {
 			FROM tb_turma a
 			INNER JOIN tb_turmatemporada b ON a.idturma = b.idturma
             INNER JOIN tb_espaco c ON c.idespaco = a.idespaco
-            INNER JOIN tb_horario d ON d.idhorario = a.idhorario
+            INNER JOIN tb_horario d ON c.idhorario = d.idhorario
             INNER JOIN tb_atividade e ON a.idativ = e.idativ
             INNER JOIN tb_fxetaria f ON e.idfxetaria = f.idfxetaria
 			INNER JOIN tb_users g ON a.iduser = g.iduser
@@ -111,75 +150,8 @@ class Local extends Model {
 			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
 		];
 	}
-
-
-	public function getEspaco($related = true)
-	{
-		$sql = new Sql();
-
-		if ($related === true) {
-
-			return $sql->select("
-				   SELECT * FROM tb_espaco c 
-					   INNER JOIN tb_horarioespaco d 
-					   ON c.idespaco = d.idespaco 
-					   -- INNER JOIN tb_horario e 
-					   -- ON d.idhorario = e.idhorario
-			           WHERE c.idespaco 
-				    	    IN( 
-				    		SELECT a.idespaco
-							FROM tb_espaco a
-			   				INNER JOIN tb_espacolocal b 
-			           		ON a.idespaco = b.idespaco
-				    		WHERE b.idlocal = :idlocal ORDER BY a.nomeespaco
-				    	);", [
-							':idlocal'=>$this->getidlocal()
-					]);
-
-		} else {
-
-			return $sql->select("
-				SELECT * FROM tb_espaco c 
-					   INNER JOIN tb_horarioespaco d 
-					   ON c.idespaco = d.idespaco 
-					   -- INNER JOIN tb_horario e 
-					   -- ON d.idhorario = e.idhorario
-			           WHERE c.idespaco 
-				    	NOT IN( 
-				    		SELECT a.idespaco
-							FROM tb_espaco a
-			   				INNER JOIN tb_espacolocal b 
-			           		ON a.idespaco = b.idespaco
-				    		WHERE b.idlocal = :idlocal ORDER BY a.nomeespaco
-				    	);", [
-							':idlocal'=>$this->getidlocal()
-					]);
-		}
-	}
-
-	public function addEspaco(Espaco $espaco)
-	{
-
-		$sql = new Sql();
-
-		$sql->query("INSERT INTO tb_espacolocal (idlocal, idespaco) VALUES(:idlocal, :idespaco)", [
-			':idlocal'=>$this->getidlocal(),
-			':idespaco'=>$espaco->getidespaco()
-		]);
-
-	}
-
-	public function removeEspaco(Espaco $espaco)
-	{
-
-		$sql = new Sql();
-
-		$sql->query("DELETE FROM tb_espacolocal WHERE idlocal = :idlocal AND idespaco = :idespaco", [
-			':idlocal'=>$this->getidlocal(),
-			':idespaco'=>$espaco->getidespaco()
-		]);
-	}	
-
+	*/
+	
 	public static function getPage($page = 1, $itemsPerPage = 6)
 	{
 
@@ -236,6 +208,30 @@ class Local extends Model {
 
 	}
 
+
+
+	public function addEspaco(Espaco $espaco)
+	{
+
+		$sql = new Sql();
+
+		$sql->query("INSERT INTO tb_espacolocal (idlocal, idespaco) VALUES(:idlocal, :idespaco)", [
+			':idlocal'=>$this->getidlocal(),
+			':idespaco'=>$espaco->getidespaco()
+		]);
+
+	}
+
+	public function removeEspaco(Espaco $espaco)
+	{
+
+		$sql = new Sql();
+
+		$sql->query("DELETE FROM tb_espacolocal WHERE idlocal = :idlocal AND idespaco = :idespaco", [
+			':idlocal'=>$this->getidlocal(),
+			':idespaco'=>$espaco->getidespaco()
+		]);
+	}	
 }
 
 

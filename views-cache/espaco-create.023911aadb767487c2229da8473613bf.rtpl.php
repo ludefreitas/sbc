@@ -41,11 +41,13 @@
             </div>
             <div class="form-group">
               <label for="idlocal">CREC</label>
-              <select class="form-control" name="idlocal"> 
+              <select class="form-control" name="idlocal">
                  <option selected="selected">Selecione CREC</option>
                   <?php $counter1=-1;  if( isset($local) && ( is_array($local) || $local instanceof Traversable ) && sizeof($local) ) foreach( $local as $key1 => $value1 ){ $counter1++; ?>
+
                  <option  value="<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
                   <?php } ?>
+
               </select>
             </div>                           
           </div>

@@ -151,6 +151,25 @@ class Cart extends Model {
 
 	}
 
+	public function getTurmaTemporada()
+	{
+
+		$sql = new Sql();
+
+		$rows = $sql->select("
+			SELECT * 
+			FROM tb_turmatemporada a 
+			INNER JOIN tb_cartsturmas b ON b.idturma = a.idturma
+			INNER JOIN tb_turma c ON c.idturma = b.idturma 
+			INNER JOIN tb_temporada k ON k.idtemporada = a.idtemporada
+			WHERE b.idcart = :idcart AND b.dtremoved IS NULL 
+			-- GROUP BY b.idturma, b.descturma
+			-- ORDER BY b.descturma
+		", [
+			':idcart'=>$this->getidcart()
+		]);
+	}
+
 	public function getTurma()
 	{
 
@@ -158,16 +177,18 @@ class Cart extends Model {
 
 		$rows = $sql->select("
 			SELECT * 
-			FROM tb_cartsturmas a 
-			INNER JOIN tb_turma b ON a.idturma = b.idturma 
-            INNER JOIN tb_espaco c ON c.idespaco = b.idespaco
-            INNER JOIN tb_atividade d ON d.idativ = b.idativ
-			INNER JOIN tb_fxetaria e ON e.idfxetaria = d.idfxetaria
-			INNER JOIN tb_horario f ON f.idhorario = b.idhorario
-			INNER JOIN tb_local g ON g.idlocal = c.idlocal
-			INNER JOIN tb_users h ON h.iduser = b.iduser
-			INNER JOIN tb_persons i ON i.idperson = h.idperson
-			WHERE a.idcart = :idcart AND a.dtremoved IS NULL 
+			FROM tb_turmatemporada a 
+			INNER JOIN tb_cartsturmas b ON b.idturma = a.idturma
+			INNER JOIN tb_turma c ON c.idturma = b.idturma 
+            INNER JOIN tb_espaco d ON d.idespaco = c.idespaco
+            INNER JOIN tb_atividade e ON e.idativ = c.idativ
+			INNER JOIN tb_fxetaria f ON f.idfxetaria = e.idfxetaria
+			INNER JOIN tb_horario g ON g.idhorario = c.idhorario
+			INNER JOIN tb_local h ON h.idlocal = d.idlocal
+			INNER JOIN tb_users i ON i.iduser = c.iduser
+			INNER JOIN tb_persons j ON j.idperson = i.idperson
+			INNER JOIN tb_temporada k ON k.idtemporada = a.idtemporada
+			WHERE b.idcart = :idcart AND b.dtremoved IS NULL 
 			-- GROUP BY b.idturma, b.descturma
 			-- ORDER BY b.descturma
 		", [
@@ -195,7 +216,11 @@ class Cart extends Model {
 			':idcart'=>$this->getidcart()
 		]);
 
-		return $results[0];
+		if (count($results) > 0) {
+
+			return $results[0];
+
+		}
 	}	
 
 	public static function setError($msg)
@@ -291,6 +316,23 @@ class Cart extends Model {
 		return (count($results) > 0);
 
 	}	
+
+	public function getCartsTurmasFromId($idcart)
+	{
+
+		$sql = new Sql();
+
+		$rows = $sql->select(
+			"SELECT * FROM tb_cartsturmas
+			INNER JOIN 	tb_carts USING(idcart)
+			
+			WHERE idcart = :idcart ", [
+			':idcart'=>$idcart
+		]);
+
+		return $rows;
+	}
+
 
 
 

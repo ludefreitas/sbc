@@ -7,8 +7,6 @@ use \Sbc\Model\Temporada;
 use \Sbc\Model\StatusTemporada;
 use \Sbc\Model\Turma;
 
-
-
 $app->get("/professor/temporada", function() {
 
 	User::verifyLogin();
@@ -39,6 +37,22 @@ $app->get("/professor/temporada/create", function() {
 	));
 });
 
+
+$app->post("/professor/temporada/create", function() {
+
+	User::verifyLogin();
+
+	$temporada = new Temporada();
+
+	$temporada->setData($_POST);
+
+	$temporada->save();
+
+	header("Location: /professor/temporada");
+	exit();	
+});
+
+
 $app->get("/professor/temporada/:idtemporada/delete", function($idtemporada) {
 
 	User::verifyLogin();
@@ -52,27 +66,6 @@ $app->get("/professor/temporada/:idtemporada/delete", function($idtemporada) {
 	header("Location: /professor/temporada");
 	exit();	
 });
-
-
-$app->post("/professor/temporada/create", function() {
-
-	User::verifyLogin();
-
-	$temporada = new Temporada();
-
-	$temporada->setData($_POST);
-
-	//var_dump($_POST);
-	//exit();
-
-	$temporada->save();
-
-	header("Location: /professor/temporada");
-	exit();	
-});
-
-
-
 
 $app->get("/professor/temporada/:idtemporada", function($idtemporada) {
 

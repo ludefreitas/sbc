@@ -40,15 +40,18 @@
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul>
-                            <li><a href="/profile"><i class="fa fa-user"></i> Minha Conta</a></li>
+                            <li><a href="/"><i class="fa fa-user"></i> Minha Conta</a></li>
                             <li><a href="/user/pessoas"><i class="fa fa-heart"></i> Minha Família</a></li>
                             <li><a href="/"><i class="fa fa-users"></i> Minhas Inscrições</a></li>
                             <?php if( checkLogin(false) ){ ?>
+
                             <li><a href="/profile"><i class="fa fa-user"></i> <?php echo getUserName(); ?></a></li>
                             <li><a href="/logout"><i class="fa fa-close"></i> Sair</a></li>
                             <?php }else{ ?>
+
                             <li><a href="/login"><i class="fa fa-lock"></i> Entrar</a></li>
                             <?php } ?>
+
                         </ul>
                     </div>
                 </div>

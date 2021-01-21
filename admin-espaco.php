@@ -23,6 +23,7 @@ $app->get("/professor/espaco", function() {
 });
 */
 
+
 $app->get("/professor/espaco", function() {
 
 	User::verifyLogin();
@@ -68,7 +69,6 @@ $app->get("/professor/espaco", function() {
 		"pages"=>$pages
 	));
 });
-
 
 $app->get("/professor/espaco/create", function() {
 

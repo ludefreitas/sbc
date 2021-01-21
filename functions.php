@@ -10,6 +10,13 @@ function formatDate($date)
 
 }
 
+function formatDateHour($dateHour)
+{
+
+    return date('d/m/Y - H:i:s', strtotime($dateHour));
+
+}
+
 function checkLogin($inadmin = true)
 {
 
@@ -44,16 +51,7 @@ function calcularIdade($date){
  
     return $year_diff;
 
-}
-
-function professorDaTurma(){
-
-
-        return alert("Esta turma não pertence a este professor");
-
-}
-
-
+   }
 
 
 

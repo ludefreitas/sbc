@@ -21,7 +21,7 @@
                     <div class="row">
                        
 
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <div class="turma-images">
                                 <div class="turma-main-img">
                                     <img src="<?php echo htmlspecialchars( $turma["desphoto"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
@@ -29,10 +29,11 @@
                             </div>
                         </div>
                 
-                        <div class="col-sm-6">
+                        <div class="col-sm-8">
                             <div class="turma-inner">                
                                 
-                                <form action="/cart/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/add" class="cart">
+                                <!--<form action="/cart/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/add" class="cart">-->
+                                <form action="/cart/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/add" class="cart"> 
                                     <button class="add_to_cart_button" type="submit">Increver-se</button>
                                 </form>   
                                  
@@ -48,9 +49,8 @@
                                     <div class="tab-content">
                                         <div role="tabpanel" class="tab-pane fade in active" id="home">
 
-                                            <h2><?php echo htmlspecialchars( $turma["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> do Programa <?php echo htmlspecialchars( $turma["prograativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - para <?php echo htmlspecialchars( $turma["descrfxetaria"], ENT_COMPAT, 'UTF-8', FALSE ); ?> de <?php echo htmlspecialchars( $turma["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> a <?php echo htmlspecialchars( $turma["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> anos - <?php echo htmlspecialchars( $turma["geneativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> no período da <?php echo htmlspecialchars( $turma["periodo"], ENT_COMPAT, 'UTF-8', FALSE ); ?> das <?php echo htmlspecialchars( $turma["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $turma["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> na <?php echo htmlspecialchars( $turma["descespaco"], ENT_COMPAT, 'UTF-8', FALSE ); ?> do Crec <?php echo htmlspecialchars( $turma["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> com o(a) professor(a) <?php echo htmlspecialchars( $turma["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </h2>
+                                            <h2><?php echo htmlspecialchars( $turma["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> do Programa <?php echo htmlspecialchars( $turma["prograativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - para <?php echo htmlspecialchars( $turma["descrfxetaria"], ENT_COMPAT, 'UTF-8', FALSE ); ?> de <?php echo htmlspecialchars( $turma["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> a <?php echo htmlspecialchars( $turma["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> anos - <?php echo htmlspecialchars( $turma["geneativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> no período da <?php echo htmlspecialchars( $turma["periodo"], ENT_COMPAT, 'UTF-8', FALSE ); ?> das <?php echo htmlspecialchars( $turma["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $turma["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> na <?php echo htmlspecialchars( $turma["descespaco"], ENT_COMPAT, 'UTF-8', FALSE ); ?> do Crec <?php echo htmlspecialchars( $turma["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> com o(a) professor(a) <?php echo htmlspecialchars( $turma["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $turma["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h2>
 
-                                            
                                         </div>
                                         <div role="tabpanel" class="tab-pane fade" id="profile">
                                             <h2>Reviews</h2>

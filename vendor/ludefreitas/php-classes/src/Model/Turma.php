@@ -22,17 +22,15 @@ class Turma extends Model {
 			using(idativ)
 			INNER JOIN tb_espaco e
 			using(idespaco)
-			INNER JOIN tb_horario f
-			using(idhorario)
-			INNER JOIN tb_local g
+			INNER JOIN tb_local f
 			using(idlocal)
-			INNER JOIN tb_turmastatus h
+			INNER JOIN tb_turmastatus g
 			using(idturmastatus)
-			INNER JOIN tb_horario i
+			INNER JOIN tb_horario h
 			using(idhorario)
-			INNER JOIN tb_fxetaria j
+			INNER JOIN tb_fxetaria i
 			using(idfxetaria)
-			INNER JOIN tb_modalidade k         
+			INNER JOIN tb_modalidade J         
 			using(idmodal)            
 			ORDER BY a.descturma");
 	}
@@ -67,7 +65,7 @@ class Turma extends Model {
 			using(idstatustemporada)
 			INNER JOIN tb_modalidade m         
 			using(idmodal)
-      		WHERE idstatustemporada = 3
+      		WHERE idstatustemporada = 4
 			ORDER BY a.descturma");
 	}
 
@@ -296,6 +294,32 @@ class Turma extends Model {
 
 	}
 
+	public function getFromIdTurmaTemporada($idturma, $idtemporada)
+	{
+
+		$sql = new Sql();
+
+		$rows = $sql->select(
+			"SELECT * FROM tb_turmatemporada
+			INNER JOIN tb_turma USING(idturma)
+			INNER JOIN 	tb_users USING(iduser)
+			INNER JOIN 	tb_persons USING(idperson)	
+			INNER JOIN tb_atividade USING(idativ) 
+			INNER JOIN tb_fxetaria USING(idfxetaria)
+			INNER JOIN tb_espaco USING(idespaco) 
+			INNER JOIN tb_horario USING(idhorario) 
+			INNER JOIN tb_local USING(idlocal)
+			INNER JOIN tb_modalidade USING(idmodal)
+			WHERE idturma = :idturma
+			AND idtemporada = :idtemporada LIMIT 1", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+
+		$this->setData($rows[0]);
+
+	}
+
 	public function getLocal()
 	{
 		$sql = new Sql();
@@ -305,7 +329,6 @@ class Turma extends Model {
 			INNER JOIN tb_espaco b ON a.idlocal = b.idlocal 
 			INNER JOIN tb_turma c ON b.idespaco = c.idespaco 
 			INNER JOIN tb_atividade d ON c.idativ = d.idativ 
-			INNER JOIN tb_horario e ON a.idhorario = e.idhorario 
  			WHERE b.idturma = :idturma
 		", [
 			':idturma'=>$this->getidturma()
@@ -321,34 +344,27 @@ class Turma extends Model {
 		$sql = new Sql();
 
 		$results = $sql->select("
-			SELECT SQL_CALC_FOUND_ROWS * 
+			SELECT SQL_CALC_FOUND_ROWS *
 			FROM tb_turma a 
-			INNER JOIN tb_users b
-			using(iduser)
+			INNER JOIN tb_users b 
+			USING(iduser)
 			INNER JOIN tb_persons c
-			using(idperson)
+			USING(idperson)
 			INNER JOIN tb_atividade d
-			using(idativ)
+			USING(idativ)
 			INNER JOIN tb_espaco e
-			using(idespaco)
+			USING(idespaco)
 			INNER JOIN tb_local f
-			using(idlocal)
+			USING(idlocal)
 			INNER JOIN tb_turmastatus g
-			using(idturmastatus)
+			USING(idturmastatus)
 			INNER JOIN tb_horario h
-			using(idhorario)
+			USING(idhorario)
 			INNER JOIN tb_fxetaria i
-			using(idfxetaria)
-            -- INNER JOIN tb_turmatemporada j            
-			-- using(idturma)
-            -- INNER JOIN tb_temporada k          
-			-- using(idtemporada)   
-            -- INNER JOIN tb_statustemporada l          
-			-- using(idstatustemporada)
-			 INNER JOIN tb_modalidade m         
-			 using(idmodal)
-      		-- WHERE idstatustemporada = 3
-			ORDER BY a.descturma, h.horainicio, h.diasemana
+			USING(idfxetaria) 
+            INNER JOIN tb_modalidade 
+            USING(idmodal)
+			ORDER BY h.horainicio, h.diasemana
 			LIMIT $start, $itemsPerPage;
 		");
 
@@ -362,7 +378,6 @@ class Turma extends Model {
 
 	}
 
-	
 	public static function getPageSearch($search, $page = 1, $itemsPerPage = 5)
 	{
 
@@ -389,26 +404,19 @@ class Turma extends Model {
 			USING(idhorario)
 			INNER JOIN tb_fxetaria i
 			USING(idfxetaria) 
-			-- INNER JOIN tb_turmatemporada j
-			-- USING(idturma)
-            -- INNER JOIN tb_temporada k
-            -- USING(idtemporada)   
-            -- INNER JOIN tb_statustemporada l
-            -- USING(idstatustemporada)
-            INNER JOIN tb_modalidade m
+            INNER JOIN tb_modalidade j
             USING(idmodal)
       		WHERE a.descturma LIKE :search 
 			OR b.deslogin LIKE :search
 			OR c.desperson LIKE :search
 			OR d.descativ LIKE :search
-			OR a.nomeativ LIKE :search 
 			OR e.nomeespaco LIKE :search
 			OR f.apelidolocal LIKE :search
 			OR g.desstatus LIKE :search
 			OR h.horainicio LIKE :search
 			OR h.periodo LIKE :search
 			OR i.descrfxetaria LIKE :search	
-			OR m.descmodal LIKE :search													
+			OR j.descmodal LIKE :search													
 			ORDER BY a.descturma
 			LIMIT $start, $itemsPerPage;
 		", [

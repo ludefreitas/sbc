@@ -41,13 +41,13 @@
                 <tbody>
                   {loop="$temporada"}
                   <tr>
-                    <td>{$value.idstatustemporada}</td>
+                    <td>{$value.idtemporada}</td>
                     <td>{$value.desctemporada}</td>
                     <td>{$value.descstatustemporada}</td>
-                    <td>{$value.dtinicinscricao}</td>
-                    <td>{$value.dtterminscricao}</td>
-                    <td>{$value.dtinicmatricula}</td>
-                    <td>{$value.dttermmatricula}</td>                                
+                    <td>{function="formatDateHour($value.dtinicinscricao)"}</td>
+                    <td>{function="formatDateHour($value.dtterminscricao)"}</td>
+                    <td>{function="formatDateHour($value.dtinicmatricula)"}</td>
+                    <td>{function="formatDateHour($value.dttermmatricula)"}</td>
                     <td>
                     <a href="/professor/temporada/{$value.idtemporada}/turma" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> Turmas</a>                  
                       <a href="/professor/temporada/{$value.idtemporada}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>

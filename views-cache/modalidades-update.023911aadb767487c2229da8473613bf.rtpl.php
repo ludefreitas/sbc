@@ -18,14 +18,14 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" action="/professor/modalidades/<?php echo htmlspecialchars( $modalidades["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post">
+        <form role="form" action="/professor/modalidades/<?php echo htmlspecialchars( $modalidade["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post">
           <div class="box-body">
 
             
 
             <div class="form-group">
               <label for="descmodal">Nome da modalidade</label>
-              <input type="text" class="form-control" id="descmodal" name="descmodal" placeholder="Digite a descrição da modalidade" value="<?php echo htmlspecialchars( $modalidades["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+              <input type="text" class="form-control" id="descmodal" name="descmodal" placeholder="Digite a descrição da modalidade" value="<?php echo htmlspecialchars( $modalidade["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
           </div>
           <!-- /.box-body -->

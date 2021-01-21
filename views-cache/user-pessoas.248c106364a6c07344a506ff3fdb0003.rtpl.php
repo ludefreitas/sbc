@@ -1,11 +1,11 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
+
 <div class="product-big-title-area">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="product-bit-title text-center">
                     <h2>Meus Dependentes</h2>
-
                 </div>
             </div>
         </div>
@@ -13,11 +13,20 @@
 </div>
 
 <div class="single-product-area">
+
     <?php if( $errorRegister != '' ){ ?>
+
     <div class="alert alert-danger">
     <?php echo htmlspecialchars( $errorRegister, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+
     </div>
     <?php } ?>
+
+
+    <div class="alert alert-info">
+        <a class="btn btn-primary" href="/pessoa-create" role="button">Cadastrar novo dependente</a>
+    </div>
+    
     <?php $counter1=-1;  if( isset($pessoas) && ( is_array($pessoas) || $pessoas instanceof Traversable ) && sizeof($pessoas) ) foreach( $pessoas as $key1 => $value1 ){ $counter1++; ?>         
 
     <div class="container">
@@ -54,7 +63,7 @@
                     
                     <tbody>                       
                         <tr>
-                            <td><?php echo htmlspecialchars( $value1["dtnasc"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                            <td><?php echo calcularIdade($value1["dtnasc"]); ?></td>
                             <td><?php echo htmlspecialchars( $value1["dtnasc"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                             <td><?php echo htmlspecialchars( $value1["sexo"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                             <td><?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
@@ -82,6 +91,7 @@
         </div>
     </div>
     <?php }else{ ?>
+
 <div class="alert alert-info">
  Nenhuma pessoa encontrada.
 
@@ -91,4 +101,5 @@
  
 </div>
 <?php } ?>
+
 </div>

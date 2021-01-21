@@ -21,7 +21,7 @@
                     <div class="row">
                        
 
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <div class="turma-images">
                                 <div class="turma-main-img">
                                     <img src="{$turma.desphoto}">
@@ -29,10 +29,11 @@
                             </div>
                         </div>
                 
-                        <div class="col-sm-6">
+                        <div class="col-sm-8">
                             <div class="turma-inner">                
                                 
-                                <form action="/cart/{$turma.idturma}/add" class="cart">
+                                <!--<form action="/cart/{$turma.idturma}/add" class="cart">-->
+                                <form action="/cart/{$turma.idturma}/{$turma.idtemporada}/add" class="cart"> 
                                     <button class="add_to_cart_button" type="submit">Increver-se</button>
                                 </form>   
                                  
@@ -48,9 +49,8 @@
                                     <div class="tab-content">
                                         <div role="tabpanel" class="tab-pane fade in active" id="home">
 
-                                            <h2>{$turma.descativ} do Programa {$turma.prograativ} - para {$turma.descrfxetaria} de {$turma.initidade} a {$turma.fimidade} anos - {$turma.geneativ} no período da {$turma.periodo} das {$turma.horainicio} às {$turma.horatermino} na {$turma.descespaco} do Crec {$turma.apelidolocal} com o(a) professor(a) {$turma.desperson} </h2>
+                                            <h2>{$turma.descativ} do Programa {$turma.prograativ} - para {$turma.descrfxetaria} de {$turma.initidade} a {$turma.fimidade} anos - {$turma.geneativ} no período da {$turma.periodo} das {$turma.horainicio} às {$turma.horatermino} na {$turma.descespaco} do Crec {$turma.apelidolocal} com o(a) professor(a) {$turma.desperson} - {$turma.idtemporada}</h2>
 
-                                            
                                         </div>
                                         <div role="tabpanel" class="tab-pane fade" id="profile">
                                             <h2>Reviews</h2>

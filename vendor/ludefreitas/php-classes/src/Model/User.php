@@ -61,18 +61,18 @@ class User extends Model {
 		}
 	}
 
-	public static function login($login, $password)
+	public function login($login, $password)
 	{
 
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT * FROM tb_users a INNER JOIN tb_persons b ON a.idperson = b.idperson WHERE a.deslogin = :LOGIN", array(
+		$results = $sql->select("SELECT * FROM tb_users INNER JOIN tb_persons using(idperson) where deslogin = :LOGIN", array(
 			":LOGIN"=>$login
 		));
 
 		if(count($results) === 0)
 		{
-			throw new \Exception("Usuário inexistente ou senha inválida", 1);			
+			throw new Exception("Usuário inexistente ou senha inválida", 1);			
 		}
 
 		$data = $results[0];
@@ -118,7 +118,7 @@ class User extends Model {
 		$_SESSION[User::SESSION] = NULL;
 
 	}
-
+	/*
 	public static function listAll()
 	{
 
@@ -127,7 +127,9 @@ class User extends Model {
 		return $sql->select("SELECT * FROM tb_users a 	INNER JOIN tb_persons b using(idperson) ORDER BY b.desperson");
 	
 	}
+	*/
 
+	
 	public static function listAllProf()
 	{
 
@@ -140,21 +142,7 @@ class User extends Model {
 			WHERE isprof = 1;
 			ORDER BY b.desperson");
 	}
-
-	public static function listAllCliente()
-	{
-
-		$sql = new Sql();
-
-		return $sql->select("
-			SELECT * FROM tb_users a 
-			INNER JOIN tb_persons b 
-			using(idperson) 
-			WHERE isprof = 0 AND inadmin = 0;
-			ORDER BY b.desperson");
-	}
-	
-	public function save()
+		public function save()
 	{
 		$sql = new Sql();
 
@@ -357,6 +345,33 @@ class User extends Model {
 
 	}
 
+	public static function getPageProf($page = 1, $itemsPerPage = 10)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_users a 
+			INNER JOIN tb_persons b USING(idperson) 
+			WHERE isprof = 1
+			ORDER BY b.desperson
+			LIMIT $start, $itemsPerPage;
+		");
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+
+	
 	public static function getPageSearch($search, $page = 1, $itemsPerPage = 10)
 	{
 
@@ -369,6 +384,89 @@ class User extends Model {
 			FROM tb_users a 
 			INNER JOIN tb_persons b USING(idperson)
 			WHERE b.desperson LIKE :search OR b.desemail = :search OR a.deslogin LIKE :search
+			ORDER BY b.desperson
+			LIMIT $start, $itemsPerPage;
+		", [
+			':search'=>'%'.$search.'%'
+		]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+
+	public static function getPageSearchProf($search, $page = 1, $itemsPerPage = 10)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_users a 
+			INNER JOIN tb_persons b USING(idperson)
+
+			WHERE isprof = 1 AND b.desperson LIKE :search OR b.desemail = :search OR a.deslogin LIKE :search
+			ORDER BY b.desperson
+			LIMIT $start, $itemsPerPage;
+		", [
+			':search'=>'%'.$search.'%'
+		]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+
+	public static function getPageCliente($page = 1, $itemsPerPage = 10)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_users a 
+			INNER JOIN tb_persons b USING(idperson) 
+			WHERE isprof = 0 AND inadmin = 0
+			ORDER BY b.desperson
+			LIMIT $start, $itemsPerPage;
+		");
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+
+	public static function getPageSearchCliente($search, $page = 1, $itemsPerPage = 10)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_users a 
+			INNER JOIN tb_persons b USING(idperson)
+			WHERE isprof = 0 AND inadmin = 0 AND b.desperson LIKE :search OR b.desemail = :search OR a.deslogin LIKE :search
 			ORDER BY b.desperson
 			LIMIT $start, $itemsPerPage;
 		", [
@@ -503,102 +601,6 @@ class User extends Model {
 
 		$this->setData($rows[0]);
 	}
-
-	public function getTurma($related = true)
-	{
-		$sql = new Sql();
-
-		if ($related === true) {
-
-			return $sql->select("
-				SELECT * FROM tb_turma
-				INNER JOIN tb_atividade 
-				using(idativ)
-				INNER JOIN tb_modalidade
-				using(idmodal)   
-				INNER JOIN tb_fxetaria
-				using(idfxetaria)             
-                INNER JOIN tb_espaco 
-				using(idespaco)
-                INNER JOIN tb_users 
-				using(iduser) 
-				INNER JOIN tb_persons 
-				using(idperson) 
-				INNER JOIN tb_local 
-				using(idlocal)
-				INNER JOIN tb_horario 
-				using(idhorario)
-				INNER JOIN tb_turmastatus 
-				using(idturmastatus) 				
-					WHERE idturma IN(
-					SELECT a.idturma
-					FROM tb_turma a
-					INNER JOIN tb_turmasuser b ON a.idturma = b.idturma
-					WHERE b.iduser = :iduser ORDER BY a.descturma
-				);
-			", [
-				':iduser'=>$this->getiduser()
-			]);
-
-		} else {
-
-			return $sql->select("
-				SELECT * FROM tb_turma
-				INNER JOIN tb_atividade 
-				using(idativ)
-				INNER JOIN tb_modalidade
-				using(idmodal)   
-				INNER JOIN tb_fxetaria
-				using(idfxetaria)             
-                INNER JOIN tb_espaco 
-				using(idespaco)
-                INNER JOIN tb_users 
-				using(iduser) 
-				INNER JOIN tb_persons 
-				using(idperson) 
-				INNER JOIN tb_local 
-				using(idlocal)
-				INNER JOIN tb_horario 
-				using(idhorario)
-				INNER JOIN tb_turmastatus 
-				using(idturmastatus) 							
-				WHERE idturma NOT IN(
-					SELECT a.idturma
-					FROM tb_turma a
-					INNER JOIN tb_turmasuser b ON a.idturma = b.idturma
-					WHERE b.iduser = :iduser ORDER BY a.descturma
-				);
-			", [
-				':iduser'=>$this->getiduser()
-			]);
-		}		
-	}
-
-
-	public function addTurma(Turma $turma)
-	{
-
-		$sql = new Sql();
-
-		$sql->query("INSERT INTO tb_turmasuser (iduser, idturma) VALUES(:iduser, :idturma)", [
-			':iduser'=>$this->getiduser(),
-			':idturma'=>$turma->getidturma()
-		]);
-
-	}
-
-	public function removeTurma(Turma $turma)
-	{
-
-		$sql = new Sql();
-
-		$sql->query("DELETE FROM tb_turmasuser WHERE iduser = :iduser AND idturma = :idturma", [
-			':iduser'=>$this->getiduser(),
-			':idturma'=>$turma->getidturma()
-		]);
-
-	}
-
 
 }
 

@@ -77,8 +77,8 @@ $app->get("/professor/turma/create", function() {
 	User::verifyLogin();
 
 	$local = Local::listAll();
-	//$espaco = Espaco::listAll();
 	$user = User::listAllProf();
+	$espaco = Espaco::listAll();	
 	$horario = Horario::listAll();
 	$atividade = Atividade::listAll();
 	$modalidade = Modalidade::listAll();
@@ -87,12 +87,12 @@ $app->get("/professor/turma/create", function() {
 	$page = new PageAdmin();
 
 	$page->setTpl("turma-create", array(
-		'local'=>$local,
-		'horario'=>$horario,
 		'user'=>$user,
+		'local'=>$local,
+		'espaco'=>$espaco,
+		'horario'=>$horario,		
 		'atividade'=>$atividade,
 		'modalidade'=>$modalidade,
-		'espaco'=>Espaco::listAll(),
 		'turmastatus'=>$turmastatus
 	));
 });
@@ -109,6 +109,21 @@ $app->post("/professor/turma/create", function() {
 
 	header("Location: /professor/turma");
 	exit();	
+});
+
+$app->get("/professor/turma/:idturma/delete", function($idturma) {
+
+	User::verifyLogin();
+
+	$turma = new Turma();
+
+	$turma->get((int)$idturma);
+
+	$turma->delete();
+
+	header("Location: /professor/turma");
+	exit();
+	
 });
 
 
@@ -146,27 +161,10 @@ $app->post("/professor/turma/:idturma", function($idturma) {
 
 	$turma->save();
 
-	if($_FILES["file"]["name"] !== "") $turma->setPhoto($_FILES["file"]);
-
-	//$turma->setPhoto($_FILES["file"]);
+	$turma->setPhoto($_FILES["file"]);
 
 	header("Location: /professor/turma");
 	exit();	
-});
-
-$app->get("/professor/turma/:idturma/delete", function($idturma) {
-
-	User::verifyLogin();
-
-	$turma = new Turma();
-
-	$turma->get((int)$idturma);
-
-	$turma->delete();
-
-	header("Location: /professor/turma");
-	exit();
-	
 });
 
 $app->get("/turma/:idturma", function($idturma) {
@@ -182,8 +180,6 @@ $app->get("/turma/:idturma", function($idturma) {
 	]);	
 
 });
-
-
 
 
 ?>

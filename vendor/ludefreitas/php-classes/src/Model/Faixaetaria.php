@@ -139,7 +139,6 @@ class Faixaetaria extends Model {
 
 	}
 
-
 }
 
 

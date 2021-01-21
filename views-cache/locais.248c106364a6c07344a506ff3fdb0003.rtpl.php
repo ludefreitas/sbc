@@ -101,6 +101,7 @@
                         <h2 class="section-title">Crecs <br> Centros Esportivos, Recreativos e Culturais</h2>
                         <div class="product-carousel">
                             <?php $counter1=-1;  if( isset($locais) && ( is_array($locais) || $locais instanceof Traversable ) && sizeof($locais) ) foreach( $locais as $key1 => $value1 ){ $counter1++; ?>
+
                             
                             <div class="single-product">
                                 <div class="product-upper">
@@ -114,10 +115,11 @@
                              </div>                       
                                 
                                 <div class="product-option-shop">
-                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/local/<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">Cursos Diponíveis</a>
+                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/local/<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">Cursos Disponíveis</a>
                             </div>                       
                             </div>
                             <?php } ?>
+
                             </div>
                     </div>
                 </div>

@@ -7,21 +7,6 @@ use \Sbc\Model\Espaco;
 
 use \Sbc\Page;
 
-/*
-$app->get("/professor/local", function() {
-
-	User::verifyLogin();
-
-	$local = Local::listAll();
-
-	$page = new PageAdmin();
-
-	$page->setTpl("local", array(
-		'local'=>$local
-	));
-});
-*/
-
 $app->get("/professor/local", function() {
 
 	User::verifyLogin();

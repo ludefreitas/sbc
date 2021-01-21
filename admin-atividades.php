@@ -55,7 +55,7 @@ $app->get("/professor/atividade", function() {
 
 	}
 
-	$atividade = Atividade::listAll();
+	//$atividade = Atividade::listAll();
 	// carrega uma pagina das páginas do admin
 	$page = new PageAdmin();
 

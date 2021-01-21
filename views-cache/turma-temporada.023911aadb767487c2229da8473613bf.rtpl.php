@@ -4,6 +4,7 @@
 <section class="content-header">
   <h1>
     Turmas para <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -35,6 +36,7 @@
                         </thead>
                         <tbody>
                             <?php $counter1=-1;  if( isset($turmaNotRelated) && ( is_array($turmaNotRelated) || $turmaNotRelated instanceof Traversable ) && sizeof($turmaNotRelated) ) foreach( $turmaNotRelated as $key1 => $value1 ){ $counter1++; ?>
+
                             <tr>
                             <td><?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                             <td><?php echo htmlspecialchars( $value1["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["nomeativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - 
@@ -44,6 +46,7 @@
                             </td>
                             </tr>
                             <?php } ?>
+
                         </tbody>
                     </table>
                 </div>
@@ -67,6 +70,7 @@
                         </thead>
                         <tbody>
                             <?php $counter1=-1;  if( isset($turmaRelated) && ( is_array($turmaRelated) || $turmaRelated instanceof Traversable ) && sizeof($turmaRelated) ) foreach( $turmaRelated as $key1 => $value1 ){ $counter1++; ?>
+
                             <tr>
                             <td><?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                             <td><?php echo htmlspecialchars( $value1["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["nomeativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - 
@@ -76,6 +80,7 @@
                             </td>
                             </tr>
                             <?php } ?>
+
                         </tbody>
                     </table>
                 </div>

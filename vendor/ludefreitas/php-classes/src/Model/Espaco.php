@@ -124,7 +124,6 @@ class Espaco extends Model {
 				':idespaco'=>$this->getidespaco()
 			]);
 		}
-
 		
 	}
 	*/
@@ -153,8 +152,8 @@ class Espaco extends Model {
 		]);
 
 	}
-	*/
 	
+
 	public function checkPhoto()
 	{
 
@@ -178,6 +177,7 @@ class Espaco extends Model {
 		return $this->setdesphoto($url);
 
 	}
+
 	
 	public function getValues()
 	{
@@ -189,6 +189,7 @@ class Espaco extends Model {
 		return $values;
 
 	}
+	
 
 	public function setPhoto($file)
 	{
@@ -227,7 +228,7 @@ class Espaco extends Model {
 		$this->checkPhoto();
 
 	}
-
+	*/
 	public static function getPage($page = 1, $itemsPerPage = 8)
 	{
 
@@ -291,5 +292,8 @@ class Espaco extends Model {
 			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
 		];
 	}
+
+
+
 }
 ?>

@@ -11,17 +11,19 @@ use \Sbc\Model\Cart;
 use \Sbc\Model\Pessoa;
 use \Sbc\Model\User;
 use \Sbc\Model\Modalidade;
+use \Sbc\Model\Insc;
+use \Sbc\Model\InscStatus;
+use \Sbc\Model\CartsTurmas;
+
 
 $app->get('/', function() {
 
 	$turma = Turma::listAllTurmaTemporada();
 	
-	$page = new Page();
-    
+	$page = new Page();    
+
 	$page->setTpl("index", [
 		'turma'=>Turma::checkList($turma),
-		//'temporada'=>$turma->getTemporada()
-
 	]);
 });
 
@@ -30,14 +32,8 @@ $app->get("/cart", function(){
 	$cart = Cart::getFromSession();
 	$user = User::getFromSession();
 
-	//var_dump(Cart::cartIsEmpty($_SESSION[Cart::SESSION]['iduser']));
+	//var_dump($cart);
 	//exit();
-	
-	if($_SESSION[User::SESSION] === NULL){	
-
-		Cart::setMsgError("você precisa logar-se para selecionar uma pessoa e finalizar inscrição!");
-	}
-
 
 	$page = new Page();
 
@@ -49,7 +45,6 @@ $app->get("/cart", function(){
 		'msgError'=>Cart::getMsgError(),
 		'msgSuccess'=>Cart::getMsgSuccess()
 	]);
-
 });
 
 $app->post("/cart", function() {
@@ -58,14 +53,14 @@ $app->post("/cart", function() {
 
 	if(Cart::cartIsEmpty((int)$_SESSION[Cart::SESSION]['idcart']) === false){
 
-		Cart::setMsgError("Selecione uma turma antes de finalizar! ");
+		Cart::setMsgError("Selecione uma turma! ");
 		header("Location: /cart");
 		exit();
 	}	
 
 	if($_POST['idpess'] <= 0){	
 
-		Cart::setMsgError("Selecione uma pessoa! ");
+		Cart::setMsgError("você precisa selecionar uma pessoa! ");
 		header("Location: /cart");
 		exit();
 
@@ -98,28 +93,7 @@ $app->get("/checkout", function(){
 	$cart = Cart::getFromSession();
 	$user = User::getFromSession();
 
-	$pessoa = new Pessoa();
-
-	//var_dump(Cart::getFromSession());
-	//exit();
-
-
-	if($_SESSION[Cart::SESSION]['idcart'] === NULL){
-
-		Cart::setMsgError("Selecione uma turma e uma pessoa antes de finalizar! ");
-		header("Location: /cart");
-		exit();
-
-	}
-
-
-	if($_SESSION[Cart::SESSION]['idpess'] === NULL){
-
-		Cart::setMsgError("Selecione uma pessoa antes de finalizar! ");
-		header("Location: /cart");
-		exit();
-
-	}
+	//$pessoa = new Pessoa();
 
 	$page = new Page();
 
@@ -131,6 +105,75 @@ $app->get("/checkout", function(){
 	]);
 });
 
+
+$app->post("/checkout", function(){
+
+	User::verifyLogin(false);
+
+	$user = User::getFromSession();
+	$cart = Cart::getFromSession();
+
+	$idcart = (int)$cart->getidcart();
+
+	$idtemporada = $_POST['idtemporada'];
+	$idturma = $_POST['idturma'];
+
+	$cartsturmas = CartsTurmas::getCartsTurmasFromId($idcart);
+
+	$turma = new Turma();	
+	
+	$insc = new Insc();
+	
+	$insc->setData([
+		'idcart'=>$cart->getidcart(),
+		'idinscstatus'=>InscStatus::AGUARDANDO_SORTEIO,
+		'idturma'=>$idturma,
+		'idtemporada'=>$idtemporada		
+	]);
+
+	$insc->save();
+	
+	//Cart::removeFromSession();
+    //session_regenerate_id();
+	
+    //header("Location: /insc/1");
+    header("Location: /insc/".$insc->getidinsc());
+	exit;
+
+});
+
+/*
+$app->get("/insc", function(){
+
+	User::verifyLogin(false);
+
+	$insc = new Insc();
+
+	$page = new Page();
+
+	$page->setTpl("insc", [
+		'insc'=>$insc->getValues()
+	]);
+});
+*/
+
+
+$app->get("/insc/:idinsc", function($idinsc){
+
+	User::verifyLogin(false);
+
+	$insc = new Insc();
+
+	$insc->get((int)$idinsc);
+
+	$page = new Page();
+
+	$page->setTpl("insc", [
+		'insc'=>$insc->getValues()
+	]);
+
+});
+/*
 $app->get("/cart/:idturma/add", function($idturma){
 
 	$turma = new Turma();
@@ -140,6 +183,10 @@ $app->get("/cart/:idturma/add", function($idturma){
 	$cart = Cart::getFromSession();
 
 	$idcart = (int)$_SESSION[Cart::SESSION]["idcart"];
+
+
+	//var_dump($turma);
+	//exit();
 
 	if( Cart::cartIsEmpty($idcart) > 0){
 
@@ -153,7 +200,35 @@ $app->get("/cart/:idturma/add", function($idturma){
 	
 	header("Location: /cart");
 	exit;
+});
+*/
 
+$app->get("/cart/:idturma/:idtemporada/add", function($idturma, $idtemporada){
+
+	$turma = new Turma();
+
+	$turma->get((int)$idturma);
+
+
+	$cart = Cart::getFromSession();
+
+	$idcart = (int)$_SESSION[Cart::SESSION]["idcart"];
+
+	//var_dump($turma);
+	//exit();
+
+	if( Cart::cartIsEmpty($idcart) > 0){
+
+		var_dump("Você já selecionou uma turma! remova a atual para continuar.");
+		exit();
+
+	}else{
+				
+			$cart->addTurma($turma);
+	}		
+	
+	header("Location: /cart");
+	exit;
 });
 
 $app->get("/cart/:idturma/minus", function($idturma){
@@ -168,7 +243,6 @@ $app->get("/cart/:idturma/minus", function($idturma){
 
 	header("Location: /cart");
 	exit;
-
 });
 
 $app->get("/cart/:idturma/remove", function($idturma){
@@ -183,7 +257,6 @@ $app->get("/cart/:idturma/remove", function($idturma){
 
 	header("Location: /cart");
 	exit;
-
 });
 
 
@@ -194,7 +267,6 @@ $app->get("/temporada/:idtemporada", function($idtemporada){
 	$temporada = new Temporada();
 
 	$temporada->get((int)$idtemporada);
-
 
 	$pagination = $temporada->getTurmaTemporadaPage($page);	
 
@@ -215,6 +287,60 @@ $app->get("/temporada/:idtemporada", function($idtemporada){
 	]);
 });
 
+$app->get("/modalidade/:idmodal", function($idmodal){
+
+	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
+
+	$modalidade = new Modalidade();
+
+	$modalidade->get((int)$idmodal);
+
+	$pagination = $modalidade->getTurmaModalidadePage($page);	
+
+	$pages = [];
+
+	for ($i=1; $i <= $pagination['pages']; $i++) { 
+		array_push($pages, [
+			'link'=>'/modalidade/'.$modalidade->getidmodal().'?page='.$i,
+			'page'=>$i
+		]);
+	}
+	$page = new Page();
+
+	$page->setTpl("modalidade", [
+		'modalidade'=>$modalidade->getValues(),
+		'turma'=>$pagination["data"],
+		'pages'=>$pages
+	]);
+});
+
+$app->get("/local/:idlocal", function($idlocal){
+
+	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
+
+	$local = new Local();
+
+	$local->get((int)$idlocal);
+
+	$pagination = $local->getTurmaLocalPage($page);	
+
+	$pages = [];
+
+	for ($i=1; $i <= $pagination['pages']; $i++) { 
+		array_push($pages, [
+			'link'=>'/local/'.$local->getidlocal().'?page='.$i,
+			'page'=>$i
+		]);
+	}
+	$page = new Page();
+
+	$page->setTpl("local", [
+		'local'=>$local->getValues(),
+		'turma'=>$pagination["data"],
+		'pages'=>$pages
+	]);
+});
+
 $app->get("/locais", function() {
 
 	$locais = Local::listAll();
@@ -226,6 +352,7 @@ $app->get("/locais", function() {
 	));
 });
 
+/*
 $app->get("/local/:idlocal", function($idlocal){
 
 	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
@@ -252,7 +379,7 @@ $app->get("/local/:idlocal", function($idlocal){
 		'pages'=>$pages
 	]);
 });
-
+*/
 
 $app->get("/espaco/:idespaco", function($idespaco) {
 
@@ -266,7 +393,6 @@ $app->get("/espaco/:idespaco", function($idespaco) {
 		'espaco'=>$espaco->getValues(),
 		'horario'=>$espaco->getHorario()
 	]);	
-
 });
 
 $app->get("/local/:idlocal", function($idlocal) {
@@ -281,7 +407,6 @@ $app->get("/local/:idlocal", function($idlocal) {
 		'local'=>$local->getValues(),
 		'espaco'=>$local->getEspaco()
 	]);	
-
 });
 
 $app->get("/atividade/:idativ", function($idativ){
@@ -290,24 +415,32 @@ $app->get("/atividade/:idativ", function($idativ){
 
 	$atividade->getFromId($idativ);
 
-	//var_dump($atividade);
-	//exit();
-
 	$page = new Page();
 
 	$page->setTpl("atividade-detail", [
-		'atividade'=>$atividade->getValues(),
-		// Implementar método
-		//'local'=>$atividade->getLocal()
+		'atividade'=>$atividade->getValues()
 	]);
-
 });
 
+/*
 $app->get("/turma/:idturma", function($idturma){
 
 	$turma = new Turma();
 
 	$turma->getFromId($idturma);
+
+	$page = new Page();
+
+	$page->setTpl("turma-detail", [
+		'turma'=>$turma->getValues()
+	]);
+});
+*/
+$app->get("/turma/:idturma/:idtemporada", function($idturma, $idtemporada){
+
+	$turma = new Turma();
+
+	$turma->getFromIdTurmaTemporada($idturma, $idtemporada);
 
 	//var_dump($turma);
 	//exit();
@@ -315,23 +448,11 @@ $app->get("/turma/:idturma", function($idturma){
 	$page = new Page();
 
 	$page->setTpl("turma-detail", [
-		'turma'=>$turma->getValues(),
-		// Implementar método
-		//'local'=>$turma->getLocal()
+		'turma'=>$turma->getValues()
 	]);
-
 });
 
-
 $app->get("/login", function(){
-
-	/*
-	if($_SESSION[User::SESSION] !== NULL){
-
-		header("Location: /cart");
-		exit();
-	}*/
-
 
 	$page = new Page();
 
@@ -340,7 +461,6 @@ $app->get("/login", function(){
 		'errorRegister'=>User::getErrorRegister(),
 		'registerValues'=>(isset($_SESSION['registerValues'])) ? $_SESSION['registerValues'] : ['name'=>'', 'email'=>'', 'phone'=>'']
 	]);
-
 });
 
 
@@ -353,15 +473,10 @@ $app->post("/login", function(){
 	} catch(Exception $e) {
 
 		User::setError($e->getMessage());
-
-		header("Location: /login");
-		exit;
-
 	}
 
 	header("Location: /cart");
 	exit;
-
 });
 
 $app->get("/logout", function(){
@@ -374,7 +489,6 @@ $app->get("/logout", function(){
 
 	header("Location: /login");
 	exit;
-
 });
 
 $app->post("/register", function(){
@@ -386,7 +500,6 @@ $app->post("/register", function(){
 		User::setErrorRegister("Preencha o seu nome.");
 		header("Location: /login");
 		exit;
-
 	}
 
 	if (!isset($_POST['email']) || $_POST['email'] == '') {
@@ -394,7 +507,6 @@ $app->post("/register", function(){
 		User::setErrorRegister("Preencha o seu e-mail.");
 		header("Location: /login");
 		exit;
-
 	}
 
 	if (!isset($_POST['password']) || $_POST['password'] == '') {
@@ -402,7 +514,6 @@ $app->post("/register", function(){
 		User::setErrorRegister("Preencha a senha.");
 		header("Location: /login");
 		exit;
-
 	}
 
 	if (User::checkLoginExist($_POST['email']) === true) {
@@ -410,7 +521,6 @@ $app->post("/register", function(){
 		User::setErrorRegister("Este endereço de e-mail já está sendo usado por outro usuário.");
 		header("Location: /login");
 		exit;
-
 	}
 
 	$user = new User();
@@ -418,7 +528,7 @@ $app->post("/register", function(){
 	$user->setData([
 		'inadmin'=>0,
 		'isprof'=>0,
-		'statususer'=>1,
+		'status'=>1,
 		'deslogin'=>$_POST['email'],
 		'desperson'=>$_POST['name'],
 		'desemail'=>$_POST['email'],
@@ -432,7 +542,6 @@ $app->post("/register", function(){
 
 	header('Location: /checkout');
 	exit;
-
 });
 
 $app->get("/forgot", function() {
@@ -440,7 +549,6 @@ $app->get("/forgot", function() {
 	$page = new Page();
 
 	$page->setTpl("forgot");	
-
 });
 
 $app->post("/forgot", function($email){
@@ -449,7 +557,6 @@ $app->post("/forgot", function($email){
 
 	header("Location: /forgot/sent");
 	exit;
-
 });
 
 $app->get("/forgot/sent", function(){
@@ -457,7 +564,6 @@ $app->get("/forgot/sent", function(){
 	$page = new Page();
 
 	$page->setTpl("forgot-sent");	
-
 });
 
 
@@ -471,7 +577,6 @@ $app->get("/forgot/reset", function(){
 		"name"=>$user["desperson"],
 		"code"=>$_GET["code"]
 	));
-
 });
 
 $app->post("/forgot/reset", function(){
@@ -491,7 +596,6 @@ $app->post("/forgot/reset", function(){
 	$page = new Page();
 
 	$page->setTpl("forgot-reset-success");
-
 });
 
 $app->get("/pessoa-create", function() {
@@ -527,6 +631,13 @@ $app->post("/registerpessoa", function(){
 		exit;
 	}
 
+	if (!isset($_POST['sexo']) || $_POST['sexo'] == '') {
+
+		Pessoa::setErrorRegister("Informe o sexo.");
+		header("Location: /pessoa-create");
+		exit;
+	}
+
 	if (!isset($_POST['numcpf']) || $_POST['numcpf'] == '') {
 
 		Pessoa::setErrorRegister("Informe o número do CPF.");
@@ -555,16 +666,36 @@ $app->post("/registerpessoa", function(){
 		exit;
 	}	
 
-	if (!isset($_POST['cadunico']) || $_POST['cadunico'] == '') {
+	if (!isset($_POST['vulnsocial']) || $_POST['vulnsocial'] == '') {
 
-		Pessoa::setErrorRegister("Informe o número do Cartão CadUnico.");
+		Pessoa::setErrorRegister("Informe se a pessoa participa de programas sociais.");
+		header("Location: /pessoa-create");
+		exit;
+	}	
+	
+	if ($_POST['vulnsocial'] === '1' && (!isset($_POST['cadunico']) || $_POST['cadunico'] == '')) {
+
+		Pessoa::setErrorRegister("Informe o número do Cadastro Único (cadunico)");
 		header("Location: /pessoa-create");
 		exit;
 	}
 
-	$pessoa->getPessoaExist();
+	if (!isset($_POST['nomemae']) || $_POST['nomemae'] == '') {
+
+		Pessoa::setErrorRegister("Informe o nome da mãe.");
+		header("Location: /pessoa-create");
+		exit;
+	}
+
+	$_POST['statuspessoa'] = 1;
+
+	//var_dump($_POST);
+	//exit();
+
 
 	$pessoa = new Pessoa();
+
+	$pessoa->getPessoaExist();
 
 	$pessoa->setData([
 		'iduser'=>$iduser, 		
@@ -580,14 +711,13 @@ $app->post("/registerpessoa", function(){
 		'cpfmae'=>$_POST['cpfmae'],
 		'nomepai'=>$_POST['nomepai'],
 		'cpfpai'=>$_POST['cpfpai'],
-		'statuspessoa'=>1		
+		'statuspessoa'=>$_POST['statuspessoa']
 	]);
 
 	$pessoa->save();
 
-	header('Location: /checkout');
+	header('Location: /cart');
 	exit;
-
 });
 
 /*
@@ -599,13 +729,12 @@ $app->get("/pessoa/:idpess/status", function($idpess) {
 
 	$pessoa->get((int)$idpess);
 
-	$pessoa->setStatusPessoa();
+	$pessoa->setStatus();
 
 	header("Location: /user-pessoas");
 	exit();	
 });
 */
-
 $app->get("/user/:idpess/status", function($idpess){
 
 	User::verifyLogin(false);	
@@ -614,14 +743,14 @@ $app->get("/user/:idpess/status", function($idpess){
 
 	$pessoa->get((int)$idpess);
 
-	$_POST['statuspessoa'] = 0;
-	$_POST['idpess'] = $idpess;
-
 	$pessoa->setData($_POST);
+
+	// setstatuspessoa --> 0 = pessoa não ativa   -  1 = pessoa ativa (default)
+	$pessoa->setstatuspessoa(0);
 
 	$pessoa->save();
 
-	Pessoa::setErrorRegister("Pessoa excluída com sucesso.");	
+	Pessoa::setSuccess("Status atualizado.");
 
 	header("Location: /user/pessoas");
 	exit;
@@ -659,7 +788,7 @@ $app->get("/user/pessoas", function(){
 
 	$user = User::getFromSession();
 
-	//var_dump($user->getPessoas());
+	//var_dump($user->getPessoa());
 	//exit();
 
 	$page = new Page();
@@ -709,83 +838,6 @@ $app->get("/modalidades", function() {
 	$page->setTpl("modalidades", array(
 		'modalidades'=>$modalidades
 	));
-});
-
-$app->get("/profile", function(){
-
-	User::verifyLogin(false);
-
-	$user = User::getFromSession();
-
-	$page = new Page();
-
-	$page->setTpl("profile", [
-		'user'=>$user->getValues(),
-		'profileMsg'=>User::getSuccess(),
-		'profileError'=>User::getError()
-
-	]);
-});
-
-$app->post("/profile", function(){
-
-	User::verifyLogin(false);
-
-
-	if (!isset($_POST['desperson']) || $_POST['desperson'] ==='') {
-
-		User::setError("Preencha o seu nome completo.");
-		header("Location: /profile");
-		exit;
-	}
-
-	if (!isset($_POST['desemail']) || $_POST['desemail'] === '') {
-
-		User::setError("Informe o seu email.");
-		header("Location: /profile");
-		exit;
-	}
-
-	if (!isset($_POST['nrphone']) || $_POST['nrphone'] === '') {
-
-		User::setError("Informe o número do telefone.");
-		header("Location: /profile");
-		exit;
-	}	
-
-	$user = User::getFromSession();
-
-	if($_POST['desemail'] !== $user->getdesemail()){
-
-		if(User::checkLoginExist($_POST['desemail']) === true) {
-
-			User::setError("Este endereço de email já está cadastrado.");
-			header("Location: /profile");
-			exit;
-			
-		}
-	}
-
-	$_POST['iduser'] = $user->getiduser();
-	$_POST['inadmin'] = $user->getinadmin();
-	$_POST['isprof'] = $user->getisprof();
-	$_POST['statususer'] = $user->getstatususer();
-	$_POST['despassword'] = $user->getdespassword();
-	//$_POST['deslogin'] = $_POST['desemail'];
-
-	//var_dump($_POST);
-	//exit();	
-
-	$user->setData($_POST);
-
-	$user->update();
-
-	$_SESSION[User::SESSION] = $user->getValues();
-
-	User::getSuccess("Dados alterados com sucesso!");
-
-	header("Location: /profile");
-	exit();
 });
 
 

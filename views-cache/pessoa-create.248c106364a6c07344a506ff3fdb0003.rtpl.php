@@ -26,10 +26,13 @@
 
                 
                 <?php if( $errorRegister != '' ){ ?>
+
                 <div class="alert alert-danger">
                     <?php echo htmlspecialchars( $errorRegister, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+
                 </div>
                 <?php } ?>
+
 
                 <form id="register-form-wrap" action="/registerpessoa" class="register" method="post">
                     <h2>Cadastrar Nova Pessoa</h2>
@@ -47,8 +50,8 @@
                         <label for="sexo">Sexo
                         </label>
                         <select class="form-control" name="sexo">
-                            <option selected="">Selecione</option>                      
-                            
+                            <option selected="" value="">Selecione</option>                      
+                             
                             <option value="Masculino">Masculino</option>
                             <option value="Feminino">Feminino</option>
                             <option value="Não Declarado">Não Declarado</option>
@@ -77,7 +80,7 @@
                      <label for="vulnsocial">Vulnerabilidade Social?
                         </label>
                         <select class="form-control" name="vulnsocial">
-                            <option selected="">Seclecione</option>     
+                            <option selected="" value="">Seclecione</option>     
                             
                             <option value="1">Sim</option>
                             <option value="0">Não</option>
@@ -87,7 +90,7 @@
                         <p class="form-row form-row-first">
                         <label for="cadunico">Número do CadÚnico<span class="required"></span>
                         </label>
-                        <input type="number" id="cadunico" name="cadunico" class="input-text" value="<?php echo htmlspecialchars( $registerValues["cadunico"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                        <input type="text" id="cadunico" name="cadunico" class="input-text" value="<?php echo htmlspecialchars( $registerValues["cadunico"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                         </p>   
 
                         <p class="form-row form-row-first">

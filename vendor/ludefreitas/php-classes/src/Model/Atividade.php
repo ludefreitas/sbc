@@ -21,7 +21,7 @@ class Atividade extends Model {
 
 		}	
 
-		public static function checkList($list)
+	public static function checkList($list)
 	{
 
 		foreach ($list as &$row) {
@@ -157,12 +157,11 @@ class Atividade extends Model {
 		$sql = new Sql();
 
 		$results = $sql->select("
-			SELECT SQL_CALC_FOUND_ROWS * 
+			SELECT * 
 			FROM tb_atividade a 
 			INNER JOIN tb_fxetaria b
 			using(idfxetaria)
-			WHERE a.nomeativ LIKE :search
-			OR a.descativ LIKE :search 
+			WHERE a.nomeativ LIKE :search 
 			OR a.geneativ LIKE :search 
 			OR a.origativ LIKE :search
 			OR a.prograativ LIKE :search

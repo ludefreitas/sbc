@@ -57,6 +57,7 @@
                   {/loop}                            
                 </select>
             </div>
+
             <div class="form-group">
               <label for="turma">Dia Semana - Horário</label>
                 <select class="form-control" name="idhorario">     
@@ -88,7 +89,7 @@
             </div>
             <div class="form-group">
               <label for="file">Foto</label>
-              <input type="file" class="form-control" id="file" name="file" value="{$turma.desphoto}" >
+              <input type="file" class="form-control" id="file" name="file" value="{$turma.desphoto}">
               <div class="box box-widget">
                 <div class="box-body">
                   <img class="img-responsive" id="image-preview" src="{$turma.desphoto}" alt="Photo">
@@ -96,8 +97,7 @@
               </div>
             </div>   
 
-        </div>       
-             
+        </div>                  
             
           <!-- /.box-body -->
           <div class="box-footer">

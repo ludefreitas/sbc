@@ -108,7 +108,18 @@
                                         <!--<form role="form" action="/cart/{$value.idpess}/insert" method="get">-->
                                              {/loop}
                                             <div class="box-body">
-                                                <div class="form-group">                                            
+                                                <!--
+                                                {loop="$pessoa"}
+                                                <div class="form-group">
+
+                                                    <input type="button" class="btn btn-primary" name="idpess" value='{$value.idpess} - {$value.nomepess}, {function="calcularIdade($value.dtnasc)"} anos, {$value.sexo}'>
+                                                </div>
+                                                {else}
+                                                        <label>Não há pessoas cadastradas</label>
+                                                {/loop}
+                                                <div class="form-group">
+                                                -->
+                                                                                          
                                                     <select class="form-control" name="idpess">
                                                          <option selected="selected" value="idpess=0">selecione uma pessoa</option>
                                                         {loop="$pessoa"}
@@ -122,8 +133,8 @@
                                             <!-- /.box-body -->
                                             <div class="box-footer">
                                             
-                                            <!-- <input type="submit" value="Selecionar Pessoa" id="pessoa" class="button alt" formaction="/cart" formmethod="post"> -->
-                                            </div> 
+                                               
+                                            </div>
                                            
                                        <!-- </form> -->
 
@@ -132,8 +143,9 @@
                                         <a href="/pessoa-create">Cadastrar uma nova pessoa</a>
                                         
                                         <div class="pull-right">
-                                            <input type="submit" value="Finalizar Inscrição" id="pessoa" class="button alt" formaction="/cart" formmethod="post"> 
-                                           <!-- <input type="submit" value="Finalizar Inscrição" name="proceed" class="checkout-button button alt wc-forward">-->
+
+                                            <input type="submit" value="Confirmar Inscrição" id="pessoa" class="button alt" formaction="/cart" formmethod="post">
+                                            
                                          </div>
                                     </div>
 

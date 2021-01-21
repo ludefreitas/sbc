@@ -5,21 +5,6 @@ use \Sbc\PageAdmin;
 use \Sbc\Model\User;
 use \Sbc\Model\Horario;
 
-/*
-$app->get("/professor/horario", function() {
-
-	User::verifyLogin();
-
-	$horario = Horario::listAll();
-
-	$page = new PageAdmin();
-
-	$page->setTpl("horario", array(
-		'horario'=>$horario
-	));
-});
-*/
-
 $app->get("/professor/horario", function() {
 
 	User::verifyLogin();

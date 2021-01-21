@@ -313,28 +313,6 @@ UNLOCK TABLES;
 -- Table structure for table `tb_inscricao`
 --
 
-DROP TABLE IF EXISTS `tb_inscricao`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tb_inscricao` (
-  `idinscricao` int(11) NOT NULL AUTO_INCREMENT,
-  `idmatricula` int(11) NOT NULL,
-  `idstatusinscricao` int(11) NOT NULL,
-  `idpess` int(11) NOT NULL,
-  `idturma` int(11) NOT NULL,
-  `idtemporada` int(11) NOT NULL,
-  `dtinscricao` timestamp NOT NULL DEFAULT current_timestamp(),
-  `dtmatricula` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`idinscricao`),
-  KEY `fk_matricula_pessoa_idx` (`idpess`),
-  KEY `fk_matricula_turma_idx` (`idturma`),
-  KEY `fk_matricula_turmatemporada_idx` (`idtemporada`),
-  KEY `fk_matricula_inscricaostatus_idx` (`idstatusinscricao`),
-  CONSTRAINT `fk_matricula_inscricaostatus` FOREIGN KEY (`idstatusinscricao`) REFERENCES `tb_inscricaostatus` (`idstatusinscricao`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_matricula_pessoa` FOREIGN KEY (`idpess`) REFERENCES `tb_pessoa` (`idpess`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_matricula_temporada` FOREIGN KEY (`idtemporada`) REFERENCES `tb_turmatemporada` (`idtemporada`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_matricula_turma` FOREIGN KEY (`idturma`) REFERENCES `tb_turma` (`idturma`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -350,15 +328,7 @@ UNLOCK TABLES;
 -- Table structure for table `tb_inscricaostatus`
 --
 
-DROP TABLE IF EXISTS `tb_inscricaostatus`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tb_inscricaostatus` (
-  `idstatusinscricao` int(11) NOT NULL AUTO_INCREMENT,
-  `descstatus` varchar(32) NOT NULL,
-  `dtalteracao` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`idstatusinscricao`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -616,17 +586,6 @@ UNLOCK TABLES;
 -- Table structure for table `tb_sorteioinscricao`
 --
 
-DROP TABLE IF EXISTS `tb_sorteioinscricao`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tb_sorteioinscricao` (
-  `idsorteio` int(11) NOT NULL,
-  `idinscricao` int(11) NOT NULL,
-  PRIMARY KEY (`idsorteio`,`idinscricao`),
-  KEY `fk_productscategories_products_idx` (`idinscricao`),
-  CONSTRAINT `fk_sorteioinscricao_matricula` FOREIGN KEY (`idinscricao`) REFERENCES `tb_inscricao` (`idinscricao`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_sorteioinscricao_sorteio` FOREIGN KEY (`idsorteio`) REFERENCES `tb_sorteio` (`idsorteio`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1572,3 +1531,48 @@ DELIMITER ;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2020-12-12  0:32:38
+
+
+DROP TABLE IF EXISTS `tb_insc`;
+
+CREATE TABLE `tb_insc` (
+  `idinsc` int(11) NOT NULL AUTO_INCREMENT,
+  `idmatricula` int(11) NOT NULL,
+  `idstatusinsc` int(11) NOT NULL,
+  `idcar` int(11) NOT NULL,
+  `idturma` int(11) NOT NULL,
+  `idtemporada` int(11) NOT NULL,
+  `dtinsc` timestamp NOT NULL DEFAULT current_timestamp(),
+  `dtmatricula` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`idinsc`),
+  KEY `fk_matricula_cart_idx` (`idcar`),
+  KEY `fk_matricula_turma_idx` (`idturma`),
+  KEY `fk_matricula_turmatemporada_idx` (`idtemporada`),
+  KEY `fk_matricula_inscstatus_idx` (`idstatusinsc`),
+  CONSTRAINT `fk_matricula_cart` FOREIGN KEY (`idcar`) REFERENCES `tb_cart` (`idcar`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_matricula_temporada` FOREIGN KEY (`idtemporada`) REFERENCES `tb_turmatemporada` (`idtemporada`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_matricula_turma` FOREIGN KEY (`idturma`) REFERENCES `tb_turma` (`idturma`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tb_inscstatus`;
+
+CREATE TABLE `tb_inscstatus` (
+  `idstatusinsc` int(11) NOT NULL AUTO_INCREMENT,
+  `descstatus` varchar(32) NOT NULL,
+  PRIMARY KEY (`idstatusinsc`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tb_sorteioinsc`;
+
+CREATE TABLE `tb_sorteioinsc` (
+  `idsorteio` int(11) NOT NULL,
+  `idinsc` int(11) NOT NULL,
+  PRIMARY KEY (`idsorteio`,`idinsc`),
+  KEY `fk_sorteioinsc_insc_idx` (`idsorteio`),
+  KEY `fk_sorteioinsc_sorteio_idx` (`idinsc`),
+  CONSTRAINT `fk_sorteioinsc_insc` FOREIGN KEY (`idinsc`) REFERENCES `tb_indc` (`idinsc`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_sorteioinsc_sorteio` FOREIGN KEY (`idsorteio`) REFERENCES `tb_sorteio` (`idsorteio`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+

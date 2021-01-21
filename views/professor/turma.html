@@ -55,13 +55,13 @@
                 <tbody>                  
                   {loop="$turma"}
                   <tr>
-                    <td>{$value.descturma}</br>{$value.periodo}</td>
+                    <td>{$value.idturma} - {$value.descturma}</br>{$value.periodo}</td>
                      <td>{$value.descmodal}</td>
                     <td>{$value.descrfxetaria} </br> {$value.initidade} a {$value.fimidade} anos</td>
                     <td>{$value.desperson}</td>
                     <td>{$value.apelidolocal}</td>
                     <td>{$value.nomeespaco}</td>
-                    <td>{$value.diasemana} </br> {$value.horainicio} ás {$value.horatermino}  </td>
+                    <td> {$value.idhorario} - {$value.diasemana} </br> {$value.horainicio} ás {$value.horatermino}  </td>
                     <td>{$value.desstatus}</td>
                     <td>{$value.vagas}</td>
                     <td>{$value.numinscritos}</td>
@@ -74,9 +74,7 @@
                   {/loop}
                 </tbody>
               </table>
-            </div>
-            
-            <!-- /.box-body -->
+            </div>            
 
             <div class="box-footer clearfix">
               <ul class="pagination pagination-sm no-margin pull-right">
@@ -85,9 +83,12 @@
                 {/loop}
               </ul>
             </div>
+
+            <!-- /.box-body -->
+
             <button type="button" onclick="window.print()" class="btn btn-primary pull-right" style="margin-right: 5px;">
-                    <i class="fa fa-print"></i> Imprimir
-                </button>
+                <i class="fa fa-print"></i> Imprimir
+            </button>
 
           </div>
   	</div>

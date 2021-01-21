@@ -142,7 +142,6 @@ class Horario extends Model {
 
 	}
 
-
 }
 
 

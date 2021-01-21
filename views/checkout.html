@@ -27,17 +27,6 @@
 										</div>
 										{/if}
 									
-										<!--
-											<div class="woocommerce-billing-fields">
-
-												<h3>Confirme a Inscrição</h3>
-
-											<label for="pessoa">Nome da pessoa que irá fazer esta aula</label>
-								            <input type="text" value="{$pessoa.nomepess} {$pessoa.dtnasc} -  {$pessoa.sexo} " placeholder="{$pessoa.nomepess}, {function='calcularIdade($pessoa.dtnasc)'} anos, {$pessoa.sexo}" id="idpess" name="idpess" class="input-text ">								            
-											
-											</div>								
-                                        
-										-->
 											<div class="clear">
 											
 											</div>
@@ -68,6 +57,12 @@
 												<tr class="cart_item">
 													<td class="product-name">
 													 	{$value.descativ} <br> {$value.periodo}
+
+													 	<input hidden="" type="text" id="idtemporada" name="idtemporada" class="input-text" value="{$value.idtemporada}"></input>
+
+													 	<input hidden="" 
+													 	type="text" id="idturma" name="idturma" class="input-text" value="{$value.idturma}"></input>
+
 												    </td>											
 
 	                                        		<td class="product-name">
@@ -82,23 +77,25 @@
 														{$value.apelidolocal} <br> {$value.rua}, Nº {$value.numero} <br>
 													</td>
                                        			</tr>
+                                       			<tr class="order-total">
+														<th colspan="5" ><input type="submit" data-value="Place order" value="Finalizar" id="place_order" name="insc" class="button alt" ></th>
+												</tr>
                                              	{/loop}
 
                                              	</tbody>                                        
 												
 												<tfoot>
+													
+													
 													{loop="$turma"}
-													<tr class="order-total">
-														<th colspan="5" >
-															<input type="submit" data-value="Place order" value="Confirmar Inscrição" id="place_order" name="woocommerce_checkout_place_order" class="button alt" disabled="">
-														</th>
-													</tr>
 													{else}
 													<tr class="order-total">
 														<td colspan="5" class="product-name"><strong class="product-name"><a href="/cart">Encontrar uma turma</a></strong>
 														</td>
 													</tr>
-													{/loop}													
+													{/loop}
+													
+														
 													
 												</tfoot>
 												

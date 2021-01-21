@@ -27,7 +27,7 @@ class Pessoa extends Model {
 	{
 		$sql = new Sql();
 
-		$results = $sql->select("CALL sp_pessoa_save(:idpess, :iduser, :nomepess, :dtnasc, :sexo, :numcpf, :numrg, :numsus, :vulnsocial, :cadunico, :nomemae, :cpfmae, :nomepai, :cpfpai, :statuspessoa, :dtalteracao)", array(
+		$results = $sql->select("CALL sp_pessoa_save(:idpess, :iduser, :nomepess, :dtnasc, :sexo, :numcpf, :numrg, :numsus, :vulnsocial, :cadunico, :nomemae, :cpfmae, :nomepai, :cpfpai, :statuspessoa, :dtinclusao, :dtalteracao)", array(
 			":idpess"=>$this->getidpess(),
 			":iduser"=>$this->getiduser(),
 			":nomepess"=>$this->getnomepess(),
@@ -43,6 +43,7 @@ class Pessoa extends Model {
 			":nomepai"=>$this->getnomepai(),
 			":cpfpai"=>$this->getcpfpai(),
 			":statuspessoa"=>$this->getstatuspessoa(),
+			":dtinclusao"=>$this->getdtinclusao(),
 			":dtalteracao"=>$this->getdtalteraca()
 		));	
 
@@ -50,7 +51,7 @@ class Pessoa extends Model {
 
 			$this->setData($results[0]);
 
-			Pessoa::updateFile();
+			//Pessoa::updateFile();
 
 		}
 	}
@@ -91,7 +92,7 @@ class Pessoa extends Model {
 		$html = [];
 
 		foreach ($pessoa as $row) {
-			array_push($html, '<li><a href="/pessoa/'.$row['idpess'].'">'.$row['nomepess'].'</a></li>');
+			array_push($html, '<li><a href="/pessoa/'.$row['idpess'].'">'.$row['nomepass'].'</a></li>');
 		}
 		file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."pessoa-menu.html", implode('', $html));
 	}
@@ -200,7 +201,6 @@ class Pessoa extends Model {
 		$this->setData($rows[0]);
 	}
 
-
 	public function getPessoaExist()	{
 
 		$sql = new Sql();
@@ -222,6 +222,25 @@ class Pessoa extends Model {
 		}
 
 	}
+
+
+	/*
+	public function setStatus(){
+
+		$statuspessoa = 0
+
+		$sql = new Sql();
+
+		$results = $sql->select(
+			"UPDATE tb_pessoa SET statuspessoa = :statuspessoa WHERE idpess = :pidpess", [
+			':idpess'=>$this->getidpess(),
+			':statuspessoa'=>$this->getstatuspessoa()			
+		]);
+
+		//$this->setData($results[0]);	
+
+	}
+	*/
 
 }
 
