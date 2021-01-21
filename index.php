@@ -38,6 +38,8 @@ require_once("admin-espaco.php");
 require_once("admin-turma.php");
 require_once("admin-temporada.php");
 require_once("admin-modalidade.php");
+require_once("admin-pessoa.php");
+
 $app->run();
 
 ?>

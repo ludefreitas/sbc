@@ -268,7 +268,7 @@ desired effect
             <li><a href="/professor/users"><i class="fa fa-users"></i>Todos Usuários</a></li>
             <li><a href="/professor/prof"><i class="fa fa-users"></i>Professores</a></li>
             <li><a href="/professor/cliente"><i class="fa fa-users"></i>Clientes</a></li>
-            <li><a href="#"><i class="fa fa-users"></i>Alunos</a></li>          
+            <li><a href="/professor/pessoas"><i class="fa fa-users"></i>Alunos</a></li>          
           </ul>
         </li> 
         <li class="treeview">

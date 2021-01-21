@@ -103,6 +103,21 @@ class Cart extends Model {
 
 		$sql = new Sql();
 
+		$results = $sql->select("CALL sp_cart_save(:idcart, :dessessionid, :idpess)", [
+			':idcart'=>$this->getidcart(),
+			':dessessionid'=>$this->getdessessionid(),
+			':idpess'=>$this->getidpess()
+		]);
+
+		$this->setData($results[0]);
+
+	}
+	/*
+	public function save()
+	{
+
+		$sql = new Sql();
+
 		$results = $sql->select("CALL sp_carts_save(:idcart, :dessessionid, :iduser, :idpess)", [
 			':idcart'=>$this->getidcart(),
 			':dessessionid'=>$this->getdessessionid(),
@@ -113,6 +128,7 @@ class Cart extends Model {
 		$this->setData($results[0]);
 
 	}
+	*/
 
 	public function addTurma(Turma $turma)
 	{
@@ -207,7 +223,7 @@ class Cart extends Model {
 		$results = $sql->select("
 			SELECT * 
 			FROM tb_pessoa a 
-			INNER JOIN tb_users b ON b.iduser = a.iduser
+			-- INNER JOIN tb_users b ON b.iduser = a.iduser
             INNER JOIN tb_carts c ON c.idpess = a.idpess
 			WHERE c.idcart = :idcart
 			-- GROUP BY b.idturma, b.descturma

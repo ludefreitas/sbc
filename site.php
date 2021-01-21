@@ -15,7 +15,6 @@ use \Sbc\Model\Insc;
 use \Sbc\Model\InscStatus;
 use \Sbc\Model\CartsTurmas;
 
-
 $app->get('/', function() {
 
 	$turma = Turma::listAllTurmaTemporada();
@@ -31,10 +30,6 @@ $app->get("/cart", function(){
 
 	$cart = Cart::getFromSession();
 	$user = User::getFromSession();
-
-	//var_dump($cart);
-	//exit();
-
 	$page = new Page();
 
 	$page->setTpl("cart", [
@@ -52,14 +47,12 @@ $app->post("/cart", function() {
 	User::verifyLogin(false);
 
 	if(Cart::cartIsEmpty((int)$_SESSION[Cart::SESSION]['idcart']) === false){
-
 		Cart::setMsgError("Selecione uma turma! ");
 		header("Location: /cart");
 		exit();
 	}	
 
 	if($_POST['idpess'] <= 0){	
-
 		Cart::setMsgError("você precisa selecionar uma pessoa! ");
 		header("Location: /cart");
 		exit();
@@ -69,14 +62,14 @@ $app->post("/cart", function() {
 		$cart = new Cart();
 
 		$_POST['idcart'] = (int)$_SESSION[Cart::SESSION]["idcart"];
-		$_POST['iduser'] = (int)$_SESSION[User::SESSION]["iduser"];
+		//$_POST['iduser'] = (int)$_SESSION[User::SESSION]["iduser"];
 		$_POST['dessessionid'] = $_SESSION[Cart::SESSION]["dessessionid"];
 
 		$cart->setData($_POST);
 
 		$cart->save([
 			'idcart'=>$_POST['idcart'],
-			':iduser'=>$_POST['iduser'],		
+			//':iduser'=>$_POST['iduser'],		
 			':idpess'=>$_POST['idpess'],
 			':dessessionid'=>$_POST['dessessionid']
 		]);
@@ -93,7 +86,11 @@ $app->get("/checkout", function(){
 	$cart = Cart::getFromSession();
 	$user = User::getFromSession();
 
-	//$pessoa = new Pessoa();
+	if(Cart::cartIsEmpty((int)$_SESSION[Cart::SESSION]['idcart']) === false){
+		Cart::setMsgError("Selecione uma turma e a pessoa que irá fazer a aula! ");
+		header("Location: /cart");
+		exit();
+	}	
 
 	$page = new Page();
 
@@ -104,7 +101,6 @@ $app->get("/checkout", function(){
 		'error'=>Pessoa::getError()
 	]);
 });
-
 
 $app->post("/checkout", function(){
 
@@ -133,11 +129,10 @@ $app->post("/checkout", function(){
 
 	$insc->save();
 	
-	//Cart::removeFromSession();
-    //session_regenerate_id();
+	Cart::removeFromSession();
+    session_regenerate_id();
 	
-    //header("Location: /insc/1");
-    header("Location: /insc/".$insc->getidinsc());
+	header("Location: /insc/".$insc->getidinsc());
 	exit;
 
 });
@@ -166,7 +161,12 @@ $app->get("/insc/:idinsc", function($idinsc){
 
 	$insc->get((int)$idinsc);
 
-	$page = new Page();
+	//$page = new Page();
+
+	$page = new Page([
+		'header'=>false,
+		'footer'=>false
+	]);
 
 	$page->setTpl("insc", [
 		'insc'=>$insc->getValues()
@@ -209,38 +209,26 @@ $app->get("/cart/:idturma/:idtemporada/add", function($idturma, $idtemporada){
 
 	$turma->get((int)$idturma);
 
-
 	$cart = Cart::getFromSession();
 
 	$idcart = (int)$_SESSION[Cart::SESSION]["idcart"];
 
-	//var_dump($turma);
-	//exit();
 
 	if( Cart::cartIsEmpty($idcart) > 0){
 
-		var_dump("Você já selecionou uma turma! remova a atual para continuar.");
+
+		Cart::setMsgError("Você já selecionou uma turma! remova a atual para selecionar uma outra.");
+		header("Location: /cart");
 		exit();
+
+		//var_dump("Você já selecionou uma turma! remova a atual para continuar.");
+		//exit();
 
 	}else{
 				
 			$cart->addTurma($turma);
 	}		
 	
-	header("Location: /cart");
-	exit;
-});
-
-$app->get("/cart/:idturma/minus", function($idturma){
-
-	$turma = new Turma();
-
-	$turma->get((int)$idturma);
-
-	$cart = Cart::getFromSession();
-
-	$cart->removeTurma($turma);
-
 	header("Location: /cart");
 	exit;
 });
@@ -254,6 +242,9 @@ $app->get("/cart/:idturma/remove", function($idturma){
 	$cart = Cart::getFromSession();
 
 	$cart->removeTurma($turma, true);
+
+	Cart::removeFromSession();
+    session_regenerate_id();
 
 	header("Location: /cart");
 	exit;

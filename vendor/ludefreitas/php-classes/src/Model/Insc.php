@@ -39,10 +39,10 @@ class Insc extends Model {
 			SELECT * 
 			FROM tb_insc a 
 			INNER JOIN tb_inscstatus b USING(idinscstatus) 
-			INNER JOIN tb_carts c USING(idcart)
-			INNER JOIN tb_users d ON d.iduser = c.iduser
-			INNER JOIN tb_pessoa e USING(idpess)
-			INNER JOIN tb_persons f ON f.idperson = d.iduser
+			INNER JOIN tb_carts c USING(idcart)			
+			INNER JOIN tb_pessoa d USING(idpess)
+			INNER JOIN tb_users e ON e.iduser = d.iduser
+			INNER JOIN tb_persons f ON f.idperson = e.iduser
 			INNER JOIN tb_temporada g USING(idtemporada) 
 			INNER JOIN tb_turma h USING(idturma) 
 			WHERE a.idinsc = :idinsc
@@ -62,14 +62,14 @@ class Insc extends Model {
 		$sql = new Sql();
 
 		return $sql->select("
-			SELECT * 
+			 SELECT * 
 			FROM tb_insc a 
 			INNER JOIN tb_inscstatus b USING(idinscstatus) 
 			INNER JOIN tb_carts c USING(idcart)
-			INNER JOIN tb_users d ON d.iduser = a.iduser
-			INNER JOIN tb_pessoa e USING(idpess)
-			INNER JOIN tb_persons f ON f.idperson = d.idperson
-			ORDER BY a.dtregister DESC
+			INNER JOIN tb_pessoa d USING(idpess)
+			INNER JOIN tb_users e ON e.iduser = d.iduser			
+			INNER JOIN tb_persons f ON f.idperson = e.idperson
+			ORDER BY a.dtinsc DESC
 		");
 
 	}
@@ -157,11 +157,11 @@ class Insc extends Model {
 			SELECT SQL_CALC_FOUND_ROWS *
 			FROM tb_insc a 
 			INNER JOIN tb_inscstatus b USING(idinscstatus) 
-			INNER JOIN tb_carts c USING(idcart)
-			INNER JOIN tb_users d ON d.iduser = a.iduser
-			INNER JOIN tb_pesssoa e USING(idpess)
-			INNER JOIN tb_persons f ON f.idperson = d.idperson
-			ORDER BY a.dtregister DESC
+			INNER JOIN tb_carts c USING(idcart)			
+			INNER JOIN tb_pesssoa d USING(idpess)
+			INNER JOIN tb_users e ON e.iduser = d.iduser
+			INNER JOIN tb_persons f ON f.idperson = e.idperson
+			ORDER BY a.dtinsc DESC
 			LIMIT $start, $itemsPerPage;
 		");
 
@@ -186,11 +186,14 @@ class Insc extends Model {
 			SELECT SQL_CALC_FOUND_ROWS *
 			FROM tb_insc a 
 			INNER JOIN tb_inscstatus b USING(idinscstatus) 
-			INNER JOIN tb_carts c USING(idcart)
-			INNER JOIN tb_users d ON d.iduser = a.iduser
-			INNER JOIN tb_pessoa e USING(idpess)
-			INNER JOIN tb_persons f ON f.idperson = d.idperson
-			WHERE a.idinsc = :id OR f.desperson LIKE :search
+			INNER JOIN tb_carts c USING(idcart)			
+			INNER JOIN tb_pessoa d USING(idpess)
+			INNER JOIN tb_users e ON e.iduser = d.iduser
+			INNER JOIN tb_persons f ON f.idperson = e.idperson
+			WHERE a.idinsc = :id 
+			OR f.desperson LIKE :search 
+			OR d.nomepess LIKE :search
+			OR a.idisnc LIKE :search
 			ORDER BY a.dtregister DESC
 			LIMIT $start, $itemsPerPage;
 		", [
