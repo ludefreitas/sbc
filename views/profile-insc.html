@@ -1,0 +1,58 @@
+
+<div class="product-big-title-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product-bit-title text-center">
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+
+<div class="single-product-area">
+    <div class="zigzag-bottom"></div>
+    <div class="container">
+        <div class="row">                
+            <div class="col-md-12">
+                
+                <div class="cart-collaterals">
+                    <h2>Minhas Inscrições</h2>
+                </div>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nome do Aluno</th>
+                             <th>Idade</th>
+                            <th>Status</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {loop="$insc"}
+                        <tr>
+                            <th scope="row">{$value.idinsc}</th>
+                            <td>{$value.nomepess}</td>
+                            <td>{function="calcularIdade($value.dtnasc)"}</td>                            
+                            <td>{$value.descstatus}</td>
+                            <td style="width:222px;">
+                                <a class="btn btn-success" href="/insc/{$value.idinsc}" role="button">Imprimir Inscrição</a>
+                            </td>
+                            <td style="width:222px;">
+                                <a class="btn btn-default" href="#" role="button">Detalhes</a>
+                            </td>
+                        </tr>
+                        {else}
+                        <div class="alert alert-info">
+                            Nenhum pedido foi encontrado.
+                        </div>
+                        {/loop}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>

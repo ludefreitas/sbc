@@ -28,7 +28,7 @@
                         <ul>
                             <li><a href="#">Minha Conta</a></li>
                             <li><a href="#">Minha Família</a></li>
-                            <li><a href="#">Minhas Inscrições</a></li>
+                            <li><a href="/profile/insc">Minhas Inscrições</a></li>
                         </ul>                        
                     </div>
                 </div>

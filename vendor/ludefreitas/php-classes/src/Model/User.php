@@ -602,7 +602,32 @@ class User extends Model {
 		$this->setData($rows[0]);
 	}
 
+	public function getInsc()
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT * 
+			FROM tb_insc a 
+			INNER JOIN tb_inscstatus b USING(idinscstatus) 
+			INNER JOIN tb_carts c USING(idcart)
+			INNER JOIN tb_pessoa d ON d.idpess = c.idpess
+			INNER JOIN tb_users e ON e.iduser = d.iduser
+			INNER JOIN tb_persons f ON f.idperson = e.idperson
+			WHERE e.iduser = :iduser
+		", [
+			':iduser'=>$this->getiduser()
+		]);
+
+		return $results;
+
+	}
+
+
 }
+
+
 
 
 ?>

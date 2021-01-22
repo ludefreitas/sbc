@@ -173,6 +173,20 @@ $app->get("/insc/:idinsc", function($idinsc){
 	]);
 
 });
+
+$app->get("/profile/insc", function(){
+
+	User::verifyLogin(false);
+
+	$user = User::getFromSession();
+
+	$page = new Page();
+
+	$page->setTpl("profile-insc", [
+		'insc'=>$user->getInsc()
+	]);
+
+});
 /*
 $app->get("/cart/:idturma/add", function($idturma){
 

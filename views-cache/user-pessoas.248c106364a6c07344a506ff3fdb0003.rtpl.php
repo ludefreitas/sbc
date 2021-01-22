@@ -5,7 +5,6 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="product-bit-title text-center">
-                    <h2>Meus Dependentes</h2>
                 </div>
             </div>
         </div>
@@ -34,7 +33,7 @@
         <div class="row">
 
             
-            <div class="">
+            <div class="col-md-12">
                 
                 <div class="cart-collaterals">
                     <h2><?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h2>
