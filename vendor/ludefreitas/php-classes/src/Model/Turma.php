@@ -66,7 +66,8 @@ class Turma extends Model {
 			INNER JOIN tb_modalidade m         
 			using(idmodal)
       		WHERE idstatustemporada = 4
-			ORDER BY a.descturma");
+			-- ORDER BY a.descturma
+			ORDER BY RAND()");
 	}
 
 

@@ -65,17 +65,31 @@ $app->post("/cart", function() {
 		//$_POST['iduser'] = (int)$_SESSION[User::SESSION]["iduser"];
 		$_POST['dessessionid'] = $_SESSION[Cart::SESSION]["dessessionid"];
 
-		$cart->setData($_POST);
+		$numcpf = $_POST['numcpf'];
+		$idpess = $_POST['idpess'];
+		$idturma = $_POST['idturma'];
+		$idtemporada = $_POST['idtemporada'];
 
-		$cart->save([
-			'idcart'=>$_POST['idcart'],
-			//':iduser'=>$_POST['iduser'],		
-			':idpess'=>$_POST['idpess'],
-			':dessessionid'=>$_POST['dessessionid']
-		]);
+		if ($cart->getInscExist($numcpf, $idpess, $idturma, $idtemporada)){
 
-		header("Location: /checkout");
-		exit();
+			Cart::setMsgError("Esta pessoa já está inscrita nesta turma para esta temporada!");
+			header("Location: /cart");
+			exit();
+
+		}else{				
+
+			$cart->setData($_POST);
+
+			$cart->save([
+				'idcart'=>$_POST['idcart'],
+				//':iduser'=>$_POST['iduser'],		
+				':idpess'=>$_POST['idpess'],
+				':dessessionid'=>$_POST['dessessionid']
+			]);
+
+			header("Location: /checkout");
+			exit();
+		}
 	}
 });
 
@@ -85,6 +99,8 @@ $app->get("/checkout", function(){
 
 	$cart = Cart::getFromSession();
 	$user = User::getFromSession();
+
+	//$insc = new Insc;
 
 	if(Cart::cartIsEmpty((int)$_SESSION[Cart::SESSION]['idcart']) === false){
 		Cart::setMsgError("Selecione uma turma e a pessoa que irá fazer a aula! ");
@@ -113,27 +129,33 @@ $app->post("/checkout", function(){
 
 	$idtemporada = $_POST['idtemporada'];
 	$idturma = $_POST['idturma'];
+	//$numcpf = $_POST['numcpf'];
 
 	$cartsturmas = CartsTurmas::getCartsTurmasFromId($idcart);
 
 	$turma = new Turma();	
 	
 	$insc = new Insc();
-	
-	$insc->setData([
-		'idcart'=>$cart->getidcart(),
-		'idinscstatus'=>InscStatus::AGUARDANDO_SORTEIO,
-		'idturma'=>$idturma,
-		'idtemporada'=>$idtemporada		
-	]);
 
-	$insc->save();
+	$idpess= $cart->getidpess();
 	
-	Cart::removeFromSession();
-    session_regenerate_id();
 	
-	header("Location: /insc/".$insc->getidinsc());
-	exit;
+		$insc->setData([
+			'idcart'=>$idcart,
+			'idinscstatus'=>InscStatus::AGUARDANDO_SORTEIO,
+			'idturma'=>$idturma,
+			'idtemporada'=>$idtemporada		
+		]);
+
+
+		$insc->save();
+		
+		$cart->removeTurma($turma, true);
+		Cart::removeFromSession();
+	    session_regenerate_id();
+		
+		header("Location: /insc/".$insc->getidinsc());
+		exit;	
 
 });
 

@@ -38,6 +38,7 @@
               <table class="table table-striped">
                 <thead>
                   <tr>
+                    <th>ID</th>
                     <th>Nome</th>
                     <th>Idade</th>
                     <th>Responsável</th>
@@ -46,6 +47,7 @@
                 <tbody>
                   {loop="$pessoas"}
                   <tr>
+                    <td>{$value.idpess}</td>
                     <td>{$value.nomepess}</td>
                     <td>{function="calcularIdade($value.dtnasc)"}</td>
                     <td>{$value.desperson}</td>

@@ -50,8 +50,10 @@
 
                                         <td class="product-thumbnail">
                                             <a href="/turma/{$value.idturma}"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="{$value.desphoto}"></a>
-                                        </td>                                       
-                                        
+                                        </td> 
+
+                                        <input type="text" name="idturma" hidden="" value="{$value.idturma}">
+                                        <input type="text" name="idtemporada" hidden="" value="{$value.idtemporada}">               
 
                                         <td class="product-name">
                                             <a href="/turma/{$value.idturma}">{$value.descativ} <br> <br> {$value.periodo}</a> 
@@ -122,7 +124,10 @@
                                                     <select class="form-control" name="idpess">
                                                          <option selected="selected" value="idpess=0">selecione uma pessoa</option>
                                                         {loop="$pessoa"}
-                                                         <option {if="$value.iduser === $user.iduser"}{/if} value="{$value.idpess}">{$value.idpess} - {$value.nomepess}, {function="calcularIdade($value.dtnasc)"} anos, {$value.sexo}</option>
+                                                         <option {if="$value.iduser === $user.iduser"}{/if} value="{$value.idpess}">{$value.idpess} - {$value.nomepess}, {function="calcularIdade($value.dtnasc)"} anos, {$value.sexo} 
+                                                            <input type="text" name="numcpf" hidden="" value="{$value.numcpf}">
+                                                        </option>
+
                                                         {else}
                                                         <option value="0">Não há pessoas cadastradas</option>
                                                          {/loop}

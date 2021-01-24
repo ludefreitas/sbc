@@ -38,6 +38,7 @@
               <table class="table table-striped">
                 <thead>
                   <tr>
+                    <th>ID</th>
                     <th>Nome</th>
                     <th>Idade</th>
                     <th>Responsável</th>
@@ -46,6 +47,7 @@
                 <tbody>
                   <?php $counter1=-1;  if( isset($pessoas) && ( is_array($pessoas) || $pessoas instanceof Traversable ) && sizeof($pessoas) ) foreach( $pessoas as $key1 => $value1 ){ $counter1++; ?>
                   <tr>
+                    <td><?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                     <td><?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                     <td><?php echo calcularIdade($value1["dtnasc"]); ?></td>
                     <td><?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>

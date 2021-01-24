@@ -210,7 +210,6 @@ class Insc extends Model {
 		];
 
 	}
-
 }
 
 ?>

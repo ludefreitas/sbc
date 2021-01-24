@@ -188,14 +188,13 @@ class Cart extends Model {
 
 	public function getTurma()
 	{
-
 		$sql = new Sql();
 
 		$rows = $sql->select("
 			SELECT * 
 			FROM tb_turmatemporada a 
 			INNER JOIN tb_cartsturmas b ON b.idturma = a.idturma
-			INNER JOIN tb_turma c ON c.idturma = b.idturma 
+			INNER JOIN tb_turma c ON c.idturma = a.idturma 
             INNER JOIN tb_espaco d ON d.idespaco = c.idespaco
             INNER JOIN tb_atividade e ON e.idativ = c.idativ
 			INNER JOIN tb_fxetaria f ON f.idfxetaria = e.idfxetaria
@@ -204,7 +203,9 @@ class Cart extends Model {
 			INNER JOIN tb_users i ON i.iduser = c.iduser
 			INNER JOIN tb_persons j ON j.idperson = i.idperson
 			INNER JOIN tb_temporada k ON k.idtemporada = a.idtemporada
-			WHERE b.idcart = :idcart AND b.dtremoved IS NULL 
+            INNER JOIN tb_statustemporada l ON l.idstatustemporada = k.idstatustemporada
+            WHERE l.idstatustemporada = 4 
+            AND b.idcart = :idcart AND b.dtremoved IS NULL 
 			-- GROUP BY b.idturma, b.descturma
 			-- ORDER BY b.descturma
 		", [
@@ -349,7 +350,31 @@ class Cart extends Model {
 		return $rows;
 	}
 
+	public function getInscExist($numcpf, $idpess, $idturma, $idtemporada) {
 
+		$sql = new Sql();
+
+		$results = $sql->select(
+			"SELECT * FROM tb_insc a
+			INNER JOIN tb_carts b USING(idcart)
+			INNER JOIN tb_pessoa c USING(idpess)
+			INNER JOIN tb_turma d USING(idturma)   
+			INNER JOIN tb_temporada e USING(idtemporada)         
+			WHERE c.numcpf = :numcpf AND c.idpess = :idpess AND d.idturma = :idturma AND e.idtemporada = :idtemporada", [
+			':numcpf'=>$numcpf,
+			':idpess'=>$idpess,
+			'idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+
+		return $results;
+
+		if(count($results) === 0)
+		{
+			throw new \Exception("Esta pessoa já está inscrita nesta turma?", 1);			
+		}
+
+	}
 
 
 }
