@@ -53,7 +53,17 @@ function calcularIdade($date){
 
    }
 
+   function idadeCerta($idade, $initIdade, $fimIdade){
 
+        if(($idade <= $initIdade) || ($idade <= $fimIdade)){
+
+            return false;
+
+       }else{
+
+            return true;
+       }
+    }
 
 
  ?>

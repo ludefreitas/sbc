@@ -39,6 +39,7 @@ require_once("admin-turma.php");
 require_once("admin-temporada.php");
 require_once("admin-modalidade.php");
 require_once("admin-pessoa.php");
+require_once("admin-insc.php");
 
 $app->run();
 

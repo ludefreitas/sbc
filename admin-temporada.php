@@ -75,7 +75,6 @@ $app->get("/professor/temporada/:idtemporada", function($idtemporada) {
 
 	$temporada->get((int)$idtemporada);
 
-
 	$page = new PageAdmin();
 
 	$page->setTpl("temporada-update", array(

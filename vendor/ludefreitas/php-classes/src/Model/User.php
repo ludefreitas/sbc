@@ -624,6 +624,26 @@ class User extends Model {
 
 	}
 
+	function calcularIdade($dtnasc){
+    $time = strtotime($dtnasc);
+    if($time === false){
+      return '';
+    }
+ 
+    $year_diff = '';
+    $dtnasc = date('Y-m-d', $time);
+    list($year,$month,$day) = explode('-',$dtnasc);
+    $year_diff = date('Y') - $year;
+    $month_diff = date('m') - $month;
+    $day_diff = date('d') - $day;
+    if ($day_diff < 0 || $month_diff < 0){
+    	$year_diff;
+    } 
+ 
+    return $year_diff;
+
+   }
+
 
 }
 

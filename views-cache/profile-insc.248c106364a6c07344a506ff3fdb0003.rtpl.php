@@ -14,8 +14,6 @@
     <div class="zigzag-bottom"></div>
     <div class="container">
         <div class="row">                
-            <div class="col-md-3">
-            </div>
             <div class="col-md-12">
                 
                 <div class="cart-collaterals">
@@ -38,12 +36,12 @@
                             <th scope="row"><?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?></th>
                             <td><?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                             <td><?php echo calcularIdade($value1["dtnasc"]); ?></td>                            
-                            <td><?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                            <td style="width:222px;">
-                                <a class="btn btn-success" href="/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" role="button">Imprimir Inscrição</a>
-                            </td>
-                            <td style="width:222px;">
+                            <td><?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>                            
+                            <td>
                                 <a class="btn btn-default" href="#" role="button">Detalhes</a>
+                            </td>
+                            <td >
+                                <a class="btn btn-success" href="/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" role="button">Imprimir Inscrição</a>
                             </td>
                         </tr>
                         <?php }else{ ?>

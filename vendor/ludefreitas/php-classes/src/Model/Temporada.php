@@ -55,7 +55,6 @@ class Temporada extends Model {
 
 	public static function checkList($list)
 	{
-
 		foreach ($list as &$row) {
 			
 			$p = new Temporada();
@@ -63,9 +62,7 @@ class Temporada extends Model {
 			$row = $p->getValues();
 
 		}
-
 		return $list;
-
 	}
 
 	
@@ -95,7 +92,10 @@ class Temporada extends Model {
 
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT * FROM tb_temporada WHERE idtemporada = :idtemporada", [
+		$results = $sql->select("
+			SELECT * FROM tb_temporada a 
+			INNER JOIN tb_statustemporada b ON b.idstatustemporada = a.idstatustemporada
+			WHERE idtemporada = :idtemporada", [
 			':idtemporada'=>$idtemporada 
 		]);
 

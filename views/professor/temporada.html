@@ -41,14 +41,16 @@
                 <tbody>
                   {loop="$temporada"}
                   <tr>
-                    <td>{$value.idtemporada}</td>
-                    <td>{$value.desctemporada}</td>
-                    <td>{$value.descstatustemporada}</td>
-                    <td>{function="formatDateHour($value.dtinicinscricao)"}</td>
-                    <td>{function="formatDateHour($value.dtterminscricao)"}</td>
-                    <td>{function="formatDateHour($value.dtinicmatricula)"}</td>
-                    <td>{function="formatDateHour($value.dttermmatricula)"}</td>
+                    
+                    <td> <a href="/professor/turma-temporada/{$value.idtemporada}">{$value.idtemporada}</a></td>
+                    <td><a href="/professor/turma-temporada/{$value.idtemporada}">{$value.desctemporada}</a></td>
+                    <td>{$value.descstatustemporada}</a></td>
+                    <td>{function="formatDateHour($value.dtinicinscricao)"}</a></td>
+                    <td>{function="formatDateHour($value.dtterminscricao)"}</a></td>
+                    <td>{function="formatDateHour($value.dtinicmatricula)"}</a></td>
+                    <td>{function="formatDateHour($value.dttermmatricula)"}</a></td>
                     <td>
+                    
                     <a href="/professor/temporada/{$value.idtemporada}/turma" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> Turmas</a>                  
                       <a href="/professor/temporada/{$value.idtemporada}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
                       <a href="/professor/temporada/{$value.idtemporada}/delete" onclick="return confirm('Deseja realmente excluir temporada {$value.desctemporada}?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>

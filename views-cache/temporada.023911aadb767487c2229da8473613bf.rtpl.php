@@ -43,14 +43,16 @@
                   <?php $counter1=-1;  if( isset($temporada) && ( is_array($temporada) || $temporada instanceof Traversable ) && sizeof($temporada) ) foreach( $temporada as $key1 => $value1 ){ $counter1++; ?>
 
                   <tr>
-                    <td><?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                    <td><?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                    <td><?php echo htmlspecialchars( $value1["descstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                    <td><?php echo formatDateHour($value1["dtinicinscricao"]); ?></td>
-                    <td><?php echo formatDateHour($value1["dtterminscricao"]); ?></td>
-                    <td><?php echo formatDateHour($value1["dtinicmatricula"]); ?></td>
-                    <td><?php echo formatDateHour($value1["dttermmatricula"]); ?></td>
+                    
+                    <td> <a href="/professor/turma-temporada/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a></td>
+                    <td><a href="/professor/turma-temporada/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a></td>
+                    <td><?php echo htmlspecialchars( $value1["descstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a></td>
+                    <td><?php echo formatDateHour($value1["dtinicinscricao"]); ?></a></td>
+                    <td><?php echo formatDateHour($value1["dtterminscricao"]); ?></a></td>
+                    <td><?php echo formatDateHour($value1["dtinicmatricula"]); ?></a></td>
+                    <td><?php echo formatDateHour($value1["dttermmatricula"]); ?></a></td>
                     <td>
+                    
                     <a href="/professor/temporada/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/turma" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> Turmas</a>                  
                       <a href="/professor/temporada/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
                       <a href="/professor/temporada/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir temporada <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>

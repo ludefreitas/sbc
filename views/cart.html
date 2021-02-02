@@ -31,7 +31,7 @@
                                 <thead>
                                       {loop="$turma"}
                                     <tr>
-                                        <th class="product-remove">Remover</th>
+                                        <th class="product-remove"><a title="Remove this item" class="remove" href="/cart/{$value.idturma}/remove">Remover</a></th>
                                         <th class="product-thumbnail">&nbsp;</th>
                                         <th class="product-name">Turma</th>
                                          <th class="product-quantity">Local</th>
@@ -53,7 +53,9 @@
                                         </td> 
 
                                         <input type="text" name="idturma" hidden="" value="{$value.idturma}">
-                                        <input type="text" name="idtemporada" hidden="" value="{$value.idtemporada}">               
+                                        <input type="text" name="idtemporada" hidden="" value="{$value.idtemporada}">  
+                                        <input type="text" name="initidade" hidden="" value="{$value.initidade}"><input type="text" name="fimidade" hidden="" value="{$value.fimidade}">            
+
 
                                         <td class="product-name">
                                             <a href="/turma/{$value.idturma}">{$value.descativ} <br> <br> {$value.periodo}</a> 
@@ -126,6 +128,8 @@
                                                         {loop="$pessoa"}
                                                          <option {if="$value.iduser === $user.iduser"}{/if} value="{$value.idpess}">{$value.idpess} - {$value.nomepess}, {function="calcularIdade($value.dtnasc)"} anos, {$value.sexo} 
                                                             <input type="text" name="numcpf" hidden="" value="{$value.numcpf}">
+                                                            <input type="text" name="dtnasc" hidden="" value="{$value.dtnasc}">
+                                                            <input type="text" name="nomepess" hidden="" value="{$value.nomepess}">
                                                         </option>
 
                                                         {else}

@@ -36,12 +36,12 @@
                             <th scope="row">{$value.idinsc}</th>
                             <td>{$value.nomepess}</td>
                             <td>{function="calcularIdade($value.dtnasc)"}</td>                            
-                            <td>{$value.descstatus}</td>
-                            <td style="width:222px;">
-                                <a class="btn btn-success" href="/insc/{$value.idinsc}" role="button">Imprimir Inscrição</a>
-                            </td>
-                            <td style="width:222px;">
+                            <td>{$value.descstatus}</td>                            
+                            <td>
                                 <a class="btn btn-default" href="#" role="button">Detalhes</a>
+                            </td>
+                            <td >
+                                <a class="btn btn-success" href="/insc/{$value.idinsc}" role="button">Imprimir Inscrição</a>
                             </td>
                         </tr>
                         {else}

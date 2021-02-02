@@ -158,9 +158,11 @@ class Insc extends Model {
 			FROM tb_insc a 
 			INNER JOIN tb_inscstatus b USING(idinscstatus) 
 			INNER JOIN tb_carts c USING(idcart)			
-			INNER JOIN tb_pesssoa d USING(idpess)
+			INNER JOIN tb_pessoa d USING(idpess)
 			INNER JOIN tb_users e ON e.iduser = d.iduser
 			INNER JOIN tb_persons f ON f.idperson = e.idperson
+			INNER JOIN tb_temporada g USING(idtemporada)
+			INNER JOIN tb_turma h USING(idturma)
 			ORDER BY a.dtinsc DESC
 			LIMIT $start, $itemsPerPage;
 		");
@@ -190,11 +192,12 @@ class Insc extends Model {
 			INNER JOIN tb_pessoa d USING(idpess)
 			INNER JOIN tb_users e ON e.iduser = d.iduser
 			INNER JOIN tb_persons f ON f.idperson = e.idperson
-			WHERE a.idinsc = :id 
+			INNER JOIN tb_temporada g USING(idtemporada)
+			INNER JOIN tb_turma h USING(idturma)
+			WHERE a.idinsc LIKE :search
 			OR f.desperson LIKE :search 
 			OR d.nomepess LIKE :search
-			OR a.idisnc LIKE :search
-			ORDER BY a.dtregister DESC
+			ORDER BY a.dtinsc DESC
 			LIMIT $start, $itemsPerPage;
 		", [
 			':search'=>'%'.$search.'%',

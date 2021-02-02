@@ -70,9 +70,26 @@ $app->post("/cart", function() {
 		$idturma = $_POST['idturma'];
 		$idtemporada = $_POST['idtemporada'];
 
+		$idade = User::calcularIdade($_POST['dtnasc']);
+		$initidade = $_POST['initidade'];
+		$fimidade = $_POST['fimidade']; 
+		$nomepess = $_POST['nomepess']; 
+
+		//var_dump($idade);
+		//exit();
+
+		if(($idade < $initidade) || ($idade > $fimidade)){
+		
+
+		Cart::setMsgError('Esta turma é para pessoas que tem idade entre '.$initidade.' e '.$fimidade.' anos! Remova a turma atual e escolha outra turma compatível com a idade do(a) '.$nomepess.'.');
+		header("Location: /cart");
+		exit();
+
+		}	
+
 		if ($cart->getInscExist($numcpf, $idpess, $idturma, $idtemporada)){
 
-			Cart::setMsgError("Esta pessoa já está inscrita nesta turma para esta temporada!");
+			Cart::setMsgError('O(A) '.$nomepess.' já está inscrita nesta turma para esta temporada!');
 			header("Location: /cart");
 			exit();
 
@@ -131,11 +148,29 @@ $app->post("/checkout", function(){
 	$idturma = $_POST['idturma'];
 	//$numcpf = $_POST['numcpf'];
 
+	
+
 	$cartsturmas = CartsTurmas::getCartsTurmasFromId($idcart);
 
 	$turma = new Turma();	
 	
 	$insc = new Insc();
+
+	/*
+	if (idadeCerta() === true){
+
+		Cart::setMsgError("Idade correta! ");
+		header("Location: /cart");
+
+
+	}else{
+
+		Cart::setMsgError("Idade Incorreta! ");
+		header("Location: /cart");
+
+
+	*/
+
 
 	$idpess= $cart->getidpess();
 	
