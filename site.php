@@ -535,6 +535,8 @@ $app->post("/login", function(){
 	} catch(Exception $e) {
 
 		User::setError($e->getMessage());
+		header("Location: /login");
+		exit;
 	}
 
 	header("Location: /cart");
@@ -587,22 +589,29 @@ $app->post("/register", function(){
 
 	$user = new User();
 
+	$_POST["inadmin"] = (isset($_POST["inadmin"]))?1:0;
+	$_POST["isprof"] = (isset($_POST["isprof"]))?1:0;
+	$_POST["statususer"] = 1;
+
 	$user->setData([
-		'inadmin'=>0,
-		'isprof'=>0,
-		'status'=>1,
-		'deslogin'=>$_POST['email'],
 		'desperson'=>$_POST['name'],
-		'desemail'=>$_POST['email'],
+		'deslogin'=>$_POST['email'],
 		'despassword'=>$_POST['password'],
-		'nrphone'=>$_POST['phone']
+		'desemail'=>$_POST['email'],		
+		'nrphone'=>$_POST['phone'],
+		'inadmin'=>$_POST["inadmin"],
+		'isprof'=>$_POST["isprof"],
+		'statususer'=>$_POST["statususer"]		
 	]);
+
+	//var_dump($user);
+	//exit();
 
 	$user->save();
 
 	User::login($_POST['email'], $_POST['password']);
 
-	header('Location: /checkout');
+	header('Location: /cart');
 	exit;
 });
 

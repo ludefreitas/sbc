@@ -20,15 +20,41 @@ $app->get("/professor/login", function() {
 		"footer"=>false
 	]);
 
-	$page->setTpl("login");
+	$page->setTpl("login", [
+		'error'=>User::getError()
+	
+	]);
 });
 
 $app->post("/professor/login", function() {
 
-	User::login($_POST["login"], $_POST["password"]);
+	try {
 
-	header("Location: /professor");
-	exit;
+		User::login($_POST['login'], $_POST['password']);
+
+		//var_dump($_SESSION[User::SESSION]["inadmin"]);
+		//exit();
+
+		if((int)$_SESSION[User::SESSION]["inadmin"] === 1){
+
+			header("Location: /professor");
+			exit;
+
+		}else{			
+
+			header("Location: /");
+			exit;
+		
+		}
+
+	} catch(Exception $e) {
+
+		User::setError($e->getMessage());
+		header("Location: /professor/login");
+		exit;
+	}
+
+	
 });
 
 $app->get("/professor/logout", function(){

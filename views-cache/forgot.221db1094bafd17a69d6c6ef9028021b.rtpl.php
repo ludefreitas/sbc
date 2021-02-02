@@ -429,7 +429,7 @@
                           <tr>
                             <td class="body-signature-cell">
                               <p>Obrigado!</p>
-                              <p class="body-signature"><img src="https://www.filepicker.io/api/file/2R9HpqboTPaB4NyF35xt" alt="Luciano Freitas"></p>
+                              
                                <p>Cursos Esportivos SBC</p>
                             </td>
                           </tr>

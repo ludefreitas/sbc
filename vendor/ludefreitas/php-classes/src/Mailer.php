@@ -83,7 +83,7 @@ class Mailer {
 		$this->mail->msgHTML($html);
 
 		//Replace the plain text body with one created manually
-		$this->mail->AltBody = 'Esta é uma mendagem de teste';
+		$this->mail->AltBody = 'Esta é uma mensagem de teste';
 
 		//Attach an image file
 		//$mail->addAttachment('images/phpmailer_mini.png');

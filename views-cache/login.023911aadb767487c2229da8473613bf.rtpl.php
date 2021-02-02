@@ -32,6 +32,14 @@
   <!-- /.login-logo -->
   <div class="login-box-body">
     <p class="login-box-msg">Faça o login para iniciar sua sessão</p>
+    <?php if( $error != '' ){ ?>
+
+                <div class="alert alert-danger">
+                    <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+
+                </div>
+                <?php } ?>
+
 
     <form action="/professor/login" method="post">
       <div class="form-group has-feedback">

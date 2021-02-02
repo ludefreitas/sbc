@@ -87,7 +87,7 @@
 
                                     <tr>
                                           <td colspan="7" class="product-name">
-                                            <span class="amount">Não há uma turma para fazer inscrição !!! </span><br><a href="/"> >>> Selecione uma turma <<< </a> 
+                                            <span class="amount">Não há turma selecionada para fazer inscrição !!! </span><br><a href="/"> >>> Selecione uma Turma <<< </a> 
                                         </td>
                                     </tr>
                                     <?php } ?>

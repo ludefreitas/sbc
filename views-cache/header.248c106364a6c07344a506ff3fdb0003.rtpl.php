@@ -92,7 +92,9 @@
                 
                 <div class="col-sm-6">
                     <div class="shopping-item">
-                        <a href="/cart">Inscrições a Confirmar<span class="cart-amunt"></span> <i class="fa fa-user"></i> <span class="product-count">5</span></a>
+                        <a href="/cart">Inscrições a Confirmar<span class="cart-amunt">                            
+                        </span><i class="fa fa-user"></i> 
+                     </a>
                     </div>
                 </div>
             </div>
