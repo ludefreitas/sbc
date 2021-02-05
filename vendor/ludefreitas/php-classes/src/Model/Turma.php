@@ -91,7 +91,7 @@ class Turma extends Model {
 	public function save()
 	{
 		$sql = new Sql();
-		$results = $sql->select("CALL sp_turma_save(:idturma, :idativ, :idmodal, :idespaco, :idhorario, :iduser, :idturmastatus, :descturma, :vagas, :numinscritos)", array(
+		$results = $sql->select("CALL sp_turma_save(:idturma, :idativ, :idmodal, :idespaco, :idhorario, :iduser, :idturmastatus, :descturma, :vagas)", array(
 			":idturma"=>$this->getidturma(),			
 			":idativ"=>$this->getidativ(),
 			":idmodal"=>$this->getidmodal(),
@@ -100,8 +100,7 @@ class Turma extends Model {
 			":iduser"=>$this->getiduser(),
 			":idturmastatus"=>$this->getidturmastatus(),
 			":descturma"=>$this->getdescturma(),
-			":vagas"=>$this->getvagas(),
-			":numinscritos"=>$this->getnuminscritos(),
+			":vagas"=>$this->getvagas()		
 		));	
 
 		$this->setData($results[0]);
@@ -302,7 +301,7 @@ class Turma extends Model {
 
 		$rows = $sql->select(
 			"SELECT * FROM tb_turmatemporada
-			INNER JOIN tb_turma USING(idturma)
+			INNER JOIN tb_turma a USING(idturma)
 			INNER JOIN 	tb_users USING(iduser)
 			INNER JOIN 	tb_persons USING(idperson)	
 			INNER JOIN tb_atividade USING(idativ) 
@@ -312,7 +311,8 @@ class Turma extends Model {
 			INNER JOIN tb_local USING(idlocal)
 			INNER JOIN tb_modalidade USING(idmodal)
 			WHERE idturma = :idturma
-			AND idtemporada = :idtemporada LIMIT 1", [
+			AND idtemporada = :idtemporada LIMIT 1
+			", [
 			':idturma'=>$idturma,
 			':idtemporada'=>$idtemporada
 		]);
@@ -349,6 +349,8 @@ class Turma extends Model {
 			FROM tb_turma a 
 			INNER JOIN tb_users b 
 			USING(iduser)
+			-- INNER JOIN tb_turmatemporada k
+			-- USING(idtemporada)			
 			INNER JOIN tb_persons c
 			USING(idperson)
 			INNER JOIN tb_atividade d
@@ -391,6 +393,8 @@ class Turma extends Model {
 			FROM tb_turma a 
 			INNER JOIN tb_users b
 			USING(iduser)
+			INNER JOIN tb_turmatemporada k
+			USING(idtemporada)			
 			INNER JOIN tb_persons c
 			USING(idperson)
 			INNER JOIN tb_atividade d
@@ -433,6 +437,20 @@ class Turma extends Model {
 		];
 
 	}
+
+	/*
+	public static function atualizaNumInscritos($idturma)
+	{
+
+		$sql = new Sql();
+
+		$sql->query("UPDATE tb_turmatemporada SET numinscritos = numinscritos + 1 WHERE idturma = :idturma", array(
+			":idturma"=>$idturma
+		));
+
+	}
+	*/
+
 
 }
 

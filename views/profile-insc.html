@@ -24,6 +24,8 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>sorte</th>
+                            <th>IDTURMA</th>
                             <th>Nome do Aluno</th>
                              <th>Idade</th>
                             <th>Status</th>
@@ -34,11 +36,13 @@
                         {loop="$insc"}
                         <tr>
                             <th scope="row">{$value.idinsc}</th>
+                            <th scope="row">{$value.numsorte}</th>                            
+                            <th scope="row">{$value.idturma}</th>
                             <td>{$value.nomepess}</td>
                             <td>{function="calcularIdade($value.dtnasc)"}</td>                            
                             <td>{$value.descstatus}</td>                            
                             <td>
-                                <a class="btn btn-default" href="#" role="button">Detalhes</a>
+                                <a class="btn btn-default" href="/profile/insc/{$value.idinsc}" role="button">Detalhes</a>
                             </td>
                             <td >
                                 <a class="btn btn-success" href="/insc/{$value.idinsc}" role="button">Imprimir Inscrição</a>
@@ -46,7 +50,7 @@
                         </tr>
                         {else}
                         <div class="alert alert-info">
-                            Nenhum pedido foi encontrado.
+                            Nenhuma inscrição foi encontrada.
                         </div>
                         {/loop}
                     </tbody>

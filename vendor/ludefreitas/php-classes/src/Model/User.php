@@ -296,7 +296,7 @@ class User extends Model {
      }
  }
 
- public static function setForgotUsed($idrecovery)
+ 	public static function setForgotUsed($idrecovery)
 	{
 
 		$sql = new Sql();

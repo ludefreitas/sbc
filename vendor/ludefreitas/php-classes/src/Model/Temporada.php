@@ -20,8 +20,8 @@ class Temporada extends Model {
 			using(idstatustemporada)
 			ORDER BY desctemporada");
 	}
-
-	public static function listAllTurmaTemporada()
+	
+	public static function listAllTurmaTemporada($idtemporada)
 	{
 		$sql = new Sql();
 
@@ -47,11 +47,16 @@ class Temporada extends Model {
 			using(idtemporada)   
             INNER JOIN tb_statustemporada k          
 			using(idstatustemporada)
-            -- INNER JOIN tb_persons l
-			-- using(iduser)            
-			WHERE idstatustemporada = 3
-			ORDER BY a.descturma");
+			INNER JOIN tb_modalidade l
+			using(idmodal)
+            INNER JOIN tb_persons m
+			using(idperson)            
+			WHERE idtemporada = :idtemporada
+			ORDER BY i.numinscritos DESC", [
+			':idtemporada'=>$idtemporada 
+		]);
 	}
+			
 
 	public static function checkList($list)
 	{
@@ -153,7 +158,7 @@ class Temporada extends Model {
 			FROM tb_turma a
 			INNER JOIN tb_turmatemporada b ON a.idturma = b.idturma
             INNER JOIN tb_espaco c ON c.idespaco = a.idespaco
-            INNER JOIN tb_horario d ON c.idhorario = d.idhorario
+            INNER JOIN tb_horario d ON d.idhorario = a.idhorario
             INNER JOIN tb_atividade e ON a.idativ = e.idativ
             INNER JOIN tb_fxetaria f ON e.idfxetaria = f.idfxetaria
 			INNER JOIN tb_users g ON a.iduser = g.iduser
@@ -164,6 +169,7 @@ class Temporada extends Model {
 			INNER JOIN tb_statustemporada l ON l.idstatustemporada = k.idstatustemporada
 			INNER JOIN tb_turmastatus m ON m.idturmastatus = a.idturmastatus
 			WHERE k.idtemporada = :idtemporada
+			ORDER BY a.numinscritos
 			LIMIT $start, $itemsPerPage;
 			
 		", [
@@ -189,6 +195,8 @@ class Temporada extends Model {
 				SELECT * FROM tb_turma
 				INNER JOIN tb_atividade 
 				using(idativ)
+				-- INNER JOIN tb_turmatemporada d
+				-- USING(idturma)			
 				INNER JOIN tb_modalidade
 				using(idmodal)   
 				INNER JOIN tb_fxetaria
@@ -208,8 +216,8 @@ class Temporada extends Model {
 					WHERE idturma IN(
 					SELECT a.idturma
 					FROM tb_turma a
-					INNER JOIN tb_turmatemporada b ON a.idturma = b.idturma
-					WHERE b.idtemporada = :idtemporada ORDER BY a.descturma
+					INNER JOIN tb_turmatemporada b ON b.idturma = a.idturma
+					WHERE b.idtemporada = :idtemporada ORDER BY descturma
 				);
 			", [
 				':idtemporada'=>$this->getidtemporada()
@@ -272,38 +280,6 @@ class Temporada extends Model {
 		]);
 
 	}
-	/*
-	public function getFromId($idtemporada)
-	{
-
-		$sql = new Sql();
-
-		$rows = $sql->select(
-			"SELECT * 
-			FROM tb_turmatemporada b
-			INNER JOIN tb_turma a ON a.idturma = b.idturma
-            INNER JOIN tb_espaco c ON c.idespaco = a.idespaco
-            INNER JOIN tb_horario d ON c.idhorario = d.idhorario
-            INNER JOIN tb_atividade e ON a.idativ = e.idativ
-            INNER JOIN tb_fxetaria f ON e.idfxetaria = f.idfxetaria
-			INNER JOIN tb_users g ON a.iduser = g.iduser
-			INNER JOIN tb_persons h ON g.idperson = h.idperson
-            INNER JOIN tb_espaco i ON a.idespaco = i.idespaco
-			INNER JOIN tb_local j ON j.idlocal = c.idlocal
-			INNER JOIN tb_temporada k ON k.idtemporada = b.idtemporada
-			INNER JOIN tb_statustemporada l ON l.idstatustemporada = k.idstatustemporada
-			INNER JOIN tb_turmastatus m ON m.idturmastatus = a.idturmastatus
-			WHERE k.idtemporada = :idtemporada ORDER BY a.descturma
-			", [
-			':idtemporada'=>$idtemporada
-		]);
-
-		$this->setData($rows[0]);
-
-	}
-	*/
-
-
-
+		
 }
 ?>

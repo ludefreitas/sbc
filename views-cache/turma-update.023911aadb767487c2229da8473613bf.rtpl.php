@@ -88,11 +88,6 @@
               <label for="turma">Vagas</label>
               <input type="number" class="form-control" id="vagas" name="vagas" placeholder="Informe a quantidade de vagas" value="<?php echo htmlspecialchars( $turma["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
-
-            <div class="form-group">
-              <label for="turma">Nº inicial de inscritos</label>
-              <input type="number" class="form-control" id="numinscritos" name="numinscritos" placeholder="informe a quantidade inicial de inscritos" value="<?php echo htmlspecialchars( $turma["numinscritos"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-            </div>
             <div class="form-group">
               <label for="file">Foto</label>
               <input type="file" class="form-control" id="file" name="file" value="<?php echo htmlspecialchars( $turma["desphoto"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">

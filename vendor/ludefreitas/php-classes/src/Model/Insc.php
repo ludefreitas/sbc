@@ -16,12 +16,13 @@ class Insc extends Model {
 
 		$sql = new Sql();													        
 
-		$results = $sql->select("CALL sp_insc_save(:idinsc, :idinscstatus, :idcart, :idturma, :idtemporada)", [
+		$results = $sql->select("CALL sp_insc_save(:idinsc, :idinscstatus, :idcart, :idturma, :idtemporada, :numsorte)", [
 			':idinsc'=>$this->getidinsc(),
 			':idinscstatus'=>$this->getidinscstatus(),
 			':idcart'=>$this->getidcart(),
 			':idturma'=>$this->getidturma(),
-			':idtemporada'=>$this->getidtemporada()
+			':idtemporada'=>$this->getidtemporada(),
+			':numsorte'=>$this->getnumsorte()
 		]);
 
 		if (count($results) > 0) {
@@ -45,6 +46,10 @@ class Insc extends Model {
 			INNER JOIN tb_persons f ON f.idperson = e.iduser
 			INNER JOIN tb_temporada g USING(idtemporada) 
 			INNER JOIN tb_turma h USING(idturma) 
+			INNER JOIN tb_horario USING(idhorario)
+			INNER JOIN tb_espaco USING(idespaco)
+			INNER JOIN tb_local USING(idlocal)
+			INNER JOIN tb_statustemporada USING(idstatustemporada)
 			WHERE a.idinsc = :idinsc
 		", [
 			':idinsc'=>$idinsc
@@ -213,6 +218,7 @@ class Insc extends Model {
 		];
 
 	}
+	
 }
 
 ?>

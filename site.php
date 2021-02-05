@@ -155,22 +155,7 @@ $app->post("/checkout", function(){
 	$turma = new Turma();	
 	
 	$insc = new Insc();
-
-	/*
-	if (idadeCerta() === true){
-
-		Cart::setMsgError("Idade correta! ");
-		header("Location: /cart");
-
-
-	}else{
-
-		Cart::setMsgError("Idade Incorreta! ");
-		header("Location: /cart");
-
-
-	*/
-
+	
 
 	$idpess= $cart->getidpess();
 	
@@ -179,17 +164,19 @@ $app->post("/checkout", function(){
 			'idcart'=>$idcart,
 			'idinscstatus'=>InscStatus::AGUARDANDO_SORTEIO,
 			'idturma'=>$idturma,
-			'idtemporada'=>$idtemporada		
+			'idtemporada'=>$idtemporada	
 		]);
 
 
 		$insc->save();
+
+		//Turma::atualizaNumInscritos($idturma);
 		
 		$cart->removeTurma($turma, true);
 		Cart::removeFromSession();
 	    session_regenerate_id();
 		
-		header("Location: /insc/".$insc->getidinsc());
+		header("Location: /profile/insc/".$insc->getidinsc());
 		exit;	
 
 });
@@ -242,6 +229,25 @@ $app->get("/profile/insc", function(){
 	$page->setTpl("profile-insc", [
 		'insc'=>$user->getInsc()
 	]);
+
+});
+	
+
+$app->get("/profile/insc/:idinsc", function($idinsc){
+
+	User::verifyLogin(false);
+
+	$insc = new Insc();
+
+	$insc->get((int)$idinsc);	
+
+	//$insc = Insc::getFromId($idinsc);
+
+	$page = new Page();
+
+	$page->setTpl("profile-insc-detail", [
+		'insc'=>$insc->getValues()
+	]);	
 
 });
 /*

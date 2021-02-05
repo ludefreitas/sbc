@@ -94,10 +94,10 @@
               <label for="turma">Vagas</label>
               <input type="number" class="form-control" id="vagas" name="vagas" placeholder="Informe a quantidade de vagas">
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label for="turma">Nº inicial de inscritos</label>
               <input type="number" class="form-control" id="numinscritos" name="numinscritos" placeholder="informe a quantidade inicial de inscritos">
-            </div>
+            </div> -->
             
             
 

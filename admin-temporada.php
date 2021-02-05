@@ -114,7 +114,8 @@ $app->get("/professor/turma-temporada/:idtemporada", function($idtemporada) {
 
 	$page->setTpl("turmas-por-temporada", [
 		'temporada'=>$temporada->getValues(),
-		'turmaRelated'=>$temporada->getTurma(true),
+		//'turmaRelated'=>$temporada->getTurma(true)
+		'turmaRelated'=>Temporada::listAllTurmatemporada($idtemporada),
 		//'turmaNotRelated'=>$temporada->getTurma(false)
 	]);	
 });
