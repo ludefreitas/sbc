@@ -123,6 +123,7 @@ $app->post("/professor/insc/:idinsc", function($idinsc) {
 	exit();		
 });
 
+/*
 $app->get("/insc/:idinsc", function($idinsc) {
 
 	$insc = new Insc();
@@ -132,6 +133,25 @@ $app->get("/insc/:idinsc", function($idinsc) {
 	$page = new Page();
 
 	$page->setTpl("insc", [
+		'insc'=>$insc->getValues()
+	]);	
+
+});
+*/
+
+$app->get("/professor/profile/insc/:idinsc", function($idinsc){
+
+	User::verifyLogin();
+
+	$insc = new Insc();
+
+	$insc->get((int)$idinsc);	
+
+	//$insc = Insc::getFromId($idinsc);
+
+	$page = new PageAdmin();
+
+	$page->setTpl("insc-detail", [
 		'insc'=>$insc->getValues()
 	]);	
 

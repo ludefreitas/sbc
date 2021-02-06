@@ -196,7 +196,7 @@ $app->get("/insc", function(){
 });
 */
 
-
+/*
 $app->get("/insc/:idinsc", function($idinsc){
 
 	User::verifyLogin(false);
@@ -217,6 +217,7 @@ $app->get("/insc/:idinsc", function($idinsc){
 	]);
 
 });
+*/
 
 $app->get("/profile/insc", function(){
 

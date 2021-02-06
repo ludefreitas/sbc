@@ -24,8 +24,9 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>sorte</th>
+                            <th>NÚMERO <br>DA SORTE</th>
                             <th>IDTURMA</th>
+                            <th>Turma</th>
                             <th>Nome do Aluno</th>
                              <th>Idade</th>
                             <th>Status</th>
@@ -38,6 +39,7 @@
                             <th scope="row"><?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?></th>
                             <th scope="row"><?php echo htmlspecialchars( $value1["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?></th>                            
                             <th scope="row"><?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?></th>
+                            <th scope="row"><?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?></th>
                             <td><?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                             <td><?php echo calcularIdade($value1["dtnasc"]); ?></td>                            
                             <td><?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>                            

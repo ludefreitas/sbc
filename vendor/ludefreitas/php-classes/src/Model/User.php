@@ -612,6 +612,9 @@ class User extends Model {
 			FROM tb_insc a 
 			INNER JOIN tb_inscstatus b USING(idinscstatus) 
 			INNER JOIN tb_carts c USING(idcart)
+			INNER JOIN tb_turma g USING(idturma)
+			INNER JOIN tb_atividade h ON h.idativ = g.idativ
+			INNER JOIN tb_espaco i ON i.idespaco = g.idespaco
 			INNER JOIN tb_pessoa d ON d.idpess = c.idpess
 			INNER JOIN tb_users e ON e.iduser = d.iduser
 			INNER JOIN tb_persons f ON f.idperson = e.idperson

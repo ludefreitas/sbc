@@ -3,12 +3,15 @@ corrigir adicionarr e remover turma por temporada
 (não está removendo porque existe inscrição nas turmas desta temporada)
 
 Criar classe Sorteio
+(atualixzar status depois do sorteio das inscrições e temporada)
 
 criar método para salvar endereço
 
-Criar lista de inscrições por cliente, usuários e todas as isncrições e detalhes
+Criar lista de inscrições por cliente, usuários e todas as isncrições e detalhes 
+(melhorar lista de inscrições na página profile/insc)
 
 continuar função para verificar idade para determinado curso
+(inserir novas turmas e alunos)
 
 
 

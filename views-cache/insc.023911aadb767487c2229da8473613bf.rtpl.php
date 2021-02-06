@@ -58,7 +58,7 @@
                     <td><?php echo htmlspecialchars( $value1["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td/>
                     <td><?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td/>                     
                     <td>
-                      <a class="btn btn-default" href="#" role="button">Detalhes</a>
+                      <a class="btn btn-default" href="/professor/profile/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" role="button">Detalhes</a>
                     </td>
                     <td>
                       <a class="btn btn-success" href="/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" role="button">Imprimir <br>Inscrição</a>
