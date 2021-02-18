@@ -1,175 +1,165 @@
+ 
+        <div class="col-md-12" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px; padding-right: 90px; padding-left: 90px;">           
 
-<div class="product-big-title-area">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="product-bit-title text-center">
-                </div>
-            </div>
-        </div>
-    </div>
-</div> <!-- End Page title area -->
+                        
+                        <div class="col-md-12">
+                            <div class="product-content-right">
+                                <div class="woocommerce">
 
-<div class="single-product-area">
-    <div class="zigzag-bottom"></div>
-    <div class="container">
-        <div class="row">
-            
-            <div class="col-md-12">
-                <div class="product-content-right">
-                    <div class="woocommerce">
-
-                        <form action="/checkout">
-                            
-                            {if="$error != ''"}
-                            <div class="alert alert-danger" role="alert">
-                            {$error}
-                            </div>
-                            {/if}
-
-                            <table cellspacing="0" class="shop_table cart">
-                                <thead>
-                                      {loop="$turma"}
-                                    <tr>
-                                        <th class="product-remove"><a title="Remove this item" class="remove" href="/cart/{$value.idturma}/remove">Remover</a></th>
-                                        <th class="product-thumbnail">&nbsp;</th>
-                                        <th class="product-name">Turma</th>
-                                         <th class="product-quantity">Local</th>
-                                         <th class="product-quantity">Horário </th>
-                                        <th class="product-price">Faixa Etária</th>                          
-                                        <th class="product-subtotal">Professor(a)</th>
-                                    </tr>
-                                    {/loop}
-                                </thead>
-                                <tbody>
-                                    {loop="$turma"}
-                                    <tr class="cart_item">
-                                        <td class="product-remove">
-                                            <a title="Remove this item" class="remove" href="/cart/{$value.idturma}/remove">X</a> 
-                                        </td>
-
-                                        <td class="product-thumbnail">
-                                            <a href="/turma/{$value.idturma}"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="{$value.desphoto}"></a>
-                                        </td> 
-
-                                        <input type="text" name="idturma" hidden="" value="{$value.idturma}">
-                                        <input type="text" name="idtemporada" hidden="" value="{$value.idtemporada}">  
-                                        <input type="text" name="initidade" hidden="" value="{$value.initidade}"><input type="text" name="fimidade" hidden="" value="{$value.fimidade}">            
-
-
-                                        <td class="product-name">
-                                            <a href="/turma/{$value.idturma}">{$value.descativ} <br> <br> {$value.periodo}</a> 
-                                        </td>
-
-                                        <td class="product-name">
-                                            <span class="amount"> {$value.apelidolocal} <br> {$value.rua}, Nº {$value.numero} <br> {$value.bairro} </span> 
-                                        </td>
-                                        <td class="product-name">
-                                            <span class="amount"> {$value.diasemana} <br>{$value.horainicio} às {$value.horatermino} </span> 
-                                        </td>
-
-                                        <td class="product-name">
-                                            <span class="amount">{$value.initidade} a {$value.fimidade} <br> {$value.descrfxetaria}</span> 
-                                        </td>
-
-                                        <td class="product-name">
-                                            <span class="amount">{$value.desperson} </span> 
-                                        </td>
-                                    </tr>
-                                    {else}
-                                    <tr>
-                                          <td colspan="7" class="product-name">
-                                            <span class="amount">Não há turma selecionada para fazer inscrição !!! </span><br><a href="/"> >>> Selecione uma Turma <<< </a> 
-                                        </td>
-                                    </tr>
-                                    {/loop}
-                                </tbody>
-                            </table>
-
-                            <div class="cart-collaterals">
-
-                                <div class="cross-sells">
-
-                                    <h2>Selecione a Pessoa</h2>
-                                    
-                                    <div class="coupon">
-
-                                        {if="$msgError != ''"}
-                                        <div class="alert alert-danger alert-dismissible" style="margin:10px">
-                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                            <p>{$msgError}</p>
-                                        </div>
-                                        {/if}
-                                        {if="$msgSuccess != ''"}
-                                        <div class="alert alert-success alert-dismissible" style="margin:10px">
-                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                            <p>{$msgSuccess}</p>
-                                        </div>
-                                        {/if}
-                                        <!-- form start -->
-                                        {loop="$pessoa"}
-                                        <!--<form role="form" action="/cart/{$value.idpess}/insert" method="get">-->
-                                             {/loop}
-                                            <div class="box-body">
-                                                <!--
-                                                {loop="$pessoa"}
-                                                <div class="form-group">
-
-                                                    <input type="button" class="btn btn-primary" name="idpess" value='{$value.idpess} - {$value.nomepess}, {function="calcularIdade($value.dtnasc)"} anos, {$value.sexo}'>
-                                                </div>
-                                                {else}
-                                                        <label>Não há pessoas cadastradas</label>
-                                                {/loop}
-                                                <div class="form-group">
-                                                -->
-                                                                                          
-                                                    <select class="form-control" name="idpess">
-                                                         <option selected="selected" value="idpess=0">selecione uma pessoa</option>
-                                                        {loop="$pessoa"}
-                                                         <option {if="$value.iduser === $user.iduser"}{/if} value="{$value.idpess}">{$value.idpess} - {$value.nomepess}, {function="calcularIdade($value.dtnasc)"} anos, {$value.sexo} 
-                                                            <input type="text" name="numcpf" hidden="" value="{$value.numcpf}">
-                                                            <input type="text" name="dtnasc" hidden="" value="{$value.dtnasc}">
-                                                            <input type="text" name="nomepess" hidden="" value="{$value.nomepess}">
-                                                        </option>
-
-                                                        {else}
-                                                        <option value="0">Não há pessoas cadastradas</option>
-                                                         {/loop}
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <!-- /.box-body -->
-                                            <div class="box-footer">
-                                            
-                                               
-                                            </div>
-                                           
-                                       <!-- </form> -->
-
-
-                                        <div>&nbsp;</div>
-                                        <a href="/pessoa-create">Cadastrar uma nova pessoa</a>
+                                    <form action="/checkout">
                                         
-                                        <div class="pull-right">
+                                        {if="$error != ''"}
+                                        <div class="alert alert-danger" role="alert">
+                                        {$error}
+                                        </div>
+                                        {/if}
 
-                                            <input type="submit" value="Confirmar Inscrição" id="pessoa" class="button alt" formaction="/cart" formmethod="post">
+                                        <table cellspacing="0" class="shop_table cart">
+                                            <thead>
+                                                  {loop="$turma"}
+                                                <tr>
+                                                    <th class="product-remove"><a title="Remove this item" class="remove" href="/cart/{$value.idturma}/remove">Remover</a></th>
+                                                    <th class="product-thumbnail">&nbsp;</th>
+                                                    <th class="product-name">Turma</th>
+                                                     <th class="product-quantity">Local</th>
+                                                     <th class="product-quantity">Horário </th>
+                                                    <th class="product-price">Faixa Etária</th>                          
+                                                    <th class="product-subtotal">Professor(a)</th>
+                                                </tr>
+                                                {/loop}
+                                            </thead>
+                                            <tbody>
+                                                {loop="$turma"}
+                                                <tr class="cart_item">
+                                                    <td class="product-remove">
+                                                        <a title="Remove this item" class="remove" href="/cart/{$value.idturma}/remove">X</a> 
+                                                    </td>
+
+                                                    <td class="product-thumbnail">
+                                                        <a href="/turma/{$value.idturma}"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="{$value.desphoto}"></a>
+                                                    </td> 
+
+                                                    <input type="text" name="idturma" hidden="" value="{$value.idturma}">
+                                                    <input type="text" name="idtemporada" hidden="" value="{$value.idtemporada}">  
+                                                    <input type="text" name="initidade" hidden="" value="{$value.initidade}"><input type="text" name="fimidade" hidden="" value="{$value.fimidade}">            
+
+
+                                                    <td class="product-name">
+                                                        <a href="/turma/{$value.idturma}">{$value.descativ} <br> <br> {$value.periodo}</a> 
+                                                    </td>
+
+                                                    <td class="product-name">
+                                                        <span class="amount"> {$value.apelidolocal} <br> {$value.rua}, Nº {$value.numero} <br> {$value.bairro} </span> 
+                                                    </td>
+                                                    <td class="product-name">
+                                                        <span class="amount"> {$value.diasemana} <br>{$value.horainicio} às {$value.horatermino} </span> 
+                                                    </td>
+
+                                                    <td class="product-name">
+                                                        <span class="amount">{$value.initidade} a {$value.fimidade} <br> {$value.descrfxetaria}</span> 
+                                                    </td>
+
+                                                    <td class="product-name">
+                                                        <span class="amount">{$value.desperson} </span> 
+                                                    </td>
+                                                </tr>
+                                                {else}
+                                                <tr>
+                                                      <td>
+
+
+                                                        <span class="amount" style="color: #000">Não há turma selecionada para fazer inscrição !!! </span><br>
+                                                        <div class="alert alert">
+                                                            <a class="btn btn-success" href="/" >Selecione uma turma clicando aqui!</a>
+                                                         </div>
+                                                    </td>
+                                                </tr>
+                                                {/loop}
+                                            </tbody>
+                                        </table>
+
+                                        <div class="cart-collaterals">
+
+                                            <div class="cross-sells">
+
+                                                <h2>Selecione a Pessoa</h2>
+                                                
+                                                <div class="coupon">
+
+                                                    {if="$msgError != ''"}
+                                                    <div class="alert alert-danger alert-dismissible" style="margin:10px">
+                                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                                        <p>{$msgError}</p>
+                                                    </div>
+                                                    {/if}
+                                                    {if="$msgSuccess != ''"}
+                                                    <div class="alert alert-success alert-dismissible" style="margin:10px">
+                                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                                        <p>{$msgSuccess}</p>
+                                                    </div>
+                                                    {/if}
+                                                    <!-- form start -->
+                                                    {loop="$pessoa"}
+                                                    <!--<form role="form" action="/cart/{$value.idpess}/insert" method="get">-->
+                                                         {/loop}
+                                                        <div class="box-body">
+                                                            <!--
+                                                            {loop="$pessoa"}
+                                                            <div class="form-group">
+
+                                                                <input type="button" class="btn btn-primary" name="idpess" value='{$value.idpess} - {$value.nomepess}, {function="calcularIdade($value.dtnasc)"} anos, {$value.sexo}'>
+                                                            </div>
+                                                            {else}
+                                                                    <label>Não há pessoas cadastradas</label>
+                                                            {/loop}
+                                                            <div class="form-group">
+                                                            -->
+                                                                                                      
+                                                                <select class="form-control" name="idpess">
+                                                                     <option selected="selected" value="idpess=0">selecione uma pessoa</option>
+                                                                    {loop="$pessoa"}
+                                                                     <option {if="$value.iduser === $user.iduser"}{/if} value="{$value.idpess}">{$value.idpess} - {$value.nomepess}, {function="calcularIdade($value.dtnasc)"} anos, {$value.sexo} 
+                                                                        <input type="text" name="numcpf" hidden="" value="{$value.numcpf}">
+                                                                        <input type="text" name="dtnasc" hidden="" value="{$value.dtnasc}">
+                                                                        <input type="text" name="nomepess" hidden="" value="{$value.nomepess}">
+                                                                    </option>
+
+                                                                    {else}
+                                                                    <option value="0">Não há pessoas cadastradas</option>
+                                                                     {/loop}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.box-body -->
+                                                        <div class="box-footer">
+                                                        
+                                                           
+                                                        </div>
+                                                       
+                                                   <!-- </form> -->
+
+
+                                                    <div>&nbsp;</div>
+                                                    <a href="/pessoa-create">Cadastrar uma nova pessoa</a>
+                                                    
+                                                    <div class="pull-right">
+
+                                                        <input type="submit" value="Confirmar Inscrição" id="pessoa" class="button alt" formaction="/cart" formmethod="post">
+                                                        
+                                                     </div>
+                                                </div>
+
+                                            </div>
                                             
-                                         </div>
-                                    </div>
+                                        </div>                           
 
-                                </div>
-                                
-                            </div>                           
+                                    </form>
 
-                        </form>
-
-                    </div>                        
-                </div>                    
-            </div>
+                                </div>                        
+                            </div>                    
+                        </div>
         </div>
-    </div>
-</div>
-
+    
 
 
 

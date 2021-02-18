@@ -1,86 +1,70 @@
-<div class="turma-big-title-area">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="turma-bit-title text-center">
-                    <h2>{$turma.descativ}</h2>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="single-turma-area">
-    <div class="zigzag-bottom"></div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="turma-content-right">
-                    <div class="turma-breadcroumb">
-                    </div>
-                    
+
+          <div class="container"> <!-- container 1 -->
+            <div class="row"> <!-- row 2 -->
+
+              <div class="col-md-8 col-sm-1" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
+
+                <div class="container">
                     <div class="row">
-                       
-
-                        <div class="col-sm-4">
-                            <div class="turma-images">
-                                <div class="turma-main-img">
-                                    <img src="{$turma.desphoto}">
-                                </div>
-                            </div>
-                        </div>
-                
-                        <div class="col-sm-8">
-                            <div class="turma-inner">                
-                                
-                                <!--<form action="/cart/{$turma.idturma}/add" class="cart">-->
-                                <form action="/cart/{$turma.idturma}/{$turma.idtemporada}/add" class="cart"> 
-                                    <button class="add_to_cart_button" type="submit">Increver-se</button>
-                                </form>   
-                                 
-                                <div class="turma-inner-turma">
-                                    <p>Locais {loop="$local"} <a href="/local/{$value.idlocal}">{$value.apelidolocal}</a>{/loop}.
-                                </div> 
-                                
-                                <div role="tabpanel">
-                                    <ul class="turma-tab" role="tablist">
-                                        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Descrição</a></li>
-                                        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Avaliações</a></li>
-                                    </ul>
-                                    <div class="tab-content">
-                                        <div role="tabpanel" class="tab-pane fade in active" id="home">
-
-                                            <h2>{$turma.descativ} do Programa {$turma.prograativ} - para {$turma.descrfxetaria} de {$turma.initidade} a {$turma.fimidade} anos - {$turma.geneativ} no período da {$turma.periodo} das {$turma.horainicio} às {$turma.horatermino} na {$turma.descespaco} do Crec {$turma.apelidolocal} com o(a) professor(a) {$turma.desperson} - {$turma.idtemporada}</h2>
-
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane fade" id="profile">
-                                            <h2>Reviews</h2>
-                                            <div class="submit-review">
-                                                <p><label for="name">Name</label> <input name="name" type="text"></p>
-                                                <p><label for="email">Email</label> <input name="email" type="email"></p>
-                                                <div class="rating-chooser">
-                                                    <p>Your rating</p>
-
-                                                    <div class="rating-wrap-post">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div>
-                                                </div>
-                                                <p><label for="review">Your review</label> <textarea name="review" id="" cols="30" rows="10"></textarea></p>
-                                                <p><input type="submit" value="Submit"></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
+                        <div class="col-md-12">
+                            <div class="turma-bit-title text-center">
+                                <h2>{$turma.descativ}</h2>
                             </div>
                         </div>
                     </div>
-                    
-                </div>                    
-            </div>
-        </div>
-    </div>
-</div>
+                </div>
+
+               
+                    <div class="container"> <!-- container 3 -->
+                      <div class="row"> <!-- row 4 -->
+                        
+                              <div class="col-md-12" col-sm-1 style="text-align-last: left; background-color: white; margin: 5px 0px 5px 0px; padding-right: 0px">
+                                <table>
+                                  <tr>
+                                    <td>
+
+                                      <img class="img-responsive" style="width: 282px; height: 179px" id="image-preview" src="{$turma.desphoto}" alt="Photo">
+
+                                   </td>
+                                  </tr>
+                                   
+                                  </tr>
+                                    <tr>
+                                    <td>
+                                        <h5 style="color: #000000"> <span style="font-weight: bold;">
+                                        </span>{$turma.descativ} do Programa {$turma.prograativ}, para {$turma.descrfxetaria} de {$turma.initidade} a {$turma.fimidade} anos,  {$turma.geneativ} no período da {$turma.periodo} das {$turma.horainicio} às {$turma.horatermino}, na {$turma.descespaco} do Crec {$turma.apelidolocal}, com o(a) professor(a) {$turma.desperson} - Temporada {$turma.desctemporada}</</h5>
+
+                                    </td>
+                                 
+                                </table>
+                                <table>
+                                <tr>
+
+                                   <td> 
+
+                                     <form action="/cart/{$turma.idturma}/{$turma.idtemporada}/add" class="cart"> 
+                                            <button class="btn btn-success btn-sm" style="width: 282px; text-align-last: center" type="submit">Increver-se</button>
+                                        </form>                          
+                                       
+                                   </td>
+                               </tr>
+                               </table>
+                              </div>                              
+                        
+                             
+                      </div> <!-- row 4 -->
+                    </div> <!-- container 3 -->
+                    {if="$turma.idstatustemporada != 4"}
+                <div class="container"> <!-- container 3 -->
+                    <div class="row"> <!-- row 4 -->                        
+                        <div class="col-md-8" col-sm-1 style="text-align-last: left; background-color: white; margin: 5px 0px 5px 0px; padding-right: 0px">
+                                <h2>Não há temporada iniciada ): </h2>                               
+                                <h1>Lo_| _Aguarde  </h1>
+                                <h1>Em breve \o/ </h1>                              
+                                <h1>Novidades :) </h1>
+                          </div> 
+                    </div> <!-- row 4 -->
+                  </div> <!-- container 3 -->                             
+                  {/if}
+
+              </div>

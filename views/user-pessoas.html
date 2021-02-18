@@ -1,16 +1,6 @@
 
-<div class="product-big-title-area">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="product-bit-title text-center">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="single-product-area">
+<div class="col-md-8" style="margin-left: 100px;">
 
     {if="$errorRegister != ''"}
     <div class="alert alert-danger">
@@ -20,39 +10,23 @@
 
     <div class="alert alert-info">
         <a class="btn btn-primary" href="/pessoa-create" role="button">Cadastrar novo dependente</a>
-    </div>
-    
-    {loop="$pessoas"}         
-
-    <div class="container">
-
-        <div class="row">
-
-            
-            <div class="col-md-12">
-                
-                <div class="cart-collaterals">
-                    <h2>{$value.idpess} - {$value.nomepess}</h2>
-                </div>
+    </div>    
+    {loop="$pessoas"}      
+               
 
                 <table class="table">
                     <thead>
+                        <tr>
+                            <th colspan="13" style="text-align: center;"><h3>{$value.idpess} - {$value.nomepess}</h3></th>
+                        </tr>
                         <tr>                            
                             <th>Idade</th>
                             <th>Data Nasc</th>
                             <th>Sexo</th>
                             <th>CPF</th>
                             <th>RG</th>
-                            <th>SUS</th>
-                            <th>Vuln. Social</th>
-                             <th>CadUnico</th>  
-                            <th>Nome da Mãe</th>
-                            <th>CPF da mãe</th>
-                            <th>Nome da pai</th>
-                            <th>CPF da pai</th>  
-                            <td style="width:222px;">
-                                <a class="btn btn-primary" href="#" role="button">Editar</a>
-                            </td>                                                      
+                            <th>SUS</th>                            
+                            
                         </tr>
                     </thead>
                     
@@ -63,36 +37,50 @@
                             <td>{$value.sexo}</td>
                             <td>{$value.numcpf}</td>
                             <td>{$value.numrg}</td>
-                            <td>{$value.numsus}</td>
+                            <td>{$value.numsus}</td>                            
+                             <td style="width:222px;">
+                                <form action="post" name="idpess">
+                                <a class="btn btn-danger"  href="/user/{$value.idpess}/status" role="button">Excluir</a>
+                                </form>
+                            </td>                            
+                        </tr>                            
+                    </tbody>
+                    <thead>                        
+                        <tr>                            
+                            
+                            <th>Vuln. Social</th>
+                             <th>CadUnico</th>  
+                            <th>Nome da Mãe</th>
+                            <th>CPF da mãe</th>
+                            <th>Nome do pai</th>
+                            <th>CPF do pai</th>  
+                            <td style="width:222px;">
+                                <a class="btn btn-primary" href="#" role="button">Editar</a>
+                            </td>                                                      
+                        </tr>
+                    </thead>
+                    
+                    <tbody>                       
+                        <tr>
+                            
                             <td>{$value.vulnsocial}</td>
                             <td>{$value.cadunico}</td>
                             <td>{$value.nomemae}</td>
                             <td>{$value.cpfmae}</td>
                             <td>{$value.nomepai}</td>
                             <td>{$value.cpfpai}</td>
-                             <td style="width:222px;">
-                                <form action="post" name="idpess">
-                                <a class="btn btn-danger"  href="/user/{$value.idpess}/status" role="button">Excluir</a>
-                                </form>
-                            </td>                            
-                        </tr>                             
-                        <tr>
-                           
-                        
-                        </tr>                       
+                             
+                        </tr>                            
                     </tbody>
                 </table>
-            </div>
-        </div>
-    </div>
-    {else}
-<div class="alert alert-info">
- Nenhuma pessoa encontrada.
 
-</div>
-<div class="alert alert">
- <a class="btn btn-success" href="/pessoa-create" role="button">Cadastrar pessoa</a>
- 
-</div>
-{/loop}
+            
+    {else}
+    <div class="alert alert-info">
+        Nenhuma pessoa encontrada.
+    </div>
+    <div class="alert alert">
+        <a class="btn btn-success" href="/pessoa-create" role="button">Cadastrar pessoa</a> 
+    </div>
+    {/loop}
 </div>

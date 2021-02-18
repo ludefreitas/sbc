@@ -1,162 +1,62 @@
- <div class="slider-area"> 
 
-            <!-- Slider -->
-            <!--
-            <div class="block-slider block-slider4">
-                <ul class="" id="bxslider-home4">
-                    <li><img src="res/site/img/natacao.png" alt="Slide">
-                        <div class="caption-group">
-                            <h2 class="caption title">
-                                Natação <span class="primary"><strong>Treinamento</strong></span>
-                            </h2>
-                            <h4 class="caption subtitle">Baetinha</h4>
-                            <a class="caption button-radius" href="#"><span class="icon"></span>Increver-se</a>
-                        </div>
-                    </li>
-                    <li><img src="res/site/img/voleibol.png" alt="Slide">
-                        <div class="caption-group">
-                            <h2 class="caption title">
-                                 Voleibol <span class="primary"><strong>Adulto</strong></span>
-                            </h2>
-                            <h4 class="caption subtitle">Jerusalém</h4>
-                            <a class="caption button-radius" href="#"><span class="icon"></span>Increver-se</a>
-                        </div>
-                    </li>
-                    
-                    <li><img src="res/site/img/hidroginastica.png" alt="Slide">
-                        <div class="caption-group">
-                            <h2 class="caption title">
-                                Hidroginástica <span class="primary"><strong>Idoso</strong></span>
-                            </h2>
-                            <h4 class="caption subtitle">Baetão</h4>
-                            <a class="caption button-radius" href="#"><span class="icon"></span>Increver-se</a>
-                        </div>
-                    </li>
-                    <li><img src="res/site/img/natacao.png" alt="Slide">
-                        <div class="caption-group">
-                            <h2 class="caption title">
-                                 Natação <span class="primary"><strong>Iniciação</strong></span>
-                            </h2>
-                            <h4 class="caption subtitle">Creeba</h4>
-                            <a class="caption button-radius" href="#"><span class="icon"></span>Increver-se</a>
-                        </div>
-                    </li>
-                    <li><img src="res/site/img/voleibol.png" alt="Slide">
-                        <div class="caption-group">
-                            <h2 class="caption title">
-                                 Voleibol <span class="primary"><strong>Adolescente</strong></span>
-                            </h2>
-                            <h4 class="caption subtitle">Taboão</h4>
-                            <a class="caption button-radius" href="#"><span class="icon"></span>Increver-se</a>
-                        </div>
-                    </li>
-                    <li><img src="res/site/img/hidroginastica.png" alt="Slide">
-                        <div class="caption-group">
-                            <h2 class="caption title">
-                                Hidroginástica <span class="primary"><strong>Funcional</strong></span>
-                            </h2>
-                            <h4 class="caption subtitle">Baetinha</h4>
-                            <a class="caption button-radius" href="#"><span class="icon"></span>Increver-se</a>
-                        </div>
-                    </li>
-                </ul>
-            </div> 
-            -->
-            <!-- ./Slider -->
+          <div class="container"> <!-- container 1 -->
+            <div class="row"> <!-- row 2 -->
 
-   </div> 
-    <!-- End slider area -->
-    <!--
-    <div class="promo-area">
-        <div class="zigzag-bottom"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-sm-6">
-                    <div class="single-promo promo1">
-                        <p>Hora do Treino</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="single-promo promo2">
-                        <p>Corpo em Ação</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="single-promo promo3">
-                        <p>Pelc</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="single-promo promo4">
-                        <p>Campeões da Vida</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>  
-    -->
-    <!--End promo area -->
+              <div class="col-md-8 col-sm-1" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
 
+                {loop="$turma"}
+                <a href="/turma/{$value.idturma}/{$value.idtemporada}">
+                    <div class="container"> <!-- container 3 -->
+                      <div class="row"> <!-- row 4 -->
+                        
+                              <div class="col-md-4" col-sm-1 style="text-align-last: left; background-color: white; margin: 5px 0px 5px 0px; padding-right: 0px">
+                                <table>
+                                  <tr>
+                                   <td>
 
-    
-<div class="maincontent-area">
-        <div class="zigzag-bottom">            
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="latest-product">
-                        <div class="product-carousel">
-                            {loop="$turma"}
-                            
-                            <div class="single-product">
-                            	<h2><a href="/turma/{$value.idturma}/{$value.idtemporada}">
-                            	<div><h2>{$value.descativ}</h2></div>
-                                <div class="product-upper">
-                             <!-- <img src="/res/site/img/orquideas.jpg" alt=""> -->
-                            <img class="img-responsive" id="image-preview" src="{$value.desphoto}" alt="Photo">
+                                      <img class="img-responsive" style="width: 282px; height: 179px" id="image-preview" src="{$value.desphoto}" alt="Photo">
 
-                             </div>
+                                   </td>
+                                  </tr>
+                                </table>
+                              </div>                              
+                        
+                              <div class="col-md-8"style="text-align-last: left; line-height: 20px;  font-size: 14px; font-style: normal; margin: 5px 0px 20px 0px">
 
-                                 No  {$value.apelidolocal} - {$value.diasemana} das {$value.horainicio} às {$value.horatermino} com o professor(a): {$value.desperson} - Turma {$value.desstatus} - - {$value.desctemporada}</h2> </a>
-                            </div>
-                           {else}
-                            <div class="maincontent-area">                                
+                                <table>
+                                  <tr>
+                                    <td>
+                                      
+                                        <h5 style="color: #000000"> <span style="font-weight: bold;">
+                                        {$value.idturma} - {$value.descativ}; </span><br>
+                                        Local da aula: {$value.apelidolocal};<br>
+                                        {$value.diasemana} das {$value.horainicio} às {$value.horatermino}<br>
+                                        Professor(a): {$value.desperson} <br>
+                                        Turma {$value.desstatus} - {$value.desctemporada}<br></h5>
+                                        <div class="product-option-shop">
+                                          <a class="btn btn-info btn-sm" style="background-color: #cc5d1e" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/turma/{$value.idturma}/{$value.idtemporada}">Inscrever-se</a>
+                                     </div>                       
+
+                                      </a> 
+                                    </td>   
+                                  </tr>
+                                </table>
+
+                              </div>  
+
+                      </div> <!-- row 4 -->
+                    </div> <!-- container 3 -->
+                </a>
+                {else}
+                <div class="container"> <!-- container 3 -->
+                    <div class="row"> <!-- row 4 -->                        
+                        <div class="col-md-8" col-sm-1 style="text-align-last: left; background-color: white; margin: 5px 0px 5px 0px; padding-right: 0px">
                                 <h2>Temporada  <br> não iniciada ): </h2>                               
-                            </div>
-                            <div class="maincontent-area">                             
                                 <h1>Lo_| _Aguarde  </h1>
-                            </div>
-                             <div class="maincontent-area"> 
                                 <h1>Em breve \o/ </h1>                              
-                            </div>
-                            <div class="maincontent-area">                              
                                 <h1>Novidades :) </h1>
-                            </div>
-                            
-                        {/loop}
-                       
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> <!-- End main content area -->
-    
-    <div class="brands-area">
-        <div class="zigzag-bottom"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="brand-wrapper">
-                        <div class="brand-list">                            
-                            <img src="res/site/img/horatreino.png" alt="">
-                            <img src="res/site/img/corpoacao.png" alt="">
-                            <img src="res/site/img/pelc.png" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> <!-- End brands area -->
-    
+                          </div> 
+                    </div> <!-- row 4 -->
+                  </div> <!-- container 3 -->                             
+                  {/loop}
+              </div>

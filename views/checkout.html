@@ -1,116 +1,112 @@
+ 
+        <div class="col-md-12" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px; padding-right: 90px; padding-left: 90px;">           
 
-<div class="product-big-title-area">
-	<div class="container">
-		<!--<div class="row">
-            <div class="col-md-12">
-                <div class="product-bit-title text-center">
-                    <h2>Finalizar Inscrição</h2>
-                </div>
-            </div>
-        </div> -->
-	</div>
-</div>
-<div class="single-product-area">
-	<div class="zigzag-bottom"></div>
-	  	<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="product-content-right">
-						<form action="/checkout" class="checkout" method="post" name="checkout">
-							<div id="customer_details" class="col2-set">
-								<div class="row">
-									<div class="col-md-12">
+                        
+                        <div class="col-md-12">
+                            <div class="product-content-right">
+                                <div class="woocommerce">
 
-										{if="$error != ''"}
-										<div class="alert alert-danger">
-										{$error}
-										</div>
-										{/if}
-									
-											<div class="clear">
-											
-											</div>
+                                    <form action="/checkout" class="checkout" method="post" name="checkout">
+                            <div id="customer_details" class="col2-set">
+                                <div class="row">
+                                    <div class="col-md-12">
 
-										<h3 id="order_review_heading" style="margin-top:30px;">Detalhes da Inscrição</h3>
-										<div id="order_review" style="position: relative;">
-											<table class="shop_table">
-												<thead>
-													<tr>
-														<th colspan="5" class="product-name">
-															Nome do aluno <strong class="product-name"> -  {$pessoa.nomepess}</strong>
-														</th>
-													
-													</tr>
-													<tr>
-														{loop="$turma"}
-														<td colspan="5" class="product-name"><strong class="product-name">Turma</strong>
-														</td>
-														{else}
-														<td colspan="5" class="product-name"><strong class="product-name">Não há turma para confirmar</strong>
-														</td>
-														{/loop}
-														
-													</tr>
-												</thead>
-												<tbody>
-												{loop="$turma"}
-												<tr class="cart_item">
-													<td class="product-name">
-													 	{$value.descativ} <br> {$value.periodo}
+                                        {if="$error != ''"}
+                                        <div class="alert alert-danger">
+                                        {$error}
+                                        </div>
+                                        {/if}
+                                    
+                                            <div class="clear">
+                                            
+                                            </div>
 
-													 	<input hidden="" type="text" id="idtemporada" name="idtemporada" class="input-text" value="{$value.idtemporada}"></input>
+                                        <h3 id="order_review_heading" style="margin-top:30px;">Detalhes da Inscrição</h3>
+                                        <div id="order_review" style="position: relative;">
+                                            <table class="shop_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="5" class="product-name">
+                                                            Nome do aluno <strong class="product-name"> -  {$pessoa.nomepess}</strong>
+                                                        </th>
+                                                    
+                                                    </tr>
+                                                    <tr>
+                                                        {loop="$turma"}
+                                                        <td colspan="5" class="product-name"><strong class="product-name">Turma</strong>
+                                                        </td>
+                                                        {else}
+                                                        <td colspan="5" class="product-name"><strong class="product-name">Não há turma para confirmar</strong>
+                                                        </td>
+                                                        {/loop}
+                                                        
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                {loop="$turma"}
+                                                <tr class="cart_item">
+                                                    <td class="product-name">
+                                                        {$value.descativ} <br> {$value.periodo}
 
-													 	<input hidden="" 
-													 	type="text" id="idturma" name="idturma" class="input-text" value="{$value.idturma}"></input>
+                                                        <input hidden="" type="text" id="idtemporada" name="idtemporada" class="input-text" value="{$value.idtemporada}"></input>
 
-												    </td>											
+                                                        <input hidden="" 
+                                                        type="text" id="idturma" name="idturma" class="input-text" value="{$value.idturma}"></input>
 
-	                                        		<td class="product-name">
-	                                            		{$value.initidade} a {$value.fimidade} <br> {$value.descrfxetaria}
-	                                        		</td> 
+                                                    </td>                                           
 
-	                                        		<td class="product-name">
-	                                             		<span class="amount">Professor(a) <br>{$value.desperson} 
-	                                       		 	</td> 
+                                                    <td class="product-name">
+                                                        {$value.initidade} a {$value.fimidade} <br> {$value.descrfxetaria}
+                                                    </td> 
 
-	                                       		 	<td class="product-name">
-														{$value.apelidolocal} <br> {$value.rua}, Nº {$value.numero} <br>
-													</td>
-                                       			</tr>
-                                       			<tr class="order-total">
-														<th colspan="5" ><input type="submit" data-value="Place order" value="Finalizar" id="place_order" name="insc" class="button alt" ></th>
-												</tr>
-                                             	{/loop}
+                                                    <td class="product-name">
+                                                        <span class="amount">Professor(a) <br>{$value.desperson} 
+                                                    </td> 
 
-                                             	</tbody>                                        
-												
-												<tfoot>
-													
-													
-													{loop="$turma"}
-													{else}
-													<tr class="order-total">
-														<td colspan="5" class="product-name"><strong class="product-name"><a href="/cart">Encontrar uma turma</a></strong>
-														</td>
-													</tr>
-													{/loop}
-													
-														
-													
-												</tfoot>
-												
-											</table>
+                                                    <td class="product-name">
+                                                        {$value.apelidolocal} <br> {$value.rua}, Nº {$value.numero} <br>
+                                                    </td>
+                                                </tr>
+                                                <tr class="order-total">
+                                                        <th colspan="5" ><input type="submit" data-value="Place order" value="Finalizar" id="place_order" name="insc" class="button alt" ></th>
+                                                </tr>
+                                                {/loop}
 
-										</div>
-									</div>
+                                                </tbody>                                        
+                                                
+                                                <tfoot>
+                                                    
+                                                    
+                                                    {loop="$turma"}
+                                                    {else}
+                                                    <tr class="order-total">
+                                                        <td colspan="5" class="product-name"><strong class="product-name"><a href="/cart">Encontrar uma turma</a></strong>
+                                                        </td>
+                                                    </tr>
+                                                    {/loop}
+                                                    
+                                                        
+                                                    
+                                                </tfoot>
+                                                
+                                            </table>
+
+                                        </div>
+                                    </div>
 
 
-								</div>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                                </div>                        
+                            </div>                    
+                        </div>
+        </div>
+    
+
+
+
+
+                                                                            
+                                       

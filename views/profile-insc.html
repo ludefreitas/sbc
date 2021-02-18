@@ -1,34 +1,17 @@
 
-<div class="product-big-title-area">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="product-bit-title text-center">
-                </div>
-            </div>
-        </div> 
-    </div>
-</div>
+          <div class="container"> <!-- container 1 -->
+            <div class="row"> <!-- row 2 -->
 
-<div class="single-product-area">
-    <div class="zigzag-bottom"></div>
-    <div class="container">
-        <div class="row">                
-            <div class="col-md-12">
-                
-                <div class="cart-collaterals">
-                    <h2>Minhas Inscrições</h2>
-                </div>
-
-                <table class="table">
+              <div class="col-md-8">
+                <table class="table" style="width: 100%; margin: 15px;">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <!--<th>#</th>-->
                             <th>NÚMERO <br>DA SORTE</th>
-                            <th>IDTURMA</th>
+                           <!-- <th>IDTURMA</th> -->
                             <th>Turma</th>
                             <th>Nome do Aluno</th>
-                             <th>Idade</th>
+                            <!-- <th>Idade</th> -->
                             <th>Status</th>
                             <th>&nbsp;</th>
                         </tr>
@@ -36,29 +19,25 @@
                     <tbody>
                         {loop="$insc"}
                         <tr>
-                            <th scope="row">{$value.idinsc}</th>
+                            <!--<th scope="row">{$value.idinsc}</th>-->
                             <th scope="row">{$value.numsorte}</th>                            
-                            <th scope="row">{$value.idturma}</th>
+                            <!--<th scope="row">{$value.idturma}</th>-->
                             <th scope="row">{$value.descativ}</th>
                             <td>{$value.nomepess}</td>
-                            <td>{function="calcularIdade($value.dtnasc)"}</td>                            
+                           <!-- td>{function="calcularIdade($value.dtnasc)"}</td> -->                  
                             <td>{$value.descstatus}</td>                            
                             <td>
-                                <a class="btn btn-default" href="/profile/insc/{$value.idinsc}" role="button">Detalhes</a>
+                                <a class="btn btn-primary" href="/profile/insc/{$value.idinsc}" role="button">Detalhes</a>
                             </td>
-                            <td >
-                                <a class="btn btn-success" href="/insc/{$value.idinsc}" role="button">Imprimir Inscrição</a>
-                            </td>
+                            
                         </tr>
-                        {else}
+                        
+                    </tbody>
+                    {else}
                         <div class="alert alert-info">
                             Nenhuma inscrição foi encontrada.
                         </div>
                         {/loop}
-                    </tbody>
                 </table>
 
             </div>
-        </div>
-    </div>
-</div>

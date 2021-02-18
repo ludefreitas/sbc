@@ -356,33 +356,6 @@ $app->get("/temporada/:idtemporada", function($idtemporada){
 	]);
 });
 
-$app->get("/modalidade/:idmodal", function($idmodal){
-
-	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
-
-	$modalidade = new Modalidade();
-
-	$modalidade->get((int)$idmodal);
-
-	$pagination = $modalidade->getTurmaModalidadePage($page);	
-
-	$pages = [];
-
-	for ($i=1; $i <= $pagination['pages']; $i++) { 
-		array_push($pages, [
-			'link'=>'/modalidade/'.$modalidade->getidmodal().'?page='.$i,
-			'page'=>$i
-		]);
-	}
-	$page = new Page();
-
-	$page->setTpl("modalidade", [
-		'modalidade'=>$modalidade->getValues(),
-		'turma'=>$pagination["data"],
-		'pages'=>$pages
-	]);
-});
-
 $app->get("/local/:idlocal", function($idlocal){
 
 	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
@@ -525,6 +498,13 @@ $app->get("/login", function(){
 
 	$page = new Page();
 
+	/*
+	$page = new Page([
+		"header"=>false,
+		"footer"=>false
+	]);
+	*/
+
 	$page->setTpl("login", [
 		'error'=>User::getError(),
 		'errorRegister'=>User::getErrorRegister(),
@@ -624,7 +604,11 @@ $app->post("/register", function(){
 
 $app->get("/forgot", function() {
 
-	$page = new Page();
+
+	$page = new Page([
+		"header"=>false,
+		"footer"=>false
+	]);
 
 	$page->setTpl("forgot");	
 });
@@ -836,8 +820,6 @@ $app->get("/user/:idpess/status", function($idpess){
 });
 
 
-
-
 $app->get("/pessoa/:idpess", function($idpess){
 
 	User::verifyLogin(false);
@@ -878,6 +860,55 @@ $app->get("/user/pessoas", function(){
 
 });
 
+/*
+$app->get("/modalidade/:idmodal", function($idmodal){
+
+	$turma = new Turma();
+
+	$turma->getFromIdTurmaModalidade($idmodal);
+
+	//var_dump($turma);
+	//exit();
+
+	$page = new Page();
+
+	$page->setTpl("modalidade", [
+		'turma'=>$turma->getValues()
+	]);
+});
+*/
+
+$app->get("/modalidade/:idmodal", function($idmodal){
+
+	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
+
+	$modalidade = new Modalidade();
+
+	$modalidade->get((int)$idmodal);
+
+	//var_dump($modalidade);
+	//exit();
+
+	$pagination = $modalidade->getTurmaModalidadePage($page);	
+
+	$pages = [];
+
+	for ($i=1; $i <= $pagination['pages']; $i++) { 
+		array_push($pages, [
+			'link'=>'/modalidade/'.$modalidade->getidmodal().'?page='.$i,
+			'page'=>$i
+		]);
+	}
+	$page = new Page();
+
+	$page->setTpl("modalidade", [
+		'modalidade'=>$modalidade->getValues(),
+		'turma'=>$pagination["data"],
+		'pages'=>$pages
+	]);
+});
+
+/*
 $app->get("/modalidade/:idmodal", function($idmodal){
 
 	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
@@ -906,7 +937,7 @@ $app->get("/modalidade/:idmodal", function($idmodal){
 		'pages'=>$pages
 	]);
 });
-
+*/
 $app->get("/modalidades", function() {
 
 	$modalidades = Modalidade::listAll();
@@ -917,10 +948,5 @@ $app->get("/modalidades", function() {
 		'modalidades'=>$modalidades
 	));
 });
-
-
-
-
-
 
 ?>

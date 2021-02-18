@@ -3,7 +3,8 @@ corrigir adicionarr e remover turma por temporada
 (não está removendo porque existe inscrição nas turmas desta temporada)
 
 Criar classe Sorteio
-(atualixzar status depois do sorteio das inscrições e temporada)
+(atualizar status depois do sorteio das inscrições e temporada)
+atualizar na inscrição? Na turmatemporada?
 
 criar método para salvar endereço
 
@@ -12,6 +13,18 @@ Criar lista de inscrições por cliente, usuários e todas as isncrições e det
 
 continuar função para verificar idade para determinado curso
 (inserir novas turmas e alunos)
+
+atualizar matricula da inscrição
+SELECT CONCAT(idinsc, dtinsc) AS '@matricula' FROM tb_insc WHERE idinsc = ?;
+
+Para colocar número de matrícula ou na isncrição
+SELECT CURRENT_DATE() AS Hoje, CURRENT_TIMESTAMP()+0 AS 'Hoje, como núm.';
+
+
+criar metodo para alterar status de tempora com a função CURRENT_TIMESTAMP()+0
+admin irá insformar data em um determinado dia e quando carregar página home do admin
+irá aletar status
+
 
 
 

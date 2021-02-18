@@ -156,6 +156,8 @@ class Modalidade extends Model {
 
 	}	
 
+
+	
 	public function getTurmaModalidadePage($page = 1, $itemsPerPage = 4)
 	{
 
@@ -166,7 +168,9 @@ class Modalidade extends Model {
 		$results = $sql->select("
 
 			SELECT SQL_CALC_FOUND_ROWS *
-			FROM tb_turma a
+			FROM tb_turmatemporada n 
+            INNER JOIN tb_temporada o ON o.idtemporada = n.idtemporada
+			INNER JOIN tb_turma a ON a.idturma = n.idturma
 			INNER JOIN tb_modalidade b ON b.idmodal = a.idmodal
             INNER JOIN tb_espaco c ON c.idespaco = a.idespaco
             INNER JOIN tb_horario d ON d.idhorario = a.idhorario
@@ -193,6 +197,7 @@ class Modalidade extends Model {
 			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
 		];
 	}
+	
 
 }
 

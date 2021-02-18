@@ -1,56 +1,58 @@
-<div class="product-big-title-area">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="product-bit-title text-center">
-                    <h2> {$local.apelidolocal} <br> 
-                        <!--<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3653.942486586681!2d-46.559485385380924!3d-23.678014671794863!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce43ab9d337473%3A0xfa781f4cb20f6822!2sAv.%20Kennedy%2C%201155%20-%20Jardim%20do%20Mar%2C%20S%C3%A3o%20Bernardo%20do%20Campo%20-%20SP%2C%2009726-263!5e0!3m2!1spt-BR!2sbr!4v1603810364835!5m2!1spt-BR!2sbr" width="310" height="170" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe> -->
-                        </h2><h4>{$local.nomelocal}</h4>
-                    
-                </div>
-            </div>
-            
-            </div>
-        </div>
-    </div>
-<div class="single-product-area">
-    <div class="zigzag-bottom"></div>
-    <div class="container">
-        <div class="row">
-            
-             {loop="$turma"}
-            <div class="col-md-3 col-sm-6">
-                <div class="single-shop-product">
-                    <div class="product-upper">
-                            <img class="img-responsive" id="image-preview" src="{$value.desphoto}" alt="Photo">
-                    </div>
-                    <h2><a href="/turma/{$value.idturma}">
 
-                         {$value.descativ} do Programa {$value.prograativ} - para {$value.descrfxetaria} de {$value.initidade} a {$value.fimidade} anos - {$value.diasemana} das {$value.horainicio} às {$value.horatermino}
-                       
-                    </a></h2>             
-                    
-                    <div class="product-option-shop">
-                        <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/turma/{$value.idturma}">Inscrever-se</a>
-                    </div>                       
-                </div>
-            </div> 
-            {/loop}      
+          <div class="container"> <!-- container 1 -->
+            <div class="row"> <!-- row 2 -->
 
-        </div>
-        
-        <div class="row">
-            <div class="col-md-12">
-                <div class="product-pagination text-center">
-                    <nav>
-                        <ul class="pagination">
-                        {loop="$pages"}
-                        <li><a href="{$value.link}">{$value.page}</a></li>
-                        {/loop}
-                        </ul>
-                    </nav>                        
-                </div>
+              <div class="col-md-8 col-sm-1" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
+
+                {loop="$turma"}
+                <a href="/turma/{$value.idturma}/{$value.idtemporada}" style="text-decoration: none">
+                    <div class="container"> <!-- container 3 -->
+                      <div class="row"> <!-- row 4 -->
+                        
+                              <div class="col-md-4" col-sm-1 style="text-align-last: left; background-color: white; margin: 5px 0px 5px 0px; padding-right: 0px">
+                                <table>
+                                  <tr>
+                                   <td>
+
+                                      <img class="img-responsive" style="width: 232px; height: 179px" id="image-preview" src="{$value.desphoto}" alt="Photo">
+
+                                   </td>
+                                  </tr>
+                                </table>
+                              </div>                              
+                        
+                              <div class="col-md-8"style="text-align-last: left; line-height: 20px;  font-size: 14px; font-style: normal; margin: 5px 0px 20px 0px">
+
+                                <table>
+                                  <tr>
+                                    <td >
+                                       <h5 style="color: #000000"> <span style="font-weight: bold;">
+                                        {$value.idturma} - {$value.descativ};</span><br>
+                                        Local da aula: {$value.apelidolocal};<br>
+                                        {$value.diasemana} das {$value.horainicio} às {$value.horatermino}<br>
+                                        Professor(a): {$value.desperson} <br>
+                                        Turma {$value.desstatus}<br>  </h5>                                 
+                                      <div class="product-option-shop">
+                                          <a class="btn btn-info btn-sm"  style="background-color: #cc5d1e" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/turma/{$value.idturma}/{$value.idtemporada}">Inscrever-se</a>
+                                     </div>                       
+                                    </td>   
+                                  </tr>
+                                </table>
+
+                              </div>                        
+                      </div> <!-- row 4 -->
+                    </div> <!-- container 3 -->
+                </a>
+                 {else}
+            <div class="col-md-8 col-sm-1" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
+
+            <div class="alert alert-info">
+                 Nenhuma turma encontrada para este Centro Esportivo.
             </div>
-        </div>
-    </div>
-</div>
+            <div class="alert alert">
+                <a class="btn btn-success" href="/" >Encontre uma atividade aqui!</a>
+            </div>
+          </div>
+            {/loop}     
+
+              </div>

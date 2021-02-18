@@ -310,6 +310,7 @@ class Turma extends Model {
 			INNER JOIN tb_horario USING(idhorario) 
 			INNER JOIN tb_local USING(idlocal)
 			INNER JOIN tb_modalidade USING(idmodal)
+			INNER JOIN tb_temporada USING(idtemporada)
 			WHERE idturma = :idturma
 			AND idtemporada = :idtemporada LIMIT 1
 			", [
@@ -320,6 +321,36 @@ class Turma extends Model {
 		$this->setData($rows[0]);
 
 	}
+	
+	public function getFromIdTurmaModalidade($idmodal)
+	{
+
+		$sql = new Sql();
+
+		$rows = $sql->select(
+			"SELECT *
+			FROM tb_turmatemporada n 
+            INNER JOIN tb_temporada o ON o.idtemporada = n.idtemporada
+			INNER JOIN tb_turma a ON a.idturma = n.idturma
+			INNER JOIN tb_modalidade b ON b.idmodal = a.idmodal
+            INNER JOIN tb_espaco c ON c.idespaco = a.idespaco
+            INNER JOIN tb_horario d ON d.idhorario = a.idhorario
+            INNER JOIN tb_atividade e ON a.idativ = e.idativ
+            INNER JOIN tb_fxetaria f ON e.idfxetaria = f.idfxetaria
+			INNER JOIN tb_users g ON a.iduser = g.iduser
+			INNER JOIN tb_persons h ON g.idperson = h.idperson
+            INNER JOIN tb_espaco i ON a.idespaco = i.idespaco
+			INNER JOIN tb_local j ON j.idlocal = c.idlocal
+			INNER JOIN tb_turmastatus m ON m.idturmastatus = a.idturmastatus
+			WHERE b.idmodal = :idmodal
+			", [			
+			':idmodal'=>$idmodal
+		]);
+
+		$this->setData($rows[0]);
+
+	}
+	
 
 	public function getLocal()
 	{
