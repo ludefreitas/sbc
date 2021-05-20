@@ -526,7 +526,7 @@ $app->post("/login", function(){
 		exit;
 	}
 
-	header("Location: /cart");
+	header("Location: /");
 	exit;
 });
 

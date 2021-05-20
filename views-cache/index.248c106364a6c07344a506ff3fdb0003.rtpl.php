@@ -1,5 +1,5 @@
-                {loop="$turma"}
-                <a href="/turma/{$value.idturma}/{$value.idtemporada}">
+<?php if(!class_exists('Rain\Tpl')){exit;}?>                <?php $counter1=-1;  if( isset($turma) && ( is_array($turma) || $turma instanceof Traversable ) && sizeof($turma) ) foreach( $turma as $key1 => $value1 ){ $counter1++; ?>
+                <a href="/turma/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                     <div class="container"> <!-- container 3 -->
                       <div class="row"> <!-- row 4 -->
                         
@@ -8,7 +8,7 @@
                                   <tr>
                                    <td>
 
-                                      <img class="img-responsive" style="width: 282px; height: 179px" id="image-preview" src="{$value.desphoto}" alt="Photo">
+                                      <img class="img-responsive" style="width: 282px; height: 179px" id="image-preview" src="<?php echo htmlspecialchars( $value1["desphoto"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" alt="Photo">
 
                                    </td>
                                   </tr>
@@ -22,13 +22,13 @@
                                     <td>
                                       
                                         <h5 style="color: #000000"> <span style="font-weight: bold;">
-                                        {$value.idturma} - {$value.descativ}; </span><br>
-                                        Local da aula: {$value.apelidolocal};<br>
-                                        {$value.diasemana} das {$value.horainicio} às {$value.horatermino}<br>
-                                        Professor(a): {$value.desperson} <br>
-                                        Turma {$value.desstatus} - {$value.desctemporada}<br></h5>
+                                        <?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>; </span><br>
+                                        Local da aula: <?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>;<br>
+                                        <?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?> das <?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
+                                        Professor(a): <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <br>
+                                        Turma <?php echo htmlspecialchars( $value1["desstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br></h5>
                                         <div class="product-option-shop">
-                                          <a class="btn btn-info btn-sm" style="background-color: #cc5d1e" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/turma/{$value.idturma}/{$value.idtemporada}">Inscrever-se</a>
+                                          <a class="btn btn-info btn-sm" style="background-color: #cc5d1e" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/turma/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">Inscrever-se</a>
                                      </div>                       
 
                                       </a> 
@@ -41,7 +41,7 @@
                       </div> <!-- row 4 -->
                     </div> <!-- container 3 -->
                 </a>
-                {else}
+                <?php }else{ ?>
                 <div class="container"> <!-- container 3 -->
                     <div class="row"> <!-- row 4 -->                        
                         <div class="col-md-8" col-sm-1 style="text-align-last: left; background-color: white; margin: 5px 0px 5px 0px; padding-right: 0px">
@@ -52,5 +52,5 @@
                           </div> 
                     </div> <!-- row 4 -->
                   </div> <!-- container 3 -->                             
-                  {/loop}
+                  <?php } ?>
              

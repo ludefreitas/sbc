@@ -1,4 +1,4 @@
- 
+<?php if(!class_exists('Rain\Tpl')){exit;}?> 
         
                         
                        
@@ -7,11 +7,11 @@
                                 <div class="row">
                                     <div class="col-md-12">
 
-                                        {if="$error != ''"}
+                                        <?php if( $error != '' ){ ?>
                                         <div class="alert alert-danger">
-                                        {$error}
+                                        <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
                                         </div>
-                                        {/if}
+                                        <?php } ?>
                                     
                                             <div class="clear">
                                             
@@ -25,63 +25,63 @@
                                                 <thead>
                                                     <tr>
                                                         <th colspan="5" class="product-name" style="text-align-last: center">
-                                                            Nome do aluno <strong class="product-name"> -  {$pessoa.nomepess}</strong>
+                                                            Nome do aluno <strong class="product-name"> -  <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
                                                         </th>
                                                     
                                                     </tr>
                                                     <tr style="text-align-last: center">
-                                                        {loop="$turma"}
+                                                        <?php $counter1=-1;  if( isset($turma) && ( is_array($turma) || $turma instanceof Traversable ) && sizeof($turma) ) foreach( $turma as $key1 => $value1 ){ $counter1++; ?>
                                                         <td colspan="5" class="product-name"><strong class="product-name">Turma</strong>
                                                         </td>
-                                                        {else}
+                                                        <?php }else{ ?>
                                                         <td colspan="5" class="product-name"><strong class="product-name">Não há turma para confirmar</strong>
                                                         </td>
-                                                        {/loop}
+                                                        <?php } ?>
                                                         
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                {loop="$turma"}
+                                                <?php $counter1=-1;  if( isset($turma) && ( is_array($turma) || $turma instanceof Traversable ) && sizeof($turma) ) foreach( $turma as $key1 => $value1 ){ $counter1++; ?>
                                                 <tr class="cart_item">
                                                     <td class="product-name">
-                                                        {$value.descativ} <br> {$value.periodo}
+                                                        <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <br> <?php echo htmlspecialchars( $value1["periodo"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
 
-                                                        <input hidden="" type="text" id="idtemporada" name="idtemporada" class="input-text" value="{$value.idtemporada}"></input>
+                                                        <input hidden="" type="text" id="idtemporada" name="idtemporada" class="input-text" value="<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"></input>
 
                                                         <input hidden="" 
-                                                        type="text" id="idturma" name="idturma" class="input-text" value="{$value.idturma}"></input>
+                                                        type="text" id="idturma" name="idturma" class="input-text" value="<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"></input>
 
                                                     </td>                                           
 
                                                     <td class="product-name">
-                                                        {$value.initidade} a {$value.fimidade} <br> {$value.descrfxetaria}
+                                                        <?php echo htmlspecialchars( $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> a <?php echo htmlspecialchars( $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <br> <?php echo htmlspecialchars( $value1["descrfxetaria"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                                                     </td> 
 
                                                     <td class="product-name">
-                                                        <span class="amount">Professor(a) <br>{$value.desperson} 
+                                                        <span class="amount">Professor(a) <br><?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> 
                                                     </td> 
 
                                                     <td class="product-name">
-                                                        {$value.apelidolocal} <br> {$value.rua}, Nº {$value.numero} <br>
+                                                        <?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <br> <?php echo htmlspecialchars( $value1["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, Nº <?php echo htmlspecialchars( $value1["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <br>
                                                     </td>
                                                 </tr>
                                                 <tr class="order-total" style="text-align-last: center">
                                                         <th colspan="5" ><input type="submit" data-value="Place order" value="Finalizar" id="place_order" name="insc" class="button alt" ></th>
                                                 </tr>
-                                                {/loop}
+                                                <?php } ?>
 
                                                 </tbody>                                        
                                                 
                                                 <tfoot>
                                                     
                                                     
-                                                    {loop="$turma"}
-                                                    {else}
+                                                    <?php $counter1=-1;  if( isset($turma) && ( is_array($turma) || $turma instanceof Traversable ) && sizeof($turma) ) foreach( $turma as $key1 => $value1 ){ $counter1++; ?>
+                                                    <?php }else{ ?>
                                                     <tr class="order-total" >
                                                         <td colspan="5" class="product-name"><strong class="product-name"><a href="/cart">Encontrar uma turma</a></strong>
                                                         </td>
                                                     </tr>
-                                                    {/loop}
+                                                    <?php } ?>
                                                     
                                                         
                                                     

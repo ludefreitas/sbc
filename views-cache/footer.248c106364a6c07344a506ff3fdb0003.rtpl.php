@@ -1,4 +1,4 @@
-          </div> <!-- final da index -->
+<?php if(!class_exists('Rain\Tpl')){exit;}?>          </div> <!-- final da index -->
 
               <div class="col-md-4" style="text-align-last: center; background-color: white; margin: 0px 0px 15px 0px ">
 

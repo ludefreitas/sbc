@@ -1,86 +1,69 @@
 
 
-<div class="col-md-8" style="margin-left: 100px;">
-
     {if="$errorRegister != ''"}
     <div class="alert alert-danger">
     {$errorRegister}
     </div>
     {/if}
 
-    <div class="alert alert-info">
-        <a class="btn btn-primary" href="/pessoa-create" role="button">Cadastrar novo dependente</a>
-    </div>    
-    {loop="$pessoas"}      
+    <div class="alert alert-info" style="text-align-last: center;">
+        <a class="btn btn-primary card-just-text" href="/pessoa-create" role="button" >Cadastrar uma pessoa ou dependente</a>
+    </div>
+
+     <div class="container">
+                    
+        {loop="$pessoas"}      
+        <div class="row alert alert-primary">
+            <div class="col-md-12">
+                <span style="text-align: center;">
+                    {$value.idpess} - {$value.nomepess} 
+                <hr> 
+                <strong>Idade: </strong> {function="calcularIdade($value.dtnasc)"}
+                - <strong>Data Nasc: </strong>{function="formatDate($value.dtnasc)"}
+                - <strong>Sexo: </strong>{$value.sexo}
+                <br><strong>CPF: </strong>{$value.numcpf}
+                - <strong>RG: </strong>{$value.numrg}
+                - <strong>SUS: </strong>{$value.numsus}   
+                <br><strong>Vuln. Social: </strong> {$value.vulnsocial}
+                - <strong>CadUnico: </strong>{$value.cadunico}
+                <br><strong>Nome da Mãe: </strong>{$value.nomemae}
+                - <strong>CPF da mãe: </strong>{$value.cpfmae}
+                <br><strong>Nome do pai: </strong>{$value.nomepai}
+                - <strong>CPF do pai: </strong>{$value.cpfpai}
+                </span>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6 alert-success" style="text-align-last: center; ba" >
+                        <form action="post" name="idpess">
+                            <a class="btn btn-success" href="#" role="button">Editar</a>
+                        </form>
+                    </div>
+                    <div class="col-md-6 alert-success" style="text-align-last: center;">
+                        <form action="post" name="idpess">
+                            <a class="btn btn-danger"  href="/user/{$value.idpess}/status" role="button">Excluir</a>
+                        </form>
+                    </div>
+                </div> 
+
+            </div>
+        </div>
+
+        {else}
+        <div class="row alert alert-danger">
+            <div class="col-md-6">
+                Nenhuma pessoa encontrada.
+            </div>
+        </div>      
+        {/loop} 
+
+    </div>
+
+    
+                    
+
                
 
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th colspan="13" style="text-align: center;"><h3>{$value.idpess} - {$value.nomepess}</h3></th>
-                        </tr>
-                        <tr>                            
-                            <th>Idade</th>
-                            <th>Data Nasc</th>
-                            <th>Sexo</th>
-                            <th>CPF</th>
-                            <th>RG</th>
-                            <th>SUS</th>                            
-                            
-                        </tr>
-                    </thead>
-                    
-                    <tbody>                       
-                        <tr>
-                            <td>{function="calcularIdade($value.dtnasc)"}</td>
-                            <td>{$value.dtnasc}</td>
-                            <td>{$value.sexo}</td>
-                            <td>{$value.numcpf}</td>
-                            <td>{$value.numrg}</td>
-                            <td>{$value.numsus}</td>                            
-                             <td style="width:222px;">
-                                <form action="post" name="idpess">
-                                <a class="btn btn-danger"  href="/user/{$value.idpess}/status" role="button">Excluir</a>
-                                </form>
-                            </td>                            
-                        </tr>                            
-                    </tbody>
-                    <thead>                        
-                        <tr>                            
-                            
-                            <th>Vuln. Social</th>
-                             <th>CadUnico</th>  
-                            <th>Nome da Mãe</th>
-                            <th>CPF da mãe</th>
-                            <th>Nome do pai</th>
-                            <th>CPF do pai</th>  
-                            <td style="width:222px;">
-                                <a class="btn btn-primary" href="#" role="button">Editar</a>
-                            </td>                                                      
-                        </tr>
-                    </thead>
-                    
-                    <tbody>                       
-                        <tr>
-                            
-                            <td>{$value.vulnsocial}</td>
-                            <td>{$value.cadunico}</td>
-                            <td>{$value.nomemae}</td>
-                            <td>{$value.cpfmae}</td>
-                            <td>{$value.nomepai}</td>
-                            <td>{$value.cpfpai}</td>
-                             
-                        </tr>                            
-                    </tbody>
-                </table>
+                
 
             
-    {else}
-    <div class="alert alert-info">
-        Nenhuma pessoa encontrada.
-    </div>
-    <div class="alert alert">
-        <a class="btn btn-success" href="/pessoa-create" role="button">Cadastrar pessoa</a> 
-    </div>
-    {/loop}
-</div>
+    

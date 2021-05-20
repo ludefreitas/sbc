@@ -1,15 +1,15 @@
-          
+<?php if(!class_exists('Rain\Tpl')){exit;}?>          
 
 <div class="container">
     <div class="row">
 
         <div class="col-md-6">
             
-            {if="$error != ''"}
+            <?php if( $error != '' ){ ?>
             <div class="alert alert-danger">
-            {$error}
+            <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
             </div>
-            {/if}
+            <?php } ?>
                 
             <form action="/login" id="login-form-wrap" class="login" method="post">
                 <h2>Acessar</h2>
@@ -39,11 +39,11 @@
             </form>                    
         </div>
         <div class="col-md-6">
-            {if="$errorRegister != ''"}
+            <?php if( $errorRegister != '' ){ ?>
             <div class="alert alert-danger">
-            {$errorRegister}
+            <?php echo htmlspecialchars( $errorRegister, ENT_COMPAT, 'UTF-8', FALSE ); ?>
             </div>
-            {/if}
+            <?php } ?>
 
             <form id="register-form-wrap" action="/register" class="register" method="post">
                 <h2>Criar conta</h2>

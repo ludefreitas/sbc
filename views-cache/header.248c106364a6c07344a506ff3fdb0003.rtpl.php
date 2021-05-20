@@ -1,4 +1,4 @@
-<!doctype html>
+<?php if(!class_exists('Rain\Tpl')){exit;}?><!doctype html>
 <html lang="pt-br">
   <head>
     <!-- Required meta tags -->   
@@ -98,12 +98,12 @@
                 <div class="collapse navbar-collapse" id="nav-secundario">
                     <ul class="navbar-nav ml-auto" style="text-align: center;">                        
                         
-                        {if="checkLogin(false)"}
+                        <?php if( checkLogin(false) ){ ?>
                         <li class="nav-item">
                             <a href="/profile" class="nav-link">
                               <i class="fa fa-user"></i>
                               <span class="text-dark" style="font-weight: bold">
-                               {function="getUserName()"}
+                               <?php echo getUserName(); ?>
                               </span>
                             </a>
                         </li>
@@ -141,7 +141,7 @@
                             </a>
                         </li>
                               
-                        {else}
+                        <?php }else{ ?>
                         <li class="nav-item">
                             <a class="nav-link" href="#">
                               <span class="text-dark" style="font-weight: bold">
@@ -171,7 +171,7 @@
                                </span>
                             </a>
                         </li>          
-                        {/if}                         
+                        <?php } ?>                         
                     </ul>                    
                 </div>
 

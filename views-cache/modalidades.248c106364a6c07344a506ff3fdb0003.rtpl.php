@@ -1,8 +1,8 @@
-
+<?php if(!class_exists('Rain\Tpl')){exit;}?>
          
 
-                {loop="$modalidades"}
-                <a href="/modalidade/{$value.idmodal}">
+                <?php $counter1=-1;  if( isset($modalidades) && ( is_array($modalidades) || $modalidades instanceof Traversable ) && sizeof($modalidades) ) foreach( $modalidades as $key1 => $value1 ){ $counter1++; ?>
+                <a href="/modalidade/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                     <div class="container"> <!-- container 3 -->
                       <div class="row"> <!-- row 4 -->
                         
@@ -23,12 +23,12 @@
                               <div class="container">
                                 <div class="row alert-warning">
                                   <div class="col-md-6" style="margin: 5px 0px 5px 0px; ">
-                                    <a style="color: #0f71b3" href="/modalidade/{$value.idmodal}">
-                                        {$value.descmodal}<br>
+                                    <a style="color: #0f71b3" href="/modalidade/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                                        <?php echo htmlspecialchars( $value1["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
                                       </a>
                                   </div>
                                   <div class="col-md-6" style="text-align-last: center; margin: 5px 0px 5px 0px; color: white; padding: 0px 0px 0px 0px">
-                                       <a class="card card-just-text" data-quantity="1" style="background-color: #cc5d1e; color: white; padding: 5px 0px 5px 0px" href="/modalidade/{$value.idmodal}" text-decoration="none">Cursos dísponíveis</a>
+                                       <a class="card card-just-text" data-quantity="1" style="background-color: #cc5d1e; color: white; padding: 5px 0px 5px 0px" href="/modalidade/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" text-decoration="none">Cursos dísponíveis</a>
                                   </div>
                                 </div>
                               </div>
@@ -36,5 +36,5 @@
                       </div> <!-- row 4 -->
                     </div> <!-- container 3 -->
                 </a>
-                {/loop}
+                <?php } ?>
 

@@ -1,9 +1,4 @@
 
-          <div class="container"> <!-- container 1 -->
-            <div class="row"> <!-- row 2 -->
-
-              <div class="col-md-8 col-sm-1" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
-
                 {loop="$turma"}
                 <a href="/turma/{$value.idturma}/{$value.idtemporada}" style="text-decoration: none">
                     <div class="container"> <!-- container 3 -->
@@ -33,7 +28,7 @@
                                         Professor(a): {$value.desperson} <br>
                                         Turma {$value.desstatus}<br>  </h5>                                 
                                       <div class="product-option-shop">
-                                          <a class="btn btn-info btn-sm"  style="background-color: #cc5d1e" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/turma/{$value.idturma}">Inscrever-se</a>
+                                          <a class="btn btn-info btn-sm"  style="background-color: #cc5d1e" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/turma/{$value.idturma}/{$value.idtemporada}">Inscrever-se</a>
                                      </div>                       
                                     </td>   
                                   </tr>
@@ -55,4 +50,3 @@
           </div>
             {/loop}     
 
-              </div>

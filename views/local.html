@@ -1,47 +1,32 @@
 
-          <div class="container"> <!-- container 1 -->
-            <div class="row"> <!-- row 2 -->
-
-              <div class="col-md-8 col-sm-1" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
-
                 {loop="$turma"}
                 <a href="/turma/{$value.idturma}/{$value.idtemporada}" style="text-decoration: none">
-                    <div class="container"> <!-- container 3 -->
-                      <div class="row"> <!-- row 4 -->
-                        
-                              <div class="col-md-4" col-sm-1 style="text-align-last: left; background-color: white; margin: 5px 0px 5px 0px; padding-right: 0px">
-                                <table>
-                                  <tr>
-                                   <td>
-
-                                      <img class="img-responsive" style="width: 232px; height: 179px" id="image-preview" src="{$value.desphoto}" alt="Photo">
-
-                                   </td>
-                                  </tr>
-                                </table>
-                              </div>                              
-                        
-                              <div class="col-md-8"style="text-align-last: left; line-height: 20px;  font-size: 14px; font-style: normal; margin: 5px 0px 20px 0px">
-
-                                <table>
-                                  <tr>
-                                    <td >
-                                       <h5 style="color: #000000"> <span style="font-weight: bold;">
-                                        {$value.idturma} - {$value.descativ};</span><br>
-                                        Local da aula: {$value.apelidolocal};<br>
-                                        {$value.diasemana} das {$value.horainicio} às {$value.horatermino}<br>
-                                        Professor(a): {$value.desperson} <br>
-                                        Turma {$value.desstatus}<br>  </h5>                                 
-                                      <div class="product-option-shop">
-                                          <a class="btn btn-info btn-sm"  style="background-color: #cc5d1e" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/turma/{$value.idturma}/{$value.idtemporada}">Inscrever-se</a>
-                                     </div>                       
-                                    </td>   
-                                  </tr>
-                                </table>
-
-                              </div>                        
-                      </div> <!-- row 4 -->
-                    </div> <!-- container 3 -->
+                    <!-- <div class="container">  container 3 -->
+                      <!-- <div class="row"> row 4 -->   
+                      <div class="col-md-12 alert alert-primary">
+                          <div class="row">
+                              <div class="col-md-4" col-sm-1 style="text-align-last: left;  margin: 5px 0px 5px 0px; padding-right: 0px">  
+                                <img class="img-responsive" style="width: 100%; height: 100%" id="image-preview" src="{$value.desphoto}" alt="Photo">
+                              </div> 
+                              <div class="col-md-8" style="text-align-last: left; line-height: 20px;  font-size: 14px; font-style: normal; margin: 5px 0px 5px 0px">
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <h5 style="color: #000000"> <span style="font-weight: bold; ">
+                                   {$value.idturma} - {$value.descativ};</span><br>
+                                    Local da aula: {$value.apelidolocal};<br>
+                                   {$value.diasemana} das {$value.horainicio} às {$value.horatermino}<br>
+                                    Professor(a): {$value.desperson} <br>
+                                    Turma {$value.desstatus}   </h5> 
+                                </div>
+                              </div> 
+                              </div>                         
+                          </div> 
+                          <div class="product-option-shop"  style="text-align-last: center;">
+                              <a class="btn btn-info btn-lg card card-just-text"  style="background-color: #cc5d1e; text-align: right;" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/turma/{$value.idturma}/{$value.idtemporada}">Inscrever-se</a>
+                          </div>      
+                      </div>                                          
+                      <!-- </div>  row 4 -->
+                    <!-- </div>  container 3 -->
                 </a>
                  {else}
             <div class="col-md-8 col-sm-1" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
@@ -55,4 +40,3 @@
           </div>
             {/loop}     
 
-              </div>
