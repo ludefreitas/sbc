@@ -1,142 +1,143 @@
 
-            <form action="/checkout">
+<form action="/checkout">
 
-                {if="$error != ''"}
-                <div class="alert alert-danger" role="alert">
-                {$error}
-                </div>
-                {/if}
+    {if="$error != ''"}
+    <div class="alert alert-danger" role="alert">
+    {$error}
+    </div>
+    {/if}
 
-                <div class="container">
-                    <div class="row alert alert-primary">
-                        <div class="col-md-12">
-                            Turma selecionada! Selecione agora, logo abaixo, a pessoa que irá participar desta turma.
-                        </div>
-                    </div>
-                     {loop="$turma"}
-                    <div class="row alert alert-primary"> 
-                        <div class="col-md-3">
-                            <a href="/turma/{$value.idturma}"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="{$value.desphoto}"></a>
-                          </div>                      
+    <div class="container">
+        {loop="$turma"}
+        <div class="row alert alert-primary">
+            <div class="col-md-12">
+                Turma selecionada! Selecione agora, logo abaixo, a pessoa que irá participar desta turma.
+            </div>
+        </div>
+         
+        <div class="row alert alert-primary"> 
+            <div class="col-md-3">
+                <a href="/turma/{$value.idturma}"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="{$value.desphoto}"></a>
+              </div>                      
 
-                        <div class="col-md-9">
-                           TURMA: <a href="/turma/{$value.idturma}">{$value.descativ} - {$value.periodo} / </a> 
-                           <span class="amount"> 
-                              LOCAL: {$value.apelidolocal} - {$value.rua}, Nº {$value.numero} - {$value.bairro} / 
-                           </span> 
-                           <span class="amount">
-                              HORÁRIO: {$value.diasemana} - {$value.horainicio} às {$value.horatermino} / 
-                           </span> 
-                           <span class="amount">
-                              FAIXA ETÁRIA: {$value.initidade} a {$value.fimidade} - {$value.descrfxetaria}
-                          </span> 
-                           <span class="amount">
-                              PROFESSOR: {$value.desperson} - 
-                           </span> 
-                            <span class="amount">
-                               <br> <br><a title="Remove this item" class="remove" href="/cart/{$value.idturma}/remove"> REMOVER <p style="color: green">(Remover esta, selecionar outra turma)</p></a>
-                           </span>  
+            <div class="col-md-9">
+               TURMA: <a href="/turma/{$value.idturma}">{$value.descativ} - {$value.periodo} / </a> 
+               <span class="amount"> 
+                  LOCAL: {$value.apelidolocal} - {$value.rua}, Nº {$value.numero} - {$value.bairro} / 
+               </span> 
+               <span class="amount">
+                  HORÁRIO: {$value.diasemana} - {$value.horainicio} às {$value.horatermino} / 
+               </span> 
+               <span class="amount">
+                  FAIXA ETÁRIA: {$value.initidade} a {$value.fimidade} - {$value.descrfxetaria}
+              </span> 
+               <span class="amount">
+                  PROFESSOR: {$value.desperson} - 
+               </span> 
+                <span class="amount">
+                   <br> <br><a title="Remove this item" class="remove" href="/cart/{$value.idturma}/remove"> REMOVER <p style="color: green">(Remover esta, selecionar outra turma)</p></a>
+               </span>  
 
-                           <input type="text" name="idturma" hidden="" value="{$value.idturma}">
-                           <input type="text" name="idtemporada" hidden="" value="{$value.idtemporada}">  
-                           <input type="text" name="initidade" hidden="" value="{$value.initidade}">
-                           <input type="text" name="fimidade" hidden="" value="{$value.fimidade}">            
-                        </div>
-                         
-                    </div>
-                     <div class="row alert alert-primary">
-                        <div class="col-md-12">
-                            <div class="">
-                                <div class="">
-
-                                    <h2>Selecione a Pessoa</h2>
-                                
-                                    <div class="">
-
-                                        {if="$msgError != ''"}
-                                        <div class="alert alert-danger alert-dismissible" style="margin:10px">
-                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                            <p>{$msgError}</p>
-                                        </div>
-                                        {/if}
-                                        {if="$msgSuccess != ''"}
-                                        <div class="alert alert-success alert-dismissible" style="margin:10px">
-                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                            <p>{$msgSuccess}</p>
-                                        </div>
-                                        {/if}
-                                            <!-- form start -->
-                                        {loop="$pessoa"}
-                                            <!--<form role="form" action="/cart/{$value.idpess}/insert" method="get">-->
-                                         {/loop}
-                                        <div class="box-body">
-                                            <!--
-                                            {loop="$pessoa"}
-                                            <div class="form-group">
-
-                                                <input type="button" class="btn btn-primary" name="idpess" value='{$value.idpess} - {$value.nomepess}, {function="calcularIdade($value.dtnasc)"} anos, {$value.sexo}'>
-                                            </div>
-                                            {else}
-                                                    <label>Não há pessoas cadastradas</label>
-                                            {/loop}
-                                            <div class="form-group">
-                                            -->
-                                                                                      
-                                            <select class="form-control" name="idpess">
-                                                <option selected="selected" value="idpess=0">
-                                                    selecione uma pessoa
-                                                </option>
-                                                {loop="$pessoa"}
-                                                <option {if="$value.iduser === $user.iduser"}{/if} value="{$value.idpess}">{$value.idpess} - {$value.nomepess}, {function="calcularIdade($value.dtnasc)"} anos, {$value.sexo} 
-                                                    <input type="text" name="numcpf" hidden="" value="{$value.numcpf}">
-                                                    <input type="text" name="dtnasc" hidden="" value="{$value.dtnasc}">
-                                                    <input type="text" name="nomepess" hidden="" value="{$value.nomepess}">
-                                                </option>
-
-                                                {else}
-                                                <option value="0">
-                                                    Não há pessoas cadastradas
-                                                </option>
-                                                {/loop}
-                                            </select>
-                                        </div>
-                                    </div>
-                                        <!-- /.box-body -->
-                                    <div class="box-footer">                                           
-                                           
-                                    </div>
-                                       
-                                   <!-- </form> -->
-
-
-                                    <div>&nbsp;</div>
-                                    <a href="/pessoa-create">Cadastrar uma nova pessoa</a>
-                                    <div>&nbsp;</div>
-                                    <input type="submit" value="Confirmar Inscrição" id="pessoa" class="button alt" formaction="/cart" formmethod="post">
-                                </div>
-                            </div> 
-                        </div>
-                    </div>
-                    {else}
-                    <div class="row">
-                        <div class="col-md-6 alert alert-success">
-                            <span class="amount" style="color: #000">Não há turma selecionada para fazer inscrição !!! </span>                            
-                        </div>
-                        <div class="col-md-6 alert alert-success">
-                                <a class="btn btn-success" href="/" >Selecione uma turma, clicando aqui!</a>
-                            </div>
-                    </div>
-                     {/loop}
-                </div>                             
-                                     
-            </form>
+               <input type="text" name="idturma" hidden="" value="{$value.idturma}">
+               <input type="text" name="idtemporada" hidden="" value="{$value.idtemporada}">  
+               <input type="text" name="initidade" hidden="" value="{$value.initidade}">
+               <input type="text" name="fimidade" hidden="" value="{$value.fimidade}">            
+            </div>
              
+        </div>
+         <div class="row alert alert-primary">
+            <div class="col-md-12">
+                <div class="">
+                    <div class="">
+
+                        <h2>Selecione a Pessoa</h2>
+                    
+                        <div class="">
+
+                            {if="$msgError != ''"}
+                            <div class="alert alert-danger alert-dismissible" style="margin:10px">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <p>{$msgError}</p>
+                            </div>
+                            {/if}
+                            {if="$msgSuccess != ''"}
+                            <div class="alert alert-success alert-dismissible" style="margin:10px">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <p>{$msgSuccess}</p>
+                            </div>
+                            {/if}
+                                <!-- form start -->
+                            {loop="$pessoa"}
+                                <!--<form role="form" action="/cart/{$value.idpess}/insert" method="get">-->
+                             {/loop}
+                            <div class="box-body">
+                                <!--
+                                {loop="$pessoa"}
+                                <div class="form-group">
+
+                                    <input type="button" class="btn btn-primary" name="idpess" value='{$value.idpess} - {$value.nomepess}, {function="calcularIdade($value.dtnasc)"} anos, {$value.sexo}'>
+                                </div>
+                                {else}
+                                        <label>Não há pessoas cadastradas</label>
+                                {/loop}
+                                <div class="form-group">
+                                -->
+                                                                          
+                                <select class="form-control" name="idpess">
+                                    <option selected="selected" value="idpess=0">
+                                        selecione uma pessoa
+                                    </option>
+                                    {loop="$pessoa"}
+                                    <option {if="$value.iduser === $user.iduser"}{/if} value="{$value.idpess}">{$value.idpess} - {$value.nomepess}, {function="calcularIdade($value.dtnasc)"} anos, {$value.sexo} 
+                                        <input type="text" name="numcpf" hidden="" value="{$value.numcpf}">
+                                        <input type="text" name="dtnasc" hidden="" value="{$value.dtnasc}">
+                                        <input type="text" name="nomepess" hidden="" value="{$value.nomepess}">
+                                    </option>
+
+                                    {else}
+                                    <option value="0">
+                                        Não há pessoas cadastradas
+                                    </option>
+                                    {/loop}
+                                </select>
+                            </div>
+                        </div>
+                            <!-- /.box-body -->
+                        <div class="box-footer">                                           
+                               
+                        </div>
+                           
+                       <!-- </form> -->
+
+
+                        <div>&nbsp;</div>
+                        <a href="/pessoa-create">Cadastrar uma nova pessoa</a>
+                        <div>&nbsp;</div>
+                        <input type="submit" value="Confirmar Inscrição" id="pessoa" class="button alt" formaction="/cart" formmethod="post">
+                    </div>
+                </div> 
+            </div>
+        </div>
+        {else}
+        <div class="row">
+            <div class="col-md-6 alert alert-danger" style="text-align-last: center; font-weight: bold">
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Não há turma selecionada para fazer inscrição! </span>                            
+            </div>
+            <div class="col-md-6 alert alert-success" style="padding-top: 18px; text-align-last: center;">
+                    <a class="btn btn-success" href="/" >Selecione uma turma, clicando aqui!</a>
+                </div>
+        </div>
+         {/loop}
+    </div>                             
+                         
+</form>
+ 
+            
                         
-                                    
-                            
+                
 
 
 
 
-                                                                            
-                                       
+                                                                
+                           

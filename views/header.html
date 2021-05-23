@@ -14,7 +14,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 
-    <link rel="stylesheet" type="text/css" href="res/site/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/../res/site/css/style.css">
 
     <title>Cursos Esportivos SBC</title>
   </head>
@@ -26,7 +26,7 @@
             <div class="container">
                 <!-- Logo -->
                 <a href="/" class="navbar-brand">
-                    <img src="../res/site/icon/ico-home.png" title="CursosEsportivosSBC" width="30">
+                    <img src="/../res/site/icon/ico-home.png" title="CursosEsportivosSBC" width="30">
                 </a>
                 <!-- botão para expandir itens em navegação em tela pequena -->
                 <button class="navbar-toggler" data-toggle="collapse" data-target="#nav-principal" aria-expanded="false">
@@ -72,7 +72,7 @@
 
               <div class="col-md-2" style="text-align: center; margin: 50px 0px 15px 0px;">
                 <a href="/" class="">
-                  <img src="../res/site/img/corpoacao.png" title="CorpoEmAcao" width="150">
+                  <img src="/../res/site/img/corpoacao.png" title="CorpoEmAcao" width="150">
                 </a> 
               </div>
 
@@ -164,7 +164,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-outline-light btn-sm " href="/login" class="nav-link">
+                            <a class="btn btn-outline-light" href="/login" class="nav-link">
                               <i class="fa fa-lock"></i>
                                <span class="text-dark" style="font-weight: bold"> 
                                  Entrar

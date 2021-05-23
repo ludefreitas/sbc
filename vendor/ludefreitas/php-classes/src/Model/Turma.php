@@ -8,6 +8,12 @@ use \Sbc\Mailer;
 
 class Turma extends Model {
 
+	const SESSION = "Turma";
+	const SESSION_ERROR = "TurmaError";
+	const ERROR = "TurmaError";
+	const ERROR_REGISTER = "TurmaErrorRegister";
+	const SUCCESS = "TurmaSucesss";	
+
 	public static function listAll()
 	{
 		$sql = new Sql();
@@ -318,9 +324,20 @@ class Turma extends Model {
 			':idtemporada'=>$idtemporada
 		]);
 
-		$this->setData($rows[0]);
+		if (count($rows) > 0) {
+
+			$this->setData($rows[0]);
+
+		}else{
+			Turma::setMsgError('Desculpe, não foi possível selecionar esta turma e/ou temporada! Selecione outra.');
+		header("Location: /turma/".$idturma."/".$idtemporada);
+		}	
+
+		//$this->setData($rows[0]);
 
 	}
+
+	/*
 	
 	public function getFromIdTurmaModalidade($idmodal)
 	{
@@ -350,7 +367,7 @@ class Turma extends Model {
 		$this->setData($rows[0]);
 
 	}
-	
+	*/
 
 	public function getLocal()
 	{
@@ -481,6 +498,48 @@ class Turma extends Model {
 
 	}
 	*/
+
+
+	public static function setMsgError($msg)
+	{
+		$_SESSION[Turma::SESSION_ERROR] = $msg;
+	}
+
+	public static function getMsgError()	{
+
+		$msg = (isset($_SESSION[Turma::SESSION_ERROR])) ? $_SESSION[Turma::SESSION_ERROR] : "";
+
+		Turma::clearMsgError();
+
+		return $msg;
+	}
+
+	public static function clearMsgError()
+	{
+		$_SESSION[Turma::SESSION_ERROR] = NULL;
+	}
+
+	public static function setMsgSuccess($msg)
+	{
+		$_SESSION[Turma::SUCCESS] = $msg;
+	}
+
+	public static function getMsgSuccess()
+	{
+		$msg = (isset($_SESSION[Turma::SUCCESS]) && $_SESSION[Turma::SUCCESS]) ? $_SESSION[Turma::SUCCESS] : '';
+
+		Turma::clearMsgSuccess();
+
+		return $msg;
+	}
+
+	public static function clearMsgSuccess()
+	{
+
+		$_SESSION[Turma::SUCCESS] = NULL;
+
+	}
+
 
 
 }

@@ -218,7 +218,7 @@ class Pessoa extends Model {
 
 		if(count($results) === 0)
 		{
-			throw new \Exception("Pessoa já existe deseja ativar?", 1);			
+			throw new \Exception("Esta pessoa já esta cadastrada, deseja ativar?", 1);			
 		}
 
 	}

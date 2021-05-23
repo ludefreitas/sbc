@@ -33,12 +33,12 @@
                 </span>
                 <hr>
                 <div class="row">
-                    <div class="col-md-6 alert-success" style="text-align-last: center; ba" >
+                    <div class="col-md-6 alert-success" style="padding: 5px; text-align-last: center;">
                         <form action="post" name="idpess">
                             <a class="btn btn-success" href="#" role="button">Editar</a>
                         </form>
                     </div>
-                    <div class="col-md-6 alert-success" style="text-align-last: center;">
+                    <div class="col-md-6 alert-success" style="padding: 5px; text-align-last: center;">
                         <form action="post" name="idpess">
                             <a class="btn btn-danger"  href="/user/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/status" role="button">Excluir</a>
                         </form>

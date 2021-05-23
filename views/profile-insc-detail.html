@@ -1,77 +1,93 @@
 
-                <div id="order_review" style="position: relative;">
-                    <table class="shop_table">
-                        <thead>
-                            <tr>
-                                <th colspan="2" class="product-name"><h5>Nome: {$insc.nomepess} -  {function="calcularIdade($insc.dtnasc)"} anos </h5></th>
-                            </tr>
-                            <tr>
-                                <th colspan="2" class="product-name">número para concorrer no sorteio: <span style="font-weight: bold; font-size: 26px;">&nbsp;{$insc.numsorte}</span> </th>
-                            </tr>
-                            <tr>
-                                <th class="product-name">Turma / Temporada</th>
-                                <td class="product-name">{$insc.descturma} - {$insc.desctemporada}</td>
-                            </tr>
-                            <tr>
-                                <th class="product-name">Horário</th>
-                                <td class="product-name">{$insc.diasemana} das {$insc.horainicio} às {$insc.horatermino}</td>
-                            </tr>
-                            <tr>
-                                <th class="product-name">Professor</th>
-                                <td class="product-name">{$insc.desperson}</td>
-                            </tr>
-                            <tr>
-                                <th class="product-name">Local da aula (CREC)</th>
-                                <td class="product-name">{$insc.descespaco} - {$insc.apelidolocal}</td>
-                            </tr>
-                            <tr>
-                                <th class="product-name">Data da Inscrição</th>
-                                <td class="product-name">{function="formatDateHour($insc.dtinsc)"}</td>
-                            </tr>                            
-                            <tr>
-                                <th class="product-name">Status da Inscrição</th>
-                                <td class="product-name">{$insc.descstatus}</td>
-                            </tr>
-                             <tr>
-                                <th class="product-name">Início previsto das aulas</th>
-                                <td class="product-name">{function="formatDate($insc.dttermmatricula)"}</td>
-                            </tr>
-                            <tr>
-                                <th class="product-name">&nbsp;</th>
-                                <td class="product-name">&nbsp;</td>
-                            </tr>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 alert alert-primary">
+            <h5>Nome do aluno: {$insc.nomepess} -  {function="calcularIdade($insc.dtnasc)"} anos </h5>
+            Número para concorrer no sorteio: <span style="font-weight: bold; font-size: 20px; color: red">&nbsp;{$insc.numsorte}</span> 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3" style="padding-top: 10px">
+            <strong>Turma / Temporada: </strong>
+        </div>
+        <div class="col-md-9 alert alert-success">
+            <strong>{$insc.descturma} - {$insc.desctemporada}</strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3" style="padding-top: 10px">
+            <strong>Horário: </strong>
+        </div>
+        <div class="col-md-9 alert alert-success">
+            <strong>{$insc.diasemana} das {$insc.horainicio} às {$insc.horatermino}</strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3" style="padding-top: 10px">
+            <strong>Professor: </strong>
+        </div>
+        <div class="col-md-9 alert alert-success">
+            <strong>{$insc.desperson}</strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3" style="padding-top: 5px">
+            <strong>Local da aula (CREC): </strong>
+        </div>
+        <div class="col-md-9 alert alert-success">
+            <strong>{$insc.descespaco} - {$insc.apelidolocal}</strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3" style="padding-top: 10px">
+            <strong>Data da Inscrição: </strong>
+        </div>
+        <div class="col-md-9 alert alert-success">
+            <strong>{function="formatDateHour($insc.dtinsc)"}</strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3" style="padding-top: 10px">
+            <strong>Status da Inscrição: </strong>
+        </div>
+        <div class="col-md-9 alert alert-success">
+            <strong>{$insc.descstatus}</strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3" style="padding-top: 10px">
+            <strong>Início previsto das aulas: </strong>
+        </div>
+        <div class="col-md-9 alert alert-success">
+            <strong>{function="formatDate($insc.dttermmatricula)"}</strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" style="padding-top: 10px">
+            
+            <input type="submit" value="Imprimir" class="button alt" onclick="window.print()">
+        
+        </div>
+        
+    </div>
+</div>
 
-                        </thead>
-                        <tbody>
-                            
-                               
-                        </tbody>
-                        <tfoot>
-                            
-                        </tfoot>
-                    </table>
-                    <div id="payment">
-                        <div class="form-row place-order">
-                            <input type="submit" value="Imprimir" class="button alt" onclick="window.print()">
-                        </div>
-                        <div class="clear"></div>
-                    </div>
-                </div>
+
 
 <style>
 @media print {
-    .header-area,
-    .site-branding-area,
-    .sticky-wrapper,
-    .footer-top-area,
-    .footer-bottom-area,
-    .single-product-area .col-md-3,
-    .button.alt,
-    .product-big-title-area {
-        display:none!important;
-    }
-    .single-product-area .col-md-9 {
-        width: 100%!important;
-    }
+.header-area,
+.site-branding-area,
+.sticky-wrapper,
+.footer-top-area,
+.footer-bottom-area,
+.single-product-area .col-md-3,
+.button.alt,
+.product-big-title-area {
+display:none!important;
+}
+.single-product-area .col-md-9 {
+width: 100%!important;
+}
 }
 </style>

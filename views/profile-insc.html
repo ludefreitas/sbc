@@ -1,39 +1,32 @@
-
-          
-                <table class="table" style="width: 100%; margin: 15px;">
-                    <thead>
-                        <tr>
-                            <!--<th>#</th>-->
-                            <th>NÚMERO <br>DA SORTE</th>
-                           <!-- <th>IDTURMA</th> -->
-                            <th>Turma</th>
-                            <th>Nome do Aluno</th>
-                            <!-- <th>Idade</th> -->
-                            <th>Status</th>
-                            <th>&nbsp;</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {loop="$insc"}
-                        <tr>
-                            <!--<th scope="row">{$value.idinsc}</th>-->
-                            <th scope="row">{$value.numsorte}</th>                            
-                            <!--<th scope="row">{$value.idturma}</th>-->
-                            <th scope="row">{$value.descativ}</th>
-                            <td>{$value.nomepess}</td>
-                           <!-- td>{function="calcularIdade($value.dtnasc)"}</td> -->                  
-                            <td>{$value.descstatus}</td>                            
-                            <td>
-                                <a class="btn btn-primary" href="/profile/insc/{$value.idinsc}" role="button">Detalhes</a>
-                            </td>
-                            
-                        </tr>
+            <div class="container">
+                <div class="row alert-primary">
+                    <div class="col-md-12" style="padding-top: 10px; padding-bottom: 10px">
+                        <strong> Minhas inscrições</strong>
+                    </div>
+                </div>
+                 {loop="$insc"}
+                <div class="row alert-info">
+                    <div class="col-md-12">
+                        <hr>
+                        <strong>NÚMERO PARA O SORTEIO: </strong><span style="color: red; font-size: 20px">{$value.numsorte}</span><br>
+                        <strong>NOME DO ALUNO: </strong> <span>{$value.nomepess}</span><br>
+                        <strong>TURMA: </strong>{$value.descativ}<br>
                         
-                    </tbody>
-                    {else}
-                        <div class="alert alert-info">
-                            Nenhuma inscrição foi encontrada.
-                        </div>
-                        {/loop}
-                </table>
+                        <strong>STATUS :</strong>{$value.descstatus}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a class="btn btn-primary" href="/profile/insc/{$value.idinsc}" role="button">Detalhes</a>
+                        <hr>
+                    </div>
+                </div>
+                {else}
+                <div class="row alert-danger">
+                    <div class="col-md-12" style="padding-top: 10px; padding-bottom: 0px">
+                       <hr> Nenhuma inscrição foi encontrada.<hr>
+                    </div>
+                </div>
+            
+           
+            {/loop}
+            </div>  
+            
 

@@ -14,6 +14,7 @@ use \Sbc\Model\Modalidade;
 use \Sbc\Model\Insc;
 use \Sbc\Model\InscStatus;
 use \Sbc\Model\CartsTurmas;
+use \Sbc\Model\Endereco;
 
 $app->get('/', function() {
 
@@ -120,7 +121,7 @@ $app->get("/checkout", function(){
 	//$insc = new Insc;
 
 	if(Cart::cartIsEmpty((int)$_SESSION[Cart::SESSION]['idcart']) === false){
-		Cart::setMsgError("Selecione uma turma e a pessoa que irá fazer a aula! ");
+		Cart::setMsgError("Selecione uma turma e a pessoa que irá fazer a aula, nesta turma! ");
 		header("Location: /cart");
 		exit();
 	}	
@@ -295,7 +296,7 @@ $app->get("/cart/:idturma/:idtemporada/add", function($idturma, $idtemporada){
 	if( Cart::cartIsEmpty($idcart) > 0){
 
 
-		Cart::setMsgError("Você já selecionou uma turma! remova a atual para selecionar uma outra.");
+		Cart::setMsgError("Você já selecionou uma turma! remova a atual, se você quiser selecionar uma outra.");
 		header("Location: /cart");
 		exit();
 
@@ -484,13 +485,21 @@ $app->get("/turma/:idturma/:idtemporada", function($idturma, $idtemporada){
 
 	$turma->getFromIdTurmaTemporada($idturma, $idtemporada);
 
+	/*
+	if($turma->getFromIdTurmaTemporada($idturma, $idtemporada)){
+		Turma::setMsgError('Desculpe, não foi possível selecionar esta turma e/ou temporada! Selecione outra.');
+		header("Location: /turma/".$idturma."/".$idtemporada);
+			//exit();
+	}
+	*/
 	//var_dump($turma);
 	//exit();
 
-	$page = new Page();
+	$page = new Page(); 
 
 	$page->setTpl("turma-detail", [
-		'turma'=>$turma->getValues()
+		'turma'=>$turma->getValues(),
+		'error'=>Turma::getMsgError(),
 	]);
 });
 
@@ -598,7 +607,7 @@ $app->post("/register", function(){
 
 	User::login($_POST['email'], $_POST['password']);
 
-	header('Location: /cart');
+	header('Location: /endereco');
 	exit;
 });
 
@@ -674,6 +683,8 @@ $app->get("/pessoa-create", function() {
 });
 
 $app->post("/registerpessoa", function(){
+
+	User::verifyLogin(false);
 
 	$_SESSION['registerValues'] = $_POST;
 
@@ -777,6 +788,8 @@ $app->post("/registerpessoa", function(){
 	]);
 
 	$pessoa->save();
+
+	$_SESSION['registerValues'] = NULL;
 
 	header('Location: /cart');
 	exit;
@@ -948,5 +961,112 @@ $app->get("/modalidades", function() {
 		'modalidades'=>$modalidades
 	));
 });
+
+$app->get("/endereco", function() {
+
+	User::verifyLogin(false);
+
+	$page = new Page();
+
+	$page->setTpl("endereco", array(		
+		'error'=>Endereco::getMsgError(),
+		'enderecoValues'=>(
+			isset($_SESSION['enderecoValues'])) 
+		        ? $_SESSION['enderecoValues'] 
+		        : ['cep'=>'','rua'=>'', 'numero'=>'', 'complemento'=>'', 'bairro'=>'' , 'cidade'=>'', 'estado'=>'', 'telres'=>'', 'telemer'=>'', 'contato'=>'']
+	));
+
+});
+
+$app->post("/endereco", function() {
+
+	User::verifyLogin(false);
+
+	$idperson = (int)$_SESSION[User::SESSION]["idperson"];
+
+	$_SESSION['enderecoValues'] = $_POST;
+
+	$endereco = new Endereco(); 
+
+	if (!isset($_POST['cep']) || $_POST['cep'] == '') {
+		Endereco::setMsgError("Digite o número do cep.");
+		header("Location: /endereco");
+		exit;		
+	}
+	if (!isset($_POST['rua']) || $_POST['rua'] == '') {
+		Endereco::setMsgError("Informe o nome da rua, avenida ou logradouro.");
+		header("Location: /endereco");
+		exit;		
+	}	
+
+	if (!isset($_POST['numero']) || $_POST['numero'] == '') {
+		Endereco::setMsgError("Informe o nome da número do local.");
+		header("Location: /endereco");
+		exit;		
+	}		
+	if (!isset($_POST['bairro']) || $_POST['bairro'] == '') {
+		Endereco::setMsgError("Informe o nome do bairro.");
+		header("Location: /endereco");
+		exit;		
+	}		
+	if (!isset($_POST['cidade']) || $_POST['cidade'] == '') {
+		Endereco::setMsgError("Informe o nome da cidade.");
+		header("Location: /endereco");
+		exit;		
+	}	
+
+	if (!isset($_POST['estado']) || $_POST['estado'] == '') {
+		Endereco::setMsgError("Informe o nome da estado.");
+		header("Location: /endereco");
+		exit;		
+	}
+
+	if (!isset($_POST['telemer']) || $_POST['telemer'] == '') {
+		Endereco::setMsgError("Informe um número de telefone para ligar, em caso de emergência.");
+		header("Location: /endereco");
+		exit;		
+	}
+	if (!isset($_POST['contato']) || $_POST['contato'] == '') {
+		Endereco::setMsgError("Informe um nome para entrar em contato, em caso de emergência");
+		header("Location: /endereco");
+		exit;		
+	}
+
+	$_POST['idperson'] = $idperson;
+
+	//echo '<pre>';
+	//var_dump($_POST);
+	//echo '</pre>';
+	//exit();
+
+
+	$endereco = new Endereco();	
+
+	$endereco->setData([
+		//'idender'=>0,
+		'idperson'=>$_POST['idperson'], 			
+		'rua'=>$_POST['rua'],
+		'numero'=>$_POST['numero'],
+		'complemento'=>$_POST['complemento'],
+		'bairro'=>$_POST['bairro'],
+		'cidade'=>$_POST['cidade'],
+		'estado'=>$_POST['estado'],
+		'cep'=>$_POST['cep'],	
+		'telres'=>$_POST['telres'],
+		'telemer'=>$_POST['telemer'],
+		'contato'=>$_POST['contato']
+		
+	]);	
+
+	$endereco->save();
+
+	$_SESSION['enderecoValues'] = NULL;
+															
+
+	header("Location: /login");
+	exit();
+});
+
+
 
 ?>

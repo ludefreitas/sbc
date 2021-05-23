@@ -1,4 +1,4 @@
-
+<?php if(!class_exists('Rain\Tpl')){exit;}?>
 <div class="container">
     <div class="row" style="padding-bottom: 5px">
     
@@ -9,11 +9,11 @@
             </div>
 
     
-            {if="$errorRegister != ''"}
+            <?php if( $errorRegister != '' ){ ?>
             <div class="alert alert-danger">
-             {$errorRegister}
+             <?php echo htmlspecialchars( $errorRegister, ENT_COMPAT, 'UTF-8', FALSE ); ?>
             </div>
-            {/if}
+            <?php } ?>
 
             <form id="register-form-wrap" action="/registerpessoa" class="register" method="post">
                 <h3>Preencha os campos abaixo para cadastrar uma nova pessoa</h3>
@@ -24,7 +24,7 @@
                     *
                     </span>
                 </label>
-                <input style="width: 100%; float: right;" type="text" id="nomepess" name="nomepess" class="input-text" value="{$registerValues.nomepess}" placeholder="Informe o nome completo">                
+                <input style="width: 100%; float: right;" type="text" id="nomepess" name="nomepess" class="input-text" value="<?php echo htmlspecialchars( $registerValues["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" placeholder="Informe o nome completo">                
                 
                 <label for="dtnasc">
                     <br>Data do Nascimento
@@ -32,7 +32,7 @@
                         *
                     </span>
                 </label>
-                <input style="width: 100%; float: right;" type="date" id="dtnasc" name="dtnasc" class="input-text" value="{$registerValues.dtnasc}">               
+                <input style="width: 100%; float: right;" type="date" id="dtnasc" name="dtnasc" class="input-text" value="<?php echo htmlspecialchars( $registerValues["dtnasc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">               
                 
                 <label for="sexo"><br>
                     <br>Sexo
@@ -50,7 +50,7 @@
                         *
                     </span>
                 </label>
-                <input style="width: 100%; float: right;" type="number" id="numcpf" name="numcpf" class="input-text" value="{$registerValues.numcpf}">
+                <input style="width: 100%; float: right;" type="number" id="numcpf" name="numcpf" class="input-text" value="<?php echo htmlspecialchars( $registerValues["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                
 
                 <label for="numrg">
@@ -59,7 +59,7 @@
                         *
                     </span>
                 </label>
-                <input style="width: 100%; float: right;" type="text" id="numrg" name="numrg" class="input-text" value="{$registerValues.numrg}">
+                <input style="width: 100%; float: right;" type="text" id="numrg" name="numrg" class="input-text" value="<?php echo htmlspecialchars( $registerValues["numrg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
 
                 <label for="numsus">
                     <br><br>Número do Cartão do SUS 
@@ -67,7 +67,7 @@
                         *
                     </span>
                 </label>
-                <input style="width: 100%; float: right;" type="number" id="numsus" name="numsus" class="input-text" value="{$registerValues.numsus}">
+                <input style="width: 100%; float: right;" type="number" id="numsus" name="numsus" class="input-text" value="<?php echo htmlspecialchars( $registerValues["numsus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                 
 
                 
@@ -86,7 +86,7 @@
                         *
                     </span>
                 </label>
-                <input style="width: 100%; float: right;" type="number" id="cadunico" name="cadunico" class="input-text" value="{$registerValues.cadunico}">
+                <input style="width: 100%; float: right;" type="number" id="cadunico" name="cadunico" class="input-text" value="<?php echo htmlspecialchars( $registerValues["cadunico"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                 
                 <label for="nomemae">
                     <br><br>Nome da Mãe
@@ -94,7 +94,7 @@
                         *
                     </span>
                 </label>
-                <input style="width: 100%; float: right;" type="text" id="nomemae" name="nomemae" class="input-text" value="{$registerValues.nomemae}">                
+                <input style="width: 100%; float: right;" type="text" id="nomemae" name="nomemae" class="input-text" value="<?php echo htmlspecialchars( $registerValues["nomemae"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">                
                 
                 <label for="cpfmae">
                     <br><br>CPF da Mãe
@@ -102,7 +102,7 @@
                         *
                     </span>
                 </label>
-                <input style="width: 100%; float: right;" type="number" id="cpfmae" name="cpfmae" class="input-text" value="{$registerValues.cpfmae}">
+                <input style="width: 100%; float: right;" type="number" id="cpfmae" name="cpfmae" class="input-text" value="<?php echo htmlspecialchars( $registerValues["cpfmae"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                 
                 <label for="nomepai">
                     <br><br>Nome da Pai
@@ -110,7 +110,7 @@
                         *
                     </span>
                 </label>
-                <input style="width: 100%; float: right;" type="text" id="nomepai" name="nomepai" class="input-text" value="{$registerValues.nomepai}">
+                <input style="width: 100%; float: right;" type="text" id="nomepai" name="nomepai" class="input-text" value="<?php echo htmlspecialchars( $registerValues["nomepai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                 
                 <label for="cpfpai">
                     CPF da Pai
@@ -118,7 +118,7 @@
                         *
                     </span>
                 </label>
-                <input style="width: 100%; float: right;" type="number" id="cpfpai" name="cpfpai" class="input-text" value="{$registerValues.cpfpai}">           
+                <input style="width: 100%; float: right;" type="number" id="cpfpai" name="cpfpai" class="input-text" value="<?php echo htmlspecialchars( $registerValues["cpfpai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">           
             </div>  
         </div>
         <div class="row" style="padding-bottom: 10px;">

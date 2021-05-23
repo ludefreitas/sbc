@@ -1,52 +1,48 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12" style="font-size: 20px; text-align-last: center ">
+       <span style="font-size: 20px;">Modalodade: </span><span style="font-weight: bold">{$modalidade.descmodal}</span><hr>
+    </div>     
+  </div>
+</div>
 
-                {loop="$turma"}
-                <a href="/turma/{$value.idturma}/{$value.idtemporada}" style="text-decoration: none">
-                    <div class="container"> <!-- container 3 -->
-                      <div class="row"> <!-- row 4 -->
-                        
-                              <div class="col-md-4" col-sm-1 style="text-align-last: left; background-color: white; margin: 5px 0px 5px 0px; padding-right: 0px">
-                                <table>
-                                  <tr>
-                                   <td>
+{loop="$turma"}
 
-                                      <img class="img-responsive" style="width: 232px; height: 179px" id="image-preview" src="{$value.desphoto}" alt="Photo">
+<div class="container"> <!-- container 3 -->
+  <div class="row"> <!-- row 4 -->        
+    <div class="col-md-4 col-sm-12" style="text-align-last: left; background-color: white; margin: 5px 0px 5px 0px; padding-right: 0px"><a href="/turma/{$value.idturma}/{$value.idtemporada}">           
+      <img class="img-responsive" style="width: 282px; height: 179px" id="image-preview" src="{$value.desphoto}" alt="Photo"></a>            
+    </div> 
+    <div class="col-md-8"style="text-align-last: left; line-height: 20px;  font-size: 14px; font-style: normal; margin: 5px 0px 20px 0px"><a href="/turma/{$value.idturma}/{$value.idtemporada}" style="text-decoration: none">
+      <h5 style="color: #000000"> 
+        <span style="font-weight: bold;">
+          {$value.idturma} - {$value.descativ}; 
+        </span><br>
+          Local da aula: {$value.apelidolocal};<br>
+          {$value.diasemana} das {$value.horainicio} às {$value.horatermino}<br>
+          Professor(a): {$value.desperson} <br>
+           Turma {$value.desstatus} - {$value.desctemporada}<br>
+      </h5></a>
 
-                                   </td>
-                                  </tr>
-                                </table>
-                              </div>                              
-                        
-                              <div class="col-md-8"style="text-align-last: left; line-height: 20px;  font-size: 14px; font-style: normal; margin: 5px 0px 20px 0px">
+        <a class="btn btn-info" style="background-color: #cc5d1e" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/turma/{$value.idturma}/{$value.idtemporada}">Inscrever-se</a>
+          
+    </div>
+  </div> <!-- row 4 -->
+</div> <!-- container 3 -->
+{else}
+<div class="container" >
+  <div class="row">
+    <div class="col-md-12 alert-danger" style="font-size: 20px; text-align-last: center ">
+       <span style="font-size: 20px;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nenhuma turma encontrada para esta modalidade.</span>
+    </div>     
+  </div>
+  <div class="row" style="padding: 10px">
+    <div class="col-md-12" style="font-size: 20px; text-align-last: center ">
+       <a class="btn btn-success" href="/" >Encontre uma atividade aqui!</a>
+    </div>     
+  </div>
+</div>
 
-                                <table>
-                                  <tr>
-                                    <td >
-                                       <h5 style="color: #000000"> <span style="font-weight: bold;">
-                                        {$value.idturma} - {$value.descativ};</span><br>
-                                        Local da aula: {$value.apelidolocal};<br>
-                                        {$value.diasemana} das {$value.horainicio} às {$value.horatermino}<br>
-                                        Professor(a): {$value.desperson} <br>
-                                        Turma {$value.desstatus}<br>  </h5>                                 
-                                      <div class="product-option-shop">
-                                          <a class="btn btn-info btn-sm"  style="background-color: #cc5d1e" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/turma/{$value.idturma}/{$value.idtemporada}">Inscrever-se</a>
-                                     </div>                       
-                                    </td>   
-                                  </tr>
-                                </table>
 
-                              </div>                        
-                      </div> <!-- row 4 -->
-                    </div> <!-- container 3 -->
-                </a>
-                 {else}
-            <div class="col-md-8 col-sm-1" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
-
-            <div class="alert alert-info">
-                 Nenhuma turma encontrada para esta modalidade.
-            </div>
-            <div class="alert alert">
-                <a class="btn btn-success" href="/" >Encontre uma atividade aqui!</a>
-            </div>
-          </div>
-            {/loop}     
+{/loop}     
 
