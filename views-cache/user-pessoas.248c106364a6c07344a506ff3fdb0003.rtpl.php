@@ -5,6 +5,7 @@
     <?php echo htmlspecialchars( $errorRegister, ENT_COMPAT, 'UTF-8', FALSE ); ?>
     </div>
     <?php } ?>
+    
 
     <div class="alert alert-info" style="text-align-last: center;">
         <a class="btn btn-primary card-just-text" href="/pessoa-create" role="button" >Cadastrar uma pessoa ou dependente</a>

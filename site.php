@@ -54,7 +54,7 @@ $app->post("/cart", function() {
 	}	
 
 	if($_POST['idpess'] <= 0){	
-		Cart::setMsgError("você precisa selecionar uma pessoa! ");
+		Cart::setMsgError("Você precisa selecionar uma pessoa! ");
 		header("Location: /cart");
 		exit();
 
@@ -66,23 +66,34 @@ $app->post("/cart", function() {
 		//$_POST['iduser'] = (int)$_SESSION[User::SESSION]["iduser"];
 		$_POST['dessessionid'] = $_SESSION[Cart::SESSION]["dessessionid"];
 
-		$numcpf = $_POST['numcpf'];
+		$pessoa = new Pessoa();
+
+
 		$idpess = $_POST['idpess'];
+
+		$pessoa->get((int)$idpess);
+
+		
+
+		//$numcpf = $pessoa->getcpf();
+		$numcpf = $pessoa->getnumcpf();
+		$idade = User::calcularIdade($pessoa->getdtnasc());
+		$nomepess = $pessoa->getnomepess();
+
+		//var_dump($numcpf.' - '.$idade.' - '.$nomepess);
+		//exit();
+		
 		$idturma = $_POST['idturma'];
 		$idtemporada = $_POST['idtemporada'];
-
-		$idade = User::calcularIdade($_POST['dtnasc']);
+		
 		$initidade = $_POST['initidade'];
 		$fimidade = $_POST['fimidade']; 
-		$nomepess = $_POST['nomepess']; 
 
-		//var_dump($idade);
-		//exit();
 
 		if(($idade < $initidade) || ($idade > $fimidade)){
 		
 
-		Cart::setMsgError('Esta turma é para pessoas que tem idade entre '.$initidade.' e '.$fimidade.' anos! Remova a turma atual e escolha outra turma compatível com a idade do(a) '.$nomepess.'.');
+		Cart::setMsgError('Esta turma é exclusiva para pessoas que tem idade entre '.$initidade.' e '.$fimidade.' anos! Remova a turma atual e escolha outra turma compatível com a idade do(a) '.$nomepess.'.');
 		header("Location: /cart");
 		exit();
 
@@ -118,10 +129,13 @@ $app->get("/checkout", function(){
 	$cart = Cart::getFromSession();
 	$user = User::getFromSession();
 
+	$idperson = (int)$_SESSION[User::SESSION]['idperson'];
+	Endereco::seEnderecoExiste($idperson);
+
 	//$insc = new Insc;
 
 	if(Cart::cartIsEmpty((int)$_SESSION[Cart::SESSION]['idcart']) === false){
-		Cart::setMsgError("Selecione uma turma e a pessoa que irá fazer a aula, nesta turma! ");
+		Cart::setMsgError("Selecione uma turma e a pessoa que irá fazer a aula! ");
 		header("Location: /cart");
 		exit();
 	}	
@@ -555,6 +569,10 @@ $app->post("/register", function(){
 
 	$_SESSION['registerValues'] = $_POST;
 
+	//$endereco = new Endereco;
+
+	//Endereco::seEnderecoExiste();
+
 	if (!isset($_POST['name']) || $_POST['name'] == '') {
 
 		User::setErrorRegister("Preencha o seu nome.");
@@ -673,13 +691,19 @@ $app->get("/pessoa-create", function() {
 
 	User::verifyLogin(false);
 
-	$page = new Page();
+	//$endereco = new Endereco;
+	$idperson = (int)$_SESSION[User::SESSION]["idperson"];
 
-	$page->setTpl("pessoa-create", [
-		'error'=>User::getError(),
-		'errorRegister'=>User::getErrorRegister(),
-		'registerValues'=>(isset($_SESSION['registerValues'])) ? $_SESSION['registerValues'] : ['nomepess'=>'', 'dtnasc'=>'', 'numcpf'=>'', 'numrg'=>'', 'numsus'=>'', 'cadunico'=>'', 'nomemae'=>'', 'cpfmae'=>'', 'nomepai'=>'', 'cpfpai'=>'']
-	]);
+	Endereco::seEnderecoExiste($idperson);
+
+		$page = new Page();
+
+		$page->setTpl("pessoa-create", [
+			'error'=>User::getError(),
+			'errorRegister'=>User::getErrorRegister(),
+			'registerValues'=>(isset($_SESSION['registerValues'])) ? $_SESSION['registerValues'] : ['nomepess'=>'', 'dtnasc'=>'', 'numcpf'=>'', 'numrg'=>'', 'numsus'=>'', 'cadunico'=>'', 'nomemae'=>'', 'cpfmae'=>'', 'nomepai'=>'', 'cpfpai'=>'']
+		]);
+	
 });
 
 $app->post("/registerpessoa", function(){
@@ -965,6 +989,8 @@ $app->get("/modalidades", function() {
 $app->get("/endereco", function() {
 
 	User::verifyLogin(false);
+
+	$idperson = (int)$_SESSION[User::SESSION]["idperson"];
 
 	$page = new Page();
 

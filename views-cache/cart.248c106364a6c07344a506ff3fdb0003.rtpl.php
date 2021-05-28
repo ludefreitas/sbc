@@ -9,11 +9,12 @@
 
     <div class="container">
         <?php $counter1=-1;  if( isset($turma) && ( is_array($turma) || $turma instanceof Traversable ) && sizeof($turma) ) foreach( $turma as $key1 => $value1 ){ $counter1++; ?>
-        <div class="row alert alert-primary">
+        <!--<div class="row alert alert-primary">
             <div class="col-md-12">
                 Turma selecionada! Selecione agora, logo abaixo, a pessoa que irá participar desta turma.
             </div>
         </div>
+      -->
          
         <div class="row alert alert-primary"> 
             <div class="col-md-3">
@@ -50,7 +51,7 @@
                 <div class="">
                     <div class="">
 
-                        <h2>Selecione a Pessoa</h2>
+                        <h3>Selecione a Pessoa</h3>
                     
                         <div class="">
 
@@ -66,32 +67,14 @@
                                 <p><?php echo htmlspecialchars( $msgSuccess, ENT_COMPAT, 'UTF-8', FALSE ); ?></p>
                             </div>
                             <?php } ?>
-                                <!-- form start -->
-                            <?php $counter2=-1;  if( isset($pessoa) && ( is_array($pessoa) || $pessoa instanceof Traversable ) && sizeof($pessoa) ) foreach( $pessoa as $key2 => $value2 ){ $counter2++; ?>
-                                <!--<form role="form" action="/cart/<?php echo htmlspecialchars( $value2["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/insert" method="get">-->
-                             <?php } ?>
-                            <div class="box-body">
-                                <!--
-                                <?php $counter2=-1;  if( isset($pessoa) && ( is_array($pessoa) || $pessoa instanceof Traversable ) && sizeof($pessoa) ) foreach( $pessoa as $key2 => $value2 ){ $counter2++; ?>
-                                <div class="form-group">
-
-                                    <input type="button" class="btn btn-primary" name="idpess" value='<?php echo htmlspecialchars( $value2["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value2["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, <?php echo calcularIdade($value2["dtnasc"]); ?> anos, <?php echo htmlspecialchars( $value2["sexo"], ENT_COMPAT, 'UTF-8', FALSE ); ?>'>
-                                </div>
-                                <?php }else{ ?>
-                                        <label>Não há pessoas cadastradas</label>
-                                <?php } ?>
-                                <div class="form-group">
-                                -->
-                                                                          
+                            <!-- form start -->                           
+                            <div class="box-body">                                                               
                                 <select class="form-control" name="idpess">
                                     <option selected="selected" value="idpess=0">
-                                        selecione uma pessoa
+                                        Selecione uma pessoa
                                     </option>
                                     <?php $counter2=-1;  if( isset($pessoa) && ( is_array($pessoa) || $pessoa instanceof Traversable ) && sizeof($pessoa) ) foreach( $pessoa as $key2 => $value2 ){ $counter2++; ?>
-                                    <option <?php if( $value2["iduser"] === $user["iduser"] ){ ?><?php } ?> value="<?php echo htmlspecialchars( $value2["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value2["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value2["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, <?php echo calcularIdade($value2["dtnasc"]); ?> anos, <?php echo htmlspecialchars( $value2["sexo"], ENT_COMPAT, 'UTF-8', FALSE ); ?> 
-                                        <input type="text" name="numcpf" hidden="" value="<?php echo htmlspecialchars( $value2["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-                                        <input type="text" name="dtnasc" hidden="" value="<?php echo htmlspecialchars( $value2["dtnasc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-                                        <input type="text" name="nomepess" hidden="" value="<?php echo htmlspecialchars( $value2["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                                    <option <?php if( $value2["iduser"] === $user["iduser"] ){ ?><?php } ?> value="<?php echo htmlspecialchars( $value2["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value2["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value2["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>; <?php echo calcularIdade($value2["dtnasc"]); ?> anos; <?php echo htmlspecialchars( $value2["sexo"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                                     </option>
 
                                     <?php }else{ ?>
@@ -120,15 +103,28 @@
         </div>
         <?php }else{ ?>
         <div class="row">
-            <div class="col-md-6 alert alert-danger" style="text-align-last: center; font-weight: bold">
-                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Não há turma selecionada para fazer inscrição! </span>                            
+            <div class="col-md-12 alert alert-info" style="text-align-last: center; font-weight: bold">
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Selecione abaixo uma turma</span>                            
             </div>
-            <div class="col-md-6 alert alert-success" style="padding-top: 18px; text-align-last: center;">
-                    <a class="btn btn-success" href="/" >Selecione uma turma, clicando aqui!</a>
-                </div>
+            
         </div>
-         <?php } ?>
-    </div>                             
+
+  <div class="row" style="">
+    <div class="col-md-4 alert" style="text-align-last: center; background-color: #ce2c3e; border: solid 5px; border-color: white;  border-radius: 25px;  padding-left: 0px ">
+       <a class="btn" href="/locais" style="color: white; font-weight: bold;">Turmas por LOCAL (Crec)
+       </a>
+    </div>
+    <div class="col-md-4 alert" style="text-align-last: center; background-color: #cc5d1e; border: solid 5px; border-color: white; border-radius: 25px;  padding-left: 0px">
+       <a class="btn" href="/modalidades" style="color: white; font-weight: bold" >Turmas por MODALIDADE
+       </a>
+    </div>
+    <div class="col-md-4 alert" style="text-align-last: center; background-color: #15a03f; border: solid 5px; border-color: white; border-radius: 25px;  padding-left: 0px;">
+       <a class="btn" href="/" style="color: white; font-weight: bold; ">Todas turmas
+       </a>
+    </div>  
+  </div>
+  <?php } ?>
+</div>                             
                          
 </form>
  

@@ -62,6 +62,28 @@ class Endereco extends Model {
 
 	}
 
+	public function seEnderecoExiste($idperson)	{
+
+		$sql = new Sql();
+
+		$results = $sql->select(
+			"SELECT * FROM tb_endereco a
+			INNER JOIN tb_persons b using (idperson)
+			WHERE idperson = :idperson", [
+			':idperson'=>$idperson			
+		]);		
+
+		if(count($results) === 0)
+		{
+			Endereco::setMsgError('Você precisa cadastrar um endereço para continuar a inscrição?');
+			header("Location: /endereco");
+			exit();			
+		}
+
+			return $results;
+		
+	}
+
 	public static function setMsgError($msg)
 	{
 

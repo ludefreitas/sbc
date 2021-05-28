@@ -1,4 +1,21 @@
-<?php if(!class_exists('Rain\Tpl')){exit;}?><?php $counter1=-1;  if( isset($turma) && ( is_array($turma) || $turma instanceof Traversable ) && sizeof($turma) ) foreach( $turma as $key1 => $value1 ){ $counter1++; ?>
+<?php if(!class_exists('Rain\Tpl')){exit;}?><div class="container">
+  <div class="row" style="">
+    <div class="col-md-4 alert" style="text-align-last: center; background-color: #ce2c3e; border: solid 5px; border-color: white;  border-radius: 25px;  padding-left: 0px ">
+       <a class="btn" href="/locais" style="color: white; font-weight: bold;">Turmas por LOCAL (Crec)
+       </a>
+    </div>
+    <div class="col-md-4 alert" style="text-align-last: center; background-color: #cc5d1e; border: solid 5px; border-color: white; border-radius: 25px;  padding-left: 0px">
+       <a class="btn" href="/modalidades" style="color: white; font-weight: bold" >Turmas por MODALIDADE
+       </a>
+    </div>
+    <div class="col-md-4 alert" style="text-align-last: center; background-color: #15a03f; border: solid 5px; border-color: white; border-radius: 25px;  padding-left: 0px;">
+       <a class="btn" href="/" style="color: white; font-weight: bold; ">Todas turmas
+       </a>
+    </div>  
+  </div>
+</div>
+
+<?php $counter1=-1;  if( isset($turma) && ( is_array($turma) || $turma instanceof Traversable ) && sizeof($turma) ) foreach( $turma as $key1 => $value1 ){ $counter1++; ?>
 
     <div class="container"> <!-- container 3 -->
       <div class="row"> <!-- row 4 -->        
