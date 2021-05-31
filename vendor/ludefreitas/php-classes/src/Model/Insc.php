@@ -31,6 +31,8 @@ class Insc extends Model {
 
 	}
 
+	/*
+
 	public function get($idinsc)
 	{
 
@@ -41,7 +43,7 @@ class Insc extends Model {
 			FROM tb_insc a 
 			INNER JOIN tb_inscstatus b USING(idinscstatus) 
 			INNER JOIN tb_carts c USING(idcart)			
-			INNER JOIN tb_pessoa d USING(idpess)
+			INNER JOIN tb_pessoa d ON d.idpess = c.idpess
 			INNER JOIN tb_users e ON e.iduser = d.iduser
 			INNER JOIN tb_persons f ON f.idperson = e.iduser
 			INNER JOIN tb_temporada g USING(idtemporada) 
@@ -60,6 +62,35 @@ class Insc extends Model {
 		}
 
 	}
+
+	public function getInscPessoa($idpess)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT * 
+			FROM tb_insc a 
+			INNER JOIN tb_inscstatus b ON b.idinscstatus = a.idinscstatus 
+			INNER JOIN tb_carts c ON c.idcart = a.idcart
+			INNER JOIN tb_turma g ON g.idturma = a.idturma
+			INNER JOIN tb_atividade h ON h.idativ = g.idativ
+			INNER JOIN tb_espaco i ON i.idespaco = g.idespaco
+			INNER JOIN tb_pessoa d ON d.idpess = c.idpess
+			INNER JOIN tb_users e ON e.iduser = d.iduser
+			INNER JOIN tb_persons f ON f.idperson = e.idperson
+			INNER JOIN tb_temporada j ON j.idtemporada = a.idtemporada
+			WHERE c.idpess = :idpess
+		", [
+			':idpess'=>$idpess
+		]);
+
+		if (count($results) > 0) {
+			$this->setData($results[0]);
+		}
+
+	}
+	*/
 
 	public static function listAll()
 	{

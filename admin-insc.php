@@ -3,6 +3,7 @@
 use \Sbc\PageAdmin;
 use \Sbc\Model\User;
 use \Sbc\Model\Insc;
+use \Sbc\Model\Pessoa;
 
 
 
@@ -91,6 +92,7 @@ $app->get("/professor/insc/:idinsc/delete", function($idinsc) {
 	
 });
 
+/*
 $app->get("/professor/insc/:idinsc", function($idinsc) {
 
 	User::verifyLogin();
@@ -106,6 +108,7 @@ $app->get("/professor/insc/:idinsc", function($idinsc) {
 	]);	
 	
 });
+*/
 
 $app->post("/professor/insc/:idinsc", function($idinsc) {
 
@@ -154,6 +157,52 @@ $app->get("/professor/profile/insc/:idinsc", function($idinsc){
 	$page->setTpl("insc-detail", [
 		'insc'=>$insc->getValues()
 	]);	
+
+});
+
+/*
+
+$app->get("/professor/insc/pessoa/:idpess", function($idpess){
+
+	User::verifyLogin();
+
+	$insc = new Insc();
+
+	$insc->get((int)$idpess);
+	//$insc->get((int)$idpess);		
+
+	echo '<pre>';
+	print_r($insc);
+	echo '</pre>';
+	exit();
+
+	$page = new PageAdmin();
+
+	$page->setTpl("insc-pessoa", [
+		'insc'=>$insc->getValues()
+	]);	
+
+});
+
+*/
+
+$app->get("/professor/insc/pessoa/:idepess", function($idpess){
+
+	User::verifyLogin();
+
+	$pessoa = new Pessoa;
+
+	$pessoa->get((int)$idpess);
+
+	//var_dump($pessoa);
+	//exit();
+
+	$page = new PageAdmin();
+
+	$page->setTpl("insc-pessoa", [
+		'insc'=>$pessoa->getInsc(),
+		'pessoa'=>$pessoa->getValues()
+	]);
 
 });
 

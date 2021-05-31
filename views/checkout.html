@@ -15,8 +15,8 @@
                 
                       
                     <div class="row">
-                        <div class="col-md-12 alert alert-primary" style="text-align-last: center; padding: 15px">
-                           <h5 style="font-weight: bold">Nome do aluno: {$pessoa.nomepess} -  {function="calcularIdade($pessoa.dtnasc)"} anos </h5>
+                        <div class="col-md-12 alert alert-primary" style="text-align-last: center; ">
+                           <h5 style="font-weight: bold; padding-top: 10px">Nome do aluno: {$pessoa.nomepess} -  {function="calcularIdade($pessoa.dtnasc)"} anos </h5>
                          
                         </div>
                     </div>                    
@@ -27,15 +27,26 @@
                            <strong>Turma / Temporada: </strong>
                        </div>
                        <div class="col-md-9 alert alert-success">
-                            <strong>{$value.descativ} ({$value.periodo}) - {$value.desctemporada}</strong><hr>
-                            <strong>
+                            <strong>{$value.descativ} {$value.desctemporada} {$value.periodo}  ( {$value.numinscritos} inscritos para {$value.vagas} vagas )</strong><hr>
+                            
                             {$value.descrfxetaria} de {$value.initidade} a {$value.fimidade} anos,
                             com o professor {$value.desperson}, 
                             no {$value.apelidolocal} - {$value.rua} - Nº {$value.numero} - bairro {$value.bairro} - {$value.cidade}
-                            </strong>
+                            
 
                         </div>
                     </div>
+                    <div class="row" style="padding-top: 0px">
+                         <div class="col-md-12 alert-primary" style="text-align-last: left; padding-top: 10px;">
+                            Ao clicar no botão <strong>FINALIZAR</strong> você confirma...<br>
+                             - Que inscreve o(a) <strong>{$pessoa.nomepess}</strong> na turma <strong> {$value.descativ}</strong>;<br>
+                             - Que leu e concorda com os <a href="#">Termos de Responsabilidade</a>; <br>
+                             - Que está ciente que a matrícula da pessoa, para o respectivo curso esportivo, está sujeito ao sorteio que acontecerá no dia <strong>{function="formatDate($value.dtterminscricao)"}</strong>, caso a quantidade de inscritos supere o número de vagas;<br>
+                             - Que deverá confirmar a matrícula do(a) <strong>{$pessoa.nomepess}</strong> a partir do dia <strong>{function="formatDate($value.dtinicmatricula)"}</strong> ao <strong>{function="formatDate($value.dttermmatricula)"}</strong>;<br>
+                             
+                           
+                         </div>
+                    </div>                  
                     <div class="row" style="padding-top: 0px">
                          <div class="col-md-12" style="text-align-last: center; padding-top: 10px;">
                            <input type="submit" data-value="Place order" value="Finalizar" id="place_order" name="insc" class="button alt" >                     

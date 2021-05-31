@@ -198,7 +198,9 @@ class Pessoa extends Model {
 			':idpess'=>$idpess
 		]);
 
-		$this->setData($rows[0]);
+		if (count($rows) > 0) {
+			$this->setData($rows[0]);
+		}
 	}
 
 	public function getPessoaExist()	{
@@ -249,7 +251,6 @@ class Pessoa extends Model {
 
 	}
 
-
 	public static function getPageSearch($search, $page = 1, $itemsPerPage = 10)
 	{
 
@@ -279,6 +280,34 @@ class Pessoa extends Model {
 
 	}
 
+	public function getInsc()
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT * 
+			FROM tb_insc a 
+			INNER JOIN tb_inscstatus b USING(idinscstatus) 
+			INNER JOIN tb_carts c USING(idcart)
+			INNER JOIN tb_turma g USING(idturma)
+			INNER JOIN tb_atividade h ON h.idativ = g.idativ
+			INNER JOIN tb_espaco i ON i.idespaco = g.idespaco
+			INNER JOIN tb_pessoa d ON d.idpess = c.idpess
+			INNER JOIN tb_users e ON e.iduser = d.iduser
+			INNER JOIN tb_persons f ON f.idperson = e.idperson
+			INNER JOIN tb_temporada j USING(idtemporada)
+			INNER JOIN tb_inscstatus k USING(idinscstatus)
+			INNER JOIN tb_horario l USING(idhorario)
+			INNER JOIN tb_local m USING(idlocal)
+			WHERE d.idpess = :idpess
+		", [
+			':idpess'=>$this->getidpess()
+		]);
+
+		return $results;
+
+	}
 
 	/*
 	public function setStatus(){
