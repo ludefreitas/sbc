@@ -31,7 +31,7 @@ class Insc extends Model {
 
 	}
 
-	/*
+	
 
 	public function get($idinsc)
 	{
@@ -62,6 +62,10 @@ class Insc extends Model {
 		}
 
 	}
+
+	/*
+
+
 
 	public function getInscPessoa($idpess)
 	{

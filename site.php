@@ -157,7 +157,9 @@ $app->post("/checkout", function(){
 	$user = User::getFromSession();
 	$cart = Cart::getFromSession();
 
+
 	$idcart = (int)$cart->getidcart();
+
 
 	$idtemporada = $_POST['idtemporada'];
 	$idturma = $_POST['idturma'];
@@ -181,6 +183,8 @@ $app->post("/checkout", function(){
 			'idturma'=>$idturma,
 			'idtemporada'=>$idtemporada	
 		]);
+
+		
 
 
 		$insc->save();
@@ -741,13 +745,14 @@ $app->post("/registerpessoa", function(){
 		header("Location: /pessoa-create");
 		exit;
 	}
-
+	/*
 	if (Pessoa::checkCpfExist($_POST['numcpf']) === true) {
 
 		Pessoa::setErrorRegister("Este CPF pertence a outro usuário.");
 		header("Location: /pessoa-create");
 		exit;
 	}
+	*/
 
 	if (!isset($_POST['numrg']) || $_POST['numrg'] == '') {
 

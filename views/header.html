@@ -17,6 +17,10 @@
     <link rel="stylesheet" type="text/css" href="/../res/site/css/style.css">
 
     <title>Cursos Esportivos SBC</title>
+    <link rel="icon" 
+      type="image/jpg" 
+      href="/../res/site/img/corpoacao.png" />
+</head>
   </head>
   <body>
 
@@ -38,20 +42,20 @@
                                                     
                         <li class="nav-item">
                             <a class="nav-link" href="#">
-                              <span class="text-white" style="font-weight: bold">
+                              <span class="text-white"  style="font-weight: bold;">
                                 Início
                               </span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" mr-4 href="#">
-                              <span class="text-white" style="font-weight: bold">
+                            <a class="nav-link" mr-4 href="#" >
+                              <span class="text-white" style="font-weight: bold;">
                                 Cursos Esportivos
                               </span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a style="" class="nav-link" href="#">
+                        <li class="nav-item" >
+                            <a style="" class="nav-link" href="#" >
                               <span class="text-white" style="font-weight: bold">
                                 Esportes
                               </span>
@@ -70,19 +74,25 @@
           <div class="container">
             <div class="row">
 
-              <div class="col-md-2" style="text-align: center; margin: 50px 0px 15px 0px;">
+                <div class="col-md-2 col-sm-4" style="text-align: center; margin: 60px 0px 10px 0px;">
                 <a href="/" class="">
-                  <img src="/../res/site/img/corpoacao.png" title="CorpoEmAcao" width="150">
+                  <img src="/../res/site/img/horatreino.png" title="HoraTreino" height="50" width="150">
                 </a> 
               </div>
-
-              <div class="col-md-2" style="text-align: left; margin: 0px 0px 0px 0px;">
+              <div class="col-md-2 col-sm-4" style="text-align: center; margin: 50px 0px 15px 0px;">
                 <a href="/" class="">
-                 
+                  <img src="/../res/site/img/corpoacao.png" title="CorpoEmAcao" height="50" width="150">
                 </a> 
               </div>
+              
+              <div class="col-md-2 col-sm-4" style="text-align: center; margin: 30px 0px 15px 0px;">
+                <a href="/" class="">
+                  <img src="/../res/site/img/campeoesvida.png" title="CampeoesDaVida" height="50" width="150">
+                </a> 
+              </div>
+              
 
-               <div class="col-md-8 text-dark" col-sm-1 style="text-align: center; margin: 80px 0px 0px 0px;  ">
+               <div class="col-md-6 text-dark" col-sm-1 style="text-align: center; margin: 80px 0px 0px 0px;  ">
 
                 <nav class="navbar navbar-expand-sm navbar-dark " style="background-color: #fff"> 
                 <div class="container">
@@ -151,7 +161,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" mr-4 href="#">
-                              <span class="text-dark" style="font-weight: bold">
+                              <span class="text-dark" style="font-weight: bold; align-self: flex-end;">
                                 Cursos Esportivos
                               </span>
                             </a>
