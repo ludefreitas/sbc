@@ -1019,11 +1019,24 @@ $app->post("/endereco", function() {
 
 	$endereco = new Endereco(); 
 
+	$menor = '09600000';
+	$maior = '09899999';
+
+	
+
 	if (!isset($_POST['cep']) || $_POST['cep'] == '') {
 		Endereco::setMsgError("Digite o número do cep.");
 		header("Location: /endereco");
 		exit;		
 	}
+
+	if (($_POST['cep']) < $menor || ($_POST['cep']) > $maior){
+
+		Endereco::setMsgError("Cep inválido ou não cadastrado");
+		header("Location: /endereco");
+		exit;		
+	}
+
 	if (!isset($_POST['rua']) || $_POST['rua'] == '') {
 		Endereco::setMsgError("Informe o nome da rua, avenida ou logradouro.");
 		header("Location: /endereco");

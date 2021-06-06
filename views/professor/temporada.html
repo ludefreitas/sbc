@@ -22,6 +22,12 @@
               <a href="/professor/temporada/create" class="btn btn-success">Criar nova temporada</a>
             </div>
 
+                {if="$error != ''"}
+                <div class="alert alert-danger" style="margin: 0px 10px 0px 10px">
+                    {$error}
+                </div>
+                {/if}
+
             <div class="box-body no-padding">
               <table class="table table-striped">
                 <thead>
@@ -51,7 +57,7 @@
                     <td>{function="formatDateHour($value.dttermmatricula)"}</a></td>
                     <td>
                     
-                    <a href="/professor/temporada/{$value.idtemporada}/turma" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> Turmas</a>                  
+                    
                       <a href="/professor/temporada/{$value.idtemporada}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
                       <a href="/professor/temporada/{$value.idtemporada}/delete" onclick="return confirm('Deseja realmente excluir temporada {$value.desctemporada}?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
                     </td>

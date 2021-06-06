@@ -26,12 +26,12 @@
         <!-- form start --><form role="form" action="/professor/turma/create" method="post">
           <div class="box-body">
 
-            <div class="form-group">
+            <div class="box-header">
               <label for="descturma">Descrição da turma</label>
               <input type="text" class="form-control" id="descturma" name="descturma" placeholder="Descreva a turma">
             </div>            
             
-            <div class="form-group">
+            <div class="box-header">
               <label for="turma">Modalidade</label>
                 <select class="form-control" name="idmodal">
                 <option>Selecione a modalidade</option>           
@@ -41,7 +41,7 @@
                   <?php } ?>                            
                 </select>
             </div>
-            <div class="form-group">
+            <div class="box-header">
               <label for="turma">Atividade</label>
                 <select class="form-control" name="idativ">
                 <option>Selecione a atividade e faixa etária</option>           
@@ -51,7 +51,7 @@
                   <?php } ?>                            
                 </select>
             </div>
-            <div class="form-group">
+            <div class="box-header">
               <label for="turma">Professor</label>
                 <select class="form-control" name="iduser">
                 <option>Selecione o professor</option>       
@@ -61,7 +61,7 @@
                   <?php } ?>                            
                 </select>
             </div>
-            <div class="form-group">
+            <div class="box-header">
               <label for="turma">Espaço - Crec</label>
                 <select class="form-control" name="idespaco">
                 <option>Selecione o Crec, o espaço e os horários</option>    
@@ -71,7 +71,7 @@
                   <?php } ?>                            
                 </select>
             </div>
-            <div class="form-group">
+            <div class="box-header">
               <label for="turma">Dia Semana - Horário</label>
                 <select class="form-control" name="idhorario">
                 <option>Selecione o dia e o horários</option>    
@@ -81,7 +81,7 @@
                   <?php } ?>                            
                 </select>
             </div>
-            <div class="form-group">
+            <div class="box-header">
               <label for="turma">Status</label>
                 <select class="form-control" name="idturmastatus"> 
                 <option>Selecione o Status</option>
@@ -90,11 +90,11 @@
                   <option value="<?php echo htmlspecialchars( $value1["idturmastatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["desstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
                   <?php } ?>                            
                 </select>
-            </div><div class="form-group">
+            </div><div class="box-header">
               <label for="turma">Vagas</label>
               <input type="number" class="form-control" id="vagas" name="vagas" placeholder="Informe a quantidade de vagas">
             </div>
-            <!-- <div class="form-group">
+            <!-- <div class="box-header">
               <label for="turma">Nº inicial de inscritos</label>
               <input type="number" class="form-control" id="numinscritos" name="numinscritos" placeholder="informe a quantidade inicial de inscritos">
             </div> -->

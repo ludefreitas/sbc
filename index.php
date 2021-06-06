@@ -17,6 +17,7 @@ use \Sbc\Model\Turma;
 use \Sbc\Model\Temporada;
 use \Sbc\Model\Cart;
 use \Sbc\Model\Modalidade;
+use \Sbc\Model\Sorteio;
 
 
 
@@ -40,6 +41,7 @@ require_once("admin-temporada.php");
 require_once("admin-modalidade.php");
 require_once("admin-pessoa.php");
 require_once("admin-insc.php");
+require_once("admin-sorteio.php");
 
 $app->run();
 

@@ -1,4 +1,4 @@
-<!-- Content Wrapper. Contains page content -->
+<?php if(!class_exists('Rain\Tpl')){exit;}?><!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -20,11 +20,14 @@
         <div class="box-header with-border">
           <h3 class="box-title"> Nova Temporada</h3>
         </div>
-        {if="$error != ''"}
+        <?php if( $error != '' ){ ?>
+
         <div class="alert alert-danger" style="margin: 0px 10px 0px 10px">
-        {$error}
+        <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+
         </div>
-        {/if}
+        <?php } ?>
+
         <!-- /.box-header -->
         <!-- form start --><form role="form" action="/professor/temporada/create" method="post">
           
@@ -52,9 +55,11 @@
               <label for="idstatustemporada"> Status Temporada</label>
               <select class="form-control" name="idstatustemporada">
               <option selected="selected">Selecione o Status da Temporada</option>                          
-                {loop="$statustemporada"}
-                <option value="{$value.idstatustemporada}">{$value.descstatustemporada} </option>
-                {/loop}
+                <?php $counter1=-1;  if( isset($statustemporada) && ( is_array($statustemporada) || $statustemporada instanceof Traversable ) && sizeof($statustemporada) ) foreach( $statustemporada as $key1 => $value1 ){ $counter1++; ?>
+
+                <option value="<?php echo htmlspecialchars( $value1["idstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["descstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </option>
+                <?php } ?>
+
               </select>
             </div>
           </div>

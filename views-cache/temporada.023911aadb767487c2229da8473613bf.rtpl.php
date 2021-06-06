@@ -23,6 +23,15 @@
               <a href="/professor/temporada/create" class="btn btn-success">Criar nova temporada</a>
             </div>
 
+                <?php if( $error != '' ){ ?>
+
+                <div class="alert alert-danger" style="margin: 0px 10px 0px 10px">
+                    <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+
+                </div>
+                <?php } ?>
+
+
             <div class="box-body no-padding">
               <table class="table table-striped">
                 <thead>
@@ -53,7 +62,7 @@
                     <td><?php echo formatDateHour($value1["dttermmatricula"]); ?></a></td>
                     <td>
                     
-                    <a href="/professor/temporada/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/turma" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> Turmas</a>                  
+                    
                       <a href="/professor/temporada/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
                       <a href="/professor/temporada/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir temporada <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
                     </td>

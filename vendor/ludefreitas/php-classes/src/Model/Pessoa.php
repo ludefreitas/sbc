@@ -237,7 +237,7 @@ class Pessoa extends Model {
 			FROM tb_pessoa a 
 			INNER JOIN tb_users b USING(iduser) 
 			INNER JOIN tb_persons c USING(idperson)
-			ORDER BY a.nomepess
+			ORDER BY a.nomepess, a.numcpf
 			LIMIT $start, $itemsPerPage;
 		");
 

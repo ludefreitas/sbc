@@ -8,6 +8,9 @@ use \Sbc\Mailer;
 
 class Temporada extends Model {
 
+	const ERROR = "TemporadaError";
+	const SUCCESS = "TemporadaSucesss";	
+
 
 	public static function listAll()
 	{
@@ -70,9 +73,83 @@ class Temporada extends Model {
 		return $list;
 	}
 
+
+	public function temporadaExiste($desctemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT desctemporada FROM tb_temporada WHERE desctemporada = :desctemporada", [
+			':desctemporada'=>$desctemporada 
+		]);
+
+		if($results){
+			Temporada::setError("Temporada ".$desctemporada." já existe!");
+			header("Location: /professor/temporada/create");
+			exit;
+		}
+	}
+
+	public function temporadaStatusExiste($idstatustemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT idstatustemporada FROM tb_temporada WHERE idstatustemporada = :idstatustemporada AND idstatustemporada = 2", [
+			':idstatustemporada'=>$idstatustemporada 
+		]);
+
+		if($results){
+			Temporada::setError("Já existe uma temporada iniciada. Não pode existir mais de uma temporada iniciada.");
+			header("Location: /professor/temporada/create");
+			exit;
+		}
+	}
+
 	
+	public function createTable($temporada, $idtemporada){
+
+		$servername = "localhost";
+		$username = "root";
+		$password = "";
+		$dbname = "db_cursossbc";
+
+		try {
+    	$conn = new \PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    	// set the PDO error mode to exception
+    	$conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+
+    	// sql to create table
+    	$sql = "CREATE TABLE IF NOT EXISTS tb_sorteio".$temporada." (
+		  idsorteio int(11) NOT NULL AUTO_INCREMENT,
+		  idtemporada int(11) NOT NULL DEFAULT ".$idtemporada.",
+		  idstatussort int(11) NOT NULL DEFAULT 1,
+		  numerodeordem int(11) DEFAULT NULL,
+		  numerosortear int(11) NOT NULL,
+		  PRIMARY KEY (idsorteio),
+		  KEY fk_sorteio".$temporada."_sorteiostatus_idx (idstatussort),
+		  KEY fk_sorteio".$temporada."_sorteiotemporada_idx (idtemporada),
+		  CONSTRAINT fk_sorteio".$temporada."_sorteiostatus FOREIGN KEY (idstatussort) REFERENCES tb_sorteiostatus (idstatussort) ON DELETE NO ACTION ON UPDATE NO ACTION,
+		  CONSTRAINT fk_sorteio".$temporada."_sorteiotemporada FOREIGN KEY (idtemporada) REFERENCES tb_temporada (idtemporada) ON DELETE NO ACTION ON UPDATE NO ACTION
+		)ENGINE=InnoDB DEFAULT CHARSET=utf8";
+		
+
+   		// use exec() because no results are returned
+    	$conn->exec($sql);
+    	echo "Tabela Sorteio ".$temporada." criada com sucesso";
+    	
+    	}
+			catch(PDOException $e)
+    	{
+    		echo $sql . "<br>" . $e->getMessage();
+    	}
+
+		$conn = null;
+
+	}
+
+
 	public function save()
-	{
+	{		
+
 		$sql = new Sql();
 
 		$results = $sql->select("CALL sp_temporada_save (:idtemporada, :desctemporada, :idstatustemporada, :dtinicinscricao, :dtterminscricao, :dtinicmatricula, :dttermmatricula)", array(
@@ -85,11 +162,16 @@ class Temporada extends Model {
 			":dttermmatricula"=>$this->getdttermmatricula()
 		));
 
+		
+		$temporada = $results[0]['desctemporada'];	
+		$idtemporada = $results[0]['idtemporada'];			
+
+		Temporada::createTable($temporada, $idtemporada);	
+
 		$this->setData($results[0]);
 
 		Temporada::updateFile();
-		Temporada::updateFileAdmin();
-
+		Temporada::updateFileAdmin();	
 	}
 
 	public function get($idtemporada)
@@ -102,18 +184,28 @@ class Temporada extends Model {
 			INNER JOIN tb_statustemporada b ON b.idstatustemporada = a.idstatustemporada
 			WHERE idtemporada = :idtemporada", [
 			':idtemporada'=>$idtemporada 
-		]);
+		]);		
 
-		$this->setData($results[0]);		
+		if($results){
+
+			$this->setData($results[0]);
+		}else{
+			Temporada::setError("Temporada selecionada não encontrada!");
+			header("Location: /professor/temporada");
+			exit;
+		}
+				
 	}
 
 	public function delete()
 	{
 		$sql = new Sql();
 
+
+
 		$results = $sql->select("DELETE FROM tb_temporada WHERE idtemporada = :idtemporada", [
 			':idtemporada'=>$this->getidtemporada()
-		]);		
+		]);	
 
 		Temporada::updateFile();
 		Temporada::updateFileAdmin();
@@ -139,7 +231,26 @@ class Temporada extends Model {
 		$html = [];
 
 		foreach ($temporada as $row) {
-			array_push($html, '<li><a href="/professor/turma-temporada/'.$row['idtemporada'].'"><i class="fa fa-users"></i> Temporada - '.$row['desctemporada'].'</a></li>');
+			array_push($html, '<li class="treeview">
+							   		<a href="/professor/turma-temporada/'.$row['idtemporada'].'">
+							   			<i class="fa fa-link"></i> 
+							   			Temporada - '.$row['desctemporada'].'
+							   		</a>
+							   		<ul class="treeview-menu">
+								   		<li>
+								   			<a href="/professor/turma-temporada/'.$row['idtemporada'].'">
+								   				<i class="fa fa-link"></i>
+								   				Turma/Temporada '.$row['desctemporada'].'
+								   			</a>
+								   		</li>
+								   		<li>
+								   			<a href="/professor/sorteio'.$row['desctemporada'].'">
+								   				<i class="fa fa-link"></i>
+								   				Sorteio '.$row['desctemporada'].'
+								   			</a>
+								   		</li>
+									</ul>
+								</li>');
 
 		}
 		file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."professor".DIRECTORY_SEPARATOR."professor-temporada-menu.html", implode('', $html));
@@ -280,6 +391,58 @@ class Temporada extends Model {
 		]);
 
 	}
+
+	public static function setError($msg)
+	{
+
+		$_SESSION[Temporada::ERROR] = $msg;
+
+	}
+
+	public static function getError()
+	{
+
+		$msg = (isset($_SESSION[Temporada::ERROR]) && $_SESSION[Temporada::ERROR]) ? $_SESSION[Temporada::ERROR] : '';
+
+		Temporada::clearError();
+
+		return $msg;
+
+	}
+
+	public static function clearError()
+	{
+
+		$_SESSION[Temporada::ERROR] = NULL;
+
+	}
+
+	public static function setSuccess($msg)
+	{
+
+		$_SESSION[Temporada::SUCCESS] = $msg;
+
+	}
+
+	public static function getSuccess()
+	{
+
+		$msg = (isset($_SESSION[Temporada::SUCCESS]) && $_SESSION[Temporada::SUCCESS]) ? $_SESSION[Temporada::SUCCESS] : '';
+
+		Temporada::clearSuccess();
+
+		return $msg;
+
+	}
+
+	public static function clearSuccess()
+	{
+
+		$_SESSION[Temporada::SUCCESS] = NULL;
+
+	}
+
+
 		
 }
 ?>

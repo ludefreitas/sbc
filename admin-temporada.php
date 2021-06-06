@@ -6,6 +6,7 @@ use \Sbc\Model\User;
 use \Sbc\Model\Temporada;
 use \Sbc\Model\StatusTemporada;
 use \Sbc\Model\Turma;
+use \Sbc\Model\Sorteio;
 
 $app->get("/professor/temporada", function() {
 
@@ -16,7 +17,8 @@ $app->get("/professor/temporada", function() {
 	$page = new PageAdmin();
 
 	$page->setTpl("temporada", array(
-		'temporada'=>$temporada
+		'temporada'=>$temporada,
+		'error'=>Temporada::getError()
 	));
 });
 
@@ -33,7 +35,8 @@ $app->get("/professor/temporada/create", function() {
 
 	$page->setTpl("temporada-create", array(
 		'temporada'=>$temporada,
-		'statustemporada'=>$statustemporada
+		'statustemporada'=>$statustemporada,
+		'error'=>Temporada::getError()
 	));
 });
 
@@ -46,10 +49,17 @@ $app->post("/professor/temporada/create", function() {
 
 	$temporada->setData($_POST);
 
+	$desctemporada = $_POST['desctemporada'];
+	$idstatustemporada = $_POST['idstatustemporada'];
+
+	Temporada::temporadaExiste($desctemporada);
+	Temporada::temporadaStatusExiste($idstatustemporada);
+
 	$temporada->save();
 
 	header("Location: /professor/temporada");
 	exit();	
+
 });
 
 
@@ -58,10 +68,14 @@ $app->get("/professor/temporada/:idtemporada/delete", function($idtemporada) {
 	User::verifyLogin();
 
 	$temporada = new Temporada();
+	$sorteio = new Sorteio();
 
 	$temporada->get((int)$idtemporada);
 
+	$desctemporada = $temporada->getdesctemporada();
+
 	$temporada->delete();
+	$sorteio->excluiTabelaSorteio($desctemporada);
 
 	header("Location: /professor/temporada");
 	exit();	
@@ -79,7 +93,8 @@ $app->get("/professor/temporada/:idtemporada", function($idtemporada) {
 
 	$page->setTpl("temporada-update", array(
 		'temporada'=>$temporada->getValues(),
-		'statustemporada'=>StatusTemporada::listAll()		
+		'statustemporada'=>StatusTemporada::listAll()
+		
 	));
 });
 
@@ -106,7 +121,9 @@ $app->get("/professor/turma-temporada/:idtemporada", function($idtemporada) {
 	$temporada = new Temporada();
 	$turma = new Turma();
 
-	$temporada->get((int)$idtemporada);	
+
+	$temporada->get((int)$idtemporada);
+
 
 	//var_dump($temporada->getTurma(true)); exit();
 
