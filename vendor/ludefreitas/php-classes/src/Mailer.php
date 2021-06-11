@@ -36,6 +36,11 @@ class Mailer {
 		//Tell PHPMailer to use SMTP
 		$this->mail->isSMTP();
 
+
+		$this->mail->IsHTML(true);
+
+		$this->mail->CharSet = 	'utf-8';
+
 		//Enable SMTP debugging
 		// 0 = off (for production use)
 		// 1 = client messages

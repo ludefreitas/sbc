@@ -5,6 +5,7 @@ namespace Sbc\Model;
 use \Sbc\DB\Sql;
 use \Sbc\Model;
 use \Sbc\Model\Cart;
+use \Sbc\Mailer;
 
 class Insc extends Model {
 
@@ -29,6 +30,41 @@ class Insc extends Model {
 			$this->setData($results[0]);
 		}
 
+	}
+
+	public static function inscricaoEmail($idinsc, $numsorte, $idpess, $nomepess, $email, $desperson, $desctemporada){
+
+		//$email = "lulufreitas08@hotmail.com";
+		//$user = "Luciano Freitas";
+		$assunto = "Inscrição Cursos Esportivos ".$desctemporada."";
+		$tplName = "comprovante-insc";
+		$link = "http://www.cursosesportivossbc.com.br/profile/insc/".$idinsc."";
+
+		/*
+		$mailer = new Mailer($data['desemail'], $data['desperson'], "Redefinir senha do Cursos Esportivos SBC", "forgot", array(
+                 "name"=>$data['desperson'],
+                 "link"=>$link
+        )); 
+		*/
+        $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
+                 "nomepess"=>$nomepess,
+                 "desperson"=>$desperson,
+                 "link"=>$link,
+                 "email"=>$email,
+                 "idinsc"=>$idinsc,
+                 "numsorte"=>$numsorte
+        )); 
+             
+        $emailEnviado = $mailer->send();        
+
+        if (!$emailEnviado)
+     	{
+
+        	Insc::setError("Não foi possivel enviar email");
+        	header("Location: /checkout");
+			exit();
+
+     	}
 	}
 
 	

@@ -66,6 +66,8 @@
           <!-- /.box-body -->
           <div class="box-footer">
             <button type="submit" class="btn btn-success">Cadastrar</button>
+            &nbsp&nbsp&nbsp&nbsp
+            <a type="button" class="btn btn-danger" href="/professor/temporada">Cancelar</a>
           </div>
         </form>
       </div>

@@ -146,7 +146,8 @@ $app->get("/checkout", function(){
 		'cart'=>$cart->getValues(),
 		'pessoa'=>$cart->getPessoa(),
 		'turma'=>$cart->getTurma(),
-		'error'=>Pessoa::getError()
+		'error'=>Pessoa::getError(),
+		'erroInsc'=>Insc::getError()
 	]);
 });
 
@@ -157,25 +158,34 @@ $app->post("/checkout", function(){
 	$user = User::getFromSession();
 	$cart = Cart::getFromSession();
 
-
 	$idcart = (int)$cart->getidcart();
 
-
 	$idtemporada = $_POST['idtemporada'];
-	$idturma = $_POST['idturma'];
-	//$numcpf = $_POST['numcpf'];
-
-	
+	$idturma = $_POST['idturma'];	
 
 	$cartsturmas = CartsTurmas::getCartsTurmasFromId($idcart);
 
-	$turma = new Turma();	
+	$turma = new Turma();
+
+	$pessoa = new Pessoa();
+
+	$temporada = new Temporada();
 	
-	$insc = new Insc();
-	
+	$insc = new Insc();	
+
+	$temporada->get((int)$idtemporada);
+
+	$desctemporada = $temporada->getdesctemporada();
 
 	$idpess= $cart->getidpess();
-	
+
+	$pessoa->get((int)$idpess);
+
+	$nomepess = $pessoa->getnomepess();
+
+	$email = $user->getdesemail();	
+
+	$desperson = $user->getdesperson();		
 	
 		$insc->setData([
 			'idcart'=>$idcart,
@@ -184,10 +194,16 @@ $app->post("/checkout", function(){
 			'idtemporada'=>$idtemporada	
 		]);
 
-		
-
-
 		$insc->save();
+
+		$idinsc = $insc->getidinsc();	
+
+		$numsorte = $insc->getnumsorte();	
+
+		//var_dump($numsorte." - ".$email." - ".$idpess." - ".$nomepess." - ".$idinsc);
+		//exit;
+
+		$insc->inscricaoEmail($idinsc, $numsorte, $idpess, $nomepess, $email, $desperson, $desctemporada);
 
 		//Turma::atualizaNumInscritos($idturma);
 		
@@ -197,7 +213,6 @@ $app->post("/checkout", function(){
 		
 		header("Location: /profile/insc/".$insc->getidinsc());
 		exit;	
-
 });
 
 /*
@@ -644,6 +659,7 @@ $app->get("/forgot", function() {
 	$page->setTpl("forgot");	
 });
 
+
 $app->post("/forgot", function($email){
 
 	$user = User::getForgot($_POST["email"], false);
@@ -690,6 +706,17 @@ $app->post("/forgot/reset", function(){
 
 	$page->setTpl("forgot-reset-success");
 });
+
+$app->get("/comprovante", function() {
+
+	$page = new Page([
+		"header"=>false,
+		"footer"=>false
+	]);
+
+	$page->setTpl("comprovante-insc");	
+});
+
 
 $app->get("/pessoa-create", function() {
 

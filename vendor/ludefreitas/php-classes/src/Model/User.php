@@ -619,6 +619,7 @@ class User extends Model {
 			INNER JOIN tb_pessoa d ON d.idpess = c.idpess
 			INNER JOIN tb_users e ON e.iduser = d.iduser
 			INNER JOIN tb_persons f ON f.idperson = e.idperson
+			INNER JOIN tb_temporada j ON j.idtemporada = a.idtemporada
 			WHERE e.iduser = :iduser
 		", [
 			':iduser'=>$this->getiduser()

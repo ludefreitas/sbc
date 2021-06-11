@@ -93,13 +93,13 @@ class Temporada extends Model {
 
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT idstatustemporada FROM tb_temporada WHERE idstatustemporada = :idstatustemporada AND idstatustemporada = 2", [
+		$results = $sql->select("SELECT idstatustemporada FROM tb_temporada WHERE idstatustemporada = :idstatustemporada AND idstatustemporada = 4", [
 			':idstatustemporada'=>$idstatustemporada 
 		]);
 
 		if($results){
-			Temporada::setError("Já existe uma temporada iniciada. Não pode existir mais de uma temporada iniciada.");
-			header("Location: /professor/temporada/create");
+			Temporada::setError("Já existe uma temporada com inscrição iniciada. Não pode existir mais de uma temporada com inscrição iniciada.");
+			header("Location: /professor/temporada");
 			exit;
 		}
 	}

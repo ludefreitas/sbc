@@ -106,6 +106,10 @@ $app->post("/professor/temporada/:idtemporada", function($idtemporada) {
 
 	$temporada->get((int)$idtemporada);
 
+	$idstatustemporada = $_POST['idstatustemporada'];
+
+	Temporada::temporadaStatusExiste($idstatustemporada);
+
 	$temporada->setData($_POST);
 
 	$temporada->save();
