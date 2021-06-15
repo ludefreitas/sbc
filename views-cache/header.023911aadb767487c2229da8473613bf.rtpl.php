@@ -309,9 +309,6 @@ desired effect
         <li>
           <a href="/professor/horario"><i class="fa fa-link"></i> <span>Horários</span></a>
         </li>
-        <li>
-          <a href="/professor/sorteio"><i class="fa fa-link"></i> <span>Sorteio</span></a>
-        </li>              
       </ul>
       <!-- /.sidebar-menu -->
     </section>

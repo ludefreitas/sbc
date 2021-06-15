@@ -11,26 +11,26 @@
 								   			</a>
 								   		</li>
 								   		<li>
-								   			<a href="/professor/sorteio2019">
+								   			<a href="/professor/sorteio2019/53">
 								   				<i class="fa fa-link"></i>
 								   				Sorteio 2019
 								   			</a>
 								   		</li>
 									</ul>
 								</li><li class="treeview">
-							   		<a href="/professor/turma-temporada/5">
+							   		<a href="/professor/turma-temporada/57">
 							   			<i class="fa fa-link"></i> 
 							   			Temporada - 2020
 							   		</a>
 							   		<ul class="treeview-menu">
 								   		<li>
-								   			<a href="/professor/turma-temporada/5">
+								   			<a href="/professor/turma-temporada/57">
 								   				<i class="fa fa-link"></i>
 								   				Turma/Temporada 2020
 								   			</a>
 								   		</li>
 								   		<li>
-								   			<a href="/professor/sorteio2020">
+								   			<a href="/professor/sorteio2020/57">
 								   				<i class="fa fa-link"></i>
 								   				Sorteio 2020
 								   			</a>
@@ -49,7 +49,7 @@
 								   			</a>
 								   		</li>
 								   		<li>
-								   			<a href="/professor/sorteio2021">
+								   			<a href="/professor/sorteio2021/4">
 								   				<i class="fa fa-link"></i>
 								   				Sorteio 2021
 								   			</a>

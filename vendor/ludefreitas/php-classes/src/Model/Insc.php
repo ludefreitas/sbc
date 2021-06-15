@@ -65,9 +65,7 @@ class Insc extends Model {
 			exit();
 
      	}
-	}
-
-	
+	}	
 
 	public function get($idinsc)
 	{
@@ -96,13 +94,9 @@ class Insc extends Model {
 		if (count($results) > 0) {
 			$this->setData($results[0]);
 		}
-
 	}
 
 	/*
-
-
-
 	public function getInscPessoa($idpess)
 	{
 
@@ -128,7 +122,6 @@ class Insc extends Model {
 		if (count($results) > 0) {
 			$this->setData($results[0]);
 		}
-
 	}
 	*/
 
@@ -290,6 +283,31 @@ class Insc extends Model {
 
 	}
 	
+	public function getInscByTurmaTemporada($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus
+
+			WHERE idturma = :idturma AND idtemporada = :idtemporada
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+
+
+			$this->setData($results);
+
+	}
+	
+
 }
 
 ?>

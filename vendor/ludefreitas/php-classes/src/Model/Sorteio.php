@@ -46,6 +46,48 @@ class Sorteio extends Model {
 		*/
 	}
 
+	public function createTableSorteio($temporada, $idtemporada){
+
+		$servername = "localhost";
+		$username = "root";
+		$password = "";
+		$dbname = "db_cursossbc";
+
+		try {
+    	$conn = new \PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    	// set the PDO error mode to exception
+    	$conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+
+    	// sql to create table
+    	$sql = "CREATE TABLE IF NOT EXISTS tb_sorteio".$temporada." (
+		  idsorteio int(11) NOT NULL AUTO_INCREMENT,
+		  idtemporada int(11) NOT NULL DEFAULT ".$idtemporada.",
+		  idstatussort int(11) NOT NULL DEFAULT 1,
+		  numerodeordem int(11) DEFAULT NULL,
+		  numerosortear int(11) NOT NULL,
+		  PRIMARY KEY (idsorteio),
+		  KEY fk_sorteio".$temporada."_sorteiostatus_idx (idstatussort),
+		  KEY fk_sorteio".$temporada."_sorteiotemporada_idx (idtemporada),
+		  CONSTRAINT fk_sorteio".$temporada."_sorteiostatus FOREIGN KEY (idstatussort) REFERENCES tb_sorteiostatus (idstatussort) ON DELETE NO ACTION ON UPDATE NO ACTION,
+		  CONSTRAINT fk_sorteio".$temporada."_sorteiotemporada FOREIGN KEY (idtemporada) REFERENCES tb_temporada (idtemporada) ON DELETE NO ACTION ON UPDATE NO ACTION
+		)ENGINE=InnoDB DEFAULT CHARSET=utf8";
+		
+
+   		// use exec() because no results are returned
+    	$conn->exec($sql);
+    	echo "Tabela Sorteio ".$temporada." criada com sucesso";
+    	
+    	}
+			catch(PDOException $e)
+    	{
+    		echo $sql . "<br>" . $e->getMessage();
+    	}
+
+		$conn = null;
+
+	}
+
+
 	public function excluiTabelaSorteio($desctemporada){
 
 		$servername = "localhost";
@@ -74,12 +116,7 @@ class Sorteio extends Model {
 
 		$conn = null;
 
-	}
-
-
-	// para chamar a função
-
-	
+	}	
 
 }
 

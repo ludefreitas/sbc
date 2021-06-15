@@ -420,13 +420,13 @@
                           </tr>
                           <tr>
                             <td class="body-text-cell">
-                              A <?php echo htmlspecialchars( $nomepess, ENT_COMPAT, 'UTF-8', FALSE ); ?> vai concorrer a uma vaga com o número - <strong style="font-size: 20px"><?php echo htmlspecialchars( $numsorte, ENT_COMPAT, 'UTF-8', FALSE ); ?>,</strong> caso tenha sorteio.
+                              O(A) <?php echo htmlspecialchars( $nomepess, ENT_COMPAT, 'UTF-8', FALSE ); ?> irá concorrer a uma vaga na turma com o número - <strong style="font-size: 20px; color: green;"><?php echo htmlspecialchars( $numsorte, ENT_COMPAT, 'UTF-8', FALSE ); ?>,</strong> caso tenha sorteio.
                             </td>
                             
                           </tr>
                           <tr>                            
                             <td class="body-text-cell">
-                              Clique no link abaixo, para conferir os detalhes <a href="<?php echo htmlspecialchars( $link, ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $link, ENT_COMPAT, 'UTF-8', FALSE ); ?></a>.
+                              Clique no link abaixo, para conferir os detalhes da inscrição <a href="<?php echo htmlspecialchars( $link, ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $link, ENT_COMPAT, 'UTF-8', FALSE ); ?></a>.
                             </td>
                           </tr>
                         </table>

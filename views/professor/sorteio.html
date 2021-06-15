@@ -2,11 +2,11 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Lista de Números sorteados
+    Lista de números do sorteio
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active"><a href="/professor/sorteio">Sorteio</a></li>
+    <li class="active"><a href="/professor/temporada">Temporadas</a></li>
   </ol>
 </section>
 
@@ -17,10 +17,27 @@
     <div class="col-md-12">
       <div class="box box-primary">
             
-            <div class="box-header">
-              <a href="/professor/sorteio" class="btn btn-success">Fazer novo sorteio</a>
-            </div>
+            
 
+            <div class="row">
+              <div class="col-md-12">
+
+                <div>
+                  {if="$temporada.maximoInscritos > 0"}
+                    <div class="alert alert-info" style="text-align: center;">
+                      Qtde de números para o sorteio: <h3 style="color: black;">{$temporada.maximoInscritos}</h3>
+                    </div> 
+                    <div style="text-align: center;">
+                      <a href="/professor/sorteio" class="btn btn-success btn-lg">Sortear</a>
+                    </div>                
+                  {else}
+                    <div class="alert alert-danger" style="text-align: center;">
+                      {$error}
+                    </div>
+                  {/if}                    
+                </div>                 
+              </div>              
+            </div>            
             <div class="box-body no-padding">
               <table class="table table-striped">
                 <thead>                 

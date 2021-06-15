@@ -105,47 +105,7 @@ class Temporada extends Model {
 	}
 
 	
-	public function createTable($temporada, $idtemporada){
-
-		$servername = "localhost";
-		$username = "root";
-		$password = "";
-		$dbname = "db_cursossbc";
-
-		try {
-    	$conn = new \PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    	// set the PDO error mode to exception
-    	$conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-
-    	// sql to create table
-    	$sql = "CREATE TABLE IF NOT EXISTS tb_sorteio".$temporada." (
-		  idsorteio int(11) NOT NULL AUTO_INCREMENT,
-		  idtemporada int(11) NOT NULL DEFAULT ".$idtemporada.",
-		  idstatussort int(11) NOT NULL DEFAULT 1,
-		  numerodeordem int(11) DEFAULT NULL,
-		  numerosortear int(11) NOT NULL,
-		  PRIMARY KEY (idsorteio),
-		  KEY fk_sorteio".$temporada."_sorteiostatus_idx (idstatussort),
-		  KEY fk_sorteio".$temporada."_sorteiotemporada_idx (idtemporada),
-		  CONSTRAINT fk_sorteio".$temporada."_sorteiostatus FOREIGN KEY (idstatussort) REFERENCES tb_sorteiostatus (idstatussort) ON DELETE NO ACTION ON UPDATE NO ACTION,
-		  CONSTRAINT fk_sorteio".$temporada."_sorteiotemporada FOREIGN KEY (idtemporada) REFERENCES tb_temporada (idtemporada) ON DELETE NO ACTION ON UPDATE NO ACTION
-		)ENGINE=InnoDB DEFAULT CHARSET=utf8";
-		
-
-   		// use exec() because no results are returned
-    	$conn->exec($sql);
-    	echo "Tabela Sorteio ".$temporada." criada com sucesso";
-    	
-    	}
-			catch(PDOException $e)
-    	{
-    		echo $sql . "<br>" . $e->getMessage();
-    	}
-
-		$conn = null;
-
-	}
-
+	
 
 	public function save()
 	{		
@@ -166,7 +126,7 @@ class Temporada extends Model {
 		$temporada = $results[0]['desctemporada'];	
 		$idtemporada = $results[0]['idtemporada'];			
 
-		Temporada::createTable($temporada, $idtemporada);	
+		Sorteio::createTableSorteio($temporada, $idtemporada);	
 
 		$this->setData($results[0]);
 
@@ -244,7 +204,7 @@ class Temporada extends Model {
 								   			</a>
 								   		</li>
 								   		<li>
-								   			<a href="/professor/sorteio'.$row['desctemporada'].'">
+								   			<a href="/professor/sorteio'.$row['desctemporada'].'/'.$row['idtemporada'].'">
 								   				<i class="fa fa-link"></i>
 								   				Sorteio '.$row['desctemporada'].'
 								   			</a>
@@ -366,6 +326,18 @@ class Temporada extends Model {
 				':idtemporada'=>$this->getidtemporada()
 			]);
 		}		
+	}
+
+	public function numMaxInscritos($idtemporada){
+
+		$sql = new Sql();
+		
+		$results =  $sql->select("SELECT MAX(numinscritos) as maximoInscritos FROM tb_turmatemporada WHERE idtemporada = :idtemporada", [
+			'idtemporada'=>$idtemporada
+		]);
+
+		return $results;
+		
 	}
 	
 	public function addTurma(Turma $turma)

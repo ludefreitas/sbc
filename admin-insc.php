@@ -4,6 +4,8 @@ use \Sbc\PageAdmin;
 use \Sbc\Model\User;
 use \Sbc\Model\Insc;
 use \Sbc\Model\Pessoa;
+use \Sbc\Model\Turma;
+use \Sbc\Model\Temporada;
 
 
 
@@ -204,6 +206,35 @@ $app->get("/professor/insc/pessoa/:idepess", function($idpess){
 		'pessoa'=>$pessoa->getValues()
 	]);
 
+});
+
+$app->get("/professor/insc-turma-temporada/:idturma/:idtemporada", function($idturma, $idtemporada) {
+
+	User::verifyLogin();
+
+	$insc = new Insc();
+	$turma = new Turma();
+	$temporada = new Temporada();
+
+	$temporada->get((int)$idtemporada);
+	$turma->get((int)$idturma);
+
+	$insc->getInscByTurmaTemporada($idturma, $idtemporada);
+
+	/*
+	echo '<pre>';
+	print_r($insc->getValues());
+	echo '</pre>';
+	exit();
+	*/
+
+	$page = new PageAdmin();	
+
+	$page->setTpl("insc-turma-temporada", [
+		'insc'=>$insc->getValues(),
+		'turma'=>$turma->getValues(),
+		'temporada'=>$temporada->getValues()
+	]);	
 });
 
 

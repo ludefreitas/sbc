@@ -3,11 +3,11 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-   Turmas relacionadas à Temporada {$temporada.desctemporada} - {$temporada.descstatustemporada}
+    {$turma.descturma} {$turma.diasemana}  {$turma.periodo} {$turma.apelidolocal} -   {$temporada.desctemporada}
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active"><a href="/professor/turma">Turmas</a></li>
+    <li class="active"><a href="/professor/turma-temporada/{$temporada.idtemporada}">Turmas por temporada</a></li>
   </ol>
 </section>
 
@@ -19,24 +19,21 @@
         <div class="box box-primary">
             
             <div class="box-header">
-
-              <a href="/professor/temporada/{$temporada.idtemporada}" class="btn btn-success">Editar Temporada</a>
-
-               <a href="/professor/temporada/{$temporada.idtemporada}/turma" class="btn btn-primary">Inserir ou remover turma</a>
-             
+           
             </div>
            
             <div class="box-body no-padding">
               <table class="table table-striped">
                 <thead>
                   <tr>
-                    <th>Descrição da turma</th>                    
-                    <th>Modalidade</th>
-                    <th>Faixa Etária</th>    
-                    <th>Professor</th>                  
-                    <th>Crec</th>
-                    <th>Espaço</th>
-                    <th>Horário  Dia Semana</th>
+                    <th>Nome do aluno</th> 
+                    <th>CPF</th> 
+                    <th>Data Nascimento</th>    
+                    <th>idade</th>
+                    <th>Nome do Responsável</th>                 
+                    <th>Telefone</th>
+                    <th>Data Inscrição</th>
+                    <th>Status Inscrição</th>
                     <th>Status</th>
                     <th >Vagas</th>
                     <th>Nº de inscritos</th>
@@ -44,21 +41,17 @@
                   </tr>
                 </thead>
                 <tbody>                  
-                  {loop="$turmaRelated"}
+                  {loop="$insc"}
                   <tr>
 
-                  
-                    <td>{$value.idturma} - {$value.descturma} - {$temporada.desctemporada}</br>{$value.periodo}</td>
-                     <td>{$value.descmodal}</td>
-                    <td>{$value.descrfxetaria} </br> {$value.initidade} a {$value.fimidade} anos</td>
-                    <td>{$value.desperson}</td>
-                    <td>{$value.apelidolocal}</td>
-                    <td>{$value.nomeespaco}</td>
-                    <td> {$value.diasemana} </br> {$value.horainicio} ás {$value.horatermino}  </td>
-                    <td>{$value.desstatus}</td>
-                    <td>{$value.vagas}</td>
-                    <td><a href="/professor/insc-turma-temporada/{$value.idturma}/{$value.idtemporada}">{$value.numinscritos}</a></td>
-                  
+                    <td>{$value.nomepess} </td>
+                    <td>{$value.numcpf} </td>                      
+                      <td>{function="formatDate($value.dtnasc)"} </td>
+                      <td>{function="calcularIdade($value.dtnasc)"}</td>
+                      <td>{$value.desperson} </td>
+                      <td>{$value.nrphone} </td>                                      
+                      <td>{function="formatDate($value.dtinsc)"} </td>                                      
+                       <td>{$value.descstatus} </td>                                      
                    
                   </tr>
                   {/loop}

@@ -6,29 +6,43 @@ use \Sbc\Model\Temporada;
 use \Sbc\Model\Sorteio;
 
 
-$app->get("/professor/sorteio:desctemporada", function($desctemporada) {
+$app->get("/professor/sorteio:desctemporada/:idtemporada", function($desctemporada, $idtemporada) {
+
+	User::verifyLogin();
+
+	$temporada = new Temporada();
+	$sorteio = new Sorteio();	
+
+	$sorteio = Sorteio::listAll($desctemporada);
+
+	$temporada = Temporada::numMaxInscritos($idtemporada);
+
+	$sort = Sorteio::sortear(3, 10, 5);
+
+	Temporada::setError("Não há inscrições para realizar o sorteio!");	
+
+	$page = new PageAdmin();
+
+	$page->setTpl("sorteio", [
+		'sorteio'=>$sorteio,
+		'temporada'=>$temporada[0],
+		'error'=>Temporada::getError()
+	]);
+});
+
+/*
+$app->post("/professor/sorteio:desctemporada", function($desctemporada) {
 
 	User::verifyLogin();
 
 	$temporada = new Temporada();
 	$sorteio = new Sorteio();
 
-	//$idtemporada = $temporada->getidtemporada();
 
 	$sorteio = Sorteio::listAll($desctemporada);	
 
-	//var_dump($sorteio);
-	//exit;
-
-	//Criar função getSorteio($desctemporada) na classe soretio
-
 
 	$sort = Sorteio::sortear(3, 10, 5);
-
-
-	//echo '<pre>';
-	//print_r($sort);
-	//echo '</pre';
 
 	$page = new PageAdmin();
 
@@ -38,5 +52,7 @@ $app->get("/professor/sorteio:desctemporada", function($desctemporada) {
 	
 	]);
 });
+
+*/
 
 ?>
