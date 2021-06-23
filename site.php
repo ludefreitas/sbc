@@ -268,20 +268,28 @@ $app->get("/profile/insc", function(){
 });
 	
 
-$app->get("/profile/insc/:idinsc", function($idinsc){
+$app->get("/profile/insc/:idinsc/:idepess", function($idinsc, $idpess){
 
 	User::verifyLogin(false);
 
 	$insc = new Insc();
 
-	$insc->get((int)$idinsc);	
+	$pessoa = new Pessoa();
+
+	$pessoa->get((int)$idpess); 
+
+	$insc->get((int)$idinsc);
+
+	//var_dump($pessoa);
+	//exit();
 
 	//$insc = Insc::getFromId($idinsc);
 
 	$page = new Page();
 
 	$page->setTpl("profile-insc-detail", [
-		'insc'=>$insc->getValues()
+		'insc'=>$insc->getValues(),
+		'pessoa'=>$pessoa->getValues()
 	]);	
 
 });
@@ -730,7 +738,7 @@ $app->get("/pessoa-create", function() {
 		$page = new Page();
 
 		$page->setTpl("pessoa-create", [
-			'error'=>User::getError(),
+			//'error'=>User::getError(),
 			'errorRegister'=>User::getErrorRegister(),
 			'registerValues'=>(isset($_SESSION['registerValues'])) ? $_SESSION['registerValues'] : ['nomepess'=>'', 'dtnasc'=>'', 'numcpf'=>'', 'numrg'=>'', 'numsus'=>'', 'cadunico'=>'', 'nomemae'=>'', 'cpfmae'=>'', 'nomepai'=>'', 'cpfpai'=>'']
 		]);

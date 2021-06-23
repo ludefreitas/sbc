@@ -76,12 +76,11 @@ class Insc extends Model {
 			SELECT * 
 			FROM tb_insc a 
 			INNER JOIN tb_inscstatus b USING(idinscstatus) 
-			INNER JOIN tb_carts c USING(idcart)			
-			INNER JOIN tb_pessoa d ON d.idpess = c.idpess
+			INNER JOIN tb_carts c USING(idcart)	
+            INNER JOIN tb_turma d USING(idturma) 
 			INNER JOIN tb_users e ON e.iduser = d.iduser
-			INNER JOIN tb_persons f ON f.idperson = e.iduser
-			INNER JOIN tb_temporada g USING(idtemporada) 
-			INNER JOIN tb_turma h USING(idturma) 
+			INNER JOIN tb_persons f ON f.idperson = e.idperson
+			INNER JOIN tb_temporada g USING(idtemporada) 			
 			INNER JOIN tb_horario USING(idhorario)
 			INNER JOIN tb_espaco USING(idespaco)
 			INNER JOIN tb_local USING(idlocal)

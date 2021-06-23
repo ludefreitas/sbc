@@ -144,7 +144,7 @@ $app->get("/insc/:idinsc", function($idinsc) {
 });
 */
 
-$app->get("/professor/profile/insc/:idinsc", function($idinsc){
+$app->get("/professor/profile/insc/:idinsc/:idpess", function($idinsc, $idpess){
 
 	User::verifyLogin();
 
@@ -152,12 +152,17 @@ $app->get("/professor/profile/insc/:idinsc", function($idinsc){
 
 	$insc->get((int)$idinsc);	
 
+	$pessoa = new Pessoa();
+
+	$pessoa->get((int)$idpess);	
+
 	//$insc = Insc::getFromId($idinsc);
 
 	$page = new PageAdmin();
 
 	$page->setTpl("insc-detail", [
-		'insc'=>$insc->getValues()
+		'insc'=>$insc->getValues(),
+		'pessoa'=>$pessoa->getValues()
 	]);	
 
 });

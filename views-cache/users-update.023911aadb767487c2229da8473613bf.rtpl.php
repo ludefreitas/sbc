@@ -25,6 +25,10 @@
               <input type="text" class="form-control" id="desperson" name="desperson" placeholder="Digite o nome" value="<?php echo htmlspecialchars( $user["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
             <div class="form-group">
+              <label for="apelidoperson">Apelido</label>
+              <input type="text" class="form-control" id="apelidoperson" name="apelidoperson" placeholder="Digite o apelido" value="<?php echo htmlspecialchars( $user["apelidoperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+            </div>
+            <div class="form-group">
               <label for="deslogin">Login</label>
               <input type="text" class="form-control" id="deslogin" name="deslogin" placeholder="Digite o login"  value="<?php echo htmlspecialchars( $user["deslogin"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>

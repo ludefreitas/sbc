@@ -1,10 +1,22 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
 <div class="container">
     <div class="row">
-        <div class="col-md-12 alert alert-primary">
-            <h5>Nome do aluno: <?php echo htmlspecialchars( $insc["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> -  <?php echo calcularIdade($insc["dtnasc"]); ?> anos </h5>
-            Número para concorrer no sorteio: <span style="font-weight: bold; font-size: 20px; color: red">&nbsp;<?php echo htmlspecialchars( $insc["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span> 
+        <div class="col-md-12">
+            <div class="row">            
+                <div class="col-md-7 alert alert-primary">
+                    <h5>Nome do aluno: <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> -  <?php echo calcularIdade($pessoa["dtnasc"]); ?> anos </h5>
+                    <h5>Inscrição Nº <?php echo htmlspecialchars( $insc["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h5>
+                    
+                </div>
+                <div class="col-md-5 alert alert-success">
+                   
+                       <p><h5 style="text-align: center"> Nº para concorrer no sorteio: </h5></p>
+                       <p><h3 style="color: red; text-align-last: center"><?php echo htmlspecialchars( $insc["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h3> </p>
+                </div> 
+                
+            </div>              
         </div>
+        
     </div>
     <div class="row">
         <div class="col-md-3" style="padding-top: 10px">
@@ -27,7 +39,7 @@
             <strong>Professor: </strong>
         </div>
         <div class="col-md-9 alert alert-success">
-            <strong><?php echo htmlspecialchars( $insc["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
+            <strong><?php echo htmlspecialchars( $insc["apelidoperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
         </div>
     </div>
     <div class="row">

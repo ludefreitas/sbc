@@ -34,9 +34,11 @@
                     <th>Telefone</th>
                     <th>Data Inscrição</th>
                     <th>Status Inscrição</th>
+                    
                     <th>Status</th>
                     <th >Vagas</th>
                     <th>Nº de inscritos</th>
+                    <th></th>
                     
                   </tr>
                 </thead>
@@ -51,7 +53,12 @@
                       <td><?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </td>
                       <td><?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </td>                                      
                       <td><?php echo formatDate($value1["dtinsc"]); ?> </td>                                      
-                       <td><?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </td>                                      
+                       <td> </td> 
+                       <td> </td> 
+                       <td> </td>                        
+                       <td>
+                          <a class="btn btn-info" href="/professor/profile/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" role="button">Detalhes</a>
+                       </td>                                     
                    
                   </tr>
                   <?php } ?>

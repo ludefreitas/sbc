@@ -34,9 +34,11 @@
                     <th>Telefone</th>
                     <th>Data Inscrição</th>
                     <th>Status Inscrição</th>
+                    
                     <th>Status</th>
                     <th >Vagas</th>
                     <th>Nº de inscritos</th>
+                    <th></th>
                     
                   </tr>
                 </thead>
@@ -51,7 +53,12 @@
                       <td>{$value.desperson} </td>
                       <td>{$value.nrphone} </td>                                      
                       <td>{function="formatDate($value.dtinsc)"} </td>                                      
-                       <td>{$value.descstatus} </td>                                      
+                       <td> </td> 
+                       <td> </td> 
+                       <td> </td>                        
+                       <td>
+                          <a class="btn btn-info" href="/professor/profile/insc/{$value.idinsc}/{$value.idpess}" role="button">Detalhes</a>
+                       </td>                                     
                    
                   </tr>
                   {/loop}

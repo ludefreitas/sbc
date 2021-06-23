@@ -1,4 +1,23 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?><li class="treeview">
+							   		<a href="/professor/turma-temporada/58">
+							   			<i class="fa fa-link"></i> 
+							   			Temporada - 2016
+							   		</a>
+							   		<ul class="treeview-menu">
+								   		<li>
+								   			<a href="/professor/turma-temporada/58">
+								   				<i class="fa fa-link"></i>
+								   				Turma/Temporada 2016
+								   			</a>
+								   		</li>
+								   		<li>
+								   			<a href="/professor/sorteio2016/58">
+								   				<i class="fa fa-link"></i>
+								   				Sorteio 2016
+								   			</a>
+								   		</li>
+									</ul>
+								</li><li class="treeview">
 							   		<a href="/professor/turma-temporada/53">
 							   			<i class="fa fa-link"></i> 
 							   			Temporada - 2019
