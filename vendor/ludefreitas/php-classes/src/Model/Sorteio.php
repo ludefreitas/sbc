@@ -9,7 +9,9 @@ use \Sbc\Mailer;
 class Sorteio extends Model {
 
 
-	public function sortear($min, $max, $count){
+	public function sortear($max, $count, $idtemporada){
+
+		$min = 1;
 
 		$numsGerados = range($min, $max);
 		shuffle($numsGerados);
@@ -18,33 +20,42 @@ class Sorteio extends Model {
 
 		for($i=0; $i < $count; $i++) { 
 			array_push($response, $numsGerados[$i]);
+
+			$sql = new Sql();
+
+			//var_dump($desctemporada.' - '.)
+
+			$sql->query("INSERT INTO tb_sorteio (idtemporada, idstatussort, numerodeordem, numerosortear) VALUES(:idtemporada, :idstatussort, :numerodeordem, :numerosortear)", [
+			':idtemporada'=>$idtemporada,
+			':idstatussort'=>2,
+			':numerodeordem'=>$i + 1,
+			':numerosortear'=>$numsGerados[$i]
+			]);
+
 		}
 
-
-
+		//var_dump($sql);
+		//	exit();
 		return $response;
 	}
 
-	public function listAll($desctemporada){
+	public function listAll($idtemporada){
 
 		$sql = new Sql();
 
 		//var_dump($desctemporada);
 		//exit;
 
-		$results =  $sql->select("SELECT * FROM tb_sorteio".$desctemporada."");
+		$results = $sql->select(
+			"SELECT * FROM tb_sorteio			
+			WHERE idtemporada = :idtemporada", [
+			':idtemporada'=>$idtemporada			
+		]);		
 
-		return $results;
-
-		/*
-
-		if (count($results) > 0) {
-
-			$this->setData($results[0]);
-
-		}		
-		*/
+		return $results;		
 	}
+
+	/*
 
 	public function createTableSorteio($temporada, $idtemporada){
 
@@ -87,6 +98,11 @@ class Sorteio extends Model {
 
 	}
 
+	*/
+
+
+	/*
+
 
 	public function excluiTabelaSorteio($desctemporada){
 
@@ -116,7 +132,9 @@ class Sorteio extends Model {
 
 		$conn = null;
 
-	}	
+	}
+
+	*/	
 
 }
 

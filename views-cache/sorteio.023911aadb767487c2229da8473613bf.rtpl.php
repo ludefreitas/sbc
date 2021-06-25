@@ -6,7 +6,7 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active"><a href="/professor/temporada">Temporadas</a></li>
+    <li class="active"><a href="/professor/turma-temporada/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">Temporada <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a></li>
   </ol>
 </section>
 
@@ -22,38 +22,61 @@
             <div class="row">
               <div class="col-md-12">
 
+                
+
+                <form method="post" action="/professor/sortear">
                 <div>
-                  <?php if( $temporada["maximoInscritos"] > 0 ){ ?>
+                  <?php if( $maxIncritosTemporada["maximoInscritos"] > 0 ){ ?>
                     <div class="alert alert-info" style="text-align: center;">
-                      Qtde de números para o sorteio: <h3 style="color: black;"><?php echo htmlspecialchars( $temporada["maximoInscritos"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h3>
+                      Qtde de números para o sorteio: <h3 style="color: black;"><?php echo htmlspecialchars( $maxIncritosTemporada["maximoInscritos"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h3>
                     </div> 
+
+                    <?php if( $temporada["idstatustemporada"] == 3 ){ ?>
                     <div style="text-align: center;">
-                      <a href="/professor/sorteio" class="btn btn-success btn-lg">Sortear</a>
-                    </div>                
+
+                      <input type="hidden" name="desctemporada" value="<?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" >
+                      <input type="hidden" name="idtemporada" value="<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                      <input type="hidden" name="maxIncritosTemporada" value="<?php echo htmlspecialchars( $maxIncritosTemporada["maximoInscritos"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                      
+                      <input type="submit" name="sortear" value="Realizar Sorteio" class="btn btn-success btn-lg">
+                     
+                    </div> 
+                    <?php }else{ ?>
+                    <div style="text-align: center;">
+
+                      <input type="hidden" name="desctemporada" value="<?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" >
+                      <input type="hidden" name="idtemporada" value="<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                      <input type="hidden" name="maxIncritosTemporada" value="<?php echo htmlspecialchars( $maxIncritosTemporada["maximoInscritos"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                      
+                      <input type="submit" disabled="true" name="sortear" value="Realizar Sorteio" class="btn btn-success btn-lg">
+                     
+                    </div>     
+                    <?php } ?>
+
                   <?php }else{ ?>
                     <div class="alert alert-danger" style="text-align: center;">
                       <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
                     </div>
                   <?php } ?>                    
-                </div>                 
+                </div>   
+                </form>              
               </div>              
             </div>            
             <div class="box-body no-padding">
               <table class="table table-striped">
                 <thead>                 
                   <tr>
-                    <th>ordem do sorteio</th>
-                    <th>numero da sorte</th>
-                    <th style="width: 240px">&nbsp;</th>
+                    <th><h5>Ordem</h5> <h5>do Sorteio</h5></th>
+                    <th><h5>Número</h5> <h5>sorteado</h5></th>
                   </tr>
                   <tr>
-                    <th style="width: 240px">&nbsp;</th>
+                    <th style="width: 120px"></th>
                   </tr>                 
                 </thead>
                 <tbody>
                    <?php $counter1=-1;  if( isset($sorteio) && ( is_array($sorteio) || $sorteio instanceof Traversable ) && sizeof($sorteio) ) foreach( $sorteio as $key1 => $value1 ){ $counter1++; ?>
                   <tr>                    
-                    <td><?php echo htmlspecialchars( $value1["numerodeordem"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                    <td><?php echo htmlspecialchars( $value1["numerodeordem"], ENT_COMPAT, 'UTF-8', FALSE ); ?>º</td>
                     <td><?php echo htmlspecialchars( $value1["numerosortear"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                   </tr>
                    <?php } ?>

@@ -11,9 +11,28 @@
 								   			</a>
 								   		</li>
 								   		<li>
-								   			<a href="/professor/sorteio2016/58">
+								   			<a href="/professor/sorteio/58">
 								   				<i class="fa fa-link"></i>
 								   				Sorteio 2016
+								   			</a>
+								   		</li>
+									</ul>
+								</li><li class="treeview">
+							   		<a href="/professor/turma-temporada/59">
+							   			<i class="fa fa-link"></i> 
+							   			Temporada - 2017
+							   		</a>
+							   		<ul class="treeview-menu">
+								   		<li>
+								   			<a href="/professor/turma-temporada/59">
+								   				<i class="fa fa-link"></i>
+								   				Turma/Temporada 2017
+								   			</a>
+								   		</li>
+								   		<li>
+								   			<a href="/professor/sorteio/59">
+								   				<i class="fa fa-link"></i>
+								   				Sorteio 2017
 								   			</a>
 								   		</li>
 									</ul>
@@ -30,7 +49,7 @@
 								   			</a>
 								   		</li>
 								   		<li>
-								   			<a href="/professor/sorteio2019/53">
+								   			<a href="/professor/sorteio/53">
 								   				<i class="fa fa-link"></i>
 								   				Sorteio 2019
 								   			</a>
@@ -49,7 +68,7 @@
 								   			</a>
 								   		</li>
 								   		<li>
-								   			<a href="/professor/sorteio2020/57">
+								   			<a href="/professor/sorteio/57">
 								   				<i class="fa fa-link"></i>
 								   				Sorteio 2020
 								   			</a>
@@ -68,7 +87,7 @@
 								   			</a>
 								   		</li>
 								   		<li>
-								   			<a href="/professor/sorteio2021/4">
+								   			<a href="/professor/sorteio/4">
 								   				<i class="fa fa-link"></i>
 								   				Sorteio 2021
 								   			</a>

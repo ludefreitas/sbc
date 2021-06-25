@@ -126,7 +126,7 @@ class Temporada extends Model {
 		$temporada = $results[0]['desctemporada'];	
 		$idtemporada = $results[0]['idtemporada'];			
 
-		Sorteio::createTableSorteio($temporada, $idtemporada);	
+		//Sorteio::createTableSorteio($temporada, $idtemporada);	
 
 		$this->setData($results[0]);
 
@@ -204,7 +204,7 @@ class Temporada extends Model {
 								   			</a>
 								   		</li>
 								   		<li>
-								   			<a href="/professor/sorteio'.$row['desctemporada'].'/'.$row['idtemporada'].'">
+								   			<a href="/professor/sorteio/'.$row['idtemporada'].'">
 								   				<i class="fa fa-link"></i>
 								   				Sorteio '.$row['desctemporada'].'
 								   			</a>
