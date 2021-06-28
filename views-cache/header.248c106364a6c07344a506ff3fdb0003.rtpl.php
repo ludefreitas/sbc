@@ -198,6 +198,7 @@
 
               <div class="col-md-4" col-sm-1 style="text-align: center; margin: 50px 0px 15px 0px;">
                   <span style="font-size: 30px; ">Cursos Esportivos SBC</span>
+
               </div>
 
               <div class="col-md-4" style="text-align: center; margin: 50px 0px 15px 0px;">
@@ -214,11 +215,16 @@
                             <a class="" style="padding: 10px;" mr-4 href="#">Cursos Esportivos</a>
 
               </div>
-
+              
             </div>
-          </div>  
+            <hr>
+          </div> 
+          <hr>
 
           <div class="container"> <!-- container 1 -->
             <div class="row"> <!-- row 2 -->
 
+
+
               <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
+

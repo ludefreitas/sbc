@@ -186,10 +186,16 @@ $app->post("/checkout", function(){
 	$email = $user->getdesemail();	
 
 	$desperson = $user->getdesperson();		
+
+	if(Insc::statusTemporadaMatriculaIniciada($idtemporada)){
+		$InscStatus = InscStatus::AGUARDANDO_SORTEIO;
+	}else{
+		$InscStatus = InscStatus::AGURADANDO_MATRICULA;
+	}
 	
 		$insc->setData([
 			'idcart'=>$idcart,
-			'idinscstatus'=>InscStatus::AGUARDANDO_SORTEIO,
+			'idinscstatus'=>$InscStatus,
 			'idturma'=>$idturma,
 			'idtemporada'=>$idtemporada	
 		]);
@@ -971,7 +977,8 @@ $app->get("/modalidade/:idmodal", function($idmodal){
 	$pages = [];
 
 	for ($i=1; $i <= $pagination['pages']; $i++) { 
-		array_push($pages, [
+		array_push($pages, 
+		[
 			'link'=>'/modalidade/'.$modalidade->getidmodal().'?page='.$i,
 			'page'=>$i
 		]);
@@ -1054,10 +1061,8 @@ $app->post("/endereco", function() {
 
 	$endereco = new Endereco(); 
 
-	$menor = '09600000';
-	$maior = '09899999';
-
-	
+	$cepMenor = '09600000';
+	$cepMaior = '09899999';	
 
 	if (!isset($_POST['cep']) || $_POST['cep'] == '') {
 		Endereco::setMsgError("Digite o número do cep.");
@@ -1065,7 +1070,7 @@ $app->post("/endereco", function() {
 		exit;		
 	}
 
-	if (($_POST['cep']) < $menor || ($_POST['cep']) > $maior){
+	if (($_POST['cep']) < $cepMenor || ($_POST['cep']) > $cepMaior){
 
 		Endereco::setMsgError("Cep inválido ou não cadastrado");
 		header("Location: /endereco");

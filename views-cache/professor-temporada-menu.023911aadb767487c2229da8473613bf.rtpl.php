@@ -18,25 +18,6 @@
 								   		</li>
 									</ul>
 								</li><li class="treeview">
-							   		<a href="/professor/turma-temporada/59">
-							   			<i class="fa fa-link"></i> 
-							   			Temporada - 2017
-							   		</a>
-							   		<ul class="treeview-menu">
-								   		<li>
-								   			<a href="/professor/turma-temporada/59">
-								   				<i class="fa fa-link"></i>
-								   				Turma/Temporada 2017
-								   			</a>
-								   		</li>
-								   		<li>
-								   			<a href="/professor/sorteio/59">
-								   				<i class="fa fa-link"></i>
-								   				Sorteio 2017
-								   			</a>
-								   		</li>
-									</ul>
-								</li><li class="treeview">
 							   		<a href="/professor/turma-temporada/53">
 							   			<i class="fa fa-link"></i> 
 							   			Temporada - 2019

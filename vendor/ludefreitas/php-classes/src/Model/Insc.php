@@ -293,16 +293,34 @@ class Insc extends Model {
 			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
-			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus
-
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
 			WHERE idturma = :idturma AND idtemporada = :idtemporada
+			ORDER BY a.idinscstatus
 		", [
 			':idturma'=>$idturma,
 			':idtemporada'=>$idtemporada
 		]);
 
-
 			$this->setData($results);
+	}
+
+	public function statusTemporadaMatriculaIniciada($idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT idstatustemporada
+			FROM tb_temporada 					
+			WHERE idtemporada = :idtemporada AND idstatustemporada = 4
+		", [
+			':idtemporada'=>$idtemporada
+		]);
+
+		if (count($results) > 0) {			
+			return true;
+		}else{
+			return false;
+		}
 
 	}
 	

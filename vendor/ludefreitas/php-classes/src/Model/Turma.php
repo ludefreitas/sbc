@@ -42,7 +42,11 @@ class Turma extends Model {
 	}
 
 	public static function listAllTurmaTemporada()
+
 	{
+		$idStatusTemporadaInscricaoIniciada = 4;
+		$idStatusTemporadaMatriculaIniciada = 6;
+
 		$sql = new Sql();
 
 		return $sql->select("SELECT * 
@@ -71,9 +75,13 @@ class Turma extends Model {
 			using(idstatustemporada)
 			INNER JOIN tb_modalidade m         
 			using(idmodal)
-      		WHERE idstatustemporada = 4
+      		WHERE idstatustemporada = :idStatusTemporadaInscricaoIniciada OR idstatustemporada = :idStatusTemporadaMatriculaIniciada
 			-- ORDER BY a.descturma
-			ORDER BY RAND()");
+			ORDER BY RAND()", [
+				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
+				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada
+
+			]);
 	}
 
 

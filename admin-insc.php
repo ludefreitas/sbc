@@ -35,8 +35,8 @@ $app->get("/professor/insc", function() {
 
 		array_push($pages, [
 			'href'=>'/professor/insc?'.http_build_query([
-				'page'=>$x+1,
-				'search'=>$search
+			'page'=>$x+1,
+			'search'=>$search
 			]),
 			'text'=>$x+1
 		]);

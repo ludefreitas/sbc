@@ -8,7 +8,6 @@ use \Sbc\Mailer;
 
 class StatusTemporada extends Model {
 
-
 	public static function listAll()
 	{
 		$sql = new Sql();

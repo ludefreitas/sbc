@@ -53,7 +53,7 @@
                       <td><?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </td>
                       <td><?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </td>                                      
                       <td><?php echo formatDate($value1["dtinsc"]); ?> </td>                                      
-                       <td> </td> 
+                       <td><?php echo htmlspecialchars( $value1["idinscstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </td> 
                        <td> </td> 
                        <td> </td>                        
                        <td>

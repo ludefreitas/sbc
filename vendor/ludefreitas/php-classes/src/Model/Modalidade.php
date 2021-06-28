@@ -158,7 +158,7 @@ class Modalidade extends Model {
 
 
 	
-	public function getTurmaModalidadePage($page = 1, $itemsPerPage = 4)
+	public function getTurmaModalidadePage($page = 1, $itemsPerPage = 100)
 	{
 
 		$start = ($page - 1) * $itemsPerPage;

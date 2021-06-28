@@ -1,4 +1,19 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
+<div class="container" style="margin: 0px px 0px 0px; ">
+  <div class="row" style="margin: -5px -20px 0px -5px; ">
+
+  
+  <div class="col-md-12" style="text-align-last: left; background-color:#0f71b3; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;"> 
+    <a href="/locais">           
+      <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 14px; font-style: normal; margin: 10px 5px 10px 5px; ">                                               
+          Selecione aqui um local para para praticar uma atividade.
+      </div>
+    </a>
+  </div> 
+
+  </div>
+</div>
+
 <?php $counter1=-1;  if( isset($locais) && ( is_array($locais) || $locais instanceof Traversable ) && sizeof($locais) ) foreach( $locais as $key1 => $value1 ){ $counter1++; ?>
 <a href="/local/<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="text-decoration: none">
   <div class="container"> <!-- container 3 -->

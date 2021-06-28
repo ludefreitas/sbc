@@ -91,14 +91,19 @@ class Temporada extends Model {
 
 	public function temporadaStatusExiste($idstatustemporada){
 
+		$idtemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
+		$idtemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
+
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT idstatustemporada FROM tb_temporada WHERE idstatustemporada = :idstatustemporada AND idstatustemporada = 4", [
-			':idstatustemporada'=>$idstatustemporada 
+		$results = $sql->select("SELECT idstatustemporada FROM tb_temporada WHERE idstatustemporada = :idstatustemporada AND idstatustemporada = :idtemporadaInscricaoIniciada OR :idtemporadaMatriculaIniciada ", [
+			':idstatustemporada'=>$idstatustemporada,
+			'idtemporadaInscricaoIniciada'=>$idtemporadaInscricaoIniciada,
+			'idtemporadaMatriculaIniciada '=>$idtemporadaMatriculaIniciada
 		]);
 
 		if($results){
-			Temporada::setError("Já existe uma temporada com inscrição iniciada. Não pode existir mais de uma temporada com inscrição iniciada.");
+			Temporada::setError("Já existe uma temporada com inscrição ou matrícula iniciada. Não pode existir mais de uma temporada com inscrição ou matrícula iniciada.");
 			header("Location: /professor/temporada");
 			exit;
 		}
