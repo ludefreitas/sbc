@@ -8,6 +8,9 @@ use \Sbc\Mailer;
 
 class Faixaetaria extends Model {
 
+	const SESSION = "Faixaetaria";
+	const SESSION_ERROR = "FaixaetariaError";
+
 
 	public static function listAll()
 	{
@@ -58,7 +61,16 @@ class Faixaetaria extends Model {
 		$results = $sql->select("SELECT * FROM tb_fxetaria WHERE idfxetaria = :idfxetaria", [':idfxetaria'=>$idfxetaria 
 		]);
 
-		$this->setData($results[0]);
+		if($results){
+
+			$this->setData($results[0]);		
+
+		}else{
+
+			Faixaetaria::setMsgError("Faixa etária selecionada não existe!");
+			header("Location: /professor/faixaetaria");
+			exit();			
+		}				
 		
 	}
 
@@ -136,6 +148,46 @@ class Faixaetaria extends Model {
 			'total'=>(int)$resultTotal[0]["nrtotal"],
 			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
 		];
+
+	}
+
+	public static function setMsgError($msg)
+	{
+		$_SESSION[Faixaetaria::SESSION_ERROR] = $msg;
+	}
+
+	public static function getMsgError(){
+
+		$msg = (isset($_SESSION[Faixaetaria::SESSION_ERROR])) ? $_SESSION[Faixaetaria::SESSION_ERROR] : "";
+
+		Faixaetaria::clearMsgError();
+
+		return $msg;
+	}
+
+	public static function clearMsgError()
+	{
+		$_SESSION[Faixaetaria::SESSION_ERROR] = NULL;
+	}
+
+	public static function setMsgSuccess($msg)
+	{
+		$_SESSION[Faixaetaria::SUCCESS] = $msg;
+	}
+
+	public static function getMsgSuccess()
+	{
+		$msg = (isset($_SESSION[Faixaetaria::SUCCESS]) && $_SESSION[Faixaetaria::SUCCESS]) ? $_SESSION[Faixaetaria::SUCCESS] : '';
+
+		Faixaetaria::clearMsgSuccess();
+
+		return $msg;
+	}
+
+	public static function clearMsgSuccess()
+	{
+
+		$_SESSION[Faixaetaria::SUCCESS] = NULL;
 
 	}
 

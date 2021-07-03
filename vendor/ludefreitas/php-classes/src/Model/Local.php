@@ -8,6 +8,8 @@ use \Sbc\Mailer;
 
 class Local extends Model {
 
+	const SESSION = "Local";
+	const SESSION_ERROR = "LocalError";
 
 	public static function listAll()
 	{
@@ -48,7 +50,16 @@ class Local extends Model {
 		$results = $sql->select("SELECT * FROM tb_local WHERE idlocal = :idlocal", [':idlocal'=>$idlocal 
 		]);
 
-		$this->setData($results[0]);
+		if($results){
+
+			$this->setData($results[0]);		
+
+		}else{
+
+			Local::setMsgError("Crec selecionado não encontrado!");
+			header("Location: /professor/local");
+			exit();			
+		}		
 		
 	}
 
@@ -234,6 +245,46 @@ class Local extends Model {
 			':idespaco'=>$espaco->getidespaco()
 		]);
 	}	
+
+	public static function setMsgError($msg)
+	{
+		$_SESSION[Local::SESSION_ERROR] = $msg;
+	}
+
+	public static function getMsgError(){
+
+		$msg = (isset($_SESSION[Local::SESSION_ERROR])) ? $_SESSION[Local::SESSION_ERROR] : "";
+
+		Local::clearMsgError();
+
+		return $msg;
+	}
+
+	public static function clearMsgError()
+	{
+		$_SESSION[Local::SESSION_ERROR] = NULL;
+	}
+
+	public static function setMsgSuccess($msg)
+	{
+		$_SESSION[Local::SUCCESS] = $msg;
+	}
+
+	public static function getMsgSuccess()
+	{
+		$msg = (isset($_SESSION[Local::SUCCESS]) && $_SESSION[Local::SUCCESS]) ? $_SESSION[Local::SUCCESS] : '';
+
+		Local::clearMsgSuccess();
+
+		return $msg;
+	}
+
+	public static function clearMsgSuccess()
+	{
+
+		$_SESSION[Local::SUCCESS] = NULL;
+
+	}
 }
 
 

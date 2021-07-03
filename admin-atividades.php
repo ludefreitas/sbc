@@ -63,7 +63,8 @@ $app->get("/professor/atividade", function() {
 	$page->setTpl("atividade", array( // aqui temos um array com muitos arrays
 		"atividade"=>$pagination['data'],
 		"search"=>$search,
-		"pages"=>$pages
+		"pages"=>$pages,
+		"error"=>Atividade::getMsgError()
 	));
 });
 

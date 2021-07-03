@@ -25,7 +25,6 @@
                     </span>
                 </label>
                 <input style="width: 100%; float: right;" type="text" id="nomepess" name="nomepess" class="input-text" value="<?php echo htmlspecialchars( $registerValues["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" placeholder="Informe o nome completo">                
-                
                 <label for="dtnasc">
                     <br>Data do Nascimento
                     <span class="required">

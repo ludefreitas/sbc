@@ -8,6 +8,8 @@ use \Sbc\Mailer;
 
 class Horario extends Model {
 
+	const SESSION = "Horario";
+	const SESSION_ERROR = "HorarioError";
 
 	public static function listAll()
 	{
@@ -60,7 +62,16 @@ class Horario extends Model {
 			':idhorario'=>$idhorario 
 		]);
 
-		$this->setData($results[0]);
+		if($results){
+
+			$this->setData($results[0]);		
+
+		}else{
+
+			Horario::setMsgError("Horario selecionado não encontrado!");
+			header("Location: /professor/horario");
+			exit();			
+		}				
 		
 	}
 
@@ -139,6 +150,46 @@ class Horario extends Model {
 			'total'=>(int)$resultTotal[0]["nrtotal"],
 			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
 		];
+
+	}
+
+	public static function setMsgError($msg)
+	{
+		$_SESSION[Horario::SESSION_ERROR] = $msg;
+	}
+
+	public static function getMsgError(){
+
+		$msg = (isset($_SESSION[Horario::SESSION_ERROR])) ? $_SESSION[Horario::SESSION_ERROR] : "";
+
+		Horario::clearMsgError();
+
+		return $msg;
+	}
+
+	public static function clearMsgError()
+	{
+		$_SESSION[Horario::SESSION_ERROR] = NULL;
+	}
+
+	public static function setMsgSuccess($msg)
+	{
+		$_SESSION[Horario::SUCCESS] = $msg;
+	}
+
+	public static function getMsgSuccess()
+	{
+		$msg = (isset($_SESSION[Horario::SUCCESS]) && $_SESSION[Horario::SUCCESS]) ? $_SESSION[Horario::SUCCESS] : '';
+
+		Horario::clearMsgSuccess();
+
+		return $msg;
+	}
+
+	public static function clearMsgSuccess()
+	{
+
+		$_SESSION[Horario::SUCCESS] = NULL;
 
 	}
 

@@ -51,7 +51,8 @@ $app->get("/professor/insc", function() {
 	$page->setTpl("insc", array( // aqui temos um array com muitos arrays
 		"insc"=>$pagination['data'],
 		"search"=>$search,
-		"pages"=>$pages
+		"pages"=>$pages,
+		"error"=>User::getError()
 	));
 });
 
@@ -112,6 +113,7 @@ $app->get("/professor/insc/:idinsc", function($idinsc) {
 });
 */
 
+/*
 $app->post("/professor/insc/:idinsc", function($idinsc) {
 
 	User::verifyLogin();
@@ -127,6 +129,7 @@ $app->post("/professor/insc/:idinsc", function($idinsc) {
 	header("Location: /professor/insc");
 	exit();		
 });
+*/
 
 /*
 $app->get("/insc/:idinsc", function($idinsc) {
@@ -150,7 +153,21 @@ $app->get("/professor/profile/insc/:idinsc/:idpess", function($idinsc, $idpess){
 
 	$insc = new Insc();
 
-	$insc->get((int)$idinsc);	
+	$insc->get((int)$idinsc);
+
+	if( !$insc->getidinsc()){
+
+		User::setError("Inscrição selecionada não existe!");
+		header("Location: /professor/insc");
+		exit();			
+	}
+
+	if( $insc->getidpess() != $idpess){
+
+		User::setError("Aluno selecionado não está relacionado para esta inscrição!");
+		header("Location: /professor/insc");
+		exit();			
+	}
 
 	$pessoa = new Pessoa();
 
@@ -164,7 +181,6 @@ $app->get("/professor/profile/insc/:idinsc/:idpess", function($idinsc, $idpess){
 		'insc'=>$insc->getValues(),
 		'pessoa'=>$pessoa->getValues()
 	]);	
-
 });
 
 /*
@@ -201,13 +217,22 @@ $app->get("/professor/insc/pessoa/:idepess", function($idpess){
 
 	$pessoa->get((int)$idpess);
 
-	//var_dump($pessoa);
+	$inscricoes = $pessoa->getInsc();
+
+	if(!$inscricoes){
+
+		User::setError("Inscrição(ões) não encontrada(s)!!!");
+		header("Location: /professor/pessoas");
+		exit();			
+	}
+
+	//var_dump($inscricoes[0]['idinsc']);
 	//exit();
 
 	$page = new PageAdmin();
 
 	$page->setTpl("insc-pessoa", [
-		'insc'=>$pessoa->getInsc(),
+		'insc'=>$inscricoes,
 		'pessoa'=>$pessoa->getValues()
 	]);
 

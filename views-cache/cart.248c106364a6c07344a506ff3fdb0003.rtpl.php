@@ -5,7 +5,7 @@
     <div class="alert alert-danger" role="alert">
     <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
     </div>
-    <?php } ?>
+    <?php } ?>    
 
     <div class="container">
         <?php $counter1=-1;  if( isset($turma) && ( is_array($turma) || $turma instanceof Traversable ) && sizeof($turma) ) foreach( $turma as $key1 => $value1 ){ $counter1++; ?>
@@ -17,11 +17,13 @@
       -->
          
         <div class="row alert alert-primary"> 
-            <div class="col-md-3">
+           <!-- 
+           <div class="col-md-3">
                 <a href="/turma/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="<?php echo htmlspecialchars( $value1["desphoto"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"></a>
-              </div>                      
+            </div>
+            -->                      
 
-            <div class="col-md-9">
+            <div class="col-md-6">
                TURMA: <a href="/turma/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["periodo"], ENT_COMPAT, 'UTF-8', FALSE ); ?> / </a> 
                <span class="amount"> 
                   LOCAL: <?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, Nº <?php echo htmlspecialchars( $value1["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["bairro"], ENT_COMPAT, 'UTF-8', FALSE ); ?> / 
@@ -44,10 +46,7 @@
                <input type="text" name="initidade" hidden="" value="<?php echo htmlspecialchars( $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                <input type="text" name="fimidade" hidden="" value="<?php echo htmlspecialchars( $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">            
             </div>
-             
-        </div>
-         <div class="row alert alert-primary">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="">
                     <div class="">
 
@@ -92,7 +91,6 @@
                            
                        <!-- </form> -->
 
-
                         <div>&nbsp;</div>
                         <a href="/pessoa-create">Cadastrar uma nova pessoa</a>
                         <div>&nbsp;</div>
@@ -100,6 +98,10 @@
                     </div>
                 </div> 
             </div>
+             
+        </div>
+         <div class="row alert alert-primary">
+            
         </div>
         <?php }else{ ?>
         <div class="row">

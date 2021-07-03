@@ -66,7 +66,8 @@ $app->get("/professor/espaco", function() {
 	$page->setTpl("espaco", array( // aqui temos um array com muitos arrays
 		"espaco"=>$pagination['data'],
 		"search"=>$search,
-		"pages"=>$pages
+		"pages"=>$pages,
+		"error"=>Espaco::getMsgError()
 	));
 });
 

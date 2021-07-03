@@ -18,6 +18,14 @@
   <div class="row">
   	<div class="col-md-12">
   		<div class="box box-primary">
+        <?php if( $error != '' ){ ?>
+
+          <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
+        <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+
+          </div>
+        <?php } ?>
+
             
             <div class="box-header">
               <a href="/professor/atividade/create" class="btn btn-success">Cadastrar Atividade</a>

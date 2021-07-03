@@ -8,6 +8,8 @@ use \Sbc\Mailer;
 
 class Modalidade extends Model {
 
+	const SESSION = "Modalidade";
+	const SESSION_ERROR = "ModalidadeError";
 
 	public static function listAll()
 	{
@@ -57,12 +59,16 @@ class Modalidade extends Model {
 			':idmodal'=>$idmodal 
 		]);
 
-		if (count($results) > 0) {
+		if($results){
 
-			$this->setData($results[0]);
+			$this->setData($results[0]);		
 
-		}		
-		
+		}else{
+
+			Modalidade::setMsgError("Modalidade selecionado não existe!");
+			header("Location: /professor/modalidades");
+			exit();			
+		}				
 	}
 
 	public function delete()
@@ -155,8 +161,6 @@ class Modalidade extends Model {
 		];
 
 	}	
-
-
 	
 	public function getTurmaModalidadePage($page = 1, $itemsPerPage = 100)
 	{
@@ -196,6 +200,46 @@ class Modalidade extends Model {
 			'total'=>(int)$resultTotal[0]["nrtotal"],
 			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
 		];
+	}
+
+	public static function setMsgError($msg)
+	{
+		$_SESSION[Modalidade::SESSION_ERROR] = $msg;
+	}
+
+	public static function getMsgError(){
+
+		$msg = (isset($_SESSION[Modalidade::SESSION_ERROR])) ? $_SESSION[Modalidade::SESSION_ERROR] : "";
+
+		Modalidade::clearMsgError();
+
+		return $msg;
+	}
+
+	public static function clearMsgError()
+	{
+		$_SESSION[Modalidade::SESSION_ERROR] = NULL;
+	}
+
+	public static function setMsgSuccess($msg)
+	{
+		$_SESSION[Modalidade::SUCCESS] = $msg;
+	}
+
+	public static function getMsgSuccess()
+	{
+		$msg = (isset($_SESSION[Modalidade::SUCCESS]) && $_SESSION[Modalidade::SUCCESS]) ? $_SESSION[Modalidade::SUCCESS] : '';
+
+		Modalidade::clearMsgSuccess();
+
+		return $msg;
+	}
+
+	public static function clearMsgSuccess()
+	{
+
+		$_SESSION[Modalidade::SUCCESS] = NULL;
+
 	}
 	
 

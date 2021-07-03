@@ -17,11 +17,13 @@
       -->
          
         <div class="row alert alert-primary"> 
-            <div class="col-md-3">
+           <!-- 
+           <div class="col-md-3">
                 <a href="/turma/{$value.idturma}"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="{$value.desphoto}"></a>
-              </div>                      
+            </div>
+            -->                      
 
-            <div class="col-md-9">
+            <div class="col-md-6">
                TURMA: <a href="/turma/{$value.idturma}">{$value.descativ} - {$value.periodo} / </a> 
                <span class="amount"> 
                   LOCAL: {$value.apelidolocal} - {$value.rua}, Nº {$value.numero} - {$value.bairro} / 
@@ -44,10 +46,7 @@
                <input type="text" name="initidade" hidden="" value="{$value.initidade}">
                <input type="text" name="fimidade" hidden="" value="{$value.fimidade}">            
             </div>
-             
-        </div>
-         <div class="row alert alert-primary">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="">
                     <div class="">
 
@@ -92,7 +91,6 @@
                            
                        <!-- </form> -->
 
-
                         <div>&nbsp;</div>
                         <a href="/pessoa-create">Cadastrar uma nova pessoa</a>
                         <div>&nbsp;</div>
@@ -100,6 +98,10 @@
                     </div>
                 </div> 
             </div>
+             
+        </div>
+         <div class="row alert alert-primary">
+            
         </div>
         {else}
         <div class="row">

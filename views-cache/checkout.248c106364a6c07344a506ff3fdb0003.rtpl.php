@@ -9,13 +9,7 @@
                     <div class="alert alert-danger">
                     <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
                     </div>
-                    <?php } ?>
-
-                    <?php if( $erroInsc != '' ){ ?>
-                    <div class="alert alert-danger">
-                    <?php echo htmlspecialchars( $erroInsc, ENT_COMPAT, 'UTF-8', FALSE ); ?>
-                    </div>
-                    <?php } ?>
+                    <?php } ?>                    
 
                      <h3 id="order_review_heading" style="margin-top:30px;">Detalhes da Inscrição</h3>
                 

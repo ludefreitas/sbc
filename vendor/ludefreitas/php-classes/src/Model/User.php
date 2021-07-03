@@ -171,11 +171,20 @@ class User extends Model {
 			":iduser"=>$iduser
 		));
 
-		$data = $results[0];
+		if($results){
 
-		$data['desperson'] = utf8_encode($data['desperson']);
+			$data = $results[0];
 
-		$this->setData($data);
+			$data['desperson'] = utf8_encode($data['desperson']);
+
+			$this->setData($data);			
+
+		}else{
+
+			User::setError("Usuário selecionado não existe!");
+			header("Location: /professor/users");
+			exit();			
+		}
 		
 	}
 

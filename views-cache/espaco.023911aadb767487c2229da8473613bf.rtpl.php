@@ -1,14 +1,12 @@
-<?php if(!class_exists('Rain\Tpl')){exit;}?>
-
-<div class="content-wrapper">
+<?php if(!class_exists('Rain\Tpl')){exit;}?><div class="content-wrapper">
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Lista de Modalidades
+    Lista de Espaços
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active"><a href="/professor/modalidade">Modalidade</a></li>
+    <li class="active"><a href="/professor/espaco">Espaço</a></li>
   </ol>
 </section>
 
@@ -16,8 +14,8 @@
 <section class="content">
 
   <div class="row">
-    <div class="col-md-12">
-      <div class="box box-primary">
+  	<div class="col-md-12">
+  		<div class="box box-primary">
         <?php if( $error != '' ){ ?>
 
           <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
@@ -28,10 +26,10 @@
 
             
             <div class="box-header">
-              <a href="/professor/modalidades/create" class="btn btn-success">Cadastrar Modalidade</a>
+              <a href="/professor/espaco/create" class="btn btn-success">Cadastrar Novo Espaço</a>
 
               <div class="box-tools">
-                <form action="/professor/modalidades">
+                <form action="/professor/espaco">
                   <div class="input-group input-group-sm" style="width: 150px;">
                     <input type="text" name="search" class="form-control pull-right" placeholder="Search" value="<?php echo htmlspecialchars( $search, ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                     <div class="input-group-btn">
@@ -47,21 +45,26 @@
               <table class="table table-striped">
                 <thead>
                   <tr>
-
+                    <th>Espaco</th>
                     <th>Descrição</th>
-                    
-
+                    <th>Crec</th>
+                    <th>Àrea(m²)</th>
+                    <th>Observação</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <?php $counter1=-1;  if( isset($modalidade) && ( is_array($modalidade) || $modalidade instanceof Traversable ) && sizeof($modalidade) ) foreach( $modalidade as $key1 => $value1 ){ $counter1++; ?>
+                  <?php $counter1=-1;  if( isset($espaco) && ( is_array($espaco) || $espaco instanceof Traversable ) && sizeof($espaco) ) foreach( $espaco as $key1 => $value1 ){ $counter1++; ?>
 
                   <tr>
-                    <td><?php echo htmlspecialchars( $value1["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>                    
-                               
+                    <td><?php echo htmlspecialchars( $value1["nomeespaco"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                    <td><?php echo htmlspecialchars( $value1["descespaco"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                    <td><?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                    <td><?php echo htmlspecialchars( $value1["areaespaco"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                    <td><?php echo htmlspecialchars( $value1["observacao"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>                 
                     <td>
-                      <a href="/professor/modalidades/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
-                      <a href="/professor/modalidades/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir a modalidade <?php echo htmlspecialchars( $value1["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
+                     <!-- <a href="/professor/espaco/<?php echo htmlspecialchars( $value1["idespaco"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/horario" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> Horários</a> -->
+                      <a href="/professor/espaco/<?php echo htmlspecialchars( $value1["idespaco"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
+                      <a href="/professor/espaco/<?php echo htmlspecialchars( $value1["idespaco"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir o espaço <?php echo htmlspecialchars( $value1["nomeespaco"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
                     </td>
                   </tr>
                   <?php } ?>
@@ -83,7 +86,7 @@
                     <i class="fa fa-print"></i> Imprimir
                 </button>
           </div>
-    </div>
+  	</div>
   </div>
 
 </section>

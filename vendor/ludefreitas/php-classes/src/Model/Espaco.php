@@ -8,6 +8,8 @@ use \Sbc\Mailer;
 
 class Espaco extends Model {
 
+	const SESSION = "Espaco";
+	const SESSION_ERROR = "EspacoError";
 
 	public static function listAll()
 	{
@@ -66,7 +68,16 @@ class Espaco extends Model {
 			':idespaco'=>$idespaco 
 		]);
 
-		$this->setData($results[0]);
+		if($results){
+
+			$this->setData($results[0]);		
+
+		}else{
+
+			Espaco::setMsgError("Espaço selecionado não encontrado!");
+			header("Location: /professor/espaco");
+			exit();			
+		}		
 		
 	}
 
@@ -291,6 +302,46 @@ class Espaco extends Model {
 			'total'=>(int)$resultTotal[0]["nrtotal"],
 			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
 		];
+	}
+
+	public static function setMsgError($msg)
+	{
+		$_SESSION[Espaco::SESSION_ERROR] = $msg;
+	}
+
+	public static function getMsgError(){
+
+		$msg = (isset($_SESSION[Espaco::SESSION_ERROR])) ? $_SESSION[Espaco::SESSION_ERROR] : "";
+
+		Espaco::clearMsgError();
+
+		return $msg;
+	}
+
+	public static function clearMsgError()
+	{
+		$_SESSION[Espaco::SESSION_ERROR] = NULL;
+	}
+
+	public static function setMsgSuccess($msg)
+	{
+		$_SESSION[Espaco::SUCCESS] = $msg;
+	}
+
+	public static function getMsgSuccess()
+	{
+		$msg = (isset($_SESSION[Espaco::SUCCESS]) && $_SESSION[Espaco::SUCCESS]) ? $_SESSION[Espaco::SUCCESS] : '';
+
+		Espaco::clearMsgSuccess();
+
+		return $msg;
+	}
+
+	public static function clearMsgSuccess()
+	{
+
+		$_SESSION[Espaco::SUCCESS] = NULL;
+
 	}
 
 

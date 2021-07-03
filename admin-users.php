@@ -34,7 +34,7 @@ $app->get("/professor/users", function() {
 				'page'=>$x+1,
 				'search'=>$search
 			]),
-			'text'=>$x+1
+			'text'=>$x+1			
 		]);
 
 	}
@@ -47,8 +47,9 @@ $app->get("/professor/users", function() {
 	$page->setTpl("users", array( // aqui temos um array com muitos arrays
 		"users"=>$pagination['data'],
 		"search"=>$search,
-		"pages"=>$pages
-	));
+		"pages"=>$pages,
+		"error"=>User::getError()
+	));	
 });
 
 $app->get("/professor/prof", function() {
@@ -174,6 +175,13 @@ $app->get("/professor/users/:iduser", function($iduser) {
 	$user = new User();
 
 	$user->get((int)$iduser);
+
+	if( $user->getiduser() != $iduser){
+
+		User::setError("Usuário não encontrado!!!");
+		header("Location: /professor/users");
+		exit();			
+	}
 
 	$page = new PageAdmin();
 

@@ -16,7 +16,7 @@
         <div class="box-header with-border">
           <h3 class="box-title">Editar Usuário</h3>
         </div>
-        <!-- /.box-header -->
+        <!-- /.box-header -->        
         <!-- form start -->
         <form role="form" action="/professor/users/<?php echo htmlspecialchars( $user["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post">
           <div class="box-body">

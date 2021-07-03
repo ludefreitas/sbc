@@ -47,7 +47,8 @@ $app->get("/professor/faixaetaria", function() {
 	$page->setTpl("faixaetaria", array( // aqui temos um array com muitos arrays
 		"faixaetaria"=>$pagination['data'],
 		"search"=>$search,
-		"pages"=>$pages
+		"pages"=>$pages,
+		"error"=>Faixaetaria::getMsgError()
 	));
 });
 

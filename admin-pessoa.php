@@ -47,7 +47,8 @@ $app->get("/professor/pessoas", function() {
 	$page->setTpl("pessoas", array( // aqui temos um array com muitos arrays
 		"pessoas"=>$pagination['data'],
 		"search"=>$search,
-		"pages"=>$pages
+		"pages"=>$pages,
+		"error"=>User::getError()
 	));
 });
 
@@ -74,6 +75,7 @@ $app->get("/professor/pessoas/:idpess/delete", function($idpess) {
 	exit();
 });
 
+/*
 $app->get("/professor/pessoas/:idpess", function($idpess) {
 
 	User::verifyLogin();
@@ -88,6 +90,7 @@ $app->get("/professor/pessoas/:idpess", function($idpess) {
 		"pessoa"=>$pessoa->getValues()
 	));
 });
+*/
 
 $app->post("/professor/pessoas/create", function() {
 
@@ -109,6 +112,7 @@ $app->post("/professor/pessoas/create", function() {
 	exit();
 });
 
+/*
 $app->post("/professor/pessoas/:idpess", function($idpess) {
 
 	User::verifyLogin();
@@ -128,6 +132,6 @@ $app->post("/professor/pessoas/:idpess", function($idpess) {
 	header("Location: /professor/pessoas");
 	exit();
 });
-
+*/
 
 ?>

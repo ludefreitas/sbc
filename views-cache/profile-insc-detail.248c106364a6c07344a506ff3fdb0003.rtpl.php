@@ -2,6 +2,11 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
+            <?php if( $erroInsc != '' ){ ?>
+        <div class="alert alert-danger">
+            <?php echo htmlspecialchars( $erroInsc, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+        </div>
+            <?php } ?>
             <div class="row">            
                 <div class="col-md-7 alert alert-primary">
                     <h5>Nome do aluno: <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> -  <?php echo calcularIdade($pessoa["dtnasc"]); ?> anos </h5>

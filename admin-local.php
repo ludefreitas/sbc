@@ -49,7 +49,8 @@ $app->get("/professor/local", function() {
 	$page->setTpl("local", array( // aqui temos um array com muitos arrays
 		"local"=>$pagination['data'],
 		"search"=>$search,
-		"pages"=>$pages
+		"pages"=>$pages,
+		"error"=>Local::getMsgError()
 	));
 });
 

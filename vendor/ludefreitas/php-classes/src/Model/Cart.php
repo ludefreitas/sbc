@@ -163,7 +163,7 @@ class Cart extends Model {
 
 		}
 
-		$this->getCalculateTotal();
+		//$this->getCalculateTotal();
 
 	}
 

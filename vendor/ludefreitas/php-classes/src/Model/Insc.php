@@ -38,7 +38,7 @@ class Insc extends Model {
 		//$user = "Luciano Freitas";
 		$assunto = "Inscrição Cursos Esportivos ".$desctemporada."";
 		$tplName = "comprovante-insc";
-		$link = "http://www.cursosesportivossbc.com.br/profile/insc/".$idinsc."";
+		$link = "http://www.cursosesportivossbc.com.br/profile/insc/".$idinsc."/".$idpess."";
 
 		/*
 		$mailer = new Mailer($data['desemail'], $data['desperson'], "Redefinir senha do Cursos Esportivos SBC", "forgot", array(
@@ -60,9 +60,9 @@ class Insc extends Model {
         if (!$emailEnviado)
      	{
 
-        	Insc::setError("Não foi possivel enviar email");
-        	header("Location: /checkout");
-			exit();
+        	Insc::setError("Não foi possivel enviar email, no entanto, a incrição abaixo foi efetuada!");
+        	header("Location: /profile/insc/".$idinsc."/".$idpess."");
+        	exit();			
 
      	}
 	}	

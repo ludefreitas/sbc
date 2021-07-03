@@ -4,11 +4,11 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Lista de Modalidades
+    Lista Horários
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active"><a href="/professor/modalidade">Modalidade</a></li>
+    <li class="active"><a href="/professor/horario">Horários</a></li>
   </ol>
 </section>
 
@@ -16,8 +16,8 @@
 <section class="content">
 
   <div class="row">
-    <div class="col-md-12">
-      <div class="box box-primary">
+  	<div class="col-md-12">
+  		<div class="box box-primary">
         <?php if( $error != '' ){ ?>
 
           <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
@@ -28,10 +28,10 @@
 
             
             <div class="box-header">
-              <a href="/professor/modalidades/create" class="btn btn-success">Cadastrar Modalidade</a>
+              <a href="/professor/horario/create" class="btn btn-success">Cadastrar Horário de aulas</a>
 
               <div class="box-tools">
-                <form action="/professor/modalidades">
+                <form action="/professor/horario">
                   <div class="input-group input-group-sm" style="width: 150px;">
                     <input type="text" name="search" class="form-control pull-right" placeholder="Search" value="<?php echo htmlspecialchars( $search, ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                     <div class="input-group-btn">
@@ -47,21 +47,24 @@
               <table class="table table-striped">
                 <thead>
                   <tr>
-
-                    <th>Descrição</th>
-                    
-
+                    <th>Dias da semana</th>
+                    <th>Hora de início</th>
+                    <th>Hora de término</th>
+                    <th>Período</th>
+                    <th style="width: 140px">&nbsp;</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <?php $counter1=-1;  if( isset($modalidade) && ( is_array($modalidade) || $modalidade instanceof Traversable ) && sizeof($modalidade) ) foreach( $modalidade as $key1 => $value1 ){ $counter1++; ?>
+                <tbody>                  
+                    <?php $counter1=-1;  if( isset($horario) && ( is_array($horario) || $horario instanceof Traversable ) && sizeof($horario) ) foreach( $horario as $key1 => $value1 ){ $counter1++; ?>
 
-                  <tr>
-                    <td><?php echo htmlspecialchars( $value1["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>                    
-                               
+                    <tr>
+                    <td><?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                    <td><?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                    <td><?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                    <td><?php echo htmlspecialchars( $value1["periodo"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                     <td>
-                      <a href="/professor/modalidades/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
-                      <a href="/professor/modalidades/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir a modalidade <?php echo htmlspecialchars( $value1["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
+                      <a href="/professor/horario/<?php echo htmlspecialchars( $value1["idhorario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
+                      <a href="/professor/horario/<?php echo htmlspecialchars( $value1["idhorario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir o horário das <?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["periodo"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
                     </td>
                   </tr>
                   <?php } ?>
@@ -83,7 +86,7 @@
                     <i class="fa fa-print"></i> Imprimir
                 </button>
           </div>
-    </div>
+  	</div>
   </div>
 
 </section>

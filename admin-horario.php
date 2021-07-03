@@ -47,7 +47,8 @@ $app->get("/professor/horario", function() {
 	$page->setTpl("horario", array( // aqui temos um array com muitos arrays
 		"horario"=>$pagination['data'],
 		"search"=>$search,
-		"pages"=>$pages
+		"pages"=>$pages,
+		"error"=>Horario::getMsgError()
 	));
 });
 

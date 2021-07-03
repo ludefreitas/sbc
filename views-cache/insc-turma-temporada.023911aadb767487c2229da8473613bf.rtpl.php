@@ -1,4 +1,5 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
+
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -46,14 +47,14 @@
                   <?php $counter1=-1;  if( isset($insc) && ( is_array($insc) || $insc instanceof Traversable ) && sizeof($insc) ) foreach( $insc as $key1 => $value1 ){ $counter1++; ?>
                   <tr>
 
-                    <td><?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </td>
+                    <td id="tr"><?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </td>
                     <td><?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </td>                      
                       <td><?php echo formatDate($value1["dtnasc"]); ?> </td>
                       <td><?php echo calcularIdade($value1["dtnasc"]); ?></td>
                       <td><?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </td>
                       <td><?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </td>                                      
                       <td><?php echo formatDate($value1["dtinsc"]); ?> </td>                                      
-                       <td><?php echo htmlspecialchars( $value1["idinscstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </td> 
+                       <td id="idstatus"><?php echo htmlspecialchars( $value1["idinscstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </td> 
                        <td> </td> 
                        <td> </td>                        
                        <td>
@@ -86,3 +87,46 @@
 <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<script>
+
+    // $(document).ready(() =>{ /*código aqui*/ }) // Esta é uma função de callback
+
+
+    //$(document).ready(function(){ // sem a notação de arrow function 
+    $(document).ready(() =>{        // com a notação de arrow function 
+      
+      //$('img').attr('src', 'imagens/esfera_2.png')
+      //$('img').attr('border', 20)
+
+      //if($('#idstatus').hasClass('2')){
+        //if ($('input').attr('value') = 2)
+
+
+        let status = document.getElementById('idstatus').innerHTML
+
+    if(status == 6) {
+
+        $('#tr').attr('style', 'background-color: blue;')
+
+       // console.log('conteudo div1: ', $('#div1').text('<strong style="color: red">Eu sou um novo contúdo</strong>'))
+        
+      }else{
+
+        $('#tr').attr('style', 'background-color: green;')
+
+      }
+
+      //$('#div2').attr('style', 'background-color: red; width: 150px; height: 200px;')
+      //console.log($('div').attr('style', 'background-color: red; width: 150px; height: 200px;'))
+      //$('input').attr('value', 'eu ainda sou um input text')
+      //$('input').attr('type', 'button')
+      //$('input').attr('value', 'Agora eu sou um button')
+
+
+    })    
+
+  </script>
+
+

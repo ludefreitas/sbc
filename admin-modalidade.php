@@ -63,7 +63,8 @@ $app->get("/professor/modalidades", function() {
 	$page->setTpl("modalidades", array( // aqui temos um array com muitos arrays
 		"modalidade"=>$pagination['data'],
 		"search"=>$search,
-		"pages"=>$pages
+		"pages"=>$pages,
+		"error"=>Modalidade::getMsgError()
 	));
 });
 

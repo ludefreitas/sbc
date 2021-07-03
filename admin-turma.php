@@ -67,7 +67,8 @@ $app->get("/professor/turma", function() {
 	$page->setTpl("turma", array( // aqui temos um array com muitos arrays
 		"turma"=>$pagination['data'],
 		"search"=>$search,
-		"pages"=>$pages
+		"pages"=>$pages,
+		"error"=>Turma::getMsgError()
 	));
 });
 
@@ -145,7 +146,7 @@ $app->get("/professor/turma/:idturma", function($idturma) {
 		'modalidade'=>Modalidade::listAll(),
 		'users'=>User::listAllProf(),
 		'horario'=>Horario::listAll(),
-		'espaco'=>Espaco::listAll()
+		'espaco'=>Espaco::listAll()		
 	));
 });
 

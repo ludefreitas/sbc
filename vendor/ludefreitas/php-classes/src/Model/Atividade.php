@@ -8,6 +8,9 @@ use \Sbc\Mailer;
 
 class Atividade extends Model {
 
+	const SESSION = "Atividade";
+	const SESSION_ERROR = "AtividadeError";
+
 
 	public static function listAll()
 	{
@@ -66,7 +69,16 @@ class Atividade extends Model {
 			':idativ'=>$idativ 
 		]);
 
-		$this->setData($results[0]);
+		if($results){
+
+			$this->setData($results[0]);		
+
+		}else{
+
+			Atividade::setMsgError("Atividade selecionado não existe!");
+			header("Location: /professor/atividade");
+			exit();			
+		}		
 		
 	}
 
@@ -183,6 +195,46 @@ class Atividade extends Model {
 
 	}
 
+	public static function setMsgError($msg)
+	{
+		$_SESSION[Atividade::SESSION_ERROR] = $msg;
+	}
+
+	
+	public static function getMsgError()	{
+
+		$msg = (isset($_SESSION[Atividade::SESSION_ERROR])) ? $_SESSION[Atividade::SESSION_ERROR] : "";
+
+		Atividade::clearMsgError();
+
+		return $msg;
+	}
+
+	public static function clearMsgError()
+	{
+		$_SESSION[Atividade::SESSION_ERROR] = NULL;
+	}
+
+	public static function setMsgSuccess($msg)
+	{
+		$_SESSION[Atividade::SUCCESS] = $msg;
+	}
+
+	public static function getMsgSuccess()
+	{
+		$msg = (isset($_SESSION[Atividade::SUCCESS]) && $_SESSION[Atividade::SUCCESS]) ? $_SESSION[Atividade::SUCCESS] : '';
+
+		Atividade::clearMsgSuccess();
+
+		return $msg;
+	}
+
+	public static function clearMsgSuccess()
+	{
+
+		$_SESSION[Atividade::SUCCESS] = NULL;
+
+	}
 
 }
 

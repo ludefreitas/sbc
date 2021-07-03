@@ -18,16 +18,19 @@ use \Sbc\Model\Temporada;
 use \Sbc\Model\Cart;
 use \Sbc\Model\Modalidade;
 use \Sbc\Model\Sorteio;
-
-
-
-
+use \Sbc\Model\Insc;
 
 $app = new Slim();
 
 $app->config('ebug', true);
 
 require_once("site.php");
+require_once("site-cart.php");
+require_once("site-endereco.php");
+require_once("site-insc.php");
+require_once("site-local.php");
+require_once("site-modalidade.php");
+require_once("site-pessoa.php");
 require_once("functions.php");
 require_once("admin.php");
 require_once("admin-faixaetarias.php");

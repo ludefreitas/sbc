@@ -84,6 +84,93 @@ class Turma extends Model {
 			]);
 	}
 
+	public static function listAllTurmaTemporadaModalidade($idmodal)
+
+	{
+		$idStatusTemporadaInscricaoIniciada = 4;
+		$idStatusTemporadaMatriculaIniciada = 6;
+
+		$sql = new Sql();
+
+		return $sql->select("SELECT * 
+			FROM tb_turma a 
+			INNER JOIN tb_users b
+			using(iduser)
+			INNER JOIN tb_persons c
+			using(idperson)
+			INNER JOIN tb_atividade d
+			using(idativ)
+			INNER JOIN tb_espaco e
+			using(idespaco)
+			INNER JOIN tb_local f
+			using(idlocal)
+			INNER JOIN tb_turmastatus g
+			using(idturmastatus)
+			INNER JOIN tb_horario h
+			using(idhorario)
+			INNER JOIN tb_fxetaria i
+			using(idfxetaria)
+            INNER JOIN tb_turmatemporada j            
+			using(idturma)
+            INNER JOIN tb_temporada k          
+			using(idtemporada)   
+            INNER JOIN tb_statustemporada l          
+			using(idstatustemporada)
+			INNER JOIN tb_modalidade m         
+			using(idmodal)
+      		WHERE idstatustemporada = :idStatusTemporadaInscricaoIniciada OR idstatustemporada = :idStatusTemporadaMatriculaIniciada AND m.idmodal = :idmodal
+			-- ORDER BY a.descturma
+			ORDER BY RAND()", [
+				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
+				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
+				':idmodal'=>$idmodal
+			]);
+	}
+
+	public static function listAllTurmaTemporadaLocal($idlocal)
+
+	{
+		$idStatusTemporadaInscricaoIniciada = 4;
+		$idStatusTemporadaMatriculaIniciada = 6;
+
+		$sql = new Sql();
+
+		return $sql->select("SELECT * 
+			FROM tb_turma a 
+			INNER JOIN tb_users b
+			using(iduser)
+			INNER JOIN tb_persons c
+			using(idperson)
+			INNER JOIN tb_atividade d
+			using(idativ)
+			INNER JOIN tb_espaco e
+			using(idespaco)
+			INNER JOIN tb_local f
+			using(idlocal)
+			INNER JOIN tb_turmastatus g
+			using(idturmastatus)
+			INNER JOIN tb_horario h
+			using(idhorario)
+			INNER JOIN tb_fxetaria i
+			using(idfxetaria)
+            INNER JOIN tb_turmatemporada j            
+			using(idturma)
+            INNER JOIN tb_temporada k          
+			using(idtemporada)   
+            INNER JOIN tb_statustemporada l          
+			using(idstatustemporada)
+			INNER JOIN tb_modalidade m         
+			using(idmodal)
+      		WHERE idstatustemporada = :idStatusTemporadaInscricaoIniciada OR idstatustemporada = :idStatusTemporadaMatriculaIniciada AND f.idlocal = :idlocal
+			-- ORDER BY a.descturma
+			ORDER BY RAND()", [
+				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
+				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
+				':idlocal'=>$idlocal
+			]);
+	}
+
+
 
 	public static function checkList($list)
 	{
@@ -148,7 +235,16 @@ class Turma extends Model {
 			':idturma'=>$idturma 
 		]);
 
-		$this->setData($results[0]);		
+		if($results){
+
+			$this->setData($results[0]);		
+
+		}else{
+
+			Turma::setMsgError("Turma selecionado não existe!");
+			header("Location: /professor/turma");
+			exit();			
+		}		
 	}
 
 	public function delete()
@@ -337,17 +433,18 @@ class Turma extends Model {
 			$this->setData($rows[0]);
 
 		}else{
-			Turma::setMsgError('Desculpe, não foi possível selecionar esta turma e/ou temporada! Selecione outra.');
-		header("Location: /turma/".$idturma."/".$idtemporada);
+			Turma::setMsgError("Desculpe, não foi possível selecionar esta turma e/ou temporada! Selecione outra.");
+			header("Location: /turma/".$idturma."/".$idtemporada."");
 		}	
 
 		//$this->setData($rows[0]);
 
 	}
 
-	/*
 	
-	public function getFromIdTurmaModalidade($idmodal)
+
+	/*
+	public function getFromIdTurmaModalidade($idmodal, $idtemporada)
 	{
 
 		$sql = new Sql();
@@ -367,12 +464,21 @@ class Turma extends Model {
             INNER JOIN tb_espaco i ON a.idespaco = i.idespaco
 			INNER JOIN tb_local j ON j.idlocal = c.idlocal
 			INNER JOIN tb_turmastatus m ON m.idturmastatus = a.idturmastatus
-			WHERE b.idmodal = :idmodal
+			WHERE b.idmodal = :idmodal AND n.idtemporada = :idtemporada
 			", [			
-			':idmodal'=>$idmodal
+			':idmodal'=>$idmodal,
+			':idtemporada'=>$idtemporada
 		]);
 
-		$this->setData($rows[0]);
+		/*
+		echo '<pre>';
+		print_r($rows);
+		echo '</pre>';
+		exit();
+		*//*
+		
+
+		$this->setData($rows);
 
 	}
 	*/
@@ -547,8 +653,6 @@ class Turma extends Model {
 		$_SESSION[Turma::SUCCESS] = NULL;
 
 	}
-
-
 
 }
 

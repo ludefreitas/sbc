@@ -2,6 +2,11 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
+            {if="$erroInsc != ''"}
+        <div class="alert alert-danger">
+            {$erroInsc}
+        </div>
+            {/if}
             <div class="row">            
                 <div class="col-md-7 alert alert-primary">
                     <h5>Nome do aluno: {$pessoa.nomepess} -  {function="calcularIdade($pessoa.dtnasc)"} anos </h5>

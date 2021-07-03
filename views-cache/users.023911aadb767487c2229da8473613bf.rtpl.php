@@ -17,11 +17,18 @@
   <div class="row">
   	<div class="col-md-12">
   		<div class="box box-primary">
+        <?php if( $error != '' ){ ?>
+
+                <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
+                    <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+
+                </div>
+                <?php } ?>
+
             
             <div class="box-header">
               <a href="/professor/users/create" class="btn btn-success">Cadastrar Usuário</a>
-
-              <div class="box-tools">
+              <div class="box-tools">                
                 <form action="/professor/users">
                   <div class="input-group input-group-sm" style="width: 150px;">
                     <input type="text" name="search" class="form-control pull-right" placeholder="Search" value="<?php echo htmlspecialchars( $search, ENT_COMPAT, 'UTF-8', FALSE ); ?>">
