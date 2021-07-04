@@ -14,7 +14,14 @@
 <!-- Main content -->
 <section class="content">
 
+
+
   <div class="row">
+    {if="$error != ''"}
+            <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
+        {$error}
+            </div>
+        {/if}
     <div class="col-md-12">
         <div class="box box-primary">
             
@@ -51,13 +58,13 @@
                     <td>{$value.idturma} - {$value.descturma} - {$temporada.desctemporada}</br>{$value.periodo}</td>
                      <td>{$value.descmodal}</td>
                     <td>{$value.descrfxetaria} </br> {$value.initidade} a {$value.fimidade} anos</td>
-                    <td>{$value.apelidoperson}</td>
+                    <td>{$value.apelidoperson} - {$value.idperson}</td>
                     <td>{$value.apelidolocal}</td>
                     <td>{$value.nomeespaco}</td>
                     <td> {$value.diasemana} </br> {$value.horainicio} ás {$value.horatermino}  </td>
                     <td>{$value.desstatus}</td>
                     <td>{$value.vagas}</td>
-                    <td><a href="/professor/insc-turma-temporada/{$value.idturma}/{$value.idtemporada}">{$value.numinscritos}</a></td>
+                    <td><a href="/professor/insc-turma-temporada/{$value.idturma}/{$value.idtemporada}/{$value.idperson}">{$value.numinscritos}</a></td>
                   
                    
                   </tr>

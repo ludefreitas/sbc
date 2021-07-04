@@ -240,41 +240,39 @@ $app->get("/professor/insc/pessoa/:idepess", function($idpess){
 
 });
 
-$app->get("/professor/insc-turma-temporada/:idturma/:idtemporada", function($idturma, $idtemporada) {
+$app->get("/professor/insc-turma-temporada/:idturma/:idtemporada/:idperson", function($idturma, $idtemporada, $idperson) {
 
 	User::verifyLogin();
 
 	$insc = new Insc();
 	$turma = new Turma();
+	$user = new User();
 	$temporada = new Temporada();
-
 	$temporada->get((int)$idtemporada);
 	$turma->get((int)$idturma);
+	$user->get((int)$idperson);
 
-	$insc->getInscByTurmaTemporada($idturma, $idtemporada);
+	$idusersessao = $_SESSION['User']['idperson'];
+	$iduser = $user->getiduser();
 
-	//$idisncstatus = $insc->getIdInscStatusByIdinsc($idturma, $idtemporada);
+	//criar função Verificar se professor é da turma
+	if(($idusersessao === $iduser) || ($idusersessao === '1') || ($idusersessao === '7') ) {
 
+		$insc->getInscByTurmaTemporada($idturma, $idtemporada);
 	
+		$page = new PageAdmin();	
 
-	/*
-	echo '<pre>';
-	print_r($idisncstatus);
-	echo '</pre>';
-	exit();	
-	*/
-	
-
-	//$background = 'blue';	
-
-	$page = new PageAdmin();	
-
-	$page->setTpl("insc-turma-temporada", [
+		$page->setTpl("insc-turma-temporada", [
 		'insc'=>$insc->getValues(),
 		'turma'=>$turma->getValues(),
 		'temporada'=>$temporada->getValues()
-		//'style'=>$background
-	]);	
+		]);	
+	}else{
+
+		User::setError("A turma que você selecionou não está relacionada a este professor(a)!!!");
+		header("Location: /professor/turma-temporada/".$idtemporada."");
+		exit();		
+	}	
 });
 
 

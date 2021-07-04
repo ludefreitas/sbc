@@ -138,6 +138,7 @@ $app->get("/professor/turma-temporada/:idtemporada", function($idtemporada) {
 		//'turmaRelated'=>$temporada->getTurma(true)
 		'turmaRelated'=>Temporada::listAllTurmatemporada($idtemporada),
 		//'turmaNotRelated'=>$temporada->getTurma(false)
+		'error'=>User::getError()
 	]);	
 });
 
@@ -154,7 +155,8 @@ $app->get("/professor/temporada/:idtemporada/turma", function($idtemporada) {
 	$page->setTpl("turma-temporada", [
 		'temporada'=>$temporada->getValues(),
 		'turmaRelated'=>$temporada->getTurma(true),
-		'turmaNotRelated'=>$temporada->getTurma(false)
+		'turmaNotRelated'=>$temporada->getTurma(false),
+		'error'=>User::getError()
 	]);	
 });
 
