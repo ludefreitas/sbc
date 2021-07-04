@@ -67,7 +67,7 @@
         <div class="col-md-3" style="padding-top: 10px">
             <strong>Status da Inscrição: </strong>
         </div>
-        <div class="col-md-9 alert alert-success">
+        <div class="col-md-9 alert alert-success" <?php echo colorStatus($insc["idinscstatus"]); ?>>
             <strong><?php echo htmlspecialchars( $insc["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
         </div>
     </div>

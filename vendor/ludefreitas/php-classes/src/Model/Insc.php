@@ -231,7 +231,7 @@ class Insc extends Model {
 			INNER JOIN tb_persons f ON f.idperson = e.idperson
 			INNER JOIN tb_temporada g USING(idtemporada)
 			INNER JOIN tb_turma h USING(idturma)
-			ORDER BY a.dtinsc DESC
+			-- ORDER BY a.dtinsc DESC
 			LIMIT $start, $itemsPerPage;
 		");
 
@@ -265,7 +265,7 @@ class Insc extends Model {
 			WHERE a.idinsc LIKE :search
 			OR f.desperson LIKE :search 
 			OR d.nomepess LIKE :search
-			ORDER BY a.dtinsc DESC
+			-- ORDER BY a.dtinsc DESC
 			LIMIT $start, $itemsPerPage;
 		", [
 			':search'=>'%'.$search.'%',
@@ -300,8 +300,30 @@ class Insc extends Model {
 			':idturma'=>$idturma,
 			':idtemporada'=>$idtemporada
 		]);
+		
+		$this->setData($results);
+	}
 
-			$this->setData($results);
+	public function getIdInscStatusByIdinsc($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT f.idinscstatus FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
+			WHERE idturma = :idturma AND idtemporada = :idtemporada
+			ORDER BY a.idinscstatus
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+			return $results;
 	}
 
 	public function statusTemporadaMatriculaIniciada($idtemporada){
@@ -321,6 +343,19 @@ class Insc extends Model {
 		}else{
 			return false;
 		}
+
+	}
+
+	public function alteraStatusInscricaoCancelada($idinsc){
+
+		$idStatusCancelada = 7;
+
+		$sql = new Sql();
+
+		$sql->query("UPDATE tb_insc SET idinscstatus = :idStatusCancelada WHERE idinsc = :idinsc", array(
+			":idinsc"=>$idinsc,
+			"idStatusCancelada"=>$idStatusCancelada
+		));
 
 	}
 	

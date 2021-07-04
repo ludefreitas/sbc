@@ -46,6 +46,19 @@ $app->get("/profile/insc/:idinsc/:idepess", function($idinsc, $idpess){
 	]);	
 });
 
+$app->get("/insc/:idinsc/statusCancelada", function($idinsc){
+
+	$insc = new Insc();
+
+	$insc->get((int)$idinsc);
+
+	$insc->alteraStatusInscricaoCancelada($idinsc);
+
+	header('Location: /profile/insc');
+	exit();
+
+});
+
 /*
 $app->get("/insc", function(){
 

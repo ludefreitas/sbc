@@ -72,7 +72,7 @@
                                 <th class="product-name">Data da Inscrição</th>
                                 <td class="product-name">{function="formatDateHour($insc.dtinsc)"}</td>
                             </tr>                            
-                            <tr>
+                            <tr {function="colorStatus($insc.idinscstatus)"}>
                                 <th class="product-name">Status da Inscrição</th>
                                 <td class="product-name">{$insc.descstatus}</td>
                             </tr>

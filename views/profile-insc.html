@@ -9,13 +9,39 @@
                     <div class="col-md-12">
                         <hr>
                         <strong>NÚMERO PARA O SORTEIO: </strong><span style="color: red; font-size: 20px">{$value.numsorte}</span><br>
+                        <strong>NÚMERO INSCRIÇÃO: </strong><span>{$value.idinsc}</span><br>
                         <strong>NOME DO ALUNO: </strong> <span>{$value.nomepess}</span><br>
                         <strong>TURMA: </strong>{$value.idturma} - {$value.descativ}<br>
                         <strong>Temporada: </strong>{$value.desctemporada}<br>
+
+                        <div class="row">
+                            <div class="col-md-6" {function="colorStatus($value.idinscstatus)"}>
+                                <strong>STATUS: </strong>{$value.descstatus}
+                            </div>
+
+                            
+                            <div class="col-md-6">
+                                <a class="btn btn-primary" href="/profile/insc/{$value.idinsc}/{$value.idpess}" role="button">Detalhes</a>
+
+                            {if="($value.idinscstatus) === '2'"}
+
+                            
+                            <a href="/insc/{$value.idinsc}/statusCancelada" onclick="return confirm('Deseja realmente excluir PERMANENTEMENTE a inscrição {$value.idinsc} do(a) {$value.nomepess} da turma {$value.descativ} - {$value.desctemporada}? Lembramos que se você clicar em OK a inscrição e a matricula se existir, serão definitivamente canceladas.')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                            {/if}
+
+                            {if="($value.idinscstatus) !== '7'"}
+
+                            <a href="/insc/{$value.idinsc}/statusCancelada" onclick="return confirm('Deseja realmente excluir PERMANENTEMENTE a inscrição {$value.idinsc} do(a) {$value.nomepess} da turma {$value.descativ} - {$value.desctemporada}? Lembramos que se você clicar em OK a inscrição e a matricula se existir, serão definitivamente canceladas.')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
+                            {/if}
+
+                            
+                            
+                            </div>
+                        </div>
+
+
                         
-                        <strong>STATUS :</strong>{$value.descstatus}
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a class="btn btn-primary" href="/profile/insc/{$value.idinsc}/{$value.idpess}" role="button">Detalhes</a>
+
                         <hr>
                     </div>
                 </div>

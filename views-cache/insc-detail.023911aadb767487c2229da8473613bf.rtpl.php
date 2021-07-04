@@ -72,7 +72,7 @@
                                 <th class="product-name">Data da Inscrição</th>
                                 <td class="product-name"><?php echo formatDateHour($insc["dtinsc"]); ?></td>
                             </tr>                            
-                            <tr>
+                            <tr <?php echo colorStatus($insc["idinscstatus"]); ?>>
                                 <th class="product-name">Status da Inscrição</th>
                                 <td class="product-name"><?php echo htmlspecialchars( $insc["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                             </tr>

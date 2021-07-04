@@ -54,7 +54,7 @@
                 </thead>
                 <tbody>
                   {loop="$insc"}
-                  <tr>
+                  <tr {function="colorStatus($value.idinscstatus)"}>
                     <td>{$value.idinsc}</td>
                     <td>{$value.dtinsc}</td>
                     <td>{$value.descstatus}</td/>                    

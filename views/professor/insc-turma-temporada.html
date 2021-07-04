@@ -45,7 +45,8 @@
                 </thead>
                 <tbody>                  
                   {loop="$insc"}
-                  <tr>
+
+                  <tr {function="colorStatus($value.idinscstatus)"}>
 
                     <td id="tr">{$value.nomepess} </td>
                     <td>{$value.numcpf} </td>                      
@@ -53,8 +54,9 @@
                       <td>{function="calcularIdade($value.dtnasc)"}</td>
                       <td>{$value.desperson} </td>
                       <td>{$value.nrphone} </td>                                      
-                      <td>{function="formatDate($value.dtinsc)"} </td>                                      
-                       <td id="idstatus">{$value.idinscstatus} </td> 
+                      <td>{function="formatDate($value.dtinsc)"} </td>                      
+                      <td>{$value.descstatus}</td>        
+                                                                                          
                        <td> </td> 
                        <td> </td>                        
                        <td>
@@ -87,46 +89,6 @@
 <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-<script>
-
-    // $(document).ready(() =>{ /*código aqui*/ }) // Esta é uma função de callback
-
-
-    //$(document).ready(function(){ // sem a notação de arrow function 
-    $(document).ready(() =>{        // com a notação de arrow function 
-      
-      //$('img').attr('src', 'imagens/esfera_2.png')
-      //$('img').attr('border', 20)
-
-      //if($('#idstatus').hasClass('2')){
-        //if ($('input').attr('value') = 2)
-
-
-        let status = document.getElementById('idstatus').innerHTML
-
-    if(status == 6) {
-
-        $('#tr').attr('style', 'background-color: blue;')
-
-       // console.log('conteudo div1: ', $('#div1').text('<strong style="color: red">Eu sou um novo contúdo</strong>'))
-        
-      }else{
-
-        $('#tr').attr('style', 'background-color: green;')
-
-      }
-
-      //$('#div2').attr('style', 'background-color: red; width: 150px; height: 200px;')
-      //console.log($('div').attr('style', 'background-color: red; width: 150px; height: 200px;'))
-      //$('input').attr('value', 'eu ainda sou um input text')
-      //$('input').attr('type', 'button')
-      //$('input').attr('value', 'Agora eu sou um button')
-
-
-    })    
-
-  </script>
 
 

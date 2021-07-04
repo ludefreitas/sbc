@@ -6,6 +6,8 @@ use \Sbc\Model\Insc;
 use \Sbc\Model\Pessoa;
 use \Sbc\Model\Turma;
 use \Sbc\Model\Temporada;
+use \Sbc\Model\InscStatus;
+
 
 
 
@@ -251,12 +253,19 @@ $app->get("/professor/insc-turma-temporada/:idturma/:idtemporada", function($idt
 
 	$insc->getInscByTurmaTemporada($idturma, $idtemporada);
 
+	//$idisncstatus = $insc->getIdInscStatusByIdinsc($idturma, $idtemporada);
+
+	
+
 	/*
 	echo '<pre>';
-	print_r($insc->getValues());
+	print_r($idisncstatus);
 	echo '</pre>';
-	exit();
+	exit();	
 	*/
+	
+
+	//$background = 'blue';	
 
 	$page = new PageAdmin();	
 
@@ -264,6 +273,7 @@ $app->get("/professor/insc-turma-temporada/:idturma/:idtemporada", function($idt
 		'insc'=>$insc->getValues(),
 		'turma'=>$turma->getValues(),
 		'temporada'=>$temporada->getValues()
+		//'style'=>$background
 	]);	
 });
 
