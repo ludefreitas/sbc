@@ -5,7 +5,7 @@
     <div class="alert alert-danger" role="alert">
     <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
     </div>
-    <?php } ?>    
+    <?php } ?>
 
     <div class="container">
         <?php $counter1=-1;  if( isset($turma) && ( is_array($turma) || $turma instanceof Traversable ) && sizeof($turma) ) foreach( $turma as $key1 => $value1 ){ $counter1++; ?>
@@ -100,9 +100,7 @@
             </div>
              
         </div>
-         <div class="row alert alert-primary">
-            
-        </div>
+         
         <?php }else{ ?>
         <div class="row">
             <div class="col-md-12 alert alert-info" style="text-align-last: center; font-weight: bold">

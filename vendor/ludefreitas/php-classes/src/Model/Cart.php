@@ -189,7 +189,7 @@ class Cart extends Model {
 	public function getTurma()
 	{
 		$idStatustemporadaInscricaoIniciada = 4;
-		$idStatusTemporadaMatriculaIniciada = 6;
+		//$idStatusTemporadaMatriculaIniciada = 6;
 		$sql = new Sql();
 
 		$rows = $sql->select("
@@ -206,14 +206,15 @@ class Cart extends Model {
 			INNER JOIN tb_persons j ON j.idperson = i.idperson
 			INNER JOIN tb_temporada k ON k.idtemporada = a.idtemporada
             INNER JOIN tb_statustemporada l ON l.idstatustemporada = k.idstatustemporada
-            WHERE l.idstatustemporada = :idStatustemporadaInscricaoIniciada OR l.idstatustemporada = :idStatusTemporadaMatriculaIniciada
+            WHERE l.idstatustemporada = :idStatustemporadaInscricaoIniciada 
+            -- OR l.idstatustemporada = :idStatusTemporadaMatriculaIniciada
             AND b.idcart = :idcart AND b.dtremoved IS NULL 
 			-- GROUP BY b.idturma, b.descturma
 			-- ORDER BY b.descturma
 		", [
 			':idcart'=>$this->getidcart(),
-			'idStatustemporadaInscricaoIniciada'=>$idStatustemporadaInscricaoIniciada,
-			'idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada
+			'idStatustemporadaInscricaoIniciada'=>$idStatustemporadaInscricaoIniciada
+			//'idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada
 		]);
 
 		return Turma::checkList($rows);

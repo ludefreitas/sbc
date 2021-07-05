@@ -87,9 +87,9 @@ $app->post("/checkout", function(){
 	$desperson = $user->getdesperson();		
 
 	if(Insc::statusTemporadaMatriculaIniciada($idtemporada)){
-		$InscStatus = InscStatus::AGUARDANDO_SORTEIO;
+		$InscStatus = InscStatus::AGUARDANDO_MATRICULA;
 	}else{
-		$InscStatus = InscStatus::AGURADANDO_MATRICULA;
+		$InscStatus = InscStatus::AGUARDANDO_SORTEIO;
 	}
 	
 		$insc->setData([

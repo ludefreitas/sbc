@@ -118,7 +118,9 @@ class Turma extends Model {
 			using(idstatustemporada)
 			INNER JOIN tb_modalidade m         
 			using(idmodal)
-      		WHERE idstatustemporada = :idStatusTemporadaInscricaoIniciada OR idstatustemporada = :idStatusTemporadaMatriculaIniciada AND m.idmodal = :idmodal
+      		WHERE a.idmodal = :idmodal 
+      		AND idstatustemporada = :idStatusTemporadaInscricaoIniciada 
+      		OR idstatustemporada = :idStatusTemporadaMatriculaIniciada       		
 			-- ORDER BY a.descturma
 			ORDER BY RAND()", [
 				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
@@ -144,9 +146,9 @@ class Turma extends Model {
 			INNER JOIN tb_atividade d
 			using(idativ)
 			INNER JOIN tb_espaco e
-			using(idespaco)
+			ON e.idespaco = a.idespaco
 			INNER JOIN tb_local f
-			using(idlocal)
+			ON f.idlocal = e.idlocal
 			INNER JOIN tb_turmastatus g
 			using(idturmastatus)
 			INNER JOIN tb_horario h
@@ -161,7 +163,9 @@ class Turma extends Model {
 			using(idstatustemporada)
 			INNER JOIN tb_modalidade m         
 			using(idmodal)
-      		WHERE idstatustemporada = :idStatusTemporadaInscricaoIniciada OR idstatustemporada = :idStatusTemporadaMatriculaIniciada AND f.idlocal = :idlocal
+      		WHERE e.idlocal = :idlocal
+      		AND idstatustemporada = :idStatusTemporadaInscricaoIniciada 
+      		OR idstatustemporada = :idStatusTemporadaMatriculaIniciada 
 			-- ORDER BY a.descturma
 			ORDER BY RAND()", [
 				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,

@@ -326,16 +326,22 @@ class Insc extends Model {
 			return $results;
 	}
 
+
+	// Esta função verifica se a temporada está com a matricula iniciada 
+	// para setar o status da inscrição no site.php
 	public function statusTemporadaMatriculaIniciada($idtemporada){
+
+		$idStatusTemporadaMatriculaIniciada = 6;
 
 		$sql = new Sql();
 
 		$results = $sql->select("
 			SELECT idstatustemporada
 			FROM tb_temporada 					
-			WHERE idtemporada = :idtemporada AND idstatustemporada = 4
+			WHERE idtemporada = :idtemporada AND idstatustemporada = :idstatustemporada
 		", [
-			':idtemporada'=>$idtemporada
+			':idtemporada'=>$idtemporada,
+			':idstatustemporada'=>$idStatusTemporadaMatriculaIniciada
 		]);
 
 		if (count($results) > 0) {			
