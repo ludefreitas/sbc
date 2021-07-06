@@ -1,4 +1,9 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
+
+ <div class="container"> <!-- container 1 -->
+            <div class="row"> <!-- row 2 -->
+              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
+
 <?php if( $error != '' ){ ?>
   <div class="alert alert-danger" role="alert">
       <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
@@ -56,4 +61,5 @@
 </div> <!-- container 3 -->           
     
 <?php } ?>
+</div> <!-- final da index -->
 

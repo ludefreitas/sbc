@@ -1,4 +1,9 @@
-<?php if(!class_exists('Rain\Tpl')){exit;}?>            <div class="container">
+<?php if(!class_exists('Rain\Tpl')){exit;}?>
+ <div class="container"> <!-- container 1 -->
+            <div class="row"> <!-- row 2 -->
+              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
+
+            <div class="container">
                 <div class="row alert-primary">
                     <div class="col-md-12" style="padding-top: 10px; padding-bottom: 10px">
                         <strong> Minhas inscrições</strong>
@@ -50,5 +55,6 @@
            
             <?php } ?>
             </div>  
+            </div> <!-- final da index -->
             
 

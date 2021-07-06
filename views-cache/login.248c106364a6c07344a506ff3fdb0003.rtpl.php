@@ -1,86 +1,61 @@
-<?php if(!class_exists('Rain\Tpl')){exit;}?>          
+<?php if(!class_exists('Rain\Tpl')){exit;}?>
+             <div class="container"> <!-- container 1 -->
+                        <div class="row"> <!-- row 2 -->
+                          <div class="col-md-12" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
+                      
 
-<div class="container">
-    <div class="row">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        
+                        <?php if( $error != '' ){ ?>
+                        <div class="alert alert-danger">
+                        <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                        </div>
+                        <?php } ?>
+                    </div>
 
-        <div class="col-md-6">
-            
-            <?php if( $error != '' ){ ?>
-            <div class="alert alert-danger">
-            <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
             </div>
-            <?php } ?>
-                
-            <form action="/login" id="login-form-wrap" class="login" method="post">
-                <h2>Acessar</h2>
-                <p class="form-row form-row-first">
-                    <label for="login">
-                        E-mail<span class="required">*</span>
-                    </label>
-                <input type="text" id="login" name="login" class="input-text">
-                </p>
-                <p class="form-row form-row-last">
-                    <label for="senha">
-                        Senha <span class="required">*</span>
-                    </label>
-                    <input type="password" id="senha" name="password" class="input-text">
-                </p>
-                <div class="clear"></div>
-                <p class="form-row">
-                    <input type="submit" value="Login" class="button">                       
-                </p>
-                <p class="form-row">
-                    <label class="inline" for="rememberme"><input type="checkbox" value="forever" id="rememberme" name="rememberme"> Manter conectado </label>
-                </p>
-                <p class="lost_password">
-                    <a href="/forgot">Esqueceu a senha?</a>
-                </p>
-                <div class="clear"></div>
-            </form>                    
-        </div>
-        <div class="col-md-6">
-            <?php if( $errorRegister != '' ){ ?>
-            <div class="alert alert-danger">
-            <?php echo htmlspecialchars( $errorRegister, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+           </div>
+                <div class="container">
+                <div class="row">
+                    <div class="col-md-6">                    
+                            
+                        <form action="/login" id="register-form-wrap" class="login" method="post">
+                            <h2>Acessar</h2>
+                            <p>Não tem conta?&nbsp;&nbsp; <a href="/user-create">Cadastre-se!</a>   </p>                  
+                            <p class="form-row form-row-first">
+                                <label for="login">
+                                    E-mail <span class="required">*</span>
+                                </label>
+                            <input type="text" id="login" name="login" class="input-text">
+                            </p>
+                            <p class="form-row form-row-last">
+                                <label for="senha">
+                                    Senha <span class="required">*</span>
+                                </label>
+                                <input type="password" id="senha" name="password" class="input-text">
+                            </p>
+                            <div class="clear"></div>
+                            <p class="form-row">
+                                <input type="submit" value="Login" class="button">                              
+                            </p>
+
+                            <p class="form-row">
+                                <label class="inline" for="rememberme"><input type="checkbox" value="forever" id="rememberme" name="rememberme"> Manter conectado </label>
+                            </p>
+                            <p class="lost_password">
+                                <a href="/forgot">Esqueceu a senha?</a>
+                            </p>
+                            <div class="clear"></div>
+                        </form>  
+
+                    </div>
+                    
+                </div>
             </div>
-            <?php } ?>
+            </div> <!-- final da index -->
 
-            <form id="register-form-wrap" action="/register" class="register" method="post">
-                <h2>Criar conta</h2>
-                <p class="form-row form-row-first">
-                    <label for="nome">
-                        Nome Completo <span class="required">*</span>
-                    </label>
-                    <input type="text" id="name" name="name" class="input-text" value="">
-                </p>
-                <p class="form-row form-row-first">
-                    <label for="email">
-                        E-mail <span class="required">*</span>
-                    </label>
-                    <input type="email" id="email" name="email" class="input-text" value="">
-                </p>
-                <p class="form-row form-row-first">
-                    <label for="phone">
-                        Telefone
-                    </label>
-                    <input type="text" id="phone" name="phone" class="input-text" value="">
-                </p>
-                <p class="form-row form-row-last">
-                    <label for="senha">
-                        Senha <span class="required">*</span>
-                    </label>
-                    <input type="password" id="senha" name="password" class="input-text">
-                </p>
-                <div class="clear"></div>
-                <p class="form-row">
-                    <input type="submit" value="Criar Conta" name="login" class="button">
-                </p>
-                <div class="clear"></div>
-            </form>               
-        </div>
-    </div>
-</div>
-
-                     
+                                 
 
 

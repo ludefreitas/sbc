@@ -89,12 +89,6 @@ $app->post("/endereco", function() {
 
 	$_POST['idperson'] = $idperson;
 
-	//echo '<pre>';
-	//var_dump($_POST);
-	//echo '</pre>';
-	//exit();
-
-
 	$endereco = new Endereco();	
 
 	$endereco->setData([
@@ -109,14 +103,12 @@ $app->post("/endereco", function() {
 		'cep'=>$_POST['cep'],	
 		'telres'=>$_POST['telres'],
 		'telemer'=>$_POST['telemer'],
-		'contato'=>$_POST['contato']
-		
+		'contato'=>$_POST['contato']		
 	]);	
 
 	$endereco->save();
 
-	$_SESSION['enderecoValues'] = NULL;
-															
+	$_SESSION['enderecoValues'] = NULL;															
 
 	header("Location: /cart");
 	exit();

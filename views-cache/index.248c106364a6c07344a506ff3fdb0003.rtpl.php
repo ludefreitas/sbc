@@ -1,4 +1,9 @@
-<?php if(!class_exists('Rain\Tpl')){exit;}?><div class="container" style="margin: 0px px 0px 0px; ">
+<?php if(!class_exists('Rain\Tpl')){exit;}?>
+ <div class="container"> <!-- container 1 -->
+            <div class="row"> <!-- row 2 -->
+              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
+
+<div class="container" style="margin: 0px px 0px 0px; ">
   <div class="row" style="margin: -5px -20px 0px -5px; ">
 
    
@@ -48,7 +53,7 @@
               Local da aula: <?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>;<br>
               <?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?> das <?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - 
               Professor(a): <?php echo htmlspecialchars( $value1["apelidoperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <br>
-              Turma <?php echo htmlspecialchars( $value1["desstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - Tempporada: <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
+              Turma <?php echo htmlspecialchars( $value1["desstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - Temporada: <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
               Número de inscritos: <?php echo htmlspecialchars( $value1["numinscritos"], ENT_COMPAT, 'UTF-8', FALSE ); ?> para <?php echo htmlspecialchars( $value1["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas <br>
               Idade: <?php echo htmlspecialchars( $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> a <?php echo htmlspecialchars( $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <br>
           </h5></a>
@@ -71,3 +76,108 @@
     </div> <!-- row 4 -->
   </div> <!-- container 3 -->                             
   <?php } ?>
+  </div> <!-- final da index -->
+
+
+              <div class="col-md-4" style="text-align-last: center; background-color: white; margin: 0px 0px 15px 0px ">
+
+                <div class="container">
+                  <div class="row estruturaAcessos">
+
+                     <div class="col-md-12" col-sm-1 style="text-align-last: left; background-color: #0f71b3; margin: 15px 0px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center;">
+                      <div style="text-align-last: center; font-weight: 900; font-size: 60px; color: white; margin: 5px;">
+                          <i class="fas fa-walking"></i>
+                      </div>
+                      <div style="text-align-last: center; font-weight: 600; line-height: 20px; color: white; font-size: 14px; font-style: normal; margin: 5px; ">
+                         Eventos Esportivos
+                      </div>
+                    </div>     
+
+                     <div class="col-md-12" col-sm-1 style="text-align-last: left; background-color: #909090; margin: 15px 0px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center;">
+                      <div style="text-align-last: center; font-weight: 900; font-size: 60px; color: white; margin: 5px;">
+                         <i class="fas fa-swimmer"></i>
+                      </div>
+                      <div style="text-align-last: center; font-weight: 600; line-height: 20px; color: white; font-size: 14px; font-style: normal; margin: 5px; ">
+
+                         Cursos Esportivos
+
+                      </div>
+                    </div> 
+                    <a href="/modalidades">    
+                    <div class="col-md-12" col-sm-1 style="text-align-last: left; background-color: #cc5d1e; margin: 15px 0px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center;">
+                      <div style="text-align-last: center; font-weight: 900; font-size: 60px; color: white; margin: 5px;">
+                         <i class="fas fa-trophy"></i>
+                      </div>
+                      <div style="text-align-last: center; font-weight: 600; line-height: 20px; color: white; font-size: 14px; font-style: normal; margin: 5px; ">
+                                               
+                         Modalidades
+                      </div></a>
+                    </div> 
+
+                    <div class="col-md-12" col-sm-1 style="text-align-last: left; background-color: #15a03f; margin: 15px 0px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center;">
+                      <div style="text-align-last: center; font-weight: 900; font-size: 60px; color: white; margin: 5px;">
+                         <i class="fas fa-futbol"></i>
+                      </div>
+                      <div style="text-align-last: center; font-weight: 600; line-height: 20px; color: white; font-size: 14px; font-style: normal; margin: 5px; ">
+                                               
+                         Campos de Futebol
+                      </div>
+                    </div> 
+                    <a href="/locais">        
+                    <div class="col-md-12" col-sm-1 style="text-align-last: left; background-color: #ce2c3e; margin: 15px 0px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center;">
+                      <div style="text-align-last: center; font-weight: 900; font-size: 60px; color: white; margin: 5px;">
+                      
+                         <i class="fas fa-warehouse"></i>
+                      </div>
+                      <div style="text-align-last: center; font-weight: 600; line-height: 20px; color: white; font-size: 14px; font-style: normal; margin: 5px; ">
+                                               
+                         Crec's
+                      </div>
+                      </a>
+                    </div>     
+                    <div class="col-md-12" col-sm-1 style="text-align-last: left; background-color: #0f71b3; margin: 15px 0px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center;">
+                      <div style="text-align-last: center; font-weight: 900; font-size: 60px; color: white; margin: 5px;">
+                      
+                         <i class="fas fa-bicycle"></i>
+                      </div>
+                      <div style="text-align-last: center; font-weight: 600; line-height: 20px; color: white; font-size: 14px; font-style: normal; margin: 5px; ">
+                                               
+                         Lazer
+                      </div>
+                    </div>     
+                    <div class="col-md-12" col-sm-1 style="text-align-last: left; background-color: #909090; margin: 15px 0px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center;">
+                      <div style="text-align-last: center; font-weight: 900; font-size: 60px; color: white; margin: 5px;">
+                      
+                         <i class="fas fa-handshake"></i>
+                      </div>
+                      <div style="text-align-last: center; font-weight: 600; line-height: 20px; color: white; font-size: 14px; font-style: normal; margin: 5px; ">
+                                               
+                         Parceiros
+                      </div>
+                    </div>     
+                    <div class="col-md-12" col-sm-1 style="text-align-last: left; background-color: #cc5d1e; margin: 15px 0px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center;">
+                      <div style="text-align-last: center; font-weight: 900; font-size: 60px; color: white; margin: 5px;">
+                      
+                         <i class="fas fa-user-plus"></i>
+                      </div>
+                      <div style="text-align-last: center; font-weight: 600; line-height: 20px; color: white; font-size: 14px; font-family: 'Open Sans'; f ">                         
+                         Melhor Idade
+                      </div>
+                    </div>     
+                    <div class="col-md-12" col-sm-1 style="text-align-last: left; background-color: #15a03f; margin: 15px 0px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center;">
+                      <div style="text-align-last: center; font-weight: 900; font-size: 60px; color: white; margin: 5px;">
+                      
+                         <i class="fas fa-map-marker-alt"></i>
+                      </div>
+                      <div style="text-align-last: center; font-weight: 600; line-height: 20px; color: white; font-size: 14px; font-style: normal; margin: 5px; ">
+                                               
+                         Mapas
+                      </div>
+                    </div>         
+                    
+                    
+                  </div>
+                </div>
+
+              </div>
+

@@ -1,4 +1,7 @@
-<?php if(!class_exists('Rain\Tpl')){exit;}?>
+<?php if(!class_exists('Rain\Tpl')){exit;}?> <div class="container"> <!-- container 1 -->
+            <div class="row"> <!-- row 2 -->
+              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
+
 
     <?php if( $errorRegister != '' ){ ?>
     <div class="alert alert-danger">
@@ -58,6 +61,7 @@
         <?php } ?> 
 
     </div>
+    </div> <!-- final da index -->
 
     
                     

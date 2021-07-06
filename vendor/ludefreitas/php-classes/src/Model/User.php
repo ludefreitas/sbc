@@ -13,6 +13,7 @@ class User extends Model {
 	const SECRET_IV = "Cursos_2020_Sbc1_IV"; //Colocar nas "" secret com 16 caracters + _IV;
 	const ERROR = "UserError";
 	const ERROR_REGISTER = "UserErrorRegister";
+	const ERROR_REGISTER_SENDMAIL = "UserErrorRegisterSendmail";
 	const SUCCESS = "UserSucesss";	
 
 	public static function getFromSession()
@@ -105,7 +106,7 @@ class User extends Model {
 			if ($inadmin) {
 				header("Location: /professor/login");
 			} else {
-				header("Location: /login");
+				header("Location: /user-create");
 			}
 			exit;
 
@@ -569,6 +570,32 @@ class User extends Model {
 		$_SESSION[User::ERROR_REGISTER] = NULL;
 
 	}
+
+	public static function setErrorRegisterSendmail($msg)
+	{
+
+		$_SESSION[User::ERROR_REGISTER_SENDMAIL] = $msg;
+
+	}
+
+	public static function getErrorRegisterSendmail()
+	{
+
+		$msg = (isset($_SESSION[User::ERROR_REGISTER_SENDMAIL]) && $_SESSION[User::ERROR_REGISTER_SENDMAIL]) ? $_SESSION[User::ERROR_REGISTER_SENDMAIL] : '';
+
+		User::clearErrorRegisterSendmail();
+
+		return $msg;
+
+	}
+
+	public static function clearErrorRegisterSendmail()
+	{
+
+		$_SESSION[User::ERROR_REGISTER_SENDMAIL] = NULL;
+
+	}
+
 
 	public static function checkLoginExist($login)
 	{

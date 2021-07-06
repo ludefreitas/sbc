@@ -52,12 +52,9 @@ class Endereco extends Model {
 		if (count($results) > 0) {
 			$this->setData($results[0]);
 		}else{
-
 			Endereco::setMsgError('Não foi possivel cadastrar endereço!');
 			header("Location: /endereco");
-			exit();
-
-			
+			exit();			
 		}
 
 	}
@@ -75,7 +72,7 @@ class Endereco extends Model {
 
 		if(count($results) === 0)
 		{
-			Endereco::setMsgError('Você precisa cadastrar um endereço para continuar a inscrição?');
+			Endereco::setMsgError('Você precisa completar o cadastro para cadastrar pessoa e fazer inscrição.');
 			header("Location: /endereco");
 			exit();			
 		}

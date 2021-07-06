@@ -18,17 +18,20 @@ $app->get("/pessoa-create", function() {
 		$page = new Page();
 
 		$page->setTpl("pessoa-create", [
-			//'error'=>User::getError(),
 			'errorRegister'=>User::getErrorRegister(),
-			'registerValues'=>(isset($_SESSION['registerValues'])) ? $_SESSION['registerValues'] : ['nomepess'=>'', 'dtnasc'=>'', 'numcpf'=>'', 'numrg'=>'', 'numsus'=>'', 'cadunico'=>'', 'nomemae'=>'', 'cpfmae'=>'', 'nomepai'=>'', 'cpfpai'=>'']
+			'registerpessoaValues'=>(
+				isset($_SESSION['registerpessoaValues'])) 
+				    ? $_SESSION['registerpessoaValues'] 
+			        : ['nomepess'=>'', 'dtnasc'=>'', 'numcpf'=>'', 'numrg'=>'', 'numsus'=>'', 'cadunico'=>'', 'nomemae'=>'', 'cpfmae'=>'', 'nomepai'=>'', 'cpfpai'=>'']
 		]);	
+
 });
 
 $app->post("/registerpessoa", function(){
 
 	User::verifyLogin(false);
 
-	$_SESSION['registerValues'] = $_POST;
+	$_SESSION['registerpessoaValues'] = $_POST;
 
 	$iduser = (int)$_SESSION[User::SESSION]["iduser"];
 
@@ -66,7 +69,7 @@ $app->post("/registerpessoa", function(){
 		header("Location: /pessoa-create");
 		exit;
 	}
-	*/
+	*/	
 
 	if (!isset($_POST['numrg']) || $_POST['numrg'] == '') {
 
@@ -94,20 +97,23 @@ $app->post("/registerpessoa", function(){
 		Pessoa::setErrorRegister("Informe o número do Cadastro Único (cadunico)");
 		header("Location: /pessoa-create");
 		exit;
+	}	
+
+	if ((!isset($_POST['nomemae']) || $_POST['nomemae'] == '') && (!isset($_POST['nomepai']) || $_POST['nomepai'] == '')) {
+
+		Pessoa::setErrorRegister("Informe pelo menos o nome ou da mãe, ou do pai ou do responsável.");
+		header("Location: /pessoa-create");
+		exit;
 	}
 
-	if (!isset($_POST['nomemae']) || $_POST['nomemae'] == '') {
+	if ((!isset($_POST['cpfmae']) || $_POST['cpfmae'] == '') && (!isset($_POST['cpfpai']) || $_POST['cpfpai'] == '')) {
 
-		Pessoa::setErrorRegister("Informe o nome da mãe.");
+		Pessoa::setErrorRegister("Informe pelo menos o CPF ou da mãe, ou do pai ou do responsável.");
 		header("Location: /pessoa-create");
 		exit;
 	}
 
 	$_POST['statuspessoa'] = 1;
-
-	//var_dump($_POST);
-	//exit();
-
 
 	$pessoa = new Pessoa();
 
@@ -132,7 +138,7 @@ $app->post("/registerpessoa", function(){
 
 	$pessoa->save();
 
-	$_SESSION['registerValues'] = NULL;
+	$_SESSION['registerpessoaValues'] = NULL;
 
 	header('Location: /cart');
 	exit;
