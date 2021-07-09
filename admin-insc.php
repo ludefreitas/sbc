@@ -8,9 +8,6 @@ use \Sbc\Model\Turma;
 use \Sbc\Model\Temporada;
 use \Sbc\Model\InscStatus;
 
-
-
-
 $app->get("/professor/insc", function() {
 
 	User::verifyLogin();
@@ -240,7 +237,7 @@ $app->get("/professor/insc/pessoa/:idepess", function($idpess){
 
 });
 
-$app->get("/professor/insc-turma-temporada/:idturma/:idtemporada/:idperson", function($idturma, $idtemporada, $idperson) {
+$app->get("/professor/insc-turma-temporada/:idturma/:idtemporada/:iduser", function($idturma, $idtemporada, $iduser) {
 
 	User::verifyLogin();
 
@@ -250,86 +247,33 @@ $app->get("/professor/insc-turma-temporada/:idturma/:idtemporada/:idperson", fun
 	$temporada = new Temporada();
 	$temporada->get((int)$idtemporada);
 	$turma->get((int)$idturma);
-	$user->get((int)$idperson);
 
-	$idusersessao = $_SESSION['User']['idperson'];
-	$iduser = $user->getiduser();
+	$idusersessao = (int)$_SESSION['User']['iduser'];
 
-	//criar função Verificar se professor é da turma
-	if(($idusersessao === $iduser) || ($idusersessao === '1') || ($idusersessao === '7') ) {
+	$iduserprof = User::getIdUseInTurmaTemporada($idturma, $idtemporada, $idusersessao);	
 
+	$idadmin = 1;
+	$idsuporte = 7;
+
+	// Aqui verifica se a turma pertencve ao professor 
+	if( $idusersessao === $idadmin || $idusersessao === 7 || $iduserprof === true) {
+	
 		$insc->getInscByTurmaTemporada($idturma, $idtemporada);
 	
 		$page = new PageAdmin();	
 
 		$page->setTpl("insc-turma-temporada", [
-		'insc'=>$insc->getValues(),
-		'turma'=>$turma->getValues(),
-		'temporada'=>$temporada->getValues()
+			'insc'=>$insc->getValues(),
+			'turma'=>$turma->getValues(),
+			'temporada'=>$temporada->getValues()
 		]);	
+
 	}else{
 
 		User::setError("A turma que você selecionou não está relacionada a este professor(a)!!!");
 		header("Location: /professor/turma-temporada/".$idtemporada."");
-		exit();		
+		exit();					
 	}	
 });
-
-
-/*
-$app->get("/professor/local/:idlocal/espaco", function($idlocal) {
-
-	User::verifyLogin();
-
-	$local = new Local();
-
-	$local->get((int)$idlocal);
-
-	$page = new PageAdmin();	
-
-	$page->setTpl("espaco-local", [
-		'local'=>$local->getValues(),
-		'espacoRelated'=> $local->getEspaco(true),
-		'espacoNotRelated'=>$local->getEspaco(false)
-	]);	
-});
-
-$app->get("/professor/local/:idlocal/espaco/:idespaco/add", function($idlocal, $idespaco) {
-
-	User::verifyLogin();
-
-	$local = new Local();
-
-	$local->get((int)$idlocal);
-
-	$espaco = new Espaco();
-
-	$espaco->get((int)$idespaco);
-
-	$local->addEspaco($espaco);
-
-	header("Location: /professor/local/".$idlocal."/espaco");
-	exit;
-});
-
-$app->get("/professor/local/:idlocal/espaco/:idespaco/remove", function($idlocal, $idespaco) {
-
-	User::verifyLogin();
-
-	$local = new Local();
-
-	$local->get((int)$idlocal);
-
-	$espaco = new Espaco();
-
-	$espaco->get((int)$idespaco);
-
-	$local->removeEspaco($espaco);
-
-	header("Location: /professor/local/".$idlocal."/espaco");
-	exit;
-
-});
-*/
 
 ?>

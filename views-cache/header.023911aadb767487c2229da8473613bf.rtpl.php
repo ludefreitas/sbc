@@ -184,7 +184,7 @@ desired effect
                 <img src="/res/admin/dist/img/user9-160x120.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  <?php echo getUserName(); ?> - Web Developer
+                  <?php echo getUserName(); ?> - <?php echo getUserId(); ?> - Web Developer
                   <small>Membro desde Set. 2020</small>
                 </p>
               </li>

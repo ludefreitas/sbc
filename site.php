@@ -14,7 +14,7 @@ use \Sbc\Model\Endereco;
 $app->get('/', function() {
 
 	$turma = Turma::listAllTurmaTemporada();
-	
+		
 	$page = new Page();    
 
 	$page->setTpl("index", [
@@ -143,8 +143,8 @@ $app->get("/login", function(){
 
 	$page->setTpl("login", [
 		'error'=>User::getError(),
-		'errorRegister'=>User::getErrorRegister(),
-		'registerValues'=>(isset($_SESSION['registerValues'])) ? $_SESSION['registerValues'] : ['name'=>'', 'email'=>'', 'phone'=>'']
+		'errorRegister'=>User::getErrorRegister()
+		//'registerValues'=>(isset($_SESSION['registerValues'])) ? $_SESSION['registerValues'] : ['name'=>'', 'email'=>'', 'phone'=>'']
 	]);
 });
 

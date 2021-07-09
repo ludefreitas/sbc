@@ -1,4 +1,4 @@
-	<?php
+<?php
 
 	namespace Sbc\Model;
 
@@ -29,7 +29,9 @@
 			$sql = new Sql();
 
 			return $sql->select("SELECT * 
-				FROM tb_turma a 
+				FROM tb_turmatemporada a 
+				INNER JOIN tb_turma i            
+				using(idturma)
 				INNER JOIN tb_users b
 				using(iduser)
 				INNER JOIN tb_atividade c
@@ -43,9 +45,7 @@
 				INNER JOIN tb_horario g
 				using(idhorario)
 				INNER JOIN tb_fxetaria h
-				using(idfxetaria)
-	            INNER JOIN tb_turmatemporada i            
-				using(idturma)
+				using(idfxetaria)	            
 	            INNER JOIN tb_temporada j           
 				using(idtemporada)   
 	            INNER JOIN tb_statustemporada k          
@@ -55,7 +55,7 @@
 	            INNER JOIN tb_persons m
 				using(idperson)            
 				WHERE idtemporada = :idtemporada
-				ORDER BY i.numinscritos DESC", [
+				ORDER BY a.numinscritos DESC", [
 				':idtemporada'=>$idtemporada 
 			]);
 		}
@@ -279,10 +279,10 @@
 					using(idfxetaria)             
 	                INNER JOIN tb_espaco 
 					using(idespaco)
-	                INNER JOIN tb_users 
-					using(iduser) 
-					INNER JOIN tb_persons 
-					using(idperson) 
+	                -- INNER JOIN tb_users 
+					-- using(iduser) 
+					-- INNER JOIN tb_persons 
+					-- using(idperson) 
 					INNER JOIN tb_local 
 					using(idlocal)
 					INNER JOIN tb_horario 
@@ -311,10 +311,10 @@
 					using(idfxetaria)             
 	                INNER JOIN tb_espaco 
 					using(idespaco)
-	                INNER JOIN tb_users 
-					using(iduser) 
-					INNER JOIN tb_persons 
-					using(idperson) 
+	                -- INNER JOIN tb_users 
+					-- using(iduser) 
+					-- INNER JOIN tb_persons 
+					-- using(idperson) 
 					INNER JOIN tb_local 
 					using(idlocal)
 					INNER JOIN tb_horario 
@@ -332,6 +332,8 @@
 				]);
 			}		
 		}
+
+		
 
 		public function numMaxInscritos($idtemporada){
 
@@ -366,7 +368,18 @@
 				':idtemporada'=>$this->getidtemporada(),
 				':idturma'=>$turma->getidturma()
 			]);
+		}
 
+		public function addProfessor(User $user)
+		{
+
+			$sql = new Sql();
+
+			$sql->query("UPDATE tb_turmatemporada SET iduser = :iduser WHERE idturma = :idturma AND idtemporada = :idtemporada", [
+				':idtemporada'=>$this->getidtemporada(),
+				':idturma'=>$this->getidturma(),
+				':iduser'=>$user->getiduser()
+			]);
 		}
 
 		public static function setError($msg)

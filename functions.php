@@ -47,6 +47,15 @@ function getUserName()
 
 }
 
+function getUserId()
+{
+
+    $user = User::getFromSession();
+
+    return $user->getiduser();
+
+}
+
 function calcularIdade($date){
     $time = strtotime($date);
     if($time === false){

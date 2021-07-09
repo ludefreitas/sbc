@@ -48,14 +48,15 @@
         <div class="col-md-12"style="text-align-last: left; line-height: 20px;  font-size: 14px; font-style: normal; margin: 5px 0px 20px 0px"><a href="/turma/{$value.idturma}/{$value.idtemporada}" style="text-decoration: none">
           <h5 style="color: #000000"> 
             <span style="font-weight: bold;">
-              {$value.idturma} - {$value.descativ}; 
+              {$value.idturma} - {$value.descativ} 
             </span><br>
-              Local da aula: {$value.apelidolocal};<br>
+              Local da aula: {$value.apelidolocal}<br>
               {$value.diasemana} das {$value.horainicio} às {$value.horatermino} - 
               Professor(a): {$value.apelidoperson} <br>
               Turma {$value.desstatus} - Temporada: {$value.desctemporada}<br>
-              Número de inscritos: {$value.numinscritos} para {$value.vagas} vagas <br>
               Idade: {$value.initidade} a {$value.fimidade} <br>
+               <span style="font-weight: bold;">
+              {$value.numinscritos} inscritos para {$value.vagas} vagas  
           </h5></a>
           
             <a class="btn btn-info" style="background-color: #cc5d1e"  href="/turma/{$value.idturma}/{$value.idtemporada}">Inscrever-se</a>

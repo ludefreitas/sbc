@@ -125,9 +125,7 @@ $app->get("/professor/turma-temporada/:idtemporada", function($idtemporada) {
 	$temporada = new Temporada();
 	$turma = new Turma();
 
-
 	$temporada->get((int)$idtemporada);
-
 
 	//var_dump($temporada->getTurma(true)); exit();
 
@@ -136,7 +134,7 @@ $app->get("/professor/turma-temporada/:idtemporada", function($idtemporada) {
 	$page->setTpl("turmas-por-temporada", [
 		'temporada'=>$temporada->getValues(),
 		//'turmaRelated'=>$temporada->getTurma(true)
-		'turmaRelated'=>Temporada::listAllTurmatemporada($idtemporada),
+		'turmas'=>Temporada::listAllTurmatemporada($idtemporada),
 		//'turmaNotRelated'=>$temporada->getTurma(false)
 		'error'=>User::getError()
 	]);	
@@ -196,18 +194,6 @@ $app->get("/professor/temporada/:idtemporada/turma/:idturma/remove", function($i
 	exit;
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ?>

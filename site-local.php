@@ -8,7 +8,7 @@ $app->get("/local/:idlocal", function($idlocal) {
 
 	$local = new local();
 
-	$local->get((int)$idlocal);
+	$local->get((int)$idlocal);	
 
 	$turma = Turma::listAllTurmaTemporadaLocal($idlocal);
 	
@@ -23,6 +23,8 @@ $app->get("/local/:idlocal", function($idlocal) {
 $app->get("/locais", function() {
 
 	$locais = Local::listAll();
+
+
 
 	$page = new Page();
 

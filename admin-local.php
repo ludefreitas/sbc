@@ -125,7 +125,8 @@ $app->post("/professor/local/:idlocal", function($idlocal) {
 	exit();		
 });
 
-$app->get("/local/:idlocal", function($idlocal) {
+/*
+$app->get("professor/local/:idlocal", function($idlocal) {
 
 	$local = new Local();
 
@@ -138,6 +139,7 @@ $app->get("/local/:idlocal", function($idlocal) {
 	]);	
 
 });
+*/
 
 
 /*

@@ -230,5 +230,23 @@ $app->post("/professor/users/:iduser", function($iduser) {
 	exit();
 });
 
+$app->get("/professor/turmatemporada/:iduser/turma", function($iduser) {
+
+	User::verifyLogin();
+
+	$user = new User();
+
+	$user->get((int)$iduser);	
+
+	$page = new PageAdmin();	
+
+	$page->setTpl("turma-temporada-professor", [
+		'user'=>$user->getValues(),
+		'turmaRelated'=>$user->getTurmaTemporada(true),
+		'turmaNotRelated'=>$user->getTurmaTemporada(false),
+		'error'=>User::getError()
+	]);	
+});
+
 
 ?>

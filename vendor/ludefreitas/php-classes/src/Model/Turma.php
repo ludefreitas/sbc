@@ -50,7 +50,9 @@ class Turma extends Model {
 		$sql = new Sql();
 
 		return $sql->select("SELECT * 
-			FROM tb_turma a 
+			FROM tb_turmatemporada a 
+			INNER JOIN tb_turma j            
+			using(idturma)
 			INNER JOIN tb_users b
 			using(iduser)
 			INNER JOIN tb_persons c
@@ -67,15 +69,15 @@ class Turma extends Model {
 			using(idhorario)
 			INNER JOIN tb_fxetaria i
 			using(idfxetaria)
-            INNER JOIN tb_turmatemporada j            
-			using(idturma)
+            -- INNER JOIN tb_turma j            
+			-- using(idturma)
             INNER JOIN tb_temporada k          
 			using(idtemporada)   
             INNER JOIN tb_statustemporada l          
 			using(idstatustemporada)
 			INNER JOIN tb_modalidade m         
 			using(idmodal)
-      		WHERE idstatustemporada = :idStatusTemporadaInscricaoIniciada OR idstatustemporada = :idStatusTemporadaMatriculaIniciada
+      		WHERE k.idstatustemporada = :idStatusTemporadaInscricaoIniciada OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
 			-- ORDER BY a.descturma
 			ORDER BY RAND()", [
 				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
@@ -93,7 +95,9 @@ class Turma extends Model {
 		$sql = new Sql();
 
 		return $sql->select("SELECT * 
-			FROM tb_turma a 
+			FROM tb_turmatemporada a 
+			INNER JOIN tb_turma j            
+			using(idturma)
 			INNER JOIN tb_users b
 			using(iduser)
 			INNER JOIN tb_persons c
@@ -109,18 +113,16 @@ class Turma extends Model {
 			INNER JOIN tb_horario h
 			using(idhorario)
 			INNER JOIN tb_fxetaria i
-			using(idfxetaria)
-            INNER JOIN tb_turmatemporada j            
-			using(idturma)
+			using(idfxetaria)            
             INNER JOIN tb_temporada k          
 			using(idtemporada)   
             INNER JOIN tb_statustemporada l          
 			using(idstatustemporada)
 			INNER JOIN tb_modalidade m         
 			using(idmodal)
-      		WHERE a.idmodal = :idmodal 
-      		AND idstatustemporada = :idStatusTemporadaInscricaoIniciada 
-      		OR idstatustemporada = :idStatusTemporadaMatriculaIniciada       		
+      		WHERE j.idmodal = :idmodal 
+      		AND k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
+      		OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada       		
 			-- ORDER BY a.descturma
 			ORDER BY RAND()", [
 				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
@@ -138,7 +140,9 @@ class Turma extends Model {
 		$sql = new Sql();
 
 		return $sql->select("SELECT * 
-			FROM tb_turma a 
+			FROM tb_turmatemporada a 
+			INNER JOIN tb_turma j            
+			using(idturma)
 			INNER JOIN tb_users b
 			using(iduser)
 			INNER JOIN tb_persons c
@@ -146,7 +150,7 @@ class Turma extends Model {
 			INNER JOIN tb_atividade d
 			using(idativ)
 			INNER JOIN tb_espaco e
-			ON e.idespaco = a.idespaco
+			ON e.idespaco = j.idespaco
 			INNER JOIN tb_local f
 			ON f.idlocal = e.idlocal
 			INNER JOIN tb_turmastatus g
@@ -154,9 +158,7 @@ class Turma extends Model {
 			INNER JOIN tb_horario h
 			using(idhorario)
 			INNER JOIN tb_fxetaria i
-			using(idfxetaria)
-            INNER JOIN tb_turmatemporada j            
-			using(idturma)
+			using(idfxetaria)            
             INNER JOIN tb_temporada k          
 			using(idtemporada)   
             INNER JOIN tb_statustemporada l          
@@ -164,8 +166,8 @@ class Turma extends Model {
 			INNER JOIN tb_modalidade m         
 			using(idmodal)
       		WHERE e.idlocal = :idlocal
-      		AND idstatustemporada = :idStatusTemporadaInscricaoIniciada 
-      		OR idstatustemporada = :idStatusTemporadaMatriculaIniciada 
+      		AND k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
+      		OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada 
 			-- ORDER BY a.descturma
 			ORDER BY RAND()", [
 				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
@@ -173,8 +175,6 @@ class Turma extends Model {
 				':idlocal'=>$idlocal
 			]);
 	}
-
-
 
 	public static function checkList($list)
 	{
@@ -196,13 +196,12 @@ class Turma extends Model {
 	public function save()
 	{
 		$sql = new Sql();
-		$results = $sql->select("CALL sp_turma_save(:idturma, :idativ, :idmodal, :idespaco, :idhorario, :iduser, :idturmastatus, :descturma, :vagas)", array(
+		$results = $sql->select("CALL sp_turma_save(:idturma, :idativ, :idmodal, :idespaco, :idhorario, :idturmastatus, :descturma, :vagas)", array(
 			":idturma"=>$this->getidturma(),			
 			":idativ"=>$this->getidativ(),
 			":idmodal"=>$this->getidmodal(),
 			":idespaco"=>$this->getidespaco(),
 			":idhorario"=>$this->getidhorario(),
-			":iduser"=>$this->getiduser(),
 			":idturmastatus"=>$this->getidturmastatus(),
 			":descturma"=>$this->getdescturma(),
 			":vagas"=>$this->getvagas()		
@@ -219,8 +218,8 @@ class Turma extends Model {
 
 		$results = $sql->select("SELECT * 
 			FROM tb_turma a 
-			INNER JOIN tb_users b
-			using(iduser)
+			-- INNER JOIN tb_users b
+			-- using(iduser)
 			INNER JOIN tb_atividade c
 			using(idativ)
 			INNER JOIN tb_espaco d
@@ -245,7 +244,7 @@ class Turma extends Model {
 
 		}else{
 
-			Turma::setMsgError("Turma selecionado não existe!");
+			Turma::setMsgError("Turma selecionada não existe!");
 			header("Location: /professor/turma");
 			exit();			
 		}		
@@ -513,12 +512,12 @@ class Turma extends Model {
 		$results = $sql->select("
 			SELECT SQL_CALC_FOUND_ROWS *
 			FROM tb_turma a 
-			INNER JOIN tb_users b 
-			USING(iduser)
+			-- INNER JOIN tb_users b 
+			-- USING(iduser)
 			-- INNER JOIN tb_turmatemporada k
-			-- USING(idtemporada)			
-			INNER JOIN tb_persons c
-			USING(idperson)
+			-- USING(iduser)			
+			-- INNER JOIN tb_persons c
+			-- USING(idperson)
 			INNER JOIN tb_atividade d
 			USING(idativ)
 			INNER JOIN tb_espaco e
@@ -557,12 +556,12 @@ class Turma extends Model {
 		$results = $sql->select("
 			SELECT SQL_CALC_FOUND_ROWS *
 			FROM tb_turma a 
-			INNER JOIN tb_users b
-			USING(iduser)
-			INNER JOIN tb_turmatemporada k
-			USING(idtemporada)			
-			INNER JOIN tb_persons c
-			USING(idperson)
+			-- INNER JOIN tb_users b
+			-- USING(iduser)
+			-- INNER JOIN tb_turmatemporada k
+			-- USING(idtemporada)			
+			-- INNER JOIN tb_persons c
+			-- USING(idperson)
 			INNER JOIN tb_atividade d
 			USING(idativ)
 			INNER JOIN tb_espaco e
@@ -580,6 +579,7 @@ class Turma extends Model {
       		WHERE a.descturma LIKE :search 
 			OR b.deslogin LIKE :search
 			OR c.desperson LIKE :search
+			OR c.apelidoperson LIKE :search
 			OR d.descativ LIKE :search
 			OR e.nomeespaco LIKE :search
 			OR f.apelidolocal LIKE :search

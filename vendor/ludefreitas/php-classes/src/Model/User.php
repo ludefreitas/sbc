@@ -687,6 +687,124 @@ class User extends Model {
 
    }
 
+   public function getTurmaTemporada($related = true)
+		{
+			$sql = new Sql();
+
+			if ($related === true) {
+
+				return $sql->select("
+					SELECT * FROM tb_turma
+					INNER JOIN tb_atividade 
+					using(idativ)
+					-- INNER JOIN tb_turmatemporada d
+					-- USING(idturma)			
+					INNER JOIN tb_modalidade
+					using(idmodal)   
+					INNER JOIN tb_fxetaria
+					using(idfxetaria)             
+	                INNER JOIN tb_espaco 
+					using(idespaco)
+	                -- INNER JOIN tb_users 
+					-- using(iduser) 
+					-- INNER JOIN tb_persons 
+					-- using(idperson) 
+					INNER JOIN tb_local 
+					using(idlocal)
+					INNER JOIN tb_horario 
+					using(idhorario)
+					INNER JOIN tb_turmastatus 
+					using(idturmastatus) 				
+						WHERE idturma IN(
+						SELECT a.idturma
+						FROM tb_turma a
+						INNER JOIN tb_turmatemporada b ON b.idturma = a.idturma
+						WHERE b.iduser = :iduser ORDER BY descturma
+					);
+				", [
+					':iduser'=>$this->getiduser()
+				]);
+
+			} else {
+
+				return $sql->select("
+					SELECT * FROM tb_turma
+					INNER JOIN tb_atividade 
+					using(idativ)
+					INNER JOIN tb_modalidade
+					using(idmodal)   
+					INNER JOIN tb_fxetaria
+					using(idfxetaria)             
+	                INNER JOIN tb_espaco 
+					using(idespaco)
+	                -- INNER JOIN tb_users 
+					-- using(iduser) 
+					-- INNER JOIN tb_persons 
+					-- using(idperson) 
+					INNER JOIN tb_local 
+					using(idlocal)
+					INNER JOIN tb_horario 
+					using(idhorario)
+					INNER JOIN tb_turmastatus 
+					using(idturmastatus) 							
+					WHERE idturma NOT IN(
+						SELECT a.idturma
+						FROM tb_turma a
+						INNER JOIN tb_turmatemporada b ON a.idturma = b.idturma
+						WHERE b.iduser = :iduser ORDER BY a.descturma
+					);
+				", [
+					':iduser'=>$this->getiduser()
+				]);
+			}		
+		}
+
+		/*
+		public function getUserInTurmaTemporada($idturma, $idtemporada){
+
+			$sql = new Sql();
+
+			$rows = $sql->select(
+				"SELECT * FROM tb_turmatemporada 
+				INNER JOIN tb_users USING(iduser)
+				INNER JOIN tb_persons USING(idperson)			
+				WHERE idturma = :idturma
+				AND idtemporada = :idtemporada ", [
+				':idturma'=>$idturma,
+				':idtemporada'=>$idtemporada
+			]);
+
+			return $rows;
+		}
+		*/
+		
+		public function getIdUseInTurmaTemporada($idturma, $idtemporada, $iduser){
+
+			$sql = new Sql();
+
+			$rows = $sql->select(
+				"SELECT iduser FROM tb_turmatemporada 			
+				WHERE idturma = :idturma
+				AND idtemporada = :idtemporada
+				AND iduser = :iduser ", [
+				':idturma'=>$idturma,
+				':idtemporada'=>$idtemporada,
+				':iduser'=>$iduser
+			]);
+
+			if($rows){
+
+				return true;
+
+			}else{
+
+				return false;
+
+			}		
+
+		}
+
+
 
 }
 
