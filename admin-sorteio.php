@@ -5,7 +5,6 @@ use \Sbc\Model\User;
 use \Sbc\Model\Temporada;
 use \Sbc\Model\Sorteio;
 
-
 $app->get("/professor/sorteio/:idtemporada", function($idtemporada) {
 
 	User::verifyLogin();
@@ -30,8 +29,35 @@ $app->get("/professor/sorteio/:idtemporada", function($idtemporada) {
 		'sorteio'=>$sorteio,
 		'maxIncritosTemporada'=>$maxIncritos[0],
 		'temporada'=>$temporada->getValues(),
-		'error'=>Temporada::getError()
+		'error'=>Temporada::getError(),
+		'errorSorteio'=>Sorteio::getError()
 	]);
+});
+
+
+$app->post("/professor/sortear", function() {
+
+	User::verifyLogin();
+
+	$temporada = new Temporada();
+	$sorteio = new Sorteio();	
+	$idtemporada = $_POST['idtemporada'];
+	$maxIncritos = $_POST['maxIncritosTemporada'];
+
+	if(!Sorteio::listAll($idtemporada)){
+
+			$sort = Sorteio::sortear($maxIncritos, $maxIncritos, $idtemporada);
+
+			header("Location: /professor/sorteio/".$idtemporada."");
+			exit();	
+
+	}else{
+
+		Sorteio::setError("Sorteio Já realizado! Você precisa excluir o sorteio atual para realizar novo sorteio.");
+		header("Location: /professor/sorteio/".$idtemporada."");
+		exit();
+	}	
+
 });
 /*
 $app->get("/professor/sorteio:desctemporada/:idtemporada", function($desctemporada, $idtemporada) {
@@ -63,33 +89,6 @@ $app->get("/professor/sorteio:desctemporada/:idtemporada", function($desctempora
 });
 */
 
-$app->post("/professor/sortear", function() {
-
-	User::verifyLogin();
-
-	$temporada = new Temporada();
-	$sorteio = new Sorteio();	
-
-	//$desctemporada = $_POST['desctemporada'];
-	$idtemporada = $_POST['idtemporada'];
-	$maxIncritos = $_POST['maxIncritosTemporada'];
-
-
-	//var_dump($_POST['idtemporada'].' - '.$_POST['desctemporada'].' - '.$_POST['maxIncritosTemporada']);
-	//exit();
-
-	//$sorteio = Sorteio::listAll($desctemporada);
-
-	//$temporada = Temporada::numMaxInscritos($idtemporada);
-
-
-	$sort = Sorteio::sortear($maxIncritos, $maxIncritos, $idtemporada);
-
-	header("Location: /professor/sorteio/".$idtemporada."");
-	exit();		
-	
-
-});
 /*
 $app->post("/professor/sortear", function() {
 

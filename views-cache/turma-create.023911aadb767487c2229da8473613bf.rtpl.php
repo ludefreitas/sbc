@@ -51,16 +51,17 @@
                   <?php } ?>                            
                 </select>
             </div>
+            <!--
             <div class="box-header">
               <label for="turma">Professor</label>
                 <select class="form-control" name="iduser">
                 <option>Selecione o professor</option>       
                   <?php $counter1=-1;  if( isset($user) && ( is_array($user) || $user instanceof Traversable ) && sizeof($user) ) foreach( $user as $key1 => $value1 ){ $counter1++; ?>
 
-                  <option value="<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
                   <?php } ?>                            
                 </select>
             </div>
+          -->
             <div class="box-header">
               <label for="turma">Espaço - Crec</label>
                 <select class="form-control" name="idespaco">
@@ -97,14 +98,14 @@
             <!-- <div class="box-header">
               <label for="turma">Nº inicial de inscritos</label>
               <input type="number" class="form-control" id="numinscritos" name="numinscritos" placeholder="informe a quantidade inicial de inscritos">
-            </div> -->
-            
-            
+            </div> -->           
 
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
             <button type="submit" class="btn btn-success">Cadastrar</button>
+            &nbsp&nbsp&nbsp&nbsp
+            <a type="button" class="btn btn-danger" href="/professor/turma">Cancelar</a>
           </div>
         </form>
       </div>

@@ -3,7 +3,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Lista de Professores
+    Lista dos professores da temporada <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -19,6 +19,11 @@
       <div class="box box-primary">
             
             <div class="box-header">
+              <?php if( $error != '' ){ ?>
+                <div class="alert alert-danger" style="margin: 0px 10px 0px 10px">
+                    <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                </div>
+                <?php }else{ ?>
               <!--
               <a href="/professor/users/create" class="btn btn-success">Cadastrar Usuário</a>
             -->
@@ -26,9 +31,12 @@
             <div class="box-tools">
                 <form action="/professor/prof">
                   <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="search" class="form-control pull-right" placeholder="Search" value="">
+                    <!--<input type="text" name="search" class="form-control pull-right" placeholder="Search" value="">
                     <div class="input-group-btn">
+                     -->
+                     <!--
                       <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    -->
                     </div>
                   </div>
                 </form>
@@ -44,62 +52,49 @@
                     <th>Nome</th>
                     <th>Apelido</th>
                     <th>E-mail</th>
-                    <th>Fone</th>
                     <th>Login</th>
-                    <th style="width: 60px">Admin</th>
-                    <th style="width: 60px">Prof</th>
-                    <th style="width: 60px">Status</th>
+                    <th></th>
+                     <th></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <?php $counter1=-1;  if( isset($prof) && ( is_array($prof) || $prof instanceof Traversable ) && sizeof($prof) ) foreach( $prof as $key1 => $value1 ){ $counter1++; ?>
 
+                  <?php $counter1=-1;  if( isset($prof) && ( is_array($prof) || $prof instanceof Traversable ) && sizeof($prof) ) foreach( $prof as $key1 => $value1 ){ $counter1++; ?>
                   <tr>
                     <td><?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                     <td><?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                     <td><?php echo htmlspecialchars( $value1["apelidoperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                     <td><?php echo htmlspecialchars( $value1["desemail"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                    <td><?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                     <td><?php echo htmlspecialchars( $value1["deslogin"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td/>
-                    <td><?php if( $value1["inadmin"] == 1 ){ ?>Sim<?php }else{ ?>Não<?php } ?></td>
-                    <td><?php if( $value1["isprof"] == 1 ){ ?>Sim<?php }else{ ?>Não<?php } ?></td>
-                    <td><?php if( $value1["statususer"] == 1 ){ ?>Ativo<?php }else{ ?>Inativo<?php } ?></td>
+                    
+                    <td>
+                      
+
+                      <a href="/professor/turmatemporada/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/turma" class="btn btn-success btn-xs"><i class=""></i>Turmas<br>da Temporada</a>
+
+
+                      
+                    </td>
 
                     <td>
-                      <a href="/professor/users/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
-                      <!--
-                      <a href="/professor/turmatemporada/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/turma/4" class="btn btn-info btn-xs"><i class=""></i> Turmas</a>
-                    -->
-
-
-                      <!--<a href="/professor/users/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir o registro do(a) <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>-->
+                      
+                      <a href="/professor/turmatemporada/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/turma/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-info btn-xs"><i class=""></i> Inserir ou remover<br> turma</a>                      
                     </td>
                     
                   </tr>
                   <?php } ?>
-
                 </tbody>
               </table>
-            </div>
-
-            <div class="box-footer clearfix">
-              <ul class="pagination pagination-sm no-margin pull-right">
-                <?php $counter1=-1;  if( isset($pages) && ( is_array($pages) || $pages instanceof Traversable ) && sizeof($pages) ) foreach( $pages as $key1 => $value1 ){ $counter1++; ?>
-
-                <li><a href="<?php echo htmlspecialchars( $value1["href"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["text"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a></li>
-                <?php } ?>
-
-              </ul>
-            </div>
+            </div>           
 
             <!-- /.box-body -->
             <button type="button" onclick="window.print()" class="btn btn-primary pull-right" style="margin-right: 5px;">
                 <i class="fa fa-print"></i> Imprimir
             </button>
-          </div>
+          </div>           
     </div>
   </div>
-
+    <?php } ?>
 </section>
 <!-- /.content -->
 </div>

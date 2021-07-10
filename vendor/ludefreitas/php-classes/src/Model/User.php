@@ -687,48 +687,43 @@ class User extends Model {
 
    }
 
-   public function getTurmaTemporada($related = true)
+   public function getTurmaTemporada($related = true, $idtemporada)
 		{
 			$sql = new Sql();
 
 			if ($related === true) {
 
 				return $sql->select("
-					SELECT * FROM tb_turma
+					SELECT * FROM tb_turmatemporada a
+					INNER JOIN tb_turma 
+					using(idturma)
 					INNER JOIN tb_atividade 
 					using(idativ)
-					-- INNER JOIN tb_turmatemporada d
-					-- USING(idturma)			
 					INNER JOIN tb_modalidade
 					using(idmodal)   
 					INNER JOIN tb_fxetaria
 					using(idfxetaria)             
 	                INNER JOIN tb_espaco 
 					using(idespaco)
-	                -- INNER JOIN tb_users 
-					-- using(iduser) 
-					-- INNER JOIN tb_persons 
-					-- using(idperson) 
 					INNER JOIN tb_local 
 					using(idlocal)
 					INNER JOIN tb_horario 
 					using(idhorario)
 					INNER JOIN tb_turmastatus 
 					using(idturmastatus) 				
-						WHERE idturma IN(
-						SELECT a.idturma
-						FROM tb_turma a
-						INNER JOIN tb_turmatemporada b ON b.idturma = a.idturma
-						WHERE b.iduser = :iduser ORDER BY descturma
-					);
+					WHERE a.iduser = :iduser 
+					AND a.idtemporada = :idtemporada
 				", [
-					':iduser'=>$this->getiduser()
+					':iduser'=>$this->getiduser(),
+					':idtemporada'=>$idtemporada
 				]);
 
 			} else {
 
 				return $sql->select("
-					SELECT * FROM tb_turma
+					SELECT * FROM tb_turmatemporada a
+					INNER JOIN tb_turma 
+					using(idturma)
 					INNER JOIN tb_atividade 
 					using(idativ)
 					INNER JOIN tb_modalidade
@@ -737,24 +732,17 @@ class User extends Model {
 					using(idfxetaria)             
 	                INNER JOIN tb_espaco 
 					using(idespaco)
-	                -- INNER JOIN tb_users 
-					-- using(iduser) 
-					-- INNER JOIN tb_persons 
-					-- using(idperson) 
 					INNER JOIN tb_local 
 					using(idlocal)
 					INNER JOIN tb_horario 
 					using(idhorario)
 					INNER JOIN tb_turmastatus 
-					using(idturmastatus) 							
-					WHERE idturma NOT IN(
-						SELECT a.idturma
-						FROM tb_turma a
-						INNER JOIN tb_turmatemporada b ON a.idturma = b.idturma
-						WHERE b.iduser = :iduser ORDER BY a.descturma
-					);
+					using(idturmastatus) 				
+					WHERE a.iduser != :iduser
+					AND a.idtemporada = :idtemporada
 				", [
-					':iduser'=>$this->getiduser()
+					':iduser'=>$this->getiduser(),
+					':idtemporada'=>$idtemporada
 				]);
 			}		
 		}

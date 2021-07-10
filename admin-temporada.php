@@ -40,6 +40,30 @@ $app->get("/professor/temporada/create", function() {
 	));
 });
 
+$app->get("/professor/professor-temporada/:idtemporada", function($idtemporada) {
+
+	User::verifyLogin();
+
+	$temporada = new Temporada();
+
+	$temporada->get((int)$idtemporada);
+
+
+	$proftemporada = Temporada::listaProf($idtemporada);
+
+	if(!$proftemporada){
+		Temporada::setError("Não há professores para esta turma, você precisa relacionar turmas a esta temporada!");
+	}
+
+	$page = new PageAdmin();
+
+	$page->setTpl("prof-temporada", array(
+		'prof'=>$proftemporada,
+		'temporada'=>$temporada->getValues(),
+		'error'=>Temporada::getError()
+	));
+});
+
 
 $app->post("/professor/temporada/create", function() {
 
@@ -54,6 +78,13 @@ $app->post("/professor/temporada/create", function() {
 
 	Temporada::temporadaExiste($desctemporada);
 	Temporada::temporadaStatusExiste($idstatustemporada);
+	/*
+	if((bool)Temporada::temporadaStatusIniciadaExiste()){
+		Temporada::setError("Já existe uma temporada com inscrição ou matrícula iniciada. Não pode existir mais de ma temporada com inscrição ou matrícula iniciada.");
+		header("Location: /professor/temporada");
+		exit;
+	}
+	*/
 
 	$temporada->save();
 

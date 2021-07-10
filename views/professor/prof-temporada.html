@@ -3,7 +3,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Lista de Professores
+    Lista dos professores da temporada {$temporada.desctemporada}
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -19,6 +19,11 @@
       <div class="box box-primary">
             
             <div class="box-header">
+              {if="$error != ''"}
+                <div class="alert alert-danger" style="margin: 0px 10px 0px 10px">
+                    {$error}
+                </div>
+                {else}
               <!--
               <a href="/professor/users/create" class="btn btn-success">Cadastrar Usuário</a>
             -->
@@ -26,9 +31,12 @@
             <div class="box-tools">
                 <form action="/professor/prof">
                   <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="search" class="form-control pull-right" placeholder="Search" value="">
+                    <!--<input type="text" name="search" class="form-control pull-right" placeholder="Search" value="">
                     <div class="input-group-btn">
+                     -->
+                     <!--
                       <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    -->
                     </div>
                   </div>
                 </form>
@@ -44,58 +52,49 @@
                     <th>Nome</th>
                     <th>Apelido</th>
                     <th>E-mail</th>
-                    <th>Fone</th>
                     <th>Login</th>
-                    <th style="width: 60px">Admin</th>
-                    <th style="width: 60px">Prof</th>
-                    <th style="width: 60px">Status</th>
+                    <th></th>
+                     <th></th>
                   </tr>
                 </thead>
                 <tbody>
+
                   {loop="$prof"}
                   <tr>
                     <td>{$value.iduser}</td>
                     <td>{$value.desperson}</td>
                     <td>{$value.apelidoperson}</td>
                     <td>{$value.desemail}</td>
-                    <td>{$value.nrphone}</td>
                     <td>{$value.deslogin}</td/>
-                    <td>{if="$value.inadmin == 1"}Sim{else}Não{/if}</td>
-                    <td>{if="$value.isprof == 1"}Sim{else}Não{/if}</td>
-                    <td>{if="$value.statususer == 1"}Ativo{else}Inativo{/if}</td>
+                    
+                    <td>
+                      
+
+                      <a href="/professor/turmatemporada/{$value.iduser}/turma" class="btn btn-success btn-xs"><i class=""></i>Turmas<br>da Temporada</a>
+
+
+                      
+                    </td>
 
                     <td>
-                      <a href="/professor/users/{$value.iduser}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
-                      <!--
-                      <a href="/professor/turmatemporada/{$value.iduser}/turma/4" class="btn btn-info btn-xs"><i class=""></i> Turmas</a>
-                    -->
-
-
-                      <!--<a href="/professor/users/{$value.iduser}/delete" onclick="return confirm('Deseja realmente excluir o registro do(a) {$value.desperson}?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>-->
+                      
+                      <a href="/professor/turmatemporada/{$value.iduser}/turma/{$value.idtemporada}" class="btn btn-info btn-xs"><i class=""></i> Inserir ou remover<br> turma</a>                      
                     </td>
                     
                   </tr>
                   {/loop}
                 </tbody>
               </table>
-            </div>
-
-            <div class="box-footer clearfix">
-              <ul class="pagination pagination-sm no-margin pull-right">
-                {loop="$pages"}
-                <li><a href="{$value.href}">{$value.text}</a></li>
-                {/loop}
-              </ul>
-            </div>
+            </div>           
 
             <!-- /.box-body -->
             <button type="button" onclick="window.print()" class="btn btn-primary pull-right" style="margin-right: 5px;">
                 <i class="fa fa-print"></i> Imprimir
             </button>
-          </div>
+          </div>           
     </div>
   </div>
-
+    {/if}
 </section>
 <!-- /.content -->
 </div>

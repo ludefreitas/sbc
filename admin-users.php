@@ -98,7 +98,7 @@ $app->get("/professor/prof", function() {
 	));
 });
 
-$app->get("/professor/cliente", function() {
+$app->get("/professor/users-cliente", function() {
 
 	User::verifyLogin();
 	// na linha abaixo retorna um array com todos os dados do usuário
@@ -123,7 +123,7 @@ $app->get("/professor/cliente", function() {
 	{
 
 		array_push($pages, [
-			'href'=>'/professor/cliente?'.http_build_query([
+			'href'=>'/professor/users-cliente?'.http_build_query([
 				'page'=>$x+1,
 				'search'=>$search
 			]),
@@ -137,7 +137,7 @@ $app->get("/professor/cliente", function() {
 	$page = new PageAdmin();
 
 	// envia para a página o array retornado pelo listAll
-	$page->setTpl("cliente", array( // aqui temos um array com muitos arrays
+	$page->setTpl("users-cliente", array( // aqui temos um array com muitos arrays
 		"cliente"=>$pagination['data'],
 		"search"=>$search,
 		"pages"=>$pages
@@ -230,7 +230,7 @@ $app->post("/professor/users/:iduser", function($iduser) {
 	exit();
 });
 
-$app->get("/professor/turmatemporada/:iduser/turma", function($iduser) {
+$app->get("/professor/turmatemporada/:iduser/turma/:idtemporada", function($iduser, $idtemporada) {
 
 	User::verifyLogin();
 
@@ -242,8 +242,8 @@ $app->get("/professor/turmatemporada/:iduser/turma", function($iduser) {
 
 	$page->setTpl("turma-temporada-professor", [
 		'user'=>$user->getValues(),
-		'turmaRelated'=>$user->getTurmaTemporada(true),
-		'turmaNotRelated'=>$user->getTurmaTemporada(false),
+		'turmaRelated'=>$user->getTurmaTemporada(true, $idtemporada),
+		'turmaNotRelated'=>$user->getTurmaTemporada(false, $idtemporada),
 		'error'=>User::getError()
 	]);	
 });

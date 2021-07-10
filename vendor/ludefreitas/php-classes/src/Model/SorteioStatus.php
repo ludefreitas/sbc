@@ -7,7 +7,7 @@ use \Sbc\Model;
 
 class SorteioStatus extends Model {
 
-	const NAO INICIADO = 1;
+	const NAO_INICIADO = 1;
 	const FINALIZADO = 2;
 	const CANCELADO = 3;
 

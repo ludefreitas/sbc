@@ -22,12 +22,13 @@
           <div class="box-body">
             <div class="form-group">
               <label for="desperson">Nome</label>
-              <input type="text" class="form-control" id="desperson" name="desperson" placeholder="Digite o nome" value="<?php echo htmlspecialchars( $user["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+              <input disabled="true" type="text" class="form-control" id="desperson" name="desperson" placeholder="Digite o nome" value="<?php echo htmlspecialchars( $user["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
             <div class="form-group">
               <label for="apelidoperson">Apelido</label>
               <input type="text" class="form-control" id="apelidoperson" name="apelidoperson" placeholder="Digite o apelido" value="<?php echo htmlspecialchars( $user["apelidoperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
+            <!--
             <div class="form-group">
               <label for="deslogin">Login</label>
               <input type="text" class="form-control" id="deslogin" name="deslogin" placeholder="Digite o login"  value="<?php echo htmlspecialchars( $user["deslogin"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
@@ -40,6 +41,7 @@
               <label for="desemail">E-mail</label>
               <input type="email" class="form-control" id="desemail" name="desemail" placeholder="Digite o e-mail" value="<?php echo htmlspecialchars( $user["desemail"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
+          -->
             <div class="checkbox">
               <label>
                 <input type="checkbox" name="inadmin" value="1" <?php if( $user["inadmin"] == 1 ){ ?>checked<?php } ?>> Acesso de Administrador
@@ -59,6 +61,8 @@
           <!-- /.box-body -->
           <div class="box-footer">
             <button type="submit" class="btn btn-primary">Salvar</button>
+            &nbsp&nbsp&nbsp&nbsp
+            <a type="button" class="btn btn-danger" href="javascript:window.history.go(-1)">Cancelar</a>
           </div>
         </form>
       </div>

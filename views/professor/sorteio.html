@@ -16,13 +16,13 @@
   <div class="row">
     <div class="col-md-12">
       <div class="box box-primary">
-            
-            
-
+        {if="$errorSorteio != ''"}
+          <div class="alert alert-danger" role="alert">
+              {$errorSorteio}
+          </div>
+        {/if}
             <div class="row">
-              <div class="col-md-12">
-
-                
+              <div class="col-md-12">         
 
                 <form method="post" action="/professor/sortear">
                 <div>

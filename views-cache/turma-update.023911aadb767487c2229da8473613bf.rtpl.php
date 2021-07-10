@@ -44,15 +44,6 @@
                 </select>
             </div>            
             <div class="form-group">
-              <label for="atividade">Professor</label>
-                <select class="form-control" name="iduser">     
-                  <?php $counter1=-1;  if( isset($users) && ( is_array($users) || $users instanceof Traversable ) && sizeof($users) ) foreach( $users as $key1 => $value1 ){ $counter1++; ?>
-
-                  <option <?php if( $value1["iduser"] === $turma["iduser"] ){ ?>selected="selected"<?php } ?> value="<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
-                  <?php } ?>                            
-                </select>
-            </div>
-            <div class="form-group">
               <label for="turma">Espaço - Crec</label>
                 <select class="form-control" name="idespaco">     
                   <?php $counter1=-1;  if( isset($espaco) && ( is_array($espaco) || $espaco instanceof Traversable ) && sizeof($espaco) ) foreach( $espaco as $key1 => $value1 ){ $counter1++; ?>
@@ -76,8 +67,7 @@
               <label for="turma">Status</label>
                 <select class="form-control" name="idturmastatus"> 
 
-                  <?php $counter1=-1;  if( isset($turmastatus) && ( is_array($turmastatus) || $turmastatus instanceof Traversable ) && sizeof($turmastatus) ) foreach( $turmastatus as $key1 => $value1 ){ $counter1++; ?>
-
+                  <?php $counter1=-1;  if( isset($turmastatus) && ( is_array($turmastatus) || $turmastatus instanceof Traversable ) && sizeof($turmastatus) ) foreach( $turmastatus as $key1 => $value1 ){ $counter1++; ?> 
                   <option <?php if( $value1["idturmastatus"] === $turma["idturmastatus"] ){ ?>selected="selected"<?php } ?> value="<?php echo htmlspecialchars( $value1["idturmastatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["desstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
                   <?php } ?>                            
                 </select>
@@ -88,7 +78,7 @@
               <label for="turma">Vagas</label>
               <input type="number" class="form-control" id="vagas" name="vagas" placeholder="Informe a quantidade de vagas" value="<?php echo htmlspecialchars( $turma["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
-            <div class="form-group">
+      <!--  <div class="form-group">
               <label for="file">Foto</label>
               <input type="file" class="form-control" id="file" name="file" value="<?php echo htmlspecialchars( $turma["desphoto"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
               <div class="box box-widget">
@@ -96,13 +86,16 @@
                   <img class="img-responsive" id="image-preview" src="<?php echo htmlspecialchars( $turma["desphoto"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" alt="Photo">
                 </div>
               </div>
-            </div>   
+            </div>
+      -->   
 
         </div>                  
             
           <!-- /.box-body -->
           <div class="box-footer">
             <button type="submit" class="btn btn-primary">Salvar</button>
+            &nbsp&nbsp&nbsp&nbsp
+            <a type="button" class="btn btn-danger" href="/professor/turma">Cancelar</a>
           </div>
         </form>
       </div>

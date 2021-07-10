@@ -88,7 +88,7 @@ $app->get("/professor/turma/create", function() {
 	$page = new PageAdmin();
 
 	$page->setTpl("turma-create", array(
-		'user'=>$user,
+		//'user'=>$user,
 		'local'=>$local,
 		'espaco'=>$espaco,
 		'horario'=>$horario,		
@@ -144,7 +144,7 @@ $app->get("/professor/turma/:idturma", function($idturma) {
 		'modalidade'=>Modalidade::listAll(),
 		'atividade'=>Atividade::listAll(),
 		'modalidade'=>Modalidade::listAll(),
-		'users'=>User::listAllProf(),
+		//'users'=>User::listAllProf(),
 		'horario'=>Horario::listAll(),
 		'espaco'=>Espaco::listAll()		
 	));

@@ -49,15 +49,16 @@
                   {/loop}                            
                 </select>
             </div>
+            <!--
             <div class="box-header">
               <label for="turma">Professor</label>
                 <select class="form-control" name="iduser">
                 <option>Selecione o professor</option>       
                   {loop="$user"}
-                  <option value="{$value.iduser}">{$value.desperson}</option>
                   {/loop}                            
                 </select>
             </div>
+          -->
             <div class="box-header">
               <label for="turma">Espaço - Crec</label>
                 <select class="form-control" name="idespaco">
@@ -91,14 +92,14 @@
             <!-- <div class="box-header">
               <label for="turma">Nº inicial de inscritos</label>
               <input type="number" class="form-control" id="numinscritos" name="numinscritos" placeholder="informe a quantidade inicial de inscritos">
-            </div> -->
-            
-            
+            </div> -->           
 
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
             <button type="submit" class="btn btn-success">Cadastrar</button>
+            &nbsp&nbsp&nbsp&nbsp
+            <a type="button" class="btn btn-danger" href="/professor/turma">Cancelar</a>
           </div>
         </form>
       </div>

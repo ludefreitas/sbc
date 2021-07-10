@@ -16,11 +16,17 @@
   <div class="row">
     <div class="col-md-12">
       <div class="box box-primary">
+        <?php if( $errorSorteio != '' ){ ?>
+          <div class="alert alert-danger" role="alert">
+              <?php echo htmlspecialchars( $errorSorteio, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+          </div>
+        <?php } ?>
             
             
 
             <div class="row">
               <div class="col-md-12">
+
 
                 
 

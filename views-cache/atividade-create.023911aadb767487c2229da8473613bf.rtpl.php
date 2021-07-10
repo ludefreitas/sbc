@@ -1,4 +1,4 @@
-<!-- Content Wrapper. Contains page content -->
+<?php if(!class_exists('Rain\Tpl')){exit;}?><!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -53,9 +53,11 @@
                         <label for="atividade">Faixa Etária</label>
                         <select class="form-control" name="idfxetaria">                          
 
-                            {loop="$faixaetaria"}
-                            <option {if="$value.idfxetaria"}selected="selected"{/if} value="{$value.idfxetaria}">{$value.initidade} a {$value.fimidade} anos - {$value.descrfxetaria}</option>
-                            {/loop}
+                            <?php $counter1=-1;  if( isset($faixaetaria) && ( is_array($faixaetaria) || $faixaetaria instanceof Traversable ) && sizeof($faixaetaria) ) foreach( $faixaetaria as $key1 => $value1 ){ $counter1++; ?>
+
+                            <option <?php if( $value1["idfxetaria"] ){ ?>selected="selected"<?php } ?> value="<?php echo htmlspecialchars( $value1["idfxetaria"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> a <?php echo htmlspecialchars( $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> anos - <?php echo htmlspecialchars( $value1["descrfxetaria"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                            <?php } ?>
+
                             
                         </select>
                     </div>   

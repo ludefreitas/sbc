@@ -73,7 +73,6 @@
 			return $list;
 		}
 
-
 		public function temporadaExiste($desctemporada){
 
 			$sql = new Sql();
@@ -96,10 +95,15 @@
 
 			$sql = new Sql();
 
-			$results = $sql->select("SELECT idstatustemporada FROM tb_temporada WHERE idstatustemporada = :idstatustemporada AND idstatustemporada = :idtemporadaInscricaoIniciada OR :idtemporadaMatriculaIniciada ", [
+			$results = $sql->select("SELECT idstatustemporada 
+				FROM tb_temporada 
+				WHERE idstatustemporada = :idstatustemporada 
+				AND idstatustemporada = :idtemporadaInscricaoIniciada 
+				OR :idtemporadaMatriculaIniciada", 
+				[
 				':idstatustemporada'=>$idstatustemporada,
 				'idtemporadaInscricaoIniciada'=>$idtemporadaInscricaoIniciada,
-				'idtemporadaMatriculaIniciada '=>$idtemporadaMatriculaIniciada
+				'idtemporadaMatriculaIniciada'=>$idtemporadaMatriculaIniciada
 			]);
 
 			if($results){
@@ -107,10 +111,10 @@
 				header("Location: /professor/temporada");
 				exit;
 			}
-		}
+			
 
-		
-		
+			return $results;
+		}		
 
 		public function save()
 		{		
@@ -126,7 +130,6 @@
 				":dtinicmatricula"=>$this->getdtinicmatricula(),
 				":dttermmatricula"=>$this->getdttermmatricula()
 			));
-
 			
 			$temporada = $results[0]['desctemporada'];	
 			$idtemporada = $results[0]['idtemporada'];			
@@ -141,7 +144,6 @@
 
 		public function get($idtemporada)
 		{
-
 			$sql = new Sql();
 
 			$results = $sql->select("
@@ -154,7 +156,9 @@
 			if($results){
 
 				$this->setData($results[0]);
+
 			}else{
+
 				Temporada::setError("Temporada selecionada não encontrada!");
 				header("Location: /professor/temporada");
 				exit;
@@ -165,8 +169,6 @@
 		public function delete()
 		{
 			$sql = new Sql();
-
-
 
 			$results = $sql->select("DELETE FROM tb_temporada WHERE idtemporada = :idtemporada", [
 				':idtemporada'=>$this->getidtemporada()
@@ -189,6 +191,8 @@
 			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."temporada-menu.html", implode('', $html));
 		}
 
+		
+
 		public static function updateFileAdmin()	
 		{
 			$temporada = Temporada::listAll();
@@ -205,7 +209,13 @@
 									   		<li>
 									   			<a href="/professor/turma-temporada/'.$row['idtemporada'].'">
 									   				<i class="fa fa-link"></i>
-									   				Turma/Temporada '.$row['desctemporada'].'
+									   				Turmas Temporada '.$row['desctemporada'].'
+									   			</a>
+									   		</li>
+									   		<li>
+									   			<a href="/professor/professor-temporada/'.$row['idtemporada'].'">
+									   				<i class="fa fa-link"></i>
+									   				Profs Temporada '.$row['desctemporada'].'
 									   			</a>
 									   		</li>
 									   		<li>
@@ -331,9 +341,7 @@
 					':idtemporada'=>$this->getidtemporada()
 				]);
 			}		
-		}
-
-		
+		}		
 
 		public function numMaxInscritos($idtemporada){
 
@@ -343,25 +351,21 @@
 				'idtemporada'=>$idtemporada
 			]);
 
-			return $results;
-			
+			return $results;			
 		}
 		
 		public function addTurma(Turma $turma)
 		{
-
 			$sql = new Sql();
 
 			$sql->query("INSERT INTO tb_turmatemporada (idtemporada, idturma) VALUES(:idtemporada, :idturma)", [
 				':idtemporada'=>$this->getidtemporada(),
 				':idturma'=>$turma->getidturma()
 			]);
-
 		}
 
 		public function removeTurma(Turma $turma)
 		{
-
 			$sql = new Sql();
 
 			$sql->query("DELETE FROM tb_turmatemporada WHERE idtemporada = :idtemporada AND idturma = :idturma", [
@@ -372,13 +376,28 @@
 
 		public function addProfessor(User $user)
 		{
-
 			$sql = new Sql();
 
 			$sql->query("UPDATE tb_turmatemporada SET iduser = :iduser WHERE idturma = :idturma AND idtemporada = :idtemporada", [
 				':idtemporada'=>$this->getidtemporada(),
 				':idturma'=>$this->getidturma(),
 				':iduser'=>$user->getiduser()
+			]);
+		}
+
+		public static function listaProf($idtemporada)
+		{
+			$sql = new Sql();
+
+			return $sql->select("
+				SELECT * 
+				FROM tb_turmatemporada 
+                INNER JOIN tb_users
+                USING (iduser)
+				INNER JOIN tb_persons
+				using (idperson)
+				WHERE idtemporada = :idtemporada", [
+				':idtemporada'=>$idtemporada				
 			]);
 		}
 
@@ -422,7 +441,6 @@
 			Temporada::clearSuccess();
 
 			return $msg;
-
 		}
 
 		public static function clearSuccess()
@@ -430,9 +448,6 @@
 
 			$_SESSION[Temporada::SUCCESS] = NULL;
 
-		}
-
-
-			
+		}			
 	}
 	?>

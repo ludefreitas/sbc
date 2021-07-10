@@ -87,7 +87,6 @@ class Turma extends Model {
 	}
 
 	public static function listAllTurmaTemporadaModalidade($idmodal)
-
 	{
 		$idStatusTemporadaInscricaoIniciada = 4;
 		$idStatusTemporadaMatriculaIniciada = 6;

@@ -8,10 +8,15 @@ use \Sbc\Mailer;
 
 class Sorteio extends Model {
 
+	const ERROR = "SorteioError";
 
 	public function sortear($max, $count, $idtemporada){
 
 		$min = 1;
+		$idstatussort = SorteioStatus::FINALIZADO;
+
+		//var_dump(Sorteio::listAll($idtemporada));
+		//exit();	
 
 		$numsGerados = range($min, $max);
 		shuffle($numsGerados);
@@ -27,7 +32,7 @@ class Sorteio extends Model {
 
 			$sql->query("INSERT INTO tb_sorteio (idtemporada, idstatussort, numerodeordem, numerosortear) VALUES(:idtemporada, :idstatussort, :numerodeordem, :numerosortear)", [
 			':idtemporada'=>$idtemporada,
-			':idstatussort'=>2,
+			':idstatussort'=>$idstatussort,
 			':numerodeordem'=>$i + 1,
 			':numerosortear'=>$numsGerados[$i]
 			]);
@@ -37,6 +42,11 @@ class Sorteio extends Model {
 		//var_dump($sql);
 		//	exit();
 		return $response;
+	}
+
+	public function sorteioExiste(){
+
+
 	}
 
 	public function listAll($idtemporada){
@@ -52,8 +62,33 @@ class Sorteio extends Model {
 			':idtemporada'=>$idtemporada			
 		]);		
 
-		return $results;		
+		return $results;	
 	}
+
+	public static function setError($msg)
+		{
+
+			$_SESSION[Sorteio::ERROR] = $msg;
+
+		}
+
+		public static function getError()
+		{
+
+			$msg = (isset($_SESSION[Sorteio::ERROR]) && $_SESSION[Sorteio::ERROR]) ? $_SESSION[Sorteio::ERROR] : '';
+
+			Sorteio::clearError();
+
+			return $msg;
+
+		}
+
+		public static function clearError()
+		{
+
+			$_SESSION[Sorteio::ERROR] = NULL;
+
+		}
 
 	/*
 

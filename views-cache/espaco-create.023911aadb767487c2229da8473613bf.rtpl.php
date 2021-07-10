@@ -1,4 +1,4 @@
-<!-- Content Wrapper. Contains page content -->
+<?php if(!class_exists('Rain\Tpl')){exit;}?><!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -43,9 +43,11 @@
               <label for="idlocal">CREC</label>
               <select class="form-control" name="idlocal">
                  <option selected="selected">Selecione CREC</option>
-                  {loop="$local"}
-                 <option  value="{$value.idlocal}">{$value.apelidolocal}</option>
-                  {/loop}
+                  <?php $counter1=-1;  if( isset($local) && ( is_array($local) || $local instanceof Traversable ) && sizeof($local) ) foreach( $local as $key1 => $value1 ){ $counter1++; ?>
+
+                 <option  value="<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                  <?php } ?>
+
               </select>
             </div>                           
           </div>
