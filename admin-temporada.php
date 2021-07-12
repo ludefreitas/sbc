@@ -77,14 +77,29 @@ $app->post("/professor/temporada/create", function() {
 	$idstatustemporada = $_POST['idstatustemporada'];
 
 	Temporada::temporadaExiste($desctemporada);
-	Temporada::temporadaStatusExiste($idstatustemporada);
-	/*
-	if((bool)Temporada::temporadaStatusIniciadaExiste()){
-		Temporada::setError("Já existe uma temporada com inscrição ou matrícula iniciada. Não pode existir mais de ma temporada com inscrição ou matrícula iniciada.");
-		header("Location: /professor/temporada");
-		exit;
+	//Temporada::temporadaStatusIniciadaExiste($idstatustemporada);
+
+	if($idstatustemporada == 6){
+
+		$idStatusTemporadaMatriculaIniciada = Temporada::temporadaStatusMatriculaIniciadaExiste();	
+	
+		if($idStatusTemporadaMatriculaIniciada){
+			Temporada::setError("Já existe uma temporada com matrícula iniciada. Não pode existir mais de uma temporada com inscrição ou matrícula iniciada.");
+			header("Location: /professor/temporada");
+			exit;
+		}
 	}
-	*/
+
+	if($idstatustemporada == 4){
+
+			$idStatusTemporadaInscricaoIniciada = Temporada::temporadaStatusInscricaoIniciadaExiste();
+
+			if($idStatusTemporadaInscricaoIniciada){
+				Temporada::setError("Já existe uma temporada com inscrição iniciada. Não pode existir mais de uma temporada com inscrição ou matrícula iniciada.");
+				header("Location: /professor/temporada");
+				exit;
+			}		
+	}					
 
 	$temporada->save();
 
@@ -139,7 +154,38 @@ $app->post("/professor/temporada/:idtemporada", function($idtemporada) {
 
 	$idstatustemporada = $_POST['idstatustemporada'];
 
-	Temporada::temporadaStatusExiste($idstatustemporada);
+	//$temporadadaIniciada = Temporada::StatusTemporadaIsIniciada($idtemporada, $idstatustemporada);
+
+	//if(!$temporadadaIniciada){
+
+	if($idstatustemporada == 6){
+
+		if(!Temporada::statusTemporadaIsIniciadaMatricula($idtemporada)){
+
+			$idStatusTemporadaMatriculaIniciada = Temporada::temporadaStatusMatriculaIniciadaExiste();	
+		
+			if($idStatusTemporadaMatriculaIniciada){
+				Temporada::setError("Já existe uma temporada com matrícula iniciada. Não pode existir mais de uma temporada com inscrição ou matrícula iniciada.");
+				header("Location: /professor/temporada");
+				exit;
+			}
+		}
+	}
+	if($idstatustemporada == 4){
+
+		if(!Temporada::statusTemporadaIsIniciadaInscricao($idtemporada)){		
+
+			$idStatusTemporadaInscricaoIniciada = Temporada::temporadaStatusInscricaoIniciadaExiste();
+
+			if($idStatusTemporadaInscricaoIniciada){
+				Temporada::setError("Já existe uma temporada com inscrição iniciada. Não pode existir mais de uma temporada com inscrição ou matrícula iniciada.");
+				header("Location: /professor/temporada");
+				exit;
+			}		
+		}
+
+	}					
+	//}	
 
 	$temporada->setData($_POST);
 
@@ -166,6 +212,32 @@ $app->get("/professor/turma-temporada/:idtemporada", function($idtemporada) {
 		'temporada'=>$temporada->getValues(),
 		//'turmaRelated'=>$temporada->getTurma(true)
 		'turmas'=>Temporada::listAllTurmatemporada($idtemporada),
+		//'turmaNotRelated'=>$temporada->getTurma(false)
+		'error'=>User::getError()
+	]);	
+});
+
+$app->get("/professor/turma-temporada/:idtemporada/:iduser", function($idtemporada, $iduser) {
+
+	User::verifyLogin();
+
+	$temporada = new Temporada();
+	$turma = new Turma();
+	$user = new User();
+
+	$temporada->get((int)$idtemporada);
+	$user->get((int)$iduser);
+
+
+	//var_dump($temporada->getTurma(true)); exit();
+
+	$page = new PageAdmin();	
+
+	$page->setTpl("professor-turmas-por-temporada", [
+		'user'=>$user->getValues(),
+		'temporada'=>$temporada->getValues(),
+		//'turmaRelated'=>$temporada->getTurma(true)
+		'turmas'=>Temporada::listAllTurmatemporadaProfessor($idtemporada, $iduser),
 		//'turmaNotRelated'=>$temporada->getTurma(false)
 		'error'=>User::getError()
 	]);	

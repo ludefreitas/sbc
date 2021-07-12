@@ -59,6 +59,44 @@
 				':idtemporada'=>$idtemporada 
 			]);
 		}
+
+		public static function listAllTurmaTemporadaProfessor($idtemporada, $iduser)
+		{
+			$sql = new Sql();
+
+			return $sql->select("SELECT * 
+				FROM tb_turmatemporada a 
+				INNER JOIN tb_turma i            
+				using(idturma)
+				INNER JOIN tb_users b
+				using(iduser)
+				INNER JOIN tb_atividade c
+				using(idativ)
+				INNER JOIN tb_espaco d
+				using(idespaco)
+				INNER JOIN tb_local e
+				using(idlocal)
+				INNER JOIN tb_turmastatus f
+				using(idturmastatus)
+				INNER JOIN tb_horario g
+				using(idhorario)
+				INNER JOIN tb_fxetaria h
+				using(idfxetaria)	            
+	            INNER JOIN tb_temporada j           
+				using(idtemporada)   
+	            INNER JOIN tb_statustemporada k          
+				using(idstatustemporada)
+				INNER JOIN tb_modalidade l
+				using(idmodal)
+	            INNER JOIN tb_persons m
+				using(idperson)            
+				WHERE idtemporada = :idtemporada
+				AND a.iduser = :iduser
+				ORDER BY a.numinscritos DESC", [
+				':idtemporada'=>$idtemporada ,
+				':iduser'=>$iduser 
+			]);
+		}
 				
 
 		public static function checkList($list)
@@ -88,32 +126,79 @@
 			}
 		}
 
-		public function temporadaStatusExiste($idstatustemporada){
+		public function statusTemporadaIsIniciadaInscricao($idtemporada){
 
-			$idtemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
-			$idtemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
+			$idstatustemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
 
 			$sql = new Sql();
 
 			$results = $sql->select("SELECT idstatustemporada 
 				FROM tb_temporada 
-				WHERE idstatustemporada = :idstatustemporada 
-				AND idstatustemporada = :idtemporadaInscricaoIniciada 
-				OR :idtemporadaMatriculaIniciada", 
-				[
-				':idstatustemporada'=>$idstatustemporada,
-				'idtemporadaInscricaoIniciada'=>$idtemporadaInscricaoIniciada,
-				'idtemporadaMatriculaIniciada'=>$idtemporadaMatriculaIniciada
+				WHERE idtemporada = :idtemporada
+                AND idstatustemporada = :idstatustemporadaInscricaoIniciada" ,[
+				':idtemporada'=>$idtemporada,
+				'idstatustemporadaInscricaoIniciada'=>$idstatustemporadaInscricaoIniciada,
 			]);
 
 			if($results){
-				Temporada::setError("Já existe uma temporada com inscrição ou matrícula iniciada. Não pode existir mais de uma temporada com inscrição ou matrícula iniciada.");
-				header("Location: /professor/temporada");
-				exit;
+				return true;
+			}else{
+				return false;
+			}
+		}
+
+		public function statusTemporadaIsIniciadaMatricula($idtemporada){
+
+			$idstatustemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
+
+			$sql = new Sql();
+
+			$results = $sql->select("SELECT idstatustemporada 
+				FROM tb_temporada 
+				WHERE idtemporada = :idtemporada
+                AND idstatustemporada = :idstatustemporadaMatriculaIniciada" ,[
+				':idtemporada'=>$idtemporada,
+				'idstatustemporadaMatriculaIniciada'=>$idstatustemporadaMatriculaIniciada,
+			]);
+
+			if($results){
+				return true;
+			}else{
+				return false;
+			}
+		}
+
+		public function temporadaStatusMatriculaIniciadaExiste(){
+
+			$idstatustemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
+			$sql = new Sql();
+			$results = $sql->select("
+				SELECT idstatustemporada 
+				FROM tb_temporada 
+				WHERE idstatustemporada = :idstatustemporadaMatriculaIniciada", [
+					':idstatustemporadaMatriculaIniciada'=>$idstatustemporadaMatriculaIniciada
+			]);
+			if($results){
+				return true;
+			}else{
+				return false;
 			}
 			
-
-			return $results;
+		}		
+		public function temporadaStatusInscricaoIniciadaExiste(){
+			$idstatustemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
+			$sql = new Sql();
+			$results = $sql->select("
+				SELECT idstatustemporada 
+				FROM tb_temporada 
+				WHERE idstatustemporada = :idstatustemporadaInscricaoIniciada", [
+					':idstatustemporadaInscricaoIniciada'=>$idstatustemporadaInscricaoIniciada
+			]);
+			if($results){
+				return true;
+			}else{
+				return false;
+			}			
 		}		
 
 		public function save()
@@ -390,11 +475,11 @@
 			$sql = new Sql();
 
 			return $sql->select("
-				SELECT * 
-				FROM tb_turmatemporada 
-                INNER JOIN tb_users
-                USING (iduser)
-				INNER JOIN tb_persons
+				SELECT DISTINCT iduser, desperson, apelidoperson, idtemporada
+				FROM tb_turmatemporada a 
+                INNER JOIN tb_users b
+                using (iduser)
+				INNER JOIN tb_persons c
 				using (idperson)
 				WHERE idtemporada = :idtemporada", [
 				':idtemporada'=>$idtemporada				

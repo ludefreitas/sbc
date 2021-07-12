@@ -51,8 +51,7 @@
                     <th style="width: 10px">#</th>
                     <th>Nome</th>
                     <th>Apelido</th>
-                    <th>E-mail</th>
-                    <th>Login</th>
+                    
                     <th></th>
                      <th></th>
                   </tr>
@@ -63,22 +62,16 @@
                   <tr>
                     <td><?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                     <td><?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                    <td><?php echo htmlspecialchars( $value1["apelidoperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                    <td><?php echo htmlspecialchars( $value1["desemail"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                    <td><?php echo htmlspecialchars( $value1["deslogin"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td/>
+                    <td><?php echo htmlspecialchars( $value1["apelidoperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>                   
                     
-                    <td>
-                      
+                    <td>                     
 
-                      <a href="/professor/turmatemporada/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/turma" class="btn btn-success btn-xs"><i class=""></i>Turmas<br>da Temporada</a>
-
-
-                      
+                     <a href="/professor/turma-temporada/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-success btn-xs"><i class=""></i>Turmas do professor(a) <br><?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br> para Temporada <br> <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a>
                     </td>
 
                     <td>
                       
-                      <a href="/professor/turmatemporada/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/turma/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-info btn-xs"><i class=""></i> Inserir ou remover<br> turma</a>                      
+                      <a href="/professor/turmatemporada/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/turma/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-info btn-xs"><i class=""></i> Inserir ou remover <br> turma do professor(a) <br><?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br> <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a>                      
                     </td>
                     
                   </tr>

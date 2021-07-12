@@ -22,7 +22,7 @@ use \Slim\Slim;
 
 $app = new Slim();
 
-$app->config('ebug', true);
+$app->config('debug', true);
 
 require_once("admin-atividades.php");
 require_once("admin-espaco.php");

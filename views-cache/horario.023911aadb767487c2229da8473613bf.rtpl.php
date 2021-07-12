@@ -9,6 +9,7 @@
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
     <li class="active"><a href="/professor/horario">Horários</a></li>
+    <li class="active"><a href="/professor/horario/create">Criar horário</a></li>
   </ol>
 </section>
 

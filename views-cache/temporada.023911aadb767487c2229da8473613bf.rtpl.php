@@ -55,7 +55,7 @@
                     
                     <td> <a href="/professor/turma-temporada/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a></td>
                     <td><a href="/professor/turma-temporada/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a></td>
-                    <td><?php echo htmlspecialchars( $value1["descstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a></td>
+                    <td><?php echo htmlspecialchars( $value1["idstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["descstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a></td>
                     <td><?php echo formatDateHour($value1["dtinicinscricao"]); ?></a></td>
                     <td><?php echo formatDateHour($value1["dtterminscricao"]); ?></a></td>
                     <td><?php echo formatDateHour($value1["dtinicmatricula"]); ?></a></td>
