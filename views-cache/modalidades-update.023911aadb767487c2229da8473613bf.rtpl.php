@@ -3,7 +3,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Lista de Modalidades
+    Editar Modalidade
   </h1>
 </section>
 
@@ -13,9 +13,14 @@
   <div class="row">
     <div class="col-md-12">
       <div class="box box-primary">
-        <div class="box-header with-border">
-          <h3 class="box-title">Editar Modalidade</h3>
-        </div>
+        <?php if( $error != '' ){ ?>
+
+          <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
+        <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+
+          </div>
+        <?php } ?>
+
         <!-- /.box-header -->
         <!-- form start -->
         <form role="form" action="/professor/modalidades/<?php echo htmlspecialchars( $modalidade["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post">

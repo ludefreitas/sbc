@@ -45,7 +45,7 @@ $app->post("/register", function(){
 
 	if ($_POST['email'] != $_POST['emailconfirme']) {
 
-		User::setErrorRegister("O email digitados são diferentes!");
+		User::setErrorRegister("Os emails digitados são diferentes!");
 		header("Location: /user-create");
 		exit;
 	}	
@@ -56,6 +56,13 @@ $app->post("/register", function(){
 		header("Location: /user-create");
 		exit;
 	}
+
+	if ($_POST['password'] != $_POST['passwordrepeat']) {
+
+		User::setErrorRegister("As senhas digitadas são diferentes!");
+		header("Location: /user-create");
+		exit;
+	}	
 
 	if (User::checkLoginExist($_POST['email']) === true) {
 

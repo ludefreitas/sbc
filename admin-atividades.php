@@ -6,21 +6,6 @@ use \Sbc\Model\User;
 use \Sbc\Model\Atividade;
 use \Sbc\Model\Faixaetaria;
 
-/*
-
-$app->get("/professor/atividade", function() {
-
-	User::verifyLogin();
-
-	$atividade = Atividade::listAll();
-
-	$page = new PageAdmin();
-
-	$page->setTpl("atividade", array(
-		'atividade'=>Atividade::checkList($atividade)
-	));
-});
-*/
 $app->get("/professor/atividade", function() {
 
 	User::verifyLogin();
@@ -55,8 +40,6 @@ $app->get("/professor/atividade", function() {
 
 	}
 
-	//$atividade = Atividade::listAll();
-	// carrega uma pagina das páginas do admin
 	$page = new PageAdmin();
 
 	// envia para a página o array retornado pelo listAll
@@ -68,8 +51,6 @@ $app->get("/professor/atividade", function() {
 	));
 });
 
-
-
 $app->get("/professor/atividade/create", function() {
 
 	User::verifyLogin();
@@ -79,19 +60,71 @@ $app->get("/professor/atividade/create", function() {
 	$page = new PageAdmin();
 
 	$page->setTpl("atividade-create", array(
-		'faixaetaria'=>$faixaetaria
-	));
+		"faixaetaria"=>$faixaetaria,
+		"error"=>Atividade::getMsgError(),
+		"createAtivValues"=>(
+				isset($_SESSION['createAtivValues'])) 
+				    ? $_SESSION['createAtivValues'] 
+			        : ['nomeativ'=>'', 'descativ'=>'', 'prograativ'=>'', 'tipoativ'=>'', 'origativ'=>'', 'geneativ'=>'', 'idfxetaria'=>'']
+	));	
 });
 
 $app->post("/professor/atividade/create", function() {
 
 	User::verifyLogin();
 
+	$_SESSION['createAtivValues'] = $_POST;
+
 	$atividade = new Atividade();
+
+	if (!isset($_POST['nomeativ']) || $_POST['nomeativ'] == '') {
+		Atividade::setMsgError("Informe o nome da atividade.");
+		header("Location: /professor/atividade/create");
+		exit;		
+	}	
+
+	if (!isset($_POST['descativ']) || $_POST['descativ'] == '') {
+		Atividade::setMsgError("Informe uma descrição para a atividade.");
+		header("Location: /professor/atividade/create");
+		exit;		
+	}
+
+	if (!isset($_POST['prograativ']) || $_POST['prograativ'] == '') {
+		Atividade::setMsgError("Informe a que programa pertence a atividade.");
+		header("Location: /professor/atividade/create");
+		exit;		
+	}						
+
+	if (!isset($_POST['tipoativ']) || $_POST['tipoativ'] == '') {
+		Atividade::setMsgError("Informe qual o tipo da atividade (Terrestre ou Aquática).");
+		header("Location: /professor/atividade/create");
+		exit;		
+	}						
+
+	if (!isset($_POST['origativ']) || $_POST['origativ'] == '') {
+		Atividade::setMsgError("Informe é a origem desta atividade.");
+		header("Location: /professor/atividade/create");
+		exit;		
+	}
+	/*
+	if (!isset($_POST['geneativ']) || $_POST['geneativ'] == '') {
+		Atividade::setMsgError("Informe o genêro para esta atividade.");
+		header("Location: /professor/atividade/create");
+		exit;		
+	}
+	*/
+
+	if (!isset($_POST['idfxetaria']) || $_POST['idfxetaria'] == '') {
+		Atividade::setMsgError("Informe a faixa etária para esta atividade.");
+		header("Location: /professor/atividade/create");
+		exit;		
+	}
 
 	$atividade->setData($_POST);
 
 	$atividade->save();
+
+	$_SESSION['createAtivValues'] = NULL;
 
 	header("Location: /professor/atividade");
 	exit();	
@@ -125,7 +158,8 @@ $app->get("/professor/atividade/:idativ", function($idativ) {
 
 	$page->setTpl("atividade-update", array(
 		'atividade'=>$atividade->getValues(),
-		'faixaetaria'=>Faixaetaria::listAll()
+		'faixaetaria'=>Faixaetaria::listAll(),
+		"error"=>Atividade::getMsgError()
 	));
 });
 
@@ -136,6 +170,50 @@ $app->post("/professor/atividade/:idativ", function($idativ) {
 	$atividade = new Atividade;
 
 	$atividade->get((int)$idativ);
+
+	if (!isset($_POST['nomeativ']) || $_POST['nomeativ'] == '') {
+		Atividade::setMsgError("Informe o nome da atividade.");
+		header("Location: /professor/atividade/".$idativ."");
+		exit;		
+	}	
+
+	if (!isset($_POST['descativ']) || $_POST['descativ'] == '') {
+		Atividade::setMsgError("Informe uma descrição para a atividade.");
+		header("Location: /professor/atividade/".$idativ."");
+		exit;		
+	}
+
+	if (!isset($_POST['prograativ']) || $_POST['prograativ'] == '') {
+		Atividade::setMsgError("Informe a que programa pertence a atividade.");
+		header("Location: /professor/atividade/".$idativ."");
+		exit;		
+	}						
+
+	if (!isset($_POST['tipoativ']) || $_POST['tipoativ'] == '') {
+		Atividade::setMsgError("Informe qual o tipo da atividade (Terrestre ou Aquática).");
+		header("Location: /professor/atividade/".$idativ."");
+		exit;		
+	}						
+
+	if (!isset($_POST['origativ']) || $_POST['origativ'] == '') {
+		Atividade::setMsgError("Informe é a origem desta atividade.");
+		header("Location: /professor/atividade/".$idativ."");
+		exit;		
+	}
+	/*
+	if (!isset($_POST['geneativ']) || $_POST['geneativ'] == '') {
+		Atividade::setMsgError("Informe o genêro para esta atividade.");
+		header("Location: /professor/atividade/".$idativ."");
+		exit;		
+	}
+	*/
+
+	if (!isset($_POST['idfxetaria']) || $_POST['idfxetaria'] == '') {
+		Atividade::setMsgError("Informe a faixa etária para esta atividade.");
+		header("Location: /professor/atividade/".$idativ."");
+		exit;		
+	}
+	
 
 	$atividade->setData($_POST);
 

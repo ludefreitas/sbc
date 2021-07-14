@@ -6,7 +6,6 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active"><a href="/professor/espaco">Espaço</a></li>
   </ol>
 </section>
 

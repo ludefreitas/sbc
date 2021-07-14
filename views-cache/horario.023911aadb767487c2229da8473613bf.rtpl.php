@@ -8,8 +8,6 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active"><a href="/professor/horario">Horários</a></li>
-    <li class="active"><a href="/professor/horario/create">Criar horário</a></li>
   </ol>
 </section>
 
@@ -25,9 +23,7 @@
         <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
 
           </div>
-        <?php } ?>
-
-            
+        <?php } ?>            
             <div class="box-header">
               <a href="/professor/horario/create" class="btn btn-success">Cadastrar Horário de aulas</a>
 

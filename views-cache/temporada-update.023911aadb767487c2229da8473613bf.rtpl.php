@@ -5,6 +5,11 @@
   <h1>
     Editar Temporada 
   </h1>
+  <ol class="breadcrumb">
+   <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="/professor/temporada">Temporadas</a></li>
+    <li class="active"><a href="/professor/temporada/create">Criar Nova Temporada</a></li>
+  </ol>
 </section>
 
 <!-- Main content -->
@@ -13,9 +18,14 @@
   <div class="row">
   	<div class="col-md-12">
   		<div class="box box-primary">
-        <div class="box-header with-border">
-          <h3 class="box-title">Editar Temporada </h3>
+        <?php if( $error != '' ){ ?>
+
+        <div class="alert alert-danger" style="margin: 0px 10px 0px 10px">
+        <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+
         </div>
+        <?php } ?>
+
         <!-- /.box-header -->
         <!-- form start -->
         <form role="form" action="/professor/temporada/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post" enctype="multipart/form-data">
@@ -27,8 +37,9 @@
               <input type="text" class="form-control" id="desctemporada" name="desctemporada" placeholder="Descreva temporada" value="<?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
             <div class="form-group">
-              <label for="dtinicinscricao"> Data de Início das Inscrições</label>
-              <input type="date" class="form-control" id="dtinicinscricao" name="dtinicinscricao" value="<?php echo htmlspecialchars( $temporada["dtinicinscricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+              <label for="dtinicinscricao"> Data de Início das Inscrições Atual - <?php echo htmlspecialchars( $temporada["dtinicinscricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?></label><br>
+              <label for="dtinicinscricao">Nova Data de Início das Inscrições</label>
+              <input type="date" class="form-control" id="dtinicinscricao" name="dtinicinscricao">
             </div>
             <div class="form-group">
               <label for="dtterminscricao"> Data do Fim das Inscrições</label>

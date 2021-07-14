@@ -8,7 +8,6 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active"><a href="/professor/faixaetaria">Faixa Etária</a></li>
   </ol>
 </section>
 

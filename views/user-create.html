@@ -57,7 +57,7 @@
                         </p>
                         <p >                            
                             <label style="font-size: 12px; margin: 0px">Confirme a senha</label>
-                            <input type="password" id="senhaconfirme" name="password" class="form-control">
+                            <input type="password" id="senhaconfirme" name="passwordrepeat" class="form-control">
                         </p>
                         <div class="clear"></div>
                         <p class="form-row">

@@ -5,6 +5,11 @@
   <h1>
     Editar Turma 
   </h1>
+  <ol class="breadcrumb">
+    <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="/professor/turma">Turmas</a></li>
+    <li class="active"><a href="/professor/turma/create">Criar Turma</a></li>
+  </ol>
 </section>
 
 <!-- Main content -->
@@ -13,9 +18,14 @@
   <div class="row">
   	<div class="col-md-12">
   		<div class="box box-primary">
-        <div class="box-header with-border">
-          <h3 class="box-title">Editar Turma </h3>
-        </div>
+        <?php if( $error != '' ){ ?>
+
+            <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
+        <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+
+            </div>
+        <?php } ?>
+
         <!-- /.box-header -->
         <!-- form start -->
         <form role="form" action="/professor/turma/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post" enctype="multipart/form-data">

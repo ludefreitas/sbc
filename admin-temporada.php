@@ -22,7 +22,6 @@ $app->get("/professor/temporada", function() {
 	));
 });
 
-
 $app->get("/professor/temporada/create", function() {
 
 	User::verifyLogin();
@@ -33,11 +32,12 @@ $app->get("/professor/temporada/create", function() {
 
 	$page = new PageAdmin();
 
-	$page->setTpl("temporada-create", array(
+	$page->setTpl("temporada-create", [
 		'temporada'=>$temporada,
 		'statustemporada'=>$statustemporada,
-		'error'=>Temporada::getError()
-	));
+		'error'=>Temporada::getError(),
+		'createTemporadaValues'=>(isset($_SESSION['createTemporadaValues'])) ? $_SESSION['createTemporadaValues'] : ['destemporada'=>'', 'dtinicinscricao'=>'', 'dtterminscricao'=>'', 'dtinicmatricula'=>'', 'dttermmatricula'=>'', 'idstatustemporada'=>'']
+	]);
 });
 
 $app->get("/professor/professor-temporada/:idtemporada", function($idtemporada) {
@@ -69,7 +69,45 @@ $app->post("/professor/temporada/create", function() {
 
 	User::verifyLogin();
 
+	$_SESSION['createTemporadaValues'] = $_POST;
+
 	$temporada = new Temporada();
+
+	if (!isset($_POST['desctemporada']) || $_POST['desctemporada'] == '') {
+		Temporada::setError("Descreva a temporada.");
+		header("Location: /professor/temporada/create");
+		exit;		
+	}
+
+	if (!isset($_POST['dtinicinscricao']) || $_POST['dtinicinscricao'] == '') {
+		Temporada::setError("Informe quando começarão as inscrições.");
+		header("Location: /professor/temporada/create");
+		exit;		
+	}
+
+	if (!isset($_POST['dtterminscricao']) || $_POST['dtterminscricao'] == '') {
+		Temporada::setError("Informe quando terminarão as inscrições.");
+		header("Location: /professor/temporada/create");
+		exit;		
+	}
+
+	if (!isset($_POST['dtinicmatricula']) || $_POST['dtinicmatricula'] == '') {
+		Temporada::setError("Informe quando começarão as matrículas.");
+		header("Location: /professor/temporada/create");
+		exit;		
+	}
+
+	if (!isset($_POST['dttermmatricula']) || $_POST['dttermmatricula'] == '') {
+		Temporada::setError("Informe quando terminarão as matrículas.");
+		header("Location: /professor/temporada/create");
+		exit;		
+	}	
+
+	if (!isset($_POST['idstatustemporada']) || $_POST['idstatustemporada'] == '') {
+		Temporada::setError("Informe o status da temporada.");
+		header("Location: /professor/temporada/create");
+		exit;		
+	}
 
 	$temporada->setData($_POST);
 
@@ -133,13 +171,19 @@ $app->get("/professor/temporada/:idtemporada", function($idtemporada) {
 
 	$temporada = new Temporada;	
 
-	$temporada->get((int)$idtemporada);
+	$temporada->get((int)$idtemporada);	
+
+	//echo '<pre>';
+	//print_r($temporada);
+	//echo '</pre>';
+	//exit;
 
 	$page = new PageAdmin();
 
 	$page->setTpl("temporada-update", array(
 		'temporada'=>$temporada->getValues(),
-		'statustemporada'=>StatusTemporada::listAll()
+		'statustemporada'=>StatusTemporada::listAll(),
+		'error'=>Temporada::getError()
 		
 	));
 });
@@ -151,6 +195,41 @@ $app->post("/professor/temporada/:idtemporada", function($idtemporada) {
 	$temporada = new Temporada;
 
 	$temporada->get((int)$idtemporada);
+	if (!isset($_POST['desctemporada']) || $_POST['desctemporada'] == '') {
+		Temporada::setError("Descreva a temporada.");
+		header("Location: /professor/temporada/".$idtemporada."");
+		exit;		
+	}
+
+	if (!isset($_POST['dtinicinscricao']) || $_POST['dtinicinscricao'] == '') {
+		Temporada::setError("Informe quando começarão as inscrições.");
+		header("Location: /professor/temporada/".$idtemporada."");
+		exit;		
+	}
+
+	if (!isset($_POST['dtterminscricao']) || $_POST['dtterminscricao'] == '') {
+		Temporada::setError("Informe quando terminarão as inscrições.");
+		header("Location: /professor/temporada/".$idtemporada."");
+		exit;		
+	}
+
+	if (!isset($_POST['dtinicmatricula']) || $_POST['dtinicmatricula'] == '') {
+		Temporada::setError("Informe quando começarão as matrículas.");
+		header("Location: /professor/temporada/".$idtemporada."");
+		exit;		
+	}
+
+	if (!isset($_POST['dttermmatricula']) || $_POST['dttermmatricula'] == '') {
+		Temporada::setError("Informe quando terminarão as matrículas.");
+		header("Location: /professor/temporada/".$idtemporada."");
+		exit;		
+	}	
+
+	if (!isset($_POST['idstatustemporada']) || $_POST['idstatustemporada'] == '') {
+		Temporada::setError("Informe o status da temporada.");
+		header("Location: /professor/temporada/".$idtemporada."");
+		exit;		
+	}
 
 	$idstatustemporada = $_POST['idstatustemporada'];
 

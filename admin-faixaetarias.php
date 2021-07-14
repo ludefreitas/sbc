@@ -58,18 +58,52 @@ $app->get("/professor/faixaetaria/create", function() {
 
 	$page = new PageAdmin();
 
-	$page->setTpl("faixaetaria-create");
+	$page->setTpl("faixaetaria-create", array(
+		"error"=>Faixaetaria::getMsgError(),
+		"createFaixaetariaValues"=>(
+				isset($_SESSION['createFaixaetariaValues'])) 
+				    ? $_SESSION['createFaixaetariaValues'] 
+			        : ['initidade'=>'', 'fimidade'=>'', 'descrfxetaria'=>'']
+	));
 });
 
 $app->post("/professor/faixaetaria/create", function() {
 
 	User::verifyLogin();
 
+	$_SESSION['createFaixaetariaValues'] = $_POST;
+
 	$faixaetaria = new Faixaetaria();
+
+	if (!isset($_POST['initidade']) || $_POST['initidade'] == '') {
+		Faixaetaria::setMsgError("Informe a idade inicial.");
+		header("Location: /professor/faixaetaria/create");
+		exit;		
+	}	
+
+	if (!isset($_POST['fimidade']) || $_POST['fimidade'] == '') {
+		Faixaetaria::setMsgError("Informe a idade final.");
+		header("Location: /professor/faixaetaria/create");
+		exit;		
+	}
+
+	if ($_POST['initidade'] >= $_POST['fimidade']) {
+		Faixaetaria::setMsgError("Idade final deve ser maior que a idade inicial.");
+		header("Location: /professor/faixaetaria/create");
+		exit;		
+	}	
+
+	if (!isset($_POST['descrfxetaria']) || $_POST['descrfxetaria'] == '') {
+		Faixaetaria::setMsgError("descreva a faixa etária.");
+		header("Location: /professor/faixaetaria/create");
+		exit;		
+	}						
 
 	$faixaetaria->setData($_POST);
 
 	$faixaetaria->save();
+
+	$_SESSION['createFaixaetariaValues'] = NULL;
 
 	header("Location: /professor/faixaetaria");
 	exit();
@@ -101,7 +135,8 @@ $app->get("/professor/faixaetaria/:idfxetaria", function($idfxetaria) {
 	$page = new PageAdmin();
 
 	$page->setTpl("faixaetaria-update", [
-		'faixaetaria'=>$faixaetaria->getValues()
+		'faixaetaria'=>$faixaetaria->getValues(),
+		"error"=>Faixaetaria::getMsgError()
 	]);	
 	
 });
@@ -113,6 +148,30 @@ $app->post("/professor/faixaetaria/:idfxetaria", function($idfxetaria) {
 	$faixaetaria = new Faixaetaria();
 
 	$faixaetaria->get((int)$idfxetaria);
+
+	if (!isset($_POST['initidade']) || $_POST['initidade'] == '') {
+		Faixaetaria::setMsgError("Informe a idade inicial.");
+		header("Location: /professor/faixaetaria/".$idfxetaria."");
+		exit;		
+	}	
+
+	if (!isset($_POST['fimidade']) || $_POST['fimidade'] == '') {
+		Faixaetaria::setMsgError("Informe a idade final.");
+		header("Location: /professor/faixaetaria/".$idfxetaria."");
+		exit;		
+	}
+
+	if ($_POST['initidade'] >= $_POST['fimidade']) {
+		Faixaetaria::setMsgError("Idade final deve ser maior que a idade inicial.");
+		header("Location: /professor/faixaetaria/".$idfxetaria."");
+		exit;		
+	}	
+
+	if (!isset($_POST['descrfxetaria']) || $_POST['descrfxetaria'] == '') {
+		Faixaetaria::setMsgError("descreva a faixa etária.");
+		header("Location: /professor/faixaetaria/".$idfxetaria."");
+		exit;		
+	}						
 
 	$faixaetaria->setData($_POST);
 

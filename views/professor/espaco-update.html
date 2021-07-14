@@ -5,6 +5,11 @@
   <h1>
     Editar Espaço 
   </h1>
+  <ol class="breadcrumb">
+    <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="/professor/espaco">Espaços</a></li>
+    <li class="active"><a href="/professor/espaco/create">Criar Novo Espaço</a></li>
+  </ol>
 </section>
 
 <!-- Main content -->
@@ -13,9 +18,6 @@
   <div class="row">
   	<div class="col-md-12">
   		<div class="box box-primary">
-        <div class="box-header with-border">
-          <h3 class="box-title">Editar Novo Espaço </h3>
-        </div>
         <!-- /.box-header -->
         <!-- form start -->
         <form role="form" action="/professor/espaco/{$espaco.idespaco}" method="post" enctype="multipart/form-data">

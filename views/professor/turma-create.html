@@ -8,7 +8,6 @@
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
     <li><a href="/professor/turma">Turmas</a></li>
-    <!--<li class="active"><a href="/professor/turma/create">Cadastrar</a></li>-->
   </ol>
 </section>
 
@@ -18,10 +17,11 @@
   <div class="row">
   	<div class="col-md-12">
   		<div class="box box-success">
-
-        <div class="box-header with-border">
-          <h3 class="box-title">Nova Turma</h3>
-        </div>
+        {if="$error != ''"}
+            <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
+        {$error}
+            </div>
+        {/if}
         <!-- /.box-header -->
         <!-- form start --><form role="form" action="/professor/turma/create" method="post">
           <div class="box-body">
@@ -34,7 +34,7 @@
             <div class="box-header">
               <label for="turma">Modalidade</label>
                 <select class="form-control" name="idmodal">
-                <option>Selecione a modalidade</option>           
+                <option value="">Selecione a modalidade</option>           
                   {loop="$modalidade"}
                   <option value="{$value.idmodal}">{$value.descmodal} </option>
                   {/loop}                            
@@ -43,7 +43,7 @@
             <div class="box-header">
               <label for="turma">Atividade</label>
                 <select class="form-control" name="idativ">
-                <option>Selecione a atividade e faixa etária</option>           
+                <option value="">Selecione a atividade e faixa etária</option>           
                   {loop="$atividade"}
                   <option value="{$value.idativ}">{$value.nomeativ} - {$value.descrfxetaria} - {$value.initidade} a {$value.fimidade} anos</option>
                   {/loop}                            
@@ -62,7 +62,7 @@
             <div class="box-header">
               <label for="turma">Espaço - Crec</label>
                 <select class="form-control" name="idespaco">
-                <option>Selecione o Crec, o espaço e os horários</option>    
+                <option value="">Selecione o Crec, o espaço e os horários</option>    
                   {loop="$espaco"}
                   <option value="{$value.idespaco}">{$value.apelidolocal} - {$value.nomeespaco}</option>
                   {/loop}                            
@@ -71,7 +71,7 @@
             <div class="box-header">
               <label for="turma">Dia Semana - Horário</label>
                 <select class="form-control" name="idhorario">
-                <option>Selecione o dia e o horários</option>    
+                <option value="">Selecione o dia e o horários</option>    
                   {loop="$horario"}
                   <option value="{$value.idhorario}">{$value.diasemana} - {$value.horainicio} às {$value.horatermino} </option>
                   {/loop}                            
@@ -80,7 +80,7 @@
             <div class="box-header">
               <label for="turma">Status</label>
                 <select class="form-control" name="idturmastatus"> 
-                <option>Selecione o Status</option>
+                <option value="">Selecione o Status</option>
                   {loop="$turmastatus"}
                   <option value="{$value.idturmastatus}">{$value.desstatus}</option>
                   {/loop}                            

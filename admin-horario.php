@@ -59,16 +59,47 @@ $app->get("/professor/horario/create", function() {
 
 	$page = new PageAdmin();
 
-	$page->setTpl("horario-create");
+	$page->setTpl("horario-create", [
+		"error"=>Horario::getMsgError(),
+		"createHorarioValues"=>(isset($_SESSION['createHorarioValues'])) ? $_SESSION['createHorarioValues'] : ['horainicio'=>'', 'horatermino'=>'', 'diasemana'=>'', 'periodo'=>'']
+	]);
 });
 
 $app->post("/professor/horario/create", function() {
 
 	User::verifyLogin();
 
+	$_SESSION['createHorarioValues'] = $_POST;
+
 	$horario = new Horario();
 
+	if (!isset($_POST['horainicio']) || $_POST['horainicio'] == '') {
+		Horario::setMsgError("Informe o horário de início.");
+		header("Location: /professor/horario/create");
+		exit;		
+	}	
+
+	if (!isset($_POST['horatermino']) || $_POST['horatermino'] == '') {
+		Horario::setMsgError("Informe o horário de término.");
+		header("Location: /professor/horario/create");
+		exit;		
+	}
+
+	if (!isset($_POST['diasemana']) || $_POST['diasemana'] == '') {
+		Horario::setMsgError("Informe os dias da semana.");
+		header("Location: /professor/horario/create");
+		exit;		
+	}						
+
+	if (!isset($_POST['periodo']) || $_POST['periodo'] == '') {
+		Horario::setMsgError("Informe o período.");
+		header("Location: /professor/horario/create");
+		exit;		
+	}
+
 	$horario->setData($_POST);
+
+	$_SESSION['createHorarioValues'] = NULL;
 
 	$horario->save();
 
@@ -102,7 +133,8 @@ $app->get("/professor/horario/:idhorario", function($idhorario) {
 	$page = new PageAdmin();
 
 	$page->setTpl("horario-update", [
-		'horario'=>$horario->getValues()
+		'horario'=>$horario->getValues(),
+		"error"=>Horario::getMsgError()
 	]);	
 	
 });
@@ -116,6 +148,30 @@ $app->post("/professor/horario/:idhorario", function($idhorario) {
 	$horario->get((int)$idhorario);
 
 	$horario->setData($_POST);
+
+	if (!isset($_POST['horainicio']) || $_POST['horainicio'] == '') {
+		Horario::setMsgError("Informe o horário de início.");
+		header("Location: /professor/horario/".$idhorario."");
+		exit;		
+	}	
+
+	if (!isset($_POST['horatermino']) || $_POST['horatermino'] == '') {
+		Horario::setMsgError("Informe o horário de término.");
+		header("Location: /professor/horario/".$idhorario."");
+		exit;		
+	}
+
+	if (!isset($_POST['diasemana']) || $_POST['diasemana'] == '') {
+		Horario::setMsgError("Informe os dias da semana.");
+		header("Location: /professor/horario/".$idhorario."");
+		exit;		
+	}						
+
+	if (!isset($_POST['periodo']) || $_POST['periodo'] == '') {
+		Horario::setMsgError("Informe o período.");
+		header("Location: /professor/horario/".$idhorario."");
+		exit;		
+	}
 
 	$horario->save();
 

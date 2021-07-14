@@ -5,6 +5,11 @@
   <h1>
     Editar Atividade 
   </h1>
+  <ol class="breadcrumb">
+      <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li><a href="/professor/atividade">Atividades</a></li>
+      <li><a href="/professor/atividade/create">Criar Nova Atividade</a></li>
+    </ol>
 </section>
 
 <!-- Main content -->
@@ -13,65 +18,77 @@
   <div class="row">
   	<div class="col-md-12">
   		<div class="box box-primary">
-        <div class="box-header with-border">
-          <h3 class="box-title">Editar Atividade </h3>
-        </div>
+        {if="$error != ''"}
+          <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
+        {$error}
+          </div>
+        {/if}
         <!-- /.box-header -->
         <!-- form start -->
         <form role="form" action="/professor/atividade/{$atividade.idativ}" method="post" enctype="multipart/form-data">
 
           <div class="box-body">
 
-            <div class="form-group">
-              <label for="nomeativ">Nome</label>
-              <input type="text" class="form-control" id="nomeativ" name="nomeativ" placeholder="Digite o nome da atividade" value="{$atividade.nomeativ}">
-            </div>
+            <div class="row">
 
-            <div class="form-group">
-              <label for="descativ">Descrição</label>
-              <input type="text" class="form-control" id="descativ" name="descativ" placeholder="Descreva a atividade" value="{$atividade.descativ}">
-            </div>
+              <div class="col-md-6">
 
-            <div class="form-group">
-              <label for="geneativ">Gênero</label>
-              <input type="text" class="form-control" id="geneativ" name="geneativ" placeholder="Informe o gênero da atividade" value="{$atividade.geneativ}">
-            </div>
+                <div class="form-group">
+                  <label for="nomeativ">Nome</label>
+                  <input type="text" class="form-control" id="nomeativ" name="nomeativ" placeholder="Digite o nome da atividade" value="{$atividade.nomeativ}">
+                </div>
 
-            <div class="form-group">
-              <label for="prograativ">Programa</label>
-              <input type="text" class="form-control" id="prograativ" name="prograativ" placeholder="Informe qual é o programa" value="{$atividade.prograativ}">
-            </div>
+                <div class="form-group">
+                  <label for="descativ">Descrição</label>
+                  <input type="text" class="form-control" id="descativ" name="descativ" placeholder="Descreva a atividade" value="{$atividade.descativ}">
+                </div>
 
-            <div class="form-group">
-              <label for="origativ">Origem</label>
-              <input type="text" class="form-control" id="origativ" name="origativ" placeholder="Informe a origem da atividade" value="{$atividade.origativ}">
-            </div>
+                <div class="form-group">
+                  <label for="prograativ">Programa</label>
+                  <input type="text" class="form-control" id="prograativ" name="prograativ" placeholder="Informe qual é o programa" value="{$atividade.prograativ}">
+                </div>
 
-            <div class="form-group">
-              <label for="tipoativ">Tipo</label>
-              <input type="text" class="form-control" id="tipoativ" name="tipoativ" placeholder="Informe qual o tipo da atividade" value="{$atividade.tipoativ}">
-            </div>
-            <div class="form-group">
-                <label for="atividade">Faixa Etária</label>
-                <select class="form-control" name="idfxetaria">
-                 
-                {loop="$faixaetaria"}
-                    <option {if="$value.idfxetaria === $atividade.idfxetaria"}selected="selected"{/if} value="{$value.idfxetaria}">{$value.initidade} a {$value.fimidade} anos - {$value.descrfxetaria}</option>
-                {/loop}
+                <div class="form-group">
+                  <label for="tipoativ">Tipo</label>
+                  <input type="text" class="form-control" id="tipoativ" name="tipoativ" placeholder="Informe qual o tipo da atividade" value="{$atividade.tipoativ}">
+                </div>
                 
-                </select>
-            </div>   
+              </div>
 
-          </div>          
-             
-            
-          <!-- /.box-body -->
-          <div class="box-footer">
-            <button type="submit" class="btn btn-primary">Salvar</button>
-            &nbsp&nbsp&nbsp&nbsp
-            <a type="button" class="btn btn-danger" href="/professor/atividade">Cancelar</a>
+              <div class="col-md-6">
+
+                <div class="form-group">
+                  <label for="origativ">Origem</label>
+                  <input type="text" class="form-control" id="origativ" name="origativ" placeholder="Informe a origem da atividade" value="{$atividade.origativ}">
+                </div>
+
+                <div class="form-group">
+                  <label for="geneativ">Gênero</label>
+                  <input type="text" class="form-control" id="geneativ" name="geneativ" placeholder="Informe o gênero da atividade" value="{$atividade.geneativ}">
+                </div>
+
+                <div class="form-group">
+                  <label for="atividade">Faixa Etária</label>
+                  <select class="form-control" name="idfxetaria">                 
+                  {loop="$faixaetaria"}
+                    <option {if="$value.idfxetaria === $atividade.idfxetaria"}selected="selected"{/if} value="{$value.idfxetaria}">{$value.initidade} a {$value.fimidade} anos - {$value.descrfxetaria}</option>
+                  {/loop}                
+                  </select>
+                </div> 
+
+                <div class="box-footer">
+                  <button type="submit" class="btn btn-primary">Salvar</button>
+                  &nbsp&nbsp&nbsp&nbsp
+                  <a type="button" class="btn btn-danger" href="/professor/atividade">Cancelar</a>
+                </div>  
+                
+              </div>
+
           </div>
-        </form>
+
+        </div> 
+        </form>                      
+          <!-- /.box-body -->
       </div>
   	</div>
   </div>

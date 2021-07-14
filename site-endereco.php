@@ -58,12 +58,14 @@ $app->post("/endereco", function() {
 		Endereco::setMsgError("Informe o nome da número do local.");
 		header("Location: /endereco");
 		exit;		
-	}		
+	}
+
 	if (!isset($_POST['bairro']) || $_POST['bairro'] == '') {
 		Endereco::setMsgError("Informe o nome do bairro.");
 		header("Location: /endereco");
 		exit;		
-	}		
+	}	
+		
 	if (!isset($_POST['cidade']) || $_POST['cidade'] == '') {
 		Endereco::setMsgError("Informe o nome da cidade.");
 		header("Location: /endereco");

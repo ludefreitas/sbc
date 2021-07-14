@@ -7,23 +7,6 @@ use \Sbc\Model\Espaco;
 use \Sbc\Model\Horario;
 use \Sbc\Model\Local;
 
-
-/*
-$app->get("/professor/espaco", function() {
-
-	User::verifyLogin();
-
-	$espaco = Espaco::listAll();
-
-	$page = new PageAdmin();
-
-	$page->setTpl("espaco", array(
-		'espaco'=>Espaco::checkList($espaco)
-	));
-});
-*/
-
-
 $app->get("/professor/espaco", function() {
 
 	User::verifyLogin();
@@ -67,7 +50,7 @@ $app->get("/professor/espaco", function() {
 		"espaco"=>$pagination['data'],
 		"search"=>$search,
 		"pages"=>$pages,
-		"error"=>Espaco::getMsgError()
+		"error"=>Espaco::getMsgError()		
 	));
 });
 
@@ -83,7 +66,12 @@ $app->get("/professor/espaco/create", function() {
 
 	$page->setTpl("espaco-create", array(
 		'local'=>$local,
-		'horario'=>$horario
+		'horario'=>$horario,
+		"error"=>Espaco::getMsgError(),
+		"createEspacoValues"=>(
+				isset($_SESSION['createEspacoValues'])) 
+				    ? $_SESSION['createEspacoValues'] 
+			        : ['nomeespaco'=>'', 'descespaco'=>'', 'areaespaco'=>'', 'observacao'=>'']
 	));
 });
 
@@ -92,11 +80,45 @@ $app->post("/professor/espaco/create", function() {
 
 	User::verifyLogin();
 
+	$_SESSION['createEspacoValues'] = $_POST;
+
 	$espaco = new Espaco();
+
+	if (!isset($_POST['nomeespaco']) || $_POST['nomeespaco'] == '') {
+		Espaco::setMsgError("Informe o nome do espaço.");
+		header("Location: /professor/espaco/create");
+		exit;		
+	}	
+
+	if (!isset($_POST['descespaco']) || $_POST['descespaco'] == '') {
+		Espaco::setMsgError("Informe uma descrição para o espaço.");
+		header("Location: /professor/espaco/create");
+		exit;		
+	}
+
+	if (!isset($_POST['areaespaco']) || $_POST['areaespaco'] == '') {
+		Espaco::setMsgError("Informe a área em (m²) a medida do espaço.");
+		header("Location: /professor/espaco/create");
+		exit;		
+	}						
+
+	if (!isset($_POST['observacao']) || $_POST['observacao'] == '') {
+		Espaco::setMsgError("Descreva uma observação para o espaço.");
+		header("Location: /professor/espaco/create");
+		exit;		
+	}
+
+	if (!isset($_POST['idlocal']) || $_POST['idlocal'] == '') {
+		Espaco::setMsgError("Informe onde está localizado este espaço.");
+		header("Location: /professor/espaco/create");
+		exit;		
+	}												
 
 	$espaco->setData($_POST);
 
 	$espaco->save();
+
+	$_SESSION['createEspacoValues'] = NULL;
 
 	header("Location: /professor/espaco");
 	exit();	

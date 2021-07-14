@@ -62,14 +62,13 @@ $app->post("/registerpessoa", function(){
 		header("Location: /pessoa-create");
 		exit;
 	}
-	/*
+	
 	if (Pessoa::checkCpfExist($_POST['numcpf']) === true) {
 
 		Pessoa::setErrorRegister("Este CPF pertence a outro usuário.");
 		header("Location: /pessoa-create");
 		exit;
 	}
-	*/	
 
 	if (!isset($_POST['numrg']) || $_POST['numrg'] == '') {
 

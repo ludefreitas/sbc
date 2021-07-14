@@ -61,18 +61,79 @@ $app->get("/professor/local/create", function() {
 
 	$page = new PageAdmin();
 
-	$page->setTpl("local-create");
+	$page->setTpl("local-create", [
+		"error"=>Local::getMsgError(),
+		"createLocalValues"=>(isset($_SESSION['createLocalValues'])) ? $_SESSION['createLocalValues'] : ['apelidolocal'=>'', 'nomelocal'=>'', 'cep'=>'', 'rua'=>'', 'numero'=>'','complemento'=>'', 'bairro'=>'', 'cidade'=>'', 'estado'=>'', 'telefone'=>'']
+	]);
 });
 
 $app->post("/professor/local/create", function() {
 
 	User::verifyLogin();
 
+	$_SESSION['createLocalValues'] = $_POST;
+
 	$local = new Local();
+
+	if (!isset($_POST['apelidolocal']) || $_POST['apelidolocal'] == '') {
+		Local::setMsgError("Informe o nome de como é conhecido o local.");
+		header("Location: /professor/local/create");
+		exit;		
+	}	
+
+	if (!isset($_POST['nomelocal']) || $_POST['nomelocal'] == '') {
+		Local::setMsgError("Informe o nome completo do local.");
+		header("Location: /professor/local/create");
+		exit;		
+	}
+
+	if (!isset($_POST['cep']) || $_POST['cep'] == '') {
+		Local::setMsgError("Informe o cep do local.");
+		header("Location: /professor/local/create");
+		exit;		
+	}						
+
+	if (!isset($_POST['rua']) || $_POST['rua'] == '') {
+		Local::setMsgError("Informe em qual rua que está o local.");
+		header("Location: /professor/local/create");
+		exit;		
+	}
+
+	if (!isset($_POST['numero']) || $_POST['numero'] == '') {
+		Local::setMsgError("Informe número, em que está o local, na rua.");
+		header("Location: /professor/local/create");
+		exit;		
+	}	
+
+	if (!isset($_POST['bairro']) || $_POST['bairro'] == '') {
+		Local::setMsgError("Informe o bairro onde está localizado este espaço.");
+		header("Location: /professor/local/create");
+		exit;		
+	}																							
+
+	if (!isset($_POST['cidade']) || $_POST['cidade'] == '') {
+		Local::setMsgError("Informe em qual cidade está o local.");
+		header("Location: /professor/local/create");
+		exit;		
+	}																							
+
+	if (!isset($_POST['estado']) || $_POST['estado'] == '') {
+		Local::setMsgError("Informe o estado.");
+		header("Location: /professor/local/create");
+		exit;		
+	}
+
+	if (!isset($_POST['telefone']) || $_POST['telefone'] == '') {
+		Local::setMsgError("Informe o número do telefone.");
+		header("Location: /professor/local/create");
+		exit;		
+	}																									
 
 	$local->setData($_POST);
 
 	$local->save();
+
+	$_SESSION['createLocalValues'] = NULL;
 
 	header("Location: /professor/local");
 	exit();
@@ -104,6 +165,7 @@ $app->get("/professor/local/:idlocal", function($idlocal) {
 	$page = new PageAdmin();
 
 	$page->setTpl("local-update", [
+		"error"=>Local::getMsgError(),
 		'local'=>$local->getValues()
 	]);	
 	
@@ -116,6 +178,60 @@ $app->post("/professor/local/:idlocal", function($idlocal) {
 	$local = new Local();
 
 	$local->get((int)$idlocal);
+
+	if (!isset($_POST['apelidolocal']) || $_POST['apelidolocal'] == '') {
+		Local::setMsgError("Informe o nome de como é conhecido o local.");
+		header("Location: /professor/local/create");
+		exit;		
+	}	
+
+	if (!isset($_POST['nomelocal']) || $_POST['nomelocal'] == '') {
+		Local::setMsgError("Informe o nome completo do local.");
+		header("Location: /professor/local/create");
+		exit;		
+	}
+
+	if (!isset($_POST['cep']) || $_POST['cep'] == '') {
+		Local::setMsgError("Informe o cep do local.");
+		header("Location: /professor/local/create");
+		exit;		
+	}						
+
+	if (!isset($_POST['rua']) || $_POST['rua'] == '') {
+		Local::setMsgError("Informe em qual rua que está o local.");
+		header("Location: /professor/local/create");
+		exit;		
+	}
+
+	if (!isset($_POST['numero']) || $_POST['numero'] == '') {
+		Local::setMsgError("Informe número, em que está o local, na rua.");
+		header("Location: /professor/local/create");
+		exit;		
+	}	
+
+	if (!isset($_POST['bairro']) || $_POST['bairro'] == '') {
+		Local::setMsgError("Informe o bairro onde está localizado este espaço.");
+		header("Location: /professor/local/create");
+		exit;		
+	}																							
+
+	if (!isset($_POST['cidade']) || $_POST['cidade'] == '') {
+		Local::setMsgError("Informe em qual cidade está o local.");
+		header("Location: /professor/local/create");
+		exit;		
+	}																							
+
+	if (!isset($_POST['estado']) || $_POST['estado'] == '') {
+		Local::setMsgError("Informe o estado.");
+		header("Location: /professor/local/create");
+		exit;		
+	}
+
+	if (!isset($_POST['telefone']) || $_POST['telefone'] == '') {
+		Local::setMsgError("Informe o número do telefone.");
+		header("Location: /professor/local/create");
+		exit;		
+	}																											
 
 	$local->setData($_POST);
 
