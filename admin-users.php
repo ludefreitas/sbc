@@ -186,7 +186,8 @@ $app->get("/professor/users/:iduser", function($iduser) {
 	$page = new PageAdmin();
 
 	$page->setTpl("users-update", array(
-		"user"=>$user->getValues()
+		"user"=>$user->getValues(),
+		"error"=>User::getError()
 	));
 });
 
@@ -215,6 +216,12 @@ $app->post("/professor/users/:iduser", function($iduser) {
 	User::verifyLogin();
 
 	$user = new User();
+
+	if (!isset($_POST['apelidoperson']) || $_POST['apelidoperson'] == '') {
+		User::setError("Preencha o campo apelido.");
+		header("Location: /professor/users/".$iduser."");
+		exit;		
+	}																							
 
 	$_POST["inadmin"] = (isset($_POST["inadmin"]))?1:0;
 	$_POST["isprof"] = (isset($_POST["isprof"]))?1:0;

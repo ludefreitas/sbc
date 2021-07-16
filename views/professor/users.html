@@ -24,7 +24,7 @@
                 {/if}
             
             <div class="box-header">
-              <a href="/professor/users/create" class="btn btn-success">Cadastrar Usuário</a>
+              <!-- <a href="/professor/users/create" class="btn btn-success">Cadastrar Usuário</a> -->
               <div class="box-tools">                
                 <form action="/professor/users">
                   <div class="input-group input-group-sm" style="width: 150px;">
@@ -51,6 +51,7 @@
                     <th style="width: 60px">Admin</th>
                     <th style="width: 60px">Prof</th>
                     <th style="width: 60px">Status</th>
+                    <th style="width: 60px"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -65,9 +66,12 @@
                     <td>{if="$value.inadmin == 1"}Sim{else}Não{/if}</td>
                     <td>{if="$value.isprof == 1"}Sim{else}Não{/if}</td>
                     <td>{if="$value.statususer == 1"}Ativo{else}Inativo{/if}</td>
-                  <!--
+                 
                     <td>
-                      <a href="/professor/users/{$value.iduser}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
+                      {if="$value.isprof == 0"}
+                      <a href="/professor/users/{$value.iduser}" class="btn btn-success"></i>Tornar professor</a>
+                      {/if}
+                     <!--
                       <a href="/professor/users/{$value.iduser}/delete" onclick="return confirm('Deseja realmente excluir o registro do(a) {$value.desperson}?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
                     </td>
                   -->

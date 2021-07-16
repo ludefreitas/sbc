@@ -38,7 +38,6 @@
                     <th>Data Fim das Inscrição</th>
                     <th>Data Icicio das Matrícula</th>
                     <th>Data Fim das Matrícula</th>
-                    <th style="width: 240px">&nbsp;</th>
                   </tr>
                 </thead>
 
@@ -54,8 +53,7 @@
                     <td>{function="formatDateHour($value.dtterminscricao)"}</a></td>
                     <td>{function="formatDateHour($value.dtinicmatricula)"}</a></td>
                     <td>{function="formatDateHour($value.dttermmatricula)"}</a></td>
-                    <td>
-                    
+                    <td>    
                     
                       <a href="/professor/temporada/{$value.idtemporada}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
                       <a href="/professor/temporada/{$value.idtemporada}/delete" onclick="return confirm('Deseja realmente excluir temporada {$value.desctemporada}?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>

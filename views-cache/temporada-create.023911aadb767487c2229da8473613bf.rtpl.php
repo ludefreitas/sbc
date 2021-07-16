@@ -26,28 +26,22 @@
         <?php } ?>
 
         <!-- /.box-header -->
-        <!-- form start --><form role="form" action="/professor/temporada/create" method="post">
-          
-            <div class="box-header">
+        <!-- form start -->
+
+        <div class="box-body">
+            <form role="form" action="/professor/temporada/create" method="post">
+
+            
+          <div class="row">
+
+
+            <div class="col-md-4">
+
+               <div class="box-header">
               <label for="desctemporada"> Descrição da temporada</label>
               <input type="text" class="form-control" id="desctemporada" name="desctemporada" placeholder="Descreva temporada" value="<?php echo htmlspecialchars( $createTemporadaValues["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
-            <div class="box-header">
-              <label for="dtinicinscricao"> Data de Início das Inscrições</label>
-              <input type="date" class="form-control" id="dtinicinscricao" name="dtinicinscricao" value="<?php echo htmlspecialchars( $createTemporadaValues["dtinicinscricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-            </div>
-            <div class="box-header">
-              <label for="dtterminscricao"> Data do Fim das Inscrições</label>
-              <input type="date" class="form-control" id="dtterminscricao" name="dtterminscricao" value="<?php echo htmlspecialchars( $createTemporadaValues["dtterminscricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-            </div>
-            <div class="box-header">
-              <label for="dtinicmatricula"> Data de Início das Matrículas</label>
-              <input type="date" class="form-control" id="dtinicmatricula" name="dtinicmatricula" value="<?php echo htmlspecialchars( $createTemporadaValues["dtinicmatricula"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-            </div>
-            <div class="box-header">
-              <label for="dttermmatricula"> Data do Fim das Matrículas</label>
-              <input type="date" class="form-control" id="dttermmatricula" name="dttermmatricula" value="<?php echo htmlspecialchars( $createTemporadaValues["dttermmatricula"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-            </div>            
+
             <div class="box-header">
               <label for="idstatustemporada" value="<?php echo htmlspecialchars( $createTemporadaValues["idstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> Status Temporada</label>
               <select class="form-control" name="idstatustemporada">
@@ -59,14 +53,65 @@
 
               </select>
             </div>
+              
+
+            </div>
+
+           
+
+            <div class="col-md-4">
+
+                <div class="box-header">
+              <label for="dtinicinscricao"> Data de Início das Inscrições</label>
+              <input type="date" class="form-control" id="dtinicinscricao" name="dtinicinscricao" value="<?php echo htmlspecialchars( $createTemporadaValues["dtinicinscricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+            </div>
+
+             <div class="box-header">
+              <label for="dtinicmatricula"> Data de Início das Matrículas</label>
+              <input type="date" class="form-control" id="dtinicmatricula" name="dtinicmatricula" value="<?php echo htmlspecialchars( $createTemporadaValues["dtinicmatricula"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+            </div>
+              
+            </div>
+
+            <div class="col-md-4">
+
+              <div class="box-header">
+              <label for="dtterminscricao"> Data do Fim das Inscrições</label>
+              <input type="date" class="form-control" id="dtterminscricao" name="dtterminscricao" value="<?php echo htmlspecialchars( $createTemporadaValues["dtterminscricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+            </div>
+
+             <div class="box-header">
+              <label for="dttermmatricula"> Data do Fim das Matrículas</label>
+              <input type="date" class="form-control" id="dttermmatricula" name="dttermmatricula" value="<?php echo htmlspecialchars( $createTemporadaValues["dttermmatricula"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+            </div>            
+              
+            </div>
+
           </div>
-          <!-- /.box-body -->
-          <div class="box-footer">
+
+
+          
+            
+          
+            
+           
+           
+            
+
+            <div class="box-footer">
             <button type="submit" class="btn btn-success">Cadastrar</button>
             &nbsp&nbsp&nbsp&nbsp
             <a type="button" class="btn btn-danger" href="/professor/temporada">Cancelar</a>
           </div>
-        </form>
+
+           <!-- /.box-body -->
+         </form>
+       </div>
+        </div>
+
+
+         
+          
       </div>
   	</div>
   </div>

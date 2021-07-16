@@ -5,6 +5,10 @@
   <h1>
     Editar Modalidade
   </h1>
+   <ol class="breadcrumb">
+    <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="/professor/modalidades">Modalidades</a></li>
+  </ol>
 </section>
 
 <!-- Main content -->

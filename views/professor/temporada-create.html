@@ -1,72 +1,97 @@
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-<!-- Content Header (Page header) -->
-<section class="content-header">
-  <h1>
-    Criar Nova Temporada
-  </h1>
-  <ol class="breadcrumb">
-    <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="/professor/temporada">Temporadas</a></li>
-    <!--<li class="active"><a href="/professor/espaco/create">Cadastrar</a></li>-->
-  </ol>
-</section>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>
+          Criar Nova Temporada
+        </h1>
+        <ol class="breadcrumb">
+          <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
+          <li><a href="/professor/temporada">Temporadas</a></li>
+          <!--<li class="active"><a href="/professor/espaco/create">Cadastrar</a></li>-->
+        </ol>
+      </section>
 
-<!-- Main content -->
+      <!-- Main content -->
 
-  <div class="row">
-  	<div class="col-md-12">
-  		<div class="box box-success">
-        {if="$error != ''"}
-        <div class="alert alert-danger" style="margin: 0px 10px 0px 10px">
-        {$error}
+      <div class="row">
+      	<div class="col-md-12">
+      		<div class="box box-success">
+            {if="$error != ''"}
+            <div class="alert alert-danger" style="margin: 0px 10px 0px 10px">
+              {$error}
+            </div>
+            {/if}
+            <!-- /.box-header -->
+            <!-- form start -->
+
+            <div class="box-body">
+              <form role="form" action="/professor/temporada/create" method="post">
+                <div class="row">
+                  <div class="col-md-4">
+
+                    <div class="box-header">
+                      <label for="desctemporada"> Descrição da temporada</label>
+                      <input type="text" class="form-control" id="desctemporada" name="desctemporada" placeholder="Descreva temporada" value="{$createTemporadaValues.desctemporada}">
+                    </div>
+
+                    <div class="box-header">
+                      <label for="idstatustemporada" value="{$createTemporadaValues.idstatustemporada}"> Status Temporada</label>
+                      <select class="form-control" name="idstatustemporada">
+                      <option selected="selected" value="">Selecione o Status da Temporada</option>                          
+                      {loop="$statustemporada"}
+                      <option value="{$value.idstatustemporada}">{$value.idstatustemporada} - {$value.descstatustemporada} </option>
+                      {/loop}
+                      </select>
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                  <div class="box-header">
+                    <label for="dtinicinscricao"> Data de Início das Inscrições</label>
+                    <input type="date" class="form-control" id="dtinicinscricao" name="dtinicinscricao" value="{$createTemporadaValues.dtinicinscricao}">
+                  </div>
+
+                  <div class="box-header">
+                    <label for="dtinicmatricula"> Data de Início das Matrículas</label>
+                    <input type="date" class="form-control" id="dtinicmatricula" name="dtinicmatricula" value="{$createTemporadaValues.dtinicmatricula}">
+                  </div>
+                  
+                </div>
+
+                <div class="col-md-4">
+
+                  <div class="box-header">
+                    <label for="dtterminscricao"> Data do Fim das Inscrições</label>
+                    <input type="date" class="form-control" id="dtterminscricao" name="dtterminscricao" value="{$createTemporadaValues.dtterminscricao}">
+                  </div>
+
+                  <div class="box-header">
+                    <label for="dttermmatricula"> Data do Fim das Matrículas</label>
+                    <input type="date" class="form-control" id="dttermmatricula" name="dttermmatricula" value="{$createTemporadaValues.dttermmatricula}">
+                  </div>            
+                  
+                </div>
+
+              </div>
+
+              <div class="box-footer">
+                <button type="submit" class="btn btn-success">Cadastrar</button>
+                &nbsp&nbsp&nbsp&nbsp
+                <a type="button" class="btn btn-danger" href="javascript:window.history.go(-1)">Cancelar</a>
+              </div>
+
+              <!-- /.box-body -->
+            </form>
+          </div>
         </div>
-        {/if}
-        <!-- /.box-header -->
-        <!-- form start --><form role="form" action="/professor/temporada/create" method="post">
-          
-            <div class="box-header">
-              <label for="desctemporada"> Descrição da temporada</label>
-              <input type="text" class="form-control" id="desctemporada" name="desctemporada" placeholder="Descreva temporada" value="{$createTemporadaValues.desctemporada}">
-            </div>
-            <div class="box-header">
-              <label for="dtinicinscricao"> Data de Início das Inscrições</label>
-              <input type="date" class="form-control" id="dtinicinscricao" name="dtinicinscricao" value="{$createTemporadaValues.dtinicinscricao}">
-            </div>
-            <div class="box-header">
-              <label for="dtterminscricao"> Data do Fim das Inscrições</label>
-              <input type="date" class="form-control" id="dtterminscricao" name="dtterminscricao" value="{$createTemporadaValues.dtterminscricao}">
-            </div>
-            <div class="box-header">
-              <label for="dtinicmatricula"> Data de Início das Matrículas</label>
-              <input type="date" class="form-control" id="dtinicmatricula" name="dtinicmatricula" value="{$createTemporadaValues.dtinicmatricula}">
-            </div>
-            <div class="box-header">
-              <label for="dttermmatricula"> Data do Fim das Matrículas</label>
-              <input type="date" class="form-control" id="dttermmatricula" name="dttermmatricula" value="{$createTemporadaValues.dttermmatricula}">
-            </div>            
-            <div class="box-header">
-              <label for="idstatustemporada" value="{$createTemporadaValues.idstatustemporada}"> Status Temporada</label>
-              <select class="form-control" name="idstatustemporada">
-              <option selected="selected" value="">Selecione o Status da Temporada</option>                          
-                {loop="$statustemporada"}
-                <option value="{$value.idstatustemporada}">{$value.idstatustemporada} - {$value.descstatustemporada} </option>
-                {/loop}
-              </select>
-            </div>
-          </div>
-          <!-- /.box-body -->
-          <div class="box-footer">
-            <button type="submit" class="btn btn-success">Cadastrar</button>
-            &nbsp&nbsp&nbsp&nbsp
-            <a type="button" class="btn btn-danger" href="/professor/temporada">Cancelar</a>
-          </div>
-        </form>
       </div>
-  	</div>
+    </div>
   </div>
 
 </section>
 <!-- /.content -->
 </div>
-<!-- /.content-wrapper -->
+    <!-- /.content-wrapper -->

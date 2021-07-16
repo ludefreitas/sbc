@@ -2,11 +2,11 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Lista de Crecs (Local)
+    Lista de Crecs
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active"><a href="/professor/local">Crec´s</a></li>
+    <li class="active"><a href="/professor/local">Crecs</a></li>
   </ol>
 </section>
 
@@ -26,7 +26,7 @@
 
             
             <div class="box-header">
-              <a href="/professor/local/create" class="btn btn-success">Cadastrar Crec (Local)</a>
+              <a href="/professor/local/create" class="btn btn-success">Cadastrar Crec</a>
             </div>
 
             <div class="box-body no-padding">

@@ -42,7 +42,6 @@
                     <th>Data Fim das Inscrição</th>
                     <th>Data Icicio das Matrícula</th>
                     <th>Data Fim das Matrícula</th>
-                    <th style="width: 240px">&nbsp;</th>
                   </tr>
                 </thead>
 
@@ -59,8 +58,7 @@
                     <td><?php echo formatDateHour($value1["dtterminscricao"]); ?></a></td>
                     <td><?php echo formatDateHour($value1["dtinicmatricula"]); ?></a></td>
                     <td><?php echo formatDateHour($value1["dttermmatricula"]); ?></a></td>
-                    <td>
-                    
+                    <td>    
                     
                       <a href="/professor/temporada/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
                       <a href="/professor/temporada/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir temporada <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>

@@ -27,7 +27,7 @@
 
             
             <div class="box-header">
-              <a href="/professor/users/create" class="btn btn-success">Cadastrar Usuário</a>
+              <!-- <a href="/professor/users/create" class="btn btn-success">Cadastrar Usuário</a> -->
               <div class="box-tools">                
                 <form action="/professor/users">
                   <div class="input-group input-group-sm" style="width: 150px;">
@@ -54,6 +54,7 @@
                     <th style="width: 60px">Admin</th>
                     <th style="width: 60px">Prof</th>
                     <th style="width: 60px">Status</th>
+                    <th style="width: 60px"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -69,9 +70,14 @@
                     <td><?php if( $value1["inadmin"] == 1 ){ ?>Sim<?php }else{ ?>Não<?php } ?></td>
                     <td><?php if( $value1["isprof"] == 1 ){ ?>Sim<?php }else{ ?>Não<?php } ?></td>
                     <td><?php if( $value1["statususer"] == 1 ){ ?>Ativo<?php }else{ ?>Inativo<?php } ?></td>
-                  <!--
+                 
                     <td>
-                      <a href="/professor/users/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
+                      <?php if( $value1["isprof"] == 0 ){ ?>
+
+                      <a href="/professor/users/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-success"></i>Tornar professor</a>
+                      <?php } ?>
+
+                     <!--
                       <a href="/professor/users/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir o registro do(a) <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
                     </td>
                   -->

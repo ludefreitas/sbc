@@ -16,6 +16,13 @@ function colorStatus($idinscstatus){
     }
 }
 
+function formatDateEng($date)
+{
+
+    return date('dd/mm/YYYY', strtotime($date));
+
+}
+
 
 function formatDate($date)
 {

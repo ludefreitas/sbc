@@ -36,7 +36,7 @@ $app->get("/professor/temporada/create", function() {
 		'temporada'=>$temporada,
 		'statustemporada'=>$statustemporada,
 		'error'=>Temporada::getError(),
-		'createTemporadaValues'=>(isset($_SESSION['createTemporadaValues'])) ? $_SESSION['createTemporadaValues'] : ['destemporada'=>'', 'dtinicinscricao'=>'', 'dtterminscricao'=>'', 'dtinicmatricula'=>'', 'dttermmatricula'=>'', 'idstatustemporada'=>'']
+		'createTemporadaValues'=>(isset($_SESSION['createTemporadaValues'])) ? $_SESSION['createTemporadaValues'] : ['desctemporada'=>'', 'dtinicinscricao'=>'', 'dtterminscricao'=>'', 'dtinicmatricula'=>'', 'dttermmatricula'=>'', 'idstatustemporada'=>'']
 	]);
 });
 

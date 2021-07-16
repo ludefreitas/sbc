@@ -27,27 +27,26 @@
         <!-- form start -->
         <form role="form" action="/professor/turma/{$turma.idturma}" method="post" enctype="multipart/form-data">
 
-          <div class="box-body">    
-            <div class="form-group">
-              <label for="descturma">Descrição da turma</label>
-              <input type="text" class="form-control" id="descturma" name="descturma" placeholder="Descreva a turma"value="{$turma.descturma}">
-            </div>
-            <div class="form-group">
+          <div class="box-body"> 
+
+           <div class="row">
+
+            <div class="col-md-6">
+
+              <div class="form-group">
+                <label for="descturma">Descrição da turma</label>
+                <input type="text" class="form-control" id="descturma" name="descturma" placeholder="Descreva a turma"value="{$turma.descturma}">
+              </div>
+
+              <div class="form-group">
               <label for="turma">Modalidade</label>
                 <select class="form-control" name="idmodal">     
                   {loop="$modalidade"}
                   <option {if="$value.idmodal === $turma.idmodal"}selected="selected"{/if} value="{$value.idmodal}">{$value.descmodal}</option>
                   {/loop}                            
                 </select>
-            </div>            
-            <div class="form-group">
-              <label for="turma">Atividade</label>
-                <select class="form-control" name="idativ">     
-                  {loop="$atividade"}
-                  <option {if="$value.idativ === $turma.idativ"}selected="selected"{/if} value="{$value.idativ}">{$value.nomeativ} - {$value.descrfxetaria} - {$value.initidade} a {$value.fimidade} anos</option>
-                  {/loop}                            
-                </select>
-            </div>            
+            </div>  
+
             <div class="form-group">
               <label for="turma">Espaço - Crec</label>
                 <select class="form-control" name="idespaco">     
@@ -55,7 +54,21 @@
                   <option {if="$value.idespaco === $turma.idespaco"}selected="selected"{/if} value="{$value.idespaco}">{$value.nomeespaco} - {$value.apelidolocal}</option>
                   {/loop}                            
                 </select>
+            </div>          
+              
             </div>
+
+            <div class="col-md-6">
+
+              <div class="form-group">
+              <label for="turma">Atividade</label>
+                <select class="form-control" name="idativ">     
+                  {loop="$atividade"}
+                  <option {if="$value.idativ === $turma.idativ"}selected="selected"{/if} value="{$value.idativ}">{$value.nomeativ} - {$value.descrfxetaria} - {$value.initidade} a {$value.fimidade} anos</option>
+                  {/loop}                            
+                </select>
+            </div>            
+            
 
             <div class="form-group">
               <label for="turma">Dia Semana - Horário</label>
@@ -81,24 +94,18 @@
               <label for="turma">Vagas</label>
               <input type="number" class="form-control" id="vagas" name="vagas" placeholder="Informe a quantidade de vagas" value="{$turma.vagas}">
             </div>
-      <!--  <div class="form-group">
-              <label for="file">Foto</label>
-              <input type="file" class="form-control" id="file" name="file" value="{$turma.desphoto}">
-              <div class="box box-widget">
-                <div class="box-body">
-                  <img class="img-responsive" id="image-preview" src="{$turma.desphoto}" alt="Photo">
-                </div>
-              </div>
+              
             </div>
-      -->   
-
+             
+           </div>
+            
         </div>                  
             
           <!-- /.box-body -->
           <div class="box-footer">
             <button type="submit" class="btn btn-primary">Salvar</button>
             &nbsp&nbsp&nbsp&nbsp
-            <a type="button" class="btn btn-danger" href="/professor/turma">Cancelar</a>
+            <a type="button" class="btn btn-danger" href="javascript:window.history.go(-1)">Cancelar</a>
           </div>
         </form>
       </div>
