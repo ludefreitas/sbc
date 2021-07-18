@@ -687,7 +687,7 @@ class User extends Model {
 
    }
 
-   public function getTurmaTemporada($related = true, $idtemporada)
+   public function getTurmaTemporada($related = true, $idtemporada, $iduser)
 		{
 			$sql = new Sql();
 
@@ -697,6 +697,10 @@ class User extends Model {
 					SELECT * FROM tb_turmatemporada a
 					INNER JOIN tb_turma 
 					using(idturma)
+					INNER JOIN tb_users 
+					using(iduser)
+					INNER JOIN tb_persons 
+					using(idperson)
 					INNER JOIN tb_atividade 
 					using(idativ)
 					INNER JOIN tb_modalidade
@@ -714,7 +718,7 @@ class User extends Model {
 					WHERE a.iduser = :iduser 
 					AND a.idtemporada = :idtemporada
 				", [
-					':iduser'=>$this->getiduser(),
+					':iduser'=>$iduser,
 					':idtemporada'=>$idtemporada
 				]);
 
@@ -724,6 +728,10 @@ class User extends Model {
 					SELECT * FROM tb_turmatemporada a
 					INNER JOIN tb_turma 
 					using(idturma)
+					INNER JOIN tb_users 
+					using(iduser)
+					-- INNER JOIN tb_persons 
+					-- using(idperson)
 					INNER JOIN tb_atividade 
 					using(idativ)
 					INNER JOIN tb_modalidade
@@ -737,12 +745,86 @@ class User extends Model {
 					INNER JOIN tb_horario 
 					using(idhorario)
 					INNER JOIN tb_turmastatus 
-					using(idturmastatus) 				
-					WHERE a.iduser != :iduser
+					using(idturmastatus) 	
+					-- WHERE a.iduser = 0 OR a.iduser is null 			
+					WHERE a.iduser != :iduser  
 					AND a.idtemporada = :idtemporada
 				", [
-					':iduser'=>$this->getiduser(),
+					':iduser'=>$iduser,
 					':idtemporada'=>$idtemporada
+				]);
+			}		
+		}
+
+		public function getTurmaTemporadaLocal($related = true, $idtemporada, $iduser, $idlocal)
+		{
+			$sql = new Sql();
+
+			if ($related === true) {
+
+				return $sql->select("
+					SELECT * FROM tb_turmatemporada a
+					INNER JOIN tb_turma 
+					using(idturma)
+					INNER JOIN tb_users 
+					using(iduser)
+					INNER JOIN tb_persons 
+					using(idperson)
+					INNER JOIN tb_atividade 
+					using(idativ)
+					INNER JOIN tb_modalidade
+					using(idmodal)   
+					INNER JOIN tb_fxetaria
+					using(idfxetaria)             
+	                INNER JOIN tb_espaco d
+					using(idespaco)
+					INNER JOIN tb_local e
+					ON e.idlocal = d.idlocal
+					INNER JOIN tb_horario 
+					using(idhorario)
+					INNER JOIN tb_turmastatus 
+					using(idturmastatus) 				
+					WHERE a.iduser = :iduser 
+					AND a.idtemporada = :idtemporada
+					AND e.idlocal = :idlocal
+				", [
+					':iduser'=>$iduser,
+					':idtemporada'=>$idtemporada,
+					':idlocal'=>$idlocal
+				]);
+
+			} else {
+
+				return $sql->select("
+					SELECT * FROM tb_turmatemporada a
+					INNER JOIN tb_turma 
+					using(idturma)
+					INNER JOIN tb_users 
+					using(iduser)
+					-- INNER JOIN tb_persons 
+					-- using(idperson)
+					INNER JOIN tb_atividade 
+					using(idativ)
+					INNER JOIN tb_modalidade
+					using(idmodal)   
+					INNER JOIN tb_fxetaria
+					using(idfxetaria)             
+	                INNER JOIN tb_espaco d
+					using(idespaco)
+					INNER JOIN tb_local e
+					ON e.idlocal = d.idlocal
+					INNER JOIN tb_horario 
+					using(idhorario)
+					INNER JOIN tb_turmastatus 
+					using(idturmastatus) 	
+					-- WHERE a.iduser = 0 OR a.iduser is null 			
+					WHERE a.iduser != :iduser  
+					AND a.idtemporada = :idtemporada
+					AND e.idlocal = :idlocal
+				", [
+					':iduser'=>$iduser,
+					':idtemporada'=>$idtemporada,
+					':idlocal'=>$idlocal
 				]);
 			}		
 		}

@@ -7,6 +7,7 @@ use \Sbc\Model\Temporada;
 use \Sbc\Model\StatusTemporada;
 use \Sbc\Model\Turma;
 use \Sbc\Model\Sorteio;
+use \Sbc\Model\Local;
 
 $app->get("/professor/temporada", function() {
 
@@ -375,6 +376,89 @@ $app->get("/professor/temporada/:idtemporada/turma/:idturma/remove", function($i
 	header("Location: /professor/temporada/".$idtemporada."/turma");
 	exit;
 
+});
+
+$app->get("/professor/turmatemporada/:iduser/turma/:idtemporada", function($iduser, $idtemporada) {
+
+	User::verifyLogin();
+
+	$user = new User();
+
+	$temporada = new Temporada();
+
+	$temporada->get((int)$idtemporada);	
+
+	$user->get((int)$iduser);	
+	
+	/*
+	echo '<pre>';
+	print_r($user->getTurmaTemporada(false, $idtemporada, $iduser));
+	echo '</pre>';
+	exit;
+	*/
+	
+
+	$page = new PageAdmin();	
+
+	$page->setTpl("turma-temporada-professor", [
+		'locais'=>Local::listAll(),
+		'temporada'=>$temporada->getValues(),
+		'user'=>$user->getValues(),
+		'turmaRelated'=>$user->getTurmaTemporada(true, $idtemporada, $iduser),
+		'turmaNotRelated'=>$user->getTurmaTemporada(false, $idtemporada, $iduser),
+		'error'=>User::getError()
+	]);	
+});
+
+$app->get("/professor/turmatemporada/:iduser/turma/:idtemporada/:idlocal", function($iduser, $idtemporada, $idlocal) {
+
+	User::verifyLogin();
+
+	$user = new User();
+	$user->get((int)$iduser);	
+
+	$local = new Local();
+	$local->get((int)$idlocal);
+
+	$temporada = new Temporada();
+	$temporada->get((int)$idtemporada);		
+
+	$page = new PageAdmin();	
+
+	$page->setTpl("turma-temporada-local-professor", [
+		'locais'=>Local::listAll(),
+		'local'=>$local->getValues(),
+		'temporada'=>$temporada->getValues(),
+		'user'=>$user->getValues(),
+		'turmaRelated'=>$user->getTurmaTemporadaLocal(true, $idtemporada, $iduser, $idlocal),
+		'turmaNotRelated'=>$user->getTurmaTemporadaLocal(false, $idtemporada, $iduser, $idlocal),
+		'error'=>User::getError()
+	]);	
+});
+
+$app->get("/professor/turmatemporada/:idtemporada/turma/:idturma/user/:iduser/add", function($idtemporada, $idturma, $iduser) {
+
+	User::verifyLogin();
+
+	$temporada = new Temporada();
+
+	$temporada->get((int)$idtemporada);
+
+	$turma = new Turma();
+
+	$turma->get((int)$idturma);
+
+	$user = new User();
+
+	$user->get((int)$iduser);
+
+	var_dump($iduser." - ".$idturma." - ".$idtemporada);
+	exit;
+
+	$temporada->addTurmaTemporadaUser($idtemporada, $idturma, $iduser);
+
+	header("Location: /professor/turmatemporada/".$iduser."/turma/".$idtemporada."");
+	exit;
 });
 
 

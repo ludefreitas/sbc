@@ -2,6 +2,7 @@
 
 use \Sbc\PageAdmin;
 use \Sbc\Model\User;
+use \Sbc\Model\Temporada;
 
 
 // Rota para listar todos usuários da classe 
@@ -237,23 +238,30 @@ $app->post("/professor/users/:iduser", function($iduser) {
 	exit();
 });
 
+/*
 $app->get("/professor/turmatemporada/:iduser/turma/:idtemporada", function($iduser, $idtemporada) {
 
 	User::verifyLogin();
 
 	$user = new User();
 
+	$temporada = new Temporada();
+
+	$temporada->get((int)$idtemporada);	
+
 	$user->get((int)$iduser);	
 
 	$page = new PageAdmin();	
 
 	$page->setTpl("turma-temporada-professor", [
+		'temporada'=>$temporada->getValues(),
 		'user'=>$user->getValues(),
-		'turmaRelated'=>$user->getTurmaTemporada(true, $idtemporada),
-		'turmaNotRelated'=>$user->getTurmaTemporada(false, $idtemporada),
+		'turmaRelated'=>$user->getTurmaTemporada(true, $idtemporada, $iduser),
+		'turmaNotRelated'=>$user->getTurmaTemporada(false, $idtemporada, $iduser),
 		'error'=>User::getError()
 	]);	
 });
+*/
 
 
 ?>
