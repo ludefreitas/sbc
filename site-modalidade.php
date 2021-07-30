@@ -4,7 +4,7 @@ use \Sbc\Page;
 use \Sbc\Model\Turma;
 use \Sbc\Model\Temporada;
 use \Sbc\Model\Modalidade;
-
+use \Sbc\Model\Cart;
 
 $app->get("/modalidade/:idmodal", function($idmodal) {
 
@@ -13,12 +13,18 @@ $app->get("/modalidade/:idmodal", function($idmodal) {
 	$modalidade->get((int)$idmodal);
 
 	$turma = Turma::listAllTurmaTemporadaModalidade($idmodal);
+
+	if(!isset($turma) || $turma == NULL){
+
+		Cart::setMsgError("Não existe turmas para a modalidade ".$modalidade->getdescmodal()." nesta temporada. Aguarde! ");
+	}	
 	
 	$page = new Page();    
 
 	$page->setTpl("modalidade", [
 		'turma'=>Turma::checkList($turma),
-		'modalidade'=>$modalidade->getValues()
+		'modalidade'=>$modalidade->getValues(),
+		'error'=>Cart::getMsgError()
 	]);
 });
 

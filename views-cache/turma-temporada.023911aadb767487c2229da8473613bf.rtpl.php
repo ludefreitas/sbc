@@ -18,8 +18,17 @@
 <section class="content">
 
     <div class="row">
+         <?php if( $msgError != '' ){ ?>
+
+                <div class="alert alert-danger" style="margin: 0px 10px 0px 10px">
+                    <?php echo htmlspecialchars( $msgError, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+
+                </div>
+                <?php } ?>
+
         <div class="col-md-6">
             <div class="box box-primary">
+               
                 <div class="box-header with-border">
                 <h3 class="box-title">Todas as turmas</h3>
                 </div>
@@ -30,7 +39,7 @@
                         <thead>
                             <tr>
                             <th style="width: 10px">#</th>
-                            <th>Turma</th>
+                            <th>Turmas</th>
                             <th style="width: 240px">&nbsp;</th>
                             </tr>
                         </thead>

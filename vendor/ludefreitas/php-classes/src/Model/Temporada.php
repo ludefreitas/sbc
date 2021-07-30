@@ -5,6 +5,7 @@
 	use \Sbc\DB\Sql;
 	use \Sbc\Model;
 	use \Sbc\Mailer;
+	use DateTime;
 
 	class Temporada extends Model {
 
@@ -59,6 +60,45 @@
 				':idtemporada'=>$idtemporada 
 			]);
 		}
+
+		public static function listAllTurmaTemporadaLocal($idtemporada, $idlocal)
+		{
+			$sql = new Sql();
+
+			return $sql->select("SELECT * 
+				FROM tb_turmatemporada a 
+				INNER JOIN tb_turma i            
+				using(idturma)
+				INNER JOIN tb_users b
+				using(iduser)
+				INNER JOIN tb_atividade c
+				using(idativ)
+				INNER JOIN tb_espaco d
+				using(idespaco)
+				INNER JOIN tb_local e
+				using(idlocal)
+				INNER JOIN tb_turmastatus f
+				using(idturmastatus)
+				INNER JOIN tb_horario g
+				using(idhorario)
+				INNER JOIN tb_fxetaria h
+				using(idfxetaria)	            
+	            INNER JOIN tb_temporada j           
+				using(idtemporada)   
+	            INNER JOIN tb_statustemporada k          
+				using(idstatustemporada)
+				INNER JOIN tb_modalidade l
+				using(idmodal)
+	            INNER JOIN tb_persons m
+				using(idperson)            
+				WHERE a.idtemporada = :idtemporada
+				AND e.idlocal = :idlocal
+				ORDER BY a.numinscritos DESC", [
+				':idtemporada'=>$idtemporada,
+				':idlocal'=>$idlocal
+			]);
+		}
+
 
 		public static function listAllTurmaTemporadaProfessor($idtemporada, $iduser)
 		{
@@ -224,7 +264,7 @@
 			$this->setData($results[0]);
 
 			Temporada::updateFile();
-			Temporada::updateFileAdmin();	
+			Temporada::updateFileAdmin();
 		}
 
 		public function get($idtemporada)
@@ -426,7 +466,39 @@
 					':idtemporada'=>$this->getidtemporada()
 				]);
 			}		
-		}		
+		}
+
+		public function alterarStatusTemporadaParaMatriculasIniciadas($dtTerminscricao, $idtemporada){
+			$hoje = new DateTime();
+			$date = new DateTime($dtTerminscricao);
+			// $intervalo = $hoje->diff($date);
+			if($date == $hoje || $date < $hoje){
+				Temporada::updateStatusTemporadaParaMatriculasIniciadas($idtemporada);
+			}
+		} 
+		public function updateStatusTemporadaParaMatriculasIniciadas($idtemporada){
+			$sql = new Sql();
+			$idstatustemporadaMatriculasIniciadas = StatusTemporada::MATRICULAS_INICIADAS;
+			$sql->query("UPDATE tb_temporada SET idstatustemporada = :idstatustemporadaMatriculasIniciadas  WHERE idtemporada = :idtemporada", [
+				'idstatustemporadaMatriculasIniciadas'=>$idstatustemporadaMatriculasIniciadas,
+				':idtemporada'=>$idtemporada
+			]);
+		}
+		public function alterarStatusTemporadaParaMatriculasEncerradas($dtTermmatricula, $idtemporada){
+			$hoje = new DateTime();
+			$date = new DateTime($dtTermmatricula);
+			if($date == $hoje || $date < $hoje){
+				Temporada::updateStatusTemporadaMatriculasEncerradas($idtemporada);
+			}
+		}	
+		public function updateStatusTemporadaMatriculasEncerradas($idtemporada){
+			$sql = new Sql();
+			$idstatustemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
+			$sql->query("UPDATE tb_temporada SET idstatustemporada = :idstatustemporadaMatriculasEncerradas  WHERE idtemporada = :idtemporada", [
+				'idstatustemporadaMatriculasEncerradas'=>$idstatustemporadaMatriculasEncerradas,
+				':idtemporada'=>$idtemporada
+			]);
+		}
 
 		public function numMaxInscritos($idtemporada){
 
@@ -459,30 +531,52 @@
 			]);
 		}
 
-		public function addProfessor(User $user)
+		public function addTurmaTemporadaUser($idtemporada, $idturma, $iduser)
 		{
 			$sql = new Sql();
 
 			$sql->query("UPDATE tb_turmatemporada SET iduser = :iduser WHERE idturma = :idturma AND idtemporada = :idtemporada", [
-				':idtemporada'=>$this->getidtemporada(),
-				':idturma'=>$this->getidturma(),
-				':iduser'=>$user->getiduser()
+				':idtemporada'=>$idtemporada,
+				':idturma'=>$idturma,
+				':iduser'=>$iduser
 			]);
 		}
 
-		public static function listaProf($idtemporada)
+		public function removeTurmaTemporadaUser($idtemporada, $idturma, $iduser)
+		{
+			$sql = new Sql();
+
+			$sql->query("UPDATE tb_turmatemporada SET iduser = 0 WHERE idturma = :idturma AND idtemporada = :idtemporada AND iduser = :iduser", [
+				':idtemporada'=>$idtemporada,
+				':idturma'=>$idturma,
+				':iduser'=>$iduser
+			]);
+		}
+		
+		public static function seTurmaTemporadaExiste($idtemporada)
 		{
 			$sql = new Sql();
 
 			return $sql->select("
-				SELECT DISTINCT iduser, desperson, apelidoperson, idtemporada
-				FROM tb_turmatemporada a 
-                INNER JOIN tb_users b
-                using (iduser)
-				INNER JOIN tb_persons c
-				using (idperson)
+				SELECT *
+				FROM tb_turmatemporada
 				WHERE idtemporada = :idtemporada", [
 				':idtemporada'=>$idtemporada				
+			]);
+		}
+
+		public static function professorRelacionadoTurmatemporadaExiste($idtemporada, $idturma)
+		{
+			$sql = new Sql();
+
+			return $sql->select("
+				SELECT *
+				FROM tb_turmatemporada
+				WHERE idtemporada = :idtemporada 
+				AND idturma = :idturma
+				AND iduser != 0", [
+				':idtemporada'=>$idtemporada,
+				':idturma'=>$idturma								
 			]);
 		}
 

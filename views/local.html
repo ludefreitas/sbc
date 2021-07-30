@@ -32,9 +32,10 @@
       </div>
     </a>
   </div>   
-
-
   </div>
+
+ 
+
 </div>
 
 
@@ -44,6 +45,7 @@
        <span style="font-size: 20px;">Crec: </span><span style="font-weight: bold">{$local.apelidolocal}</span><hr>
     </div>     
   </div>
+
 </div>      
       {loop="$turma"}
 <a href="/turma/{$value.idturma}/{$value.idtemporada}" style="text-decoration: none">
@@ -92,11 +94,16 @@
 </div> <!-- container 3 -->
   
 </a>
- {else}
+  {/loop}     
+
+  {if="$error != ''"}
+   
 <div class="container" >
   <div class="row">
     <div class="col-md-12 alert alert-info" style="font-size: 20px; text-align-last: center ">
-       <span style="font-size: 20px;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nenhuma turma encontrada para este Centro Esportivo..</span>
+       <span style="font-size: 20px; font-weight: bold;"> 
+       {$error}
+     </span>
     </div>     
   </div>
   <div class="row" style="padding: 10px">
@@ -106,7 +113,8 @@
     </div>  
   </div>
 </div>
+ {/if}
   
-  {/loop}     
+ 
   </div> <!-- final da index -->
 

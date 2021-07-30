@@ -45,6 +45,9 @@ $app->get("/professor/turma", function() {
 
 	}
 
+	//var_dump($page);
+	//exit;
+
 	//$users = User::listAll();
 	// carrega uma pagina das páginas do admin
 	$page = new PageAdmin();
@@ -73,7 +76,7 @@ $app->get("/professor/turma/create", function() {
 
 	$page = new PageAdmin();
 
-	$page->setTpl("turma-create", array(
+	$page->setTpl("turma-create", [
 		//'user'=>$user,
 		'local'=>$local,
 		'espaco'=>$espaco,
@@ -81,13 +84,16 @@ $app->get("/professor/turma/create", function() {
 		'atividade'=>$atividade,
 		'modalidade'=>$modalidade,
 		'turmastatus'=>$turmastatus,
-		'error'=>Turma::getMsgError()
-	));
+		'error'=>Turma::getMsgError(),
+		'createTurmaValues'=>(isset($_SESSION['createTurmaValues'])) ? $_SESSION['createTurmaValues'] : ['descturma'=>'', 'idmodal'=>'', 'idhorario'=>'', 'idativ'=>'', 'idespaco'=>'', 'idturmastatus'=>'', 'vagas'=>'']
+	]);
 });
 
 $app->post("/professor/turma/create", function() {
 
 	User::verifyLogin();
+
+	$_SESSION['createTurmaValues'] = $_POST;
 
 	$turma = new Turma();
 
@@ -136,6 +142,8 @@ $app->post("/professor/turma/create", function() {
 	$turma->setData($_POST);
 
 	$turma->save();
+
+	$_SESSION['createTurmaValues'] = NULL;
 
 	header("Location: /professor/turma");
 	exit();	

@@ -50,7 +50,6 @@
                   <tr>
                     <th style="width: 10px">#</th>
                     <th>Nome</th>
-                    <th>Apelido</th>
                     
                     <th></th>
                      <th></th>
@@ -62,16 +61,15 @@
                   <tr>
                     <td>{$value.iduser}</td>
                     <td>{$value.desperson}</td>
-                    <td>{$value.apelidoperson}</td>                   
                     
                     <td>                     
 
-                     <a href="/professor/turma-temporada/{$value.idtemporada}/{$value.iduser}" class="btn btn-success btn-xs"><i class=""></i>Turmas do professor(a) <br>{$value.desperson}<br> para Temporada <br> {$temporada.desctemporada}</a>
+                     <a href="/professor/turma-temporada/{$temporada.idtemporada}/user/{$value.iduser}" class="btn btn-success btn-xs"><i class=""></i>Turmas do professor(a) <br>{$value.apelidoperson}</a>
                     </td>
 
                     <td>
                       
-                      <a href="/professor/turmatemporada/{$value.iduser}/turma/{$value.idtemporada}" class="btn btn-info btn-xs"><i class=""></i> Inserir ou remover <br> turma do professor(a) <br>{$value.desperson}<br> {$temporada.desctemporada}</a>                      
+                      <a href="/professor/turmatemporada/{$value.iduser}/turma/{$temporada.idtemporada}" class="btn btn-info btn-xs"><i class=""></i> Inserir ou remover <br> turma do professor(a)</a>                      
                     </td>
                     
                   </tr>

@@ -501,7 +501,7 @@ class Turma extends Model {
 
 	}
 
-	public static function getPage($page = 1, $itemsPerPage = 5)
+	public static function getPage($page = 1, $itemsPerPage = 6)
 	{
 
 		$start = ($page - 1) * $itemsPerPage;
@@ -531,7 +531,7 @@ class Turma extends Model {
 			USING(idfxetaria) 
             INNER JOIN tb_modalidade 
             USING(idmodal)
-			ORDER BY h.horainicio, h.diasemana
+			ORDER BY a.descturma, h.horainicio, h.diasemana
 			LIMIT $start, $itemsPerPage;
 		");
 
@@ -575,13 +575,13 @@ class Turma extends Model {
 			USING(idfxetaria) 
             INNER JOIN tb_modalidade j
             USING(idmodal)
-      		WHERE a.descturma LIKE :search 
-			OR b.deslogin LIKE :search
-			OR c.desperson LIKE :search
-			OR c.apelidoperson LIKE :search
+      		WHERE a.descturma LIKE :search
+			-- OR b.deslogin LIKE :search
+			-- OR c.desperson LIKE :search
+			-- OR c.apelidoperson LIKE :search
 			OR d.descativ LIKE :search
 			OR e.nomeespaco LIKE :search
-			OR f.apelidolocal LIKE :search
+			OR f.apelidolocal LIKE :search 
 			OR g.desstatus LIKE :search
 			OR h.horainicio LIKE :search
 			OR h.periodo LIKE :search

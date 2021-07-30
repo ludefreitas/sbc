@@ -14,11 +14,40 @@ use \Sbc\Model\Endereco;
 $app->get('/', function() {
 
 	$turma = Turma::listAllTurmaTemporada();
+	$temporada = new Temporada();
+
+	if(!isset($turma) || $turma == NULL){
+
+		Cart::setMsgError("Não existe turmas para esta temporada. Aguarde! ");
+
+	}else{
+
+		$idtemporada = $turma[0]['idtemporada']; 
+
+		$temporada->get((int)$idtemporada);
+
+		$dtTerminscricao = $temporada->getdtterminscricao();
+		$dtTermmatricula = $temporada->getdttermmatricula();
+
+		if($temporada->getidstatustemporada() == 4){
+
+			Temporada::alterarStatusTemporadaParaMatriculasIniciadas($dtTerminscricao, $idtemporada);
+
+		}	
+
+		if($temporada->getidstatustemporada() == 6){
+
+			Temporada::alterarStatusTemporadaParaMatriculasEncerradas($dtTermmatricula, $idtemporada);
+
+		}				
+
+	}	
 		
-	$page = new Page();    
+	$page = new Page();  	
 
 	$page->setTpl("index", [
 		'turma'=>Turma::checkList($turma),
+		'error'=>Cart::getMsgError()
 	]);
 });
 

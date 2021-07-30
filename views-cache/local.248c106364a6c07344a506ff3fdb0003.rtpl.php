@@ -32,9 +32,10 @@
       </div>
     </a>
   </div>   
-
-
   </div>
+
+ 
+
 </div>
 
 
@@ -44,6 +45,7 @@
        <span style="font-size: 20px;">Crec: </span><span style="font-weight: bold"><?php echo htmlspecialchars( $local["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span><hr>
     </div>     
   </div>
+
 </div>      
       <?php $counter1=-1;  if( isset($turma) && ( is_array($turma) || $turma instanceof Traversable ) && sizeof($turma) ) foreach( $turma as $key1 => $value1 ){ $counter1++; ?>
 <a href="/turma/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="text-decoration: none">
@@ -92,11 +94,16 @@
 </div> <!-- container 3 -->
   
 </a>
- <?php }else{ ?>
+  <?php } ?>     
+
+  <?php if( $error != '' ){ ?>
+   
 <div class="container" >
   <div class="row">
     <div class="col-md-12 alert alert-info" style="font-size: 20px; text-align-last: center ">
-       <span style="font-size: 20px;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nenhuma turma encontrada para este Centro Esportivo..</span>
+       <span style="font-size: 20px; font-weight: bold;"> 
+       <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+     </span>
     </div>     
   </div>
   <div class="row" style="padding: 10px">
@@ -106,7 +113,8 @@
     </div>  
   </div>
 </div>
+ <?php } ?>
   
-  <?php } ?>     
+ 
   </div> <!-- final da index -->
 

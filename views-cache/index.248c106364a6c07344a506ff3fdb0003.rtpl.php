@@ -30,11 +30,18 @@
           Todas turmas
       </div>
     </a>
-  </div>   
+  </div>
+  </div>
 
+  <?php if( $error != '' ){ ?>
+    <div class="alert alert-danger">
+      <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+    </div>
+  <?php } ?>
 
   </div>
-</div>
+
+
 
 <?php $counter1=-1;  if( isset($turma) && ( is_array($turma) || $turma instanceof Traversable ) && sizeof($turma) ) foreach( $turma as $key1 => $value1 ){ $counter1++; ?>
 
@@ -46,6 +53,8 @@
         </div>
         --> 
         <div class="col-md-12"style="text-align-last: left; line-height: 20px;  font-size: 14px; font-style: normal; margin: 5px 0px 20px 0px">
+
+          
 
           <a href="/turma/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="text-decoration: none">         
           <h5 style="color: #000000"> 
@@ -59,19 +68,20 @@
               Idade: <?php echo htmlspecialchars( $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> a <?php echo htmlspecialchars( $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> anos <br>
               <?php if( $value1["idstatustemporada"] == 4 ){ ?> 
                <span style="color: red;">
-                Inscrições iniciadas
-              </span> <br>            
-              <?php } ?>
+                <?php echo htmlspecialchars( $value1["descstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+              </span> <br> 
                <span style="font-weight: bold;">
-              <?php echo htmlspecialchars( $value1["numinscritos"], ENT_COMPAT, 'UTF-8', FALSE ); ?> inscritos para <?php echo htmlspecialchars( $value1["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas 
+              <?php echo htmlspecialchars( $value1["numinscritos"], ENT_COMPAT, 'UTF-8', FALSE ); ?> inscritos para <?php echo htmlspecialchars( $value1["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas                          
+              <?php } ?>
               
 
               <?php if( $value1["numinscritos"] > $value1["vagas"] && $value1["idstatustemporada"] == 4 ){ ?> <br>
+              </span> 
                <span style="color: orange;">
                 Para esta turma terá sorteio de vagas
               </span>              
               <?php } ?>
-            </span> 
+            
           </h5>
         </a>
           
@@ -81,17 +91,7 @@
       </div> <!-- row 4 -->
     </div> <!-- container 3 -->
 
-<?php }else{ ?>
-<div class="container"> <!-- container 3 -->
-    <div class="row"> <!-- row 4 -->                        
-        <div class="col-md-12"style="text-align-last: left; background-color: white; margin: 5px 0px 5px 0px; padding-right: 0px">
-                <h2>Temporada  <br> não iniciada ): </h2>                               
-                <h1>LoL Aguarde  </h1>
-                <h1>Em breve \o/ </h1>                              
-                <h1>Novidades :) </h1>
-          </div> 
-    </div> <!-- row 4 -->
-  </div> <!-- container 3 -->                             
+
   <?php } ?>
   </div> <!-- final da index -->
 

@@ -39,11 +39,11 @@
                             {$value.diasemana} - {$value.horainicio} - {$value.horatermino}</td>
                             {if="$value.iduser == 0"}
                             <td>
-                                <a href="/professor/turmatemporada/{$value.idtemporada}/turma/{$value.idturma}/user/{$user.iduser}/add" class="btn btn-success btn-xs pull-right"><i class="fa fa-arrow-right"></i> Adicionar</a>
+                                <a href="/professor/turmatemporada/{$value.idtemporada}/turma/{$value.idturma}/user/{$user.iduser}/{$local.idlocal}/addlocal" class="btn btn-success btn-xs pull-right"><i class="fa fa-arrow-right"></i> Adicionar</a>
                             </td>
                             {else}
                             <td>
-                                <a disabled="disabled" href="/professor/turmatemporada/{$value.idtemporada}/turma/{$value.idturma}/user/{$user.iduser}/add" class="btn btn-success btn-xs pull-right"><i class="fa fa-arrow-right"></i> Adicionar</a>
+                                <a disabled="disabled" href="/professor/turmatemporada/{$value.idtemporada}/turma/{$value.idturma}/user/{$user.iduser}/{$local.idlocal}/addlocal" class="btn btn-success btn-xs pull-right"><i class="fa fa-arrow-right"></i> Adicionar</a>
                             </td>
                             {/if}
                             </tr>
@@ -76,11 +76,11 @@
                         <tbody>
                             {loop="$turmaRelated"}
                             <tr>
-                            <td>{$value.idturma}
+                            <td>{$value.idturma} - 
                             {$value.descturma} - {$value.apelidolocal} - {$value.nomeativ} - 
                              {$value.diasemana} - {$value.horainicio} - {$value.horatermino} </td>                      
                             <td>
-                                <a href="/professor/user/remove" class="btn btn-danger btn-xs pull-right"><i class="fa fa-arrow-left"></i> Remover</a>
+                                <a href="/professor/turmatemporada/{$value.idtemporada}/turma/{$value.idturma}/user/{$user.iduser}/{$local.idlocal}/removelocal" class="btn btn-danger btn-xs pull-right"><i class="fa fa-arrow-left"></i> Remover</a>
                             </td>
                             </tr>
                             {/loop}

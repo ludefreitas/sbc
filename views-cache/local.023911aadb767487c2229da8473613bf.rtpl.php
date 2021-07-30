@@ -6,7 +6,7 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active"><a href="/professor/local">Crecs</a></li>
+    <li><a href="/professor/local/create">Cadastrar Crec</a></li>
   </ol>
 </section>
 
@@ -25,40 +25,42 @@
         <?php } ?>
 
             
-            <div class="box-header">
-              <a href="/professor/local/create" class="btn btn-success">Cadastrar Crec</a>
+            
+            <?php $counter1=-1;  if( isset($local) && ( is_array($local) || $local instanceof Traversable ) && sizeof($local) ) foreach( $local as $key1 => $value1 ){ $counter1++; ?>
+
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              <div class="row">
+              <div class="col-md-4" >
+                <h5 style="font-weight: bold; text-align: left;">
+                  <?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <br> <?php echo htmlspecialchars( $value1["nomelocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+
+                </h5>
+              </div>
+              <div class="col-md-4" >
+                <h5 style="font-weight: bold; text-align: left;">
+                  <?php echo htmlspecialchars( $value1["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["complemento"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["bairro"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - Cep: <?php echo htmlspecialchars( $value1["cep"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["cidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["estado"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+
+                </h5>
+              </div>
+              <div class="col-md-2" >
+                <h5 style="font-weight: bold; text-align: left;">
+                  <?php echo htmlspecialchars( $value1["telefone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+
+                </h5>
+              </div>
+              <div class="col-md-2" >
+                <h6 style="font-weight: bold; text-align: center;">
+                  <a href="/professor/local/<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
+                  <a href="/professor/local/<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir o Crec <?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
+                </h6>                
+              </div>
             </div>
 
-            <div class="box-body no-padding">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Apelido</th>
-                    <th>Nome do Crec</th>
-                    <th>Endereço</th>
-                    <th>Telefone</th>
-                    <th style="width: 240px">&nbsp;</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php $counter1=-1;  if( isset($local) && ( is_array($local) || $local instanceof Traversable ) && sizeof($local) ) foreach( $local as $key1 => $value1 ){ $counter1++; ?>
-
-                  <tr>
-                    <td><?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                    <td><?php echo htmlspecialchars( $value1["nomelocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                    <td><?php echo htmlspecialchars( $value1["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["complemento"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["bairro"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - Cep: <?php echo htmlspecialchars( $value1["cep"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["cidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["estado"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                    <td><?php echo htmlspecialchars( $value1["telefone"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                    <td>
-                      <!--<a href="/professor/local/<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/espaco" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> Espaços</a> -->
-                      <a href="/professor/local/<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
-                      <a href="/professor/local/<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir o Crec <?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
-                    </td>
-                  </tr>
-                  <?php } ?>
-
-                </tbody>
-              </table>
+           
             </div>
+            <?php } ?>
+
+            
             <div class="box-footer clearfix">
               <ul class="pagination pagination-sm no-margin pull-right">
                 <?php $counter1=-1;  if( isset($pages) && ( is_array($pages) || $pages instanceof Traversable ) && sizeof($pages) ) foreach( $pages as $key1 => $value1 ){ $counter1++; ?>

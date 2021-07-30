@@ -8,6 +8,7 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="/professor/atividade">Atividades</a></li>
   </ol>
 </section>
 

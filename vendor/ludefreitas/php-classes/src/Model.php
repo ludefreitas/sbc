@@ -2,6 +2,9 @@
 
 namespace Sbc;
 
+date_default_timezone_set('America/Sao_Paulo');
+
+
 class Model {
 
 	private $values = [];

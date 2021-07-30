@@ -237,7 +237,7 @@ $app->get("/professor/insc/pessoa/:idepess", function($idpess){
 
 });
 
-$app->get("/professor/insc-turma-temporada/:idturma/:idtemporada/:iduser", function($idturma, $idtemporada, $iduser) {
+$app->get("/professor/insc-turma-temporada/:idturma/:idtemporada/user/:iduser", function($idturma, $idtemporada, $iduser) {
 
 	User::verifyLogin();
 

@@ -1,48 +1,48 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?><li class="treeview">
-								   		<a href="/professor/turma-temporada/63">
+								   		<a href="/professor/turma-temporada/71">
 								   			<i class="fa fa-link"></i> 
 								   			Temporada - 2017
 								   		</a>
 								   		<ul class="treeview-menu">
 									   		<li>
-									   			<a href="/professor/turma-temporada/63">
+									   			<a href="/professor/turma-temporada/71">
 									   				<i class="fa fa-link"></i>
 									   				Turmas Temporada 2017
 									   			</a>
 									   		</li>
 									   		<li>
-									   			<a href="/professor/professor-temporada/63">
+									   			<a href="/professor/professor-temporada/71">
 									   				<i class="fa fa-link"></i>
 									   				Profs Temporada 2017
 									   			</a>
 									   		</li>
 									   		<li>
-									   			<a href="/professor/sorteio/63">
+									   			<a href="/professor/sorteio/71">
 									   				<i class="fa fa-link"></i>
 									   				Sorteio 2017
 									   			</a>
 									   		</li>
 										</ul>
 									</li><li class="treeview">
-								   		<a href="/professor/turma-temporada/65">
+								   		<a href="/professor/turma-temporada/72">
 								   			<i class="fa fa-link"></i> 
 								   			Temporada - 2018
 								   		</a>
 								   		<ul class="treeview-menu">
 									   		<li>
-									   			<a href="/professor/turma-temporada/65">
+									   			<a href="/professor/turma-temporada/72">
 									   				<i class="fa fa-link"></i>
 									   				Turmas Temporada 2018
 									   			</a>
 									   		</li>
 									   		<li>
-									   			<a href="/professor/professor-temporada/65">
+									   			<a href="/professor/professor-temporada/72">
 									   				<i class="fa fa-link"></i>
 									   				Profs Temporada 2018
 									   			</a>
 									   		</li>
 									   		<li>
-									   			<a href="/professor/sorteio/65">
+									   			<a href="/professor/sorteio/72">
 									   				<i class="fa fa-link"></i>
 									   				Sorteio 2018
 									   			</a>

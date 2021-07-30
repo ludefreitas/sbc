@@ -279,7 +279,7 @@ desired effect
           </a>
           <ul class="treeview-menu">
              <li><a href="/professor/temporada"><i class="fa fa-link"></i>Todas Temporadas</a></li>          
-            <?php require $this->checkTemplate("prof-temporada-menu");?>
+            <?php require $this->checkTemplate("professor-temporada-menu");?>
 
           </ul>
         </li> 

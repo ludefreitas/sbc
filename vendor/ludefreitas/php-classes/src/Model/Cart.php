@@ -202,8 +202,8 @@ class Cart extends Model {
 			INNER JOIN tb_fxetaria f ON f.idfxetaria = e.idfxetaria
 			INNER JOIN tb_horario g ON g.idhorario = c.idhorario
 			INNER JOIN tb_local h ON h.idlocal = d.idlocal
-			INNER JOIN tb_users i ON i.iduser = c.iduser
-			INNER JOIN tb_persons j ON j.idperson = i.idperson
+			-- INNER JOIN tb_users i ON i.iduser = c.iduser
+			-- INNER JOIN tb_persons j ON j.idperson = i.idperson
 			INNER JOIN tb_temporada k ON k.idtemporada = a.idtemporada
             INNER JOIN tb_statustemporada l ON l.idstatustemporada = k.idstatustemporada
             WHERE b.idcart = :idcart AND b.dtremoved IS NULL 

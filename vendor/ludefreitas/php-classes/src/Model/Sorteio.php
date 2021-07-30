@@ -72,23 +72,22 @@ class Sorteio extends Model {
 
 		}
 
-		public static function getError()
-		{
+	public static function getError()
+	{
 
-			$msg = (isset($_SESSION[Sorteio::ERROR]) && $_SESSION[Sorteio::ERROR]) ? $_SESSION[Sorteio::ERROR] : '';
+		$msg = (isset($_SESSION[Sorteio::ERROR]) && $_SESSION[Sorteio::ERROR]) ? $_SESSION[Sorteio::ERROR] : '';
 
-			Sorteio::clearError();
+		Sorteio::clearError();
+		return $msg;
 
-			return $msg;
+	}
 
-		}
+	public static function clearError()
+	{
 
-		public static function clearError()
-		{
+		$_SESSION[Sorteio::ERROR] = NULL;
 
-			$_SESSION[Sorteio::ERROR] = NULL;
-
-		}
+	}
 
 	/*
 

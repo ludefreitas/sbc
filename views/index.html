@@ -30,11 +30,18 @@
           Todas turmas
       </div>
     </a>
-  </div>   
+  </div>
+  </div>
 
+  {if="$error != ''"}
+    <div class="alert alert-danger">
+      {$error}
+    </div>
+  {/if}
 
   </div>
-</div>
+
+
 
 {loop="$turma"}
 
@@ -46,6 +53,8 @@
         </div>
         --> 
         <div class="col-md-12"style="text-align-last: left; line-height: 20px;  font-size: 14px; font-style: normal; margin: 5px 0px 20px 0px">
+
+          
 
           <a href="/turma/{$value.idturma}/{$value.idtemporada}" style="text-decoration: none">         
           <h5 style="color: #000000"> 
@@ -59,19 +68,20 @@
               Idade: {$value.initidade} a {$value.fimidade} anos <br>
               {if="$value.idstatustemporada == 4"} 
                <span style="color: red;">
-                Inscrições iniciadas
-              </span> <br>            
-              {/if}
+                {$value.descstatustemporada}
+              </span> <br> 
                <span style="font-weight: bold;">
-              {$value.numinscritos} inscritos para {$value.vagas} vagas 
+              {$value.numinscritos} inscritos para {$value.vagas} vagas                          
+              {/if}
               
 
               {if="$value.numinscritos > $value.vagas && $value.idstatustemporada == 4"} <br>
+              </span> 
                <span style="color: orange;">
                 Para esta turma terá sorteio de vagas
               </span>              
               {/if}
-            </span> 
+            
           </h5>
         </a>
           
@@ -81,17 +91,7 @@
       </div> <!-- row 4 -->
     </div> <!-- container 3 -->
 
-{else}
-<div class="container"> <!-- container 3 -->
-    <div class="row"> <!-- row 4 -->                        
-        <div class="col-md-12"style="text-align-last: left; background-color: white; margin: 5px 0px 5px 0px; padding-right: 0px">
-                <h2>Temporada  <br> não iniciada ): </h2>                               
-                <h1>LoL Aguarde  </h1>
-                <h1>Em breve \o/ </h1>                              
-                <h1>Novidades :) </h1>
-          </div> 
-    </div> <!-- row 4 -->
-  </div> <!-- container 3 -->                             
+
   {/loop}
   </div> <!-- final da index -->
 

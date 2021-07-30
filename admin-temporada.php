@@ -50,16 +50,16 @@ $app->get("/professor/professor-temporada/:idtemporada", function($idtemporada) 
 	$temporada->get((int)$idtemporada);
 
 
-	$proftemporada = Temporada::listaProf($idtemporada);
+	$setturmatemporadaexiste = Temporada::seTurmaTemporadaExiste($idtemporada);
 
-	if(!$proftemporada){
-		Temporada::setError("Não há professores para esta turma, você precisa relacionar turmas a esta temporada!");
+	if(!$setturmatemporadaexiste){
+		Temporada::setError("Não há professores para esta turma, você precisa relacionar pelo menos uma turma a esta temporada!");
 	}
 
 	$page = new PageAdmin();
 
 	$page->setTpl("prof-temporada", array(
-		'prof'=>$proftemporada,
+		'prof'=>User::listAllProf(),
 		'temporada'=>$temporada->getValues(),
 		'error'=>Temporada::getError()
 	));
@@ -141,6 +141,8 @@ $app->post("/professor/temporada/create", function() {
 	}					
 
 	$temporada->save();
+
+	$_SESSION['createTemporadaValues'] = NULL;
 
 	header("Location: /professor/temporada");
 	exit();	
@@ -281,14 +283,17 @@ $app->get("/professor/turma-temporada/:idtemporada", function($idtemporada) {
 
 	$temporada = new Temporada();
 	$turma = new Turma();
+	$local = new Local();
 
 	$temporada->get((int)$idtemporada);
 
-	//var_dump($temporada->getTurma(true)); exit();
+	$local = $local->setapelidolocal('');
 
 	$page = new PageAdmin();	
 
 	$page->setTpl("turmas-por-temporada", [
+		'local'=>$local,
+		'locais'=>Local::listAll(),
 		'temporada'=>$temporada->getValues(),
 		//'turmaRelated'=>$temporada->getTurma(true)
 		'turmas'=>Temporada::listAllTurmatemporada($idtemporada),
@@ -297,7 +302,38 @@ $app->get("/professor/turma-temporada/:idtemporada", function($idtemporada) {
 	]);	
 });
 
-$app->get("/professor/turma-temporada/:idtemporada/:iduser", function($idtemporada, $iduser) {
+$app->get("/professor/turma-temporada/:idtemporada/local/:idlocal", function($idtemporada, $idlocal) {
+
+	User::verifyLogin();
+
+	$temporada = new Temporada();
+	$turma = new Turma();
+	$local = new Local();
+
+
+	$temporada->get((int)$idtemporada);
+
+
+
+	$local->get((int)$idlocal);
+
+	//var_dump($local);
+	//exit();
+
+	$page = new PageAdmin();	
+
+	$page->setTpl("turmas-por-temporada", [
+		'local'=>$local->getValues(),
+		'locais'=>Local::listAll(),
+		'temporada'=>$temporada->getValues(),
+		//'turmaRelated'=>$temporada->getTurma(true)
+		'turmas'=>Temporada::listAllTurmatemporadaLocal($idtemporada, $idlocal),
+		//'turmaNotRelated'=>$temporada->getTurma(false)
+		'error'=>User::getError()
+	]);	
+});
+
+$app->get("/professor/turma-temporada/:idtemporada/user/:iduser", function($idtemporada, $iduser) {
 
 	User::verifyLogin();
 
@@ -337,7 +373,8 @@ $app->get("/professor/temporada/:idtemporada/turma", function($idtemporada) {
 		'temporada'=>$temporada->getValues(),
 		'turmaRelated'=>$temporada->getTurma(true),
 		'turmaNotRelated'=>$temporada->getTurma(false),
-		'error'=>User::getError()
+		'error'=>User::getError(),
+		'msgError'=>Temporada::getError()
 	]);	
 });
 
@@ -370,6 +407,16 @@ $app->get("/professor/temporada/:idtemporada/turma/:idturma/remove", function($i
 	$turma = new Turma();
 
 	$turma->get((int)$idturma);
+
+	$temprofrelacionado = Temporada::professorRelacionadoTurmatemporadaExiste($idtemporada, $idturma);
+
+	if($temprofrelacionado){
+
+		Temporada::setError("Você precisa, antes, remover professor desta turma para a temporadada ".$temporada->getdesctemporada()."! ");
+		header("Location: /professor/temporada/".$idtemporada."/turma");
+		exit;
+
+	}
 
 	$temporada->removeTurma($turma);
 
@@ -451,15 +498,88 @@ $app->get("/professor/turmatemporada/:idtemporada/turma/:idturma/user/:iduser/ad
 	$user = new User();
 
 	$user->get((int)$iduser);
-
+	/*
 	var_dump($iduser." - ".$idturma." - ".$idtemporada);
 	exit;
+	*/
 
 	$temporada->addTurmaTemporadaUser($idtemporada, $idturma, $iduser);
 
 	header("Location: /professor/turmatemporada/".$iduser."/turma/".$idtemporada."");
 	exit;
 });
+
+$app->get("/professor/turmatemporada/:idtemporada/turma/:idturma/user/:iduser/remove", function($idtemporada, $idturma, $iduser) {
+
+	User::verifyLogin();
+
+	$temporada = new Temporada();
+
+	$temporada->get((int)$idtemporada);
+
+	$turma = new Turma();
+
+	$turma->get((int)$idturma);
+
+	$user = new User();
+
+	$user->get((int)$iduser);
+	/*
+	var_dump($iduser." - ".$idturma." - ".$idtemporada);
+	exit;
+	*/
+
+	$temporada->removeTurmaTemporadaUser($idtemporada, $idturma, $iduser);
+
+	header("Location: /professor/turmatemporada/".$iduser."/turma/".$idtemporada."");
+	exit;
+});
+
+$app->get("/professor/turmatemporada/:idtemporada/turma/:idturma/user/:iduser/:idlocal/addlocal", function($idtemporada, $idturma, $iduser, $idlocal) {
+
+	User::verifyLogin();
+
+	$temporada = new Temporada();
+
+	$temporada->get((int)$idtemporada);
+
+	$turma = new Turma();
+
+	$turma->get((int)$idturma);
+
+	$user = new User();
+
+	$user->get((int)$iduser);
+
+	$temporada->addTurmaTemporadaUser($idtemporada, $idturma, $iduser);
+
+	header("Location: /professor/turmatemporada/".$iduser."/turma/".$idtemporada."/".$idlocal."");
+	exit;
+});
+
+$app->get("/professor/turmatemporada/:idtemporada/turma/:idturma/user/:iduser/:idlocal/removelocal", function($idtemporada, $idturma, $iduser, $idlocal) {
+
+	User::verifyLogin();
+
+	$temporada = new Temporada();
+
+	$temporada->get((int)$idtemporada);
+
+	$turma = new Turma();
+
+	$turma->get((int)$idturma);
+
+	$user = new User();
+
+	$user->get((int)$iduser);
+	
+	$temporada->removeTurmaTemporadaUser($idtemporada, $idturma, $iduser);
+
+	header("Location: /professor/turmatemporada/".$iduser."/turma/".$idtemporada."/".$idlocal."");
+	exit;
+});
+
+
 
 
 ?>

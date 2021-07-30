@@ -48,6 +48,21 @@
                 </thead>
                 <tbody>                  
                   {loop="$turmas"}
+
+                  <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+
+                    <div class="row">
+
+                      <div class="col-md-2" >
+                        <h5 style="font-weight: bold; text-align: left;">
+                         {$value.idturma}
+                        </h5>
+                      </div>
+                      
+                    </div>
+                      
+                  </div>
+
                   <tr>
 
                   
@@ -60,7 +75,9 @@
                     <td> {$value.diasemana} </br> {$value.horainicio} ás {$value.horatermino}  </td>
                     <td>{$value.desstatus}</td>
                     <td>{$value.vagas}</td>
-                    <td><a href="/professor/insc-turma-temporada/{$value.idturma}/{$value.idtemporada}/{$value.iduser}">{$value.numinscritos}</a></td>
+                    <td><a href="/professor/insc-turma-temporada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}">
+                   <!-- <td><a href="/professor/turma-temporada/{$value.idturma}/{$value.idtemporada}/{$value.iduser}">-->
+                    {$value.numinscritos}</a></td>
                   
                    
                   </tr>

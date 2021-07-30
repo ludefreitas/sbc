@@ -31,9 +31,8 @@
         </div>
       </a>
     </div>   
-
-
     </div>
+
   </div>
 
 
@@ -62,7 +61,7 @@
                 <?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?> das <?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - 
                 Professor(a): <?php echo htmlspecialchars( $value1["apelidoperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <br>
                 Turma <?php echo htmlspecialchars( $value1["desstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - Temporada: <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
-                Idade: <?php echo htmlspecialchars( $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> a <?php echo htmlspecialchars( $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <br>
+                Idade: <?php echo htmlspecialchars( $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> a <?php echo htmlspecialchars( $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> anos <br>
                  <?php if( $value1["idstatustemporada"] == 4 ){ ?> 
                <span style="color: red;">
                 Inscrições iniciadas
@@ -87,22 +86,25 @@
       </div>
     </div> <!-- row 4 -->
   </div> <!-- container 3 -->
-  <?php }else{ ?>
-  <div class="container" >
-    <div class="row">
-      <div class="col-md-12 alert-danger" style="font-size: 20px; text-align-last: center ">
-         <span style="font-size: 20px;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nenhuma turma encontrada para esta modalidade.</span>
-      </div>     
-    </div>
-    <div class="row" style="padding: 10px">
-      <div class="col-md-12" style="font-size: 20px; text-align-last: center ">
-         <a class="btn btn-success" href="/" >Encontre uma atividade aqui!</a>
-      </div>     
-    </div>
+  <?php } ?>
+  <?php if( $error != '' ){ ?>
+   
+<div class="container" >
+  <div class="row">
+    <div class="col-md-12 alert alert-info" style="font-size: 20px; text-align-last: center ">
+       <span style="font-size: 20px; font-weight: bold;"> 
+       <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+     </span>
+    </div>     
   </div>
-
-
-  <?php } ?>    
+  <div class="row" style="padding: 10px">
+    <div class="col-md-12 alert" style="text-align-last: center; background-color: #15a03f; border: solid 5px; border-color: white; border-radius: 25px;  padding-left: 0px;">
+       <a class="btn" href="/" style="color: white; font-weight: bold; ">Encontre uma atividade clicando aqui!
+       </a>
+    </div>  
+  </div>
+</div>
+ <?php } ?>
    <div class="box-footer clearfix">
                 <ul class="pagination pagination-sm no-margin pull-right">
                   <?php $counter1=-1;  if( isset($pages) && ( is_array($pages) || $pages instanceof Traversable ) && sizeof($pages) ) foreach( $pages as $key1 => $value1 ){ $counter1++; ?>
