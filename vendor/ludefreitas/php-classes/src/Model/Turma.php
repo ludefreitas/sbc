@@ -44,8 +44,9 @@ class Turma extends Model {
 	public static function listAllTurmaTemporada()
 
 	{
-		$idStatusTemporadaInscricaoIniciada = 4;
-		$idStatusTemporadaMatriculaIniciada = 6;
+		$idStatusTemporadaTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
+		$idStatusTemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
+		$idStatusTemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
 
 		$sql = new Sql();
 
@@ -69,27 +70,28 @@ class Turma extends Model {
 			using(idhorario)
 			INNER JOIN tb_fxetaria i
 			using(idfxetaria)
-            -- INNER JOIN tb_turma j            
-			-- using(idturma)
             INNER JOIN tb_temporada k          
 			using(idtemporada)   
             INNER JOIN tb_statustemporada l          
 			using(idstatustemporada)
 			INNER JOIN tb_modalidade m         
 			using(idmodal)
-      		WHERE k.idstatustemporada = :idStatusTemporadaInscricaoIniciada OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
+      		WHERE k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
+      		OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
+      		OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada
 			-- ORDER BY a.descturma
 			ORDER BY RAND()", [
 				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
-				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada
-
+				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
+				':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada
 			]);
 	}
 
 	public static function listAllTurmaTemporadaModalidade($idmodal)
 	{
-		$idStatusTemporadaInscricaoIniciada = 4;
-		$idStatusTemporadaMatriculaIniciada = 6;
+		$idStatusTemporadaTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
+		$idStatusTemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
+		$idStatusTemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
 
 		$sql = new Sql();
 
@@ -112,29 +114,30 @@ class Turma extends Model {
 			INNER JOIN tb_horario h
 			using(idhorario)
 			INNER JOIN tb_fxetaria i
-			using(idfxetaria)            
+			using(idfxetaria)
             INNER JOIN tb_temporada k          
 			using(idtemporada)   
             INNER JOIN tb_statustemporada l          
 			using(idstatustemporada)
 			INNER JOIN tb_modalidade m         
 			using(idmodal)
-      		WHERE j.idmodal = :idmodal 
-      		AND k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
-      		OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada       		
-			-- ORDER BY a.descturma
-			ORDER BY RAND()", [
+      		WHERE j.idmodal = :idmodal
+            AND k.idstatustemporada = :idStatusTemporadaTemporadaIniciada OR k.idstatustemporada = :idStatusTemporadaInscricaoIniciada OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
+      		ORDER BY RAND()", [
+      			':idmodal'=>$idmodal,
+				':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada,
 				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
-				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
-				':idmodal'=>$idmodal
+				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada
+				
 			]);
 	}
 
 	public static function listAllTurmaTemporadaLocal($idlocal)
 
 	{
-		$idStatusTemporadaInscricaoIniciada = 4;
-		$idStatusTemporadaMatriculaIniciada = 6;
+		$idStatusTemporadaTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
+		$idStatusTemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
+		$idStatusTemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
 
 		$sql = new Sql();
 
@@ -165,13 +168,12 @@ class Turma extends Model {
 			INNER JOIN tb_modalidade m         
 			using(idmodal)
       		WHERE e.idlocal = :idlocal
-      		AND k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
-      		OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada 
-			-- ORDER BY a.descturma
-			ORDER BY RAND()", [
+            AND k.idstatustemporada = :idStatusTemporadaTemporadaIniciada OR k.idstatustemporada = :idStatusTemporadaInscricaoIniciada OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
+      		ORDER BY RAND()", [
+      			':idlocal'=>$idlocal,
+				':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada,
 				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
-				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
-				':idlocal'=>$idlocal
+				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada
 			]);
 	}
 

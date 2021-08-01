@@ -8,8 +8,8 @@ use \Sbc\Mailer;
 
 class StatusTemporada extends Model {
 
-	const TEMPORADA_NAO_INICIADAS = 1;
-	const TEMPORADA_INICIADAS = 2;
+	const TEMPORADA_NAO_INICIADA = 1;
+	const TEMPORADA_INICIADA = 2;
 	const INSCRICOES_ENCERRADAS = 3;
 	const INSCRICOES_INICIADAS = 4;
 	const MATRICULAS_ENCERRADAS = 5;

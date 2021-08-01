@@ -26,8 +26,15 @@ $app->get('/', function() {
 
 		$temporada->get((int)$idtemporada);
 
+		$dtInicinscricao = $temporada->getdtinicinscricao();
 		$dtTerminscricao = $temporada->getdtterminscricao();
 		$dtTermmatricula = $temporada->getdttermmatricula();
+
+		if($temporada->getidstatustemporada() == 2){
+
+			//Temporada::alterarStatusTemporadaParaIncricoesIniciadas($dtInicinscricao, $idtemporada);
+
+		}	
 
 		if($temporada->getidstatustemporada() == 4){
 

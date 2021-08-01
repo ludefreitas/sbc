@@ -166,6 +166,32 @@
 			}
 		}
 
+		public function temporadaStatusIniciadaExiste(){
+
+			$idstatustemporadaMatriculasIniciadas = StatusTemporada::MATRICULAS_INICIADAS;
+			$idstatustemporadaInscricoesIniciadas = StatusTemporada::INSCRICOES_INICIADAS;
+			$idstatustemporadaTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
+			$sql = new Sql();
+			$results = $sql->select("
+				SELECT idstatustemporada 
+				FROM tb_temporada 
+				WHERE idstatustemporada = :idstatustemporadaMatriculasIniciadas
+				OR idstatustemporada = :idstatustemporadaInscricoesIniciadas
+				OR idstatustemporada = :idstatustemporadaTemporadaIniciada", [
+					':idstatustemporadaMatriculasIniciadas'=>$idstatustemporadaMatriculasIniciadas,
+					':idstatustemporadaInscricoesIniciadas'=>$idstatustemporadaInscricoesIniciadas,
+					':idstatustemporadaTemporadaIniciada'=>$idstatustemporadaTemporadaIniciada
+			]);
+
+			if($results){
+				return true;
+			}else{
+				return false;
+			}			
+		}		
+
+		/*
+
 		public function statusTemporadaIsIniciadaInscricao($idtemporada){
 
 			$idstatustemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
@@ -186,7 +212,9 @@
 				return false;
 			}
 		}
+		*/
 
+		/*
 		public function statusTemporadaIsIniciadaMatricula($idtemporada){
 
 			$idstatustemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
@@ -207,7 +235,9 @@
 				return false;
 			}
 		}
+		*/
 
+		/*
 		public function temporadaStatusMatriculaIniciadaExiste(){
 
 			$idstatustemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
@@ -222,9 +252,10 @@
 				return true;
 			}else{
 				return false;
-			}
-			
-		}		
+			}			
+		}	
+		*/	
+		/*
 		public function temporadaStatusInscricaoIniciadaExiste(){
 			$idstatustemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
 			$sql = new Sql();
@@ -239,7 +270,8 @@
 			}else{
 				return false;
 			}			
-		}		
+		}
+		*/
 
 		public function save()
 		{		
@@ -468,14 +500,41 @@
 			}		
 		}
 
-		public function alterarStatusTemporadaParaMatriculasIniciadas($dtTerminscricao, $idtemporada){
-			$hoje = new DateTime();
-			$date = new DateTime($dtTerminscricao);
-			// $intervalo = $hoje->diff($date);
-			if($date == $hoje || $date < $hoje){
-				Temporada::updateStatusTemporadaParaMatriculasIniciadas($idtemporada);
+		public function alterarStatusTemporadaParaIncricoesIniciadas($dtInicinscricao, $idtemporada){
+
+			$hoje = date('Y-m-d H:i:s');
+			$data = date($dtInicinscricao);
+			$intHoje = strtotime($hoje);
+			$intData = strtotime($data);
+
+			if($intHoje > $intData){
+
+				Temporada::updateStatusTemporadaParaInscricoesIniciadas($idtemporada);					
 			}
 		} 
+		
+		public function updateStatusTemporadaParaInscricoesIniciadas($idtemporada){
+			$sql = new Sql();
+			$idstatustemporadaInscricoesIniciadas = StatusTemporada::INSCRICOES_INICIADAS;
+			$sql->query("UPDATE tb_temporada SET idstatustemporada = :idstatustemporadaInscricoesIniciadas  WHERE idtemporada = :idtemporada", [
+				'idstatustemporadaInscricoesIniciadas'=>$idstatustemporadaInscricoesIniciadas,
+				':idtemporada'=>$idtemporada
+			]);
+		}
+
+		public function alterarStatusTemporadaParaMatriculasIniciadas($dtTerminscricao, $idtemporada){
+
+			$hoje = date('Y-m-d H:i:s');
+			$data = date($dtTerminscricao);
+			$intHoje = strtotime($hoje);
+			$intData = strtotime($data);
+
+			if($intHoje > $intData){
+
+				Temporada::updateStatusTemporadaParaMatriculasIniciadas($idtemporada);					
+			}
+		} 
+
 		public function updateStatusTemporadaParaMatriculasIniciadas($idtemporada){
 			$sql = new Sql();
 			$idstatustemporadaMatriculasIniciadas = StatusTemporada::MATRICULAS_INICIADAS;
@@ -485,9 +544,12 @@
 			]);
 		}
 		public function alterarStatusTemporadaParaMatriculasEncerradas($dtTermmatricula, $idtemporada){
-			$hoje = new DateTime();
-			$date = new DateTime($dtTermmatricula);
-			if($date == $hoje || $date < $hoje){
+			$hoje = date('Y-m-d H:i:s');
+			$data = date($dtTermmatricula);
+			$intHoje = strtotime($hoje);
+			$intData = strtotime($data);
+
+			if($intHoje > $intData){
 				Temporada::updateStatusTemporadaMatriculasEncerradas($idtemporada);
 			}
 		}	

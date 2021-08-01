@@ -1,23 +1,48 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?><li class="treeview">
-								   		<a href="/professor/turma-temporada/71">
+								   		<a href="/professor/turma-temporada/75">
+								   			<i class="fa fa-link"></i> 
+								   			Temporada - 2016
+								   		</a>
+								   		<ul class="treeview-menu">
+									   		<li>
+									   			<a href="/professor/turma-temporada/75">
+									   				<i class="fa fa-link"></i>
+									   				Turmas Temporada 2016
+									   			</a>
+									   		</li>
+									   		<li>
+									   			<a href="/professor/professor-temporada/75">
+									   				<i class="fa fa-link"></i>
+									   				Profs Temporada 2016
+									   			</a>
+									   		</li>
+									   		<li>
+									   			<a href="/professor/sorteio/75">
+									   				<i class="fa fa-link"></i>
+									   				Sorteio 2016
+									   			</a>
+									   		</li>
+										</ul>
+									</li><li class="treeview">
+								   		<a href="/professor/turma-temporada/73">
 								   			<i class="fa fa-link"></i> 
 								   			Temporada - 2017
 								   		</a>
 								   		<ul class="treeview-menu">
 									   		<li>
-									   			<a href="/professor/turma-temporada/71">
+									   			<a href="/professor/turma-temporada/73">
 									   				<i class="fa fa-link"></i>
 									   				Turmas Temporada 2017
 									   			</a>
 									   		</li>
 									   		<li>
-									   			<a href="/professor/professor-temporada/71">
+									   			<a href="/professor/professor-temporada/73">
 									   				<i class="fa fa-link"></i>
 									   				Profs Temporada 2017
 									   			</a>
 									   		</li>
 									   		<li>
-									   			<a href="/professor/sorteio/71">
+									   			<a href="/professor/sorteio/73">
 									   				<i class="fa fa-link"></i>
 									   				Sorteio 2017
 									   			</a>
