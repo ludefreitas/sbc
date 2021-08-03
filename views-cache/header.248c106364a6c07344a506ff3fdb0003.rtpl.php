@@ -74,25 +74,21 @@
           <div class="container">
             <div class="row">
 
-                <div class="col-md-2 col-sm-4" style="text-align: center; margin: 60px 0px 10px 0px;">
+                <div class="col-md-6" style="text-align: center; margin: 10px 0px 10px 0px;">
                 <a href="/" class="">
                   <img src="/../res/site/img/horatreino.png" title="HoraTreino" height="50" width="150">
                 </a> 
-              </div>
-              <div class="col-md-2 col-sm-4" style="text-align: center; margin: 50px 0px 15px 0px;">
-                <a href="/" class="">
-                  <img src="/../res/site/img/corpoacao.png" title="CorpoEmAcao" height="50" width="150">
-                </a> 
-              </div>
-              
-              <div class="col-md-2 col-sm-4" style="text-align: center; margin: 30px 0px 15px 0px;">
                 <a href="/" class="">
                   <img src="/../res/site/img/campeoesvida.png" title="CampeoesDaVida" height="50" width="150">
                 </a> 
+                <a href="/" class="">
+                  <img src="/../res/site/img/corpoacao.png" title="CorpoEmAcao" height="50" width="150">
+                </a> 
+                
               </div>
-              
+                         
 
-               <div class="col-md-6 text-dark" col-sm-1 style="text-align: center; margin: 80px 0px 0px 0px;  ">
+               <div class="col-md-6 text-dark" style="text-align: center; margin: 40px 0px 0px 0px;  ">
 
                 <nav class="navbar navbar-expand-sm navbar-dark " style="background-color: #fff"> 
                 <div class="container">

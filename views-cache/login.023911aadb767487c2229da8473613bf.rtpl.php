@@ -76,7 +76,7 @@
     <!-- /.social-auth-links -->
 
     <a href="/professor/forgot">Esqueci minha senha</a><br>
-    <a href="#" class="text-center">Cadastre-se</a>
+    <a href="/user-create" class="text-center">Cadastre-se</a>
 
   </div>
   <!-- /.login-box-body -->

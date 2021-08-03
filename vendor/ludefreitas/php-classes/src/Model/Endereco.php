@@ -72,7 +72,7 @@ class Endereco extends Model {
 
 		if(count($results) === 0)
 		{
-			Endereco::setMsgError('Você precisa completar o cadastro para cadastrar pessoa e fazer inscrição.');
+			Endereco::setMsgError('Você precisa completar o cadastro abaixo, com os dados do endereço e telefones, para cadastrar pessoas e fazer inscrição.');
 			header("Location: /endereco");
 			exit();			
 		}
