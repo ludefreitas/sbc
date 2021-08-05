@@ -54,6 +54,26 @@ function getUserName()
 
 }
 
+function getUserIsProfAdmin()
+{
+    $user = User::getFromSession();
+
+    $html = [];
+
+    array_push($html, '<li class="nav-item">
+                            <a href="/professor" class="nav-link">
+                              <span class="text-dark" style="font-weight: bold"> 
+                                Área do Professor
+                              </span>
+                            </a>
+                        </li>'
+                    );
+
+    if ($user->getisprof() == 1 || $user->getinadmin() == 1){
+        return $html[0];
+    }
+}
+
 function getUserId()
 {
 

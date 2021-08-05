@@ -41,6 +41,7 @@ class Turma extends Model {
 			ORDER BY a.descturma");
 	}
 
+	/*
 	public static function listAllTurmaTemporada()
 
 	{
@@ -85,6 +86,141 @@ class Turma extends Model {
 				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
 				':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada
 			]);
+	}
+	*/
+
+	public static function getPageTurmaTemporada($page = 1, $itemsPerPage = 50)
+	{
+		$idStatusTemporadaTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
+		$idStatusTemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
+		$idStatusTemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_turmatemporada a 
+			INNER JOIN tb_turma j            
+			using(idturma)
+			INNER JOIN tb_users b
+			using(iduser)
+			INNER JOIN tb_persons c
+			using(idperson)
+			INNER JOIN tb_atividade d
+			using(idativ)
+			INNER JOIN tb_espaco e
+			using(idespaco)
+			INNER JOIN tb_local f
+			using(idlocal)
+			INNER JOIN tb_turmastatus g
+			using(idturmastatus)
+			INNER JOIN tb_horario h
+			using(idhorario)
+			INNER JOIN tb_fxetaria i
+			using(idfxetaria)
+            INNER JOIN tb_temporada k          
+			using(idtemporada)   
+            INNER JOIN tb_statustemporada l          
+			using(idstatustemporada)
+			INNER JOIN tb_modalidade m         
+			using(idmodal)
+      		WHERE k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
+      		OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
+      		OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada
+			LIMIT $start, $itemsPerPage;
+			", [
+				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
+				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
+				':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada
+			]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+
+
+	public static function getPageSearchTurmaTemporada($search, $page = 1, $itemsPerPage = 50)
+	{
+		$idStatusTemporadaTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
+		$idStatusTemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
+		$idStatusTemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_turmatemporada a 
+			INNER JOIN tb_turma j            
+			ON j.idturma = a.idturma
+			INNER JOIN tb_users b
+			using(iduser)
+			INNER JOIN tb_persons c
+			using(idperson)
+			INNER JOIN tb_atividade d
+			using(idativ)
+			INNER JOIN tb_espaco e
+			using(idespaco)
+			INNER JOIN tb_local f
+			using(idlocal)
+			INNER JOIN tb_turmastatus g
+			using(idturmastatus)
+			INNER JOIN tb_horario h
+			using(idhorario)
+			INNER JOIN tb_fxetaria i
+			using(idfxetaria)
+            INNER JOIN tb_temporada k          
+			using(idtemporada)   
+            INNER JOIN tb_statustemporada l          
+			using(idstatustemporada)
+			INNER JOIN tb_modalidade m         
+			using(idmodal)
+      		WHERE (
+      			k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
+      			OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
+      			OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada
+      		) AND (
+      			j.descturma LIKE :search
+				OR d.descativ LIKE :search
+				OR d.origativ LIKE :search
+				OR d.tipoativ LIKE :search
+				OR d.prograativ LIKE :search
+				OR c.desperson LIKE :search
+				OR e.nomeespaco LIKE :search
+				OR f.apelidolocal LIKE :search 
+				OR g.desstatus LIKE :search
+				OR h.horainicio LIKE :search
+				OR h.diasemana LIKE :search
+				OR h.periodo LIKE :search
+				OR i.descrfxetaria LIKE :search	
+				OR m.descmodal LIKE :search
+			)												
+			-- ORDER BY a.descturma
+			LIMIT $start, $itemsPerPage;
+		", [
+			':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
+			':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
+			':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada,
+			':search'=>'%'.$search.'%'
+		]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
 	}
 
 	public static function listAllTurmaTemporadaModalidade($idmodal)
@@ -581,6 +717,10 @@ class Turma extends Model {
 			-- OR b.deslogin LIKE :search
 			-- OR c.desperson LIKE :search
 			-- OR c.apelidoperson LIKE :search
+			OR d.descativ LIKE :search
+			OR d.origativ LIKE :search
+			OR d.tipoativ LIKE :search
+			OR d.prograativ LIKE :search
 			OR d.descativ LIKE :search
 			OR e.nomeespaco LIKE :search
 			OR f.apelidolocal LIKE :search 

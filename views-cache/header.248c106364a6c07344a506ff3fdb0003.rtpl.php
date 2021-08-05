@@ -74,21 +74,22 @@
           <div class="container">
             <div class="row">
 
-                <div class="col-md-6" style="text-align: center; margin: 10px 0px 10px 0px;">
+                <div class="col-md-5" style="text-align: center; margin: 10px 0px 10px 0px;">
                 <a href="/" class="">
                   <img src="/../res/site/img/horatreino.png" title="HoraTreino" height="50" width="150">
                 </a> 
-                <a href="/" class="">
-                  <img src="/../res/site/img/campeoesvida.png" title="CampeoesDaVida" height="50" width="150">
-                </a> 
+               
                 <a href="/" class="">
                   <img src="/../res/site/img/corpoacao.png" title="CorpoEmAcao" height="50" width="150">
+                </a> 
+                 <a href="/" class="">
+                  <img src="/../res/site/img/campeoesvida.png" title="CampeoesDaVida" height="50" width="150">
                 </a> 
                 
               </div>
                          
 
-               <div class="col-md-6 text-dark" style="text-align: center; margin: 40px 0px 0px 0px;  ">
+               <div class="col-md-7 text-dark" style="text-align: center; margin: 40px 0px 0px 0px;  ">
 
                 <nav class="navbar navbar-expand-sm navbar-dark " style="background-color: #fff"> 
                 <div class="container">
@@ -113,6 +114,7 @@
                               </span>
                             </a>
                         </li>
+                        <?php echo getUserIsProfAdmin(); ?>
                         <li class="nav-item">  
                             <a href="/profile/insc" class="nav-link">
                               <span class="text-dark" style="font-weight: bold"> 
@@ -146,6 +148,7 @@
                               </span>
                             </a>
                         </li>
+
                               
                         <?php }else{ ?>
                         <li class="nav-item">
@@ -198,10 +201,12 @@
               </div>
 
               <div class="col-md-4" style="text-align: center; margin: 50px 0px 15px 0px;">
-                <input type="text" name="" placeholder="Pesquisa" style="text-align-last: center;">
+                 <form action="/">
+                <input type="text" name="search" placeholder="Pesquisa" style="text-align-last: center;">
                 <button type="submit" class="btn btn-default btn-sm">
                   <i class="fa fa-search"></i>
-                </button>                                              
+                </button>
+                </form>                                              
               </div>
 
               <div class="col-md-4" style="text-align: center; margin: 50px 0px 15px 0;">

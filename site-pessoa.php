@@ -44,7 +44,7 @@ $app->post("/registerpessoa", function(){
 
 	if (!isset($_POST['dtnasc']) || $_POST['dtnasc'] == '') {
 
-		Pessoa::setErrorRegister("Preencha informe da data de nascimento.");
+		Pessoa::setErrorRegister("Informe a data de nascimento.");
 		header("Location: /pessoa-create");
 		exit;
 	}
@@ -98,18 +98,22 @@ $app->post("/registerpessoa", function(){
 		exit;
 	}	
 
-	if ((!isset($_POST['nomemae']) || $_POST['nomemae'] == '') && (!isset($_POST['nomepai']) || $_POST['nomepai'] == '')) {
+	if(calcularIdade($_POST['dtnasc']) < 18){
 
-		Pessoa::setErrorRegister("Informe pelo menos o nome ou da mãe, ou do pai ou do responsável.");
-		header("Location: /pessoa-create");
-		exit;
-	}
+	
+		if ((!isset($_POST['nomemae']) || $_POST['nomemae'] == '') && (!isset($_POST['nomepai']) || $_POST['nomepai'] == '')) {
 
-	if ((!isset($_POST['cpfmae']) || $_POST['cpfmae'] == '') && (!isset($_POST['cpfpai']) || $_POST['cpfpai'] == '')) {
+			Pessoa::setErrorRegister("Informe pelo menos o nome ou da mãe, ou do pai ou do responsável.");
+			header("Location: /pessoa-create");
+			exit;
+		}
 
-		Pessoa::setErrorRegister("Informe pelo menos o CPF ou da mãe, ou do pai ou do responsável.");
-		header("Location: /pessoa-create");
-		exit;
+		if ((!isset($_POST['cpfmae']) || $_POST['cpfmae'] == '') && (!isset($_POST['cpfpai']) || $_POST['cpfpai'] == '')) {
+
+			Pessoa::setErrorRegister("Informe pelo menos o CPF ou da mãe, ou do pai ou do responsável.");
+			header("Location: /pessoa-create");
+			exit;
+		}
 	}
 
 	$_POST['statuspessoa'] = 1;

@@ -18,6 +18,11 @@
 
         let idadeAnos = quantosAnos(dtnasc, hoje)
 
+        if(idadeAnos < 0){
+            alert('Data inválida! Idade não pode ser menor que 0.')
+            document.getElementById('dtnasc').value = 0
+        }
+
         if (idadeAnos > 18){
             document.getElementById('maeEpai').hidden = true
         }else{
@@ -132,11 +137,11 @@
                     </label>
                     <input style="width: 100%; float: right;" type="number" id="cadunico" name="cadunico" class="input-text" value="{$registerpessoaValues.cadunico}">
                     </div>
-                    <div id="maeEpai">
+                    <div hidden="" id="maeEpai">
                     <label for="nomemae">
                         <br><br>Nome da Mãe
                         <span class="required">
-                            *
+                            <span style="font-size: 12px; font-weight: bold">* (Necessário preencher este campo se pessoa a cadastrar for menor de idade)</span>
                         </span>
                     </label>
                     <input style="width: 100%; float: right;" type="text" id="nomemae" name="nomemae" class="input-text" value="{$registerpessoaValues.nomemae}">                
@@ -152,7 +157,7 @@
                     <label for="nomepai">
                         <br><br>Nome da Pai
                         <span class="required">
-                            *
+                            <span style="font-size: 12px; font-weight: bold">* (Necessário preencher este campo se pessoa a cadasttrar for menor de idade)</span>
                         </span>
                     </label>
                     <input style="width: 100%; float: right;" type="text" id="nomepai" name="nomepai" class="input-text" value="{$registerpessoaValues.nomepai}">

@@ -11,6 +11,101 @@ use \Sbc\Model\InscStatus;
 use \Sbc\Model\CartsTurmas;
 use \Sbc\Model\Endereco;
 
+
+$app->get('/', function() {
+
+	//$turma = Turma::listAllTurmaTemporada();
+
+	//$turma = Turma::getPageTurmaTemporada();
+
+	$search = (isset($_GET['search'])) ? $_GET['search'] : "";
+
+	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
+
+	if ($search != '') {
+
+		$pagination = Turma::getPageSearchTurmaTemporada($search, $page);
+
+	} else {
+
+		$pagination = Turma::getPageTurmaTemporada($page);
+
+	}
+
+	$pages = [];
+
+	for ($x = 0; $x < $pagination['pages']; $x++)
+	{
+
+		array_push($pages, [
+			'href'=>'/?'.http_build_query([
+				'page'=>$x+1,
+				'search'=>$search
+			]),
+			'text'=>$x+1
+		]);
+
+	}
+
+	//var_dump($pagination['total']);
+	//exit;
+
+	$temporada = new Temporada();
+
+	if(!isset($pagination['data']) || $pagination['data'] == NULL){
+
+		if(!isset($search) || $search == NULL){
+			Cart::setMsgError("Não existe turmas para esta temporada. Aguarde! ");
+		}else{
+			Cart::setMsgError("Não encontramos nenhuma turma com a palavra '".$search."' nesta temporada! ");
+		}		
+
+	}else{
+
+		if(isset($search) && $search != NULL){
+			Cart::setMsgError("Encontramos ".$pagination['total']." turmas com a palavra '".$search."' para esta temporada! ");
+		}
+
+		$idtemporada = $pagination['data'][0]['idtemporada']; 
+
+		$temporada->get((int)$idtemporada);
+
+		$dtInicinscricao = $temporada->getdtinicinscricao();
+		$dtTerminscricao = $temporada->getdtterminscricao();
+		$dtTermmatricula = $temporada->getdttermmatricula();
+
+		if($temporada->getidstatustemporada() == 2){
+
+			Temporada::alterarStatusTemporadaParaIncricoesIniciadas($dtInicinscricao, $idtemporada);
+
+		}	
+
+		if($temporada->getidstatustemporada() == 4){
+
+			Temporada::alterarStatusTemporadaParaMatriculasIniciadas($dtTerminscricao, $idtemporada);
+
+		}	
+
+		if($temporada->getidstatustemporada() == 6){
+
+			Temporada::alterarStatusTemporadaParaMatriculasEncerradas($dtTermmatricula, $idtemporada);
+
+		}				
+
+	}	
+		
+	$page = new Page(); 
+
+	$page->setTpl("index", array(
+		'turma'=>Turma::checkList($pagination['data']),
+		"search"=>$search,
+		"pages"=>$pages,
+		'error'=>Cart::getMsgError()
+	));
+});
+
+
+/*
 $app->get('/', function() {
 
 	$turma = Turma::listAllTurmaTemporada();
@@ -32,7 +127,7 @@ $app->get('/', function() {
 
 		if($temporada->getidstatustemporada() == 2){
 
-			//Temporada::alterarStatusTemporadaParaIncricoesIniciadas($dtInicinscricao, $idtemporada);
+			Temporada::alterarStatusTemporadaParaIncricoesIniciadas($dtInicinscricao, $idtemporada);
 
 		}	
 
@@ -57,6 +152,7 @@ $app->get('/', function() {
 		'error'=>Cart::getMsgError()
 	]);
 });
+*/
 
 $app->get("/checkout", function(){
 
