@@ -2,7 +2,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Lista de Espaços
+    Lista com {$total} espaços
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -37,36 +37,85 @@
 
             </div>
 
-            <div class="box-body no-padding">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Espaco</th>
-                    <th>Descrição</th>
-                    <th>Crec</th>
-                    <th>Àrea(m²)</th>
-                    <th>Observação</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {loop="$espaco"}
-                  <tr>
-                    <td>{$value.nomeespaco}</td>
-                    <td>{$value.descespaco}</td>
-                    <td>{$value.apelidolocal}</td>
-                    <td>{$value.areaespaco}</td>
-                    <td>{$value.observacao}</td>                 
-                    <td>
-                     <!-- <a href="/professor/espaco/{$value.idespaco}/horario" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> Horários</a> -->
-                      <a href="/professor/espaco/{$value.idespaco}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
-                      <a href="/professor/espaco/{$value.idespaco}/delete" onclick="return confirm('Deseja realmente excluir o espaço {$value.nomeespaco}?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
-                    </td>
-                  </tr>
-                  {/loop}
-                </tbody>
-              </table>
+             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              <div class="row">
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">
+                 Espaço
+                </h5>
+              </div>                  
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    Descrição
+                </h5>
+              </div>
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    Local
+                </h5>
+              </div>
+
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    Área
+                </h5>
+              </div>
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                     Observação
+                </h5>
+              </div>
+
             </div>
-            <!-- /.box-body -->
+          </div>
+
+            {loop="$espaco"}
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              <div class="row">
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">
+                 {$value.nomeespaco}
+                </h5>
+              </div>    
+                    
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  {$value.descespaco}
+                </h5>
+              </div>
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    {$value.apelidolocal}
+                </h5>
+              </div>
+
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    {$value.areaespaco}
+                </h5>
+              </div>
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                     {$value.observacao}
+                </h5>
+              </div>              
+
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <a href="/professor/espaco/{$value.idespaco}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
+                      <a href="/professor/espaco/{$value.idespaco}/delete" onclick="return confirm('Deseja realmente excluir o espaço {$value.nomeespaco}?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
+              </div>
+
+            </div>
+          </div>
+          {/loop}
+
+                        <!-- /.box-body -->
             <div class="box-footer clearfix">
               <ul class="pagination pagination-sm no-margin pull-right">
                 {loop="$pages"}

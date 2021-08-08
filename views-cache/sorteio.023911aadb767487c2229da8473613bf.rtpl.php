@@ -61,28 +61,46 @@
                 </div>   
                 </form>              
               </div>              
-            </div>            
-            <div class="box-body no-padding">
-              <table class="table table-striped">
-                <thead>                 
-                  <tr>
-                    <th><h5>Ordem</h5> <h5>do Sorteio</h5></th>
-                    <th><h5>Número</h5> <h5>sorteado</h5></th>
-                  </tr>
-                  <tr>
-                    <th style="width: 120px"></th>
-                  </tr>                 
-                </thead>
-                <tbody>
-                   <?php $counter1=-1;  if( isset($sorteio) && ( is_array($sorteio) || $sorteio instanceof Traversable ) && sizeof($sorteio) ) foreach( $sorteio as $key1 => $value1 ){ $counter1++; ?>
-                  <tr>                    
-                    <td><?php echo htmlspecialchars( $value1["numerodeordem"], ENT_COMPAT, 'UTF-8', FALSE ); ?>º</td>
-                    <td><?php echo htmlspecialchars( $value1["numerosortear"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                  </tr>
-                   <?php } ?>
-                </tbody>
-              </table>
-            </div>           
+            </div>  
+
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              <div class="row">
+
+              <div class="col-md-3" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    Ordem do sorteio
+                </h5>
+              </div>
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    Número sorteado
+                </h5>
+              </div>            
+
+            </div>
+          </div>
+
+            <?php $counter1=-1;  if( isset($sorteio) && ( is_array($sorteio) || $sorteio instanceof Traversable ) && sizeof($sorteio) ) foreach( $sorteio as $key1 => $value1 ){ $counter1++; ?>
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              <div class="row">
+
+              <div class="col-md-3" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <?php echo htmlspecialchars( $value1["numerodeordem"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                </h5>
+              </div>
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <?php echo htmlspecialchars( $value1["numerosortear"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                </h5>
+              </div>
+
+            </div>
+          </div>
+          <?php } ?> 
 
             <!-- /.box-body -->
             <button type="button" onclick="window.print()" class="btn btn-primary pull-right" style="margin-right: 5px;">

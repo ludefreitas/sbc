@@ -4,7 +4,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Lista de Temporadas
+    Lista com <?php echo htmlspecialchars( $total, ENT_COMPAT, 'UTF-8', FALSE ); ?> temporadas
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -31,44 +31,105 @@
                 <?php } ?>
 
 
-            <div class="box-body no-padding">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Temporada</th>
-                    <th>Status Temporada</th>
-                    <th>Data Icicio das Inscrição</th>
-                    <th>Data Fim das Inscrição</th>
-                    <th>Data Icicio das Matrícula</th>
-                    <th>Data Fim das Matrícula</th>
-                  </tr>
-                </thead>
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              <div class="row">
 
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">
+                    Temporada                                      
+                </h5>
+              </div>
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">  
+                    Status Temporada                     
+                </h5>
+              </div>
 
-                <tbody>
-                  <?php $counter1=-1;  if( isset($temporada) && ( is_array($temporada) || $temporada instanceof Traversable ) && sizeof($temporada) ) foreach( $temporada as $key1 => $value1 ){ $counter1++; ?>
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    Início das inscrições
+                </h5>
+              </div>
 
-                  <tr>
-                    
-                    <td> <a href="/professor/turma-temporada/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a></td>
-                    <td><a href="/professor/turma-temporada/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a></td>
-                    <td><?php echo htmlspecialchars( $value1["idstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["descstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a></td>
-                    <td><?php echo formatDateHour($value1["dtinicinscricao"]); ?></a></td>
-                    <td><?php echo formatDateHour($value1["dtterminscricao"]); ?></a></td>
-                    <td><?php echo formatDateHour($value1["dtinicmatricula"]); ?></a></td>
-                    <td><?php echo formatDateHour($value1["dttermmatricula"]); ?></a></td>
-                    <td>    
-                    
-                      <a href="/professor/temporada/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
-                      <a href="/professor/temporada/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir temporada <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
-                    </td>
-                  </tr>
-                  <?php } ?>
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    Fim das inscrições
+                </h5>
+              </div>
 
-                </tbody>
-              </table>
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    Início das matrículas
+                </h5>
+              </div>
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    Fim das matrículas
+                </h5>
+              </div>
+
             </div>
+          </div>
+
+            <?php $counter1=-1;  if( isset($temporada) && ( is_array($temporada) || $temporada instanceof Traversable ) && sizeof($temporada) ) foreach( $temporada as $key1 => $value1 ){ $counter1++; ?>
+
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              <div class="row">
+
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                    
+                    <a href="/professor/turma-temporada/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a>
+                </h5>
+              </div>
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">  
+                    <?php echo htmlspecialchars( $value1["idstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["descstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+
+                </h5>
+              </div>
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    <?php echo formatDateHour($value1["dtinicinscricao"]); ?>
+
+                </h5>
+              </div>
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    <?php echo formatDateHour($value1["dtterminscricao"]); ?>
+
+                </h5>
+              </div>
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    <?php echo formatDateHour($value1["dtinicmatricula"]); ?>
+
+                </h5>
+              </div>
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    <?php echo formatDateHour($value1["dttermmatricula"]); ?>
+
+                </h5>
+              </div>
+
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                 <a href="/professor/temporada/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
+                      <a href="/professor/temporada/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir temporada <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
+              </div>
+
+            </div>
+          </div>
+          <?php } ?>
+
+
+            
             <!-- /.box-body -->
           </div>
   	</div>

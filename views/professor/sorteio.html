@@ -61,28 +61,46 @@
                 </div>   
                 </form>              
               </div>              
-            </div>            
-            <div class="box-body no-padding">
-              <table class="table table-striped">
-                <thead>                 
-                  <tr>
-                    <th><h5>Ordem</h5> <h5>do Sorteio</h5></th>
-                    <th><h5>Número</h5> <h5>sorteado</h5></th>
-                  </tr>
-                  <tr>
-                    <th style="width: 120px"></th>
-                  </tr>                 
-                </thead>
-                <tbody>
-                   {loop="$sorteio"}
-                  <tr>                    
-                    <td>{$value.numerodeordem}º</td>
-                    <td>{$value.numerosortear}</td>
-                  </tr>
-                   {/loop}
-                </tbody>
-              </table>
-            </div>           
+            </div>  
+
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              <div class="row">
+
+              <div class="col-md-3" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    Ordem do sorteio
+                </h5>
+              </div>
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    Número sorteado
+                </h5>
+              </div>            
+
+            </div>
+          </div>
+
+            {loop="$sorteio"}
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              <div class="row">
+
+              <div class="col-md-3" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  {$value.numerodeordem}
+                </h5>
+              </div>
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  {$value.numerosortear}
+                </h5>
+              </div>
+
+            </div>
+          </div>
+          {/loop} 
 
             <!-- /.box-body -->
             <button type="button" onclick="window.print()" class="btn btn-primary pull-right" style="margin-right: 5px;">

@@ -46,6 +46,7 @@ $app->get("/professor/faixaetaria", function() {
 	// envia para a página o array retornado pelo listAll
 	$page->setTpl("faixaetaria", array( // aqui temos um array com muitos arrays
 		"faixaetaria"=>$pagination['data'],
+		"total"=>$pagination['total'],
 		"search"=>$search,
 		"pages"=>$pages,
 		"error"=>Faixaetaria::getMsgError()

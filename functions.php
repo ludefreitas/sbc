@@ -34,7 +34,7 @@ function formatDate($date)
 function formatDateHour($dateHour)
 {
 
-    return date('d/m/Y - H:i:s', strtotime($dateHour));
+    return date('d/m/Y H:i:s', strtotime($dateHour));
 
 }
 

@@ -89,6 +89,8 @@ class Turma extends Model {
 	}
 	*/
 
+
+	/*
 	public static function getPageTurmaTemporada($page = 1, $itemsPerPage = 50)
 	{
 		$idStatusTemporadaTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
@@ -142,6 +144,61 @@ class Turma extends Model {
 			'data'=>$results,
 			'total'=>(int)$resultTotal[0]["nrtotal"],
 			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+	*/
+
+	public static function getPageTurmaTemporada()
+	{
+		$idStatusTemporadaTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
+		$idStatusTemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
+		$idStatusTemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_turmatemporada a 
+			INNER JOIN tb_turma j            
+			using(idturma)
+			INNER JOIN tb_users b
+			using(iduser)
+			INNER JOIN tb_persons c
+			using(idperson)
+			INNER JOIN tb_atividade d
+			using(idativ)
+			INNER JOIN tb_espaco e
+			using(idespaco)
+			INNER JOIN tb_local f
+			using(idlocal)
+			INNER JOIN tb_turmastatus g
+			using(idturmastatus)
+			INNER JOIN tb_horario h
+			using(idhorario)
+			INNER JOIN tb_fxetaria i
+			using(idfxetaria)
+            INNER JOIN tb_temporada k          
+			using(idtemporada)   
+            INNER JOIN tb_statustemporada l          
+			using(idstatustemporada)
+			INNER JOIN tb_modalidade m         
+			using(idmodal)
+      		WHERE k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
+      		OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
+      		OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada
+			", [
+				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
+				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
+				':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada
+			]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"]
+			//'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
 		];
 
 	}
@@ -205,7 +262,7 @@ class Turma extends Model {
 				OR m.descmodal LIKE :search
 			)												
 			-- ORDER BY a.descturma
-			LIMIT $start, $itemsPerPage;
+			-- LIMIT $start, $itemsPerPage;
 		", [
 			':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
 			':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
@@ -580,8 +637,6 @@ class Turma extends Model {
 		//$this->setData($rows[0]);
 
 	}
-
-	
 
 	/*
 	public function getFromIdTurmaModalidade($idmodal, $idtemporada)

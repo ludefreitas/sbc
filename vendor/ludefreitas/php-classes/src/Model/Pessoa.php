@@ -263,7 +263,11 @@ class Pessoa extends Model {
 			FROM tb_pessoa a 
 			INNER JOIN tb_users b USING(iduser) 
 			INNER JOIN tb_persons c USING(idperson)
-			WHERE a.nomepess LIKE :search OR c.desperson = :search OR c.deslogin LIKE :search
+			WHERE a.nomepess LIKE :search 
+			OR a.dtnasc LIKE :search
+			OR c.desperson = :search 
+			OR c.desemail LIKE :search 
+			OR c.apelidoperson LIKE :search
 			ORDER BY a.nomepess			
 			LIMIT $start, $itemsPerPage;
 		", [

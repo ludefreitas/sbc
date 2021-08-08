@@ -55,6 +55,7 @@ $app->get("/professor/turma", function() {
 	// envia para a página o array retornado pelo listAll
 	$page->setTpl("turma", array( // aqui temos um array com muitos arrays
 		"turma"=>$pagination['data'],
+		"total"=>$pagination['total'],
 		"search"=>$search,
 		"pages"=>$pages,
 		"error"=>Turma::getMsgError()

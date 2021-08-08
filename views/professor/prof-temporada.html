@@ -44,40 +44,41 @@
 
               </div>
 
-            <div class="box-body no-padding">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th style="width: 10px">#</th>
-                    <th>Nome</th>
-                    
-                    <th></th>
-                     <th></th>
-                  </tr>
-                </thead>
-                <tbody>
+           <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              
+            
 
-                  {loop="$prof"}
-                  <tr>
-                    <td>{$value.iduser}</td>
-                    <td>{$value.desperson}</td>
-                    
-                    <td>                     
+            {loop="$prof"}
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              <div class="row">
 
-                     <a href="/professor/turma-temporada/{$temporada.idtemporada}/user/{$value.iduser}" class="btn btn-success btn-xs"><i class=""></i>Turmas do professor(a) <br>{$value.apelidoperson}</a>
-                    </td>
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  {$value.iduser}
+                </h5>
+              </div>
 
-                    <td>
-                      
-                      <a href="/professor/turmatemporada/{$value.iduser}/turma/{$temporada.idtemporada}" class="btn btn-info btn-xs"><i class=""></i> Inserir ou remover <br> turma do professor(a)</a>                      
-                    </td>
-                    
-                  </tr>
-                  {/loop}
-                </tbody>
-              </table>
-            </div>           
+              <div class="col-md-3" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  {$value.desperson}
+                </h5>
+              </div>
+              
 
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                    <a href="/professor/turma-temporada/{$temporada.idtemporada}/user/{$value.iduser}" class="btn btn-info btn-xs"><i class=""></i><span style="color: black;">Turmas do professor(a) <br>{$value.apelidoperson}</span></a>
+              </div>
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                 <a href="/professor/turmatemporada/{$value.iduser}/turma/{$temporada.idtemporada}" class="btn btn-primary btn-xs"><i class=""></i><span style="color: black;"> Inserir ou remover <br> turma do professor(a)</span></a>                      
+              </div>
+
+            </div>
+          </div>
+          {/loop}
+
+
+            
             <!-- /.box-body -->
             <button type="button" onclick="window.print()" class="btn btn-primary pull-right" style="margin-right: 5px;">
                 <i class="fa fa-print"></i> Imprimir

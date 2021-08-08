@@ -25,7 +25,24 @@
         <?php } ?>
 
             
-            
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              <div class="row">
+              <div class="col-md-4" >
+                <h5 style="font-weight: bold; text-align: left;">
+                  Nome do Centro Esportivo
+                </h5>
+              </div>
+              <div class="col-md-4" >
+                <h5 style="font-weight: bold; text-align: left;">
+                 Endereço
+                </h5>
+              </div>
+              <div class="col-md-2" >
+                <h5 style="font-weight: bold; text-align: left;">
+                 Telefone
+                </h5>
+              </div>
+            </div>
             <?php $counter1=-1;  if( isset($local) && ( is_array($local) || $local instanceof Traversable ) && sizeof($local) ) foreach( $local as $key1 => $value1 ){ $counter1++; ?>
 
             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">

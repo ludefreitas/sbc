@@ -3,9 +3,14 @@
 use \Sbc\PageAdmin;
 use \Sbc\Model\User;
 use \Sbc\Model\Pessoa;
+//use \Sbc\Model\Insc;
 
 // Rota para listar todos usuários da classe 
 $app->get("/professor/pessoas", function() {
+
+	//$insc = new Insc();
+
+	$pessoa = new Pessoa();
 
 	User::verifyLogin();
 	// na linha abaixo retorna um array com todos os dados do usuário
@@ -37,7 +42,7 @@ $app->get("/professor/pessoas", function() {
 			'text'=>$x+1
 		]);
 
-	}
+	}	
 
 	//$pessoa = User::listAll();
 	// carrega uma pagina das páginas do admin
@@ -46,6 +51,7 @@ $app->get("/professor/pessoas", function() {
 	// envia para a página o array retornado pelo listAll
 	$page->setTpl("pessoas", array( // aqui temos um array com muitos arrays
 		"pessoas"=>$pagination['data'],
+		"total"=>$pagination['total'],
 		"search"=>$search,
 		"pages"=>$pages,
 		"error"=>User::getError()

@@ -104,14 +104,15 @@
                     </div>
 
                     <?php } ?>
+                    
+                </div>
 
                     <div id="payment">
                         <div class="form-row place-order">
                             <input type="submit" value="Imprimir" class="button alt" onclick="window.print()">
                         </div>
                         <div class="clear"></div>
-                    </div>
-                </div>
+                    </div>              
 
             </div>
         </div>

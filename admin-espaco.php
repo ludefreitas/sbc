@@ -48,6 +48,7 @@ $app->get("/professor/espaco", function() {
 	// envia para a página o array retornado pelo listAll
 	$page->setTpl("espaco", array( // aqui temos um array com muitos arrays
 		"espaco"=>$pagination['data'],
+		"total"=>$pagination['total'],
 		"search"=>$search,
 		"pages"=>$pages,
 		"error"=>Espaco::getMsgError()		

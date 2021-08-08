@@ -3,7 +3,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Lista Horários
+    Lista com {$total} horários
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -37,33 +37,73 @@
 
             </div>
 
-            <div class="box-body no-padding">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Dias da semana</th>
-                    <th>Hora de início</th>
-                    <th>Hora de término</th>
-                    <th>Período</th>
-                    <th style="width: 140px">&nbsp;</th>
-                  </tr>
-                </thead>
-                <tbody>                  
-                    {loop="$horario"}
-                    <tr>
-                    <td>{$value.diasemana}</td>
-                    <td>{$value.horainicio}</td>
-                    <td>{$value.horatermino}</td>
-                    <td>{$value.periodo}</td>
-                    <td>
-                      <a href="/professor/horario/{$value.idhorario}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
-                      <a href="/professor/horario/{$value.idhorario}/delete" onclick="return confirm('Deseja realmente excluir o horário das {$value.horainicio} às {$value.horatermino} - {$value.periodo}?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
-                    </td>
-                  </tr>
-                  {/loop}
-                </tbody>
-              </table>
+          <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              <div class="row">
+
+              <div class="col-md-3" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    Idade inicial
+                </h5>
+              </div>
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    Hora de início
+                </h5>
+              </div>
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    Hora de término
+                </h5>
+              </div>
+
+              <div class="col-md-3" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    Período
+                </h5>
+              </div>
+
             </div>
+          </div>
+
+            {loop="$horario"}
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              <div class="row">
+
+              <div class="col-md-3" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  {$value.diasemana}
+                </h5>
+              </div>
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  {$value.horainicio}
+                </h5>
+              </div>
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    {$value.horatermino}
+                </h5>
+              </div>
+
+              <div class="col-md-3" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    {$value.periodo}
+                </h5>
+              </div>
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                 <a href="/professor/horario/{$value.idhorario}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
+                      <a href="/professor/horario/{$value.idhorario}/delete" onclick="return confirm('Deseja realmente excluir o horário das {$value.horainicio} às {$value.horatermino} - {$value.periodo}?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
+              </div>
+
+            </div>
+          </div>
+          {/loop}
+
             <!-- /.box-body -->
             <div class="box-footer clearfix">
               <ul class="pagination pagination-sm no-margin pull-right">

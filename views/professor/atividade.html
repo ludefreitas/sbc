@@ -3,7 +3,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Lista de Atividades
+    Lista com {$total} atividades
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -36,46 +36,115 @@
                   </div>
                 </form>
               </div>
+            </div>
+
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              <div class="row">
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">
+                 Nome
+                </h5>
+              </div>                  
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    Descrição
+                </h5>
+              </div>
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    Gênero
+                </h5>
+              </div>
+                    
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    Programa
+                </h5>
+              </div>
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                     Origem
+                </h5>
+              </div>
+
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                   Tipo
+                </h5>
+              </div>
+
+               <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    Faixa etária
+                </h5>
+              </div>
 
 
             </div>
+          </div>
 
-            <div class="box-body no-padding">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
+            {loop="$atividade"}
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              <div class="row">
 
-                    <th>Atividade</th>
-                    <th>Descrição</th>
-                    <th>Gênero</th>
-                    <th>Programa</th>
-                    <th>Origem</th>
-                    <th>Tipo</th>
-                    <th>Faixa Etária</th>
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">
+                 {$value.nomeativ}
+                </h5>
+              </div>                  
 
-                  </tr>
-                </thead>
-                <tbody>
-                  {loop="$atividade"}
-                  <tr>
-                    <td>{$value.nomeativ}</td>
-                    <td>{$value.descativ}</td>
-                    <td>{$value.geneativ}</td>
-                    <td>{$value.prograativ}</td>
-                    <td>{$value.origativ}</td>
-                    <td>{$value.tipoativ}</td>
-                    <td>{$value.initidade} a {$value.fimidade} anos - {$value.descrfxetaria}</td>
-                               
-                    <td>
-                      <a href="/professor/atividade/{$value.idativ}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    {$value.descativ}
+                </h5>
+              </div>
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    {$value.geneativ}
+                </h5>
+              </div>
+                    
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    {$value.prograativ}
+                </h5>
+              </div>
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                     {$value.origativ}
+                </h5>
+              </div>
+
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    {$value.tipoativ}
+                </h5>
+              </div>
+
+               <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    {$value.initidade} a {$value.fimidade} anos - {$value.descrfxetaria}
+                </h5>
+              </div>
+
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <a href="/professor/atividade/{$value.idativ}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
+                <br><br>
                       <a href="/professor/atividade/{$value.idativ}/delete" onclick="return confirm('Deseja realmente excluir a atividade {$value.nomeativ}?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
-                    </td>
-                  </tr>
-                  {/loop}
-                </tbody>
-              </table>
+              </div>
+
             </div>
-            <!-- /.box-body -->
+          </div>
+          {/loop}
+
+
+                              <!-- /.box-body -->
             <div class="box-footer clearfix">
               <ul class="pagination pagination-sm no-margin pull-right">
                 {loop="$pages"}

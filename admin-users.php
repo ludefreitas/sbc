@@ -48,6 +48,7 @@ $app->get("/professor/users", function() {
 	$page->setTpl("users", array( // aqui temos um array com muitos arrays
 		"users"=>$pagination['data'],
 		"search"=>$search,
+		"total"=>$pagination['total'],
 		"pages"=>$pages,
 		"error"=>User::getError()
 	));	
@@ -94,6 +95,7 @@ $app->get("/professor/prof", function() {
 	// envia para a página o array retornado pelo listAll
 	$page->setTpl("prof", array( // aqui temos um array com muitos arrays
 		"prof"=>$pagination['data'],
+		"total"=>$pagination['total'],
 		"search"=>$search,
 		"pages"=>$pages
 	));
@@ -133,6 +135,7 @@ $app->get("/professor/users-cliente", function() {
 
 	}
 
+
 	//$users = User::listAll();
 	// carrega uma pagina das páginas do admin
 	$page = new PageAdmin();
@@ -140,8 +143,10 @@ $app->get("/professor/users-cliente", function() {
 	// envia para a página o array retornado pelo listAll
 	$page->setTpl("users-cliente", array( // aqui temos um array com muitos arrays
 		"cliente"=>$pagination['data'],
+		"total"=>$pagination['total'],
 		"search"=>$search,
-		"pages"=>$pages
+		"pages"=>$pages,
+		"error"=>User::getError()
 	));
 });
 

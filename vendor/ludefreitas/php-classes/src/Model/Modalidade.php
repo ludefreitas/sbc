@@ -112,7 +112,7 @@ class Modalidade extends Model {
 
 	}
 
-	public static function getPage($page = 1, $itemsPerPage = 8)
+	public static function getPage($page = 1, $itemsPerPage = 6)
 	{
 
 		$start = ($page - 1) * $itemsPerPage;
@@ -136,7 +136,7 @@ class Modalidade extends Model {
 
 	}
 
-	public static function getPageSearch($search, $page = 1, $itemsPerPage = 8)
+	public static function getPageSearch($search, $page = 1, $itemsPerPage = 6)
 	{
 
 		$start = ($page - 1) * $itemsPerPage;

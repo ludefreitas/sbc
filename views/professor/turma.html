@@ -3,7 +3,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Lista de Turmas
+    Lista com {$total} turmas
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -40,43 +40,99 @@
 
             </div>
 
-            <div class="box-body no-padding">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Descrição da turma</th>                    
-                    <th>Modalidade</th>
-                    <th>Faixa Etária</th>    
-                    <th>Crec</th>
-                    <th>Espaço</th>
-                    <th>Horário  Dia Semana</th>
-                    <th>Status</th>
-                    <th >Vagas</th>
-                    
-                  </tr>
-                </thead>
-                <tbody>                  
-                  {loop="$turma"}
-                  <tr>
-                    <td>{$value.idturma} - {$value.descturma}</br>{$value.periodo}</td>
-                     <td>{$value.descmodal}</td>
-                    <td>{$value.descrfxetaria} </br> {$value.initidade} a {$value.fimidade} anos</td>
-                    <td>{$value.apelidolocal}</td>
-                    <td>{$value.nomeespaco}</td>
-                    <td> {$value.idhorario} - {$value.diasemana} </br> {$value.horainicio} ás {$value.horatermino}  </td>
-                    <td>{$value.desstatus}</td>
-                    <td>{$value.vagas}</td>
-                    
-                    <td>
-                      <a href="/professor/turma/{$value.idturma}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
-                      <a href="/professor/turma/{$value.idturma}/delete" onclick="return confirm('Deseja realmente excluir a turma de {$value.descturma} {$value.horainicio} ás {$value.horatermino} - {$value.periodo}?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
-                    </td>
-                  </tr>
-                  {/loop}
-                </tbody>
-              </table>
-            </div>            
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              <div class="row">
 
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">
+                 Descrição da turma</br>período
+                </h5>
+              </div>                  
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    Faixa etária
+                </h5>
+              </div>
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    Local
+                </h5>
+              </div>
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    Horário
+                </h5>
+              </div>
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                     Status
+                </h5>
+              </div>
+
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    Vagas
+                </h5>
+              </div>          
+
+            </div>
+          </div>
+
+            {loop="$turma"}
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              <div class="row">
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">
+                 {$value.descturma}</br>{$value.periodo}
+                </h5>
+              </div>                  
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  {$value.descrfxetaria} </br> {$value.initidade} a {$value.fimidade} anos
+                </h5>
+              </div>
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    {$value.nomeespaco}<br>{$value.apelidolocal}
+                </h5>
+              </div>
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    {$value.diasemana} </br> {$value.horainicio} ás {$value.horatermino}
+                </h5>
+              </div>
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                     {$value.desstatus}
+                </h5>
+              </div>
+
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    {$value.vagas}
+                </h5>
+              </div>
+
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <a href="/professor/turma/{$value.idturma}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
+                <br><br>
+                      <a href="/professor/turma/{$value.idturma}/delete" onclick="return confirm('Deseja realmente excluir a turma de {$value.descturma} {$value.horainicio} ás {$value.horatermino} - {$value.periodo}?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
+              </div>
+
+            </div>
+          </div>
+          {/loop}
+
+
+            
             <div class="box-footer clearfix">
               <ul class="pagination pagination-sm no-margin pull-right">
                 {loop="$pages"}

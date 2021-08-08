@@ -1,9 +1,27 @@
-<?php if(!class_exists('Rain\Tpl')){exit;}?><!-- Content Wrapper. Contains page content -->
+<?php if(!class_exists('Rain\Tpl')){exit;}?><style>
+@media print {
+    .header-area,
+    .site-branding-area,
+    .sticky-wrapper,
+    .footer-top-area,
+    .footer-bottom-area,
+    .single-product-area .col-md-3,
+    .button.alt,
+    .product-big-title-area {
+        display:none!important;
+    }
+    .single-product-area .col-md-9 {
+        width: 100%!important;
+    }
+}
+</style>
+
+<!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Lista de Alunos
+    Lista com <?php echo htmlspecialchars( $total, ENT_COMPAT, 'UTF-8', FALSE ); ?> alunos
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -24,7 +42,6 @@
           <?php } ?>
             
             <div class="box-header">
-              <a href="#" class="btn btn-success">Cadastrar Usuário</a>
 
               <div class="box-tools">
                 <form action="/professor/pessoas">
@@ -39,36 +56,80 @@
 
             </div>
 
-            <div class="box-body no-padding">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>IdPess</th>
-                    <th>IdUser</th>
-                    <th>Nome</th>
-                    <th>Idade</th>
-                    <th>Responsável</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php $counter1=-1;  if( isset($pessoas) && ( is_array($pessoas) || $pessoas instanceof Traversable ) && sizeof($pessoas) ) foreach( $pessoas as $key1 => $value1 ){ $counter1++; ?>
-                  <tr>
-                    <td><?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                    <td><?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                    <td><?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                    <td><?php echo calcularIdade($value1["dtnasc"]); ?></td>
-                    <td><?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              <div class="row">
+              </div>
 
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              <div class="row">
+              <div class="col-md-3" >
+                <h5 style="font-weight: bold; text-align: left;">
+                  Nome do aluno     
+                </h5>
+              </div>
 
-                    <td>
-                      <a href="/professor/insc/pessoa/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i>Consulta inscrições</a>
-                      
-                    </td>
-                  </tr>
-                  <?php } ?>
-                </tbody>
-              </table>
+              <div class="col-md-2" >
+                <h5 style="font-weight: bold; text-align: left;">
+                 Data Nasc.
+                </h5>
+              </div>
+
+              <div class="col-md-1" >
+                <h5 style="font-weight: bold; text-align: left;">
+                 Idade
+                </h5>
+              </div>
+              <div class="col-md-2" >
+                <h5 style="font-weight: bold; text-align: left;">
+                 Nome do responsável
+                </h5>
+              </div>
+              <div class="col-md-2" >
+                <h5 style="font-weight: bold; text-align: left;">
+                  Status
+                </h5>
+              </div>
+            </div>           
             </div>
+           
+            <?php $counter1=-1;  if( isset($pessoas) && ( is_array($pessoas) || $pessoas instanceof Traversable ) && sizeof($pessoas) ) foreach( $pessoas as $key1 => $value1 ){ $counter1++; ?>
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              <div class="row">
+              <div class="col-md-3" >
+                <h5 style="font-weight: bold; text-align: left;">
+                  <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>                    
+                    
+                </h5>
+              </div>
+              <div class="col-md-2" >
+                <h5 style="font-weight: bold; text-align: left;">
+                 <?php echo formatDate($value1["dtnasc"]); ?>
+                </h5>
+              </div>
+              <div class="col-md-1" >
+                <h5 style="font-weight: bold; text-align: left;">
+                  <?php echo calcularIdade($value1["dtnasc"]); ?>
+                </h5>
+              </div>
+              <div class="col-md-2" >
+                <h5 style="font-weight: bold; text-align: left;">
+                  <td><?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                </h5>
+              </div>
+              <div class="col-md-2" >
+                <h5 style="font-weight: bold; text-align: left;">
+                  <?php if( $value1["statuspessoa"] == 1 ){ ?>Ativo<?php }else{ ?>Inativo<?php } ?>
+                </h5>
+              </div>
+              <div class="col-md-2" >
+                   <a href="/professor/insc/pessoa/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i>Consulta inscrições</a>
+              </div>
+            </div>           
+            </div>
+            <?php } ?>
+            
+              </div>
+          </div>
             <!-- /.box-body -->
             <div class="box-footer clearfix">
               <ul class="pagination pagination-sm no-margin pull-right">

@@ -49,6 +49,7 @@ $app->get("/professor/insc", function() {
 	// envia para a página o array retornado pelo listAll
 	$page->setTpl("insc", array( // aqui temos um array com muitos arrays
 		"insc"=>$pagination['data'],
+		"total"=>$pagination['total'],
 		"search"=>$search,
 		"pages"=>$pages,
 		"error"=>User::getError()

@@ -46,6 +46,7 @@ $app->get("/professor/horario", function() {
 	// envia para a página o array retornado pelo listAll
 	$page->setTpl("horario", array( // aqui temos um array com muitos arrays
 		"horario"=>$pagination['data'],
+		"total"=>$pagination['total'],
 		"search"=>$search,
 		"pages"=>$pages,
 		"error"=>Horario::getMsgError()

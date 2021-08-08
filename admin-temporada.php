@@ -15,10 +15,12 @@ $app->get("/professor/temporada", function() {
 
 	$temporada = Temporada::listAll();
 
+	$total = count($temporada);
 	$page = new PageAdmin();
-
+	
 	$page->setTpl("temporada", array(
 		'temporada'=>$temporada,
+		'total'=>$total,
 		'error'=>Temporada::getError()
 	));
 });

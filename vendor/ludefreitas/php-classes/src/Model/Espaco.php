@@ -240,7 +240,7 @@ class Espaco extends Model {
 
 	}
 	*/
-	public static function getPage($page = 1, $itemsPerPage = 8)
+	public static function getPage($page = 1, $itemsPerPage = 5)
 	{
 
 		$start = ($page - 1) * $itemsPerPage;
@@ -268,7 +268,7 @@ class Espaco extends Model {
 
 	}
 
-	public static function getPageSearch($search, $page = 1, $itemsPerPage = 8)
+	public static function getPageSearch($search, $page = 1, $itemsPerPage = 5)
 	{
 
 		$start = ($page - 1) * $itemsPerPage;

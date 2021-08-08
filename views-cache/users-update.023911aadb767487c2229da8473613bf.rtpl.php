@@ -3,7 +3,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Editar usuário
+    Tornar usuário administrador e/ou professor
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -61,11 +61,13 @@
                 <input type="checkbox" name="isprof" value="1" <?php if( $user["isprof"] == 1 ){ ?>checked<?php } ?>> Acesso de Professor
               </label>
             </div>
+            <!--
             <div class="checkbox">
               <label>
                 <input type="checkbox" name="statususer" disabled="true" value="1" <?php if( $user["statususer"] == 1 ){ ?>checked<?php } ?>> Ativar usuário
               </label>
             </div>
+          -->
           
           </div>
           <!-- /.box-body -->

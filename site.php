@@ -14,10 +14,6 @@ use \Sbc\Model\Endereco;
 
 $app->get('/', function() {
 
-	//$turma = Turma::listAllTurmaTemporada();
-
-	//$turma = Turma::getPageTurmaTemporada();
-
 	$search = (isset($_GET['search'])) ? $_GET['search'] : "";
 
 	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
@@ -25,30 +21,11 @@ $app->get('/', function() {
 	if ($search != '') {
 
 		$pagination = Turma::getPageSearchTurmaTemporada($search, $page);
-
+		
 	} else {
 
-		$pagination = Turma::getPageTurmaTemporada($page);
-
+		$pagination = Turma::getPageTurmaTemporada();
 	}
-
-	$pages = [];
-
-	for ($x = 0; $x < $pagination['pages']; $x++)
-	{
-
-		array_push($pages, [
-			'href'=>'/?'.http_build_query([
-				'page'=>$x+1,
-				'search'=>$search
-			]),
-			'text'=>$x+1
-		]);
-
-	}
-
-	//var_dump($pagination['total']);
-	//exit;
 
 	$temporada = new Temporada();
 
@@ -77,21 +54,17 @@ $app->get('/', function() {
 		if($temporada->getidstatustemporada() == 2){
 
 			Temporada::alterarStatusTemporadaParaIncricoesIniciadas($dtInicinscricao, $idtemporada);
-
 		}	
 
 		if($temporada->getidstatustemporada() == 4){
 
 			Temporada::alterarStatusTemporadaParaMatriculasIniciadas($dtTerminscricao, $idtemporada);
-
 		}	
 
 		if($temporada->getidstatustemporada() == 6){
 
 			Temporada::alterarStatusTemporadaParaMatriculasEncerradas($dtTermmatricula, $idtemporada);
-
-		}				
-
+		}		
 	}	
 		
 	$page = new Page(); 
@@ -99,7 +72,7 @@ $app->get('/', function() {
 	$page->setTpl("index", array(
 		'turma'=>Turma::checkList($pagination['data']),
 		"search"=>$search,
-		"pages"=>$pages,
+		//"pages"=>$pages,
 		'error'=>Cart::getMsgError()
 	));
 });

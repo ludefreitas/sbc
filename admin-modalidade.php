@@ -47,6 +47,7 @@ $app->get("/professor/modalidades", function() {
 	// envia para a página o array retornado pelo listAll
 	$page->setTpl("modalidades", array( // aqui temos um array com muitos arrays
 		"modalidade"=>$pagination['data'],
+		"total"=>$pagination['total'],
 		"search"=>$search,
 		"pages"=>$pages,
 		"error"=>Modalidade::getMsgError()

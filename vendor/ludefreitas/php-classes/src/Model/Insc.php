@@ -215,7 +215,7 @@ class Insc extends Model {
 
 	}
 
-	public static function getPage($page = 1, $itemsPerPage = 10)
+	public static function getPage($page = 1, $itemsPerPage =5)
 	{
 
 		$start = ($page - 1) * $itemsPerPage;
@@ -246,7 +246,7 @@ class Insc extends Model {
 
 	}
 
-	public static function getPageSearch($search, $page = 1, $itemsPerPage = 10)
+	public static function getPageSearch($search, $page = 1, $itemsPerPage = 5)
 	{
 
 		$start = ($page - 1) * $itemsPerPage;
@@ -265,7 +265,9 @@ class Insc extends Model {
 			INNER JOIN tb_turma h USING(idturma)
 			WHERE a.idinsc LIKE :search
 			OR f.desperson LIKE :search 
+			OR g.desctemporada LIKE :search 
 			OR d.nomepess LIKE :search
+			OR h.descturma LIKE :search 
 			-- ORDER BY a.dtinsc DESC
 			LIMIT $start, $itemsPerPage;
 		", [

@@ -3,7 +3,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Lista de Temporadas
+    Lista com {$total} temporadas
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -27,42 +27,98 @@
                 </div>
                 {/if}
 
-            <div class="box-body no-padding">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Temporada</th>
-                    <th>Status Temporada</th>
-                    <th>Data Icicio das Inscrição</th>
-                    <th>Data Fim das Inscrição</th>
-                    <th>Data Icicio das Matrícula</th>
-                    <th>Data Fim das Matrícula</th>
-                  </tr>
-                </thead>
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              <div class="row">
 
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">
+                    Temporada                                      
+                </h5>
+              </div>
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">  
+                    Status Temporada                     
+                </h5>
+              </div>
 
-                <tbody>
-                  {loop="$temporada"}
-                  <tr>
-                    
-                    <td> <a href="/professor/turma-temporada/{$value.idtemporada}">{$value.idtemporada}</a></td>
-                    <td><a href="/professor/turma-temporada/{$value.idtemporada}">{$value.desctemporada}</a></td>
-                    <td>{$value.idstatustemporada} - {$value.descstatustemporada}</a></td>
-                    <td>{function="formatDateHour($value.dtinicinscricao)"}</a></td>
-                    <td>{function="formatDateHour($value.dtterminscricao)"}</a></td>
-                    <td>{function="formatDateHour($value.dtinicmatricula)"}</a></td>
-                    <td>{function="formatDateHour($value.dttermmatricula)"}</a></td>
-                    <td>    
-                    
-                      <a href="/professor/temporada/{$value.idtemporada}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
-                      <a href="/professor/temporada/{$value.idtemporada}/delete" onclick="return confirm('Deseja realmente excluir temporada {$value.desctemporada}?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
-                    </td>
-                  </tr>
-                  {/loop}
-                </tbody>
-              </table>
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    Início das inscrições
+                </h5>
+              </div>
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    Fim das inscrições
+                </h5>
+              </div>
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    Início das matrículas
+                </h5>
+              </div>
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    Fim das matrículas
+                </h5>
+              </div>
+
             </div>
+          </div>
+
+            {loop="$temporada"}
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              <div class="row">
+
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                    
+                    <a href="/professor/turma-temporada/{$value.idtemporada}">{$value.desctemporada}</a>
+                </h5>
+              </div>
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">  
+                    {$value.idstatustemporada} - {$value.descstatustemporada}
+                </h5>
+              </div>
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    {function="formatDateHour($value.dtinicinscricao)"}
+                </h5>
+              </div>
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    {function="formatDateHour($value.dtterminscricao)"}
+                </h5>
+              </div>
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    {function="formatDateHour($value.dtinicmatricula)"}
+                </h5>
+              </div>
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    {function="formatDateHour($value.dttermmatricula)"}
+                </h5>
+              </div>
+
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                 <a href="/professor/temporada/{$value.idtemporada}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
+                      <a href="/professor/temporada/{$value.idtemporada}/delete" onclick="return confirm('Deseja realmente excluir temporada {$value.desctemporada}?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
+              </div>
+
+            </div>
+          </div>
+          {/loop}
+
+            
             <!-- /.box-body -->
           </div>
   	</div>

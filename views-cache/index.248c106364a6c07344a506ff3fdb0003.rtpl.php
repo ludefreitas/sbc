@@ -93,13 +93,7 @@
 
 
   <?php } ?>
-  <div class="box-footer clearfix">
-               <ul class="pagination pagination-sm no-margin pull-right"> <li style="margin: 5px">página</a></li>
-                <?php $counter1=-1;  if( isset($pages) && ( is_array($pages) || $pages instanceof Traversable ) && sizeof($pages) ) foreach( $pages as $key1 => $value1 ){ $counter1++; ?>
-               <li style="border: solid 1px black; margin: 5px"><a href="<?php echo htmlspecialchars( $value1["href"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["text"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a></li>
-                <?php } ?>
-              </ul>
-            </div>
+  
   </div> <!-- final da index -->
 
 
