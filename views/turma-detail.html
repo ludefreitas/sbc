@@ -8,21 +8,9 @@
   <div class="alert alert-danger" role="alert">
       {$error}
   </div>
-{/if}
+{else}
 
-{if="$turma.idstatustemporada != 4 AND $turma.idstatustemporada != 6"}
-  <div class="container"> <!-- container 3 -->
-      <div class="row"> <!-- row 4 -->                        
-          <div class="col-md-12" style="text-align-last: left; background-color: white; margin: 5px 0px 5px 0px; padding-right: 0px">
-                  <h2>Não há temporada iniciada ): </h2>                               
-                  <h1>Lo_| _Aguarde  </h1>
-                  <h1>Em breve \o/ </h1>                              
-                  <h1>Novidades :) </h1>
-            </div> 
-      </div> <!-- row 4 -->
-    </div> <!-- container 3 -->                             
-    
-    {else}
+
 <div class="container">
   <div class="row">
       <div class="col-md-12">
@@ -50,17 +38,26 @@
             Inicio das aulas: </</h5>
             </div>
           </div>
+          {if="$turma.idstatustemporada == 6"}
+
+          <div class="row">
+            <div class="col-md-12">
+             <h5 style="color: green; font-weight: bold;"> Aguarde terminar período de matrículas para fazer novas inscrições.</h3>
+            </div>
+          </div> 
+
+          {else}
           <div class="row">
             <div class="col-md-12">
               <form action="/cart/{$turma.idturma}/{$turma.idtemporada}/add"> 
               <button class="btn btn-success" style="text-align-last: center; background-color: #15a03f" type="submit">Confirmar inscrição para esta turma</button>
            </form>                          
             </div>
-          </div>          
+          </div> 
+          {/if}         
         </div>
     </div><!-- row 4 --> 
 </div> <!-- container 3 -->           
-    
 {/if}
 </div> <!-- final da index -->
 

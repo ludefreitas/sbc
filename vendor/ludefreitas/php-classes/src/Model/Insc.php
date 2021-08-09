@@ -17,13 +17,14 @@ class Insc extends Model {
 
 		$sql = new Sql();													        
 
-		$results = $sql->select("CALL sp_insc_save(:idinsc, :idinscstatus, :idcart, :idturma, :idtemporada, :numsorte)", [
+		$results = $sql->select("CALL sp_insc_save(:idinsc, :idinscstatus, :idcart, :idturma, :idtemporada, :numsorte, :laudo)", [
 			':idinsc'=>$this->getidinsc(),
 			':idinscstatus'=>$this->getidinscstatus(),
 			':idcart'=>$this->getidcart(),
 			':idturma'=>$this->getidturma(),
 			':idtemporada'=>$this->getidtemporada(),
-			':numsorte'=>$this->getnumsorte()
+			':numsorte'=>$this->getnumsorte(),
+			':laudo'=>$this->getlaudo()
 		]);
 
 		if (count($results) > 0) {
@@ -329,12 +330,12 @@ class Insc extends Model {
 			return $results;
 	}
 
-
+	/*
 	// Esta função verifica se a temporada está com a matricula iniciada 
 	// para setar o status da inscrição no site.php
 	public function statusTemporadaMatriculaIniciada($idtemporada){
 
-		$idStatusTemporadaMatriculaIniciada = 6;
+		$idStatusTemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
 
 		$sql = new Sql();
 
@@ -352,7 +353,31 @@ class Insc extends Model {
 		}else{
 			return false;
 		}
+	}
+	*/
 
+	// Esta função verifica se a temporada está com a matrículas encerradas 
+	// para setar o status da inscrição no site.php
+	public function statusTemporadaMatriculasEncerradas($idtemporada){
+
+		$idStatusTemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT idstatustemporada
+			FROM tb_temporada 					
+			WHERE idtemporada = :idtemporada AND idstatustemporada = :idstatustemporada
+		", [
+			':idtemporada'=>$idtemporada,
+			':idstatustemporada'=>$idStatusTemporadaMatriculasEncerradas
+		]);
+
+		if (count($results) > 0) {			
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	public function alteraStatusInscricaoCancelada($idinsc){

@@ -39,6 +39,23 @@
                             <input type="hidden" name="idturma" value="<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
 
                         </div>
+                        <?php if( $value1["idstatustemporada"] == 5 ){ ?>
+                        <div class="col-md-3" style="padding-top: 10px">
+                            <strong>Inscrição com Laudo?</strong>
+                        </div>
+                        <div class="col-md-9 alert alert-success">
+                            <div class="checkbox">
+                                <label>
+                                <input type="radio" name="laudo" value="1"> Sim
+                                </label>
+                                &nbsp;&nbsp;&nbsp;
+                                <label>
+                                <input type="radio" name="laudo" value="0"> Não
+                                </label>
+                            </div>
+                        </div> 
+                        <?php } ?>       
+            
                     </div>
                     <div class="row" style="padding-top: 0px">
                          <div class="col-md-12 alert-primary" style="text-align-last: left; padding-top: 10px;">
@@ -50,6 +67,7 @@
                              
                            
                          </div>
+
                     </div>                  
                     <div class="row" style="padding-top: 0px">
                          <div class="col-md-12" style="text-align-last: center; padding-top: 10px;">

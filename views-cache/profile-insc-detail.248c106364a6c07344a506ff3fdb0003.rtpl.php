@@ -69,6 +69,14 @@
     </div>
     <div class="row">
         <div class="col-md-3" style="padding-top: 10px">
+            <strong>Com laudo? </strong>
+        </div>
+        <div class="col-md-9 alert alert-success">
+            <strong><?php if( $insc["laudo"] == 0 ){ ?>Não<?php }else{ ?>Sim<?php } ?></strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3" style="padding-top: 10px">
             <strong>Status da Inscrição: </strong>
         </div>
         <div class="col-md-9 alert alert-success" <?php echo colorStatus($insc["idinscstatus"]); ?>>

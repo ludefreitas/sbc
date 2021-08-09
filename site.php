@@ -32,9 +32,12 @@ $app->get('/', function() {
 	if(!isset($pagination['data']) || $pagination['data'] == NULL){
 
 		if(!isset($search) || $search == NULL){
-			Cart::setMsgError("Não existe turmas para esta temporada. Aguarde! ");
+
+			Cart::setMsgError("Não existe turmas para esta temporada. A temporada pode não estar iniciada, estar em processo de sorteio ou a temporada foi encerrada. Aguarde, ou entre em contato com o Centro Esportivo mais próximo a sua casa. ");
+
 		}else{
-			Cart::setMsgError("Não encontramos nenhuma turma com a palavra '".$search."' nesta temporada! ");
+
+			Cart::setMsgError("Não encontramos nenhuma turma com a palavra '".$search."' nesta temporada! A temporada pode não estar iniciada, estar em processo de sorteio ou a temporada foi encerrada. Aguarde, ou entre em contato com o Centro Esportivo mais próximo à sua casa.");
 		}		
 
 	}else{
@@ -47,22 +50,34 @@ $app->get('/', function() {
 
 		$temporada->get((int)$idtemporada);
 
-		$dtInicinscricao = $temporada->getdtinicinscricao();
+		$dtInicinscricao = $temporada->getdtinicinscricao(); 
 		$dtTerminscricao = $temporada->getdtterminscricao();
+		$dtInicmatricula = $temporada->getdtinicmatricula();
 		$dtTermmatricula = $temporada->getdttermmatricula();
 
-		if($temporada->getidstatustemporada() == 2){
+		if($temporada->getidstatustemporada() == 2){ // statustemporada = Temporada iniciada
 
+			//Altera status para idstatustemporada = 4
 			Temporada::alterarStatusTemporadaParaIncricoesIniciadas($dtInicinscricao, $idtemporada);
 		}	
+		
+		if($temporada->getidstatustemporada() == 4){ // statustemporada = Inscrições iniciadas
 
-		if($temporada->getidstatustemporada() == 4){
+			//Altera status para idstatustemporada = 3
+			Temporada::alterarStatusTemporadaParaInscricoesEncerradas($dtTerminscricao, $idtemporada);
+		}		
 
-			Temporada::alterarStatusTemporadaParaMatriculasIniciadas($dtTerminscricao, $idtemporada);
-		}	
+		/*
+		if($temporada->getidstatustemporada() == 3){ // statustemporada = Inscrições encerradas
 
-		if($temporada->getidstatustemporada() == 6){
+			//Altera status para idstatustemporada = 6 --> Será feito ao fazer o sorteio
+			Temporada::alterarStatusTemporadaParaMatriculasIniciadas($dtInicmatricula, $idtemporada);
+		}
+		*/	
 
+		if($temporada->getidstatustemporada() == 6){ // statustemporada = Matrículas iniciadas
+
+			//Altera status para idstatustemporada = 5
 			Temporada::alterarStatusTemporadaParaMatriculasEncerradas($dtTermmatricula, $idtemporada);
 		}		
 	}	
@@ -165,19 +180,31 @@ $app->post("/checkout", function(){
 	$idcart = (int)$cart->getidcart();
 
 	$idtemporada = $_POST['idtemporada'];
-	$idturma = $_POST['idturma'];	
+	$idturma = $_POST['idturma'];
+
+	$temporada = new Temporada();
+
+	$temporada->get((int)$idtemporada);
+	
+	if($temporada->getidstatustemporada() == 5){
+
+		if(!isset($_POST['laudo']) || $_POST['laudo'] == NULL){
+
+			Pessoa::setError("Informe se você irá fazer uma inscrição com laudo ou não! ");
+			header("Location: /checkout");
+			exit();
+		}
+	}	
+
+	$laudo = isset($_POST['laudo']) ? (int)$_POST['laudo'] : 1;
 
 	$cartsturmas = CartsTurmas::getCartsTurmasFromId($idcart);
 
 	$turma = new Turma();
 
 	$pessoa = new Pessoa();
-
-	$temporada = new Temporada();
 	
 	$insc = new Insc();	
-
-	$temporada->get((int)$idtemporada);
 
 	$desctemporada = $temporada->getdesctemporada();
 
@@ -191,15 +218,24 @@ $app->post("/checkout", function(){
 
 	$desperson = $user->getdesperson();		
 
-	if(Insc::statusTemporadaMatriculaIniciada($idtemporada)){
+	//if(Insc::statusTemporadaMatriculaIniciada($idtemporada)){
+		//$InscStatus = InscStatus::AGUARDANDO_MATRICULA;
+
+	//}
+
+	if(Insc::statusTemporadaMatriculasEncerradas($idtemporada)){
+
 		$InscStatus = InscStatus::AGUARDANDO_MATRICULA;
+
 	}else{
+
 		$InscStatus = InscStatus::AGUARDANDO_SORTEIO;
 	}
 	
 		$insc->setData([
 			'idcart'=>$idcart,
 			'idinscstatus'=>$InscStatus,
+			'laudo'=>$laudo,
 			'idturma'=>$idturma,
 			'idtemporada'=>$idtemporada	
 		]);
@@ -226,6 +262,17 @@ $app->get("/turma/:idturma/:idtemporada", function($idturma, $idtemporada){
 	$turma = new Turma();
 
 	$turma->getFromIdTurmaTemporada($idturma, $idtemporada);
+
+	if(
+		$turma->getidstatustemporada() != 4 
+	   	AND $turma->getidstatustemporada() != 5 
+	    AND $turma->getidstatustemporada() != 6
+		)
+	{
+
+		Turma::setMsgError("Não é possivel Inscrever-se na turma selecionada. A temporada pode não estar iniciada, estar em processo de sorteio ou ainda, a temporada foi encerrada. Aguarde, ou entre em contato com o Centro Esportivo mais próximo a sua casa. ");
+
+	}
 
 	$page = new Page(); 
 

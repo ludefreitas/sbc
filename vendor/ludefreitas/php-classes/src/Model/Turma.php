@@ -48,6 +48,7 @@ class Turma extends Model {
 		$idStatusTemporadaTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
 		$idStatusTemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
 		$idStatusTemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
+		$idstatusTemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
 
 		$sql = new Sql();
 
@@ -79,12 +80,14 @@ class Turma extends Model {
 			using(idmodal)
       		WHERE k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
       		OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
-      		OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada
+      		OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
+      		OR k.idstatustemporada = :idstatusTemporadaMatriculasEncerradas
 			-- ORDER BY a.descturma
 			ORDER BY RAND()", [
 				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
 				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
-				':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada
+				':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada,
+				':idStatusTemporadaTemporadaIniciada'=>$idstatusTemporadaMatriculasEncerradas
 			]);
 	}
 	*/
@@ -96,6 +99,7 @@ class Turma extends Model {
 		$idStatusTemporadaTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
 		$idStatusTemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
 		$idStatusTemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
+		$idstatusTemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
 
 		$start = ($page - 1) * $itemsPerPage;
 
@@ -128,14 +132,16 @@ class Turma extends Model {
 			using(idstatustemporada)
 			INNER JOIN tb_modalidade m         
 			using(idmodal)
-      		WHERE k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
+			WHERE k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
       		OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
-      		OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada
+      		OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
+      		OR k.idstatustemporada = :idstatusTemporadaMatriculasEncerradas
 			LIMIT $start, $itemsPerPage;
 			", [
 				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
 				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
-				':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada
+				':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada,
+				':idStatusTemporadaTemporadaIniciada'=>$idstatusTemporadaMatriculasEncerradas
 			]);
 
 		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
@@ -154,6 +160,7 @@ class Turma extends Model {
 		$idStatusTemporadaTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
 		$idStatusTemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
 		$idStatusTemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
+		$idstatusTemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
 
 		$sql = new Sql();
 
@@ -184,10 +191,12 @@ class Turma extends Model {
 			using(idstatustemporada)
 			INNER JOIN tb_modalidade m         
 			using(idmodal)
-      		WHERE k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
+      		WHERE k.idstatustemporada = :idstatusTemporadaMatriculasEncerradas 
+      		OR k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
       		OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
       		OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada
 			", [
+				':idstatusTemporadaMatriculasEncerradas'=>$idstatusTemporadaMatriculasEncerradas,
 				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
 				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
 				':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada
@@ -209,6 +218,7 @@ class Turma extends Model {
 		$idStatusTemporadaTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
 		$idStatusTemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
 		$idStatusTemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
+		$idstatusTemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
 
 		$start = ($page - 1) * $itemsPerPage;
 
@@ -242,7 +252,8 @@ class Turma extends Model {
 			INNER JOIN tb_modalidade m         
 			using(idmodal)
       		WHERE (
-      			k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
+      			k.idstatustemporada = :idstatusTemporadaMatriculasEncerradas  
+      			OR k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
       			OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
       			OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada
       		) AND (
@@ -264,6 +275,7 @@ class Turma extends Model {
 			-- ORDER BY a.descturma
 			-- LIMIT $start, $itemsPerPage;
 		", [
+			':idstatusTemporadaMatriculasEncerradas'=>$idstatusTemporadaMatriculasEncerradas,
 			':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
 			':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
 			':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada,
@@ -285,6 +297,7 @@ class Turma extends Model {
 		$idStatusTemporadaTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
 		$idStatusTemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
 		$idStatusTemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
+		$idstatusTemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
 
 		$sql = new Sql();
 
@@ -315,9 +328,14 @@ class Turma extends Model {
 			INNER JOIN tb_modalidade m         
 			using(idmodal)
       		WHERE j.idmodal = :idmodal
-            AND k.idstatustemporada = :idStatusTemporadaTemporadaIniciada OR k.idstatustemporada = :idStatusTemporadaInscricaoIniciada OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
+            AND (
+            k.idstatustemporada = :idstatusTemporadaMatriculasEncerradas 
+            OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada 
+            OR k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
+            OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada)
       		ORDER BY RAND()", [
       			':idmodal'=>$idmodal,
+				':idstatusTemporadaMatriculasEncerradas'=>$idstatusTemporadaMatriculasEncerradas,
 				':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada,
 				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
 				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada
@@ -331,6 +349,7 @@ class Turma extends Model {
 		$idStatusTemporadaTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
 		$idStatusTemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
 		$idStatusTemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
+		$idstatusTemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
 
 		$sql = new Sql();
 
@@ -361,9 +380,14 @@ class Turma extends Model {
 			INNER JOIN tb_modalidade m         
 			using(idmodal)
       		WHERE e.idlocal = :idlocal
-            AND k.idstatustemporada = :idStatusTemporadaTemporadaIniciada OR k.idstatustemporada = :idStatusTemporadaInscricaoIniciada OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
+            AND (
+            k.idstatustemporada = :idstatusTemporadaMatriculasEncerradas
+            OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada 
+            OR k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
+            OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada)
       		ORDER BY RAND()", [
       			':idlocal'=>$idlocal,
+				':idstatusTemporadaMatriculasEncerradas'=>$idstatusTemporadaMatriculasEncerradas,
 				':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada,
 				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
 				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada

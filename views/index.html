@@ -73,6 +73,12 @@
                <span style="font-weight: bold;">
               {$value.numinscritos} inscritos para {$value.vagas} vagas                          
               {/if}
+
+              {if="$value.idstatustemporada == 6"} 
+               <span style="color: red;">
+                {$value.descstatustemporada}. <br>
+                <span style="color: black;">Novas inscrições a partir de {function="formatDate($value.dttermmatricula)"}.</span>
+              {/if}
               
 
               {if="$value.numinscritos > $value.vagas && $value.idstatustemporada == 4"} <br>
@@ -84,8 +90,14 @@
             
           </h5>
         </a>
+
+        {if="$value.idstatustemporada == 6"} 
+
+        {else}
+          <a class="btn btn-info" style="background-color: #cc5d1e"  href="/turma/{$value.idturma}/{$value.idtemporada}">Detalhes da turma</a>  
+        {/if}
           
-        <a class="btn btn-info" style="background-color: #cc5d1e"  href="/turma/{$value.idturma}/{$value.idtemporada}">Detalhes da turma</a>
+        
           
         </div>
       </div> <!-- row 4 -->

@@ -39,9 +39,15 @@ class Sorteio extends Model {
 
 		}
 
+
+		// Depois de sortear altera status da temporada para matrículas iniciadas
+		Temporada::updateStatusTemporadaParaMatriculasIniciadas($idtemporada);
 		//var_dump($sql);
 		//	exit();
 		return $response;
+
+		
+
 	}
 
 	public function sorteioExiste(){

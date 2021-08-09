@@ -73,6 +73,12 @@
                <span style="font-weight: bold;">
               <?php echo htmlspecialchars( $value1["numinscritos"], ENT_COMPAT, 'UTF-8', FALSE ); ?> inscritos para <?php echo htmlspecialchars( $value1["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas                          
               <?php } ?>
+
+              <?php if( $value1["idstatustemporada"] == 6 ){ ?> 
+               <span style="color: red;">
+                <?php echo htmlspecialchars( $value1["descstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>. <br>
+                <span style="color: black;">Novas inscrições a partir de <?php echo formatDate($value1["dttermmatricula"]); ?>.</span>
+              <?php } ?>
               
 
               <?php if( $value1["numinscritos"] > $value1["vagas"] && $value1["idstatustemporada"] == 4 ){ ?> <br>
@@ -84,8 +90,14 @@
             
           </h5>
         </a>
+
+        <?php if( $value1["idstatustemporada"] == 6 ){ ?> 
+
+        <?php }else{ ?>
+          <a class="btn btn-info" style="background-color: #cc5d1e"  href="/turma/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">Detalhes da turma</a>  
+        <?php } ?>
           
-        <a class="btn btn-info" style="background-color: #cc5d1e"  href="/turma/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">Detalhes da turma</a>
+        
           
         </div>
       </div> <!-- row 4 -->

@@ -169,16 +169,19 @@
 		public function temporadaStatusIniciadaExiste(){
 
 			$idstatustemporadaMatriculasIniciadas = StatusTemporada::MATRICULAS_INICIADAS;
-			$idstatustemporadaInscricoesIniciadas = StatusTemporada::INSCRICOES_INICIADAS;
+			$idstatustemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
+			$idstatustemporadaInscricoesIniciadas = StatusTemporada::INSCRICOES_INICIADAS;			
 			$idstatustemporadaTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
 			$sql = new Sql();
 			$results = $sql->select("
 				SELECT idstatustemporada 
 				FROM tb_temporada 
 				WHERE idstatustemporada = :idstatustemporadaMatriculasIniciadas
+				OR idstatustemporada = :idstatustemporadaMatriculasEncerradas
 				OR idstatustemporada = :idstatustemporadaInscricoesIniciadas
 				OR idstatustemporada = :idstatustemporadaTemporadaIniciada", [
 					':idstatustemporadaMatriculasIniciadas'=>$idstatustemporadaMatriculasIniciadas,
+					':idstatustemporadaMatriculasEncerradas'=>$idstatustemporadaMatriculasEncerradas,
 					':idstatustemporadaInscricoesIniciadas'=>$idstatustemporadaInscricoesIniciadas,
 					':idstatustemporadaTemporadaIniciada'=>$idstatustemporadaTemporadaIniciada
 			]);
@@ -295,7 +298,7 @@
 
 			$this->setData($results[0]);
 
-			Temporada::updateFile();
+			//Temporada::updateFile();
 			Temporada::updateFileAdmin();
 		}
 
@@ -331,11 +334,12 @@
 				':idtemporada'=>$this->getidtemporada()
 			]);	
 
-			Temporada::updateFile();
+			//Temporada::updateFile();
 			Temporada::updateFileAdmin();
 		}
 
 		// atualiza lista de temporada no site (no rodapé) temporada-menu.html
+		/*
 		public static function updateFile()	
 		{
 			$temporada = Temporada::listAll();
@@ -347,6 +351,7 @@
 			}
 			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."temporada-menu.html", implode('', $html));
 		}
+		*/
 
 		
 
@@ -501,7 +506,6 @@
 		}
 
 		public function alterarStatusTemporadaParaIncricoesIniciadas($dtInicinscricao, $idtemporada){
-
 			$hoje = date('Y-m-d H:i:s');
 			$data = date($dtInicinscricao);
 			$intHoje = strtotime($hoje);
@@ -511,8 +515,7 @@
 
 				Temporada::updateStatusTemporadaParaInscricoesIniciadas($idtemporada);					
 			}
-		} 
-		
+		} 		
 		public function updateStatusTemporadaParaInscricoesIniciadas($idtemporada){
 			$sql = new Sql();
 			$idstatustemporadaInscricoesIniciadas = StatusTemporada::INSCRICOES_INICIADAS;
@@ -522,6 +525,7 @@
 			]);
 		}
 
+		/*
 		public function alterarStatusTemporadaParaMatriculasIniciadas($dtTerminscricao, $idtemporada){
 
 			$hoje = date('Y-m-d H:i:s');
@@ -534,7 +538,9 @@
 				Temporada::updateStatusTemporadaParaMatriculasIniciadas($idtemporada);					
 			}
 		} 
+		*/
 
+		// Esta função é chamada quando é realizado o sorteio (Sorteio::Sortear)
 		public function updateStatusTemporadaParaMatriculasIniciadas($idtemporada){
 			$sql = new Sql();
 			$idstatustemporadaMatriculasIniciadas = StatusTemporada::MATRICULAS_INICIADAS;
@@ -543,6 +549,27 @@
 				':idtemporada'=>$idtemporada
 			]);
 		}
+
+		public function alterarStatusTemporadaParaInscricoesEncerradas($dtTerminscricao, $idtemporada){
+			$hoje = date('Y-m-d H:i:s');
+			$data = date($dtTerminscricao);
+			$intHoje = strtotime($hoje);
+			$intData = strtotime($data);
+
+			if($intHoje > $intData){
+				Temporada::updateStatusTemporadaParaInscricoesEncerradas($idtemporada);				
+			}
+		} 
+		public function updateStatusTemporadaParaInscricoesEncerradas($idtemporada){
+			$sql = new Sql();
+			$idstatustemporadaInscricoesEncerradas = StatusTemporada::INSCRICOES_ENCERRADAS;
+			$sql->query("UPDATE tb_temporada SET idstatustemporada = :idstatustemporadaInscricoesEncerradas  WHERE idtemporada = :idtemporada", [
+				'idstatustemporadaInscricoesEncerradas'=>$idstatustemporadaInscricoesEncerradas,
+				':idtemporada'=>$idtemporada
+			]);
+		}
+
+
 		public function alterarStatusTemporadaParaMatriculasEncerradas($dtTermmatricula, $idtemporada){
 			$hoje = date('Y-m-d H:i:s');
 			$data = date($dtTermmatricula);

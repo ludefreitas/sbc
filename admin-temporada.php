@@ -140,7 +140,7 @@ $app->post("/professor/temporada/create", function() {
 	}	
 	*/	
 
-	if($idstatustemporada == 2 || $idstatustemporada == 4 || $idstatustemporada == 6 ){
+	if($idstatustemporada == 2 || $idstatustemporada == 4 || $idstatustemporada == 5 || $idstatustemporada == 6 ){
 
 		//if(!Temporada::statusTemporadaIsIniciadaMatricula($idtemporada)){
 		//if($temporada->getidstatustemporada() != 2 && $temporada->getidstatustemporada() != 4 && $temporada->getidstatustemporada() != 6){
@@ -148,7 +148,7 @@ $app->post("/professor/temporada/create", function() {
 			$idStatusTemporadaMatriculaIniciada = Temporada::temporadaStatusIniciadaExiste();	
 		
 			if($idStatusTemporadaMatriculaIniciada){
-				Temporada::setError("Já existe uma temporada com o status selecionado. Não pode existir mais de uma temporada com status de TEMPORADA, INSCRIÇÕES ou MATRÍCULAS INICIADAS.");
+				Temporada::setError("Já existe uma temporada com o status selecionado. Não pode existir mais de uma temporada com status de TEMPORADA, INSCRIÇÕES, MATRÍCULAS INICIADAS ou MATRÍCULAS ENCERRADAS.");
 				header("Location: /professor/temporada/create");
 				exit;
 			}
@@ -251,15 +251,15 @@ $app->post("/professor/temporada/:idtemporada", function($idtemporada) {
 
 	$idstatustemporada = $_POST['idstatustemporada'];
 
-	if($idstatustemporada == 2 || $idstatustemporada == 4 || $idstatustemporada == 6 ){
+	if($idstatustemporada == 2 || $idstatustemporada == 4 || $idstatustemporada == 5 || $idstatustemporada == 6){
 
 		//if(!Temporada::statusTemporadaIsIniciadaMatricula($idtemporada)){
-		if($temporada->getidstatustemporada() != 2 && $temporada->getidstatustemporada() != 4 && $temporada->getidstatustemporada() != 6){
+		if($temporada->getidstatustemporada() != 2 && $temporada->getidstatustemporada() != 4 && $temporada->getidstatustemporada() != 5 && $temporada->getidstatustemporada() != 6){
 
 			$idStatusTemporadaMatriculaIniciada = Temporada::temporadaStatusIniciadaExiste();	
 		
 			if($idStatusTemporadaMatriculaIniciada){
-				Temporada::setError("Já existe uma temporada com o status selecionado. Não pode existir mais de uma temporada com status de TEMPORADA, INSCRIÇÕES ou MATRÍCULAS INICIADAS.");
+				Temporada::setError("Já existe uma temporada com o status selecionado. Não pode existir mais de uma temporada com status de TEMPORADA, INSCRIÇÕES, MATRÍCULAS INICIADAS ou MATRÍCULAS ENCERRADAS.");
 				header("Location: /professor/temporada/".$idtemporada."");
 				exit;
 			}

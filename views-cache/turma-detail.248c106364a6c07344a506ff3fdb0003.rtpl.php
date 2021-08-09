@@ -8,21 +8,9 @@
   <div class="alert alert-danger" role="alert">
       <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
   </div>
-<?php } ?>
+<?php }else{ ?>
 
-<?php if( $turma["idstatustemporada"] != 4 AND $turma["idstatustemporada"] != 6 ){ ?>
-  <div class="container"> <!-- container 3 -->
-      <div class="row"> <!-- row 4 -->                        
-          <div class="col-md-12" style="text-align-last: left; background-color: white; margin: 5px 0px 5px 0px; padding-right: 0px">
-                  <h2>Não há temporada iniciada ): </h2>                               
-                  <h1>Lo_| _Aguarde  </h1>
-                  <h1>Em breve \o/ </h1>                              
-                  <h1>Novidades :) </h1>
-            </div> 
-      </div> <!-- row 4 -->
-    </div> <!-- container 3 -->                             
-    
-    <?php }else{ ?>
+
 <div class="container">
   <div class="row">
       <div class="col-md-12">
@@ -50,17 +38,26 @@
             Inicio das aulas: </</h5>
             </div>
           </div>
+          <?php if( $turma["idstatustemporada"] == 6 ){ ?>
+
+          <div class="row">
+            <div class="col-md-12">
+             <h5 style="color: green; font-weight: bold;"> Aguarde terminar período de matrículas para fazer novas inscrições.</h3>
+            </div>
+          </div> 
+
+          <?php }else{ ?>
           <div class="row">
             <div class="col-md-12">
               <form action="/cart/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/add"> 
               <button class="btn btn-success" style="text-align-last: center; background-color: #15a03f" type="submit">Confirmar inscrição para esta turma</button>
            </form>                          
             </div>
-          </div>          
+          </div> 
+          <?php } ?>         
         </div>
     </div><!-- row 4 --> 
 </div> <!-- container 3 -->           
-    
 <?php } ?>
 </div> <!-- final da index -->
 
