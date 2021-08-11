@@ -63,8 +63,18 @@
                 </div>
                 <?php } ?>
 
+                <?php if( $success != '' ){ ?>
+                <div class="alert alert-success">
+                 <h4><?php echo htmlspecialchars( $success, ENT_COMPAT, 'UTF-8', FALSE ); ?></h4>
+                </div>
+                <?php }else{ ?>
+                <div class="">
+                <h3>Cadastrar uma nova pessoa</h3>
+                </div>
+                <?php } ?>
+
                 <form id="register-form-wrap" action="/registerpessoa" class="register" method="post">
-                    <h3>Preencha os campos abaixo para cadastrar uma nova pessoa</h3>
+                    
                     
                     <label for="nomepess">
                         Nome Completo 
@@ -141,7 +151,7 @@
                     <label for="nomemae">
                         <br><br>Nome da Mãe
                         <span class="required">
-                            <span style="font-size: 12px; font-weight: bold">* (Necessário preencher este campo se pessoa for menor de idade)</span>
+                            <span style="font-size: 12px; font-weight: bold">* (Necessário preencher este campo se pessoa a cadastrar for menor de idade)</span>
                         </span>
                     </label>
                     <input style="width: 100%; float: right;" type="text" id="nomemae" name="nomemae" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["nomemae"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">                
@@ -157,7 +167,7 @@
                     <label for="nomepai">
                         <br><br>Nome da Pai
                         <span class="required">
-                            <span style="font-size: 12px; font-weight: bold">* (Necessário preencher este campo se pessoa for menor de idade)</span>
+                            <span style="font-size: 12px; font-weight: bold">* (Necessário preencher este campo se pessoa a cadasttrar for menor de idade)</span>
                         </span>
                     </label>
                     <input style="width: 100%; float: right;" type="text" id="nomepai" name="nomepai" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["nomepai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">

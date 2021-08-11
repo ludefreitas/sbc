@@ -209,7 +209,7 @@ desired effect
                   <a href="/" class="btn btn-default btn-flat">Site</a>
                 </div>
                 <div class="pull-right">
-                  <a href="/professor/logout" class="btn btn-default btn-flat">Sair</a>
+                  <a href="/logout" class="btn btn-default btn-flat">Sair</a>
                 </div>
               </li>
             </ul>

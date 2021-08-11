@@ -4,7 +4,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-     {$turma.idturma} - {$turma.descturma} {$turma.diasemana}  {$turma.periodo} {$turma.apelidolocal} -   {$temporada.desctemporada} -
+     {$turma.idturma} - {$turma.descturma} {$turma.diasemana}  {$turma.periodo} {$turma.apelidolocal} -   {$temporada.desctemporada} - {$turma.vagas}
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -22,52 +22,107 @@
             <div class="box-header">
            
             </div>
-           
-            <div class="box-body no-padding">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Nome do aluno</th> 
-                    <th>CPF</th> 
-                    <th>Data Nascimento</th>    
-                    <th>idade</th>
-                    <th>Nome do Responsável</th>                 
-                    <th>Telefone</th>
-                    <th>Data Inscrição</th>
-                    <th>Status Inscrição</th>
-                    
-                    <th>Status</th>
-                    <th >Vagas</th>
-                    <th>Nº de inscritos</th>
-                    <th></th>
-                    
-                  </tr>
-                </thead>
-                <tbody>                  
-                  {loop="$insc"}
+          <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              
+            {loop="$insc"}
+            <div class="box-body" style=" margin: 5px;">
+              <div {function="colorStatus($value.idinscstatus)"} style="margin: 5px" class="row">
 
-                  <tr {function="colorStatus($value.idinscstatus)"}>
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  {$value.nomepess}
+                </h5>
+              </div>
 
-                    <td id="tr">{$value.nomepess} </td>
-                    <td>{$value.numcpf} </td>                      
-                      <td>{function="formatDate($value.dtnasc)"} </td>
-                      <td>{function="calcularIdade($value.dtnasc)"}</td>
-                      <td>{$value.desperson} </td>
-                      <td>{$value.nrphone} </td>                                      
-                      <td>{function="formatDate($value.dtinsc)"} </td>                      
-                      <td>{$value.descstatus}</td>        
-                                                                                          
-                       <td> </td> 
-                       <td> </td>                        
-                       <td>
-                          <a class="btn btn-info" href="/professor/profile/insc/{$value.idinsc}/{$value.idpess}" role="button">Detalhes</a>
-                       </td>                                     
-                   
-                  </tr>
-                  {/loop}
-                </tbody>
-              </table>
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  {$value.numcpf}
+                </h5>
+              </div> 
+
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  {function="formatDate($value.dtnasc)"}
+                </h5>
+              </div>
+
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  {function="calcularIdade($value.dtnasc)"}
+                </h5>
+              </div>
+
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  {$value.desperson}
+                </h5>
+              </div>
+
+               <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  {$value.nrphone}
+                </h5>
+              </div>
+
+               <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  {function="formatDate($value.dtinsc)"}
+                </h5>
+              </div>
+
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  {$value.descstatus} - {$value.numsorte} - {$value.numordem}
+                </h5>
+              </div>
+
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  {if="$value.laudo == 1"}c/ laudo{/if} -
+                </h5>
+              </div>
+
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/professor/profile/insc/{$value.idinsc}/{$value.idpess}" role="button">Detalhes</a>
+                </h5>
+              </div>
+
+              {if="$value.numordem < 3"}
+
+              {if="$value.idinscstatus == 2"}
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA da inscrição {$value.idinsc} do(a) {$value.nomepess} da turma {$turma.descturma} {$turma.idturma} da temporada {$temporada.desctemporada} ? Lembramos que se você clicar em OK o aluno será matriculado e o status da inscrição só poderá ser DESISTENTE ')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                </h5>
+              </div>
+              {/if}
+
+              {else}
+
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusMatriculada" onclick="return confirm('Deseja realmente alterar status não SORTEADO da inscrição {$value.idinsc} do(a) {$value.nomepess} da turma {$turma.descturma} {$turma.idturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-info btn-xs"><i></i> Lista de espera</a>
+                </h5>
+              </div>
+
+              {/if}
+
+              {if="$value.idinscstatus == 1"}
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a class="btn btn-danger" href="" role="button">Desistente</a>
+                </h5>
+              </div>
+              {/if}
+
+                                                                                                          
+
             </div>
+          </div>
+          {/loop}
+
+          </div>           
             <button type="button" onclick="window.print()" class="btn btn-primary pull-right" style="margin-right: 5px;">
                     <i class="fa fa-print"></i> Imprimir
                 </button>

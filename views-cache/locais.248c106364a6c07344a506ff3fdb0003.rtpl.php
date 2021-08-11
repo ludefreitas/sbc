@@ -3,10 +3,15 @@
             <div class="row"> <!-- row 2 -->
               <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
 
-
 <div class="container" style="margin: 0px px 0px 0px; ">
   <div class="row" style="margin: -5px -20px 0px -5px; ">
 
+    <?php if( $error != '' ){ ?>
+    <div class="alert alert-danger">
+      <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+    </div>
+  
+    <?php }else{ ?>
   
   <div class="col-md-12" style="text-align-last: left; background-color:#0f71b3; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;"> 
     <a href="/locais">           
@@ -15,6 +20,7 @@
       </div>
     </a>
   </div> 
+  <?php } ?>
 
   </div>
 </div>

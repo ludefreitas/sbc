@@ -41,7 +41,7 @@
           <div class="box-footer">
             <button type="submit" class="btn btn-success">Cadastrar</button>
             &nbsp&nbsp&nbsp&nbsp
-            <a type="button" class="btn btn-danger" href="/professor/modalidades">Cancelar</a>
+            <a type="button" class="btn btn-danger" href="javascript:window.history.go(-1)">Cancelar</a>
           </div>
         </form>
       </div>

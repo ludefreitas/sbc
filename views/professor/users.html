@@ -53,22 +53,44 @@
                   {$value.deslogin}
                 </h5>
               </div>
-              <div class="col-md-2" >
+              <div class="col-md-1" >
                 <h5 style="font-weight: bold; text-align: left;">
                   {$value.nrphone}
                 </h5>
               </div>
-              <div class="col-md-2" >
+              <div class="col-md-1" >
                 <h5 style="font-weight: bold; text-align: left;">
                   {if="$value.statususer == 1"}Ativo{else}Inativo{/if}
                 </h5>
               </div>
-              <div class="col-md-2" >
-                   {if="$value.isprof == 0"}
-                      <a href="/professor/users/{$value.iduser}" class="btn btn-danger"></i>Professor</a>
-                      {else}
-                      <a href="/professor/users/{$value.iduser}" class="btn btn-success"></i>Administrador</a>
-                      {/if}
+              {if="$value.isprof == 1"}
+              <div class="col-md-1" >
+                <h5 style="font-weight: bold; text-align: left;">
+                  Professor
+                </h5>
+              </div>
+              {else}
+              <div class="col-md-1" >
+                <h5 style="font-weight: bold; text-align: left;">
+                  -
+                </h5>
+              </div>
+              {/if}
+              {if="$value.inadmin == 1"}
+              <div class="col-md-1" >
+                <h5 style="font-weight: bold; text-align: left;">
+                  Admin
+                </h5>
+              </div>
+              {else}
+              <div class="col-md-1" >
+                <h5 style="font-weight: bold; text-align: left;">
+                  -
+                </h5>
+              </div>
+              {/if}
+              <div class="col-md-1" >
+                  <a href="/professor/users/{$value.iduser}" class="btn btn-success"></i>Admin / Prof</a>
               </div>
             </div>           
             </div>

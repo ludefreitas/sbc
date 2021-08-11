@@ -39,15 +39,37 @@ class Sorteio extends Model {
 
 		}
 
-
 		// Depois de sortear altera status da temporada para matrículas iniciadas
 		Temporada::updateStatusTemporadaParaMatriculasIniciadas($idtemporada);
 		//var_dump($sql);
 		//	exit();
-		return $response;
+		return $response;		
 
-		
+	}
 
+	public function updateStatusInscricaosSorteada($numsorte){
+
+		$idStatusAguardandoMatricula = 2;
+		$idStatusAguardandoSorteio = 6;
+
+		$sql = new Sql();
+
+		$sql->query("UPDATE tb_insc SET idinscstatus = :idStatusAguardandoMatricula WHERE idinscstatus = :idStatusAguardandoSorteio AND numsorte = :numsorte", array(
+			":idStatusAguardandoMatricula"=>$idStatusAguardandoMatricula,
+			":idStatusAguardandoSorteio"=>$idStatusAguardandoSorteio,
+			":numsorte"=>$numsorte
+		));
+
+	}
+
+	public function setNumeroDeOrdem($numordem, $numsorte){
+
+		$sql = new Sql();
+
+		$sql->query("CALL sp_insc_update_numordem(:numordem, :numsorte)", array(
+			":numordem"=>$numordem,
+			":numsorte"=>$numsorte
+		));
 	}
 
 	public function sorteioExiste(){
@@ -68,7 +90,9 @@ class Sorteio extends Model {
 			':idtemporada'=>$idtemporada			
 		]);		
 
-		return $results;	
+		return $results;
+
+
 	}
 
 	public static function setError($msg)

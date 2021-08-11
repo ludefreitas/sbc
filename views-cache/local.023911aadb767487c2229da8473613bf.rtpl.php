@@ -24,7 +24,24 @@
           </div>
         <?php } ?>
 
-            
+          <div class="box-header">
+
+            <a href="/professor/local/create" class="btn btn-success">Cadastrar Crec</a>
+            <div class="box-tools">
+                <form action="/professor/local">
+                  <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="search" class="form-control pull-right" placeholder="Search" value="<?php echo htmlspecialchars( $search, ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                    <div class="input-group-btn">
+                      <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+          </div>
+
+          <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">  
+          
             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
               <div class="row">
               <div class="col-md-4" >
@@ -43,6 +60,7 @@
                 </h5>
               </div>
             </div>
+          </div>        
             <?php $counter1=-1;  if( isset($local) && ( is_array($local) || $local instanceof Traversable ) && sizeof($local) ) foreach( $local as $key1 => $value1 ){ $counter1++; ?>
 
             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">

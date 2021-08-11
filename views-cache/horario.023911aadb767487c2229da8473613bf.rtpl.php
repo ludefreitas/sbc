@@ -40,14 +40,14 @@
 
             </div>
 
-            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+          <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
               
             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
               <div class="row">
 
               <div class="col-md-3" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                    Idade inicial
+                    Dia semana
                 </h5>
               </div>
               <div class="col-md-2" style="margin: 2; padding: 2">

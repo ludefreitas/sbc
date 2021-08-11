@@ -33,11 +33,11 @@ $app->get('/', function() {
 
 		if(!isset($search) || $search == NULL){
 
-			Cart::setMsgError("Não existe turmas para esta temporada. A temporada pode não estar iniciada, estar em processo de sorteio ou a temporada foi encerrada. Aguarde, ou entre em contato com o Centro Esportivo mais próximo a sua casa. ");
+			Cart::setMsgError("Não existe turmas para esta temporada. A temporada pode não estar iniciada, estar em processo de sorteio ou foi encerrada. Aguarde, ou entre em contato com o Centro Esportivo mais próximo a sua casa. ");
 
 		}else{
 
-			Cart::setMsgError("Não encontramos nenhuma turma com a palavra '".$search."' nesta temporada! A temporada pode não estar iniciada, estar em processo de sorteio ou a temporada foi encerrada. Aguarde, ou entre em contato com o Centro Esportivo mais próximo à sua casa.");
+			Cart::setMsgError("Não encontramos nenhuma turma com a palavra '".$search."' nesta temporada! A temporada pode não estar iniciada, estar em processo de sorteio ou foi encerrada. Aguarde, ou entre em contato com o Centro Esportivo mais próximo à sua casa.");
 		}		
 
 	}else{
@@ -235,6 +235,7 @@ $app->post("/checkout", function(){
 		$insc->setData([
 			'idcart'=>$idcart,
 			'idinscstatus'=>$InscStatus,
+			'numordem'=>0,
 			'laudo'=>$laudo,
 			'idturma'=>$idturma,
 			'idtemporada'=>$idtemporada	

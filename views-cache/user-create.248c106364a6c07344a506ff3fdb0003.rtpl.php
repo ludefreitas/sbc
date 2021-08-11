@@ -29,7 +29,7 @@
 
                     <?php if( $errorRegisterSendmail != '' ){ ?>
                     <div class="alert alert-danger">
-                    <?php echo htmlspecialchars( $errorRegisterSendmail, ENT_COMPAT, 'UTF-8', FALSE ); ?> <a href="/forgot">Clique aqui para recuperar senha!</a>
+                    <?php echo htmlspecialchars( $errorRegisterSendmail, ENT_COMPAT, 'UTF-8', FALSE ); ?> <a href="/forgot">Caso seja realmente seu, CLIQUE aqui para recuperar senha!</a>
                     </div>
                     <?php } ?>
 

@@ -251,19 +251,20 @@ $app->get("/professor/insc-turma-temporada/:idturma/:idtemporada/user/:iduser", 
 
 	$idusersessao = (int)$_SESSION['User']['iduser'];
 
-	$iduserprof = User::getIdUseInTurmaTemporada($idturma, $idtemporada, $idusersessao);	
+	$iduserprof = User::getIdUseInTurmaTemporada($idturma, $idtemporada);	
 
 	$idadmin = 1;
 	$idsuporte = 7;
 
-	// Aqui verifica se a turma pertencve ao professor 
-	if( $idusersessao === $idadmin || $idusersessao === 7 || $iduserprof === true) {
+	// Aqui verifica se a turma pertence ao professor 
+	if( $idusersessao === $idadmin || $idusersessao === 7 || $iduserprof === $idusersessao) {
 	
 		$insc->getInscByTurmaTemporada($idturma, $idtemporada);
 	
 		$page = new PageAdmin();	
 
 		$page->setTpl("insc-turma-temporada", [
+			'iduserprof'=>$iduserprof,
 			'insc'=>$insc->getValues(),
 			'turma'=>$turma->getValues(),
 			'temporada'=>$temporada->getValues()
@@ -275,6 +276,26 @@ $app->get("/professor/insc-turma-temporada/:idturma/:idtemporada/user/:iduser", 
 		header("Location: /professor/turma-temporada/".$idtemporada."");
 		exit();					
 	}	
+});
+
+$app->get("/insc/:idinsc/:iduserprof/:idturma/statusMatriculada", function($idinsc, $iduserprof, $idturma){
+
+	$insc = new Insc();
+	$turma = new Turma();
+	$temporada = new Temporada();
+	$user = new User();
+	
+	$insc->get((int)$idinsc);
+
+	$idturma = (int)$idturma;
+	$idtemporada = $insc->getidtemporada();
+	$iduser = (int)$iduserprof;
+
+	$insc->alteraStatusInscricaoMatriculada($idinsc);
+
+	header("Location: /professor/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
+	exit();
+
 });
 
 ?>

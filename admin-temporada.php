@@ -343,12 +343,7 @@ $app->get("/professor/turma-temporada/:idtemporada/local/:idlocal", function($id
 	$temporada = new Temporada();
 	$turma = new Turma();
 	$local = new Local();
-
-
 	$temporada->get((int)$idtemporada);
-
-
-
 	$local->get((int)$idlocal);
 
 	//var_dump($local);
@@ -374,9 +369,11 @@ $app->get("/professor/turma-temporada/:idtemporada/user/:iduser", function($idte
 	$temporada = new Temporada();
 	$turma = new Turma();
 	$user = new User();
+	$local = new Local();
 
 	$temporada->get((int)$idtemporada);
 	$user->get((int)$iduser);
+	$local = $local->setapelidolocal('');
 
 
 	//var_dump($temporada->getTurma(true)); exit();
@@ -385,6 +382,8 @@ $app->get("/professor/turma-temporada/:idtemporada/user/:iduser", function($idte
 
 	$page->setTpl("professor-turmas-por-temporada", [
 		'user'=>$user->getValues(),
+		'local'=>$local,
+		'locais'=>Local::listAll(),
 		'temporada'=>$temporada->getValues(),
 		//'turmaRelated'=>$temporada->getTurma(true)
 		'turmas'=>Temporada::listAllTurmatemporadaProfessor($idtemporada, $iduser),

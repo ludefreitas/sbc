@@ -6,14 +6,16 @@ use \Sbc\Model\User;
 function colorStatus($idinscstatus){
 
     if($idinscstatus === '1'){
-       return 'style="background: linear-gradient(to bottom, rgba(192, 192, 192, 0.8), transparent);"';
+       return 'style="background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), transparent);"';
     }else if($idinscstatus === '2'){
-       return 'style="background: linear-gradient(to bottom, rgba(0, 255, 0, 0.4), transparent);"';
+       return 'style="background: linear-gradient(to bottom, rgba(0, 255, 0, 0.4), transparent);"'; 
     }else if($idinscstatus === '6'){
-       return 'style="background: linear-gradient(to bottom, rgba(0, 0, 255, 0.4), transparent);"';
-    }else if($idinscstatus === '7'){
-       return 'style="background: linear-gradient(to bottom, rgba(255, 0, 0, 0.4), transparent);"';      
-    }
+       return 'style="background: linear-gradient(to bottom, rgba(0, 0, 255, 0.4), transparent);"';    
+    }else if($idinscstatus === '7'){       
+       return 'style="background: linear-gradient(to bottom, rgba(0, 192, 255, 0.4), transparent);"';     
+    }else if($idinscstatus === '8'){
+       return 'style="background: linear-gradient(to bottom, rgba(255, 0, 0, 0.4), transparent);"'; 
+    }     
 }
 
 function formatDateEng($date)

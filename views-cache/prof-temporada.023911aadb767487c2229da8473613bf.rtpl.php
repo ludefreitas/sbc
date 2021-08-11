@@ -27,27 +27,10 @@
               <!--
               <a href="/professor/users/create" class="btn btn-success">Cadastrar Usuário</a>
             -->
-            
-            <div class="box-tools">
-                <form action="/professor/prof">
-                  <div class="input-group input-group-sm" style="width: 150px;">
-                    <!--<input type="text" name="search" class="form-control pull-right" placeholder="Search" value="">
-                    <div class="input-group-btn">
-                     -->
-                     <!--
-                      <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                    -->
-                    </div>
-                  </div>
-                </form>
-              </div>
-
-              </div>
+            </div>         
 
            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
               
-            
-
             <?php $counter1=-1;  if( isset($prof) && ( is_array($prof) || $prof instanceof Traversable ) && sizeof($prof) ) foreach( $prof as $key1 => $value1 ){ $counter1++; ?>
             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
               <div class="row">

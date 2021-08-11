@@ -54,7 +54,7 @@
                     <table class="">
                         <thead>                           
                             <tr>
-                                <th colspan="2" ><h3>Inscrição Nº: <?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <br>Número para concorrer no sorteio: &nbsp;&nbsp;&nbsp;<?php echo htmlspecialchars( $value1["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h3></th>
+                                <th colspan="2" ><h3>INCRIÇÃO Nº: <?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <br>Número para concorrer no sorteio: &nbsp;&nbsp;&nbsp;<?php echo htmlspecialchars( $value1["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h3></th>
                             </tr>
                             <tr>
                                 <th class="product-name">Turma / Temporada</th>
@@ -71,7 +71,11 @@
                             <tr>
                                 <th class="product-name">Data da Inscrição</th>
                                 <td class="product-name"><?php echo formatDateHour($value1["dtinsc"]); ?></td>
-                            </tr>                            
+                            </tr> 
+                             <tr>
+                                <th class="product-name">Laudo</th>
+                                <td class="product-name"><?php if( $value1["laudo"] == 1 ){ ?>Sim<?php } ?>Não</td>
+                            </tr>                                                       
                             <tr>
                                 <th class="product-name">Status da Inscrição</th>
                                 <td class="product-name"><?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>

@@ -54,7 +54,7 @@
                     <table class="">
                         <thead>                           
                             <tr>
-                                <th colspan="2" ><h3>Inscrição Nº: {$value.idinsc} <br>Número para concorrer no sorteio: &nbsp;&nbsp;&nbsp;{$value.numsorte}</h3></th>
+                                <th colspan="2" ><h3>INCRIÇÃO Nº: {$value.idinsc} <br>Número para concorrer no sorteio: &nbsp;&nbsp;&nbsp;{$value.numsorte}</h3></th>
                             </tr>
                             <tr>
                                 <th class="product-name">Turma / Temporada</th>
@@ -71,7 +71,11 @@
                             <tr>
                                 <th class="product-name">Data da Inscrição</th>
                                 <td class="product-name">{function="formatDateHour($value.dtinsc)"}</td>
-                            </tr>                            
+                            </tr> 
+                             <tr>
+                                <th class="product-name">Laudo</th>
+                                <td class="product-name">{if="$value.laudo == 1"}Sim{/if}Não</td>
+                            </tr>                                                       
                             <tr>
                                 <th class="product-name">Status da Inscrição</th>
                                 <td class="product-name">{$value.descstatus}</td>

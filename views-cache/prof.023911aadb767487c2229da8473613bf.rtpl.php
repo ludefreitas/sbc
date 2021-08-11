@@ -3,7 +3,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Lista com <?php echo htmlspecialchars( $total, ENT_COMPAT, 'UTF-8', FALSE ); ?> Professores
+    Lista com <?php echo htmlspecialchars( $total, ENT_COMPAT, 'UTF-8', FALSE ); ?> professores
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -55,28 +55,52 @@
 
                 </h5>
               </div>
-              <div class="col-md-2" >
+              <div class="col-md-1" >
                 <h5 style="font-weight: bold; text-align: left;">
                   <?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
 
                 </h5>
               </div>
-               
-              <div class="col-md-2" >
+              <div class="col-md-1" >
                 <h5 style="font-weight: bold; text-align: left;">
                   <?php if( $value1["statususer"] == 1 ){ ?>Ativo<?php }else{ ?>Inativo<?php } ?>
 
                 </h5>
               </div>
-              <div class="col-md-2" >
-                  <?php if( $value1["inadmin"] == 0 ){ ?>
+              <?php if( $value1["isprof"] == 1 ){ ?>
 
-                      <a href="/professor/users/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-danger"></i>Administrador</a>
-                      <?php }else{ ?>
+              <div class="col-md-1" >
+                <h5 style="font-weight: bold; text-align: left;">
+                  Professor
+                </h5>
+              </div>
+              <?php }else{ ?>
 
-                      <a href="/professor/users/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-success"></i>Administrador</a>
-                      <?php } ?>
+              <div class="col-md-1" >
+                <h5 style="font-weight: bold; text-align: left;">
+                  -
+                </h5>
+              </div>
+              <?php } ?>
 
+              <?php if( $value1["inadmin"] == 1 ){ ?>
+
+              <div class="col-md-1" >
+                <h5 style="font-weight: bold; text-align: left;">
+                  Admin
+                </h5>
+              </div>
+              <?php }else{ ?>
+
+              <div class="col-md-1" >
+                <h5 style="font-weight: bold; text-align: left;">
+                  -
+                </h5>
+              </div>
+              <?php } ?>
+
+              <div class="col-md-1" >
+                  <a href="/professor/users/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-success"></i>Admin / Prof</a>
               </div>
             </div>           
             </div>

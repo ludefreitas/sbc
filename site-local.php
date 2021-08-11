@@ -32,11 +32,16 @@ $app->get("/locais", function() {
 	$locais = Local::listAll();
 
 
+	if(!isset($locais) || $locais == NULL){
+
+		Cart::setMsgError("Não existe Crecs Cadastrados para esta temporada. A temporada pode não estar iniciada, estar em processo de sorteio ou foi encerrada. Aguarde, ou entre em contato com o Centro Esportivo mais próximo a sua casa. ");
+	}	
 
 	$page = new Page();
 
 	$page->setTpl("locais", array(
-		'locais'=>$locais
+		'locais'=>$locais,
+		'error'=>Cart::getMsgError()
 	));
 });
 

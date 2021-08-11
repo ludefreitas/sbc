@@ -17,12 +17,13 @@ class Insc extends Model {
 
 		$sql = new Sql();													        
 
-		$results = $sql->select("CALL sp_insc_save(:idinsc, :idinscstatus, :idcart, :idturma, :idtemporada, :numsorte, :laudo)", [
+		$results = $sql->select("CALL sp_insc_save(:idinsc, :idinscstatus, :idcart, :idturma, :idtemporada, :numordem, :numsorte, :laudo)", [
 			':idinsc'=>$this->getidinsc(),
 			':idinscstatus'=>$this->getidinscstatus(),
 			':idcart'=>$this->getidcart(),
 			':idturma'=>$this->getidturma(),
 			':idtemporada'=>$this->getidtemporada(),
+			':numordem'=>$this->getnumordem(),
 			':numsorte'=>$this->getnumsorte(),
 			':laudo'=>$this->getlaudo()
 		]);
@@ -299,7 +300,7 @@ class Insc extends Model {
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
 			WHERE idturma = :idturma AND idtemporada = :idtemporada
-			ORDER BY a.idinscstatus
+			ORDER BY a.idinscstatus, a.numordem
 		", [
 			':idturma'=>$idturma,
 			':idtemporada'=>$idtemporada
@@ -382,13 +383,26 @@ class Insc extends Model {
 
 	public function alteraStatusInscricaoCancelada($idinsc){
 
-		$idStatusCancelada = 7;
+		$idStatusCancelada = 8;
 
 		$sql = new Sql();
 
 		$sql->query("UPDATE tb_insc SET idinscstatus = :idStatusCancelada WHERE idinsc = :idinsc", array(
 			":idinsc"=>$idinsc,
 			"idStatusCancelada"=>$idStatusCancelada
+		));
+
+	}
+
+	public function alteraStatusInscricaoMatriculada($idinsc){
+
+		$idStatusMatriculada = 1;
+
+		$sql = new Sql();
+
+		$sql->query("UPDATE tb_insc SET idinscstatus = :idStatusMatriculada WHERE idinsc = :idinsc", array(
+			":idinsc"=>$idinsc,
+			"idStatusMatriculada"=>$idStatusMatriculada
 		));
 
 	}

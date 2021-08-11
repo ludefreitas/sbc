@@ -223,15 +223,20 @@ $app->post("/professor/users/:iduser", function($iduser) {
 
 	$user = new User();
 
-	if (!isset($_POST['apelidoperson']) || $_POST['apelidoperson'] == '') {
-		User::setError("Preencha o campo apelido.");
-		header("Location: /professor/users/".$iduser."");
-		exit;		
-	}																							
+	
 
 	$_POST["inadmin"] = (isset($_POST["inadmin"]))?1:0;
 	$_POST["isprof"] = (isset($_POST["isprof"]))?1:0;
 	$_POST["statususer"] = (isset($_POST["statususer"]))?1:0;
+
+	if(!$_POST['isprof'] == 0){
+
+		if (!isset($_POST['apelidoperson']) || $_POST['apelidoperson'] == '') {
+			User::setError("Preencha o campo apelido.");
+			header("Location: /professor/users/".$iduser."");
+			exit;		
+		}
+	}	
 
 	$user->get((int)$iduser);
 

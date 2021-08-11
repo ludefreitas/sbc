@@ -71,11 +71,21 @@
                             <tr>
                                 <th class="product-name">Data da Inscrição</th>
                                 <td class="product-name"><?php echo formatDateHour($insc["dtinsc"]); ?></td>
-                            </tr>                            
+                            </tr>
+                            <tr>
+                                <th class="product-name">Laudo</th>
+                                <td class="product-name"><?php if( $insc["laudo"] == 1 ){ ?>Sim<?php } ?>Não</td>
+                            </tr>                                                     
                             <tr <?php echo colorStatus($insc["idinscstatus"]); ?>>
                                 <th class="product-name">Status da Inscrição</th>
                                 <td class="product-name"><?php echo htmlspecialchars( $insc["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                             </tr>
+                            <?php if( $insc["idinscstatus"] == 1 ){ ?>
+                            <tr>
+                                <th class="product-name"> Aluno desistente? </th>
+                                <td class="product-name"> <a class="btn btn-danger" href="" role="button" onclick="return confirm('Deseja realmente informar como desistente o <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da inscrição <?php echo htmlspecialchars( $insc["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')">Desistente</a> </td>
+                            </tr>
+                            <?php } ?>
                              <tr>
                                 <th class="product-name"> Início previsto das aulas </th>
                                 <td class="product-name"> <?php echo formatDate($insc["dttermmatricula"]); ?> </td>
@@ -90,12 +100,7 @@
                             
                         </tfoot>
                     </table>
-                    <div id="payment">
-                        <div class="form-row place-order">
-                            <input type="submit" value="Imprimir" class="button alt" onclick="window.print()">
-                        </div>
-                        <div class="clear"></div>
-                    </div>
+                    
                 </div>
 
             </div>

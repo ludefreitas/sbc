@@ -14,6 +14,16 @@ $app->get("/professor/sorteio/:idtemporada", function($idtemporada) {
 
 	$sorteio = Sorteio::listAll($idtemporada);
 
+	/*
+	for ($x = 0; $x<count($sorteio); $x++) {
+
+		$numerosorteado = $sorteio[$x]['numerosortear'];
+
+		var_dump($numerosorteado);
+
+	}
+	*/
+
 	$maxIncritos = Temporada::numMaxInscritos($idtemporada);
 
 	$temporada->get((int)$idtemporada);
@@ -43,10 +53,26 @@ $app->post("/professor/sortear", function() {
 	$sorteio = new Sorteio();	
 	$idtemporada = $_POST['idtemporada'];
 	$maxIncritos = $_POST['maxIncritosTemporada'];
+	
 
 	if(!Sorteio::listAll($idtemporada)){
 
 			$sort = Sorteio::sortear($maxIncritos, $maxIncritos, $idtemporada);
+
+			$sorteio = Sorteio::listAll($idtemporada);
+
+			for ($x = 0; $x<count($sorteio); $x++) {
+
+				$numerosorteado = $sorteio[$x]['numerosortear'];
+
+				$numeroordenado = $sorteio[$x]['numerodeordem'];
+
+				var_dump($numeroordenado);
+
+				Sorteio::setNumeroDeOrdem($numeroordenado, $numerosorteado);
+
+				Sorteio::updateStatusInscricaosSorteada($numerosorteado);
+			}
 
 			header("Location: /professor/sorteio/".$idtemporada."");
 			exit();	

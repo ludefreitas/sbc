@@ -104,7 +104,7 @@ class User extends Model {
 		if (!User::checkLogin($inadmin)) {
 
 			if ($inadmin) {
-				header("Location: /professor/login");
+				header("Location: /login");
 			} else {
 				header("Location: /user-create");
 			}
@@ -848,7 +848,7 @@ class User extends Model {
 		}
 		*/
 		
-		public function getIdUseInTurmaTemporada($idturma, $idtemporada, $iduser){
+		public function getIdUseInTurmaTemporada($idturma, $idtemporada){
 
 			$sql = new Sql();
 
@@ -856,12 +856,14 @@ class User extends Model {
 				"SELECT iduser FROM tb_turmatemporada 			
 				WHERE idturma = :idturma
 				AND idtemporada = :idtemporada
-				AND iduser = :iduser ", [
+				-- AND iduser = :iduser ", [
 				':idturma'=>$idturma,
-				':idtemporada'=>$idtemporada,
-				':iduser'=>$iduser
+				':idtemporada'=>$idtemporada
+				//':iduser'=>$iduser
 			]);
 
+			return $rows[0];
+			/*
 			if($rows){
 
 				return true;
@@ -870,7 +872,8 @@ class User extends Model {
 
 				return false;
 
-			}		
+			}	
+			*/	
 
 		}
 

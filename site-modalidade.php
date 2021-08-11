@@ -32,10 +32,16 @@ $app->get("/modalidades", function() {
 
 	$modalidades = Modalidade::listAll();
 
+	if(!isset($modalidades) || $modalidades == NULL){
+
+		Cart::setMsgError("Não existe modalidades para esta temporada. A temporada pode não estar iniciada, estar em processo de sorteio ou foi encerrada. Aguarde, ou entre em contato com o Centro Esportivo mais próximo a sua casa. ");
+	}	
+
 	$page = new Page();
 
 	$page->setTpl("modalidades", array(
-		'modalidades'=>$modalidades
+		'modalidades'=>$modalidades,
+		'error'=>Cart::getMsgError()
 	));
 });
 

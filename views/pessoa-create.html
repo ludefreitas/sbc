@@ -63,8 +63,18 @@
                 </div>
                 {/if}
 
+                {if="$success != ''"}
+                <div class="alert alert-success">
+                 <h4>{$success}</h4>
+                </div>
+                {else}
+                <div class="">
+                <h3>Cadastrar uma nova pessoa</h3>
+                </div>
+                {/if}
+
                 <form id="register-form-wrap" action="/registerpessoa" class="register" method="post">
-                    <h3>Preencha os campos abaixo para cadastrar uma nova pessoa</h3>
+                    
                     
                     <label for="nomepess">
                         Nome Completo 
