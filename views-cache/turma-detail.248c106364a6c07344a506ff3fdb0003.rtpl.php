@@ -50,7 +50,7 @@
           <div class="row">
             <div class="col-md-12">
               <form action="/cart/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/add"> 
-              <button class="btn btn-success" style="text-align-last: center; background-color: #15a03f" type="submit">Confirmar inscrição para esta turma</button>
+              <button class="btn btn-success" style="text-align-last: center; background-color: #15a03f" type="submit">Fazer inscrição para esta turma</button>
            </form>                          
             </div>
           </div> 

@@ -13,7 +13,9 @@ class InscStatus extends Model {
 	const NAO_SORTEADA = 4;
 	const SUSPENSA = 5;	
 	const AGUARDANDO_SORTEIO = 6;
-	const CANCELADA = 7;
+	const FILA_DE_ESPERA = 7;
+	const DESISTENTE = 8;
+	const CANCELADA = 9;
 	
 }
 

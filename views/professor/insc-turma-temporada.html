@@ -72,7 +72,7 @@
 
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  {$value.descstatus} - {$value.numsorte} - {$value.numordem}
+                  {$value.descstatus} - {$value.numordem}
                 </h5>
               </div>
 
@@ -88,7 +88,7 @@
                 </h5>
               </div>
 
-              {if="$value.numordem < 3"}
+              
 
               {if="$value.idinscstatus == 2"}
               <div class="col-md-1" style="margin: 2; padding: 2">
@@ -98,8 +98,8 @@
               </div>
               {/if}
 
-              {else}
-
+              
+              {if="$value.idinscstatus == 7"}
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
                   <a href="/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusMatriculada" onclick="return confirm('Deseja realmente alterar status não SORTEADO da inscrição {$value.idinsc} do(a) {$value.nomepess} da turma {$turma.descturma} {$turma.idturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-info btn-xs"><i></i> Lista de espera</a>
@@ -108,7 +108,7 @@
 
               {/if}
 
-              {if="$value.idinscstatus == 1"}
+              {if="$value.idinscstatus == 8"}
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
                   <a class="btn btn-danger" href="" role="button">Desistente</a>

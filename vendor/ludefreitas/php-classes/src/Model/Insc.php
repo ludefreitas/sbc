@@ -383,7 +383,7 @@ class Insc extends Model {
 
 	public function alteraStatusInscricaoCancelada($idinsc){
 
-		$idStatusCancelada = 8;
+		$idStatusCancelada = 9;
 
 		$sql = new Sql();
 
@@ -404,7 +404,51 @@ class Insc extends Model {
 			":idinsc"=>$idinsc,
 			"idStatusMatriculada"=>$idStatusMatriculada
 		));
+	}
 
+	public function numMaxNumOrdem($idtemporada, $idturma){
+
+			$sql = new Sql();
+			
+			$results =  $sql->select("SELECT MAX(numordem) as maxNumOrdem FROM tb_insc WHERE idtemporada = :idtemporada AND idturma = :idturma", [
+				'idtemporada'=>$idtemporada,
+				'idturma'=>$idturma
+			]);
+
+			return $results;			
+	}
+
+	public function alteraStatusInscricaoParaFilaDeEspera($idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT a.vagas, b.idtemporada, b.idturma
+			FROM tb_turma a 
+			INNER JOIN tb_turmatemporada b
+			ON	b.idturma = a.idturma		
+			WHERE idtemporada = :idtemporada", [
+				":idtemporada"=>$idtemporada
+		]);
+
+		for($i=0; $i < count($results); $i++) { 
+
+			$idInscStatusFilaDeEspera = InscStatus::FILA_DE_ESPERA;
+			$idStatusCancelada = InscStatus::CANCELADA;
+			$idtemporada = $results[$i]['idtemporada'];
+			$idturma = $results[$i]['idturma'];
+			$vagas = $results[$i]['vagas'];
+
+			$sql = new Sql();		
+
+			$sql->query("UPDATE tb_insc SET idinscstatus = :idInscStatusFilaDeEspera WHERE idinscstatus != :idStatusCancelada AND idtemporada = :idtemporada AND idturma = :idturma AND numordem > :vagas", array(
+				":idInscStatusFilaDeEspera"=>$idInscStatusFilaDeEspera,
+				":idStatusCancelada"=>$idStatusCancelada,
+				"idtemporada"=>$idtemporada,
+				"idturma"=>$idturma,
+				"vagas"=>$vagas
+			));
+		}		
 	}
 	
 

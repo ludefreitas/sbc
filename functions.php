@@ -14,8 +14,10 @@ function colorStatus($idinscstatus){
     }else if($idinscstatus === '7'){       
        return 'style="background: linear-gradient(to bottom, rgba(0, 192, 255, 0.4), transparent);"';     
     }else if($idinscstatus === '8'){
+       return 'style="background: linear-gradient(to bottom, rgba(192, 192, 192, 0.4), transparent);"'; 
+    }else if($idinscstatus === '9'){
        return 'style="background: linear-gradient(to bottom, rgba(255, 0, 0, 0.4), transparent);"'; 
-    }     
+    }   
 }
 
 function formatDateEng($date)

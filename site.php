@@ -55,6 +55,15 @@ $app->get('/', function() {
 		$dtInicmatricula = $temporada->getdtinicmatricula();
 		$dtTermmatricula = $temporada->getdttermmatricula();
 
+		
+
+		/*
+		echo '<pre>';
+		print_r($numerodevagas);
+		echo '</pre>';
+		exit();
+		*/
+
 		if($temporada->getidstatustemporada() == 2){ // statustemporada = Temporada iniciada
 
 			//Altera status para idstatustemporada = 4
@@ -225,17 +234,23 @@ $app->post("/checkout", function(){
 
 	if(Insc::statusTemporadaMatriculasEncerradas($idtemporada)){
 
-		$InscStatus = InscStatus::AGUARDANDO_MATRICULA;
+		$InscStatus = InscStatus::FILA_DE_ESPERA;
+
+		$numOrdemMax = Insc::numMaxNumOrdem($idtemporada, $idturma);
+
+		$numordem = $numOrdemMax[0]['maxNumOrdem'] + 1;
 
 	}else{
 
 		$InscStatus = InscStatus::AGUARDANDO_SORTEIO;
+		
+		$numordem = 0;
 	}
-	
+
 		$insc->setData([
 			'idcart'=>$idcart,
 			'idinscstatus'=>$InscStatus,
-			'numordem'=>0,
+			'numordem'=>$numordem,
 			'laudo'=>$laudo,
 			'idturma'=>$idturma,
 			'idtemporada'=>$idtemporada	

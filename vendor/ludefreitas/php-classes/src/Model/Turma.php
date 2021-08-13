@@ -195,6 +195,7 @@ class Turma extends Model {
       		OR k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
       		OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
       		OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada
+      		ORDER BY RAND()
 			", [
 				':idstatusTemporadaMatriculasEncerradas'=>$idstatusTemporadaMatriculasEncerradas,
 				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
@@ -271,7 +272,8 @@ class Turma extends Model {
 				OR h.periodo LIKE :search
 				OR i.descrfxetaria LIKE :search	
 				OR m.descmodal LIKE :search
-			)												
+			)	
+			ORDER BY RAND()											
 			-- ORDER BY a.descturma
 			-- LIMIT $start, $itemsPerPage;
 		", [

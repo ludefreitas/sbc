@@ -4,6 +4,7 @@ use \Sbc\PageAdmin;
 use \Sbc\Model\User;
 use \Sbc\Model\Temporada;
 use \Sbc\Model\Sorteio;
+use \Sbc\Model\Insc;
 
 $app->get("/professor/sorteio/:idtemporada", function($idtemporada) {
 
@@ -73,6 +74,8 @@ $app->post("/professor/sortear", function() {
 
 				Sorteio::updateStatusInscricaosSorteada($numerosorteado);
 			}
+
+			Insc::alteraStatusInscricaoParaFilaDeEspera($idtemporada);
 
 			header("Location: /professor/sorteio/".$idtemporada."");
 			exit();	

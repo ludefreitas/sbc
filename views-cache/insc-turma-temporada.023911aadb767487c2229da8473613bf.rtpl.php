@@ -72,7 +72,7 @@
 
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  <?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["numordem"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                  <?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["numordem"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                 </h5>
               </div>
 
@@ -88,7 +88,7 @@
                 </h5>
               </div>
 
-              <?php if( $value1["numordem"] < 3 ){ ?>
+              
 
               <?php if( $value1["idinscstatus"] == 2 ){ ?>
               <div class="col-md-1" style="margin: 2; padding: 2">
@@ -98,8 +98,8 @@
               </div>
               <?php } ?>
 
-              <?php }else{ ?>
-
+              
+              <?php if( $value1["idinscstatus"] == 7 ){ ?>
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
                   <a href="/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $iduserprof["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusMatriculada" onclick="return confirm('Deseja realmente alterar status não SORTEADO da inscrição <?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?> do(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da turma <?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da temporada <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ?')" class="btn btn-info btn-xs"><i></i> Lista de espera</a>
@@ -108,7 +108,7 @@
 
               <?php } ?>
 
-              <?php if( $value1["idinscstatus"] == 1 ){ ?>
+              <?php if( $value1["idinscstatus"] == 8 ){ ?>
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
                   <a class="btn btn-danger" href="" role="button">Desistente</a>
