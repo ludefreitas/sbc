@@ -8,8 +8,8 @@
 </h1>
 <ol class="breadcrumb">
   <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
-  <li><a href="/professor/temporada"> Todas temporadas</a></li>
-  <li><a href="/professor/temporada/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/turma"> Inserir turma</a></li>
+  <li><a href="/professor/insc/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> Todas inscrições <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </a></li>
+  <li><a href="/professor/temporada/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/turma"> Inserir turma <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a></li>
 </ol>
 </section>
 
@@ -47,7 +47,7 @@
 
                   <div class="row">
 
-                    <div class="col-md-3" >
+                    <div class="col-md-2" >
                       <h5 style="font-weight: bold; text-align: left;">
                        <?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> / <?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                         <?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ás <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
@@ -60,7 +60,7 @@
                       </h5>
                     </div>
 
-                    <div class="col-md-3" >
+                    <div class="col-md-2" >
                       <h5 style="font-weight: bold; text-align: left;">
                        Prof. <?php echo htmlspecialchars( $value1["apelidoperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> 
                       <?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["nomeespaco"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
@@ -75,10 +75,16 @@
                       </h5>
                     </div>
 
-                    <div class="col-md-2" >
-                      <h5 style="font-weight: bold; text-align: left;">
+                    <div class="col-md-2">
+                      <h5 style="font-weight: bold; text-align: left; color: red;">
                         <a href="/professor/insc-turma-temporada/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/user/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["numinscritos"], ENT_COMPAT, 'UTF-8', FALSE ); ?> inscritos</a>
                         
+                      </h5>
+                    </div>
+
+                    <div class="col-md-2">
+                      <h5 style="font-weight: bold; text-align: left; color: darkgreen;">
+                        <?php echo htmlspecialchars( $value1["nummatriculados"], ENT_COMPAT, 'UTF-8', FALSE ); ?> matriculados                        
                       </h5>
                     </div>
                     

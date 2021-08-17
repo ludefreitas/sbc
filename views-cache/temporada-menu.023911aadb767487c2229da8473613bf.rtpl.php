@@ -3,13 +3,7 @@
 								   			<i class="fa fa-link"></i> 
 								   			Temporada - 2019
 								   		</a>
-								   		<ul class="treeview-menu">
-									   		<li>
-									   			<a href="/professor/turma-temporada/53">
-									   				<i class="fa fa-link"></i>
-									   				Turmas Temporada 2019
-									   			</a>
-									   		</li>
+								   		<ul class="treeview-menu">									   		
 									   		<li>
 									   			<a href="/professor/professor-temporada/53">
 									   				<i class="fa fa-link"></i>
@@ -28,13 +22,7 @@
 								   			<i class="fa fa-link"></i> 
 								   			Temporada - 2020
 								   		</a>
-								   		<ul class="treeview-menu">
-									   		<li>
-									   			<a href="/professor/turma-temporada/57">
-									   				<i class="fa fa-link"></i>
-									   				Turmas Temporada 2020
-									   			</a>
-									   		</li>
+								   		<ul class="treeview-menu">									   		
 									   		<li>
 									   			<a href="/professor/professor-temporada/57">
 									   				<i class="fa fa-link"></i>
@@ -53,13 +41,7 @@
 								   			<i class="fa fa-link"></i> 
 								   			Temporada - 2021
 								   		</a>
-								   		<ul class="treeview-menu">
-									   		<li>
-									   			<a href="/professor/turma-temporada/4">
-									   				<i class="fa fa-link"></i>
-									   				Turmas Temporada 2021
-									   			</a>
-									   		</li>
+								   		<ul class="treeview-menu">									   		
 									   		<li>
 									   			<a href="/professor/professor-temporada/4">
 									   				<i class="fa fa-link"></i>

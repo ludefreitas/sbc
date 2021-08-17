@@ -8,8 +8,8 @@
 </h1>
 <ol class="breadcrumb">
   <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
-  <li><a href="/professor/temporada"> Todas temporadas</a></li>
-  <li><a href="/professor/temporada/{$temporada.idtemporada}/turma"> Inserir turma</a></li>
+  <li><a href="/professor/insc/{$temporada.idtemporada}"> Todas inscrições {$temporada.desctemporada} </a></li>
+  <li><a href="/professor/temporada/{$temporada.idtemporada}/turma"> Inserir turma {$temporada.desctemporada}</a></li>
 </ol>
 </section>
 
@@ -47,7 +47,7 @@
 
                   <div class="row">
 
-                    <div class="col-md-3" >
+                    <div class="col-md-2" >
                       <h5 style="font-weight: bold; text-align: left;">
                        {$value.idturma} - {$value.descturma} / {$value.diasemana}
                         {$value.horainicio} ás {$value.horatermino}
@@ -60,7 +60,7 @@
                       </h5>
                     </div>
 
-                    <div class="col-md-3" >
+                    <div class="col-md-2" >
                       <h5 style="font-weight: bold; text-align: left;">
                        Prof. {$value.apelidoperson} 
                       {$value.apelidolocal} - {$value.nomeespaco}
@@ -75,10 +75,16 @@
                       </h5>
                     </div>
 
-                    <div class="col-md-2" >
-                      <h5 style="font-weight: bold; text-align: left;">
+                    <div class="col-md-2">
+                      <h5 style="font-weight: bold; text-align: left; color: red;">
                         <a href="/professor/insc-turma-temporada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}">{$value.numinscritos} inscritos</a>
                         
+                      </h5>
+                    </div>
+
+                    <div class="col-md-2">
+                      <h5 style="font-weight: bold; text-align: left; color: darkgreen;">
+                        {$value.nummatriculados} matriculados                        
                       </h5>
                     </div>
                     

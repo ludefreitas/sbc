@@ -30,55 +30,94 @@
 
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                  Nome: <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                 </h5>
               </div>
 
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  <?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                  CPF.: <?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                 </h5>
               </div> 
 
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  <?php echo formatDate($value1["dtnasc"]); ?>
+                  Data do Nasc.: <?php echo formatDate($value1["dtnasc"]); ?>
                 </h5>
               </div>
 
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  <?php echo calcularIdade($value1["dtnasc"]); ?>
+                  Idade: <?php echo calcularIdade($value1["dtnasc"]); ?> anos
                 </h5>
               </div>
 
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                  Responsável: <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                 </h5>
               </div>
 
                <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  <?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                  Fone: <?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                 </h5>
               </div>
 
                <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  <?php echo formatDate($value1["dtinsc"]); ?>
+                  Data Inscr.: <?php echo formatDate($value1["dtinsc"]); ?>
                 </h5>
               </div>
+              
+              <?php if( $value1["idinscstatus"] == 1 ){ ?>
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left; color: blue;">                  
+                  <span><?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
+                </h5>
+              </div>
+              <?php } ?>
+              
+              <?php if( $value1["idinscstatus"] == 2 ){ ?>
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left; color: darkgreen;">                  
+                  <span><?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
+                </h5>
+              </div>
+              <?php } ?>
+              <?php if( $value1["idinscstatus"] == 6 ){ ?>
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left; color: darkorange;">                  
+                  <span><?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
+                </h5>
+              </div>
+              <?php } ?>
+              <?php if( $value1["idinscstatus"] == 7 ){ ?>
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left; color: darkblue;">                  
+                  <span><?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
+                </h5>
+              </div>
+              <?php } ?>
+              <?php if( $value1["idinscstatus"] == 8 ){ ?>
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left; color: orange;">                  
+                  Status: <span><?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
+                </h5>
+              </div>
+              <?php } ?>
+              <?php if( $value1["idinscstatus"] == 9 ){ ?>
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left; color: red;">                  
+                  <span><?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
+                </h5>
+              </div>
+              <?php } ?>            
+
 
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  <?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["numordem"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-                </h5>
-              </div>
-
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                  <?php if( $value1["laudo"] == 1 ){ ?>c/ laudo<?php } ?> -
+                  <?php if( $value1["laudo"] == 1 ){ ?>c/ laudo<?php } ?> - <?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                 </h5>
               </div>
 
@@ -92,8 +131,25 @@
 
               <?php if( $value1["idinscstatus"] == 2 ){ ?>
               <div class="col-md-1" style="margin: 2; padding: 2">
+                <div>
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  <a href="/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $iduserprof["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA da inscrição <?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?> do(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da turma <?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da temporada <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ? Lembramos que se você clicar em OK o aluno será matriculado e o status da inscrição só poderá ser DESISTENTE ')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                  <a href="/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $iduserprof["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA do(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> na turma <?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da temporada <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ?')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                </h5>
+                </div>
+              
+              <div>
+
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $iduserprof["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusDesistente" onclick="return confirm('Deseja realmente marcar como DESISTENTE o(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da turma <?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> na temporada <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ? ')" class="btn btn-primary btn-xs"><i></i> Desistente</a>
+                </h5>
+              </div>
+              </div>
+              <?php } ?>
+
+              <?php if( $value1["idinscstatus"] == 1 ){ ?>
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $iduserprof["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusDesistente" onclick="return confirm('Deseja realmente marcar como DESISTENTE o(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da turma <?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> na temporada <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ? ')" class="btn btn-primary btn-xs"><i></i> Desistente</a>
                 </h5>
               </div>
               <?php } ?>
@@ -102,20 +158,11 @@
               <?php if( $value1["idinscstatus"] == 7 ){ ?>
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  <a href="/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $iduserprof["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusMatriculada" onclick="return confirm('Deseja realmente alterar status não SORTEADO da inscrição <?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?> do(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da turma <?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da temporada <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ?')" class="btn btn-info btn-xs"><i></i> Lista de espera</a>
+                  <a href="/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $iduserprof["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusAguardandoMatricula" onclick="return confirm('Deseja realmente que o(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> fique aguardando matrícula na turma de <?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da temporada <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ?')" class="btn btn-info btn-xs"><i></i> Aguardar matrícula</a>
                 </h5>
               </div>
 
               <?php } ?>
-
-              <?php if( $value1["idinscstatus"] == 8 ){ ?>
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                  <a class="btn btn-danger" href="" role="button">Desistente</a>
-                </h5>
-              </div>
-              <?php } ?>
-
                                                                                                           
 
             </div>

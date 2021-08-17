@@ -272,25 +272,47 @@ desired effect
           </ul>
         </li> 
         <li class="treeview">
-          <a href="/professor/temporada"><i class="fa fa-link"></i> <span>Temporada</span>
+          <a href="/professor/temporada"><i class="fa fa-link"></i> <span>Temporadas</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-             <li><a href="/professor/temporada"><i class="fa fa-link"></i>Todas Temporadas</a></li>          
-            <?php require $this->checkTemplate("professor-temporada-menu");?>
+             <li><a href="/professor/temporada"><i class="fa fa-link"></i>Todas Temporadas</a></li>      
+            <?php require $this->checkTemplate("temporada-menu");?>
+
+          </ul>
+        </li>
+
+        <li class="treeview">
+          <a href="/professor/insc"><i class="fa fa-link"></i> <span>Turmas por temporada</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <?php require $this->checkTemplate("turma-temporada-menu");?>
+
+          </ul>
+        </li>  
+
+        
+
+        <li class="treeview">
+          <a href="/professor/insc"><i class="fa fa-link"></i> <span>Inscrições</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <?php require $this->checkTemplate("insc-temporada-menu");?>
 
           </ul>
         </li> 
-        
-        
-        <li>
-          <a href="/professor/insc"><i class="fa fa-link"></i> <span>Inscrições</span></a>
-        </li> 
         <li>
           <a href="/professor/turma"><i class="fa fa-link"></i> <span>Turmas</span></a>
-        </li>                           
+        </li>                        
+        
         <li>
           <a href="/professor/atividade"><i class="fa fa-link"></i> <span>Atividades</span></a>
         </li>

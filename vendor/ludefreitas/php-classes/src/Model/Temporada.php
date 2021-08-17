@@ -299,7 +299,9 @@
 			$this->setData($results[0]);
 
 			//Temporada::updateFile();
-			Temporada::updateFileAdmin();
+			Temporada::updateFileAdminTemporada();
+			Temporada::updateFileAdminInscricoes();
+			Temporada::updateFileAdminTurmaTemporada();
 		}
 
 		public function get($idtemporada)
@@ -335,7 +337,9 @@
 			]);	
 
 			//Temporada::updateFile();
-			Temporada::updateFileAdmin();
+			Temporada::updateFileAdminTemporada();
+			Temporada::updateFileAdminInscricoes();
+			Temporada::updateFileAdminTurmaTemporada();
 		}
 
 		// atualiza lista de temporada no site (no rodapé) temporada-menu.html
@@ -355,7 +359,7 @@
 
 		
 
-		public static function updateFileAdmin()	
+		public static function updateFileAdminTemporada()	
 		{
 			$temporada = Temporada::listAll();
 
@@ -367,13 +371,7 @@
 								   			<i class="fa fa-link"></i> 
 								   			Temporada - '.$row['desctemporada'].'
 								   		</a>
-								   		<ul class="treeview-menu">
-									   		<li>
-									   			<a href="/professor/turma-temporada/'.$row['idtemporada'].'">
-									   				<i class="fa fa-link"></i>
-									   				Turmas Temporada '.$row['desctemporada'].'
-									   			</a>
-									   		</li>
+								   		<ul class="treeview-menu">									   		
 									   		<li>
 									   			<a href="/professor/professor-temporada/'.$row['idtemporada'].'">
 									   				<i class="fa fa-link"></i>
@@ -390,8 +388,46 @@
 									</li>');
 
 			}
-			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."professor".DIRECTORY_SEPARATOR."professor-temporada-menu.html", implode('', $html));
+			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."professor".DIRECTORY_SEPARATOR."temporada-menu.html", implode('', $html));
 		}
+
+		public static function updateFileAdminInscricoes()	
+		{
+			$temporada = Temporada::listAll();
+
+			$html = [];
+
+			foreach ($temporada as $row) {
+				array_push($html, '<li class="treeview">
+								   		<a href="/professor/insc/'.$row['idtemporada'].'">
+								   			<i class="fa fa-link"></i> 
+								   			Inscrições - '.$row['desctemporada'].'
+								   		</a>								   		
+									</li>');
+
+			}
+			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."professor".DIRECTORY_SEPARATOR."insc-turma-temporada-menu.html", implode('', $html));
+		}
+
+		public static function updateFileAdminTurmaTemporada()	
+		{
+			$temporada = Temporada::listAll();
+
+			$html = [];
+
+			foreach ($temporada as $row) {
+				array_push($html, '<li class="treeview">
+										<a href="/professor/turma-temporada/'.$row['idtemporada'].'">
+								   			<i class="fa fa-link"></i> 
+								   			Turmas/Temporada '.$row['desctemporada'].'
+								   		</a>								   		
+									</li>'
+								);
+
+			}
+			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."professor".DIRECTORY_SEPARATOR."turma-temporada-menu.html", implode('', $html));
+		}
+
 
 		public function getTurmaTemporadaPage($page = 1, $itemsPerPage = 4)
 		{
@@ -497,6 +533,7 @@
 						SELECT a.idturma
 						FROM tb_turma a
 						INNER JOIN tb_turmatemporada b ON a.idturma = b.idturma
+						INNER JOIN tb_users c ON c.iduser = b.iduser
 						WHERE b.idtemporada = :idtemporada ORDER BY a.descturma
 					);
 				", [
@@ -594,12 +631,32 @@
 			$sql = new Sql();
 			
 			$results =  $sql->select("SELECT MAX(numinscritos) as maximoInscritos FROM tb_turmatemporada WHERE idtemporada = :idtemporada", [
-				'idtemporada'=>$idtemporada
+				':idtemporada'=>$idtemporada
 			]);
 
 			return $results;			
 		}
+
+		public function updateNumMatriculadosMais($idturma, $idtemporada){
+
+			$sql = new Sql();
+			
+			$sql->select("CALL sp_turmatemporada_update_nummatriculados_mais(:idturma, :idtemporada)", array(
+				":idturma"=>$idturma,
+				":idtemporada"=>$idtemporada
+			));
+		}
 		
+		public function updateNumMatriculadosMenos($idturma, $idtemporada){
+
+			$sql = new Sql();
+			
+			$sql->select("CALL sp_turmatemporada_update_nummatriculados_menos(:idturma, :idtemporada)", array(
+				":idturma"=>$idturma,
+				":idtemporada"=>$idtemporada
+			));
+		}
+
 		public function addTurma(Turma $turma)
 		{
 			$sql = new Sql();

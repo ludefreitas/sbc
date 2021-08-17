@@ -1,9 +1,9 @@
-<!-- Content Wrapper. Contains page content -->
+<?php if(!class_exists('Rain\Tpl')){exit;}?><!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Lista com {$total} inscrições
+    Lista com <?php echo htmlspecialchars( $total, ENT_COMPAT, 'UTF-8', FALSE ); ?> inscrições para a temporada <?php echo htmlspecialchars( $temporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -17,11 +17,11 @@
   <div class="row">
   	<div class="col-md-12">
   		    <div class="box box-primary">
-              {if="$error != ''"}
+              <?php if( $error != '' ){ ?>
                   <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
-              {$error}
+              <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
                   </div>
-              {/if}
+              <?php } ?>
             
             <div class="box-header">
               <!--<a href="/professor/users/create" class="btn btn-success">Cadastrar Usuário</a>-->
@@ -29,7 +29,7 @@
               <div class="box-tools">
                 <form action="/professor/insc">
                   <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="search" class="form-control pull-right" placeholder="Search" value="{$search}">
+                    <input type="text" name="search" class="form-control pull-right" placeholder="Search" value="<?php echo htmlspecialchars( $search, ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                     <div class="input-group-btn">
                       <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                     </div>
@@ -43,61 +43,61 @@
               <div class="row">
               </div>
 
-            {loop="$insc"}
+            <?php $counter1=-1;  if( isset($insc) && ( is_array($insc) || $insc instanceof Traversable ) && sizeof($insc) ) foreach( $insc as $key1 => $value1 ){ $counter1++; ?>
             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
               <div class="row">
 
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">
-                  {$value.idinsc}
+                  <?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                 </h5>
               </div>
 
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">
-                  {function="formatDateHour($value.dtinsc)"}
+                  <?php echo formatDateHour($value1["dtinsc"]); ?>
                 </h5>
               </div>
 
               <div class="col-md-2" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                    {$value.descstatus}                    
+                    <?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>                    
                 </h5>
               </div>
 
               <div class="col-md-2" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                    {$value.nomepess}                    
+                    <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>                    
                 </h5>
               </div>
 
               <div class="col-md-2" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                    {$value.desperson}
+                    <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                 </h5>
               </div>
 
               <div class="col-md-2" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                    {$value.descturma}
+                    <?php echo htmlspecialchars( $value1["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                 </h5>
               </div>
 
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                    {$value.desctemporada}
+                    <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                 </h5>
               </div>
 
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                    <a class="btn btn-primary" href="/professor/profile/insc/{$value.idinsc}/{$value.idpess}" role="button">Detalhes</a>
+                    <a class="btn btn-primary" href="/professor/profile/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" role="button">Detalhes</a>
                 </h5>
               </div>
 
             </div>
           </div>
-          {/loop}
+          <?php } ?>
 
         </div>
 
@@ -105,9 +105,9 @@
             <!-- /.box-body -->
             <div class="box-footer clearfix">
               <ul class="pagination pagination-sm no-margin pull-right">
-                {loop="$pages"}
-                <li><a href="{$value.href}">{$value.text}</a></li>
-                {/loop}
+                <?php $counter1=-1;  if( isset($pages) && ( is_array($pages) || $pages instanceof Traversable ) && sizeof($pages) ) foreach( $pages as $key1 => $value1 ){ $counter1++; ?>
+                <li><a href="<?php echo htmlspecialchars( $value1["href"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["text"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a></li>
+                <?php } ?>
               </ul>
             </div>
             

@@ -30,55 +30,94 @@
 
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  {$value.nomepess}
+                  Nome: {$value.nomepess}
                 </h5>
               </div>
 
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  {$value.numcpf}
+                  CPF.: {$value.numcpf}
                 </h5>
               </div> 
 
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  {function="formatDate($value.dtnasc)"}
+                  Data do Nasc.: {function="formatDate($value.dtnasc)"}
                 </h5>
               </div>
 
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  {function="calcularIdade($value.dtnasc)"}
+                  Idade: {function="calcularIdade($value.dtnasc)"} anos
                 </h5>
               </div>
 
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  {$value.desperson}
+                  Responsável: {$value.desperson}
                 </h5>
               </div>
 
                <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  {$value.nrphone}
+                  Fone: {$value.nrphone}
                 </h5>
               </div>
 
                <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  {function="formatDate($value.dtinsc)"}
+                  Data Inscr.: {function="formatDate($value.dtinsc)"}
                 </h5>
               </div>
+              
+              {if="$value.idinscstatus == 1"}
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left; color: blue;">                  
+                  <span>{$value.descstatus}</span>
+                </h5>
+              </div>
+              {/if}
+              
+              {if="$value.idinscstatus == 2"}
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left; color: darkgreen;">                  
+                  <span>{$value.descstatus}</span>
+                </h5>
+              </div>
+              {/if}
+              {if="$value.idinscstatus == 6"}
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left; color: darkorange;">                  
+                  <span>{$value.descstatus}</span>
+                </h5>
+              </div>
+              {/if}
+              {if="$value.idinscstatus == 7"}
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left; color: darkblue;">                  
+                  <span>{$value.descstatus}</span>
+                </h5>
+              </div>
+              {/if}
+              {if="$value.idinscstatus == 8"}
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left; color: orange;">                  
+                  Status: <span>{$value.descstatus}</span>
+                </h5>
+              </div>
+              {/if}
+              {if="$value.idinscstatus == 9"}
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left; color: red;">                  
+                  <span>{$value.descstatus}</span>
+                </h5>
+              </div>
+              {/if}            
+
 
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  {$value.descstatus} - {$value.numordem}
-                </h5>
-              </div>
-
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                  {if="$value.laudo == 1"}c/ laudo{/if} -
+                  {if="$value.laudo == 1"}c/ laudo{/if} - {$value.idinsc}
                 </h5>
               </div>
 
@@ -92,8 +131,25 @@
 
               {if="$value.idinscstatus == 2"}
               <div class="col-md-1" style="margin: 2; padding: 2">
+                <div>
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  <a href="/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA da inscrição {$value.idinsc} do(a) {$value.nomepess} da turma {$turma.descturma} {$turma.idturma} da temporada {$temporada.desctemporada} ? Lembramos que se você clicar em OK o aluno será matriculado e o status da inscrição só poderá ser DESISTENTE ')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                  <a href="/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA do(a) {$value.nomepess} na turma {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                </h5>
+                </div>
+              
+              <div>
+
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusDesistente" onclick="return confirm('Deseja realmente marcar como DESISTENTE o(a) {$value.nomepess} da turma {$turma.descturma} na temporada {$temporada.desctemporada} ? ')" class="btn btn-primary btn-xs"><i></i> Desistente</a>
+                </h5>
+              </div>
+              </div>
+              {/if}
+
+              {if="$value.idinscstatus == 1"}
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusDesistente" onclick="return confirm('Deseja realmente marcar como DESISTENTE o(a) {$value.nomepess} da turma {$turma.descturma} na temporada {$temporada.desctemporada} ? ')" class="btn btn-primary btn-xs"><i></i> Desistente</a>
                 </h5>
               </div>
               {/if}
@@ -102,20 +158,11 @@
               {if="$value.idinscstatus == 7"}
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  <a href="/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusMatriculada" onclick="return confirm('Deseja realmente alterar status não SORTEADO da inscrição {$value.idinsc} do(a) {$value.nomepess} da turma {$turma.descturma} {$turma.idturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-info btn-xs"><i></i> Lista de espera</a>
+                  <a href="/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusAguardandoMatricula" onclick="return confirm('Deseja realmente que o(a) {$value.nomepess} fique aguardando matrícula na turma de {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-info btn-xs"><i></i> Aguardar matrícula</a>
                 </h5>
               </div>
 
               {/if}
-
-              {if="$value.idinscstatus == 8"}
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                  <a class="btn btn-danger" href="" role="button">Desistente</a>
-                </h5>
-              </div>
-              {/if}
-
                                                                                                           
 
             </div>

@@ -19,11 +19,11 @@ $app->get("/professor/insc", function() {
 
 	if ($search != '') {
 
-		$pagination = Insc::getPageSearch($search, $page);
+		$pagination = Insc::getPageSearchInsc($search, $page);
 
 	} else {
 
-		$pagination = Insc::getPage($page);
+		$pagination = Insc::getPageInsc($page, $itemsPerPage = 10);
 
 	}
 
@@ -55,6 +55,70 @@ $app->get("/professor/insc", function() {
 		"error"=>User::getError()
 	));
 });
+
+$app->get("/professor/insc/:idtemporada", function($idtemporada) {
+
+	User::verifyLogin();
+	// na linha abaixo retorna um array com todos os dados do usuário
+
+	$search = (isset($_GET['search'])) ? $_GET['search'] : "";
+
+	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
+
+	if ($search != '') {
+
+		$pagination = Insc::getPageSearchInscTemporada($search, $page, $idtemporada);
+
+	} else {
+
+		$pagination = Insc::getPageInscTemporada($page, $itemsPerPage = 10, $idtemporada);
+
+	}
+
+	$pages = [];
+
+	for ($x = 0; $x < $pagination['pages']; $x++)
+	{
+
+		array_push($pages, [
+			'href'=>'/professor/insc-temporada?'.http_build_query([
+			'page'=>$x+1,
+			'search'=>$search
+			]),
+			'text'=>$x+1
+		]);
+
+	}
+
+	$temporada = new Temporada();
+
+	$temporada->get((int)$idtemporada);
+
+	$desctemporada = $temporada->getdesctemporada();
+
+	//var_dump($temporada->getdesctemporada());
+	//exit;
+
+	//$desctemporada = $temporada->getdesctemporada()
+
+
+
+	//$insc = insc::listAll();
+
+	// carrega uma pagina das páginas do admin
+	$page = new PageAdmin();
+
+	// envia para a página o array retornado pelo listAll
+	$page->setTpl("insc-temporada", array( // aqui temos um array com muitos arrays
+		"temporada"=>$desctemporada,
+		"insc"=>$pagination['data'],
+		"total"=>$pagination['total'],
+		"search"=>$search,
+		"pages"=>$pages,
+		"error"=>User::getError()
+	));
+});
+
 
 
 $app->get("/professor/insc/create", function() {
@@ -291,7 +355,47 @@ $app->get("/insc/:idinsc/:iduserprof/:idturma/statusMatriculada", function($idin
 	$idtemporada = $insc->getidtemporada();
 	$iduser = (int)$iduserprof;
 
-	$insc->alteraStatusInscricaoMatriculada($idinsc);
+	$insc->alteraStatusInscricaoMatriculada($idinsc, $idturma, $idtemporada);
+
+	header("Location: /professor/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
+	exit();
+
+});
+
+$app->get("/insc/:idinsc/:iduserprof/:idturma/statusAguardandoMatricula", function($idinsc, $iduserprof, $idturma){
+
+	$insc = new Insc();
+	$turma = new Turma();
+	$temporada = new Temporada();
+	$user = new User();
+	
+	$insc->get((int)$idinsc);
+
+	$idturma = (int)$idturma;
+	$idtemporada = $insc->getidtemporada();
+	$iduser = (int)$iduserprof;
+
+	$insc->alteraStatusInscricaoAguardandoMatricula($idinsc);
+
+	header("Location: /professor/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
+	exit();
+
+});
+
+$app->get("/insc/:idinsc/:iduserprof/:idturma/statusDesistente", function($idinsc, $iduserprof, $idturma){
+
+	$insc = new Insc();
+	$turma = new Turma();
+	$temporada = new Temporada();
+	$user = new User();
+	
+	$insc->get((int)$idinsc);
+
+	$idturma = (int)$idturma;
+	$idtemporada = $insc->getidtemporada();
+	$iduser = (int)$iduserprof;
+
+	$insc->alteraStatusInscricaoDesistente($idinsc, $idturma, $idtemporada);
 
 	header("Location: /professor/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
 	exit();

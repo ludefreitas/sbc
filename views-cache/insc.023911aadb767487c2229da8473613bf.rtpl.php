@@ -7,7 +7,7 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="/professor"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active"><a href="/professor/insc">Inscrições</a></li>
+    <li class="active"><a href="/professor/insc">Inscrições todas temporadas</a></li>
   </ol>
 </section>
 

@@ -217,7 +217,7 @@ class Insc extends Model {
 
 	}
 
-	public static function getPage($page = 1, $itemsPerPage =5)
+	public static function getPageInsc($page = 1, $itemsPerPage = 10)
 	{
 
 		$start = ($page - 1) * $itemsPerPage;
@@ -248,7 +248,7 @@ class Insc extends Model {
 
 	}
 
-	public static function getPageSearch($search, $page = 1, $itemsPerPage = 5)
+	public static function getPageSearchInsc($search, $page = 1, $itemsPerPage = 5)
 	{
 
 		$start = ($page - 1) * $itemsPerPage;
@@ -266,13 +266,91 @@ class Insc extends Model {
 			INNER JOIN tb_temporada g USING(idtemporada)
 			INNER JOIN tb_turma h USING(idturma)
 			WHERE a.idinsc LIKE :search
-			OR f.desperson LIKE :search 
+			OR f.desperson LIKE :search
+			OR b.descstatus LIKE :search 
 			OR g.desctemporada LIKE :search 
 			OR d.nomepess LIKE :search
 			OR h.descturma LIKE :search 
 			-- ORDER BY a.dtinsc DESC
 			LIMIT $start, $itemsPerPage;
 		", [
+			':search'=>'%'.$search.'%',
+			':id'=>$search
+		]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+
+	public static function getPageInscTemporada($page = 1, $itemsPerPage = 10, $idtemporada)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_insc a 
+			INNER JOIN tb_inscstatus b USING(idinscstatus) 
+			INNER JOIN tb_carts c USING(idcart)			
+			INNER JOIN tb_pessoa d USING(idpess)
+			INNER JOIN tb_users e ON e.iduser = d.iduser
+			INNER JOIN tb_persons f ON f.idperson = e.idperson
+			INNER JOIN tb_temporada g USING(idtemporada)
+			INNER JOIN tb_turma h USING(idturma)
+			WHERE idtemporada = :idtemporada
+			-- ORDER BY a.dtinsc DESC
+			LIMIT $start, $itemsPerPage;
+		", [
+			":idtemporada"=>$idtemporada
+
+		]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+
+	public static function getPageSearchInscTemporada($search, $page = 1, $itemsPerPage = 5, $idtemporada)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;		
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_insc a 
+			INNER JOIN tb_inscstatus b USING(idinscstatus) 
+			INNER JOIN tb_carts c USING(idcart)			
+			INNER JOIN tb_pessoa d USING(idpess)
+			INNER JOIN tb_users e ON e.iduser = d.iduser
+			INNER JOIN tb_persons f ON f.idperson = e.idperson
+			INNER JOIN tb_temporada g USING(idtemporada)
+			INNER JOIN tb_turma h USING(idturma)
+			INNER JOIN tb_turmatemporada i
+			WHERE idtemporada = :idtemporada AND (a.idinsc LIKE :search
+			OR f.desperson LIKE :search
+			OR b.descstatus LIKE :search 
+			OR g.desctemporada LIKE :search 
+			OR d.nomepess LIKE :search
+			OR h.descturma LIKE :search) 
+			-- ORDER BY a.dtinsc DESC
+			LIMIT $start, $itemsPerPage;
+		", [
+			'idtemporada'=>$idtemporada,
 			':search'=>'%'.$search.'%',
 			':id'=>$search
 		]);
@@ -381,6 +459,33 @@ class Insc extends Model {
 		}
 	}
 
+	public function alteraStatusInscricaoMatriculada($idinsc, $idturma, $idtemporada){
+
+		$idStatusMatriculada = 1;
+
+		$sql = new Sql();
+
+		$sql->query("UPDATE tb_insc SET idinscstatus = :idStatusMatriculada WHERE idinsc = :idinsc", array(
+			":idinsc"=>$idinsc,
+			"idStatusMatriculada"=>$idStatusMatriculada
+		));
+
+		Temporada::updateNumMatriculadosMais($idturma, $idtemporada);
+	}
+
+	public function alteraStatusInscricaoAguardandoMatricula($idinsc){
+
+		$idStatusMatriculada = 2;
+
+		$sql = new Sql();
+
+		$sql->query("UPDATE tb_insc SET idinscstatus = :idStatusMatriculada WHERE idinsc = :idinsc", array(
+			":idinsc"=>$idinsc,
+			"idStatusMatriculada"=>$idStatusMatriculada
+		));
+
+	}
+
 	public function alteraStatusInscricaoCancelada($idinsc){
 
 		$idStatusCancelada = 9;
@@ -394,9 +499,9 @@ class Insc extends Model {
 
 	}
 
-	public function alteraStatusInscricaoMatriculada($idinsc){
+	public function alteraStatusInscricaoDesistente($idinsc, $idturma, $idtemporada){
 
-		$idStatusMatriculada = 1;
+		$idStatusMatriculada = 8;
 
 		$sql = new Sql();
 
@@ -404,6 +509,8 @@ class Insc extends Model {
 			":idinsc"=>$idinsc,
 			"idStatusMatriculada"=>$idStatusMatriculada
 		));
+
+		Temporada::updateNumMatriculadosMenos($idturma, $idtemporada);
 	}
 
 	public function numMaxNumOrdem($idtemporada, $idturma){
