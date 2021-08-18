@@ -161,7 +161,7 @@
 
 			if($results){
 				Temporada::setError("Temporada ".$desctemporada." já existe!");
-				header("Location: /professor/temporada/create");
+				header("Location: /admin/temporada/create");
 				exit;
 			}
 		}
@@ -322,7 +322,7 @@
 			}else{
 
 				Temporada::setError("Temporada selecionada não encontrada!");
-				header("Location: /professor/temporada");
+				header("Location: /admin/temporada");
 				exit;
 			}
 					
@@ -367,19 +367,19 @@
 
 			foreach ($temporada as $row) {
 				array_push($html, '<li class="treeview">
-								   		<a href="/professor/turma-temporada/'.$row['idtemporada'].'">
+								   		<a href="/admin/turma-temporada/'.$row['idtemporada'].'">
 								   			<i class="fa fa-link"></i> 
 								   			Temporada - '.$row['desctemporada'].'
 								   		</a>
 								   		<ul class="treeview-menu">									   		
 									   		<li>
-									   			<a href="/professor/professor-temporada/'.$row['idtemporada'].'">
+									   			<a href="/admin/professor-temporada/'.$row['idtemporada'].'">
 									   				<i class="fa fa-link"></i>
 									   				Profs Temporada '.$row['desctemporada'].'
 									   			</a>
 									   		</li>
 									   		<li>
-									   			<a href="/professor/sorteio/'.$row['idtemporada'].'">
+									   			<a href="/admin/sorteio/'.$row['idtemporada'].'">
 									   				<i class="fa fa-link"></i>
 									   				Sorteio '.$row['desctemporada'].'
 									   			</a>
@@ -388,7 +388,7 @@
 									</li>');
 
 			}
-			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."professor".DIRECTORY_SEPARATOR."temporada-menu.html", implode('', $html));
+			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."temporada-menu.html", implode('', $html));
 		}
 
 		public static function updateFileAdminInscricoes()	
@@ -399,14 +399,14 @@
 
 			foreach ($temporada as $row) {
 				array_push($html, '<li class="treeview">
-								   		<a href="/professor/insc/'.$row['idtemporada'].'">
+								   		<a href="/admin/insc/'.$row['idtemporada'].'">
 								   			<i class="fa fa-link"></i> 
 								   			Inscrições - '.$row['desctemporada'].'
 								   		</a>								   		
 									</li>');
 
 			}
-			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."professor".DIRECTORY_SEPARATOR."insc-turma-temporada-menu.html", implode('', $html));
+			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."insc-temporada-menu.html", implode('', $html));
 		}
 
 		public static function updateFileAdminTurmaTemporada()	
@@ -417,7 +417,7 @@
 
 			foreach ($temporada as $row) {
 				array_push($html, '<li class="treeview">
-										<a href="/professor/turma-temporada/'.$row['idtemporada'].'">
+										<a href="/admin/turma-temporada/'.$row['idtemporada'].'">
 								   			<i class="fa fa-link"></i> 
 								   			Turmas/Temporada '.$row['desctemporada'].'
 								   		</a>								   		
@@ -425,7 +425,7 @@
 								);
 
 			}
-			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."professor".DIRECTORY_SEPARATOR."turma-temporada-menu.html", implode('', $html));
+			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."turma-temporada-menu.html", implode('', $html));
 		}
 
 

@@ -68,7 +68,7 @@ class Faixaetaria extends Model {
 		}else{
 
 			Faixaetaria::setMsgError("Faixa etária selecionada não existe!");
-			header("Location: /professor/faixaetaria");
+			header("Location: /admin/faixaetaria");
 			exit();			
 		}				
 		

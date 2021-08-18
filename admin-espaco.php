@@ -7,7 +7,7 @@ use \Sbc\Model\Espaco;
 use \Sbc\Model\Horario;
 use \Sbc\Model\Local;
 
-$app->get("/professor/espaco", function() {
+$app->get("/admin/espaco", function() {
 
 	User::verifyLogin();
 	// na linha abaixo retorna um array com todos os dados do usuário
@@ -32,7 +32,7 @@ $app->get("/professor/espaco", function() {
 	{
 
 		array_push($pages, [
-			'href'=>'/professor/espaco?'.http_build_query([
+			'href'=>'/admin/espaco?'.http_build_query([
 				'page'=>$x+1,
 				'search'=>$search
 			]),
@@ -55,7 +55,7 @@ $app->get("/professor/espaco", function() {
 	));
 });
 
-$app->get("/professor/espaco/create", function() {
+$app->get("/admin/espaco/create", function() {
 
 	User::verifyLogin();
 
@@ -77,7 +77,7 @@ $app->get("/professor/espaco/create", function() {
 });
 
 
-$app->post("/professor/espaco/create", function() {
+$app->post("/admin/espaco/create", function() {
 
 	User::verifyLogin();
 
@@ -87,31 +87,31 @@ $app->post("/professor/espaco/create", function() {
 
 	if (!isset($_POST['nomeespaco']) || $_POST['nomeespaco'] == '') {
 		Espaco::setMsgError("Informe o nome do espaço.");
-		header("Location: /professor/espaco/create");
+		header("Location: /admin/espaco/create");
 		exit;		
 	}	
 
 	if (!isset($_POST['descespaco']) || $_POST['descespaco'] == '') {
 		Espaco::setMsgError("Informe uma descrição para o espaço.");
-		header("Location: /professor/espaco/create");
+		header("Location: /admin/espaco/create");
 		exit;		
 	}
 
 	if (!isset($_POST['areaespaco']) || $_POST['areaespaco'] == '') {
 		Espaco::setMsgError("Informe a área em (m²) a medida do espaço.");
-		header("Location: /professor/espaco/create");
+		header("Location: /admin/espaco/create");
 		exit;		
 	}						
 
 	if (!isset($_POST['observacao']) || $_POST['observacao'] == '') {
 		Espaco::setMsgError("Descreva uma observação para o espaço.");
-		header("Location: /professor/espaco/create");
+		header("Location: /admin/espaco/create");
 		exit;		
 	}
 
 	if (!isset($_POST['idlocal']) || $_POST['idlocal'] == '') {
 		Espaco::setMsgError("Informe onde está localizado este espaço.");
-		header("Location: /professor/espaco/create");
+		header("Location: /admin/espaco/create");
 		exit;		
 	}												
 
@@ -121,11 +121,11 @@ $app->post("/professor/espaco/create", function() {
 
 	$_SESSION['createEspacoValues'] = NULL;
 
-	header("Location: /professor/espaco");
+	header("Location: /admin/espaco");
 	exit();	
 });
 
-$app->get("/professor/espaco/:idespaco/delete", function($idespaco) {
+$app->get("/admin/espaco/:idespaco/delete", function($idespaco) {
 
 	User::verifyLogin();
 
@@ -135,13 +135,13 @@ $app->get("/professor/espaco/:idespaco/delete", function($idespaco) {
 
 	$espaco->delete();
 
-	header("Location: /professor/espaco");
+	header("Location: /admin/espaco");
 	exit();
 	
 });
 
 
-$app->get("/professor/espaco/:idespaco", function($idespaco) {
+$app->get("/admin/espaco/:idespaco", function($idespaco) {
 
 	User::verifyLogin();
 
@@ -162,7 +162,7 @@ $app->get("/professor/espaco/:idespaco", function($idespaco) {
 	));
 });
 
-$app->post("/professor/espaco/:idespaco", function($idespaco) {
+$app->post("/admin/espaco/:idespaco", function($idespaco) {
 
 	User::verifyLogin();
 
@@ -174,7 +174,7 @@ $app->post("/professor/espaco/:idespaco", function($idespaco) {
 
 	$espaco->save();
 
-	header("Location: /professor/espaco");
+	header("Location: /admin/espaco");
 	exit();	
 });
 
@@ -198,7 +198,7 @@ $app->post("/admin/espaco/:idespaco", function($idespaco){
 });
 
 /*
-$app->get("/professor/espaco/:idespaco/horario", function($idespaco) {
+$app->get("/admin/espaco/:idespaco/horario", function($idespaco) {
 
 	User::verifyLogin();
 
@@ -217,7 +217,7 @@ $app->get("/professor/espaco/:idespaco/horario", function($idespaco) {
 	]);	
 });
 
-$app->get("/professor/espaco/:idespaco/horario/:idhorario/add", function($idespaco, $idhorario) {
+$app->get("/admin/espaco/:idespaco/horario/:idhorario/add", function($idespaco, $idhorario) {
 
 	User::verifyLogin();
 
@@ -231,11 +231,11 @@ $app->get("/professor/espaco/:idespaco/horario/:idhorario/add", function($idespa
 
 	$espaco->addHorario($horario);
 
-	header("Location: /professor/espaco/".$idespaco."/horario");
+	header("Location: /admin/espaco/".$idespaco."/horario");
 	exit;
 });
 
-$app->get("/professor/espaco/:idespaco/horario/:idhorario/remove", function($idespaco, $idhorario) {
+$app->get("/admin/espaco/:idespaco/horario/:idhorario/remove", function($idespaco, $idhorario) {
 
 	User::verifyLogin();
 
@@ -249,7 +249,7 @@ $app->get("/professor/espaco/:idespaco/horario/:idhorario/remove", function($ide
 
 	$espaco->removeHorario($horario);
 
-	header("Location: /professor/espaco/".$idespaco."/horario");
+	header("Location: /admin/espaco/".$idespaco."/horario");
 	exit;
 });
 

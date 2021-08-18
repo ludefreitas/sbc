@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
   <meta name="viewport" content="width=device-width" />
-  <title>Sua Inscrição</title>
+  <title>Recuperar senha</title>
   <style type="text/css">
 
   * {
@@ -402,7 +402,7 @@
                 <td>
                   <table class="soapbox">
                     <tr>
-                      <td class="soapbox-title">Comprovante de inscrição</td>
+                      <td class="soapbox-title">Recupere sua senha</td>
                     </tr>
                   </table>
                   <table class="body">
@@ -413,13 +413,7 @@
                         <table class="body-text">
                           <tr>
                             <td class="body-text-cell">
-                              Este é numero da inscrição do seu filho.
-                            </td>
-                            
-                          </tr>
-                          <tr>                            
-                            <td class="body-text-cell">
-                              Clique aqui para conferir os detalhes <a href="<?php echo htmlspecialchars( $link, ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $link, ENT_COMPAT, 'UTF-8', FALSE ); ?></a>.
+                              Para redefinir a sua senha acesse o link <a href="<?php echo htmlspecialchars( $link, ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $link, ENT_COMPAT, 'UTF-8', FALSE ); ?></a>.
                             </td>
                           </tr>
                         </table>
@@ -429,10 +423,8 @@
                             <w:anchorlock/>
                             <center style="color:#ffffff;font-family:sans-serif;font-size:17px;font-weight:bold;">Review Account Settings</center>
                           </v:roundrect>
-                        <![endif]-->
-                          <!--<a href="<?php echo htmlspecialchars( $link, ENT_COMPAT, 'UTF-8', FALSE ); ?>"
-                        style="background-color:#41CC00;background-image:url(https://www.filepicker.io/api/file/N8GiNGsmT6mK6ORk00S7);border:1px solid #407429;border-radius:4px;color:#ffffff;display:inline-block;font-family:sans-serif;font-size:17px;font-weight:bold;text-shadow: -1px -1px #47A54B;line-height:38px;text-align:center;text-decoration:none;width:230px;-webkit-text-size-adjust:none;mso-hide:all;">Redefinir Senha</a>-->
-                      </div>
+                        <![endif]--><a href="<?php echo htmlspecialchars( $link, ENT_COMPAT, 'UTF-8', FALSE ); ?>"
+                        style="background-color:#41CC00;background-image:url(https://www.filepicker.io/api/file/N8GiNGsmT6mK6ORk00S7);border:1px solid #407429;border-radius:4px;color:#ffffff;display:inline-block;font-family:sans-serif;font-size:17px;font-weight:bold;text-shadow: -1px -1px #47A54B;line-height:38px;text-align:center;text-decoration:none;width:230px;-webkit-text-size-adjust:none;mso-hide:all;">Redefinir Senha</a></div>
                         <table class="body-signature-block">
                           <tr>
                             <td class="body-signature-cell">

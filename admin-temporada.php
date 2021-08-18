@@ -9,7 +9,7 @@ use \Sbc\Model\Turma;
 use \Sbc\Model\Sorteio;
 use \Sbc\Model\Local;
 
-$app->get("/professor/temporada", function() {
+$app->get("/admin/temporada", function() {
 
 	User::verifyLogin();
 
@@ -25,7 +25,7 @@ $app->get("/professor/temporada", function() {
 	));
 });
 
-$app->get("/professor/temporada/create", function() {
+$app->get("/admin/temporada/create", function() {
 
 	User::verifyLogin();
 
@@ -43,7 +43,7 @@ $app->get("/professor/temporada/create", function() {
 	]);
 });
 
-$app->get("/professor/professor-temporada/:idtemporada", function($idtemporada) {
+$app->get("/admin/professor-temporada/:idtemporada", function($idtemporada) {
 
 	User::verifyLogin();
 
@@ -68,7 +68,7 @@ $app->get("/professor/professor-temporada/:idtemporada", function($idtemporada) 
 });
 
 
-$app->post("/professor/temporada/create", function() {
+$app->post("/admin/temporada/create", function() {
 
 	User::verifyLogin();
 
@@ -78,37 +78,37 @@ $app->post("/professor/temporada/create", function() {
 
 	if (!isset($_POST['desctemporada']) || $_POST['desctemporada'] == '') {
 		Temporada::setError("Descreva a temporada.");
-		header("Location: /professor/temporada/create");
+		header("Location: /admin/temporada/create");
 		exit;		
 	}
 
 	if (!isset($_POST['dtinicinscricao']) || $_POST['dtinicinscricao'] == '') {
 		Temporada::setError("Informe quando começarão as inscrições.");
-		header("Location: /professor/temporada/create");
+		header("Location: /admin/temporada/create");
 		exit;		
 	}
 
 	if (!isset($_POST['dtterminscricao']) || $_POST['dtterminscricao'] == '') {
 		Temporada::setError("Informe quando terminarão as inscrições.");
-		header("Location: /professor/temporada/create");
+		header("Location: /admin/temporada/create");
 		exit;		
 	}
 
 	if (!isset($_POST['dtinicmatricula']) || $_POST['dtinicmatricula'] == '') {
 		Temporada::setError("Informe quando começarão as matrículas.");
-		header("Location: /professor/temporada/create");
+		header("Location: /admin/temporada/create");
 		exit;		
 	}
 
 	if (!isset($_POST['dttermmatricula']) || $_POST['dttermmatricula'] == '') {
 		Temporada::setError("Informe quando terminarão as matrículas.");
-		header("Location: /professor/temporada/create");
+		header("Location: /admin/temporada/create");
 		exit;		
 	}	
 
 	if (!isset($_POST['idstatustemporada']) || $_POST['idstatustemporada'] == '') {
 		Temporada::setError("Informe o status da temporada.");
-		header("Location: /professor/temporada/create");
+		header("Location: /admin/temporada/create");
 		exit;		
 	}
 
@@ -125,7 +125,7 @@ $app->post("/professor/temporada/create", function() {
 	
 		if(Temporada::temporadaStatusMatriculaIniciadaExiste()){
 			Temporada::setError("Já existe uma temporada com MATRÍCULAS INICIADAS. Não pode existir mais de uma temporada com INSCRIÇÕES ou MATRÍCULAS INICIADAS.");
-			header("Location: /professor/temporada/create");
+			header("Location: /admin/temporada/create");
 			exit;
 		}
 	} 
@@ -134,7 +134,7 @@ $app->post("/professor/temporada/create", function() {
 
 			if(Temporada::temporadaStatusInscricaoIniciadaExiste()){
 				Temporada::setError("Já existe uma temporada com INSCRIÇÕES INICIADAS. Não pode existir mais de uma temporada com INSCRIÇÕES ou MATRÍCULAS INICIADAS.");
-				header("Location: /professor/temporada/create");
+				header("Location: /admin/temporada/create");
 				exit;
 			}		
 	}	
@@ -149,7 +149,7 @@ $app->post("/professor/temporada/create", function() {
 		
 			if($idStatusTemporadaMatriculaIniciada){
 				Temporada::setError("Já existe uma temporada com o status selecionado. Não pode existir mais de uma temporada com status de TEMPORADA, INSCRIÇÕES, MATRÍCULAS INICIADAS ou MATRÍCULAS ENCERRADAS.");
-				header("Location: /professor/temporada/create");
+				header("Location: /admin/temporada/create");
 				exit;
 			}
 		//}
@@ -159,13 +159,13 @@ $app->post("/professor/temporada/create", function() {
 
 	$_SESSION['createTemporadaValues'] = NULL;
 
-	header("Location: /professor/temporada");
+	header("Location: /admin/temporada");
 	exit();	
 
 });
 
 
-$app->get("/professor/temporada/:idtemporada/delete", function($idtemporada) {
+$app->get("/admin/temporada/:idtemporada/delete", function($idtemporada) {
 
 	User::verifyLogin();
 
@@ -179,11 +179,11 @@ $app->get("/professor/temporada/:idtemporada/delete", function($idtemporada) {
 	$temporada->delete();
 	$sorteio->excluiTabelaSorteio($desctemporada);
 
-	header("Location: /professor/temporada");
+	header("Location: /admin/temporada");
 	exit();	
 });
 
-$app->get("/professor/temporada/:idtemporada", function($idtemporada) {
+$app->get("/admin/temporada/:idtemporada", function($idtemporada) {
 
 	User::verifyLogin();
 
@@ -206,7 +206,7 @@ $app->get("/professor/temporada/:idtemporada", function($idtemporada) {
 	));
 });
 
-$app->post("/professor/temporada/:idtemporada", function($idtemporada) {
+$app->post("/admin/temporada/:idtemporada", function($idtemporada) {
 
 	User::verifyLogin();
 
@@ -215,37 +215,37 @@ $app->post("/professor/temporada/:idtemporada", function($idtemporada) {
 	$temporada->get((int)$idtemporada);
 	if (!isset($_POST['desctemporada']) || $_POST['desctemporada'] == '') {
 		Temporada::setError("Descreva a temporada.");
-		header("Location: /professor/temporada/".$idtemporada."");
+		header("Location: /admin/temporada/".$idtemporada."");
 		exit;		
 	}
 
 	if (!isset($_POST['dtinicinscricao']) || $_POST['dtinicinscricao'] == '') {
 		Temporada::setError("Informe quando começarão as inscrições.");
-		header("Location: /professor/temporada/".$idtemporada."");
+		header("Location: /admin/temporada/".$idtemporada."");
 		exit;		
 	}
 
 	if (!isset($_POST['dtterminscricao']) || $_POST['dtterminscricao'] == '') {
 		Temporada::setError("Informe quando terminarão as inscrições.");
-		header("Location: /professor/temporada/".$idtemporada."");
+		header("Location: /admin/temporada/".$idtemporada."");
 		exit;		
 	}
 
 	if (!isset($_POST['dtinicmatricula']) || $_POST['dtinicmatricula'] == '') {
 		Temporada::setError("Informe quando começarão as matrículas.");
-		header("Location: /professor/temporada/".$idtemporada."");
+		header("Location: /admin/temporada/".$idtemporada."");
 		exit;		
 	}
 
 	if (!isset($_POST['dttermmatricula']) || $_POST['dttermmatricula'] == '') {
 		Temporada::setError("Informe quando terminarão as matrículas.");
-		header("Location: /professor/temporada/".$idtemporada."");
+		header("Location: /admin/temporada/".$idtemporada."");
 		exit;		
 	}	
 
 	if (!isset($_POST['idstatustemporada']) || $_POST['idstatustemporada'] == '') {
 		Temporada::setError("Informe o status da temporada.");
-		header("Location: /professor/temporada/".$idtemporada."");
+		header("Location: /admin/temporada/".$idtemporada."");
 		exit;		
 	}
 
@@ -260,7 +260,7 @@ $app->post("/professor/temporada/:idtemporada", function($idtemporada) {
 		
 			if($idStatusTemporadaMatriculaIniciada){
 				Temporada::setError("Já existe uma temporada com o status selecionado. Não pode existir mais de uma temporada com status de TEMPORADA, INSCRIÇÕES, MATRÍCULAS INICIADAS ou MATRÍCULAS ENCERRADAS.");
-				header("Location: /professor/temporada/".$idtemporada."");
+				header("Location: /admin/temporada/".$idtemporada."");
 				exit;
 			}
 		}
@@ -278,7 +278,7 @@ $app->post("/professor/temporada/:idtemporada", function($idtemporada) {
 		
 			if($idStatusTemporadaMatriculaIniciada){
 				Temporada::setError("Já existe uma temporada com matrícula iniciada. Não pode existir mais de uma temporada com inscrição ou matrícula iniciada.");
-				header("Location: /professor/temporada");
+				header("Location: /admin/temporada");
 				exit;
 			}
 		}
@@ -294,7 +294,7 @@ $app->post("/professor/temporada/:idtemporada", function($idtemporada) {
 
 			if($idStatusTemporadaInscricaoIniciada){
 				Temporada::setError("Já existe uma temporada com inscrição iniciada. Não pode existir mais de uma temporada com inscrição ou matrícula iniciada.");
-				header("Location: /professor/temporada");
+				header("Location: /admin/temporada");
 				exit;
 			}		
 		}
@@ -307,11 +307,11 @@ $app->post("/professor/temporada/:idtemporada", function($idtemporada) {
 
 	$temporada->save();
 
-	header("Location: /professor/temporada");
+	header("Location: /admin/temporada");
 	exit();	
 });
 
-$app->get("/professor/turma-temporada/:idtemporada", function($idtemporada) {
+$app->get("/admin/turma-temporada/:idtemporada", function($idtemporada) {
 
 	User::verifyLogin();
 
@@ -336,7 +336,7 @@ $app->get("/professor/turma-temporada/:idtemporada", function($idtemporada) {
 	]);	
 });
 
-$app->get("/professor/turma-temporada/:idtemporada/local/:idlocal", function($idtemporada, $idlocal) {
+$app->get("/admin/turma-temporada/:idtemporada/local/:idlocal", function($idtemporada, $idlocal) {
 
 	User::verifyLogin();
 
@@ -362,7 +362,7 @@ $app->get("/professor/turma-temporada/:idtemporada/local/:idlocal", function($id
 	]);	
 });
 
-$app->get("/professor/turma-temporada/:idtemporada/user/:iduser", function($idtemporada, $iduser) {
+$app->get("/admin/turma-temporada/:idtemporada/user/:iduser", function($idtemporada, $iduser) {
 
 	User::verifyLogin();
 
@@ -392,7 +392,7 @@ $app->get("/professor/turma-temporada/:idtemporada/user/:iduser", function($idte
 	]);	
 });
 
-$app->get("/professor/temporada/:idtemporada/turma", function($idtemporada) {
+$app->get("/admin/temporada/:idtemporada/turma", function($idtemporada) {
 
 	User::verifyLogin();
 
@@ -411,7 +411,7 @@ $app->get("/professor/temporada/:idtemporada/turma", function($idtemporada) {
 	]);	
 });
 
-$app->get("/professor/temporada/:idtemporada/turma/:idturma/add", function($idtemporada, $idturma) {
+$app->get("/admin/temporada/:idtemporada/turma/:idturma/add", function($idtemporada, $idturma) {
 
 	User::verifyLogin();
 
@@ -425,11 +425,11 @@ $app->get("/professor/temporada/:idtemporada/turma/:idturma/add", function($idte
 
 	$temporada->addTurma($turma);
 
-	header("Location: /professor/temporada/".$idtemporada."/turma");
+	header("Location: /admin/temporada/".$idtemporada."/turma");
 	exit;
 });
 
-$app->get("/professor/temporada/:idtemporada/turma/:idturma/remove", function($idtemporada, $idturma) {
+$app->get("/admin/temporada/:idtemporada/turma/:idturma/remove", function($idtemporada, $idturma) {
 
 	User::verifyLogin();
 
@@ -445,20 +445,20 @@ $app->get("/professor/temporada/:idtemporada/turma/:idturma/remove", function($i
 
 	if($temprofrelacionado){
 
-		Temporada::setError("Você precisa, antes, remover professor desta turma para a temporadada ".$temporada->getdesctemporada()."! ");
-		header("Location: /professor/temporada/".$idtemporada."/turma");
+		Temporada::setError("Você precisa, antes, remover admin desta turma para a temporadada ".$temporada->getdesctemporada()."! ");
+		header("Location: /admin/temporada/".$idtemporada."/turma");
 		exit;
 
 	}
 
 	$temporada->removeTurma($turma);
 
-	header("Location: /professor/temporada/".$idtemporada."/turma");
+	header("Location: /admin/temporada/".$idtemporada."/turma");
 	exit;
 
 });
 
-$app->get("/professor/turmatemporada/:iduser/turma/:idtemporada", function($iduser, $idtemporada) {
+$app->get("/admin/turmatemporada/:iduser/turma/:idtemporada", function($iduser, $idtemporada) {
 
 	User::verifyLogin();
 
@@ -490,7 +490,7 @@ $app->get("/professor/turmatemporada/:iduser/turma/:idtemporada", function($idus
 	]);	
 });
 
-$app->get("/professor/turmatemporada/:iduser/turma/:idtemporada/:idlocal", function($iduser, $idtemporada, $idlocal) {
+$app->get("/admin/turmatemporada/:iduser/turma/:idtemporada/:idlocal", function($iduser, $idtemporada, $idlocal) {
 
 	User::verifyLogin();
 
@@ -516,7 +516,7 @@ $app->get("/professor/turmatemporada/:iduser/turma/:idtemporada/:idlocal", funct
 	]);	
 });
 
-$app->get("/professor/turmatemporada/:idtemporada/turma/:idturma/user/:iduser/add", function($idtemporada, $idturma, $iduser) {
+$app->get("/admin/turmatemporada/:idtemporada/turma/:idturma/user/:iduser/add", function($idtemporada, $idturma, $iduser) {
 
 	User::verifyLogin();
 
@@ -538,11 +538,11 @@ $app->get("/professor/turmatemporada/:idtemporada/turma/:idturma/user/:iduser/ad
 
 	$temporada->addTurmaTemporadaUser($idtemporada, $idturma, $iduser);
 
-	header("Location: /professor/turmatemporada/".$iduser."/turma/".$idtemporada."");
+	header("Location: /admin/turmatemporada/".$iduser."/turma/".$idtemporada."");
 	exit;
 });
 
-$app->get("/professor/turmatemporada/:idtemporada/turma/:idturma/user/:iduser/remove", function($idtemporada, $idturma, $iduser) {
+$app->get("/admin/turmatemporada/:idtemporada/turma/:idturma/user/:iduser/remove", function($idtemporada, $idturma, $iduser) {
 
 	User::verifyLogin();
 
@@ -564,11 +564,11 @@ $app->get("/professor/turmatemporada/:idtemporada/turma/:idturma/user/:iduser/re
 
 	$temporada->removeTurmaTemporadaUser($idtemporada, $idturma, $iduser);
 
-	header("Location: /professor/turmatemporada/".$iduser."/turma/".$idtemporada."");
+	header("Location: /admin/turmatemporada/".$iduser."/turma/".$idtemporada."");
 	exit;
 });
 
-$app->get("/professor/turmatemporada/:idtemporada/turma/:idturma/user/:iduser/:idlocal/addlocal", function($idtemporada, $idturma, $iduser, $idlocal) {
+$app->get("/admin/turmatemporada/:idtemporada/turma/:idturma/user/:iduser/:idlocal/addlocal", function($idtemporada, $idturma, $iduser, $idlocal) {
 
 	User::verifyLogin();
 
@@ -586,11 +586,11 @@ $app->get("/professor/turmatemporada/:idtemporada/turma/:idturma/user/:iduser/:i
 
 	$temporada->addTurmaTemporadaUser($idtemporada, $idturma, $iduser);
 
-	header("Location: /professor/turmatemporada/".$iduser."/turma/".$idtemporada."/".$idlocal."");
+	header("Location: /admin/turmatemporada/".$iduser."/turma/".$idtemporada."/".$idlocal."");
 	exit;
 });
 
-$app->get("/professor/turmatemporada/:idtemporada/turma/:idturma/user/:iduser/:idlocal/removelocal", function($idtemporada, $idturma, $iduser, $idlocal) {
+$app->get("/admin/turmatemporada/:idtemporada/turma/:idturma/user/:iduser/:idlocal/removelocal", function($idtemporada, $idturma, $iduser, $idlocal) {
 
 	User::verifyLogin();
 
@@ -608,7 +608,7 @@ $app->get("/professor/turmatemporada/:idtemporada/turma/:idturma/user/:iduser/:i
 	
 	$temporada->removeTurmaTemporadaUser($idtemporada, $idturma, $iduser);
 
-	header("Location: /professor/turmatemporada/".$iduser."/turma/".$idtemporada."/".$idlocal."");
+	header("Location: /admin/turmatemporada/".$iduser."/turma/".$idtemporada."/".$idlocal."");
 	exit;
 });
 

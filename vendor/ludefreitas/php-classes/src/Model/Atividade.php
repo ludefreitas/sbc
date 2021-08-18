@@ -76,7 +76,7 @@ class Atividade extends Model {
 		}else{
 
 			Atividade::setMsgError("Atividade selecionado não existe!");
-			header("Location: /professor/atividade");
+			header("Location: /admin/atividade");
 			exit();			
 		}		
 		

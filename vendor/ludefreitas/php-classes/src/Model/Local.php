@@ -57,7 +57,7 @@ class Local extends Model {
 		}else{
 
 			Local::setMsgError("Crec selecionado não encontrado!");
-			header("Location: /professor/local");
+			header("Location: /admin/local");
 			exit();			
 		}		
 		

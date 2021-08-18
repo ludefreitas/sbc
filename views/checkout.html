@@ -18,7 +18,7 @@
                 
                       
                     <div class="row">
-                        <div class="col-md-12 alert alert-primary" style="text-align-last: center; ">
+                        <div class="col-md-12 alert alert-primary" style="text-align-last: left; ">
                            <h5 style="font-weight: bold; padding-top: 10px">Nome do aluno: {$pessoa.nomepess} -  {function="calcularIdade($pessoa.dtnasc)"} anos </h5>
                          
                         </div>
@@ -59,11 +59,14 @@
                     </div>
                     <div class="row" style="padding-top: 0px">
                          <div class="col-md-12 alert-primary" style="text-align-last: left; padding-top: 10px;">
-                            Ao clicar no botão <strong>FINALIZAR</strong> você confirma...<br>
-                             - Que inscreve o(a) <strong>{$pessoa.nomepess}</strong> na turma <strong> {$value.descativ}</strong>;<br>
-                             - Que leu e concorda com os <a href="#">Termos de Responsabilidade</a>; <br>
-                             - Que está ciente que a matrícula da pessoa, para o respectivo curso esportivo, está sujeito ao sorteio que acontecerá no dia <strong>{function="formatDate($value.dtterminscricao)"}</strong>, caso a quantidade de inscritos supere o número de vagas;<br>
-                             - Que deverá confirmar a matrícula do(a) <strong>{$pessoa.nomepess}</strong> a partir do dia <strong>{function="formatDate($value.dtinicmatricula)"}</strong> ao <strong>{function="formatDate($value.dttermmatricula)"}</strong>;<br>
+                            Ao clicar no botão <strong>FINALIZAR</strong> você está ciente...<br>
+                             - Que inscreve o(a) <strong>{$pessoa.nomepess}</strong> na turma de <strong> {$value.descativ}</strong>;<br>
+                             - Que esta inscrição NÃO GARANTE vaga na respectiva turma<br>
+                             - Que leu e concorda com os <a href="#">Termos de Uso e  Responsabilidade</a>; <br>
+                             - Que está ciente que a INSCRIÇÃO, para o respectivo curso esportivo, está sujeito a <strong>SORTEIO</strong>, caso a quantidade de inscritos supere o número de vagas;<br>
+                             - Que deverá confirmar a matrícula, se sorteado,<strong> PRESENCIALMENTE, </strong>a partir do dia <strong>{function="formatDate($value.dtinicmatricula)"}</strong> ao <strong>{function="formatDate($value.dttermmatricula)"}</strong>, no horário da aula.<br>
+
+                             <input type="radio" name="ciente"><label style="color: red;">&nbsp; Estou ciente</label>
                              
                            
                          </div>

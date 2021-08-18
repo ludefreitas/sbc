@@ -75,7 +75,7 @@ class Espaco extends Model {
 		}else{
 
 			Espaco::setMsgError("Espaço selecionado não encontrado!");
-			header("Location: /professor/espaco");
+			header("Location: /admin/espaco");
 			exit();			
 		}		
 		

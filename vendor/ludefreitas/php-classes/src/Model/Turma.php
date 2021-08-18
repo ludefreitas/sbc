@@ -465,7 +465,7 @@ class Turma extends Model {
 		}else{
 
 			Turma::setMsgError("Turma selecionada não existe!");
-			header("Location: /professor/turma");
+			header("Location: /admin/turma");
 			exit();			
 		}		
 	}

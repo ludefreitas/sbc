@@ -11,7 +11,7 @@ use \Sbc\Model\TurmaStatus;
 use \Sbc\Model\Turma;
 use \Sbc\Model\Modalidade;
 
-$app->get("/professor/turma", function() {
+$app->get("/admin/turma", function() {
 
 	User::verifyLogin();
 	// na linha abaixo retorna um array com todos os dados do usuário
@@ -36,7 +36,7 @@ $app->get("/professor/turma", function() {
 	{
 
 		array_push($pages, [
-			'href'=>'/professor/turma?'.http_build_query([
+			'href'=>'/admin/turma?'.http_build_query([
 				'page'=>$x+1,
 				'search'=>$search
 			]),
@@ -63,7 +63,7 @@ $app->get("/professor/turma", function() {
 });
 
 
-$app->get("/professor/turma/create", function() {
+$app->get("/admin/turma/create", function() {
 
 	User::verifyLogin();
 
@@ -90,7 +90,7 @@ $app->get("/professor/turma/create", function() {
 	]);
 });
 
-$app->post("/professor/turma/create", function() {
+$app->post("/admin/turma/create", function() {
 
 	User::verifyLogin();
 
@@ -100,43 +100,43 @@ $app->post("/professor/turma/create", function() {
 
 	if (!isset($_POST['descturma']) || $_POST['descturma'] == '') {
 		Turma::setMsgError("Informe uam descrição para a turma.");
-		header("Location: /professor/turma/create");
+		header("Location: /admin/turma/create");
 		exit;		
 	}	
 
 	if (!isset($_POST['idmodal']) || $_POST['idmodal'] == '') {
 		Turma::setMsgError("Selecione uma modalidade.");
-		header("Location: /professor/turma/create");
+		header("Location: /admin/turma/create");
 		exit;		
 	}
 
 	if (!isset($_POST['idhorario']) || $_POST['idhorario'] == '') {
 		Turma::setMsgError("Selecione um horário.");
-		header("Location: /professor/turma/create");
+		header("Location: /admin/turma/create");
 		exit;		
 	}																																														
 
 	if (!isset($_POST['idativ']) || $_POST['idativ'] == '') {
 		Turma::setMsgError("Selecione uma atividade.");
-		header("Location: /professor/turma/create");
+		header("Location: /admin/turma/create");
 		exit;		
 	}																							
 
 	if (!isset($_POST['idespaco']) || $_POST['idespaco'] == '') {
 		Turma::setMsgError("Selecione um espaço");
-		header("Location: /professor/turma/create");
+		header("Location: /admin/turma/create");
 		exit;		
 	}
 
 	if (!isset($_POST['idturmastatus']) || $_POST['idturmastatus'] == '') {
 		Turma::setMsgError("Selecione o status.");
-		header("Location: /professor/turma/create");
+		header("Location: /admin/turma/create");
 		exit;		
 	}
 
 	if (!isset($_POST['vagas']) || $_POST['vagas'] == '') {
 		Turma::setMsgError("Informe o número de vagas.");
-		header("Location: /professor/turma/create");
+		header("Location: /admin/turma/create");
 		exit;		
 	}	
 
@@ -146,11 +146,11 @@ $app->post("/professor/turma/create", function() {
 
 	$_SESSION['createTurmaValues'] = NULL;
 
-	header("Location: /professor/turma");
+	header("Location: /admin/turma");
 	exit();	
 });
 
-$app->get("/professor/turma/:idturma/delete", function($idturma) {
+$app->get("/admin/turma/:idturma/delete", function($idturma) {
 
 	User::verifyLogin();
 
@@ -160,13 +160,13 @@ $app->get("/professor/turma/:idturma/delete", function($idturma) {
 
 	$turma->delete();
 
-	header("Location: /professor/turma");
+	header("Location: /admin/turma");
 	exit();
 	
 });
 
 
-$app->get("/professor/turma/:idturma", function($idturma) {
+$app->get("/admin/turma/:idturma", function($idturma) {
 
 	User::verifyLogin();
 
@@ -189,7 +189,7 @@ $app->get("/professor/turma/:idturma", function($idturma) {
 	));
 });
 
-$app->post("/professor/turma/:idturma", function($idturma) {
+$app->post("/admin/turma/:idturma", function($idturma) {
 
 	User::verifyLogin();
 
@@ -199,43 +199,43 @@ $app->post("/professor/turma/:idturma", function($idturma) {
 
 	if (!isset($_POST['descturma']) || $_POST['descturma'] == '') {
 		Turma::setMsgError("Informe uma descrição para a turma.");
-		header("Location: /professor/turma/".$idturma."");
+		header("Location: /admin/turma/".$idturma."");
 		exit;		
 	}	
 
 	if (!isset($_POST['idmodal']) || $_POST['idmodal'] == '') {
 		Turma::setMsgError("Selecione uma modalidade.");
-		header("Location: /professor/turma/".$idturma."");
+		header("Location: /admin/turma/".$idturma."");
 		exit;		
 	}
 
 	if (!isset($_POST['idhorario']) || $_POST['idhorario'] == '') {
 		Turma::setMsgError("Selecione um horário.");
-		header("Location: /professor/turma/".$idturma."");
+		header("Location: /admin/turma/".$idturma."");
 		exit;		
 	}																																														
 
 	if (!isset($_POST['idativ']) || $_POST['idativ'] == '') {
 		Turma::setMsgError("Selecione uma atividade.");
-		header("Location: /professor/turma/".$idturma."");
+		header("Location: /admin/turma/".$idturma."");
 		exit;		
 	}																							
 
 	if (!isset($_POST['idespaco']) || $_POST['idespaco'] == '') {
 		Turma::setMsgError("Selecione um espaço");
-		header("Location: /professor/turma/".$idturma."");
+		header("Location: /admin/turma/".$idturma."");
 		exit;		
 	}
 
 	if (!isset($_POST['idturmastatus']) || $_POST['idturmastatus'] == '') {
 		Turma::setMsgError("Selecione o status.");
-		header("Location: /professor/turma/".$idturma."");
+		header("Location: /admin/turma/".$idturma."");
 		exit;		
 	}
 
 	if (!isset($_POST['vagas']) || $_POST['vagas'] == '') {
 		Turma::setMsgError("Informe o número de vagas.");
-		header("Location: /professor/turma/".$idturma."");
+		header("Location: /admin/turma/".$idturma."");
 		exit;		
 	}
 
@@ -245,7 +245,7 @@ $app->post("/professor/turma/:idturma", function($idturma) {
 
 	//$turma->setPhoto($_FILES["file"]);
 
-	header("Location: /professor/turma");
+	header("Location: /admin/turma");
 	exit();	
 });
 

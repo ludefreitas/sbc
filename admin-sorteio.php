@@ -6,7 +6,7 @@ use \Sbc\Model\Temporada;
 use \Sbc\Model\Sorteio;
 use \Sbc\Model\Insc;
 
-$app->get("/professor/sorteio/:idtemporada", function($idtemporada) {
+$app->get("/admin/sorteio/:idtemporada", function($idtemporada) {
 
 	User::verifyLogin();
 
@@ -46,7 +46,7 @@ $app->get("/professor/sorteio/:idtemporada", function($idtemporada) {
 });
 
 
-$app->post("/professor/sortear", function() {
+$app->post("/admin/sortear", function() {
 
 	User::verifyLogin();
 
@@ -77,19 +77,19 @@ $app->post("/professor/sortear", function() {
 
 			Insc::alteraStatusInscricaoParaFilaDeEspera($idtemporada);
 
-			header("Location: /professor/sorteio/".$idtemporada."");
+			header("Location: /admin/sorteio/".$idtemporada."");
 			exit();	
 
 	}else{
 
 		Sorteio::setError("Sorteio Já realizado! Você precisa excluir o sorteio atual para realizar novo sorteio.");
-		header("Location: /professor/sorteio/".$idtemporada."");
+		header("Location: /admin/sorteio/".$idtemporada."");
 		exit();
 	}	
 
 });
 /*
-$app->get("/professor/sorteio:desctemporada/:idtemporada", function($desctemporada, $idtemporada) {
+$app->get("/admin/sorteio:desctemporada/:idtemporada", function($desctemporada, $idtemporada) {
 
 	User::verifyLogin();
 
@@ -119,7 +119,7 @@ $app->get("/professor/sorteio:desctemporada/:idtemporada", function($desctempora
 */
 
 /*
-$app->post("/professor/sortear", function() {
+$app->post("/admin/sortear", function() {
 
 	User::verifyLogin();
 
@@ -143,7 +143,7 @@ $app->post("/professor/sortear", function() {
 
 	$sort = Sorteio::sortear(1, $maxIncritos, $maxIncritos, $desctemporada, $idtemporada);
 
-	header("Location: /professor/sorteio".$desctemporada."/".$idtemporada."");
+	header("Location: /admin/sorteio".$desctemporada."/".$idtemporada."");
 	exit();		
 	
 

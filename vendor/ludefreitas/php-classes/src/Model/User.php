@@ -183,7 +183,7 @@ class User extends Model {
 		}else{
 
 			User::setError("Usuário selecionado não existe!");
-			header("Location: /professor/users");
+			header("Location: /admin/users");
 			exit();			
 		}
 		
@@ -265,7 +265,7 @@ class User extends Model {
              $code = openssl_encrypt($dataRecovery['idrecovery'], 'aes-256-cbc', User::SECRET, 0, $iv);
              $result = base64_encode($iv.$code);
              if ($inadmin === true) {
-                 $link = "http://www.cursosesportivossbc.com.br/professor/forgot/reset?code=$result";
+                 $link = "http://www.cursosesportivossbc.com.br/admin/forgot/reset?code=$result";
              } else {
                  $link = "http://www.cursosesportivossbc.com.br/forgot/reset?code=$result";
              } 

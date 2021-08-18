@@ -203,7 +203,14 @@ $app->post("/checkout", function(){
 			header("Location: /checkout");
 			exit();
 		}
-	}	
+	}
+
+	if(!isset($_POST['ciente']) || $_POST['ciente'] == NULL){
+
+		Pessoa::setError("Marque, logo abaixo, que você está ciente das regras para finalizar a inscrição! ");
+		header("Location: /checkout");
+		exit();
+	}
 
 	$laudo = isset($_POST['laudo']) ? (int)$_POST['laudo'] : 1;
 

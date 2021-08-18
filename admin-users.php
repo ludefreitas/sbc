@@ -6,7 +6,7 @@ use \Sbc\Model\Temporada;
 
 
 // Rota para listar todos usuários da classe 
-$app->get("/professor/users", function() {
+$app->get("/admin/users", function() {
 
 	User::verifyLogin();
 	// na linha abaixo retorna um array com todos os dados do usuário
@@ -31,7 +31,7 @@ $app->get("/professor/users", function() {
 	{
 
 		array_push($pages, [
-			'href'=>'/professor/users?'.http_build_query([
+			'href'=>'/admin/users?'.http_build_query([
 				'page'=>$x+1,
 				'search'=>$search
 			]),
@@ -54,7 +54,7 @@ $app->get("/professor/users", function() {
 	));	
 });
 
-$app->get("/professor/prof", function() {
+$app->get("/admin/prof", function() {
 
 	User::verifyLogin();
 	// na linha abaixo retorna um array com todos os dados do usuário
@@ -79,7 +79,7 @@ $app->get("/professor/prof", function() {
 	{
 
 		array_push($pages, [
-			'href'=>'/professor/prof?'.http_build_query([
+			'href'=>'/admin/prof?'.http_build_query([
 				'page'=>$x+1,
 				'search'=>$search
 			]),
@@ -101,7 +101,7 @@ $app->get("/professor/prof", function() {
 	));
 });
 
-$app->get("/professor/users-cliente", function() {
+$app->get("/admin/users-cliente", function() {
 
 	User::verifyLogin();
 	// na linha abaixo retorna um array com todos os dados do usuário
@@ -126,7 +126,7 @@ $app->get("/professor/users-cliente", function() {
 	{
 
 		array_push($pages, [
-			'href'=>'/professor/users-cliente?'.http_build_query([
+			'href'=>'/admin/users-cliente?'.http_build_query([
 				'page'=>$x+1,
 				'search'=>$search
 			]),
@@ -151,7 +151,7 @@ $app->get("/professor/users-cliente", function() {
 });
 
 
-$app->get("/professor/users/create", function() {
+$app->get("/admin/users/create", function() {
 
 	User::verifyLogin();
 
@@ -160,7 +160,7 @@ $app->get("/professor/users/create", function() {
 	$page->setTpl("users-create");
 });
 
-$app->get("/professor/users/:iduser/delete", function($iduser) {
+$app->get("/admin/users/:iduser/delete", function($iduser) {
 
 	User::verifyLogin();
 
@@ -170,11 +170,11 @@ $app->get("/professor/users/:iduser/delete", function($iduser) {
 
 	$user->delete();
 
-	header("Location: /professor/users");
+	header("Location: /admin/users");
 	exit();
 });
 
-$app->get("/professor/users/:iduser", function($iduser) {
+$app->get("/admin/users/:iduser", function($iduser) {
 
 	User::verifyLogin();
 
@@ -185,7 +185,7 @@ $app->get("/professor/users/:iduser", function($iduser) {
 	if( $user->getiduser() != $iduser){
 
 		User::setError("Usuário não encontrado!!!");
-		header("Location: /professor/users");
+		header("Location: /admin/users");
 		exit();			
 	}
 
@@ -197,7 +197,7 @@ $app->get("/professor/users/:iduser", function($iduser) {
 	));
 });
 
-$app->post("/professor/users/create", function() {
+$app->post("/admin/users/create", function() {
 
 	User::verifyLogin();
 
@@ -213,11 +213,11 @@ $app->post("/professor/users/create", function() {
 
 	$user->save();
 
-	header("Location: /professor/users");
+	header("Location: /admin/users");
 	exit();
 });
 
-$app->post("/professor/users/:iduser", function($iduser) {
+$app->post("/admin/users/:iduser", function($iduser) {
 
 	User::verifyLogin();
 
@@ -233,7 +233,7 @@ $app->post("/professor/users/:iduser", function($iduser) {
 
 		if (!isset($_POST['apelidoperson']) || $_POST['apelidoperson'] == '') {
 			User::setError("Preencha o campo apelido.");
-			header("Location: /professor/users/".$iduser."");
+			header("Location: /admin/users/".$iduser."");
 			exit;		
 		}
 	}	
@@ -244,12 +244,12 @@ $app->post("/professor/users/:iduser", function($iduser) {
 	
 	$user->update();
 
-	header("Location: /professor/users");
+	header("Location: /admin/users");
 	exit();
 });
 
 /*
-$app->get("/professor/turmatemporada/:iduser/turma/:idtemporada", function($iduser, $idtemporada) {
+$app->get("/admin/turmatemporada/:iduser/turma/:idtemporada", function($iduser, $idtemporada) {
 
 	User::verifyLogin();
 
@@ -263,7 +263,7 @@ $app->get("/professor/turmatemporada/:iduser/turma/:idtemporada", function($idus
 
 	$page = new PageAdmin();	
 
-	$page->setTpl("turma-temporada-professor", [
+	$page->setTpl("turma-temporada-admin", [
 		'temporada'=>$temporada->getValues(),
 		'user'=>$user->getValues(),
 		'turmaRelated'=>$user->getTurmaTemporada(true, $idtemporada, $iduser),

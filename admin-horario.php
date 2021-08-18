@@ -5,7 +5,7 @@ use \Sbc\PageAdmin;
 use \Sbc\Model\User;
 use \Sbc\Model\Horario;
 
-$app->get("/professor/horario", function() {
+$app->get("/admin/horario", function() {
 
 	User::verifyLogin();
 	// na linha abaixo retorna um array com todos os dados do usuário
@@ -30,7 +30,7 @@ $app->get("/professor/horario", function() {
 	{
 
 		array_push($pages, [
-			'href'=>'/professor/horario?'.http_build_query([
+			'href'=>'/admin/horario?'.http_build_query([
 				'page'=>$x+1,
 				'search'=>$search
 			]),
@@ -54,7 +54,7 @@ $app->get("/professor/horario", function() {
 });
 
 
-$app->get("/professor/horario/create", function() {
+$app->get("/admin/horario/create", function() {
 
 	User::verifyLogin();
 
@@ -66,7 +66,7 @@ $app->get("/professor/horario/create", function() {
 	]);
 });
 
-$app->post("/professor/horario/create", function() {
+$app->post("/admin/horario/create", function() {
 
 	User::verifyLogin();
 
@@ -76,25 +76,25 @@ $app->post("/professor/horario/create", function() {
 
 	if (!isset($_POST['horainicio']) || $_POST['horainicio'] == '') {
 		Horario::setMsgError("Informe o horário de início.");
-		header("Location: /professor/horario/create");
+		header("Location: /admin/horario/create");
 		exit;		
 	}	
 
 	if (!isset($_POST['horatermino']) || $_POST['horatermino'] == '') {
 		Horario::setMsgError("Informe o horário de término.");
-		header("Location: /professor/horario/create");
+		header("Location: /admin/horario/create");
 		exit;		
 	}
 
 	if (!isset($_POST['diasemana']) || $_POST['diasemana'] == '') {
 		Horario::setMsgError("Informe os dias da semana.");
-		header("Location: /professor/horario/create");
+		header("Location: /admin/horario/create");
 		exit;		
 	}						
 
 	if (!isset($_POST['periodo']) || $_POST['periodo'] == '') {
 		Horario::setMsgError("Informe o período.");
-		header("Location: /professor/horario/create");
+		header("Location: /admin/horario/create");
 		exit;		
 	}
 
@@ -104,11 +104,11 @@ $app->post("/professor/horario/create", function() {
 
 	$horario->save();
 
-	header("Location: /professor/horario");
+	header("Location: /admin/horario");
 	exit();
 });
 
-$app->get("/professor/horario/:idhorario/delete", function($idhorario) {
+$app->get("/admin/horario/:idhorario/delete", function($idhorario) {
 
 	User::verifyLogin();
 
@@ -118,12 +118,12 @@ $app->get("/professor/horario/:idhorario/delete", function($idhorario) {
 
 	$horario->delete();
 
-	header("Location: /professor/horario");
+	header("Location: /admin/horario");
 	exit();
 	
 });
 
-$app->get("/professor/horario/:idhorario", function($idhorario) {
+$app->get("/admin/horario/:idhorario", function($idhorario) {
 
 	User::verifyLogin();
 
@@ -140,7 +140,7 @@ $app->get("/professor/horario/:idhorario", function($idhorario) {
 	
 });
 
-$app->post("/professor/horario/:idhorario", function($idhorario) {
+$app->post("/admin/horario/:idhorario", function($idhorario) {
 
 	User::verifyLogin();
 
@@ -152,31 +152,31 @@ $app->post("/professor/horario/:idhorario", function($idhorario) {
 
 	if (!isset($_POST['horainicio']) || $_POST['horainicio'] == '') {
 		Horario::setMsgError("Informe o horário de início.");
-		header("Location: /professor/horario/".$idhorario."");
+		header("Location: /admin/horario/".$idhorario."");
 		exit;		
 	}	
 
 	if (!isset($_POST['horatermino']) || $_POST['horatermino'] == '') {
 		Horario::setMsgError("Informe o horário de término.");
-		header("Location: /professor/horario/".$idhorario."");
+		header("Location: /admin/horario/".$idhorario."");
 		exit;		
 	}
 
 	if (!isset($_POST['diasemana']) || $_POST['diasemana'] == '') {
 		Horario::setMsgError("Informe os dias da semana.");
-		header("Location: /professor/horario/".$idhorario."");
+		header("Location: /admin/horario/".$idhorario."");
 		exit;		
 	}						
 
 	if (!isset($_POST['periodo']) || $_POST['periodo'] == '') {
 		Horario::setMsgError("Informe o período.");
-		header("Location: /professor/horario/".$idhorario."");
+		header("Location: /admin/horario/".$idhorario."");
 		exit;		
 	}
 
 	$horario->save();
 
-	header("Location: /professor/horario");
+	header("Location: /admin/horario");
 	exit();		
 });
 

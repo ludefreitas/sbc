@@ -6,7 +6,7 @@ use \Sbc\Model\User;
 use \Sbc\Model\Modalidade;
 use \Sbc\Model\Faixaetaria;
 
-$app->get("/professor/modalidades", function() {
+$app->get("/admin/modalidades", function() {
 
 	User::verifyLogin();
 	// na linha abaixo retorna um array com todos os dados do usuário
@@ -31,7 +31,7 @@ $app->get("/professor/modalidades", function() {
 	{
 
 		array_push($pages, [
-			'href'=>'/professor/modalidades?'.http_build_query([
+			'href'=>'/admin/modalidades?'.http_build_query([
 				'page'=>$x+1,
 				'search'=>$search
 			]),
@@ -55,7 +55,7 @@ $app->get("/professor/modalidades", function() {
 });
 
 
-$app->get("/professor/modalidades/create", function() {
+$app->get("/admin/modalidades/create", function() {
 
 	User::verifyLogin();
 
@@ -67,7 +67,7 @@ $app->get("/professor/modalidades/create", function() {
 	]);
 });
 
-$app->post("/professor/modalidades/create", function() {
+$app->post("/admin/modalidades/create", function() {
 
 	User::verifyLogin();
 
@@ -77,7 +77,7 @@ $app->post("/professor/modalidades/create", function() {
 
 	if (!isset($_POST['descmodal']) || $_POST['descmodal'] == '') {
 		Horario::setMsgError("Informe o nome da modalidade.");
-		header("Location: /professor/modalidade/create");
+		header("Location: /admin/modalidade/create");
 		exit;		
 	}	
 
@@ -87,11 +87,11 @@ $app->post("/professor/modalidades/create", function() {
 
 	$_SESSION['createModalidadeValues'] = NULL;
 
-	header("Location: /professor/modalidades");
+	header("Location: /admin/modalidades");
 	exit();	
 });
 
-$app->get("/professor/modalidades/:idmodal/delete", function($idmodal) {
+$app->get("/admin/modalidades/:idmodal/delete", function($idmodal) {
 
 	User::verifyLogin();
 
@@ -101,13 +101,13 @@ $app->get("/professor/modalidades/:idmodal/delete", function($idmodal) {
 
 	$modalidade->delete();
 
-	header("Location: /professor/modalidades");
+	header("Location: /admin/modalidades");
 	exit();
 	
 });
 
 
-$app->get("/professor/modalidades/:idmodal", function($idmodal) {
+$app->get("/admin/modalidades/:idmodal", function($idmodal) {
 
 	User::verifyLogin();
 
@@ -123,7 +123,7 @@ $app->get("/professor/modalidades/:idmodal", function($idmodal) {
 	));
 });
 
-$app->post("/professor/modalidades/:idmodal", function($idmodal) {
+$app->post("/admin/modalidades/:idmodal", function($idmodal) {
 
 	User::verifyLogin();
 
@@ -131,7 +131,7 @@ $app->post("/professor/modalidades/:idmodal", function($idmodal) {
 
 	if (!isset($_POST['descmodal']) || $_POST['descmodal'] == '') {
 		Horario::setMsgError("Informe o nome da modalidade.");
-		header("Location: /professor/modalidade/".$idmodal."");
+		header("Location: /admin/modalidade/".$idmodal."");
 		exit;		
 	}	
 
@@ -141,7 +141,7 @@ $app->post("/professor/modalidades/:idmodal", function($idmodal) {
 
 	$modalidade->save();
 
-	header("Location: /professor/modalidades");
+	header("Location: /admin/modalidades");
 	exit();	
 });
 

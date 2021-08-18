@@ -66,7 +66,7 @@ class Modalidade extends Model {
 		}else{
 
 			Modalidade::setMsgError("Modalidade selecionado não existe!");
-			header("Location: /professor/modalidades");
+			header("Location: /admin/modalidades");
 			exit();			
 		}				
 	}

@@ -8,7 +8,7 @@ use \Sbc\Model\Turma;
 use \Sbc\Model\Temporada;
 use \Sbc\Model\InscStatus;
 
-$app->get("/professor/insc", function() {
+$app->get("/admin/insc", function() {
 
 	User::verifyLogin();
 	// na linha abaixo retorna um array com todos os dados do usuário
@@ -33,7 +33,7 @@ $app->get("/professor/insc", function() {
 	{
 
 		array_push($pages, [
-			'href'=>'/professor/insc?'.http_build_query([
+			'href'=>'/admin/insc?'.http_build_query([
 			'page'=>$x+1,
 			'search'=>$search
 			]),
@@ -56,7 +56,7 @@ $app->get("/professor/insc", function() {
 	));
 });
 
-$app->get("/professor/insc/:idtemporada", function($idtemporada) {
+$app->get("/admin/insc/:idtemporada", function($idtemporada) {
 
 	User::verifyLogin();
 	// na linha abaixo retorna um array com todos os dados do usuário
@@ -81,7 +81,7 @@ $app->get("/professor/insc/:idtemporada", function($idtemporada) {
 	{
 
 		array_push($pages, [
-			'href'=>'/professor/insc-temporada?'.http_build_query([
+			'href'=>'/admin/insc-temporada?'.http_build_query([
 			'page'=>$x+1,
 			'search'=>$search
 			]),
@@ -121,7 +121,7 @@ $app->get("/professor/insc/:idtemporada", function($idtemporada) {
 
 
 
-$app->get("/professor/insc/create", function() {
+$app->get("/admin/insc/create", function() {
 
 	User::verifyLogin();
 
@@ -130,7 +130,7 @@ $app->get("/professor/insc/create", function() {
 	$page->setTpl("insc-create");
 });
 
-$app->post("/professor/insc/create", function() {
+$app->post("/admin/insc/create", function() {
 
 	User::verifyLogin();
 
@@ -140,11 +140,11 @@ $app->post("/professor/insc/create", function() {
 
 	$insc->save();
 
-	header("Location: /professor/insc");
+	header("Location: /admin/insc");
 	exit();
 });
 
-$app->get("/professor/insc/:idinsc/delete", function($idinsc) {
+$app->get("/admin/insc/:idinsc/delete", function($idinsc) {
 
 	User::verifyLogin();
 
@@ -154,13 +154,13 @@ $app->get("/professor/insc/:idinsc/delete", function($idinsc) {
 
 	$insc->delete();
 
-	header("Location: /professor/insc");
+	header("Location: /admin/insc");
 	exit();
 	
 });
 
 /*
-$app->get("/professor/insc/:idinsc", function($idinsc) {
+$app->get("/admin/insc/:idinsc", function($idinsc) {
 
 	User::verifyLogin();
 
@@ -178,7 +178,7 @@ $app->get("/professor/insc/:idinsc", function($idinsc) {
 */
 
 /*
-$app->post("/professor/insc/:idinsc", function($idinsc) {
+$app->post("/admin/insc/:idinsc", function($idinsc) {
 
 	User::verifyLogin();
 
@@ -190,7 +190,7 @@ $app->post("/professor/insc/:idinsc", function($idinsc) {
 
 	$insc->save();
 
-	header("Location: /professor/insc");
+	header("Location: /admin/insc");
 	exit();		
 });
 */
@@ -211,7 +211,7 @@ $app->get("/insc/:idinsc", function($idinsc) {
 });
 */
 
-$app->get("/professor/profile/insc/:idinsc/:idpess", function($idinsc, $idpess){
+$app->get("/admin/profile/insc/:idinsc/:idpess", function($idinsc, $idpess){
 
 	User::verifyLogin();
 
@@ -222,14 +222,14 @@ $app->get("/professor/profile/insc/:idinsc/:idpess", function($idinsc, $idpess){
 	if( !$insc->getidinsc()){
 
 		User::setError("Inscrição selecionada não existe!");
-		header("Location: /professor/insc");
+		header("Location: /admin/insc");
 		exit();			
 	}
 
 	if( $insc->getidpess() != $idpess){
 
 		User::setError("Aluno selecionado não está relacionado para esta inscrição!");
-		header("Location: /professor/insc");
+		header("Location: /admin/insc");
 		exit();			
 	}
 
@@ -249,7 +249,7 @@ $app->get("/professor/profile/insc/:idinsc/:idpess", function($idinsc, $idpess){
 
 /*
 
-$app->get("/professor/insc/pessoa/:idpess", function($idpess){
+$app->get("/admin/insc/pessoa/:idpess", function($idpess){
 
 	User::verifyLogin();
 
@@ -273,7 +273,7 @@ $app->get("/professor/insc/pessoa/:idpess", function($idpess){
 
 */
 
-$app->get("/professor/insc/pessoa/:idepess", function($idpess){
+$app->get("/admin/insc/pessoa/:idepess", function($idpess){
 
 	User::verifyLogin();
 
@@ -286,7 +286,7 @@ $app->get("/professor/insc/pessoa/:idepess", function($idpess){
 	if(!$inscricoes){
 
 		User::setError("Inscrição(ões) não encontrada(s)!!!");
-		header("Location: /professor/pessoas");
+		header("Location: /admin/pessoas");
 		exit();			
 	}
 
@@ -302,7 +302,7 @@ $app->get("/professor/insc/pessoa/:idepess", function($idpess){
 
 });
 
-$app->get("/professor/insc-turma-temporada/:idturma/:idtemporada/user/:iduser", function($idturma, $idtemporada, $iduser) {
+$app->get("/admin/insc-turma-temporada/:idturma/:idtemporada/user/:iduser", function($idturma, $idtemporada, $iduser) {
 
 	User::verifyLogin();
 
@@ -337,7 +337,7 @@ $app->get("/professor/insc-turma-temporada/:idturma/:idtemporada/user/:iduser", 
 	}else{
 
 		User::setError("A turma que você selecionou não está relacionada a este professor(a)!!!");
-		header("Location: /professor/turma-temporada/".$idtemporada."");
+		header("Location: /admin/turma-temporada/".$idtemporada."");
 		exit();					
 	}	
 });
@@ -357,7 +357,7 @@ $app->get("/insc/:idinsc/:iduserprof/:idturma/statusMatriculada", function($idin
 
 	$insc->alteraStatusInscricaoMatriculada($idinsc, $idturma, $idtemporada);
 
-	header("Location: /professor/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
+	header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
 	exit();
 
 });
@@ -377,7 +377,7 @@ $app->get("/insc/:idinsc/:iduserprof/:idturma/statusAguardandoMatricula", functi
 
 	$insc->alteraStatusInscricaoAguardandoMatricula($idinsc);
 
-	header("Location: /professor/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
+	header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
 	exit();
 
 });
@@ -397,7 +397,7 @@ $app->get("/insc/:idinsc/:iduserprof/:idturma/statusDesistente", function($idins
 
 	$insc->alteraStatusInscricaoDesistente($idinsc, $idturma, $idtemporada);
 
-	header("Location: /professor/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
+	header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
 	exit();
 
 });

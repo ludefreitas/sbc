@@ -6,7 +6,7 @@ use \Sbc\Model\Pessoa;
 //use \Sbc\Model\Insc;
 
 // Rota para listar todos usuários da classe 
-$app->get("/professor/pessoas", function() {
+$app->get("/admin/pessoas", function() {
 
 	//$insc = new Insc();
 
@@ -35,7 +35,7 @@ $app->get("/professor/pessoas", function() {
 	{
 
 		array_push($pages, [
-			'href'=>'/professor/pessoas?'.http_build_query([
+			'href'=>'/admin/pessoas?'.http_build_query([
 				'page'=>$x+1,
 				'search'=>$search
 			]),
@@ -58,7 +58,7 @@ $app->get("/professor/pessoas", function() {
 	));
 });
 
-$app->get("/professor/pessoas/create", function() {
+$app->get("/admin/pessoas/create", function() {
 
 	User::verifyLogin();
 
@@ -67,7 +67,7 @@ $app->get("/professor/pessoas/create", function() {
 	$page->setTpl("pessoas-create");
 });
 
-$app->get("/professor/pessoas/:idpess/delete", function($idpess) {
+$app->get("/admin/pessoas/:idpess/delete", function($idpess) {
 
 	User::verifyLogin();
 
@@ -77,12 +77,12 @@ $app->get("/professor/pessoas/:idpess/delete", function($idpess) {
 
 	$pessoa->delete();
 
-	header("Location: /professor/pessoas");
+	header("Location: /admin/pessoas");
 	exit();
 });
 
 /*
-$app->get("/professor/pessoas/:idpess", function($idpess) {
+$app->get("/admin/pessoas/:idpess", function($idpess) {
 
 	User::verifyLogin();
 
@@ -98,7 +98,7 @@ $app->get("/professor/pessoas/:idpess", function($idpess) {
 });
 */
 
-$app->post("/professor/pessoas/create", function() {
+$app->post("/admin/pessoas/create", function() {
 
 	User::verifyLogin();
 
@@ -114,12 +114,12 @@ $app->post("/professor/pessoas/create", function() {
 
 	$pessoa->save();
 
-	header("Location: /professor/pessoas");
+	header("Location: /admin/pessoas");
 	exit();
 });
 
 /*
-$app->post("/professor/pessoas/:idpess", function($idpess) {
+$app->post("/admin/pessoas/:idpess", function($idpess) {
 
 	User::verifyLogin();
 
@@ -135,7 +135,7 @@ $app->post("/professor/pessoas/:idpess", function($idpess) {
 	
 	$pessoa->update();
 
-	header("Location: /professor/pessoas");
+	header("Location: /admin/pessoas");
 	exit();
 });
 */

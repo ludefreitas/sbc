@@ -7,7 +7,7 @@ use \Sbc\Model\Espaco;
 
 use \Sbc\Page;
 
-$app->get("/professor/local", function() {
+$app->get("/admin/local", function() {
 
 	User::verifyLogin();
 	// na linha abaixo retorna um array com todos os dados do usuário
@@ -32,7 +32,7 @@ $app->get("/professor/local", function() {
 	{
 
 		array_push($pages, [
-			'href'=>'/professor/local?'.http_build_query([
+			'href'=>'/admin/local?'.http_build_query([
 				'page'=>$x+1,
 				'search'=>$search
 			]),
@@ -55,7 +55,7 @@ $app->get("/professor/local", function() {
 });
 
 
-$app->get("/professor/local/create", function() {
+$app->get("/admin/local/create", function() {
 
 	User::verifyLogin();
 
@@ -67,7 +67,7 @@ $app->get("/professor/local/create", function() {
 	]);
 });
 
-$app->post("/professor/local/create", function() {
+$app->post("/admin/local/create", function() {
 
 	User::verifyLogin();
 
@@ -77,55 +77,55 @@ $app->post("/professor/local/create", function() {
 
 	if (!isset($_POST['apelidolocal']) || $_POST['apelidolocal'] == '') {
 		Local::setMsgError("Informe o nome de como é conhecido o local.");
-		header("Location: /professor/local/create");
+		header("Location: /admin/local/create");
 		exit;		
 	}	
 
 	if (!isset($_POST['nomelocal']) || $_POST['nomelocal'] == '') {
 		Local::setMsgError("Informe o nome completo do local.");
-		header("Location: /professor/local/create");
+		header("Location: /admin/local/create");
 		exit;		
 	}
 
 	if (!isset($_POST['cep']) || $_POST['cep'] == '') {
 		Local::setMsgError("Informe o cep do local.");
-		header("Location: /professor/local/create");
+		header("Location: /admin/local/create");
 		exit;		
 	}						
 
 	if (!isset($_POST['rua']) || $_POST['rua'] == '') {
 		Local::setMsgError("Informe em qual rua que está o local.");
-		header("Location: /professor/local/create");
+		header("Location: /admin/local/create");
 		exit;		
 	}
 
 	if (!isset($_POST['numero']) || $_POST['numero'] == '') {
 		Local::setMsgError("Informe número, em que está o local, na rua.");
-		header("Location: /professor/local/create");
+		header("Location: /admin/local/create");
 		exit;		
 	}	
 
 	if (!isset($_POST['bairro']) || $_POST['bairro'] == '') {
 		Local::setMsgError("Informe o bairro onde está localizado este espaço.");
-		header("Location: /professor/local/create");
+		header("Location: /admin/local/create");
 		exit;		
 	}																							
 
 	if (!isset($_POST['cidade']) || $_POST['cidade'] == '') {
 		Local::setMsgError("Informe em qual cidade está o local.");
-		header("Location: /professor/local/create");
+		header("Location: /admin/local/create");
 		exit;		
 	}																							
 
 	if (!isset($_POST['estado']) || $_POST['estado'] == '') {
 		Local::setMsgError("Informe o estado.");
-		header("Location: /professor/local/create");
+		header("Location: /admin/local/create");
 		exit;		
 	}
 
 	if (!isset($_POST['telefone']) || $_POST['telefone'] == '') {
 		Local::setMsgError("Informe o número do telefone.");
-		header("Location: /professor/local/create");
+		header("Location: /admin/local/create");
 		exit;		
 	}																									
 
@@ -135,11 +135,11 @@ $app->post("/professor/local/create", function() {
 
 	$_SESSION['createLocalValues'] = NULL;
 
-	header("Location: /professor/local");
+	header("Location: /admin/local");
 	exit();
 });
 
-$app->get("/professor/local/:idlocal/delete", function($idlocal) {
+$app->get("/admin/local/:idlocal/delete", function($idlocal) {
 
 	User::verifyLogin();
 
@@ -149,12 +149,12 @@ $app->get("/professor/local/:idlocal/delete", function($idlocal) {
 
 	$local->delete();
 
-	header("Location: /professor/local");
+	header("Location: /admin/local");
 	exit();
 	
 });
 
-$app->get("/professor/local/:idlocal", function($idlocal) {
+$app->get("/admin/local/:idlocal", function($idlocal) {
 
 	User::verifyLogin();
 
@@ -171,7 +171,7 @@ $app->get("/professor/local/:idlocal", function($idlocal) {
 	
 });
 
-$app->post("/professor/local/:idlocal", function($idlocal) {
+$app->post("/admin/local/:idlocal", function($idlocal) {
 
 	User::verifyLogin();
 
@@ -181,55 +181,55 @@ $app->post("/professor/local/:idlocal", function($idlocal) {
 
 	if (!isset($_POST['apelidolocal']) || $_POST['apelidolocal'] == '') {
 		Local::setMsgError("Informe o nome de como é conhecido o local.");
-		header("Location: /professor/local/create");
+		header("Location: /admin/local/create");
 		exit;		
 	}	
 
 	if (!isset($_POST['nomelocal']) || $_POST['nomelocal'] == '') {
 		Local::setMsgError("Informe o nome completo do local.");
-		header("Location: /professor/local/create");
+		header("Location: /admin/local/create");
 		exit;		
 	}
 
 	if (!isset($_POST['cep']) || $_POST['cep'] == '') {
 		Local::setMsgError("Informe o cep do local.");
-		header("Location: /professor/local/create");
+		header("Location: /admin/local/create");
 		exit;		
 	}						
 
 	if (!isset($_POST['rua']) || $_POST['rua'] == '') {
 		Local::setMsgError("Informe em qual rua que está o local.");
-		header("Location: /professor/local/create");
+		header("Location: /admin/local/create");
 		exit;		
 	}
 
 	if (!isset($_POST['numero']) || $_POST['numero'] == '') {
 		Local::setMsgError("Informe número, em que está o local, na rua.");
-		header("Location: /professor/local/create");
+		header("Location: /admin/local/create");
 		exit;		
 	}	
 
 	if (!isset($_POST['bairro']) || $_POST['bairro'] == '') {
 		Local::setMsgError("Informe o bairro onde está localizado este espaço.");
-		header("Location: /professor/local/create");
+		header("Location: /admin/local/create");
 		exit;		
 	}																							
 
 	if (!isset($_POST['cidade']) || $_POST['cidade'] == '') {
 		Local::setMsgError("Informe em qual cidade está o local.");
-		header("Location: /professor/local/create");
+		header("Location: /admin/local/create");
 		exit;		
 	}																							
 
 	if (!isset($_POST['estado']) || $_POST['estado'] == '') {
 		Local::setMsgError("Informe o estado.");
-		header("Location: /professor/local/create");
+		header("Location: /admin/local/create");
 		exit;		
 	}
 
 	if (!isset($_POST['telefone']) || $_POST['telefone'] == '') {
 		Local::setMsgError("Informe o número do telefone.");
-		header("Location: /professor/local/create");
+		header("Location: /admin/local/create");
 		exit;		
 	}																											
 
@@ -237,12 +237,12 @@ $app->post("/professor/local/:idlocal", function($idlocal) {
 
 	$local->save();
 
-	header("Location: /professor/local");
+	header("Location: /admin/local");
 	exit();		
 });
 
 /*
-$app->get("professor/local/:idlocal", function($idlocal) {
+$app->get("admin/local/:idlocal", function($idlocal) {
 
 	$local = new Local();
 
@@ -259,7 +259,7 @@ $app->get("professor/local/:idlocal", function($idlocal) {
 
 
 /*
-$app->get("/professor/local/:idlocal/espaco", function($idlocal) {
+$app->get("/admin/local/:idlocal/espaco", function($idlocal) {
 
 	User::verifyLogin();
 
@@ -276,7 +276,7 @@ $app->get("/professor/local/:idlocal/espaco", function($idlocal) {
 	]);	
 });
 
-$app->get("/professor/local/:idlocal/espaco/:idespaco/add", function($idlocal, $idespaco) {
+$app->get("/admin/local/:idlocal/espaco/:idespaco/add", function($idlocal, $idespaco) {
 
 	User::verifyLogin();
 
@@ -290,11 +290,11 @@ $app->get("/professor/local/:idlocal/espaco/:idespaco/add", function($idlocal, $
 
 	$local->addEspaco($espaco);
 
-	header("Location: /professor/local/".$idlocal."/espaco");
+	header("Location: /admin/local/".$idlocal."/espaco");
 	exit;
 });
 
-$app->get("/professor/local/:idlocal/espaco/:idespaco/remove", function($idlocal, $idespaco) {
+$app->get("/admin/local/:idlocal/espaco/:idespaco/remove", function($idlocal, $idespaco) {
 
 	User::verifyLogin();
 
@@ -308,7 +308,7 @@ $app->get("/professor/local/:idlocal/espaco/:idespaco/remove", function($idlocal
 
 	$local->removeEspaco($espaco);
 
-	header("Location: /professor/local/".$idlocal."/espaco");
+	header("Location: /admin/local/".$idlocal."/espaco");
 	exit;
 
 });

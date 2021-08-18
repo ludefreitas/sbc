@@ -69,7 +69,7 @@ class Horario extends Model {
 		}else{
 
 			Horario::setMsgError("Horario selecionado não encontrado!");
-			header("Location: /professor/horario");
+			header("Location: /admin/horario");
 			exit();			
 		}				
 		
