@@ -1,4 +1,4 @@
-
+<?php if(!class_exists('Rain\Tpl')){exit;}?>
 <script>
 
     function quantosAnos(nascimento, hoje) {
@@ -57,22 +57,21 @@
                 </div>
 
         
-                {if="$errorRegister != ''"}
+                <?php if( $errorRegister != '' ){ ?>
                 <div class="alert alert-danger">
-                 {$errorRegister}
+                 <?php echo htmlspecialchars( $errorRegister, ENT_COMPAT, 'UTF-8', FALSE ); ?>
                 </div>
-                {/if}
+                <?php } ?>
 
-                {if="$success != ''"}
+                <?php if( $success != '' ){ ?>
                 <div class="alert alert-success">
-                 <h4>{$success}</h4>
+                 <h4><?php echo htmlspecialchars( $success, ENT_COMPAT, 'UTF-8', FALSE ); ?></h4>
                 </div>
-                {else}
-                
+                <?php }else{ ?>
                 <div class="">
                 <h3>Cadastrar uma nova pessoa</h3>
                 </div>
-                {/if}
+                <?php } ?>
 
                 <form id="register-form-wrap" action="/registerpessoa" class="register" method="post">
                     
@@ -83,14 +82,14 @@
                         *
                         </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="text" id="nomepess" name="nomepess" class="input-text" value="{$registerpessoaValues.nomepess}" placeholder="Informe o nome completo">                
+                    <input style="width: 100%; float: right;" type="text" id="nomepess" name="nomepess" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" placeholder="Informe o nome completo">                
                     <label for="dtnasc">
                         <br>Data do Nascimento
                         <span class="required">
                             *
                         </span>
                     </label>
-                    <input onblur="menorDeIdade()" style="width: 100%; float: right;" type="date" id="dtnasc" name="dtnasc" class="input-text" value="{$registerpessoaValues.dtnasc}">               
+                    <input onblur="menorDeIdade()" style="width: 100%; float: right;" type="date" id="dtnasc" name="dtnasc" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["dtnasc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">               
                     
                     <label for="sexo"><br>
                         <br>Sexo
@@ -108,7 +107,7 @@
                             *
                         </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="number" id="numcpf" name="numcpf" class="input-text" value="{$registerpessoaValues.numcpf}">
+                    <input style="width: 100%; float: right;" type="number" id="numcpf" name="numcpf" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                    
 
                     <label for="numrg">
@@ -117,7 +116,7 @@
                             *
                         </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="text" id="numrg" name="numrg" class="input-text" value="{$registerpessoaValues.numrg}">
+                    <input style="width: 100%; float: right;" type="text" id="numrg" name="numrg" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["numrg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
 
                     <label for="numsus">
                         <br><br>Número do Cartão do SUS 
@@ -125,7 +124,7 @@
                             *
                         </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="number" id="numsus" name="numsus" class="input-text" value="{$registerpessoaValues.numsus}">
+                    <input style="width: 100%; float: right;" type="number" id="numsus" name="numsus" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["numsus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                     
 
 
@@ -146,7 +145,7 @@
                             *
                         </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="number" id="cadunico" name="cadunico" class="input-text" value="{$registerpessoaValues.cadunico}">
+                    <input style="width: 100%; float: right;" type="number" id="cadunico" name="cadunico" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["cadunico"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                     </div>
                     <div hidden="" id="maeEpai">
                     <label for="nomemae">
@@ -155,7 +154,7 @@
                             <span style="font-size: 12px; font-weight: bold">* (Necessário preencher este campo se a pessoa, a cadastrar, for menor de idade)</span>
                         </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="text" id="nomemae" name="nomemae" class="input-text" value="{$registerpessoaValues.nomemae}">                
+                    <input style="width: 100%; float: right;" type="text" id="nomemae" name="nomemae" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["nomemae"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">                
                     
                     <label for="cpfmae">
                         <br><br>CPF da Mãe
@@ -163,7 +162,7 @@
                             *
                         </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="number" id="cpfmae" name="cpfmae" class="input-text" value="{$registerpessoaValues.cpfmae}">
+                    <input style="width: 100%; float: right;" type="number" id="cpfmae" name="cpfmae" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["cpfmae"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                     
                     <label for="nomepai">
                         <br><br>Nome da Pai
@@ -171,7 +170,7 @@
                             <span style="font-size: 12px; font-weight: bold">* (Necessário preencher este campo se a pessoa, a cadasttrar, for menor de idade)</span>
                         </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="text" id="nomepai" name="nomepai" class="input-text" value="{$registerpessoaValues.nomepai}">
+                    <input style="width: 100%; float: right;" type="text" id="nomepai" name="nomepai" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["nomepai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                     
                     <label for="cpfpai">
                         CPF da Pai
@@ -179,7 +178,7 @@
                             *
                         </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="number" id="cpfpai" name="cpfpai" class="input-text" value="{$registerpessoaValues.cpfpai}">  
+                    <input style="width: 100%; float: right;" type="number" id="cpfpai" name="cpfpai" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["cpfpai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">  
                     </div>         
                 </div>  
             </div>

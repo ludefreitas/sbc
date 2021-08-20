@@ -1,4 +1,4 @@
-
+<?php if(!class_exists('Rain\Tpl')){exit;}?>
 <script>
 
     function quantosAnos(nascimento, hoje) {
@@ -29,18 +29,7 @@
             document.getElementById('maeEpai').hidden = false
         }
     }
-
-    function vulnerabilidade(){
-
-        let vulnsocial = document.getElementById('vulnsocial').value
-
-        if(vulnsocial == 0){
-            document.getElementById('divCadunico').hidden = true
-        }else{
-           document.getElementById('divCadunico').hidden = false
-        }
-    }   
-
+    
 </script>
 
      <div class="container"> <!-- container 1 -->
@@ -53,28 +42,19 @@
             <div class="col-md-12">
 
                 <div class="alert alert-success" style="text-align-last: center;">
-                    <a class="btn btn-success" href="/user/pessoas" role="button">Meus dependentes</a>
+                    <span style="font-weight: bold;">ATUALIZAR PESSOA/DEPENDENTE</span style="font-weight: bold;">
                 </div>
 
         
-                {if="$errorRegister != ''"}
-                <div class="alert alert-danger">
-                 {$errorRegister}
-                </div>
-                {/if}
-
-                {if="$success != ''"}
-                <div class="alert alert-success">
-                 <h4>{$success}</h4>
-                </div>
-                {else}
                 
-                <div class="">
-                <h3>Cadastrar uma nova pessoa</h3>
-                </div>
-                {/if}
 
-                <form id="register-form-wrap" action="/registerpessoa" class="register" method="post">
+                <?php if( $error != '' ){ ?>
+                <div class="alert alert-danger" style="text-align-last: center;">
+                    <span style="font-weight: bold;"><?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?></span style="font-weight: bold;">
+                </div>                
+                <?php } ?>
+
+                <form id="register-form-wrap" action="/updatepessoa/<?php echo htmlspecialchars( $pessoa["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="register" method="post">
                     
                     
                     <label for="nomepess">
@@ -83,20 +63,22 @@
                         *
                         </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="text" id="nomepess" name="nomepess" class="input-text" value="{$registerpessoaValues.nomepess}" placeholder="Informe o nome completo">                
+                    <input style="width: 100%; float: right;" type="text" id="nomepess" name="nomepess" class="input-text" value="<?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" placeholder="Informe o nome completo">
+
                     <label for="dtnasc">
                         <br>Data do Nascimento
                         <span class="required">
                             *
                         </span>
                     </label>
-                    <input onblur="menorDeIdade()" style="width: 100%; float: right;" type="date" id="dtnasc" name="dtnasc" class="input-text" value="{$registerpessoaValues.dtnasc}">               
+                    <input onblur="menorDeIdade()" style="width: 100%; float: right;" type="date" id="dtnasc" name="dtnasc" class="input-text" value="<?php echo htmlspecialchars( $pessoa["dtnasc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">               
                     
                     <label for="sexo"><br>
                         <br>Sexo
                     </label>
+                    
                     <select style="width: 100%; float: right;" class="form-control" name="sexo">
-                        <option selected="" value="">Selecione</option>                            
+                        <option selected="" value="<?php echo htmlspecialchars( $pessoa["sexo"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $pessoa["sexo"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option> 
                         <option value="Masculino">Masculino</option>
                         <option value="Feminino">Feminino</option>
                         <option value="Não Declarado">Não Declarado</option>                            
@@ -108,7 +90,7 @@
                             *
                         </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="number" id="numcpf" name="numcpf" class="input-text" value="{$registerpessoaValues.numcpf}">
+                    <input disabled="" style="width: 100%; float: right;" type="number" id="numcpf" name="numcpf" class="input-text" value="<?php echo htmlspecialchars( $pessoa["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                    
 
                     <label for="numrg">
@@ -117,7 +99,7 @@
                             *
                         </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="text" id="numrg" name="numrg" class="input-text" value="{$registerpessoaValues.numrg}">
+                    <input style="width: 100%; float: right;" type="text" id="numrg" name="numrg" class="input-text" value="<?php echo htmlspecialchars( $pessoa["numrg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
 
                     <label for="numsus">
                         <br><br>Número do Cartão do SUS 
@@ -125,7 +107,7 @@
                             *
                         </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="number" id="numsus" name="numsus" class="input-text" value="{$registerpessoaValues.numsus}">
+                    <input style="width: 100%; float: right;" type="number" id="numsus" name="numsus" class="input-text" value="<?php echo htmlspecialchars( $pessoa["numsus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                     
 
 
@@ -133,29 +115,32 @@
                     <label for="vulnsocial">
                         <br><br>Vulnerabilidade Social?
                     </label>
-                    <select onchange="vulnerabilidade()" id="vulnsocial" style="width: 100%; float: right;" class="form-control" name="vulnsocial">
-                        <option selected="" value="">Seclecione</option>                            
-                        <option value="1">Sim</option>
-                        <option value="0">Não</option>                                   
+                    <select id="vulnsocial" style="width: 100%; float: right;" class="form-control" name="vulnsocial">
+                        <option selected="" value="<?php echo htmlspecialchars( $pessoa["vulnsocial"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">Selecione</option>                    
+                        <option value="0">Não</option>                         
+                        <option value="1">Sim</option>    
+                       
+                        
                     </select>                 
                     
-                    <div id="divCadunico" hidden="true">
+                    <div id="divCadunico">
                     <label for="cadunico">
                         <br><br>Número do CadÚnico
                         <span class="required">
                             *
                         </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="number" id="cadunico" name="cadunico" class="input-text" value="{$registerpessoaValues.cadunico}">
+                    <input style="width: 100%; float: right;" type="number" id="cadunico" name="cadunico" class="input-text" value="<?php echo htmlspecialchars( $pessoa["cadunico"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                     </div>
-                    <div hidden="" id="maeEpai">
+
+                    <div id="maeEpai">
                     <label for="nomemae">
                         <br><br>Nome da Mãe
                         <span class="required">
                             <span style="font-size: 12px; font-weight: bold">* (Necessário preencher este campo se a pessoa, a cadastrar, for menor de idade)</span>
                         </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="text" id="nomemae" name="nomemae" class="input-text" value="{$registerpessoaValues.nomemae}">                
+                    <input style="width: 100%; float: right;" type="text" id="nomemae" name="nomemae" class="input-text" value="<?php echo htmlspecialchars( $pessoa["nomemae"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">                
                     
                     <label for="cpfmae">
                         <br><br>CPF da Mãe
@@ -163,7 +148,7 @@
                             *
                         </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="number" id="cpfmae" name="cpfmae" class="input-text" value="{$registerpessoaValues.cpfmae}">
+                    <input style="width: 100%; float: right;" type="number" id="cpfmae" name="cpfmae" class="input-text" value="<?php echo htmlspecialchars( $pessoa["cpfmae"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                     
                     <label for="nomepai">
                         <br><br>Nome da Pai
@@ -171,7 +156,7 @@
                             <span style="font-size: 12px; font-weight: bold">* (Necessário preencher este campo se a pessoa, a cadasttrar, for menor de idade)</span>
                         </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="text" id="nomepai" name="nomepai" class="input-text" value="{$registerpessoaValues.nomepai}">
+                    <input style="width: 100%; float: right;" type="text" id="nomepai" name="nomepai" class="input-text" value="<?php echo htmlspecialchars( $pessoa["nomepai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                     
                     <label for="cpfpai">
                         CPF da Pai
@@ -179,20 +164,20 @@
                             *
                         </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="number" id="cpfpai" name="cpfpai" class="input-text" value="{$registerpessoaValues.cpfpai}">  
+                    <input style="width: 100%; float: right;" type="number" id="cpfpai" name="cpfpai" class="input-text" value="<?php echo htmlspecialchars( $pessoa["cpfpai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">  
                     </div>         
                 </div>  
             </div>
             <div class="row" style="padding-bottom: 10px;">
                 <div class="col-md-12">
-                    <input style="width: 100%; float: right; background-color: #15a03f;" type="submit" value="Cadastrar" name="registerPessoa" class="btn">
+                    <input style="width: 100%; float: right; background-color: #15a03f;" type="submit" value="Atualizar" name="registerPessoa" class="btn">
                 </div>                   
             </div>
                 </form>               
             <div class="row">
                 <div class="col-md-12" style="text-align: center">
 
-                        <a class="btn" data-quantity="1" style="width: 100%; float: right; background-color: #ce2c3e;  text-decoration: none; color: white;" href="/" text-decoration="none">CANCELAR
+                        <a class="btn" data-quantity="1" style="width: 100%; float: right; background-color: #ce2c3e;  text-decoration: none; color: white;" href="/user/pessoas" text-decoration="none">CANCELAR
                         </a>
                         <!-- <input style="width: 100%; float: right; background-color: #ce2c3e;" type="submit" value="Cancelar" name="login" class="button"> -->
                    

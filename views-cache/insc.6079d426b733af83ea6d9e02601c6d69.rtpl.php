@@ -3,7 +3,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Lista com <?php echo htmlspecialchars( $total, ENT_COMPAT, 'UTF-8', FALSE ); ?> inscrições para a temporada <?php echo htmlspecialchars( $temporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+    Lista com <?php echo htmlspecialchars( $total, ENT_COMPAT, 'UTF-8', FALSE ); ?> inscrições
   </h1>
   <ol class="breadcrumb">
     <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -77,9 +77,15 @@
                 </h5>
               </div>
 
-              <div class="col-md-2" style="margin: 2; padding: 2">
+              <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
                     <?php echo htmlspecialchars( $value1["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                </h5>
+              </div>
+
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    <?php echo htmlspecialchars( $value1["descespaco"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                 </h5>
               </div>
 

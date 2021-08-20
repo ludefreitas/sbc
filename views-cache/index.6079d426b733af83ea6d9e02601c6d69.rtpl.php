@@ -9,7 +9,7 @@
         Olá! <?php echo htmlspecialchars( $user["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, seja Bem vindo!
       </h3>
       <ol class="breadcrumb">
-        <li><a href="/professor"><i class="fa fa-dashboard"></i> Level</a></li>
+        <li><a href="/admin"><i class="fa fa-dashboard"></i> Level</a></li>
         <li class="active">Here</li>
       </ol>
     </section>

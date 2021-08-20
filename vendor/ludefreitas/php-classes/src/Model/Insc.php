@@ -265,12 +265,16 @@ class Insc extends Model {
 			INNER JOIN tb_persons f ON f.idperson = e.idperson
 			INNER JOIN tb_temporada g USING(idtemporada)
 			INNER JOIN tb_turma h USING(idturma)
+			INNER JOIN tb_espaco i ON i.idespaco = h.idespaco
+			INNER JOIN tb_local j ON j.idlocal = i.idlocal
 			WHERE a.idinsc LIKE :search
 			OR f.desperson LIKE :search
 			OR b.descstatus LIKE :search 
 			OR g.desctemporada LIKE :search 
 			OR d.nomepess LIKE :search
 			OR h.descturma LIKE :search 
+			OR i.descespaco LIKE :search 
+			OR j.apelidolocal LIKE :search 
 			-- ORDER BY a.dtinsc DESC
 			LIMIT $start, $itemsPerPage;
 		", [

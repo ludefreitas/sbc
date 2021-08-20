@@ -10,41 +10,54 @@
     {/if}
     
 
-    <div class="alert alert-info" style="text-align-last: center;">
-        <a class="btn btn-primary card-just-text" href="/pessoa-create" role="button" >Cadastrar uma pessoa ou dependente</a>
-    </div>
+    
 
      <div class="container">
                     
         {loop="$pessoas"}      
         <div class="row alert alert-primary">
-            <div class="col-md-12">
+            <div class="col-md-12" >
                 <span style="text-align: center;">
-                    {$value.idpess} - {$value.nomepess} 
-                <hr> 
-                <strong>Idade: </strong> {function="calcularIdade($value.dtnasc)"}
-                - <strong>Data Nasc: </strong>{function="formatDate($value.dtnasc)"}
-                - <strong>Sexo: </strong>{$value.sexo}
-                <br><strong>CPF: </strong>{$value.numcpf}
-                - <strong>RG: </strong>{$value.numrg}
-                - <strong>SUS: </strong>{$value.numsus}   
-                <br><strong>Vuln. Social: </strong> {$value.vulnsocial}
-                - <strong>CadUnico: </strong>{$value.cadunico}
-                <br><strong>Nome da Mãe: </strong>{$value.nomemae}
-                - <strong>CPF da mãe: </strong>{$value.cpfmae}
-                <br><strong>Nome do pai: </strong>{$value.nomepai}
-                - <strong>CPF do pai: </strong>{$value.cpfpai}
+                <strong>{$value.idpess} - {$value.nomepess} </strong>
+                <div class="row alert alert-primary"> 
+                &nbsp;<strong>{function="calcularIdade($value.dtnasc)"}&nbsp; </strong>anos 
+                &nbsp;<strong>Data Nasc:</strong>{function="formatDate($value.dtnasc)"}
+                &nbsp;<strong>Sexo: </strong>{$value.sexo}
+                &nbsp;<strong>CPF: </strong>{$value.numcpf}
+                &nbsp;<strong>RG: </strong>{$value.numrg}
+                &nbsp;<strong>SUS: </strong>{$value.numsus}   
+                &nbsp;<strong>Vuln. Social: </strong> {if="$value.vulnsocial == 1"}Sim{else}Não{/if}
+                {if="$value.vulnsocial == 1"}
+                &nbsp;<strong>CadUnico: </strong>{$value.cadunico}
+                {/if}
+
+                {if="$value.nomemae != ''"}
+                &nbsp;<strong>Nome da Mãe: </strong>{$value.nomemae}
+                &nbsp;<strong>CPF da mãe: </strong>{$value.cpfmae}
+                {/if}                
+
+                {if="$value.nomepai != ''"}
+                &nbsp;<strong>Nome do pai: </strong>{$value.nomepai}
+                &nbsp;<strong>CPF do pai: </strong>{$value.cpfpai}
+                {/if}
+
+                
+
+
+                
+                &nbsp;<strong>Incluido: </strong>{$value.dtinclusao}
+                &nbsp;<strong>Alterado: </strong>{$value.dtalteracao}
                 </span>
-                <hr>
-                <div class="row">
+                </div>
+                <div class="row alert alert-primary">
                     <div class="col-md-6 alert-success" style="padding: 5px; text-align-last: center;">
                         <form action="post" name="idpess">
-                            <a class="btn btn-success" href="#" role="button">Editar</a>
+                            <a class="btn btn-success" href="/user/pessoa/{$value.idpess}" role="button">EDITAR</a>
                         </form>
                     </div>
                     <div class="col-md-6 alert-success" style="padding: 5px; text-align-last: center;">
                         <form action="post" name="idpess">
-                            <a class="btn btn-danger"  href="/user/{$value.idpess}/status" role="button">Excluir</a>
+                            <a class="btn btn-danger"  href="/user/{$value.idpess}/status" role="button">EXCLUIR</a>
                         </form>
                     </div>
                 </div> 
@@ -61,6 +74,11 @@
         {/loop} 
 
     </div>
+
+    <div class="alert alert-info" style="text-align-last: center;">
+        <a class="btn btn-primary card-just-text" href="/pessoa-create" role="button" >CADASTRAR NOVA PESSOA OU DEPENDENTE</a>
+    </div>
+
     </div> <!-- final da index -->
 
     

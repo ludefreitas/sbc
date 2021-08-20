@@ -58,14 +58,14 @@ function getUserName()
 
 }
 
-function getUserIsProfAdmin()
+function getUserIsProf()
 {
     $user = User::getFromSession();
 
     $html = [];
 
     array_push($html, '<li class="nav-item">
-                            <a href="/professor" class="nav-link">
+                            <a href="/sdmin" class="nav-link">
                               <span class="text-dark" style="font-weight: bold"> 
                                 Área do Professor
                               </span>
@@ -73,7 +73,27 @@ function getUserIsProfAdmin()
                         </li>'
                     );
 
-    if ($user->getisprof() == 1 || $user->getinadmin() == 1){
+    if ($user->getisprof() == 1){
+        return $html[0];
+    }
+}
+
+function getUserIsAdmin()
+{
+    $user = User::getFromSession();
+
+    $html = [];
+
+    array_push($html, '<li class="nav-item">
+                            <a href="/admin" class="nav-link">
+                              <span class="text-dark" style="font-weight: bold"> 
+                                Área do Admin
+                              </span>
+                            </a>
+                        </li>'
+                    );
+
+    if ($user->getinadmin() == 1){
         return $html[0];
     }
 }

@@ -112,7 +112,8 @@
                               </span>
                             </a>
                         </li>
-                        <?php echo getUserIsProfAdmin(); ?>
+                        <?php echo getUserIsProf(); ?>
+                        <?php echo getUserIsAdmin(); ?>
                         <li class="nav-item">  
                             <a href="/profile/insc" class="nav-link">
                               <span class="text-dark" style="font-weight: bold"> 

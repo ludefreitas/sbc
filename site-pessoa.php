@@ -18,6 +18,7 @@ $app->get("/pessoa-create", function() {
 		$page = new Page();
 
 		$page->setTpl("pessoa-create", [
+			'success'=>Pessoa::getSuccess(),
 			'errorRegister'=>User::getErrorRegister(),
 			'registerpessoaValues'=>(
 				isset($_SESSION['registerpessoaValues'])) 
@@ -207,6 +208,169 @@ $app->get("/user/pessoas", function(){
 		'pessoas'=>$user->getPessoa()
 	]);
 
+});
+
+$app->get("/user/pessoa/:idpess", function($idpess) {
+
+	User::verifyLogin(false);
+
+	$pessoa = new Pessoa();
+
+	$pessoa->get((int)$idpess);
+
+	if( $pessoa->getidpess() != $idpess){
+
+		Pessoa::setErrorRegister("Pessoa não encontrado!!!");
+		header("Location: /user-pessoas");
+		exit();			
+	}
+
+	$page = new Page();
+
+	$page->setTpl("pessoa-update", array(
+		"pessoa"=>$pessoa->getValues(),
+		"error"=>Pessoa::getErrorRegister()
+	));
+});
+
+$app->post("/updatepessoa/:idpess", function($idpess){
+
+	User::verifyLogin(false);
+
+	//$_SESSION['registerpessoaValues'] = $_POST;
+
+	$iduser = (int)$_SESSION[User::SESSION]["iduser"];
+
+	if (!isset($_POST['nomepess']) || $_POST['nomepess'] == '') {
+
+		Pessoa::setErrorRegister("Preencha o nome completo da pessoa.");
+		header("Location: /user/pessoa/".$idpess."");
+		exit;
+	}
+
+	if (!isset($_POST['dtnasc']) || $_POST['dtnasc'] == '') {
+
+		Pessoa::setErrorRegister("Informe a data de nascimento.");
+		header("Location: /user/pessoa/".$idpess."");
+		exit;
+	}
+
+	if (!isset($_POST['sexo']) || $_POST['sexo'] == '') {
+
+		Pessoa::setErrorRegister("Informe o sexo.");
+		header("Location: /user/pessoa/".$idpess."");
+		exit;
+	}
+
+	if (!isset($_POST['numcpf']) || $_POST['numcpf'] == '') {
+
+		Pessoa::setErrorRegister("Informe o número do CPF.");
+		header("Location: /user/pessoa/".$idpess."");
+		exit;
+	}
+	
+	/*
+	if (Pessoa::checkCpfExist($_POST['numcpf']) === true) {
+
+		Pessoa::setErrorRegister("Este CPF pertence a outro usuário.");
+		header("Location: /user/pessoa/".$idpess."");
+		exit;
+	}
+	*/
+
+	if (!isset($_POST['numrg']) || $_POST['numrg'] == '') {
+
+		Pessoa::setErrorRegister("Informe o número do RG.");
+		header("Location: /user/pessoa/".$idpess."");
+		exit;
+	}	
+
+	if (!isset($_POST['numsus']) || $_POST['numsus'] == '') {
+
+		Pessoa::setErrorRegister("Informe o número do Cartão do SUS.");
+		header("Location: /user/pessoa/".$idpess."");
+		exit;
+	}	
+
+	if (!isset($_POST['vulnsocial']) || $_POST['vulnsocial'] == '') {
+
+		Pessoa::setErrorRegister("Informe se a pessoa participa de programas sociais.");
+		header("Location: /user/pessoa/".$idpess."");
+		exit;
+	}	
+
+	//var_dump($_POST['vulnsocial']);
+	//exit;
+	
+	if ($_POST['vulnsocial'] === '1' && (!isset($_POST['cadunico']) || $_POST['cadunico'] == '')) {
+
+		Pessoa::setErrorRegister("Informe o número do Cadastro Único (cadunico)");
+		header("Location: /user/pessoa/".$idpess."");
+		exit;
+	}	
+
+	
+	if ($_POST['vulnsocial'] === '0' && $_POST['cadunico'] !== '') {
+
+		$_POST['vulnsocial'] = '1';
+	}
+
+	if(calcularIdade($_POST['dtnasc']) < 18){
+
+	
+		if ((!isset($_POST['nomemae']) || $_POST['nomemae'] == '') && (!isset($_POST['nomepai']) || $_POST['nomepai'] == '')) {
+
+			Pessoa::setErrorRegister("Informe pelo menos o nome ou da mãe, ou do pai ou do responsável.");
+			header("Location: /user/pessoa/".$idpess."");
+			exit;
+		}
+
+		if ((!isset($_POST['cpfmae']) || $_POST['cpfmae'] == '') && (!isset($_POST['cpfpai']) || $_POST['cpfpai'] == '')) {
+
+			Pessoa::setErrorRegister("Informe pelo menos o CPF ou da mãe, ou do pai ou do responsável.");
+			header("Location: /user/pessoa/".$idpess."");
+			exit;
+		}
+	}
+
+	$_POST['statuspessoa'] = 1;
+
+	$pessoa = new Pessoa();
+
+	//$pessoa->getPessoaExist();
+
+	$pessoa->setData([
+		'iduser'=>$idpess, 		
+		'iduser'=>$iduser, 		
+		'nomepess'=>$_POST['nomepess'],
+		'dtnasc'=>$_POST['dtnasc'],
+		'sexo'=>$_POST['sexo'],
+		'numcpf'=>$_POST['numcpf'],
+		'numrg'=>$_POST['numrg'],
+		'numsus'=>$_POST['numsus'],
+		'vulnsocial'=>$_POST['vulnsocial'],
+		'cadunico'=>$_POST['cadunico'],
+		'nomemae'=>$_POST['nomemae'],
+		'cpfmae'=>$_POST['cpfmae'],
+		'nomepai'=>$_POST['nomepai'],
+		'cpfpai'=>$_POST['cpfpai'],
+		'statuspessoa'=>$_POST['statuspessoa']
+	]);
+
+	/*
+	echo '<pre>';
+	print_r($pessoa);
+	echo '</pre>';
+	exit;
+	*/
+
+	$pessoa->update($idpess);
+
+
+	//$_SESSION['registerpessoaValues'] = NULL;
+
+	header('Location: /user/pessoas');
+	exit;
 });
 
 
