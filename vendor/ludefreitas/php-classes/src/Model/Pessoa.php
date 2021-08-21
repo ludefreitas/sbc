@@ -63,7 +63,7 @@ class Pessoa extends Model {
 		$sql = new Sql();
 
 		
-		$results = $sql->select("CALL sp_pessoa_save(:idpess, :iduser, :nomepess, :dtnasc, :sexo, :numcpf, :numrg, :numsus, :vulnsocial, :cadunico, :nomemae, :cpfmae, :nomepai, :cpfpai, :statuspessoa, :dtinclusao, :dtalteracao)", array(
+		$results = $sql->select("CALL sp_pessoa_update(:idpess, :iduser, :nomepess, :dtnasc, :sexo, :numcpf, :numrg, :numsus, :vulnsocial, :cadunico, :nomemae, :cpfmae, :nomepai, :cpfpai, :statuspessoa, :dtalteracao)", array(
 			":idpess"=>$idpess,
 			":iduser"=>$this->getiduser(),
 			":nomepess"=>$this->getnomepess(),
@@ -79,7 +79,6 @@ class Pessoa extends Model {
 			":nomepai"=>$this->getnomepai(),
 			":cpfpai"=>$this->getcpfpai(),
 			":statuspessoa"=>$this->getstatuspessoa(),
-			":dtinclusao"=>$this->getdtinclusao(),
 			":dtalteracao"=>$this->getdtalteraca()
 		));	
 
@@ -347,6 +346,33 @@ class Pessoa extends Model {
 
 	}
 
+	function validaCPF($cpf) {
+ 
+    // Extrai somente os números
+    $cpf = preg_replace( '/[^0-9]/is', '', $cpf );
+     
+    // Verifica se foi informado todos os digitos corretamente
+    if (strlen($cpf) != 11) {
+        return false;
+    }
+
+    // Verifica se foi informada uma sequência de digitos repetidos. Ex: 111.111.111-11
+    if (preg_match('/(\d)\1{10}/', $cpf)) {
+        return false;
+    }
+
+    // Faz o calculo para validar o CPF
+    for ($t = 9; $t < 11; $t++) {
+        for ($d = 0, $c = 0; $c < $t; $c++) {
+            $d += $cpf[$c] * (($t + 1) - $c);
+        }
+        $d = ((10 * $d) % 11) % 10;
+        if ($cpf[$c] != $d) {
+            return false;
+        }
+    }
+    return true;
+}
 	/*
 	public function setStatus(){
 

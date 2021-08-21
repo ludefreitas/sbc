@@ -39,7 +39,17 @@
         }else{
            document.getElementById('divCadunico').hidden = false
         }
-    }   
+    }  
+
+    function formatar_mascara(src, mascara) {
+        let campo = src.value.length;
+        let saida = mascara.substring(0,1);
+        let texto = mascara.substring(campo);
+
+        if(texto.substring(0,1) != saida) {
+            src.value += texto.substring(0,1);
+        }
+} 
 
 </script>
 
@@ -95,10 +105,25 @@
                         <br>Sexo
                     </label>
                     <select style="width: 100%; float: right;" class="form-control" name="sexo">
-                        <option selected="" value="">Selecione</option>                            
+
+                        
+                        <?php if( $registerpessoaValues["sexo"] === '' ){ ?>
+                        <option selected="" value="">Selecione</option> 
                         <option value="Masculino">Masculino</option>
                         <option value="Feminino">Feminino</option>
                         <option value="Não Declarado">Não Declarado</option>                            
+                        <?php } ?>
+                        <?php if( $registerpessoaValues["sexo"] === 'Feminino' ){ ?>
+                        <option selected="" value="Feminino">Feminino</option> 
+                        <option value="Masculino">Masculino</option>
+                        <option value="Não Declarado">Não Declarado</option>                             
+                        <?php } ?>                      
+                        <?php if( $registerpessoaValues["sexo"] === 'Masculino' ){ ?>
+                        <option selected="" value="Masculino">Masculino</option>
+                        <option value="Feminino">Feminino</option>
+                        <option value="Não Declarado">Não Declarado</option>                            
+                        <?php } ?>                       
+                        
                     </select>     
 
                     <label for="numcpf">
@@ -107,7 +132,7 @@
                             *
                         </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="number" id="numcpf" name="numcpf" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                    <input style="width: 100%; float: right;" type="text" maxlength="14" id="numcpf" name="numcpf" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onkeypress="formatar_mascara(this, '###.###.###-##')">
                    
 
                     <label for="numrg">
@@ -133,9 +158,19 @@
                         <br><br>Vulnerabilidade Social?
                     </label>
                     <select onchange="vulnerabilidade()" id="vulnsocial" style="width: 100%; float: right;" class="form-control" name="vulnsocial">
+                        <?php if( $registerpessoaValues["vulnsocial"] === '' ){ ?>
                         <option selected="" value="">Seclecione</option>                            
                         <option value="1">Sim</option>
-                        <option value="0">Não</option>                                   
+                        <option value="0">Não</option>  
+                        <?php } ?>   
+                        <?php if( $registerpessoaValues["vulnsocial"] === '1' ){ ?>
+                        <option sected="" value="1">Sim</option>
+                        <option value="0">Não</option>  
+                        <?php } ?>  
+                        <?php if( $registerpessoaValues["vulnsocial"] === '0' ){ ?>
+                        <option sected="" value="0">Não</option>
+                        <option value="1">Sim</option>  
+                        <?php } ?>                                                                                                                            
                     </select>                 
                     
                     <div id="divCadunico" hidden="true">
@@ -147,38 +182,40 @@
                     </label>
                     <input style="width: 100%; float: right;" type="number" id="cadunico" name="cadunico" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["cadunico"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                     </div>
-                    <div hidden="" id="maeEpai">
-                    <label for="nomemae">
-                        <br><br>Nome da Mãe
-                        <span class="required">
-                            <span style="font-size: 12px; font-weight: bold">* (Necessário preencher este campo se a pessoa, a cadastrar, for menor de idade)</span>
-                        </span>
-                    </label>
-                    <input style="width: 100%; float: right;" type="text" id="nomemae" name="nomemae" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["nomemae"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">                
-                    
-                    <label for="cpfmae">
-                        <br><br>CPF da Mãe
-                        <span class="required">
-                            *
-                        </span>
-                    </label>
-                    <input style="width: 100%; float: right;" type="number" id="cpfmae" name="cpfmae" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["cpfmae"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-                    
-                    <label for="nomepai">
-                        <br><br>Nome da Pai
-                        <span class="required">
-                            <span style="font-size: 12px; font-weight: bold">* (Necessário preencher este campo se a pessoa, a cadasttrar, for menor de idade)</span>
-                        </span>
-                    </label>
-                    <input style="width: 100%; float: right;" type="text" id="nomepai" name="nomepai" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["nomepai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-                    
-                    <label for="cpfpai">
-                        CPF da Pai
-                        <span class="required">
-                            *
-                        </span>
-                    </label>
-                    <input style="width: 100%; float: right;" type="number" id="cpfpai" name="cpfpai" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["cpfpai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">  
+
+                    <div id="maeEpai">
+
+                        <label for="nomemae">
+                            <br><br>Nome da Mãe
+                            <span class="required">
+                                <span style="font-size: 12px; font-weight: bold">* (Necessário preencher este campo se a pessoa, a cadastrar, for menor de idade)</span>
+                            </span>
+                        </label>
+                        <input style="width: 100%; float: right;" type="text" id="nomemae" name="nomemae" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["nomemae"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">                
+                        
+                        <label for="cpfmae">
+                            <br><br>CPF da Mãe
+                            <span class="required">
+                                *
+                            </span>
+                        </label>
+                        <input style="width: 100%; float: right;" type="text" maxlength="14" id="cpfmae" name="cpfmae" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["cpfmae"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onkeypress="formatar_mascara(this, '###.###.###-##')">
+                        
+                        <label for="nomepai">
+                            <br><br>Nome do Pai
+                            <span class="required">
+                                <span style="font-size: 12px; font-weight: bold">* (Necessário preencher este campo se a pessoa, a cadastrar, for menor de idade)</span>
+                            </span>
+                        </label>
+                        <input style="width: 100%; float: right;" type="text" id="nomepai" name="nomepai" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["nomepai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">                
+                        
+                        <label for="cpfpai">
+                            <br><br>CPF do Pai
+                            <span class="required">
+                                *
+                            </span>
+                        </label>
+                        <input style="width: 100%; float: right;" type="text" maxlength="14" id="cpfpai" name="cpfpai" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["cpfpai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onkeypress="formatar_mascara(this, '###.###.###-##')">
                     </div>         
                 </div>  
             </div>

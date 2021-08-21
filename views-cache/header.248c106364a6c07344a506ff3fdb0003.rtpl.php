@@ -38,30 +38,30 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="nav-principal">
-                    <ul class="navbar-nav ml-auto" style="text-align: center;">                        
+                    <div class="navbar-nav ml-auto" style="text-align: center;">                        
                                                     
-                        <li class="nav-item">
+                        <div class="nav-item">
                             <a class="nav-link" href="/">
                               <span class="text-white"  style="font-weight: bold;">
                                 Início
                               </span>
                             </a>
-                        </li>
-                        <li class="nav-item">
+                        </div>
+                        <div class="nav-item">
                             <a class="nav-link" mr-4 href="/locais" >
                               <span class="text-white" style="font-weight: bold;">
                                 Centros Esportivos
                               </span>
                             </a>
-                        </li>
-                        <li class="nav-item" >
+                        </div>
+                        <div class="nav-item" >
                             <a style="" class="nav-link" href="/modalidades" >
                               <span class="text-white" style="font-weight: bold">
                                 Modalidades
                               </span>
                             </a>
-                        </li>                        
-                    </ul>                    
+                        </div>                        
+                    </div>                    
                 </div>
 
             </div>            
@@ -101,86 +101,83 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="nav-secundario">
-                    <ul class="navbar-nav ml-auto" style="text-align: center;">                        
+                    <div class="navbar-nav ml-auto" style="text-align: center;">                        
                         
                         <?php if( checkLogin(false) ){ ?>
-                        <li class="nav-item">
+                        <div class="nav-item">
                             <a href="/profile" class="nav-link">
                               <i class="fa fa-user"></i>
                               <span class="text-dark" style="font-weight: bold">
                                <?php echo getUserName(); ?>
                               </span>
                             </a>
-                        </li>
+                        </div>
                         <?php echo getUserIsProf(); ?>
                         <?php echo getUserIsAdmin(); ?>
-                        <li class="nav-item">  
+                        <div class="nav-item">  
                             <a href="/profile/insc" class="nav-link">
-                              <span class="text-dark" style="font-weight: bold"> 
-                                Inscrições
-                                confirmadas 
+                              <span class="text-dark" style="font-weight: bold; text-align: center;"> 
+                                Inscrições confirmadas 
                               </span> 
                             </a> 
-                        </li>  
-                        <li class="nav-item">
+                        </div>  
+                        <div class="nav-item">
                             <a href="/cart" class="nav-link">
-                              <span class="text-dark" style="font-weight: bold"> 
-                                Inscrições
-                                a confirmar 
+                              <span class="text-dark" style="font-weight: bold; text-align: center;"> 
+                                Inscrições a confirmar  
                               </span>
                             </a> 
-                        </li>       
-                        <li class="nav-item">
+                        </div>       
+                        <div class="nav-item">
                           <a href="/user/pessoas" class="nav-link" >
                             <i class="fa fa-heart" ></i>
-                            <span class="text-dark" style="font-weight: bold">
-                              Minha
-                              Família
+                            <span class="text-dark" style="font-weight: bold; text-align: center;">
+                              Minha Família
                             </span>
                           </a>
-                        </li>     
-                        <li class="nav-item">
+                        </div>     
+                        <div class="nav-item">
                             <a href="/logout" class="nav-link">
                               <i class="fa fa-close"></i>
-                              <span class="text-dark" style="font-weight: bold"> 
+                              <span class="text-dark" style="font-weight: bold; text-align: center;">
                                 Sair
                               </span>
                             </a>
-                        </li>
+                        </div>
 
                               
                         <?php }else{ ?>
-                        <li class="nav-item">
+                        <div class="nav-item">
                             <a class="nav-link" href="/">
-                              <span class="text-dark" style="font-weight: bold">
+                              <span class="text-dark" style="font-weight: bold; text-align: center;">
                                 Início
                               </span>
                             </a>
-                        </li>
-                        <li class="nav-item">
+                        </div>
+                        <div class="nav-item">
                             <a class="nav-link" mr-4 href="/locais">
-                              <span class="text-dark" style="font-weight: bold; align-self: flex-end;">
+                              <span class="text-dark" style="font-weight: bold; text-align: center;">
                                 Crecs
                               </span>
                             </a>
-                        </li>
-                        <li class="nav-item">
+                        </div>
+                        <div class="nav-item">
                             <a style="" class="nav-link" href="/modalidades">
-                              <span class="text-dark" style="font-weight: bold">
+                              <span class="text-dark" style="font-weight: bold; text-align: center;">
                                 Esportes
                               </span>
                             </a>
-                        </li>
-                        <li class="nav-item">
+                        </div>
+                        <div class="nav-item">
                             <a class="btn btn-outline-light" href="/login" class="nav-link">
                               <i class="fa fa-lock"></i>
-                               <span class="text-dark" style="font-weight: bold"> 
+                               <span class="text-dark" style="font-weight: bold; text-align: center;">
                                  Entrar
                                </span>
                             </a>
-                        </li>          
+                        </div>          
                         <?php } ?>                         
-                    </ul>                    
+                    </div>                    
                 </div>
 
             </div>            

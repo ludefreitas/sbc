@@ -2,6 +2,14 @@
 
 use \Sbc\Model\User;
 
+function formatar_mascara($src, $mascara) {
+  $campo = $src.value.length;
+  $saida = $mascara.substring(0,1);
+  $texto = $mascara.substring($campo);
+ if($texto.substring(0,1) != $saida) {
+ $src += $texto.substring(0,1);
+ }
+}
 
 function colorStatus($idinscstatus){
 

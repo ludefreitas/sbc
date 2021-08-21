@@ -90,7 +90,7 @@
                             *
                         </span>
                     </label>
-                    <input disabled="" style="width: 100%; float: right;" type="number" id="numcpf" name="numcpf" class="input-text" value="<?php echo htmlspecialchars( $pessoa["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                    <input readonly="" style="width: 100%; float: right;" type="text" id="numcpf" name="numcpf" class="input-text" value="<?php echo htmlspecialchars( $pessoa["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                    
 
                     <label for="numrg">
@@ -148,7 +148,7 @@
                             *
                         </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="number" id="cpfmae" name="cpfmae" class="input-text" value="<?php echo htmlspecialchars( $pessoa["cpfmae"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                    <input style="width: 100%; float: right;" type="text" id="cpfmae" name="cpfmae" class="input-text" value="<?php echo htmlspecialchars( $pessoa["cpfmae"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                     
                     <label for="nomepai">
                         <br><br>Nome da Pai
@@ -164,7 +164,7 @@
                             *
                         </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="number" id="cpfpai" name="cpfpai" class="input-text" value="<?php echo htmlspecialchars( $pessoa["cpfpai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">  
+                    <input style="width: 100%; float: right;" type="text" id="cpfpai" name="cpfpai" class="input-text" value="<?php echo htmlspecialchars( $pessoa["cpfpai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">  
                     </div>         
                 </div>  
             </div>

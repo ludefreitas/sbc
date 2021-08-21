@@ -40,10 +40,6 @@
                 &nbsp;<strong>Nome do pai: </strong><?php echo htmlspecialchars( $value1["nomepai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                 &nbsp;<strong>CPF do pai: </strong><?php echo htmlspecialchars( $value1["cpfpai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                 <?php } ?>
-
-                
-
-
                 
                 &nbsp;<strong>Incluido: </strong><?php echo htmlspecialchars( $value1["dtinclusao"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                 &nbsp;<strong>Alterado: </strong><?php echo htmlspecialchars( $value1["dtalteracao"], ENT_COMPAT, 'UTF-8', FALSE ); ?>

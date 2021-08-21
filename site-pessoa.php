@@ -23,7 +23,7 @@ $app->get("/pessoa-create", function() {
 			'registerpessoaValues'=>(
 				isset($_SESSION['registerpessoaValues'])) 
 				    ? $_SESSION['registerpessoaValues'] 
-			        : ['nomepess'=>'', 'dtnasc'=>'', 'numcpf'=>'', 'numrg'=>'', 'numsus'=>'', 'cadunico'=>'', 'nomemae'=>'', 'cpfmae'=>'', 'nomepai'=>'', 'cpfpai'=>'']
+			        : ['nomepess'=>'', 'dtnasc'=>'', 'numcpf'=>'', 'numrg'=>'', 'numsus'=>'', 'cadunico'=>'', 'nomemae'=>'', 'cpfmae'=>'', 'nomepai'=>'', 'cpfpai'=>'', 'sexo'=>'', 'vulnsocial'=>'']
 		]);	
 
 });
@@ -33,6 +33,7 @@ $app->post("/registerpessoa", function(){
 	User::verifyLogin(false);
 
 	$_SESSION['registerpessoaValues'] = $_POST;
+
 
 	$iduser = (int)$_SESSION[User::SESSION]["iduser"];
 
@@ -62,6 +63,14 @@ $app->post("/registerpessoa", function(){
 		Pessoa::setErrorRegister("Informe o número do CPF.");
 		header("Location: /pessoa-create");
 		exit;
+	}
+
+	if(!Pessoa::validaCPF($_POST['numcpf'])){
+
+		Pessoa::setErrorRegister("Informe um número de CPF válido para a pessoa!");
+		header("Location: /pessoa-create");
+		exit;
+
 	}
 	
 	if (Pessoa::checkCpfExist($_POST['numcpf']) === true) {
@@ -114,6 +123,21 @@ $app->post("/registerpessoa", function(){
 			Pessoa::setErrorRegister("Informe pelo menos o CPF ou da mãe, ou do pai ou do responsável.");
 			header("Location: /pessoa-create");
 			exit;
+
+		}		
+
+		if($_POST['cpfmae'] !== '' && !Pessoa::validaCPF($_POST['cpfmae'])){
+
+			Pessoa::setErrorRegister("Informe um número de CPF válido para a mãe da pessoa!");
+			header("Location: /pessoa-create");
+			exit;
+		}
+
+		if($_POST['cpfpai'] !== '' && !Pessoa::validaCPF($_POST['cpfpai'])){
+
+			Pessoa::setErrorRegister("Informe um número de CPF válido para o pai da pessoa!");
+			header("Location: /pessoa-create");
+			exit;
 		}
 	}
 
@@ -137,7 +161,8 @@ $app->post("/registerpessoa", function(){
 		'cpfmae'=>$_POST['cpfmae'],
 		'nomepai'=>$_POST['nomepai'],
 		'cpfpai'=>$_POST['cpfpai'],
-		'statuspessoa'=>$_POST['statuspessoa']
+		'statuspessoa'=>$_POST['statuspessoa'],
+		'dtaltetacao'=>date('d/m/Y')
 	]);
 
 	$pessoa->save();
@@ -262,6 +287,14 @@ $app->post("/updatepessoa/:idpess", function($idpess){
 		exit;
 	}
 
+	if(!Pessoa::validaCPF($_POST['numcpf'])){
+
+		Pessoa::setErrorRegister("Informe um número de CPF válido para a pessoa!");
+		header("Location: /pessoa-create");
+		exit;
+
+	}
+
 	if (!isset($_POST['numcpf']) || $_POST['numcpf'] == '') {
 
 		Pessoa::setErrorRegister("Informe o número do CPF.");
@@ -321,14 +354,29 @@ $app->post("/updatepessoa/:idpess", function($idpess){
 		if ((!isset($_POST['nomemae']) || $_POST['nomemae'] == '') && (!isset($_POST['nomepai']) || $_POST['nomepai'] == '')) {
 
 			Pessoa::setErrorRegister("Informe pelo menos o nome ou da mãe, ou do pai ou do responsável.");
-			header("Location: /user/pessoa/".$idpess."");
+			header("Location: /pessoa-create");
 			exit;
 		}
 
 		if ((!isset($_POST['cpfmae']) || $_POST['cpfmae'] == '') && (!isset($_POST['cpfpai']) || $_POST['cpfpai'] == '')) {
 
 			Pessoa::setErrorRegister("Informe pelo menos o CPF ou da mãe, ou do pai ou do responsável.");
-			header("Location: /user/pessoa/".$idpess."");
+			header("Location: /pessoa-create");
+			exit;
+
+		}		
+
+		if($_POST['cpfmae'] !== '' && !Pessoa::validaCPF($_POST['cpfmae'])){
+
+			Pessoa::setErrorRegister("Informe um número de CPF válido para a mãe da pessoa!");
+			header("Location: /pessoa-create");
+			exit;
+		}
+
+		if($_POST['cpfpai'] !== '' && !Pessoa::validaCPF($_POST['cpfpai'])){
+
+			Pessoa::setErrorRegister("Informe um número de CPF válido para o pai da pessoa!");
+			header("Location: /pessoa-create");
 			exit;
 		}
 	}
