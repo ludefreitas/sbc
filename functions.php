@@ -73,7 +73,7 @@ function getUserIsProf()
     $html = [];
 
     array_push($html, '<li class="nav-item">
-                            <a href="/sdmin" class="nav-link">
+                            <a href="/prof" class="nav-link">
                               <span class="text-dark" style="font-weight: bold"> 
                                 Área do Professor
                               </span>

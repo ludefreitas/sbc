@@ -69,6 +69,7 @@ $app->get("/admin/insc/:idtemporada", function($idtemporada) {
 
 		$pagination = Insc::getPageSearchInscTemporada($search, $page, $idtemporada);
 
+
 	} else {
 
 		$pagination = Insc::getPageInscTemporada($page, $itemsPerPage = 10, $idtemporada);
@@ -81,7 +82,7 @@ $app->get("/admin/insc/:idtemporada", function($idtemporada) {
 	{
 
 		array_push($pages, [
-			'href'=>'/admin/insc-temporada?'.http_build_query([
+			'href'=>"/admin/insc/".$idtemporada."?".http_build_query([
 			'page'=>$x+1,
 			'search'=>$search
 			]),
@@ -96,16 +97,7 @@ $app->get("/admin/insc/:idtemporada", function($idtemporada) {
 
 	$desctemporada = $temporada->getdesctemporada();
 
-	//var_dump($temporada->getdesctemporada());
-	//exit;
-
-	//$desctemporada = $temporada->getdesctemporada()
-
-
-
-	//$insc = insc::listAll();
-
-	// carrega uma pagina das páginas do admin
+	
 	$page = new PageAdmin();
 
 	// envia para a página o array retornado pelo listAll
@@ -316,30 +308,17 @@ $app->get("/admin/insc-turma-temporada/:idturma/:idtemporada/user/:iduser", func
 	$idusersessao = (int)$_SESSION['User']['iduser'];
 
 	$iduserprof = User::getIdUseInTurmaTemporada($idturma, $idtemporada);	
-
-	$idadmin = 1;
-	$idsuporte = 7;
-
-	// Aqui verifica se a turma pertence ao professor 
-	if( $idusersessao === $idadmin || $idusersessao === 7 || $iduserprof === $idusersessao) {
 	
-		$insc->getInscByTurmaTemporada($idturma, $idtemporada);
+	$insc->getInscByTurmaTemporada($idturma, $idtemporada);
 	
-		$page = new PageAdmin();	
+	$page = new PageAdmin();	
 
-		$page->setTpl("insc-turma-temporada", [
-			'iduserprof'=>$iduserprof,
-			'insc'=>$insc->getValues(),
-			'turma'=>$turma->getValues(),
-			'temporada'=>$temporada->getValues()
-		]);	
-
-	}else{
-
-		User::setError("A turma que você selecionou não está relacionada a este professor(a)!!!");
-		header("Location: /admin/turma-temporada/".$idtemporada."");
-		exit();					
-	}	
+	$page->setTpl("insc-turma-temporada", [
+		'iduserprof'=>$iduserprof,
+		'insc'=>$insc->getValues(),
+		'turma'=>$turma->getValues(),
+		'temporada'=>$temporada->getValues()
+	]);	
 });
 
 $app->get("/insc/:idinsc/:iduserprof/:idturma/statusMatriculada", function($idinsc, $iduserprof, $idturma){

@@ -7,9 +7,8 @@
 
 </h1>
 <ol class="breadcrumb">
-  <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
-  <li><a href="/admin/insc/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> Todas inscrições <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </a></li>
-  <li><a href="/admin/temporada/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/turma"> Inserir turma <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a></li>
+  <li><a href="/prof"><i class="fa fa-dashboard"></i> Home</a></li>
+  <li><a href="/prof/insc/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> Todas inscrições <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </a></li>
 </ol>
 </section>
 
@@ -27,20 +26,13 @@
 
       <div class="box box-primary"> 
 
-        <div class="box-header">   
-
-          <?php if( $local == null ){ ?>
+        <div class="box-header"> 
 
           <h3>Todos locais</h3>
 
-          <?php }else{ ?>
-
-          <h3><?php echo htmlspecialchars( $local["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h3>
-
-          <?php } ?>       
        </div>
       <div class="box-body" style="border: solid 1px lightblue; margin: 5px;"> 
-          <div class="box-body no-padding col-md-10">
+          <div class="box-body no-padding col-md-12">
             
                 <?php $counter1=-1;  if( isset($turmas) && ( is_array($turmas) || $turmas instanceof Traversable ) && sizeof($turmas) ) foreach( $turmas as $key1 => $value1 ){ $counter1++; ?>
                 <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
@@ -77,7 +69,7 @@
 
                     <div class="col-md-2">
                       <h5 style="font-weight: bold; text-align: left; color: red;">
-                        <a href="/admin/insc-turma-temporada/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/user/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["numinscritos"], ENT_COMPAT, 'UTF-8', FALSE ); ?> inscritos</a>
+                        <a href="/prof/insc-turma-temporada/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/user/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["numinscritos"], ENT_COMPAT, 'UTF-8', FALSE ); ?> inscritos</a>
                         
                       </h5>
                     </div>
@@ -101,34 +93,7 @@
           </div>
           
           
-          <!-- /.box-body -->
-
-
-            <div class="box-body col-md-2">
-                  <table class="table table-striped">
-                      <thead>
-                          <tr>
-                           <th>Turmas da temporada por centro esportivo</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-
-                          <tr>
-                          <td>
-                              <a href="/admin/turma-temporada/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><i class=""></i>Todas turmas - Temporada <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a>
-                          </td>
-                          <?php $counter1=-1;  if( isset($locais) && ( is_array($locais) || $locais instanceof Traversable ) && sizeof($locais) ) foreach( $locais as $key1 => $value1 ){ $counter1++; ?>
-                          <tr>
-                          <td>
-                              <a href="/admin/turma-temporada/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/local/<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><i class=""></i> <?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a>
-                          </td>
-                          </tr>
-                          <?php } ?>
-
-                      </tbody>
-                  </table>
-              </div>
-            
+          <!-- /.box-body -->            
 
           <div class="box-footer clearfix">
             <ul class="pagination pagination-sm no-margin pull-right">

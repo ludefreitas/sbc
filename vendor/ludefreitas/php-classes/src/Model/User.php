@@ -62,6 +62,37 @@ class User extends Model {
 		}
 	}
 
+	public static function checkLoginProf($isprof = true)
+	{
+
+		if (
+			!isset($_SESSION[User::SESSION])
+			||
+			!$_SESSION[User::SESSION]
+			||
+			!(int)$_SESSION[User::SESSION]["iduser"] > 0
+		) {
+			//Não está logado
+			return false;
+
+		} else {
+
+			if ($isprof === true && (bool)$_SESSION[User::SESSION]['isprof'] === true) {
+
+				return true;
+
+			} else if ($isprof === false) {
+
+				return true;
+
+			} else {
+
+				return false;
+
+			}
+		}
+	}
+
 	public function login($login, $password)
 	{
 
@@ -104,6 +135,22 @@ class User extends Model {
 		if (!User::checkLogin($inadmin)) {
 
 			if ($inadmin) {
+				header("Location: /login");
+			} else {
+				header("Location: /user-create");
+			}
+			exit;
+
+		}
+
+	}
+
+	public static function verifyLoginProf($isprof = true)
+	{
+
+		if (!User::checkLoginProf($isprof)) {
+
+			if ($isprof) {
 				header("Location: /login");
 			} else {
 				header("Location: /user-create");
@@ -863,18 +910,7 @@ class User extends Model {
 			]);
 
 			return $rows[0];
-			/*
-			if($rows){
-
-				return true;
-
-			}else{
-
-				return false;
-
-			}	
-			*/	
-
+			
 		}
 
 

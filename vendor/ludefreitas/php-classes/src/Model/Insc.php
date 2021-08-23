@@ -234,6 +234,8 @@ class Insc extends Model {
 			INNER JOIN tb_persons f ON f.idperson = e.idperson
 			INNER JOIN tb_temporada g USING(idtemporada)
 			INNER JOIN tb_turma h USING(idturma)
+			INNER JOIN tb_espaco i ON i.idespaco = h.idespaco
+			INNER JOIN tb_local j ON j.idlocal = i.idlocal
 			-- ORDER BY a.dtinsc DESC
 			LIMIT $start, $itemsPerPage;
 		");
@@ -309,6 +311,8 @@ class Insc extends Model {
 			INNER JOIN tb_persons f ON f.idperson = e.idperson
 			INNER JOIN tb_temporada g USING(idtemporada)
 			INNER JOIN tb_turma h USING(idturma)
+			INNER JOIN tb_espaco i ON i.idespaco = h.idespaco
+			INNER JOIN tb_local j ON j.idlocal = i.idlocal
 			WHERE idtemporada = :idtemporada
 			-- ORDER BY a.dtinsc DESC
 			LIMIT $start, $itemsPerPage;
@@ -344,8 +348,11 @@ class Insc extends Model {
 			INNER JOIN tb_persons f ON f.idperson = e.idperson
 			INNER JOIN tb_temporada g USING(idtemporada)
 			INNER JOIN tb_turma h USING(idturma)
+			INNER JOIN tb_espaco j ON j.idespaco = h.idespaco
+			INNER JOIN tb_local k ON k.idlocal = j.idlocal
 			INNER JOIN tb_turmatemporada i
-			WHERE idtemporada = :idtemporada AND (a.idinsc LIKE :search
+			WHERE idtemporada = :idtemporada 
+			AND (a.idinsc LIKE :search
 			OR f.desperson LIKE :search
 			OR b.descstatus LIKE :search 
 			OR g.desctemporada LIKE :search 
@@ -390,6 +397,117 @@ class Insc extends Model {
 		
 		$this->setData($results);
 	}
+
+	public static function getPageInscTemporadaUser($page = 1, $itemsPerPage = 10, $idtemporada, $iduser)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS * FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_turma h ON h.idturma = a.idturma
+			INNER JOIN tb_espaco j ON j.idespaco = h.idespaco
+			INNER JOIN tb_local k ON k.idlocal = j.idlocal
+			INNER JOIN tb_temporada i ON i.idtemporada = a.idtemporada
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus  
+			WHERE a.idtemporada = :idtemporada 
+            AND a.idturma IN (SELECT idturma FROM tb_turmatemporada g WHERE g.iduser = :iduser )
+			LIMIT $start, $itemsPerPage;
+		", [
+			":idtemporada"=>$idtemporada,
+			":iduser"=>$iduser
+		]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+
+	public static function getPageSearchInscTemporadaUser($search, $page = 1, $itemsPerPage = 5, $idtemporada, $iduser)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;		
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS * FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_turma h ON h.idturma = a.idturma
+			INNER JOIN tb_espaco j ON j.idespaco = h.idespaco
+			INNER JOIN tb_local k ON k.idlocal = j.idlocal
+			INNER JOIN tb_temporada i ON i.idtemporada = a.idtemporada
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus  
+			WHERE a.idtemporada = :idtemporada 
+            AND a.idturma IN (SELECT idturma FROM tb_turmatemporada g WHERE g.iduser = :iduser ) 
+            AND (
+            a.idinsc LIKE :search	
+            OR e.desperson LIKE :search	
+            OR f.descstatus LIKE :search 
+            OR i.desctemporada LIKE :search 
+            OR c.nomepess LIKE :search 
+            OR h.descturma LIKE :search
+            ) 
+            LIMIT $start, $itemsPerPage;
+		", [
+			'idtemporada'=>$idtemporada,
+			'iduser'=>$iduser,
+			':search'=>'%'.$search.'%',
+			':id'=>$search
+		]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+
+	/*
+	public function listAllInscTurmaTemporadaByUser($idtemporada, $user){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus            
+			WHERE idtemporada = :idtemporada 
+            and idturma  
+            IN ( 
+            select idturma 
+            from tb_turmatemporada g 
+            where g.iduser = :iduser )
+			ORDER BY a.idinscstatus, a.numordem
+		", [			
+			':idtemporada'=>$idtemporada,
+			':iduser'=>$iduser
+		]);
+		
+		$this->setData($results);
+	}
+	*/
 
 	public function getIdInscStatusByIdinsc($idturma, $idtemporada){
 

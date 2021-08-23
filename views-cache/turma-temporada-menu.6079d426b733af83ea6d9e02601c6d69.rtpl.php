@@ -1,9 +1,4 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?><li class="treeview">
-										<a href="/admin/turma-temporada/81">
-								   			<i class="fa fa-link"></i> 
-								   			Turmas/Temporada 2018
-								   		</a>								   		
-									</li><li class="treeview">
 										<a href="/admin/turma-temporada/53">
 								   			<i class="fa fa-link"></i> 
 								   			Turmas/Temporada 2019

@@ -302,6 +302,8 @@
 			Temporada::updateFileAdminTemporada();
 			Temporada::updateFileAdminInscricoes();
 			Temporada::updateFileAdminTurmaTemporada();
+			Temporada::updateFileProfInscricoes();
+			Temporada::updateFileProfTurmaTemporada();
 		}
 
 		public function get($idtemporada)
@@ -340,6 +342,8 @@
 			Temporada::updateFileAdminTemporada();
 			Temporada::updateFileAdminInscricoes();
 			Temporada::updateFileAdminTurmaTemporada();
+			Temporada::updateFileProfInscricoes();
+			Temporada::updateFileProfTurmaTemporada();
 		}
 
 		// atualiza lista de temporada no site (no rodapé) temporada-menu.html
@@ -409,6 +413,24 @@
 			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."insc-temporada-menu.html", implode('', $html));
 		}
 
+		public static function updateFileProfInscricoes()	
+		{
+			$temporada = Temporada::listAll();
+
+			$html = [];
+
+			foreach ($temporada as $row) {
+				array_push($html, '<li class="treeview">
+								   		<a href="/prof/insc/'.$row['idtemporada'].'">
+								   			<i class="fa fa-link"></i> 
+								   			Inscrições - '.$row['desctemporada'].'
+								   		</a>								   		
+									</li>');
+
+			}
+			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."prof".DIRECTORY_SEPARATOR."insc-temporada-menu.html", implode('', $html));
+		}
+
 		public static function updateFileAdminTurmaTemporada()	
 		{
 			$temporada = Temporada::listAll();
@@ -426,6 +448,25 @@
 
 			}
 			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."turma-temporada-menu.html", implode('', $html));
+		}
+
+		public static function updateFileProfTurmaTemporada()	
+		{
+			$temporada = Temporada::listAll();
+
+			$html = [];
+
+			foreach ($temporada as $row) {
+				array_push($html, '<li class="treeview">
+										<a href="/prof/turma-temporada/'.$row['idtemporada'].'">
+								   			<i class="fa fa-link"></i> 
+								   			Turmas '.$row['desctemporada'].'
+								   		</a>								   		
+									</li>'
+								);
+
+			}
+			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."prof".DIRECTORY_SEPARATOR."turma-temporada-menu.html", implode('', $html));
 		}
 
 

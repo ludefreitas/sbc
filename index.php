@@ -18,6 +18,7 @@ use \Sbc\Model\Turma;
 use \Sbc\Model\User;
 use \Sbc\Page;
 use \Sbc\PageAdmin;
+use \Sbc\PageProf;
 use \Slim\Slim;
 
 $app = new Slim();
@@ -37,6 +38,9 @@ require_once("admin-temporada.php");
 require_once("admin-turma.php");
 require_once("admin-users.php");
 require_once("admin.php");
+require_once("prof.php");
+require_once("prof-insc.php");
+require_once("prof-temporada.php");
 require_once("functions.php");
 require_once("site-cart.php");
 require_once("site-endereco.php");

@@ -68,9 +68,9 @@
 
         
                 <?php if( $errorRegister != '' ){ ?>
-                <div class="alert alert-danger">
-                 <?php echo htmlspecialchars( $errorRegister, ENT_COMPAT, 'UTF-8', FALSE ); ?>
-                </div>
+                <div class="alert alert-danger" style="text-align-last: center;">
+                    <span style="font-weight: bold;"><?php echo htmlspecialchars( $errorRegister, ENT_COMPAT, 'UTF-8', FALSE ); ?></span style="font-weight: bold;">
+                </div>               
                 <?php } ?>
 
                 <?php if( $success != '' ){ ?>
