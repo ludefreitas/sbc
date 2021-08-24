@@ -24,7 +24,7 @@
               <?php } ?>
             
             <div class="box-header">
-              <!--<a href="/admin/users/create" class="btn btn-success">Cadastrar Usuário</a>-->
+              <!--<a href="/prof/users/create" class="btn btn-success">Cadastrar Usuário</a>-->
 
               <div class="box-tools">
                 <form action="/prof/insc/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>">

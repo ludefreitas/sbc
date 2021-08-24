@@ -71,11 +71,7 @@
                 </h5>
               </div>
 
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                     Status
-                </h5>
-              </div>
+            
 
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
@@ -115,14 +111,7 @@
                     <?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </br> <?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ás <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
 
                 </h5>
-              </div>
-
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                     <?php echo htmlspecialchars( $value1["desstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-
-                </h5>
-              </div>
+              </div>             
 
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  

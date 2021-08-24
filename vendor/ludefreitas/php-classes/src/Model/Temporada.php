@@ -41,8 +41,8 @@
 				using(idespaco)
 				INNER JOIN tb_local e
 				using(idlocal)
-				INNER JOIN tb_turmastatus f
-				using(idturmastatus)
+				-- INNER JOIN tb_turmastatus f
+				-- using(idturmastatus)
 				INNER JOIN tb_horario g
 				using(idhorario)
 				INNER JOIN tb_fxetaria h
@@ -77,8 +77,8 @@
 				using(idespaco)
 				INNER JOIN tb_local e
 				using(idlocal)
-				INNER JOIN tb_turmastatus f
-				using(idturmastatus)
+				-- INNER JOIN tb_turmastatus f
+				-- using(idturmastatus)
 				INNER JOIN tb_horario g
 				using(idhorario)
 				INNER JOIN tb_fxetaria h
@@ -116,8 +116,8 @@
 				using(idespaco)
 				INNER JOIN tb_local e
 				using(idlocal)
-				INNER JOIN tb_turmastatus f
-				using(idturmastatus)
+				-- INNER JOIN tb_turmastatus f
+				-- using(idturmastatus)
 				INNER JOIN tb_horario g
 				using(idhorario)
 				INNER JOIN tb_fxetaria h
@@ -492,7 +492,7 @@
 				INNER JOIN tb_local j ON j.idlocal = c.idlocal
 				INNER JOIN tb_temporada k ON k.idtemporada = b.idtemporada
 				INNER JOIN tb_statustemporada l ON l.idstatustemporada = k.idstatustemporada
-				INNER JOIN tb_turmastatus m ON m.idturmastatus = a.idturmastatus
+				INNER JOIN tb_turmastatus m ON m.idturmastatus = b.idturmastatus
 				WHERE k.idtemporada = :idtemporada
 				ORDER BY a.numinscritos
 				LIMIT $start, $itemsPerPage;
@@ -536,12 +536,13 @@
 					using(idlocal)
 					INNER JOIN tb_horario 
 					using(idhorario)
-					INNER JOIN tb_turmastatus 
-					using(idturmastatus) 				
+					-- INNER JOIN tb_turmastatus 
+					-- using(idturmastatus) 				
 						WHERE idturma IN(
 						SELECT a.idturma
 						FROM tb_turma a
 						INNER JOIN tb_turmatemporada b ON b.idturma = a.idturma
+						INNER JOIN tb_turmastatus d ON d.idturmastatus = b.idturmastatus
 						WHERE b.idtemporada = :idtemporada ORDER BY descturma
 					);
 				", [
@@ -568,13 +569,14 @@
 					using(idlocal)
 					INNER JOIN tb_horario 
 					using(idhorario)
-					INNER JOIN tb_turmastatus 
-					using(idturmastatus) 							
+					-- INNER JOIN tb_turmastatus 
+					-- using(idturmastatus) 							
 					WHERE idturma NOT IN(
 						SELECT a.idturma
 						FROM tb_turma a
 						INNER JOIN tb_turmatemporada b ON a.idturma = b.idturma
 						INNER JOIN tb_users c ON c.iduser = b.iduser
+						INNER JOIN tb_turmastatus d ON d.idturmastatus = b.idturmastatus
 						WHERE b.idtemporada = :idtemporada ORDER BY a.descturma
 					);
 				", [

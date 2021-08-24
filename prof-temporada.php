@@ -16,7 +16,8 @@ $app->get("/prof/turma-temporada/:idtemporada", function($idtemporada) {
 
 	$temporada->get((int)$idtemporada);
 
-	
+	//var_dump(Temporada::listAllTurmatemporadaProfessor($idtemporada, $iduser));
+	//exit;
 
 	$page = new PageProf();	
 

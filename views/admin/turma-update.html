@@ -79,16 +79,6 @@
                 </select>
             </div>
 
-            <div class="form-group">
-              <label for="turma">Status</label>
-                <select class="form-control" name="idturmastatus"> 
-
-                  {loop="$turmastatus"} 
-                  <option {if="$value.idturmastatus === $turma.idturmastatus"}selected="selected"{/if} value="{$value.idturmastatus}">{$value.desstatus}</option>
-                  {/loop}                            
-                </select>
-            </div>
-
             
            <div class="form-group">
               <label for="turma">Vagas</label>

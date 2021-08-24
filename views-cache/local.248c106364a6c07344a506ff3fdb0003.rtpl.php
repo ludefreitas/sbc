@@ -1,4 +1,4 @@
-
+<?php if(!class_exists('Rain\Tpl')){exit;}?>
 
  <div class="container"> <!-- container 1 -->
             <div class="row"> <!-- row 2 -->
@@ -42,51 +42,51 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12" style="font-size: 20px; text-align-last: center ">
-       <span style="font-size: 20px;">Crec: </span><span style="font-weight: bold">{$local.apelidolocal}</span><hr>
+       <span style="font-size: 20px;">Crec: </span><span style="font-weight: bold"><?php echo htmlspecialchars( $local["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span><hr>
     </div>     
   </div>
 
 </div>      
-      {loop="$turma"}
-<a href="/turma/{$value.idturma}/{$value.idtemporada}" style="text-decoration: none">
+      <?php $counter1=-1;  if( isset($turma) && ( is_array($turma) || $turma instanceof Traversable ) && sizeof($turma) ) foreach( $turma as $key1 => $value1 ){ $counter1++; ?>
+<a href="/turma/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="text-decoration: none">
   <div class="container"> <!-- container 3 -->
   <div class="row"> <!-- row 4 -->  
   <!--    
-    <div class="col-md-4" style="text-align-last: left; background-color: white; margin: 5px 0px 5px 0px; padding-right: 0px"><a href="/turma/{$value.idturma}/{$value.idtemporada}">           
-      <img class="img-responsive" style="width: 282px; height: 179px" id="image-preview" src="{$value.desphoto}" alt="Photo"></a>            
+    <div class="col-md-4" style="text-align-last: left; background-color: white; margin: 5px 0px 5px 0px; padding-right: 0px"><a href="/turma/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">           
+      <img class="img-responsive" style="width: 282px; height: 179px" id="image-preview" src="<?php echo htmlspecialchars( $value1["desphoto"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" alt="Photo"></a>            
     </div> 
   -->
     <div class="col-md-12"style="text-align-last: left; line-height: 20px;  font-size: 14px; font-style: normal; margin: 5px 0px 20px 0px">
 
-      <a href="/turma/{$value.idturma}/{$value.idtemporada}" style="text-decoration: none">
+      <a href="/turma/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="text-decoration: none">
       <h5 style="color: #000000"> 
             <span style="font-weight: bold;">
-              {$value.descativ} 
+              <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> 
             </span><br>
-              Local da aula: {$value.apelidolocal}<br>
-              {$value.diasemana} das {$value.horainicio} às {$value.horatermino} - 
-              Professor(a): {$value.apelidoperson} <br>
-              Temporada: {$value.desctemporada}<br>
-              Idade: {$value.initidade} a {$value.fimidade} anos <br>
-               {if="$value.idstatustemporada == 4"} 
+              Local da aula: <?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
+              <?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?> das <?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - 
+              Professor(a): <?php echo htmlspecialchars( $value1["apelidoperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <br>
+              Temporada: <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
+              Idade: <?php echo htmlspecialchars( $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> a <?php echo htmlspecialchars( $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> anos <br>
+               <?php if( $value1["idstatustemporada"] == 4 ){ ?> 
                <span style="color: red;">
                 Inscrições iniciadas
               </span> <br>            
-              {/if}
+              <?php } ?>
                <span style="font-weight: bold;">
-              {$value.numinscritos} inscritos para {$value.vagas} vagas 
+              <?php echo htmlspecialchars( $value1["numinscritos"], ENT_COMPAT, 'UTF-8', FALSE ); ?> inscritos para <?php echo htmlspecialchars( $value1["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas 
               
 
-              {if="$value.numinscritos > $value.vagas && $value.idstatustemporada == 4"} <br>
+              <?php if( $value1["numinscritos"] > $value1["vagas"] && $value1["idstatustemporada"] == 4 ){ ?> <br>
                <span style="color: orange;">
                 Para esta turma terá sorteio de vagas
               </span>              
-              {/if}
+              <?php } ?>
             </span> 
           </h5>
         </a>
           
-        <a class="btn btn-info" style="background-color: #cc5d1e"  href="/turma/{$value.idturma}/{$value.idtemporada}">Detalhes da turma</a>
+        <a class="btn btn-info" style="background-color: #cc5d1e"  href="/turma/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">Detalhes da turma</a>
 
           
     </div>
@@ -94,15 +94,15 @@
 </div> <!-- container 3 -->
   
 </a>
-  {/loop}     
+  <?php } ?>     
 
-  {if="$error != ''"}
+  <?php if( $error != '' ){ ?>
    
 <div class="container" >
   <div class="row">
     <div class="col-md-12 alert alert-info" style="font-size: 20px; text-align-last: center ">
        <span style="font-size: 20px; font-weight: bold;"> 
-       {$error}
+       <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
      </span>
     </div>     
   </div>
@@ -113,7 +113,7 @@
     </div>  
   </div>
 </div>
- {/if}
+ <?php } ?>
   
  
   </div> <!-- final da index -->

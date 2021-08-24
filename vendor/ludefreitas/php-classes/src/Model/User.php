@@ -760,8 +760,8 @@ class User extends Model {
 					using(idlocal)
 					INNER JOIN tb_horario 
 					using(idhorario)
-					INNER JOIN tb_turmastatus 
-					using(idturmastatus) 				
+					-- INNER JOIN tb_turmastatus 
+					-- using(idturmastatus) 				
 					WHERE a.iduser = :iduser 
 					AND a.idtemporada = :idtemporada
 				", [
@@ -791,8 +791,8 @@ class User extends Model {
 					using(idlocal)
 					INNER JOIN tb_horario 
 					using(idhorario)
-					INNER JOIN tb_turmastatus 
-					using(idturmastatus) 	
+					-- INNER JOIN tb_turmastatus 
+					-- using(idturmastatus) 	
 					-- WHERE a.iduser = 0 OR a.iduser is null 			
 					WHERE a.iduser != :iduser  
 					AND a.idtemporada = :idtemporada
@@ -829,8 +829,8 @@ class User extends Model {
 					ON e.idlocal = d.idlocal
 					INNER JOIN tb_horario 
 					using(idhorario)
-					INNER JOIN tb_turmastatus 
-					using(idturmastatus) 				
+					-- INNER JOIN tb_turmastatus 
+					-- using(idturmastatus) 				
 					WHERE a.iduser = :iduser 
 					AND a.idtemporada = :idtemporada
 					AND e.idlocal = :idlocal
@@ -862,8 +862,8 @@ class User extends Model {
 					ON e.idlocal = d.idlocal
 					INNER JOIN tb_horario 
 					using(idhorario)
-					INNER JOIN tb_turmastatus 
-					using(idturmastatus) 	
+					-- INNER JOIN tb_turmastatus 
+					-- using(idturmastatus) 	
 					-- WHERE a.iduser = 0 OR a.iduser is null 			
 					WHERE a.iduser != :iduser  
 					AND a.idtemporada = :idtemporada

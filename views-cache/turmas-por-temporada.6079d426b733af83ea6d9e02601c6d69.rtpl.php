@@ -67,13 +67,7 @@
                       </h5>
                     </div>
 
-                    <div class="col-md-2" >
-                      <h5 style="font-weight: bold; text-align: left;">
-                        <?php echo htmlspecialchars( $value1["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas / 
-                       <?php echo htmlspecialchars( $value1["desstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-                        
-                      </h5>
-                    </div>
+                  
 
                     <div class="col-md-2">
                       <h5 style="font-weight: bold; text-align: left; color: red;">

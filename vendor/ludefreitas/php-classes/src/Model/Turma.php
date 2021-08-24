@@ -30,8 +30,8 @@ class Turma extends Model {
 			using(idespaco)
 			INNER JOIN tb_local f
 			using(idlocal)
-			INNER JOIN tb_turmastatus g
-			using(idturmastatus)
+			-- INNER JOIN tb_turmastatus g
+			-- using(idturmastatus)
 			INNER JOIN tb_horario h
 			using(idhorario)
 			INNER JOIN tb_fxetaria i
@@ -179,8 +179,8 @@ class Turma extends Model {
 			using(idespaco)
 			INNER JOIN tb_local f
 			using(idlocal)
-			INNER JOIN tb_turmastatus g
-			using(idturmastatus)
+			-- INNER JOIN tb_turmastatus g
+			-- using(idturmastatus)
 			INNER JOIN tb_horario h
 			using(idhorario)
 			INNER JOIN tb_fxetaria i
@@ -240,8 +240,8 @@ class Turma extends Model {
 			using(idespaco)
 			INNER JOIN tb_local f
 			using(idlocal)
-			INNER JOIN tb_turmastatus g
-			using(idturmastatus)
+			-- INNER JOIN tb_turmastatus g
+			-- using(idturmastatus)
 			INNER JOIN tb_horario h
 			using(idhorario)
 			INNER JOIN tb_fxetaria i
@@ -317,8 +317,8 @@ class Turma extends Model {
 			using(idespaco)
 			INNER JOIN tb_local f
 			using(idlocal)
-			INNER JOIN tb_turmastatus g
-			using(idturmastatus)
+			-- INNER JOIN tb_turmastatus g
+			-- using(idturmastatus)
 			INNER JOIN tb_horario h
 			using(idhorario)
 			INNER JOIN tb_fxetaria i
@@ -369,8 +369,8 @@ class Turma extends Model {
 			ON e.idespaco = j.idespaco
 			INNER JOIN tb_local f
 			ON f.idlocal = e.idlocal
-			INNER JOIN tb_turmastatus g
-			using(idturmastatus)
+			-- INNER JOIN tb_turmastatus g
+			-- using(idturmastatus)
 			INNER JOIN tb_horario h
 			using(idhorario)
 			INNER JOIN tb_fxetaria i
@@ -446,8 +446,8 @@ class Turma extends Model {
 			using(idespaco)
 			INNER JOIN tb_local e
 			using(idlocal)
-			INNER JOIN tb_turmastatus f
-			using(idturmastatus)
+			-- INNER JOIN tb_turmastatus f
+			-- using(idturmastatus)
 			INNER JOIN tb_horario g
 			using(idhorario)			
 			INNER JOIN tb_fxetaria h
@@ -742,8 +742,8 @@ class Turma extends Model {
 			USING(idespaco)
 			INNER JOIN tb_local f
 			USING(idlocal)
-			INNER JOIN tb_turmastatus g
-			USING(idturmastatus)
+			-- INNER JOIN tb_turmastatus g
+			-- USING(idturmastatus)
 			INNER JOIN tb_horario h
 			USING(idhorario)
 			INNER JOIN tb_fxetaria i
@@ -786,8 +786,8 @@ class Turma extends Model {
 			USING(idespaco)
 			INNER JOIN tb_local f
 			USING(idlocal)
-			INNER JOIN tb_turmastatus g
-			USING(idturmastatus)
+			-- INNER JOIN tb_turmastatus g
+			-- USING(idturmastatus)
 			INNER JOIN tb_horario h
 			USING(idhorario)
 			INNER JOIN tb_fxetaria i
