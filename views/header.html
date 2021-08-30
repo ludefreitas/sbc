@@ -105,7 +105,7 @@
                         
                         {if="checkLogin(false)"}
                         <div class="nav-item">
-                            <a href="/profile" class="nav-link">
+                            <a href="/user/profile" class="nav-link">
                               <i class="fa fa-user"></i>
                               <span class="text-dark" style="font-weight: bold">
                                {function="getUserName()"}
@@ -114,28 +114,14 @@
                         </div>
                         {function="getUserIsProf()"}
                         {function="getUserIsAdmin()"}
-                        <div class="nav-item">  
-                            <a href="/profile/insc" class="nav-link">
-                              <span class="text-dark" style="font-weight: bold; text-align: center;"> 
-                                Inscrições confirmadas 
-                              </span> 
-                            </a> 
-                        </div>  
                         <div class="nav-item">
                             <a href="/cart" class="nav-link">
                               <span class="text-dark" style="font-weight: bold; text-align: center;"> 
                                 Inscrições a confirmar  
                               </span>
                             </a> 
-                        </div>       
-                        <div class="nav-item">
-                          <a href="/user/pessoas" class="nav-link" >
-                            <i class="fa fa-heart" ></i>
-                            <span class="text-dark" style="font-weight: bold; text-align: center;">
-                              Minha Família
-                            </span>
-                          </a>
-                        </div>     
+                        </div>  
+                        
                         <div class="nav-item">
                             <a href="/logout" class="nav-link">
                               <i class="fa fa-close"></i>

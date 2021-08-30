@@ -7,7 +7,7 @@ use Rain\Tpl;
 class Mailer {
 	
 	const USERNAME = "lulufreitas008@gmail.com";
-	const PASSWORD = "lu790111";
+	const PASSWORD = "";
 	const NAME_FROM = "Cursos Esportivos SBC";
 
 	private $mail;

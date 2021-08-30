@@ -50,7 +50,7 @@
                 <div class="col-md-6">
                     <p class="form-row form-row-first">
                     <label style="font-size: 12px; margin: 0px">CEP</label>
-                    <input type="text" class="form-control" value="<?php echo htmlspecialchars( $enderecoValues["cep"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="cep" placeholder="" onblur="getDadosEnderecoPorCep(this.value)" />
+                    <input type="number" class="form-control" value="<?php echo htmlspecialchars( $enderecoValues["cep"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="cep" placeholder="" onblur="getDadosEnderecoPorCep(this.value)" />
                     </p>
 
                     <p class="form-row form-row-first">
@@ -88,11 +88,11 @@
 
                 <p class="form-row form-row-first">
                     <label style="font-size: 12px; margin: 0px">Telefone Residencial</label>
-                    <input type="text" class="form-control" value="<?php echo htmlspecialchars( $enderecoValues["telres"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="telres" placeholder=""  id="telres" />
+                    <input type="number" class="form-control" value="<?php echo htmlspecialchars( $enderecoValues["telres"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="telres" placeholder=""  id="telres" />
                 </p>
                 <p class="form-row form-row-first">
                     <label style="font-size: 12px; margin: 0px">Telefone Emergencia</label>
-                    <input type="text" class="form-control" value="<?php echo htmlspecialchars( $enderecoValues["telemer"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="telemer" placeholder=""  id="telemer" />
+                    <input type="number" class="form-control" value="<?php echo htmlspecialchars( $enderecoValues["telemer"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="telemer" placeholder=""  id="telemer" />
                 </p>
                 <p class="form-row form-row-first">
                     <label style="font-size: 12px; margin: 0px">Nome de pessoa para contato</label>

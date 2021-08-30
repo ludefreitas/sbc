@@ -98,4 +98,169 @@ $app->post("/register", function(){
 	exit;
 });
 
+$app->get("/user/profile", function(){
+
+	User::verifyLogin(false);
+
+	$user = new User();
+
+	$iduser = $_SESSION['User']['iduser'];
+
+	$user->get((int)$iduser);
+
+	/*
+	echo '<pre>';
+	print_r($user);
+	echo '</pre>';
+	exit;
+	*/
+
+	$page = new Page();
+
+	$page->setTpl("user-profile", [
+		'user'=>$user->getValues(),
+		'profileMsg'=>User::getSuccess(),
+		'profileError'=>User::getError()
+	]);
+
+});
+
+$app->post("/user/profile", function(){
+
+	User::verifyLogin(false);
+
+	if (!isset($_POST['desperson']) || $_POST['desperson'] === '') {
+		User::setError("Preencha o seu nome.");
+		header('Location: /user/profile');
+		exit;
+	}
+
+	if (!isset($_POST['desemail']) || $_POST['desemail'] === '') {
+		User::setError("Preencha o seu e-mail.");
+		header('Location: /user/profile');
+		exit;
+	}
+
+	if (!isset($_POST['nrphone']) || $_POST['nrphone'] === '') {
+		User::setError("Preencha o seu telefone.");
+		header('Location: /user/profile');
+		exit;
+	}
+
+	$user = User::getFromSession();
+
+	if ($_POST['desemail'] !== $user->getdesemail()) {
+
+		if (User::checkLoginExist($_POST['desemail']) === true) {
+
+			User::setError("Este endereço de e-mail já está cadastrado.");
+			header('Location: /user/profile');
+			exit;
+
+		}
+
+	}
+
+	$_POST['iduser'] = $_SESSION['User']['iduser'];
+	$_POST['apelidoperson'] = $user->getapelidoperson();
+	$_POST['inadmin'] = $user->getinadmin();
+	$_POST['isprof'] = $user->getisprof();
+	$_POST['statususer'] = 1;
+	$_POST['despassword'] = $user->getdespassword();
+	$_POST['deslogin'] = $_POST['desemail'];
+
+	$user->setData($_POST);
+
+	//echo '<pre>';
+	//print_r($_POST);
+	//echo '<pre>';
+	//exit;
+
+	$user->update();
+
+	User::setSuccess("Dados alterados com sucesso!");
+
+	header('Location: /user/profile');
+	exit;
+
+});
+
+
+$app->get("/user-change-password", function(){
+
+	User::verifyLogin(false);
+
+	$page = new Page();
+
+	$page->setTpl("user-change-password", [
+		'changePassError'=>User::getError(),
+		'changePassSuccess'=>User::getSuccess()
+	]);
+
+});
+
+$app->post("/user-change-password", function(){
+
+	User::verifyLogin(false);
+
+	if (!isset($_POST['current_pass']) || $_POST['current_pass'] === '') {
+
+		User::setError("Digite a senha atual.");
+		header("Location: /user-change-password");
+		exit;
+
+	}
+
+	if (!isset($_POST['new_pass']) || $_POST['new_pass'] === '') {
+
+		User::setError("Digite a nova senha.");
+		header("Location: /user-change-password");
+		exit;
+
+	}
+
+	if (!isset($_POST['new_pass_confirm']) || $_POST['new_pass_confirm'] === '') {
+
+		User::setError("Confirme a nova senha.");
+		header("Location: /user-change-password");
+		exit;
+
+	}
+
+	if ($_POST['current_pass'] === $_POST['new_pass']) {
+
+		User::setError("A sua nova senha deve ser diferente da atual.");
+		header("Location: /user-change-password");
+		exit;		
+
+	}
+
+	//$user = User::getFromSession();
+
+	$user = new User();
+
+	$iduser = $_SESSION['User']['iduser'];
+
+	$user->get((int)$iduser);
+
+	if (!password_verify($_POST['current_pass'], $user->getdespassword())) {
+
+		User::setError("A senha está inválida.");
+		header("Location: /user-change-password");
+		exit;			
+
+	}
+
+	$user->setdespassword($_POST['new_pass']);
+
+	$user->updatePassword();
+
+	User::setSuccess("Senha alterada com sucesso!");
+
+	header('Location: /user/profile');
+	exit;
+
+});
+
+
 ?>

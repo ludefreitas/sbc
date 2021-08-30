@@ -8,6 +8,9 @@ use \Sbc\Model;
 class Endereco extends Model {
 
 	const SESSION_ERROR = "EnderecoError";
+	const SUCCESS = "EnderecoSucesss";	
+
+	/*
 
 	public static function getNumCep($nrcep)
 	{
@@ -28,6 +31,7 @@ class Endereco extends Model {
 		return $data;
 
 	}
+	*/
 
 	public function save()
 	{
@@ -59,6 +63,35 @@ class Endereco extends Model {
 
 	}
 
+	public function update($idperson)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("CALL sp_endereco_update(:idperson, :rua, :numero, :complemento, :bairro, :cidade, :estado, :cep, :telres, :telemer, :contato)", array(			
+			":idperson"=>$idperson,
+			":rua"=>$this->getrua(),
+			":numero"=>$this->getnumero(),
+			":complemento"=>$this->getcomplemento(),
+			":bairro"=>$this->getbairro(),
+			":cidade"=>$this->getcidade(),
+			":estado"=>$this->getestado(),
+			":cep"=>$this->getcep(),
+			":telres"=>$this->gettelres(),
+			":telemer"=>$this->gettelemer(),
+			":contato"=>$this->getcontato()
+		));		
+
+		if (count($results) > 0) {
+			$this->setData($results[0]);
+		}else{
+			Endereco::setMsgError('Não foi possivel atualizar endereço!');
+			header("Location: /user/endereco/update");
+			exit();			
+		}
+
+	}
+
 	public function seEnderecoExiste($idperson)	{
 
 		$sql = new Sql();
@@ -72,7 +105,7 @@ class Endereco extends Model {
 
 		if(count($results) === 0)
 		{
-			Endereco::setMsgError('Você precisa completar o cadastro abaixo, com os dados do endereço e telefones, para cadastrar pessoas e fazer inscrição.');
+			Endereco::setMsgError('Endereço não encontrado, você precisa completar o cadastro abaixo, com os dados do endereço e telefones, para cadastrar pessoas e fazer inscrição.');
 			header("Location: /endereco");
 			exit();			
 		}
@@ -80,6 +113,21 @@ class Endereco extends Model {
 			return $results;
 		
 	}
+
+	public function getEndereco($idperson)	{
+
+		$sql = new Sql();
+
+		$results = $sql->select(
+			"SELECT * FROM tb_endereco a
+			-- INNER JOIN tb_persons b using (idperson)
+			WHERE idperson = :idperson", [
+			':idperson'=>$idperson			
+		]);			
+
+			return $results[0];		
+	}
+
 
 	public static function setMsgError($msg)
 	{
@@ -103,6 +151,31 @@ class Endereco extends Model {
 	{
 
 		$_SESSION[Endereco::SESSION_ERROR] = NULL;
+
+	}
+
+	public static function setSuccess($msg)
+	{
+
+		$_SESSION[Endereco::SUCCESS] = $msg;
+
+	}
+
+	public static function getSuccess()
+	{
+
+		$msg = (isset($_SESSION[Endereco::SUCCESS]) && $_SESSION[Endereco::SUCCESS]) ? $_SESSION[Endereco::SUCCESS] : '';
+
+		Endereco::clearSuccess();
+
+		return $msg;
+
+	}
+
+	public static function clearSuccess()
+	{
+
+		$_SESSION[Endereco::SUCCESS] = NULL;
 
 	}
 

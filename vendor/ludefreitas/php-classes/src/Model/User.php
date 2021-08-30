@@ -191,7 +191,8 @@ class User extends Model {
 			WHERE isprof = 1;
 			ORDER BY b.desperson");
 	}
-		public function save()
+	
+	public function save()
 	{
 		$sql = new Sql();
 
@@ -247,6 +248,27 @@ class User extends Model {
 			":deslogin"=>$this->getdeslogin(),
 			":despassword"=>$this->getdespassword(),
 			//":despassword"=>User::getPasswordHash($this->getdespassword()),
+			":desemail"=>$this->getdesemail(),
+			":nrphone"=>$this->getnrphone(),
+			":inadmin"=>$this->getinadmin(),
+			":isprof"=>$this->getisprof(),
+			":statususer"=>$this->getstatususer()
+		));
+
+		$this->setData($results[0]);
+	}
+
+	public function updatePassword()
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("CALL sp_usersupdate_save(:iduser, :desperson, :apelidoperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin, :isprof, :statususer)", array(
+			":iduser"=>$this->getiduser(),
+			":desperson"=>$this->getdesperson(),
+			":apelidoperson"=>$this->getapelidoperson(),
+			":deslogin"=>$this->getdeslogin(),
+			//":despassword"=>$this->getdespassword(),
+			":despassword"=>User::getPasswordHash($this->getdespassword()),
 			":desemail"=>$this->getdesemail(),
 			":nrphone"=>$this->getnrphone(),
 			":inadmin"=>$this->getinadmin(),

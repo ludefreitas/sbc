@@ -13,7 +13,17 @@
                         <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
                         </div>
                         <?php } ?>
+
+                        <?php if( $profileMsg != '' ){ ?>
+                        <div class="alert alert-success">
+                        <?php echo htmlspecialchars( $profileMsg, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                        </div>
+                        <?php } ?>
+
                     </div>
+
+
+
 
             </div>
            </div>

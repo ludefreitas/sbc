@@ -318,6 +318,7 @@ $app->get("/login", function(){
 
 	$page->setTpl("login", [
 		'error'=>User::getError(),
+		'profileMsg'=>User::getSuccess(),
 		'errorRegister'=>User::getErrorRegister()
 		//'registerValues'=>(isset($_SESSION['registerValues'])) ? $_SESSION['registerValues'] : ['name'=>'', 'email'=>'', 'phone'=>'']
 	]);
