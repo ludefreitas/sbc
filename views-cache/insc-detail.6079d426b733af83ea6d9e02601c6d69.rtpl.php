@@ -81,10 +81,12 @@
                                 <td class="product-name"><?php echo htmlspecialchars( $insc["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                             </tr>
                             <?php if( $insc["idinscstatus"] == 1 ){ ?>
+                            <!--
                             <tr>
                                 <th class="product-name"> Aluno desistente? </th>
                                 <td class="product-name"> <a class="btn btn-danger" href="" role="button" onclick="return confirm('Deseja realmente informar como desistente o <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da inscrição <?php echo htmlspecialchars( $insc["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')">Desistente</a> </td>
                             </tr>
+                        -->
                             <?php } ?>
                              <tr>
                                 <th class="product-name"> Início previsto das aulas </th>

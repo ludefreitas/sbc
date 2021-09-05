@@ -74,7 +74,7 @@ function getUserIsProf()
 
     array_push($html, '<li class="nav-item">
                             <a href="/prof" class="nav-link">
-                              <span class="text-dark" style="font-weight: bold"> 
+                              <span class="text-white" style="font-weight: bold">
                                 Área do Professor
                               </span>
                             </a>
@@ -94,7 +94,7 @@ function getUserIsAdmin()
 
     array_push($html, '<li class="nav-item">
                             <a href="/admin" class="nav-link">
-                              <span class="text-dark" style="font-weight: bold"> 
+                              <span class="text-white" style="font-weight: bold">
                                 Área do Admin
                               </span>
                             </a>

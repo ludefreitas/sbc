@@ -334,9 +334,9 @@ class User extends Model {
              $code = openssl_encrypt($dataRecovery['idrecovery'], 'aes-256-cbc', User::SECRET, 0, $iv);
              $result = base64_encode($iv.$code);
              if ($inadmin === true) {
-                 $link = "http://www.cursosesportivossbc.com.br/admin/forgot/reset?code=$result";
+                 $link = "http://www.cursosesportivos.com.br/admin/forgot/reset?code=$result";
              } else {
-                 $link = "http://www.cursosesportivossbc.com.br/forgot/reset?code=$result";
+                 $link = "http://www.cursosesportivos.com.br/forgot/reset?code=$result";
              } 
              $mailer = new Mailer($data['desemail'], $data['desperson'], "Redefinir senha do Cursos Esportivos SBC", "forgot", array(
                  "name"=>$data['desperson'],

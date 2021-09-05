@@ -266,7 +266,7 @@ class Turma extends Model {
 				OR c.desperson LIKE :search
 				OR e.nomeespaco LIKE :search
 				OR f.apelidolocal LIKE :search 
-				OR g.desstatus LIKE :search
+				-- OR g.desstatus LIKE :search
 				OR h.horainicio LIKE :search
 				OR h.diasemana LIKE :search
 				OR h.periodo LIKE :search
@@ -805,7 +805,7 @@ class Turma extends Model {
 			OR d.descativ LIKE :search
 			OR e.nomeespaco LIKE :search
 			OR f.apelidolocal LIKE :search 
-			OR g.desstatus LIKE :search
+			-- OR g.desstatus LIKE :search
 			OR h.horainicio LIKE :search
 			OR h.periodo LIKE :search
 			OR i.descrfxetaria LIKE :search	

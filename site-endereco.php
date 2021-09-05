@@ -43,7 +43,7 @@ $app->post("/endereco", function() {
 
 	if (($_POST['cep']) < $cepMenor || ($_POST['cep']) > $cepMaior){
 
-		Endereco::setMsgError("Cep inválido ou não cadastrado");
+		Endereco::setMsgError("As inscrições nos cursos esportivos são exclusivas para os moradores de São B. do Campo. Ou o CEP que você digitou é inválido");
 		header("Location: /endereco");
 		exit;		
 	}
@@ -176,7 +176,7 @@ $app->post("/endereco/update", function() {
 
 	if (($_POST['cep']) < $cepMenor || ($_POST['cep']) > $cepMaior){
 
-		Endereco::setMsgError("Cep inválido ou não cadastrado");
+		Endereco::setMsgError("As inscrições nos cursos esportivos são exclusivas para os moradores de São B. do Campo. Ou o CEP que você digitou é inválido");
 		header("Location: /user/endereco/update");
 		exit;		
 	}

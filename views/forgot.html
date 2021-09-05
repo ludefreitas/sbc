@@ -34,7 +34,7 @@
   <div class="lockscreen-item">
 
     <!-- lockscreen credentials (contains the form) -->
-    <form  action="/professor/forgot" method="post">
+    <form  action="/admin/forgot" method="post">
       <div class="input-group">
         <input type="email" class="form-control" placeholder="Digite o e-mail" name="email">
 

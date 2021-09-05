@@ -29,7 +29,7 @@ $app->post("/cart", function() {
 	User::verifyLogin(false);
 
 	if(Cart::cartIsEmpty((int)$_SESSION[Cart::SESSION]['idcart']) === false){
-		Cart::setMsgError("Selecione uma turma! ");
+		Cart::setMsgError("Não há inscrições a confirmar! selecione uma turma! ");
 		header("Location: /cart");
 		exit();
 	}	
@@ -68,7 +68,7 @@ $app->post("/cart", function() {
 
 		if(($idade < $initidade) || ($idade > $fimidade)){		
 
-			Cart::setMsgError('Esta turma é exclusiva para pessoas que tem idade entre '.$initidade.' e '.$fimidade.' anos! Remova a turma atual e escolha outra turma compatível com a idade do(a) '.$nomepess.'.');
+			Cart::setMsgError('Esta turma é exclusiva para pessoas que tenham idade entre '.$initidade.' e '.$fimidade.' anos! Remova a turma atual e escolha outra turma compatível com a idade do(a) '.$nomepess.'.');
 			header("Location: /cart");
 			exit();
 		}	

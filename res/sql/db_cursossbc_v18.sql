@@ -1,5 +1,5 @@
-CREATE DATABASE  IF NOT EXISTS `db_cursossbc` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
-USE `db_cursossbc`;
+CREATE DATABASE  IF NOT EXISTS `curs0155_dbcursossbc` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+USE `curs0155_dbcursossbc`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: db_cursossbc
@@ -1012,7 +1012,7 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_atividade_save`(
+CREATE PROCEDURE `sp_atividade_save`(
 pidativ INT, 
 pnomeativ VARCHAR(64),
 pdescativ VARCHAR(128),
@@ -1064,7 +1064,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_cart_save`(
+CREATE PROCEDURE `sp_cart_save`(
 pidcart INT,
 pdessessionid VARCHAR(64),
 pidpess INT
@@ -1107,7 +1107,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_endereco_save`(
+CREATE PROCEDURE `sp_endereco_save`(
 pidender INT, 
 pidperson INT,
 prua VARCHAR(128),
@@ -1167,7 +1167,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_endereco_update`(
+CREATE PROCEDURE `sp_endereco_update`(
 pidperson INT,
 prua VARCHAR(128),
 pnumero VARCHAR(16),
@@ -1213,7 +1213,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_espaco_save`(
+CREATE PROCEDURE `sp_espaco_save`(
 pidespaco INT, 
 pidlocal INT, 
 pnomeespaco VARCHAR(64), 
@@ -1261,7 +1261,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_faixaetaria_save`(
+CREATE PROCEDURE `sp_faixaetaria_save`(
 pidfxetaria INT, 
 pdescrfxetaria VARCHAR(32),
 pinitidade INT,
@@ -1304,7 +1304,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_horario_save`(
+CREATE PROCEDURE `sp_horario_save`(
 pidhorario INT, 
 phorainicio VARCHAR(8),
 phoratermino VARCHAR(8),
@@ -1349,7 +1349,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insc_save`(
+CREATE PROCEDURE `sp_insc_save`(
 pidinsc INT,
 pidinscstatus INT,
 pidcart INT,
@@ -1404,7 +1404,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insc_update_numordem`(
+CREATE PROCEDURE `sp_insc_update_numordem`(
 pnumordem INT,
 pnumsorte INT
 )
@@ -1433,7 +1433,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insc_update_numsorte`(
+CREATE PROCEDURE `sp_insc_update_numsorte`(
 pidinsc INT,
 pidturma INT,
 pidtemporada INT
@@ -1471,7 +1471,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_local_save`(
+CREATE PROCEDURE `sp_local_save`(
 pidlocal INT, 
 papelidolocal VARCHAR(32),
 pnomelocal VARCHAR(64),
@@ -1528,7 +1528,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_modalidade_save`(
+CREATE PROCEDURE `sp_modalidade_save`(
 pidmodal INT, 
 pdescmodal VARCHAR(64)
 )
@@ -1567,7 +1567,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_pessoa_save`(
+CREATE PROCEDURE `sp_pessoa_save`(
 pidpess INT, 
 piduser INT,
 pnomepess VARCHAR(64),
@@ -1635,7 +1635,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_pessoa_update`(
+CREATE PROCEDURE `sp_pessoa_update`(
 pidpess INT, 
 piduser INT,
 pnomepess VARCHAR(64),
@@ -1703,7 +1703,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_temporada_save`(
+CREATE PROCEDURE `sp_temporada_save`(
 pidtemporada INT,
 pdesctemporada VARCHAR(32),
 pidstatustemporada INT, 
@@ -1753,7 +1753,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_turmatemporada_update_nummatriculados_mais`(
+CREATE PROCEDURE `sp_turmatemporada_update_nummatriculados_mais`(
 pidturma INT,
 pidtemporada INT
 )
@@ -1778,7 +1778,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_turmatemporada_update_nummatriculados_menos`(
+CREATE PROCEDURE `sp_turmatemporada_update_nummatriculados_menos`(
 pidturma INT,
 pidtemporada INT
 )
@@ -1803,7 +1803,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_turma_save`(
+CREATE PROCEDURE `sp_turma_save`(
 pidturma INT, 
 pidativ INT,
 pidmodal INT, 
@@ -1855,7 +1855,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_userspasswordsrecoveries_create`(
+CREATE PROCEDURE `sp_userspasswordsrecoveries_create`(
 piduser INT,
 pdesip VARCHAR(45)
 )
@@ -1883,7 +1883,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_usersupdate_save`(
+CREATE PROCEDURE `sp_usersupdate_save`(
 piduser INT,
 pdesperson VARCHAR(64), 
 papelidoperson VARCHAR(64),
@@ -1938,7 +1938,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_users_save`(
+CREATE PROCEDURE `sp_users_save`(
 pdesperson VARCHAR(64), 
 papelidoperson VARCHAR(64),
 pdeslogin VARCHAR(64), 

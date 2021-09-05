@@ -6,7 +6,7 @@ use Rain\Tpl;
 
 class Mailer {
 	
-	const USERNAME = "lulufreitas008@gmail.com";
+	const USERNAME = "contato@cursosesportivossbc.com.br";
 	const PASSWORD = "";
 	const NAME_FROM = "Cursos Esportivos SBC";
 
@@ -36,7 +36,6 @@ class Mailer {
 		//Tell PHPMailer to use SMTP
 		$this->mail->isSMTP();
 
-
 		$this->mail->IsHTML(true);
 
 		$this->mail->CharSet = 	'utf-8';
@@ -51,15 +50,31 @@ class Mailer {
 		$this->mail->Debugoutput = 'html';
 
 		//Set the hostname of the mail server
-		$this->mail->Host = 'smtp.gmail.com';
+
+		/* Antigo */
+	//	$this->mail->Host = 'smtp.gmail.com';
+
+		/* Novo */
+		$this->mail->Host = 'smtp.titan.email';
+
 		// use
 		// $this->mail->Host = gethostbyname('smtp.gmail.com');
 		// if your network does not support SMTP over IPv6
 
 		//Set the SMTP port number - 587 for authenticated TLS, a.k.a. RFC4409 SMTP submission
+
+		/* Antigo */
+        //$this->mail->Port = 587;
+
+		/* Novo */
 		$this->mail->Port = 587;
 
 		//Set the encryption system to use - ssl (deprecated) or tls
+
+		/* Antigo */
+		//$this->mail->SMTPSecure = 'tls';
+
+		/* Novo */
 		$this->mail->SMTPSecure = 'tls';
 
 		//Whether to use SMTP authentication

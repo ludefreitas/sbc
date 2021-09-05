@@ -73,7 +73,7 @@ $app->get("/admin/turma/create", function() {
 	$horario = Horario::listAll();
 	$atividade = Atividade::listAll();
 	$modalidade = Modalidade::listAll();
-	$turmastatus = TurmaStatus::listAll();
+	//$turmastatus = TurmaStatus::listAll();
 
 	$page = new PageAdmin();
 
@@ -84,7 +84,7 @@ $app->get("/admin/turma/create", function() {
 		'horario'=>$horario,		
 		'atividade'=>$atividade,
 		'modalidade'=>$modalidade,
-		'turmastatus'=>$turmastatus,
+		//'turmastatus'=>$turmastatus,
 		'error'=>Turma::getMsgError(),
 		'createTurmaValues'=>(isset($_SESSION['createTurmaValues'])) ? $_SESSION['createTurmaValues'] : ['descturma'=>'', 'idmodal'=>'', 'idhorario'=>'', 'idativ'=>'', 'idespaco'=>'', 'idturmastatus'=>'', 'vagas'=>'']
 	]);
@@ -127,12 +127,13 @@ $app->post("/admin/turma/create", function() {
 		header("Location: /admin/turma/create");
 		exit;		
 	}
-
+	/*
 	if (!isset($_POST['idturmastatus']) || $_POST['idturmastatus'] == '') {
 		Turma::setMsgError("Selecione o status.");
 		header("Location: /admin/turma/create");
 		exit;		
 	}
+	*/
 
 	if (!isset($_POST['vagas']) || $_POST['vagas'] == '') {
 		Turma::setMsgError("Informe o número de vagas.");
@@ -178,7 +179,7 @@ $app->get("/admin/turma/:idturma", function($idturma) {
 
 	$page->setTpl("turma-update", array(
 		'turma'=>$turma->getValues(),
-		'turmastatus'=>TurmaStatus::listAll(),
+		//'turmastatus'=>TurmaStatus::listAll(),
 		'modalidade'=>Modalidade::listAll(),
 		'atividade'=>Atividade::listAll(),
 		'modalidade'=>Modalidade::listAll(),
@@ -226,12 +227,13 @@ $app->post("/admin/turma/:idturma", function($idturma) {
 		header("Location: /admin/turma/".$idturma."");
 		exit;		
 	}
-
+	/*
 	if (!isset($_POST['idturmastatus']) || $_POST['idturmastatus'] == '') {
 		Turma::setMsgError("Selecione o status.");
 		header("Location: /admin/turma/".$idturma."");
 		exit;		
 	}
+	*/
 
 	if (!isset($_POST['vagas']) || $_POST['vagas'] == '') {
 		Turma::setMsgError("Informe o número de vagas.");

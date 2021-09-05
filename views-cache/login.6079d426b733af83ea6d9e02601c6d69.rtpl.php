@@ -27,7 +27,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="/res/admin/index2.html"><b>Cursos</b> Esportivos<b> SBC</b></a>
+    <a href="/"><b>Cursos</b> Esportivos<b> SBC</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">

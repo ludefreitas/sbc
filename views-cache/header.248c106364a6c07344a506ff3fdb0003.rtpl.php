@@ -16,12 +16,13 @@
 
     <link rel="stylesheet" type="text/css" href="/../res/site/css/style.css">
 
-    <title>Cursos Esportivos SBC</title>
-    <link rel="icon" 
-      type="image/jpg" 
-      href="/../res/site/img/corpoacao.png" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+
+    <title>C Esportivos SBC</title>
+    <link rel="icon" type="image/jpg" href="/../res/site/img/corpoacao.png" />
 </head>
-  </head>
+  
   <body>
 
     <header>
@@ -50,7 +51,7 @@
                         <div class="nav-item">
                             <a class="nav-link" mr-4 href="/locais" >
                               <span class="text-white" style="font-weight: bold;">
-                                Centros Esportivos
+                                 Crecs
                               </span>
                             </a>
                         </div>
@@ -60,7 +61,50 @@
                                 Modalidades
                               </span>
                             </a>
-                        </div>                        
+                        </div> 
+                        <?php if( checkLogin(false) ){ ?>
+                        <div class="nav-item">
+                            <a href="/user/profile" class="nav-link">
+                              <span class="text-white" style="font-weight: bold">
+                               <?php echo getUserName(); ?>
+                              </span>
+                            </a>
+                        </div>
+                        <?php echo getUserIsProf(); ?>
+                        <?php echo getUserIsAdmin(); ?>
+                        <div class="nav-item">
+                            <a href="/cart" class="nav-link">
+                              <span class="text-white" style="font-weight: bold">
+                                Inscrições a confirmar  
+                              </span>
+                            </a> 
+                        </div>                    
+
+
+                        <div class="nav-item" >
+                            <a style="" class="nav-link" href="/logout" >
+                              <span class="text-white" style="font-weight: bold">
+                                 Sair
+                              </span>
+                            </a>
+                        </div> 
+
+                        <?php }else{ ?>
+                        <div class="nav-item" >
+                            <a style="" class="nav-link" href="/login" >
+                              <span class="text-white" style="font-weight: bold">
+                                 Entrar 
+                              </span>
+                            </a>
+                        </div> 
+                        <div class="nav-item" >
+                            <a style="" class="nav-link" href="/user-create" >
+                              <span class="text-white" style="font-weight: bold">
+                                 Cadastre-se 
+                              </span>
+                            </a>
+                        </div> 
+                        <?php } ?>                                              
                     </div>                    
                 </div>
 
@@ -74,7 +118,7 @@
           <div class="container">
             <div class="row">
 
-                <div class="col-md-5" style="text-align: center; margin: 10px 0px 10px 0px;">
+                <div class="col-md-8" style="text-align: center; margin: 10px 0px 10px 0px;">
                 <a href="/" class="">
                   <img src="/../res/site/img/horatreino.png" title="HoraTreino" height="50" width="120">
                 </a> 
@@ -87,102 +131,7 @@
               </div>
                          
 
-               <div class="col-md-7 text-dark" style="text-align: center; margin: 40px 0px 0px 0px;  ">
-
-                <nav class="navbar navbar-expand-sm navbar-dark " style="background-color: #fff"> 
-                <div class="container">
-                <!-- Logo -->
-                <!--<a href="/" class="navbar-brand">
-                    <img src="res/site/icon/ico-home.png" title="CursosEsportivosSBC" width="30">
-                </a>-->
-                <!-- botão para expandir itens em navegação em tela pequena -->
-                <button class="navbar-toggler" style="margin: 0 auto; background-color: #cc5d1e;" data-toggle="collapse" data-target="#nav-secundario" aria-expanded="false">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="nav-secundario">
-                    <div class="navbar-nav ml-auto" style="text-align: center;">                        
-                        
-                        <?php if( checkLogin(false) ){ ?>
-                        <div class="nav-item">
-                            <a href="/user/profile" class="nav-link">
-                              <i class="fa fa-user"></i>
-                              <span class="text-dark" style="font-weight: bold">
-                               <?php echo getUserName(); ?>
-                              </span>
-                            </a>
-                        </div>
-                        <?php echo getUserIsProf(); ?>
-                        <?php echo getUserIsAdmin(); ?>
-                        <div class="nav-item">
-                            <a href="/cart" class="nav-link">
-                              <span class="text-dark" style="font-weight: bold; text-align: center;"> 
-                                Inscrições a confirmar  
-                              </span>
-                            </a> 
-                        </div>  
-                        
-                        <div class="nav-item">
-                            <a href="/logout" class="nav-link">
-                              <i class="fa fa-close"></i>
-                              <span class="text-dark" style="font-weight: bold; text-align: center;">
-                                Sair
-                              </span>
-                            </a>
-                        </div>
-
-                              
-                        <?php }else{ ?>
-                        <div class="nav-item">
-                            <a class="nav-link" href="/">
-                              <span class="text-dark" style="font-weight: bold; text-align: center;">
-                                Início
-                              </span>
-                            </a>
-                        </div>
-                        <div class="nav-item">
-                            <a class="nav-link" mr-4 href="/locais">
-                              <span class="text-dark" style="font-weight: bold; text-align: center;">
-                                Crecs
-                              </span>
-                            </a>
-                        </div>
-                        <div class="nav-item">
-                            <a style="" class="nav-link" href="/modalidades">
-                              <span class="text-dark" style="font-weight: bold; text-align: center;">
-                                Esportes
-                              </span>
-                            </a>
-                        </div>
-                        <div class="nav-item">
-                            <a class="btn btn-outline-light" href="/login" class="nav-link">
-                              <i class="fa fa-lock"></i>
-                               <span class="text-dark" style="font-weight: bold; text-align: center;">
-                                 Entrar
-                               </span>
-                            </a>
-                        </div>          
-                        <?php } ?>                         
-                    </div>                    
-                </div>
-
-            </div>            
-        </nav> 
-
-              </div>
-
-            </div>
-          </div>    
-
-          <div class="container" id="nav3">
-            <div class="row">
-
-              <div class="col-md-6" col-sm-1 style="text-align: center; margin: 50px 0px 15px 0px;">
-                  <span style="font-size: 30px; ">Cursos Esportivos SBC</span>
-
-              </div>
-
-              <div class="col-md-6" style="text-align: center; margin: 50px 0px 15px 0px;">
+               <div class="col-md-4" style="text-align: center; margin: 50px 0px 15px 0px;">
                  <form action="/">
                 <input type="text" name="search" placeholder="Pesquisa" style="text-align-last: center;">
                 <button type="submit" class="btn btn-default btn-sm">
@@ -190,19 +139,11 @@
                 </button>
                 </form>                                              
               </div>
-              <!--
-              <div class="col-md-4" style="text-align: center; margin: 50px 0px 15px 0;">
 
-                            <a class="" style="padding: 10px;" href="#" >Esportes</a>/
-                            <a class="" style="padding: 10px;" href="#">Início</a>/
-                            <a class="" style="padding: 10px;" mr-4 href="#">Cursos Esportivos</a>
-
-              </div>
-            -->
-              
             </div>
-            <hr>
-          </div> 
+          </div>    
+
+         
           <hr>
 
          

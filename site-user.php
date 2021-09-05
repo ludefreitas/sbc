@@ -35,6 +35,15 @@ $app->post("/register", function(){
 		header("Location: /user-create");
 		exit;
 	}
+	$_POST['phone'] = preg_replace('/[^\p{L}\p{N}\s]/', '', $_POST['phone'] );
+	$_POST['phone'] = str_replace(' ', '',$_POST['phone']);
+
+	if(strlen($_POST['phone']) !== 10 && strlen($_POST['phone']) !== 11){
+
+		User::setErrorRegister("Número de telefone inválido! Digite o número do tefefone celular com DDD.");
+		header("Location: /user-create");
+		exit;
+	}
 
 	if (!isset($_POST['email']) || $_POST['email'] == '') {
 
