@@ -272,19 +272,6 @@ desired effect
           </ul>
         </li> 
         <li class="treeview">
-          <a href="/admin/temporada"><i class="fa fa-link"></i> <span>Temporadas</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-             <li><a href="/admin/temporada"><i class="fa fa-link"></i>Todas Temporadas</a></li>      
-            <?php require $this->checkTemplate("temporada-menu");?>
-
-          </ul>
-        </li>
-
-        <li class="treeview">
           <a href="/admin/insc"><i class="fa fa-link"></i> <span>Turmas por temporada</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
@@ -294,9 +281,31 @@ desired effect
             <?php require $this->checkTemplate("turma-temporada-menu");?>
 
           </ul>
-        </li>  
+        </li>
 
-        
+        <li class="treeview">
+          <a href="/admin/insc"><i class="fa fa-link"></i> <span>Professor por temporada</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <?php require $this->checkTemplate("professor-temporada-menu");?>
+
+          </ul>
+        </li> 
+
+        <li class="treeview">
+          <a href="/admin/insc"><i class="fa fa-link"></i> <span>Sorteio por temporada</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <?php require $this->checkTemplate("sorteio-temporada-menu");?>
+
+          </ul>
+        </li>                       
 
         <li class="treeview">
           <a href="/admin/insc"><i class="fa fa-link"></i> <span>Inscrições</span>
@@ -309,6 +318,9 @@ desired effect
 
           </ul>
         </li> 
+        <li>
+          <a href="/admin/temporada"><i class="fa fa-link"></i><span>Temporadas</span></a>
+        </li>     
         <li>
           <a href="/admin/turma"><i class="fa fa-link"></i> <span>Turmas</span></a>
         </li>                        

@@ -18,7 +18,7 @@
         <div class="row alert alert-primary">
             <div class="col-md-12" >
                 <span style="text-align: center;">
-                <strong><?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </strong>
+                <strong><?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </strong>&nbsp; <strong> <?php if( $value1["pcd"] == 1 ){ ?>(PCD)<?php } ?></strong>
                 <div class="row alert alert-primary"> 
                 &nbsp;<strong><?php echo calcularIdade($value1["dtnasc"]); ?>&nbsp; </strong>anos 
                 &nbsp;<strong>Data Nasc:</strong><?php echo formatDate($value1["dtnasc"]); ?>
@@ -27,7 +27,7 @@
                 &nbsp;<strong>RG: </strong><?php echo htmlspecialchars( $value1["numrg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                 &nbsp;<strong>SUS: </strong><?php echo htmlspecialchars( $value1["numsus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>   
                 &nbsp;<strong>Vuln. Social: </strong> <?php if( $value1["vulnsocial"] == 1 ){ ?>Sim<?php }else{ ?>Não<?php } ?>
-                <?php if( $value1["vulnsocial"] == 1 ){ ?>
+                <?php if( $value1["vulnsocial"] == 1 ){ ?>                
                 &nbsp;<strong>CadUnico: </strong><?php echo htmlspecialchars( $value1["cadunico"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                 <?php } ?>
 
@@ -41,19 +41,19 @@
                 &nbsp;<strong>CPF do pai: </strong><?php echo htmlspecialchars( $value1["cpfpai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                 <?php } ?>
                 
-                &nbsp;<strong>Incluido: </strong><?php echo htmlspecialchars( $value1["dtinclusao"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-                &nbsp;<strong>Alterado: </strong><?php echo htmlspecialchars( $value1["dtalteracao"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                &nbsp;<strong>Incluido: </strong><?php echo formatDateHour($value1["dtinclusao"]); ?>
+                &nbsp;<strong>Alterado: </strong><?php echo formatDateHour($value1["dtalteracao"]); ?>
                 </span>
                 </div>
                 <div class="row alert alert-primary">
-                    <div class="col-md-6 alert-success" style="padding: 5px; text-align-last: center;">
+                    <div class="col-md-6 btn-primary" style="padding: 5px; text-align-last: center;">
                         <form action="post" name="idpess">
-                            <a class="btn btn-success" href="/user/pessoa/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" role="button">EDITAR</a>
+                            <a class="btn btn-primary" href="/user/pessoa/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" role="button">EDITAR</a>
                         </form>
                     </div>
-                    <div class="col-md-6 alert-success" style="padding: 5px; text-align-last: center;">
+                    <div class="col-md-6 btn-danger" style="padding: 5px; text-align-last: center;">
                         <form action="post" name="idpess">
-                            <a class="btn btn-danger"  href="/user/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/status" role="button">EXCLUIR</a>
+                            <a class="btn btn-danger"  href="/user/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/status" role="button" onclick="return confirm('DESEJA realmente EXCLUIR o cadastro do(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')">EXCLUIR</a>
                         </form>
                     </div>
                 </div> 

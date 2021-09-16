@@ -1,10 +1,15 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?><li class="treeview">
-								   		<a href="/admin/insc/53">
+								   		<a href="/admin/insc/85">
+								   			<i class="fa fa-link"></i> 
+								   			Inscrições - 2017
+								   		</a>								   		
+									</li><li class="treeview">
+								   		<a href="/admin/insc/83">
 								   			<i class="fa fa-link"></i> 
 								   			Inscrições - 2019
 								   		</a>								   		
 									</li><li class="treeview">
-								   		<a href="/admin/insc/57">
+								   		<a href="/admin/insc/84">
 								   			<i class="fa fa-link"></i> 
 								   			Inscrições - 2020
 								   		</a>								   		

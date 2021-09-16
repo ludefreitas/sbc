@@ -34,13 +34,13 @@ class Insc extends Model {
 
 	}
 
-	public static function inscricaoEmail($idinsc, $numsorte, $idpess, $nomepess, $email, $desperson, $desctemporada){
-
+	public static function inscricaoEmail($idinsc, $numsorte, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma){
+	
 		//$email = "lulufreitas08@hotmail.com";
 		//$user = "Luciano Freitas";
 		$assunto = "Inscrição Cursos Esportivos ".$desctemporada."";
 		$tplName = "comprovante-insc";
-		$link = "http://www.cursosesportivossbc.com.br/profile/insc/".$idinsc."/".$idpess."";
+		$link = "http://www.cursosesportivossbc.com.br";
 
 		/*
 		$mailer = new Mailer($data['desemail'], $data['desperson'], "Redefinir senha do Cursos Esportivos SBC", "forgot", array(
@@ -54,7 +54,8 @@ class Insc extends Model {
                  "link"=>$link,
                  "email"=>$email,
                  "idinsc"=>$idinsc,
-                 "numsorte"=>$numsorte
+                 "numsorte"=>$numsorte,
+                 "turma"=>$turma->getValues()                
         )); 
              
         $emailEnviado = $mailer->send();        
@@ -62,10 +63,12 @@ class Insc extends Model {
         if (!$emailEnviado)
      	{
 
-        	Insc::setError("Não foi possivel enviar email, no entanto, a incrição abaixo foi efetuada!");
+        	Insc::setError("Não foi possivel enviar email, no entanto, a incrição abaixo foi efetuada!");        	
         	header("Location: /profile/insc/".$idinsc."/".$idpess."");
         	exit();			
 
+     	}else{
+     		Insc::setSuccess("Um email com os dados desta inscrição foi enviado a você, verifique sua caixa de email cadastrado. Guarde-o com você, se necessário apresente-o quando solicitado");
      	}
 	}	
 

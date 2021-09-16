@@ -18,7 +18,7 @@
         <div class="row alert alert-primary">
             <div class="col-md-12" >
                 <span style="text-align: center;">
-                <strong>{$value.idpess} - {$value.nomepess} </strong>
+                <strong>{$value.nomepess} </strong>&nbsp; <strong> {if="$value.pcd == 1"}(PCD){/if}</strong>
                 <div class="row alert alert-primary"> 
                 &nbsp;<strong>{function="calcularIdade($value.dtnasc)"}&nbsp; </strong>anos 
                 &nbsp;<strong>Data Nasc:</strong>{function="formatDate($value.dtnasc)"}
@@ -27,7 +27,7 @@
                 &nbsp;<strong>RG: </strong>{$value.numrg}
                 &nbsp;<strong>SUS: </strong>{$value.numsus}   
                 &nbsp;<strong>Vuln. Social: </strong> {if="$value.vulnsocial == 1"}Sim{else}Não{/if}
-                {if="$value.vulnsocial == 1"}
+                {if="$value.vulnsocial == 1"}                
                 &nbsp;<strong>CadUnico: </strong>{$value.cadunico}
                 {/if}
 
@@ -41,19 +41,19 @@
                 &nbsp;<strong>CPF do pai: </strong>{$value.cpfpai}
                 {/if}
                 
-                &nbsp;<strong>Incluido: </strong>{$value.dtinclusao}
-                &nbsp;<strong>Alterado: </strong>{$value.dtalteracao}
+                &nbsp;<strong>Incluido: </strong>{function="formatDateHour($value.dtinclusao)"}
+                &nbsp;<strong>Alterado: </strong>{function="formatDateHour($value.dtalteracao)"}
                 </span>
                 </div>
                 <div class="row alert alert-primary">
-                    <div class="col-md-6 alert-success" style="padding: 5px; text-align-last: center;">
+                    <div class="col-md-6 btn-primary" style="padding: 5px; text-align-last: center;">
                         <form action="post" name="idpess">
-                            <a class="btn btn-success" href="/user/pessoa/{$value.idpess}" role="button">EDITAR</a>
+                            <a class="btn btn-primary" href="/user/pessoa/{$value.idpess}" role="button">EDITAR</a>
                         </form>
                     </div>
-                    <div class="col-md-6 alert-success" style="padding: 5px; text-align-last: center;">
+                    <div class="col-md-6 btn-danger" style="padding: 5px; text-align-last: center;">
                         <form action="post" name="idpess">
-                            <a class="btn btn-danger"  href="/user/{$value.idpess}/status" role="button">EXCLUIR</a>
+                            <a class="btn btn-danger"  href="/user/{$value.idpess}/status" role="button" onclick="return confirm('DESEJA realmente EXCLUIR o cadastro do(a) {$value.nomepess}?')">EXCLUIR</a>
                         </form>
                     </div>
                 </div> 

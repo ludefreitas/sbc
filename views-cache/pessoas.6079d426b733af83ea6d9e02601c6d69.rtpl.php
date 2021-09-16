@@ -84,9 +84,13 @@
                  Nome do responsável
                 </h5>
               </div>
-              <div class="col-md-2" >
+              <div class="col-md-1" >
                 <h5 style="font-weight: bold; text-align: left;">
                   Status
+                </h5>
+              </div>
+              <div class="col-md-1" >
+                <h5 style="font-weight: bold; text-align: left;">
                 </h5>
               </div>
             </div>           
@@ -116,9 +120,14 @@
                   <td><?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 </h5>
               </div>
-              <div class="col-md-2" >
+              <div class="col-md-1" >
                 <h5 style="font-weight: bold; text-align: left;">
                   <?php if( $value1["statuspessoa"] == 1 ){ ?>Ativo<?php }else{ ?>Inativo<?php } ?>
+                </h5>
+              </div>
+              <div class="col-md-1" >
+                <h5 style="font-weight: bold; text-align: left;">
+                  <?php if( $value1["pcd"] == 1 ){ ?>PCD<?php } ?>
                 </h5>
               </div>
               <div class="col-md-2" >

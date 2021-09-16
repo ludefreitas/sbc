@@ -1,12 +1,16 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
  <div class="container"> <!-- container 1 -->
             <div class="row"> <!-- row 2 -->
+
               <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
 
 <div class="container" style="margin: 0px px 0px 0px; ">
-  <div class="row" style="margin: -5px -20px 0px -5px; ">
-
-   
+<?php if( $profileMsg != '' ){ ?>
+    <div class="alert alert-success">
+      <?php echo htmlspecialchars( $profileMsg, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+    </div>
+  <?php } ?>
+  <div class="row" style="margin: -5px -20px 0px -5px; ">   
   <div class="col-md-4" style="text-align-last: left; background-color: #0f71b3; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
     <a href="/locais">                          
       <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 14px; font-style: normal; margin: 10px 5px 10px 0px; ">                                               
@@ -38,7 +42,6 @@
       <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
     </div>
   <?php } ?>
-
   </div>
 
 
@@ -59,7 +62,7 @@
           <a href="/turma/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="text-decoration: none">         
           <h5 style="color: #000000"> 
             <span style="font-weight: bold;">
-              <?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> 
+              <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> 
             </span><br>
               Local da aula: <?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
               <?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?> das <?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - 

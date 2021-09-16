@@ -1,4 +1,17 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
+<script> 
+$(document).ready(function(){
+
+    $('#link').on('change', function () {
+        var url = $(this).val(); 
+        if (url === 'pessoa-create') { 
+            window.open(url, '_self');
+        }
+        return false;
+    });
+});
+</script>
+
  <div class="container"> <!-- container 1 -->
             <div class="row"> <!-- row 2 -->
               <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
@@ -49,13 +62,15 @@
                <input type="text" name="idturma" hidden="" value="<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                <input type="text" name="idtemporada" hidden="" value="<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">  
                <input type="text" name="initidade" hidden="" value="<?php echo htmlspecialchars( $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-               <input type="text" name="fimidade" hidden="" value="<?php echo htmlspecialchars( $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">            
+               <input type="text" name="fimidade" hidden="" value="<?php echo htmlspecialchars( $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">  
+               <input type="text" name="idlocal" hidden="" value="<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">                      
+               <input type="text" name="apelidolocal" hidden="" value="<?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">                      
             </div>
             <div class="col-md-6">
                 <div class="">
                     <div class="">
 
-                        <h3>Selecione a Pessoa</h3>
+                        <h5>SELECIONE A PESSOA</h5>
                     
                         <div class="">
 
@@ -73,17 +88,26 @@
                             <?php } ?>
                             <!-- form start -->                           
                             <div class="box-body">                                                               
-                                <select class="form-control" name="idpess">
-                                    <option selected="selected" value="idpess=0">
+                                <select class="form-control" name="idpess" id="link"  onchange="changeFunc(value);">
+                                    <option selected="selected" value="0">
                                         Selecione uma pessoa
                                     </option>
-                                    <?php $counter2=-1;  if( isset($pessoa) && ( is_array($pessoa) || $pessoa instanceof Traversable ) && sizeof($pessoa) ) foreach( $pessoa as $key2 => $value2 ){ $counter2++; ?>
-                                    <option <?php if( $value2["iduser"] === $user["iduser"] ){ ?><?php } ?> value="<?php echo htmlspecialchars( $value2["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value2["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value2["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>; <?php echo calcularIdade($value2["dtnasc"]); ?> anos; <?php echo htmlspecialchars( $value2["sexo"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+
+                                    <?php if( $pessoa ){ ?>
+                                    <option value="pessoa-create">
+                                        CADASTRAR UMA NOVA PESSOA
+                                    </option>
+                                    <?php } ?>                                    
+                                    <?php $counter2=-1;  if( isset($pessoa) && ( is_array($pessoa) || $pessoa instanceof Traversable ) && sizeof($pessoa) ) foreach( $pessoa as $key2 => $value2 ){ $counter2++; ?>   
+                                    <option <?php if( $value2["iduser"] === $user["iduser"] ){ ?><?php } ?> value="<?php echo htmlspecialchars( $value2["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value2["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>; <?php echo calcularIdade($value2["dtnasc"]); ?> anos
                                     </option>
 
                                     <?php }else{ ?>
                                     <option value="0">
                                         Não há pessoas cadastradas
+                                    </option>
+                                    <option value="pessoa-create">
+                                        CADASTRAR UMA NOVA PESSOA
                                     </option>
                                     <?php } ?>
                                 </select>
@@ -97,7 +121,7 @@
                        <!-- </form> -->
 
                         <div>&nbsp;</div>
-                        <a href="/pessoa-create">Cadastrar uma nova pessoa</a>
+                        <div>&nbsp;</div>
                         <div>&nbsp;</div>
                         <input type="submit" value="Confirmar Inscrição" id="pessoa" class="button alt" formaction="/cart" formmethod="post">
                     </div>

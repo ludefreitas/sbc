@@ -96,6 +96,7 @@ $app->get('/', function() {
 	$page->setTpl("index", array(
 		'turma'=>Turma::checkList($pagination['data']),
 		"search"=>$search,
+		'profileMsg'=>User::getSuccess(),
 		//"pages"=>$pages,
 		'error'=>Cart::getMsgError()
 	));
@@ -212,7 +213,7 @@ $app->post("/checkout", function(){
 		exit();
 	}
 
-	$laudo = isset($_POST['laudo']) ? (int)$_POST['laudo'] : 1;
+	$laudo = isset($_POST['laudo']) ? (int)$_POST['laudo'] : 0;
 
 	$cartsturmas = CartsTurmas::getCartsTurmasFromId($idcart);
 
@@ -267,14 +268,16 @@ $app->post("/checkout", function(){
 
 		$idinsc = $insc->getidinsc();	
 
-		$numsorte = $insc->getnumsorte();	
-		
+		$numsorte = $insc->getnumsorte();
+
+		$turma->get((int)$idturma);
+
 		$cart->removeTurma($turma, true);
 		Cart::removeFromSession();
 	    session_regenerate_id();
 
-	    $insc->inscricaoEmail($idinsc, $numsorte, $idpess, $nomepess, $email, $desperson, $desctemporada);
-		
+	    $insc->inscricaoEmail($idinsc, $numsorte, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma);
+	   		
 		header("Location: /profile/insc/".$insc->getidinsc()."/".$idpess."");
 		exit;	
 });
@@ -353,6 +356,9 @@ $app->get("/logout", function(){
 	exit;
 });
 
+
+/*
+
 $app->get("/forgot", function() {
 
 
@@ -411,6 +417,7 @@ $app->post("/forgot/reset", function(){
 
 	$page->setTpl("forgot-reset-success");
 });
+*/
 
 $app->get("/comprovante", function() {
 

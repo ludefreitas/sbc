@@ -312,7 +312,11 @@ class User extends Model {
      if (count($results) === 0)
      {
 
-         throw new \Exception("Não foi possível recuperar a senha.");
+         //throw new \Exception("Não foi possível recuperar a senha.");
+
+         User::setError("Não foi possível recuperar a senha!! Usuário ou email não cadastrado!");
+		 header("Location: /login");
+			exit();			
 
      }
      else
@@ -325,7 +329,11 @@ class User extends Model {
          ));
          if (count($results2) === 0)
          {
-             throw new \Exception("Não foi possível recuperar a senha.");
+             //throw new \Exception("Não foi possível recuperar a senha.");
+
+             User::setError("Não foi possível recuperar a senha!! Código expirado!");
+		 	header("Location: /login");
+			exit();			
          }
          else
          {
@@ -370,7 +378,9 @@ class User extends Model {
      ));
      if (count($results) === 0)
      {
-         throw new \Exception("Não foi possível recuperar a senha.");
+           User::setError("Não foi possível recuperar a senha!! Código expirado!");
+		 	header("Location: /login");
+			exit();			
      }
      else
      {
@@ -400,6 +410,18 @@ class User extends Model {
 			":iduser"=>$this->getiduser()
 		));
 
+	}
+
+	public function validaEmail($email){
+
+		//$email = test_input($_POST["email"]);
+			if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+  			//$emailErr = "Invalid email format";
+  			return false; // Retorno false para indicar que o e-mail é invalido	
+		}else{
+			return true; // Retorno true para indicar que o e-mail é valido	
+		}
+		
 	}
 
 	public static function getPage($page = 1, $itemsPerPage = 10)

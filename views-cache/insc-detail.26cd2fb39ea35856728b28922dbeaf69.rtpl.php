@@ -51,7 +51,7 @@
                     <table class="shop_table">
                         <thead>
                             <tr>
-                                <th colspan="2" class="product-name"><h3>Nome: <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> -  <?php echo calcularIdade($pessoa["dtnasc"]); ?> anos </h3></th>
+                                <th colspan="2" class="product-name"><h3>Nome: <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> -  <?php echo calcularIdade($pessoa["dtnasc"]); ?> anos - <strong><?php if( $pessoa["pcd"] == 1 ){ ?>(PCD)<?php } ?></strong></h3></th>
                             </tr>
                             <tr>
                                 <th colspan="2" class="product-name"><h3>número para concorrer no sorteio: <?php echo htmlspecialchars( $insc["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h3></th>
@@ -74,7 +74,7 @@
                             </tr>
                             <tr>
                                 <th class="product-name">Laudo</th>
-                                <td class="product-name"><?php if( $insc["laudo"] == 1 ){ ?>Sim<?php } ?>Não</td>
+                                <td class="product-name"><?php if( $insc["laudo"] == 1 ){ ?>Sim<?php }else{ ?>Não<?php } ?></td>
                             </tr>                                                     
                             <tr <?php echo colorStatus($insc["idinscstatus"]); ?>>
                                 <th class="product-name">Status da Inscrição</th>

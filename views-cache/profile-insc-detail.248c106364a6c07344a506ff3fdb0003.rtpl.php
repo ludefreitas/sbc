@@ -11,6 +11,11 @@
             <?php echo htmlspecialchars( $erroInsc, ENT_COMPAT, 'UTF-8', FALSE ); ?>
         </div>
             <?php } ?>
+            <?php if( $success != '' ){ ?>
+        <div class="alert alert-info">
+            <?php echo htmlspecialchars( $success, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+        </div>
+            <?php } ?>
             <div class="row">            
                 <div class="col-md-7 alert alert-primary">
                     <h5>Nome do aluno: <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> -  <?php echo calcularIdade($pessoa["dtnasc"]); ?> anos </h5>

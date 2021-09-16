@@ -74,7 +74,7 @@
                             </tr>
                             <tr>
                                 <th class="product-name">Laudo</th>
-                                <td class="product-name"><?php if( $insc["laudo"] == 1 ){ ?>Sim<?php } ?>Não</td>
+                                <td class="product-name"><?php if( $insc["laudo"] == 1 ){ ?>Sim<?php }else{ ?>Não<?php } ?></td>
                             </tr>                                                     
                             <tr <?php echo colorStatus($insc["idinscstatus"]); ?>>
                                 <th class="product-name">Status da Inscrição</th>

@@ -11,6 +11,11 @@
             {$erroInsc}
         </div>
             {/if}
+            {if="$success != ''"}
+        <div class="alert alert-info">
+            {$success}
+        </div>
+            {/if}
             <div class="row">            
                 <div class="col-md-7 alert alert-primary">
                     <h5>Nome do aluno: {$pessoa.nomepess} -  {function="calcularIdade($pessoa.dtnasc)"} anos </h5>

@@ -87,24 +87,28 @@ $app->post("/admin/temporada/create", function() {
 		header("Location: /admin/temporada/create");
 		exit;		
 	}
+	$_POST['dtinicinscricao'] = str_replace('T', ' ', $_POST['dtinicinscricao']);
 
 	if (!isset($_POST['dtterminscricao']) || $_POST['dtterminscricao'] == '') {
 		Temporada::setError("Informe quando terminarão as inscrições.");
 		header("Location: /admin/temporada/create");
 		exit;		
 	}
+	$_POST['dtterminscricao'] = str_replace('T', ' ', $_POST['dtterminscricao']);
 
 	if (!isset($_POST['dtinicmatricula']) || $_POST['dtinicmatricula'] == '') {
 		Temporada::setError("Informe quando começarão as matrículas.");
 		header("Location: /admin/temporada/create");
 		exit;		
 	}
+	$_POST['dtinicmatricula'] = str_replace('T', ' ', $_POST['dtinicmatricula']);
 
 	if (!isset($_POST['dttermmatricula']) || $_POST['dttermmatricula'] == '') {
 		Temporada::setError("Informe quando terminarão as matrículas.");
 		header("Location: /admin/temporada/create");
 		exit;		
 	}	
+	$_POST['dttermmatricula'] = str_replace('T', ' ', $_POST['dttermmatricula']);
 
 	if (!isset($_POST['idstatustemporada']) || $_POST['idstatustemporada'] == '') {
 		Temporada::setError("Informe o status da temporada.");
@@ -441,15 +445,24 @@ $app->get("/admin/temporada/:idtemporada/turma/:idturma/remove", function($idtem
 
 	$turma->get((int)$idturma);
 
+
+	$inscRelacionada = Temporada::inscRelacionadoTurmatemporadaExiste($idtemporada, $idturma);
+
+	if($inscRelacionada){
+
+		Temporada::setError("Já existem inscrições para esta temporada. Você não pode remover. altere o status da turma para suspensa ou cancelada.");
+		header("Location: /admin/temporada/".$idtemporada."/turma");
+		exit;
+	}
+
 	$temprofrelacionado = Temporada::professorRelacionadoTurmatemporadaExiste($idtemporada, $idturma);
 
 	if($temprofrelacionado){
 
-		Temporada::setError("Você precisa, antes, remover admin desta turma para a temporadada ".$temporada->getdesctemporada()."! ");
+		Temporada::setError("Para remover esta turma da temporada ".$temporada->getdesctemporada().", você precisa antes, remover o professor desta turma para a temporadada! ");
 		header("Location: /admin/temporada/".$idtemporada."/turma");
 		exit;
-
-	}
+	}	
 
 	$temporada->removeTurma($turma);
 

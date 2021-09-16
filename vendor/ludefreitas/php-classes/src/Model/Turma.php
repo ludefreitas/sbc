@@ -191,10 +191,10 @@ class Turma extends Model {
 			using(idstatustemporada)
 			INNER JOIN tb_modalidade m         
 			using(idmodal)
-      		WHERE k.idstatustemporada = :idstatusTemporadaMatriculasEncerradas 
+      		WHERE b.iduser != 1 AND (k.idstatustemporada = :idstatusTemporadaMatriculasEncerradas 
       		OR k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
       		OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
-      		OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada
+      		OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada) 
       		ORDER BY RAND()
 			", [
 				':idstatusTemporadaMatriculasEncerradas'=>$idstatusTemporadaMatriculasEncerradas,
@@ -252,11 +252,11 @@ class Turma extends Model {
 			using(idstatustemporada)
 			INNER JOIN tb_modalidade m         
 			using(idmodal)
-      		WHERE (
+      		WHERE ( b.iduser != 1 AND (
       			k.idstatustemporada = :idstatusTemporadaMatriculasEncerradas  
       			OR k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
       			OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
-      			OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada
+      			OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada)
       		) AND (
       			j.descturma LIKE :search
 				OR d.descativ LIKE :search
@@ -330,11 +330,11 @@ class Turma extends Model {
 			INNER JOIN tb_modalidade m         
 			using(idmodal)
       		WHERE j.idmodal = :idmodal
-            AND (
+            AND ( b.iduser != 1 AND (
             k.idstatustemporada = :idstatusTemporadaMatriculasEncerradas 
             OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada 
             OR k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
-            OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada)
+            OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada ))
       		ORDER BY RAND()", [
       			':idmodal'=>$idmodal,
 				':idstatusTemporadaMatriculasEncerradas'=>$idstatusTemporadaMatriculasEncerradas,
@@ -382,11 +382,11 @@ class Turma extends Model {
 			INNER JOIN tb_modalidade m         
 			using(idmodal)
       		WHERE e.idlocal = :idlocal
-            AND (
+            AND ( b.iduser != 1 AND (
             k.idstatustemporada = :idstatusTemporadaMatriculasEncerradas
             OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada 
             OR k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
-            OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada)
+            OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada))
       		ORDER BY RAND()", [
       			':idlocal'=>$idlocal,
 				':idstatusTemporadaMatriculasEncerradas'=>$idstatusTemporadaMatriculasEncerradas,
@@ -416,13 +416,13 @@ class Turma extends Model {
 	public function save()
 	{
 		$sql = new Sql();
-		$results = $sql->select("CALL sp_turma_save(:idturma, :idativ, :idmodal, :idespaco, :idhorario, :idturmastatus, :descturma, :vagas)", array(
+		$results = $sql->select("CALL sp_turma_save(:idturma, :idativ, :idmodal, :idespaco, :idhorario, :descturma, :vagas)", array(
 			":idturma"=>$this->getidturma(),			
 			":idativ"=>$this->getidativ(),
 			":idmodal"=>$this->getidmodal(),
 			":idespaco"=>$this->getidespaco(),
 			":idhorario"=>$this->getidhorario(),
-			":idturmastatus"=>$this->getidturmastatus(),
+			//":idturmastatus"=>$this->getidturmastatus(),
 			":descturma"=>$this->getdescturma(),
 			":vagas"=>$this->getvagas()		
 		));	

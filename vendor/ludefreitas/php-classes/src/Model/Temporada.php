@@ -299,11 +299,13 @@
 			$this->setData($results[0]);
 
 			//Temporada::updateFile();
-			Temporada::updateFileAdminTemporada();
+			//Temporada::updateFileAdminTemporada();
 			Temporada::updateFileAdminInscricoes();
 			Temporada::updateFileAdminTurmaTemporada();
 			Temporada::updateFileProfInscricoes();
 			Temporada::updateFileProfTurmaTemporada();
+			Temporada::updateFileProfessorPorTemporada();
+			Temporada::updateFileSorteioPorTemporada();
 		}
 
 		public function get($idtemporada)
@@ -339,11 +341,13 @@
 			]);	
 
 			//Temporada::updateFile();
-			Temporada::updateFileAdminTemporada();
+			//Temporada::updateFileAdminTemporada();
 			Temporada::updateFileAdminInscricoes();
 			Temporada::updateFileAdminTurmaTemporada();
 			Temporada::updateFileProfInscricoes();
 			Temporada::updateFileProfTurmaTemporada();
+			Temporada::updateFileProfessorPorTemporada();
+			Temporada::updateFileSorteioPorTemporada();
 		}
 
 		// atualiza lista de temporada no site (no rodapé) temporada-menu.html
@@ -362,7 +366,7 @@
 		*/
 
 		
-
+		/*
 		public static function updateFileAdminTemporada()	
 		{
 			$temporada = Temporada::listAll();
@@ -374,26 +378,13 @@
 								   		<a href="/admin/turma-temporada/'.$row['idtemporada'].'">
 								   			<i class="fa fa-link"></i> 
 								   			Temporada - '.$row['desctemporada'].'
-								   		</a>
-								   		<ul class="treeview-menu">									   		
-									   		<li>
-									   			<a href="/admin/professor-temporada/'.$row['idtemporada'].'">
-									   				<i class="fa fa-link"></i>
-									   				Profs Temporada '.$row['desctemporada'].'
-									   			</a>
-									   		</li>
-									   		<li>
-									   			<a href="/admin/sorteio/'.$row['idtemporada'].'">
-									   				<i class="fa fa-link"></i>
-									   				Sorteio '.$row['desctemporada'].'
-									   			</a>
-									   		</li>
-										</ul>
+								   		</a>								   		
 									</li>');
 
 			}
 			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."temporada-menu.html", implode('', $html));
 		}
+		*/
 
 		public static function updateFileAdminInscricoes()	
 		{
@@ -469,6 +460,43 @@
 			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."prof".DIRECTORY_SEPARATOR."turma-temporada-menu.html", implode('', $html));
 		}
 
+		public static function updateFileProfessorPorTemporada()	
+		{
+			$temporada = Temporada::listAll();
+
+			$html = [];
+
+			foreach ($temporada as $row) {
+				array_push($html, '<li class="treeview">
+									   			<a href="/admin/professor-temporada/'.$row['idtemporada'].'">
+									   				<i class="fa fa-link"></i>
+									   				Profs Temporada '.$row['desctemporada'].'
+									   			</a>
+									   		</li>'
+								);
+
+			}
+			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."professor-temporada-menu.html", implode('', $html));
+		}
+
+		public static function updateFileSorteioPorTemporada()	
+		{
+			$temporada = Temporada::listAll();
+
+			$html = [];
+
+			foreach ($temporada as $row) {
+				array_push($html, '<li class="treeview">
+									   			<a href="/admin/sorteio/'.$row['idtemporada'].'">
+									   				<i class="fa fa-link"></i>
+									   				Sorteio Temporada '.$row['desctemporada'].'
+									   			</a>
+									   		</li>'
+								);
+
+			}
+			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."sorteio-temporada-menu.html", implode('', $html));
+		}
 
 		public function getTurmaTemporadaPage($page = 1, $itemsPerPage = 4)
 		{
@@ -702,19 +730,64 @@
 
 		public function addTurma(Turma $turma)
 		{
+			/*
+			$iduser = 0;
+			$idturmastatus = 3;
+			$numinscritos = 0;
+			$nummatriculados = 0;
+
+			*/
+
 			$sql = new Sql();
 
+			
 			$sql->query("INSERT INTO tb_turmatemporada (idtemporada, idturma) VALUES(:idtemporada, :idturma)", [
 				':idtemporada'=>$this->getidtemporada(),
 				':idturma'=>$turma->getidturma()
 			]);
+
+			/*
+
+			$sql->query("CALL sp_turmatemporada_add (:idtemporada, :idturma, :iduser, :idturmastatus, :numinscritos, :nummatriculados)", [
+				':idtemporada'=>$this->getidtemporada(),
+				':idturma'=>$turma->getidturma(),
+				':iduser'=>$iduser,
+				':idturmastatus'=>$idturmastatus,
+				':numinscritos'=>$numinscritos,
+				':nummatriculados'=>$nummatriculados
+			]);
+			*/
+
+
+			//var_dump($sql);
+			//exit;
 		}
+
+		/*
+		public function addTurma(Turma $turma)
+		{   $iduser = 0;
+			$idturmastatus = 3;
+			$numinscritos = 0;
+			$nummatriculados = 0;
+
+			$sql = new Sql();
+
+			$sql->query("INSERT INTO tb_turmatemporada (idtemporada, idturma, iduser, idturmastatus, numinscritos, nummatriculados) VALUES(:idtemporada, :idturma, :iduser, :idturmastatus, :numinscritos, :nummatriculados)", [
+				':idtemporada'=>$this->getidtemporada(),
+				':idturma'=>$turma->getidturma(),
+				':iduser'=>$iduser,
+				':idturmastatus'=>$idturmastatus,
+				':numinscritos'=>$numinscritos,
+				':nummatriculados'=>$nummatriculados
+			]);
+		}
+		*/
 
 		public function removeTurma(Turma $turma)
 		{
 			$sql = new Sql();
 
-			$sql->query("DELETE FROM tb_turmatemporada WHERE idtemporada = :idtemporada AND idturma = :idturma", [
+			$sql->query("SET FOREIGN_KEY_CHECKS=0; DELETE FROM tb_turmatemporada WHERE idtemporada = :idtemporada AND idturma = :idturma; SET FOREIGN_KEY_CHECKS=;", [
 				':idtemporada'=>$this->getidtemporada(),
 				':idturma'=>$turma->getidturma()
 			]);
@@ -735,7 +808,8 @@
 		{
 			$sql = new Sql();
 
-			$sql->query("UPDATE tb_turmatemporada SET iduser = 0 WHERE idturma = :idturma AND idtemporada = :idtemporada AND iduser = :iduser", [
+
+			$sql->query("UPDATE tb_turmatemporada SET iduser = 1 WHERE idturma = :idturma AND idtemporada = :idtemporada AND iduser = :iduser", [
 				':idtemporada'=>$idtemporada,
 				':idturma'=>$idturma,
 				':iduser'=>$iduser
@@ -764,6 +838,20 @@
 				WHERE idtemporada = :idtemporada 
 				AND idturma = :idturma
 				AND iduser != 0", [
+				':idtemporada'=>$idtemporada,
+				':idturma'=>$idturma								
+			]);
+		}
+
+		public static function inscRelacionadoTurmatemporadaExiste($idtemporada, $idturma)
+		{
+			$sql = new Sql();
+
+			return $sql->select("
+				SELECT *
+				FROM tb_insc
+				WHERE idtemporada = :idtemporada 
+				AND idturma = :idturma", [
 				':idtemporada'=>$idtemporada,
 				':idturma'=>$idturma								
 			]);

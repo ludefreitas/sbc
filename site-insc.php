@@ -32,7 +32,7 @@ $app->get("/profile/insc/:idinsc/:idepess", function($idinsc, $idpess){
 
 	$insc->get((int)$idinsc);
 
-	//var_dump($pessoa);
+	//var_dump(Insc::getSuccess());
 	//exit();
 
 	//$insc = Insc::getFromId($idinsc);
@@ -42,7 +42,8 @@ $app->get("/profile/insc/:idinsc/:idepess", function($idinsc, $idpess){
 	$page->setTpl("profile-insc-detail", [
 		'insc'=>$insc->getValues(),
 		'pessoa'=>$pessoa->getValues(),
-		'erroInsc'=>Insc::getError()
+		'erroInsc'=>Insc::getError(),
+		'success'=>Insc::getSuccess()
 	]);	
 });
 
@@ -96,8 +97,5 @@ $app->get("/insc/:idinsc", function($idinsc){
 
 });
 */	
-
-
-
 
 ?>

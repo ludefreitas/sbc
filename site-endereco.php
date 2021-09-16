@@ -78,16 +78,38 @@ $app->post("/endereco", function() {
 		exit;		
 	}
 
-	if (!isset($_POST['telemer']) || $_POST['telemer'] == '') {
-		Endereco::setMsgError("Informe um número de telefone para ligar, em caso de emergência.");
+	if (!isset($_POST['telres']) || $_POST['telres'] == '') {
+		Endereco::setMsgError("Informe um número de telefone residencial ou celular.");
 		header("Location: /endereco");
 		exit;		
+	}
+	$_POST['telres'] = preg_replace('/[^\p{L}\p{N}\s]/', '', $_POST['telres'] );
+	$_POST['telres'] = str_replace(' ', '',$_POST['telres']);
+
+	if(strlen($_POST['telres']) !== 10 && strlen($_POST['telres']) !== 11 ){
+
+		Endereco::setMsgError("Número de telefone inválido! Digite o número de um tefefone celular ou residencial com DDD.");
+		header("Location: /endereco");
+		exit;
 	}
 	if (!isset($_POST['contato']) || $_POST['contato'] == '') {
-		Endereco::setMsgError("Informe um nome para entrar em contato, em caso de emergência");
+		Endereco::setMsgError("Informe um nome para entrar em contato, em caso de emergência!");
 		header("Location: /endereco");
 		exit;		
 	}
+	if (!isset($_POST['telemer']) || $_POST['telemer'] == '') {
+		Endereco::setMsgError("Informe um número de telefone para ligar em caso de emergência!");
+		header("Location: /endereco");
+		exit;		
+	}
+	$_POST['telemer'] = preg_replace('/[^\p{L}\p{N}\s]/', '', $_POST['telemer'] );
+	$_POST['telemer'] = str_replace(' ', '',$_POST['telemer']);
+	if(strlen($_POST['telemer']) !== 10 && strlen($_POST['telemer']) !== 11 ){
+
+		Endereco::setMsgError("Número de telefone inválido! Digite o número de um tefefone celular ou residencial com DDD.");
+		header("Location: /endereco");
+		exit;
+	}	
 
 	$_POST['idperson'] = $idperson;
 
@@ -112,7 +134,7 @@ $app->post("/endereco", function() {
 
 	$_SESSION['enderecoValues'] = NULL;															
 
-	header("Location: /user/profile");
+	header("Location: /");
 	exit();
 });
 
@@ -125,7 +147,7 @@ $app->get("/user/endereco/update", function(){
 	$endereco = new Endereco();
 
 	if(!Endereco::seEnderecoExiste($idperson)){
-		Endereco::setMsgError('Você ainda não tem um endereço cadastrad0, Cadastre um endereço abaixo!');
+		Endereco::setMsgError('Você ainda não tem um endereço cadastrado, Cadastre um endereço abaixo!');
 			header("Location: /endereco");
 			exit();			
 	}
@@ -211,16 +233,41 @@ $app->post("/endereco/update", function() {
 		exit;		
 	}
 
-	if (!isset($_POST['telemer']) || $_POST['telemer'] == '') {
-		Endereco::setMsgError("Informe um número de telefone para ligar, em caso de emergência.");
+	if (!isset($_POST['telres']) || $_POST['telres'] == '') {
+		Endereco::setMsgError("Informe um número de telefone residencial ou celular.");
 		header("Location: /user/endereco/update");
 		exit;		
 	}
+	$_POST['telres'] = preg_replace('/[^\p{L}\p{N}\s]/', '', $_POST['telres'] );
+	$_POST['telres'] = str_replace(' ', '',$_POST['telres']);
+
+	if(strlen($_POST['telres']) !== 10 && strlen($_POST['telres']) !== 11 ){
+
+		Endereco::setMsgError("Número de telefone inválido! Digite o número de um tefefone celular ou residencial com DDD.");
+		header("Location: /user/endereco/update");
+		exit;
+	}
+
 	if (!isset($_POST['contato']) || $_POST['contato'] == '') {
 		Endereco::setMsgError("Informe um nome para entrar em contato, em caso de emergência");
 		header("Location: /user/endereco/update");
 		exit;		
 	}
+
+	if (!isset($_POST['telemer']) || $_POST['telemer'] == '') {
+		Endereco::setMsgError("Informe um número de telefone para ligar, em caso de emergência.");
+		header("Location: /user/endereco/update");
+		exit;		
+	}
+	$_POST['telemer'] = preg_replace('/[^\p{L}\p{N}\s]/', '', $_POST['telemer'] );
+	$_POST['telemer'] = str_replace(' ', '',$_POST['telemer']);
+
+	if(strlen($_POST['telemer']) !== 10 && strlen($_POST['telemer']) !== 11 ){
+
+		Endereco::setMsgError("Número de telefone inválido! Digite o número de um tefefone celular ou residencial com DDD.");
+		header("Location: /user/endereco/update");
+		exit;
+	}	
 
 	$_POST['idperson'] = $idperson;
 
@@ -243,11 +290,11 @@ $app->post("/endereco/update", function() {
 
 	$endereco->update($idperson);
 
-	User::setSuccess("Endereço atualizado com sucesso!");
+	User::setSuccess("Seus dados de endereço foram atualizados com sucesso!");
 
 	$_SESSION['enderecoUpdateValues'] = NULL;															
 
-	header("Location: /user/profile");
+	header("Location: /");
 	exit();
 });
 

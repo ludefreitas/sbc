@@ -84,9 +84,13 @@
                  Nome do responsável
                 </h5>
               </div>
-              <div class="col-md-2" >
+              <div class="col-md-1" >
                 <h5 style="font-weight: bold; text-align: left;">
                   Status
+                </h5>
+              </div>
+              <div class="col-md-1" >
+                <h5 style="font-weight: bold; text-align: left;">
                 </h5>
               </div>
             </div>           
@@ -116,9 +120,14 @@
                   <td>{$value.desperson}</td>
                 </h5>
               </div>
-              <div class="col-md-2" >
+              <div class="col-md-1" >
                 <h5 style="font-weight: bold; text-align: left;">
                   {if="$value.statuspessoa == 1"}Ativo{else}Inativo{/if}
+                </h5>
+              </div>
+              <div class="col-md-1" >
+                <h5 style="font-weight: bold; text-align: left;">
+                  {if="$value.pcd == 1"}(PCD){/if}
                 </h5>
               </div>
               <div class="col-md-2" >

@@ -28,7 +28,7 @@ class Pessoa extends Model {
 		$sql = new Sql();
 
 
-		$results = $sql->select("CALL sp_pessoa_save(:idpess, :iduser, :nomepess, :dtnasc, :sexo, :numcpf, :numrg, :numsus, :vulnsocial, :cadunico, :nomemae, :cpfmae, :nomepai, :cpfpai, :statuspessoa, :dtinclusao, :dtalteracao)", array(
+		$results = $sql->select("CALL sp_pessoa_save(:idpess, :iduser, :nomepess, :dtnasc, :sexo, :numcpf, :numrg, :numsus, :vulnsocial, :pcd, :cadunico, :nomemae, :cpfmae, :nomepai, :cpfpai, :statuspessoa, :dtinclusao, :dtalteracao)", array(
 			":idpess"=>$this->getidpess(),
 			":iduser"=>$this->getiduser(),
 			":nomepess"=>$this->getnomepess(),
@@ -38,6 +38,7 @@ class Pessoa extends Model {
 			":numrg"=>$this->getnumrg(),
 			":numsus"=>$this->getnumsus(),
 			":vulnsocial"=>$this->getvulnsocial(),
+			":pcd"=>$this->getpcd(),
 			":cadunico"=>$this->getcadunico(),
 			":nomemae"=>$this->getnomemae(),
 			":cpfmae"=>$this->getcpfmae(),
@@ -63,7 +64,7 @@ class Pessoa extends Model {
 		$sql = new Sql();
 
 		
-		$results = $sql->select("CALL sp_pessoa_update(:idpess, :iduser, :nomepess, :dtnasc, :sexo, :numcpf, :numrg, :numsus, :vulnsocial, :cadunico, :nomemae, :cpfmae, :nomepai, :cpfpai, :statuspessoa, :dtalteracao)", array(
+		$results = $sql->select("CALL sp_pessoa_update(:idpess, :iduser, :nomepess, :dtnasc, :sexo, :numcpf, :numrg, :numsus, :vulnsocial, :pcd, :cadunico, :nomemae, :cpfmae, :nomepai, :cpfpai, :statuspessoa, :dtalteracao)", array(
 			":idpess"=>$idpess,
 			":iduser"=>$this->getiduser(),
 			":nomepess"=>$this->getnomepess(),
@@ -73,6 +74,7 @@ class Pessoa extends Model {
 			":numrg"=>$this->getnumrg(),
 			":numsus"=>$this->getnumsus(),
 			":vulnsocial"=>$this->getvulnsocial(),
+			":pcd"=>$this->getpcd(),
 			":cadunico"=>$this->getcadunico(),
 			":nomemae"=>$this->getnomemae(),
 			":cpfmae"=>$this->getcpfmae(),

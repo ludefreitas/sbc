@@ -37,7 +37,7 @@
                             <td>{$value.idturma} - 
                                 {$value.descturma} - {$value.apelidolocal} - {$value.nomeativ} - {$value.diasemana} - {$value.horainicio} - {$value.horatermino}
                             </td>
-                            {if="$value.iduser == 0"}
+                            {if="$value.iduser == 1"}
                             <td>
                                 <a href="/admin/turmatemporada/{$value.idtemporada}/turma/{$value.idturma}/user/{$user.iduser}/add" class="btn btn-success btn-xs pull-right"><i class="fa fa-arrow-right"></i> Adicionar</a>
                             </td>

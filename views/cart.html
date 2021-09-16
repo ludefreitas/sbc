@@ -1,4 +1,17 @@
 
+<script> 
+$(document).ready(function(){
+
+    $('#link').on('change', function () {
+        var url = $(this).val(); 
+        if (url === 'pessoa-create') { 
+            window.open(url, '_self');
+        }
+        return false;
+    });
+});
+</script>
+
  <div class="container"> <!-- container 1 -->
             <div class="row"> <!-- row 2 -->
               <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
@@ -49,13 +62,15 @@
                <input type="text" name="idturma" hidden="" value="{$value.idturma}">
                <input type="text" name="idtemporada" hidden="" value="{$value.idtemporada}">  
                <input type="text" name="initidade" hidden="" value="{$value.initidade}">
-               <input type="text" name="fimidade" hidden="" value="{$value.fimidade}">            
+               <input type="text" name="fimidade" hidden="" value="{$value.fimidade}">  
+               <input type="text" name="idlocal" hidden="" value="{$value.idlocal}">                      
+               <input type="text" name="apelidolocal" hidden="" value="{$value.apelidolocal}">                      
             </div>
             <div class="col-md-6">
                 <div class="">
                     <div class="">
 
-                        <h3>Selecione a Pessoa</h3>
+                        <h5>SELECIONE A PESSOA</h5>
                     
                         <div class="">
 
@@ -73,17 +88,26 @@
                             {/if}
                             <!-- form start -->                           
                             <div class="box-body">                                                               
-                                <select class="form-control" name="idpess">
-                                    <option selected="selected" value="idpess=0">
+                                <select class="form-control" name="idpess" id="link"  onchange="changeFunc(value);">
+                                    <option selected="selected" value="0">
                                         Selecione uma pessoa
                                     </option>
-                                    {loop="$pessoa"}
-                                    <option {if="$value.iduser === $user.iduser"}{/if} value="{$value.idpess}">{$value.idpess} - {$value.nomepess}; {function="calcularIdade($value.dtnasc)"} anos; {$value.sexo}
+
+                                    {if="$pessoa"}
+                                    <option value="pessoa-create">
+                                        CADASTRAR UMA NOVA PESSOA
+                                    </option>
+                                    {/if}                                    
+                                    {loop="$pessoa"}   
+                                    <option {if="$value.iduser === $user.iduser"}{/if} value="{$value.idpess}">{$value.nomepess}; {function="calcularIdade($value.dtnasc)"} anos
                                     </option>
 
                                     {else}
                                     <option value="0">
                                         Não há pessoas cadastradas
+                                    </option>
+                                    <option value="pessoa-create">
+                                        CADASTRAR UMA NOVA PESSOA
                                     </option>
                                     {/loop}
                                 </select>
@@ -97,7 +121,7 @@
                        <!-- </form> -->
 
                         <div>&nbsp;</div>
-                        <a href="/pessoa-create">Cadastrar uma nova pessoa</a>
+                        <div>&nbsp;</div>
                         <div>&nbsp;</div>
                         <input type="submit" value="Confirmar Inscrição" id="pessoa" class="button alt" formaction="/cart" formmethod="post">
                     </div>

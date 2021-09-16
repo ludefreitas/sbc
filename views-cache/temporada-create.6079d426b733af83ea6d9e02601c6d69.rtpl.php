@@ -56,12 +56,12 @@
 
                   <div class="box-header">
                     <label for="dtinicinscricao"> Data de Início das Inscrições</label>
-                    <input type="date" class="form-control" id="dtinicinscricao" name="dtinicinscricao" value="<?php echo htmlspecialchars( $createTemporadaValues["dtinicinscricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                    <input type="datetime-local" class="form-control" id="dtinicinscricao" name="dtinicinscricao" value="<?php echo htmlspecialchars( $createTemporadaValues["dtinicinscricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                   </div>
 
                   <div class="box-header">
                     <label for="dtinicmatricula"> Data de Início das Matrículas</label>
-                    <input type="date" class="form-control" id="dtinicmatricula" name="dtinicmatricula" value="<?php echo htmlspecialchars( $createTemporadaValues["dtinicmatricula"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                    <input type="datetime-local" class="form-control" id="dtinicmatricula" name="dtinicmatricula" value="<?php echo htmlspecialchars( $createTemporadaValues["dtinicmatricula"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                   </div>
                   
                 </div>
@@ -70,12 +70,12 @@
 
                   <div class="box-header">
                     <label for="dtterminscricao"> Data do Fim das Inscrições</label>
-                    <input type="date" class="form-control" id="dtterminscricao" name="dtterminscricao" value="<?php echo htmlspecialchars( $createTemporadaValues["dtterminscricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                    <input type="datetime-local" class="form-control" id="dtterminscricao" name="dtterminscricao" value="<?php echo htmlspecialchars( $createTemporadaValues["dtterminscricao"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                   </div>
 
                   <div class="box-header">
                     <label for="dttermmatricula"> Data do Fim das Matrículas</label>
-                    <input type="date" class="form-control" id="dttermmatricula" name="dttermmatricula" value="<?php echo htmlspecialchars( $createTemporadaValues["dttermmatricula"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                    <input type="datetime-local" class="form-control" id="dttermmatricula" name="dttermmatricula" value="<?php echo htmlspecialchars( $createTemporadaValues["dttermmatricula"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                   </div>            
                   
                 </div>

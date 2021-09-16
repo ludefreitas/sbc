@@ -7,7 +7,14 @@ class Sql {
 	const HOSTNAME = "127.0.0.1";
 	const USERNAME = "root";
 	const PASSWORD = "";
-	const DBNAME = "db_cursossbc";
+	//const DBNAME = "db_cursossbc";
+	const DBNAME = "dbcursos_sbc";
+
+	//const HOSTNAME = "50.116.86.90";
+	//const USERNAME = "curs0155_db";
+	//const PASSWORD = "Mysql@132419";
+	//const DBNAME = "curs0155_dbcursossbc";
+	//const DBNAME = "curs0155_dbcursos_sbc"
 
 	private $conn;
 

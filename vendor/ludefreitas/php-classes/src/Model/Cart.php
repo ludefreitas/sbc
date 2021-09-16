@@ -381,12 +381,40 @@ class Cart extends Model {
 
 		if(count($results) === 0)
 		{
-			throw new \Exception("Esta pessoa já está inscrita nesta turma?", 1);			
+			throw new \Exception("Esta pessoa já está inscrita nesta turma!", 1);			
 		}
 
 	}
 
+	public function getInscExistAquaticLocal($numcpf, $idpess, $idturma, $idtemporada, $idlocal) {
 
+		$sql = new Sql();
+
+		$results = $sql->select(
+			"SELECT * FROM tb_insc a
+			INNER JOIN tb_carts b USING(idcart)
+			INNER JOIN tb_pessoa c USING(idpess)
+			INNER JOIN tb_turma d USING(idturma)  
+			INNER JOIN tb_espaco e USING(idespaco)  
+			INNER JOIN tb_local f USING(idlocal)  
+			INNER JOIN tb_atividade g USING(idativ)    
+			INNER JOIN tb_temporada h USING(idtemporada)         
+			WHERE c.numcpf = :numcpf AND c.idpess = :idpess AND d.idturma = :idturma AND f.idlocal = :idlocal AND h.idtemporada = :idtemporada AND g.tipoativ = 'Aquática'", [
+			':numcpf'=>$numcpf,
+			':idpess'=>$idpess,
+			'idturma'=>$idturma,
+			':idtemporada'=>$idtemporada,
+			':idlocal'=>$idlocal
+		]);
+
+		return $results;
+
+		if(count($results) === 0)
+		{
+			throw new \Exception("Esta pessoa já está inscrita para uma turma do tipo AQUÁTICA neste local", 1);			
+		}
+
+	}
 }
 
  ?>

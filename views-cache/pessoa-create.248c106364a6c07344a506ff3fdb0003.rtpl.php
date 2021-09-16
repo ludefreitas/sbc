@@ -41,16 +41,32 @@
         }
     }  
 
-    function formatar_mascara(src, mascara) {
-        let campo = src.value.length;
-        let saida = mascara.substring(0,1);
-        let texto = mascara.substring(campo);
 
-        if(texto.substring(0,1) != saida) {
-            src.value += texto.substring(0,1);
+    function getDadosEnderecoPorCep(cep){
+
+        let url = 'https://viacep.com.br/ws/'+cep+'/json/unicode/'
+
+        let xmlHttp = new XMLHttpRequest()
+        xmlHttp.open('GET', url)
+
+        xmlHttp.onreadystatechange = () => {
+            if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
+
+                let dadosJSONText = xmlHttp.responseText
+
+                let dadosJSONObj = JSON.parse(dadosJSONText)
+
+                document.getElementById('rua').value = dadosJSONObj.logradouro
+                document.getElementById('bairro').value = dadosJSONObj.bairro
+                document.getElementById('cidade').value = dadosJSONObj.localidade
+                document.getElementById('uf').value = dadosJSONObj.uf                                               
+            }
+            
         }
-} 
 
+        xmlHttp.send()
+        
+    }
 </script>
 
      <div class="container"> <!-- container 1 -->
@@ -78,9 +94,9 @@
                  <h4><?php echo htmlspecialchars( $success, ENT_COMPAT, 'UTF-8', FALSE ); ?></h4>
                 </div>
                 <?php }else{ ?>
-                <div class="">
-                <h3>Cadastrar uma nova pessoa</h3>
-                </div>
+                <div class="alert alert-success" style="text-align-last: center;">
+                    <span style="font-weight: bold;">Cadastrar uma nova pessoa</span style="font-weight: bold;">
+                </div>                
                 <?php } ?>
 
                 <form id="register-form-wrap" action="/registerpessoa" class="register" method="post">
@@ -132,16 +148,19 @@
                             *
                         </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="text" maxlength="14" id="numcpf" name="numcpf" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onkeypress="formatar_mascara(this, '###.###.###-##')">
+                    <input style="width: 100%; float: right;" type="text" maxlength="14" id="numcpf" name="numcpf" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}">
+                    <script type="text/javascript">$("#numcpf").mask("000.000.000-00");</script>
                    
-
+                 <!--
                     <label for="numrg">
                         <br><br>Número do RG 
                         <span class="required">
                             *
                         </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="text" id="numrg" name="numrg" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["numrg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                    <input style="width: 100%; float: right;" type="text" id="numrg" name="numrg" class="input-text" value="{}" pattern="[0-9]{2}.[0-9]{3}.[0-9]{3}-[0-9]{1}">
+                    <script type="text/javascript">$("#numrg").mask("00.000.000-0");</script>
+                -->
 
                     <label for="numsus">
                         <br><br>Número do Cartão do SUS 
@@ -149,11 +168,10 @@
                             *
                         </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="number" id="numsus" name="numsus" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["numsus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                    <input style="width: 100%; float: right;" type="text" id="numsus" name="numsus" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["numsus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}.[0-9]{3}.[0-9]{3}">
+                    <script type="text/javascript">$("#numsus").mask("000.000.000.000.000");</script>
                     
 
-
-                    
                     <label for="vulnsocial">
                         <br><br>Vulnerabilidade Social?
                     </label>
@@ -171,17 +189,39 @@
                         <option sected="" value="0">Não</option>
                         <option value="1">Sim</option>  
                         <?php } ?>                                                                                                                            
-                    </select>                 
-                    
-                    <div id="divCadunico" hidden="true">
+                    </select>   
+
+                     <div id="divCadunico" hidden="true">
                     <label for="cadunico">
-                        <br><br>Número do CadÚnico
+                        <br><br>Número do CadÚnico / NIS
                         <span class="required">
                             *
                         </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="number" id="cadunico" name="cadunico" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["cadunico"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-                    </div>
+                    <input style="width: 100%; float: right;" type="text" id="cadunico" name="cadunico" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["cadunico"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" pattern="[0-9]{3}.[0-9]{5}.[0-9]{2}-[0-9]{1}">
+                    <script type="text/javascript">$("#cadunico").mask("000.00000.00-0");</script>
+                    </div>              
+
+                    
+                    <label for="pcd">
+                        <br><br>PCD?
+                    </label>
+                    <select id="pcd" style="width: 100%; float: right;" class="form-control" name="pcd">
+                        <?php if( $registerpessoaValues["pcd"] === '' ){ ?>
+                        <option selected="" value="">Seclecione</option>                            
+                        <option value="1">Sim</option>
+                        <option value="0">Não</option>  
+                        <?php } ?>   
+                        <?php if( $registerpessoaValues["pcd"] === '1' ){ ?>
+                        <option sected="" value="1">Sim</option>
+                        <option value="0">Não</option>  
+                        <?php } ?>  
+                        <?php if( $registerpessoaValues["pcd"] === '0' ){ ?>
+                        <option sected="" value="0">Não</option>
+                        <option value="1">Sim</option>  
+                        <?php } ?>                                                                                                                            
+                    </select>                       
+
 
                     <div id="maeEpai">
 
@@ -199,7 +239,8 @@
                                 *
                             </span>
                         </label>
-                        <input style="width: 100%; float: right;" type="text" maxlength="14" id="cpfmae" name="cpfmae" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["cpfmae"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onkeypress="formatar_mascara(this, '###.###.###-##')">
+                        <input style="width: 100%; float: right;" type="text" maxlength="14" id="cpfmae" name="cpfmae" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["cpfmae"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}">
+                    <script type="text/javascript">$("#cpfmae").mask("000.000.000-00");</script>
                         
                         <label for="nomepai">
                             <br><br>Nome do Pai
@@ -215,25 +256,118 @@
                                 *
                             </span>
                         </label>
-                        <input style="width: 100%; float: right;" type="text" maxlength="14" id="cpfpai" name="cpfpai" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["cpfpai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onkeypress="formatar_mascara(this, '###.###.###-##')">
+                        <input style="width: 100%; float: right;" type="text" maxlength="14" id="cpfpai" name="cpfpai" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["cpfpai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}">
+                    <script type="text/javascript">$("#cpfpai").mask("000.000.000-00");</script>
+
                     </div>         
-                </div>  
-            </div>
+
+                    <label for="endereco">
+                        <span style="font-weight: bold;">
+                        <br><br><br>Endereço / Telefones
+                        <span>                        
+                    </label>                            
+
+                    <label for="cep">
+                        CEP
+                        <span class="required">
+                                
+                        </span>
+                    </label>
+                    <input style="width: 100%; float: right;" type="text" id="cep" maxlength="8" name="cep" class="input-text" pattern="[0-9]{5}-[0-9]{3}" value="<?php echo htmlspecialchars( $registerpessoaValues["cep"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onblur="getDadosEnderecoPorCep(this.value)">
+                    <script type="text/javascript">$("#cep").mask("00000-000");</script>                   
+
+                    <label for="rua">
+                        <br><br>Rua / Avenida
+                        <span class="required">
+                                
+                        </span>
+                    </label>
+                    <input style="width: 100%; float: right;" type="text" id="rua" name="rua" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+
+                    <label for="numero">
+                        <br><br>Número
+                        <span class="required">
+                                
+                        </span>
+                    </label>
+                    <input style="width: 100%; float: right;" type="text" id="numero" name="numero" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+
+                    <label for="complemento">
+                        <br><br>Complemento
+                        <span class="required">
+                                
+                        </span>
+                    </label>
+                    <input style="width: 100%; float: right;" type="text" id="complemento" name="complemento" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["complemento"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+
+
+                    <label for="bairro">
+                        <br><br>Bairro
+                        <span class="required">
+                                
+                        </span>
+                    </label>
+                    <input style="width: 100%; float: right;" type="text" id="bairro" name="bairro" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["bairro"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+
+                    <label for="cidade">
+                        <br><br>Cidade
+                        <span class="required">
+                                
+                        </span>
+                    </label>
+                    <input style="width: 100%; float: right;" type="text" id="cidade" name="cidade" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["cidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+
+                    <label for="estado">
+                        <br><br>Estado
+                        <span class="required">
+                                
+                        </span>
+                    </label>
+                    <input style="width: 100%; float: right;" type="text" id="uf" name="estado" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["estado"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> 
+
+                    <label for="telres">
+                        <br><br>Telefone Residencial/Celular
+                        <span class="required">
+                                
+                        </span>
+                    </label>
+                     <input style="width: 100%; float: right;" type="text" id="telres" name="telres" pattern="\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["telres"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" />
+                     <script type="text/javascript">$("#telres").mask("(00) 0000-00009");</script>   
+
+                <label for="contato">
+                        <br><br>Nome de pessoa para contato em caso de emergência
+                        <span class="required">
+                                
+                        </span>
+                    </label>
+                    
+                    <input style="width: 100%; float: right;" type="text" class="input-text" id="contato" value="<?php echo htmlspecialchars( $registerpessoaValues["contato"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="contato" placeholder="" />
+
+                    <label for="telemer">
+                        <br><br>Telefone da pessoa de contato em caso emergência
+                        <span class="required">
+                                
+                        </span>
+                    </label>
+                     <input style="width: 100%; float: right;" type="text" id="telemer" name="telemer" pattern="\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["telemer"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" />
+                     <script type="text/javascript">$("#telemer").mask("(00) 0000-00009");</script>                 
+                
+            
             <div class="row" style="padding-bottom: 10px;">
-                <div class="col-md-12">
+                <div class="col-md-12" style="margin-top: 10px; text-align-last: center">
                     <input style="width: 100%; float: right; background-color: #15a03f;" type="submit" value="Cadastrar" name="registerPessoa" class="btn">
-                </div>                   
-            </div>
-                </form>               
-            <div class="row">
-                <div class="col-md-12" style="text-align: center">
+                </div> 
+                <div class="col-md-12" style="margin-top: 10px; text-align-last: center">
 
                         <a class="btn" data-quantity="1" style="width: 100%; float: right; background-color: #ce2c3e;  text-decoration: none; color: white;" href="/" text-decoration="none">CANCELAR
                         </a>
-                        <!-- <input style="width: 100%; float: right; background-color: #ce2c3e;" type="submit" value="Cancelar" name="login" class="button"> -->
-                   
-                </div>
-            </div>   
+                        <!-- <input style="width: 100%; float: right; background-color: #ce2c3e;" type="submit" value="Cancelar" name="login" class="button"> -->                   
+                </div>                  
+            </div>
+                </form>               
+            
+            </div>
+            </div>    
     </div>     
 
     <script>

@@ -33,7 +33,7 @@ $app->post("/cart", function() {
 		header("Location: /cart");
 		exit();
 	}	
-
+	
 	if($_POST['idpess'] <= 0){	
 		Cart::setMsgError("Você precisa selecionar uma pessoa! ");
 		header("Location: /cart");
@@ -65,6 +65,8 @@ $app->post("/cart", function() {
 		$idtemporada = $_POST['idtemporada'];		
 		$initidade = $_POST['initidade'];
 		$fimidade = $_POST['fimidade']; 
+		$idlocal = $_POST['idlocal']; 
+		$local = $_POST['apelidolocal']; 
 
 		if(($idade < $initidade) || ($idade > $fimidade)){		
 
@@ -72,6 +74,14 @@ $app->post("/cart", function() {
 			header("Location: /cart");
 			exit();
 		}	
+
+		if ($cart->getInscExistAquaticLocal($numcpf, $idpess, $idturma, $idtemporada, $idlocal)){
+
+			Cart::setMsgError($nomepess.' já está inscrito(a) para uma turma do tipo AQUÁTICA no '.$local.'!');
+			header("Location: /cart");
+			exit();
+
+		}
 
 		if ($cart->getInscExist($numcpf, $idpess, $idturma, $idtemporada)){
 

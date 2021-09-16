@@ -51,7 +51,7 @@
     Digite seu e-mail e receba as instruções para redefinir a sua senha.
   </div>
   <div class="text-center">
-    <a href="/admin/login">Entre com um usuário diferente - Voltar</a>
+    <a href="/login">Entre com um usuário diferente - Voltar</a>
   </div>
   <div class="lockscreen-footer text-center">
     Copyright &copy; 2020-2021 <b><a href="/" class="text-black">Cursos Esportivos SBC</a></b><br>

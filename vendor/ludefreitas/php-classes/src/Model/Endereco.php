@@ -38,9 +38,10 @@ class Endereco extends Model {
 
 		$sql = new Sql();
 
-		$results = $sql->select("CALL sp_endereco_save(:idender, :idperson, :rua, :numero, :complemento, :bairro, :cidade, :estado, :cep, :telres, :telemer, :contato)", array(
+		$results = $sql->select("CALL sp_endereco_save(:idender, :idperson, :idpess, :rua, :numero, :complemento, :bairro, :cidade, :estado, :cep, :telres, :telemer, :contato)", array(
 			":idender"=>$this->getidender(),
 			":idperson"=>$this->getidperson(),
+			":idpess"=>$this->getidpess(),
 			":rua"=>$this->getrua(),
 			":numero"=>$this->getnumero(),
 			":complemento"=>$this->getcomplemento(),
@@ -56,8 +57,8 @@ class Endereco extends Model {
 		if (count($results) > 0) {
 			$this->setData($results[0]);
 		}else{
-			Endereco::setMsgError('Não foi possivel cadastrar endereço!');
-			header("Location: /endereco");
+			User::setError('Não foi possivel cadastrar endereço!');
+			header("Location: /user/pessoas");
 			exit();			
 		}
 
@@ -68,8 +69,9 @@ class Endereco extends Model {
 
 		$sql = new Sql();
 
-		$results = $sql->select("CALL sp_endereco_update(:idperson, :rua, :numero, :complemento, :bairro, :cidade, :estado, :cep, :telres, :telemer, :contato)", array(			
+		$results = $sql->select("CALL sp_endereco_update(:idperson, :idpess, :rua, :numero, :complemento, :bairro, :cidade, :estado, :cep, :telres, :telemer, :contato)", array(			
 			":idperson"=>$idperson,
+			":idpess"=>$this->getidpess(),
 			":rua"=>$this->getrua(),
 			":numero"=>$this->getnumero(),
 			":complemento"=>$this->getcomplemento(),
@@ -85,8 +87,38 @@ class Endereco extends Model {
 		if (count($results) > 0) {
 			$this->setData($results[0]);
 		}else{
-			Endereco::setMsgError('Não foi possivel atualizar endereço!');
-			header("Location: /user/endereco/update");
+			Pessoa::setErrorRegister('Não foi possivel atualizar endereço!');
+			header("Location: /pessoa-update");
+			exit();			
+		}
+
+	}
+
+	public function updateEndrecoPessoa($idpess)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("CALL sp_endereco_pessoa_update(:idperson, :idpess, :rua, :numero, :complemento, :bairro, :cidade, :estado, :cep, :telres, :telemer, :contato)", array(			
+			":idperson"=>$this->getidperson(),
+			":idpess"=>$idpess,
+			":rua"=>$this->getrua(),
+			":numero"=>$this->getnumero(),
+			":complemento"=>$this->getcomplemento(),
+			":bairro"=>$this->getbairro(),
+			":cidade"=>$this->getcidade(),
+			":estado"=>$this->getestado(),
+			":cep"=>$this->getcep(),
+			":telres"=>$this->gettelres(),
+			":telemer"=>$this->gettelemer(),
+			":contato"=>$this->getcontato()
+		));		
+
+		if (count($results) > 0) {
+			$this->setData($results[0]);
+		}else{
+			Pessoa::setErrorRegister('Não foi possivel atualizar endereço!');
+			header("Location: /userpessoa/".$idpess."");
 			exit();			
 		}
 
@@ -125,6 +157,26 @@ class Endereco extends Model {
 			':idperson'=>$idperson			
 		]);			
 
+			return $results[0];		
+	}
+
+	public function getEnderecoPessoa($idpess)	{
+
+		$sql = new Sql();
+
+		$results = $sql->select(
+			"SELECT * FROM tb_endereco a
+			-- INNER JOIN tb_persons b using (idperson)
+			WHERE idpess = :idpess", [
+			':idpess'=>$idpess			
+		]);		
+
+		if(!$results){
+
+			Pessoa::setErrorRegister("Endereço não encontrado!!!");
+			header("Location: /user/pessoas");
+			exit();			
+		}
 			return $results[0];		
 	}
 

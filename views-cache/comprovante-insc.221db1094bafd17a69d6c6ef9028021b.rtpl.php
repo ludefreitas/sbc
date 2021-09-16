@@ -409,24 +409,25 @@
                     <tr>
                       <td class="body-padding"></td>
                       <td class="body-padded">
-                        <div class="body-title">Oi <?php echo htmlspecialchars( $desperson, ENT_COMPAT, 'UTF-8', FALSE ); ?>,</div>
-                        <div class="body-title">Email: <?php echo htmlspecialchars( $email, ENT_COMPAT, 'UTF-8', FALSE ); ?>,</div>
+                        <div class="body-title">Olá <?php echo htmlspecialchars( $desperson, ENT_COMPAT, 'UTF-8', FALSE ); ?>,</div>                        
                         <table class="body-text">
+                         
                           <tr>
                             <td class="body-text-cell">
-                              Este é numero da inscrição do(a) <?php echo htmlspecialchars( $nomepess, ENT_COMPAT, 'UTF-8', FALSE ); ?> - <strong><?php echo htmlspecialchars( $idinsc, ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>.
+                              <strong style="font-size: 16px; color: darkblue;"><?php echo htmlspecialchars( $idinsc, ENT_COMPAT, 'UTF-8', FALSE ); ?></strong> é numero da inscrição do(a) <?php echo htmlspecialchars( $nomepess, ENT_COMPAT, 'UTF-8', FALSE ); ?> para a turma <strong><?php echo htmlspecialchars( $turma["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong> na <?php echo htmlspecialchars( $turma["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php echo htmlspecialchars( $turma["periodo"], ENT_COMPAT, 'UTF-8', FALSE ); ?> das <strong><?php echo htmlspecialchars( $turma["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ás <?php echo htmlspecialchars( $turma["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </strong>no <strong><?php echo htmlspecialchars( $turma["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong> - Rua <?php echo htmlspecialchars( $turma["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $turma["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $turma["bairro"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - SBC
                             </td>
                             
                           </tr>
+
                           <tr>
                             <td class="body-text-cell">
-                              O(A) <?php echo htmlspecialchars( $nomepess, ENT_COMPAT, 'UTF-8', FALSE ); ?> irá concorrer a uma vaga na turma com o número - <strong style="font-size: 20px; color: green;"><?php echo htmlspecialchars( $numsorte, ENT_COMPAT, 'UTF-8', FALSE ); ?>,</strong> caso tenha sorteio.
+                              O(A) <?php echo htmlspecialchars( $nomepess, ENT_COMPAT, 'UTF-8', FALSE ); ?><strong> irá concorrer a uma vaga na turma </strong> com o <strong>NÚMERO</strong> - <strong style="font-size: 26px; color: darkorange;"><?php echo htmlspecialchars( $numsorte, ENT_COMPAT, 'UTF-8', FALSE ); ?>,</strong> caso tenha sorteio.
                             </td>
                             
                           </tr>
                           <tr>                            
                             <td class="body-text-cell">
-                              Clique no link abaixo, para conferir os detalhes da inscrição <a href="<?php echo htmlspecialchars( $link, ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $link, ENT_COMPAT, 'UTF-8', FALSE ); ?></a>.
+                              Clique no link abaixo, para conferir mais detalhes da inscrição <a href="<?php echo htmlspecialchars( $link, ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $link, ENT_COMPAT, 'UTF-8', FALSE ); ?></a>.
                             </td>
                           </tr>
                         </table>

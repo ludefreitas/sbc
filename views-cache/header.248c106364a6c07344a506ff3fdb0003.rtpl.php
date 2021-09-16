@@ -47,21 +47,7 @@
                                 Início
                               </span>
                             </a>
-                        </div>
-                        <div class="nav-item">
-                            <a class="nav-link" mr-4 href="/locais" >
-                              <span class="text-white" style="font-weight: bold;">
-                                 Crecs
-                              </span>
-                            </a>
-                        </div>
-                        <div class="nav-item" >
-                            <a style="" class="nav-link" href="/modalidades" >
-                              <span class="text-white" style="font-weight: bold">
-                                Modalidades
-                              </span>
-                            </a>
-                        </div> 
+                        </div>                        
                         <?php if( checkLogin(false) ){ ?>
                         <div class="nav-item">
                             <a href="/user/profile" class="nav-link">

@@ -30,7 +30,7 @@
                            <strong>Turma / Temporada: </strong>
                        </div>
                        <div class="col-md-9 alert alert-success">
-                            <strong><?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php echo htmlspecialchars( $value1["periodo"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  ( <?php echo htmlspecialchars( $value1["numinscritos"], ENT_COMPAT, 'UTF-8', FALSE ); ?> inscritos para <?php echo htmlspecialchars( $value1["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas )</strong><hr>
+                            <strong><?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php echo htmlspecialchars( $value1["periodo"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  (<?php echo htmlspecialchars( $value1["numinscritos"], ENT_COMPAT, 'UTF-8', FALSE ); ?> inscritos para <?php echo htmlspecialchars( $value1["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas)</strong><hr>
                             
                             <?php echo htmlspecialchars( $value1["descrfxetaria"], ENT_COMPAT, 'UTF-8', FALSE ); ?> de <?php echo htmlspecialchars( $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> a <?php echo htmlspecialchars( $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> anos,
                             com o professor <?php echo htmlspecialchars( $value1["apelidoperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, 
@@ -57,8 +57,8 @@
                         <?php } ?>       
             
                     </div>
-                    <div class="row" style="padding-top: 0px">
-                         <div class="col-md-12 alert-primary" style="text-align-last: left; padding-top: 10px;">
+                    <div class="row" style="padding-top: 0px;">
+                        <div class="col-md-12 alert-primary" style="text-align-last: left; padding-top: 10px; padding-bottom: 10px;">
                             Ao clicar no botão <strong>FINALIZAR</strong> você está ciente...<br>
                              - Que inscreve o(a) <strong><?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong> na turma de <strong> <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>;<br>
                              - Que esta inscrição NÃO GARANTE vaga na respectiva turma<br>
@@ -66,18 +66,13 @@
                              - Que está ciente que a INSCRIÇÃO, para o respectivo curso esportivo, está sujeito a <strong>SORTEIO</strong>, caso a quantidade de inscritos supere o número de vagas;<br>
                              - Que deverá confirmar a matrícula, se sorteado,<strong> PRESENCIALMENTE, </strong>a partir do dia <strong><?php echo formatDate($value1["dtinicmatricula"]); ?></strong> ao <strong><?php echo formatDate($value1["dttermmatricula"]); ?></strong>, no horário da aula.<br>
 
-                             <input type="radio" name="ciente"><label style="color: red;">&nbsp; Estou ciente</label>
-                             
-                           
-                         </div>
+                            <div class="col-md-12" style="text-align-last: center; padding-top: 10px;">
+                                <input type="radio" name="ciente"><label style="color: red;">&nbsp; Estou ciente</label>
+                                <input type="submit" data-value="Place order" value="Finalizar" id="place_order" name="insc" class="button alt" >                     
+                            </div>                             
+                        </div>
 
                     </div>                  
-                    <div class="row" style="padding-top: 0px">
-                         <div class="col-md-12" style="text-align-last: center; padding-top: 10px;">
-                           <input type="submit" data-value="Place order" value="Finalizar" id="place_order" name="insc" class="button alt" >                     
-                         </div>
-                    </div>                  
-
                     <?php }else{ ?> 
                         
                     <div class="row" style="padding-top: 0px">                   

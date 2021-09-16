@@ -30,7 +30,7 @@
                            <strong>Turma / Temporada: </strong>
                        </div>
                        <div class="col-md-9 alert alert-success">
-                            <strong>{$value.descativ} {$value.desctemporada} {$value.periodo}  ( {$value.numinscritos} inscritos para {$value.vagas} vagas )</strong><hr>
+                            <strong>{$value.descativ} {$value.desctemporada} {$value.periodo}  ({$value.numinscritos} inscritos para {$value.vagas} vagas)</strong><hr>
                             
                             {$value.descrfxetaria} de {$value.initidade} a {$value.fimidade} anos,
                             com o professor {$value.apelidoperson}, 
@@ -57,8 +57,8 @@
                         {/if}       
             
                     </div>
-                    <div class="row" style="padding-top: 0px">
-                         <div class="col-md-12 alert-primary" style="text-align-last: left; padding-top: 10px;">
+                    <div class="row" style="padding-top: 0px;">
+                        <div class="col-md-12 alert-primary" style="text-align-last: left; padding-top: 10px; padding-bottom: 10px;">
                             Ao clicar no botão <strong>FINALIZAR</strong> você está ciente...<br>
                              - Que inscreve o(a) <strong>{$pessoa.nomepess}</strong> na turma de <strong> {$value.descativ}</strong>;<br>
                              - Que esta inscrição NÃO GARANTE vaga na respectiva turma<br>
@@ -66,18 +66,13 @@
                              - Que está ciente que a INSCRIÇÃO, para o respectivo curso esportivo, está sujeito a <strong>SORTEIO</strong>, caso a quantidade de inscritos supere o número de vagas;<br>
                              - Que deverá confirmar a matrícula, se sorteado,<strong> PRESENCIALMENTE, </strong>a partir do dia <strong>{function="formatDate($value.dtinicmatricula)"}</strong> ao <strong>{function="formatDate($value.dttermmatricula)"}</strong>, no horário da aula.<br>
 
-                             <input type="radio" name="ciente"><label style="color: red;">&nbsp; Estou ciente</label>
-                             
-                           
-                         </div>
+                            <div class="col-md-12" style="text-align-last: center; padding-top: 10px;">
+                                <input type="radio" name="ciente"><label style="color: red;">&nbsp; Estou ciente</label>
+                                <input type="submit" data-value="Place order" value="Finalizar" id="place_order" name="insc" class="button alt" >                     
+                            </div>                             
+                        </div>
 
                     </div>                  
-                    <div class="row" style="padding-top: 0px">
-                         <div class="col-md-12" style="text-align-last: center; padding-top: 10px;">
-                           <input type="submit" data-value="Place order" value="Finalizar" id="place_order" name="insc" class="button alt" >                     
-                         </div>
-                    </div>                  
-
                     {else} 
                         
                     <div class="row" style="padding-top: 0px">                   

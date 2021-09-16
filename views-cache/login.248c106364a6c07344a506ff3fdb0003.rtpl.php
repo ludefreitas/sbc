@@ -21,10 +21,6 @@
                         <?php } ?>
 
                     </div>
-
-
-
-
             </div>
            </div>
                 <div class="container">
@@ -32,7 +28,7 @@
                     <div class="col-md-6">                    
                             
                         <form action="/login" id="register-form-wrap" class="login" method="post">
-                            <h2>Acessar</h2>
+                            <h3>Acessar / Login</h3>
                             <p>Não tem conta?&nbsp;&nbsp; <a href="/user-create">Cadastre-se!</a>   </p>                  
                             <p class="form-row form-row-first">
                                 <label for="login">
@@ -48,14 +44,14 @@
                             </p>
                             <div class="clear"></div>
                             <p class="form-row">
-                                <input type="submit" value="Login" class="button">                              
+                                <input type="submit" value="Entrar" class="button">                              
                             </p>
 
                             <p class="form-row">
                                 <label class="inline" for="rememberme"><input type="checkbox" value="forever" id="rememberme" name="rememberme"> Manter conectado </label>
                             </p>
                             <p class="lost_password">
-                                <a href="/forgot">Esqueceu a senha?</a>
+                                <a href="admin/forgot">Esqueceu a senha?</a>
                             </p>
                             <div class="clear"></div>
                         </form>  
