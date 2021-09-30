@@ -45,7 +45,7 @@
             </div>
 
             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
-              
+             <!-- 
             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
               <div class="row">
 
@@ -81,6 +81,7 @@
 
             </div>
           </div>
+        -->
 
             <?php $counter1=-1;  if( isset($turma) && ( is_array($turma) || $turma instanceof Traversable ) && sizeof($turma) ) foreach( $turma as $key1 => $value1 ){ $counter1++; ?>
 

@@ -317,7 +317,9 @@ $app->get("/admin/insc-turma-temporada/:idturma/:idtemporada/user/:iduser", func
 		'iduserprof'=>$iduserprof,
 		'insc'=>$insc->getValues(),
 		'turma'=>$turma->getValues(),
-		'temporada'=>$temporada->getValues()
+		'temporada'=>$temporada->getValues(),
+		'error'=>User::getError(),
+		'success'=>User::getSuccess()
 	]);	
 });
 
@@ -328,16 +330,31 @@ $app->get("/insc/:idinsc/:iduserprof/:idturma/statusMatriculada", function($idin
 	$temporada = new Temporada();
 	$user = new User();
 	
-	$insc->get((int)$idinsc);
+	$insc->get((int)$idinsc);	
 
 	$idturma = (int)$idturma;
 	$idtemporada = $insc->getidtemporada();
 	$iduser = (int)$iduserprof;
 
-	$insc->alteraStatusInscricaoMatriculada($idinsc, $idturma, $idtemporada);
+	$turma->get((int)$idturma);
 
-	header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
-	exit();
+	$vagas = (int)$turma->getvagas();
+
+	$numMatriculados = $temporada->setNummatriculadosTemporada($idtemporada, $idturma);	
+
+	if($numMatriculados['nummatriculados'] == $vagas){
+
+		User::setError("Número de vagas insuficiente para efetuar matrícula!");
+		header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
+		exit();	
+
+	}else{			
+
+		$insc->alteraStatusInscricaoMatriculada($idinsc, $idturma, $idtemporada);
+		User::setSuccess("Aluno matriculado com sucesso!");
+		header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
+		exit();
+	}
 
 });
 

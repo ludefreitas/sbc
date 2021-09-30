@@ -102,7 +102,6 @@ class User extends Model {
 			":LOGIN"=>$login
 		));
 
-
 		if(count($results) === 0)
 		{
 			throw new \Exception("Usuário inexistente ou senha inválida!!!", 1);			
@@ -120,6 +119,13 @@ class User extends Model {
 			$user->setData($data);
 
 			$_SESSION[User::SESSION] = $user->getValues();
+
+			if(isset($_POST['lembrar']) && $_POST['lembrar'] == 'sempre' ){
+
+				User::rememberUser($login);
+				User::rememberPassword($password);				
+
+			}
 
 			return $user;
 
@@ -167,6 +173,33 @@ class User extends Model {
 		$_SESSION[User::SESSION] = NULL;
 
 	}
+
+	private function rememberUser($user){
+
+		$validade = strtotime("+1 month");
+
+		$user = base64_encode($user);
+
+		setcookie("sisgen_user", $user, $validade, "/", "", false, true);
+	}
+
+	private function rememberPassword($pass){
+
+		$validade = strtotime("+1 month");
+
+		$pass = base64_encode($pass);
+
+		setcookie("sisgen_pass", $pass, $validade, "/", "", false, true);
+	}
+
+	public function forgotUserPass(){
+
+		$validade = time() - 3600;
+
+		setcookie("sisgen_user", '', $validade, "/", "", false, true);
+		setcookie("sisgen_pass", '', $validade, "/", "", false, true);
+	}
+	
 	/*
 	public static function listAll()
 	{

@@ -57,18 +57,25 @@
         --> 
         <div class="col-md-12"style="text-align-last: left; line-height: 20px;  font-size: 14px; font-style: normal; margin: 5px 0px 20px 0px">
 
-          
-
-          <a href="/turma/{$value.idturma}/{$value.idtemporada}" style="text-decoration: none">         
+          <!--
+          <a href="/turma/{$value.idturma}/{$value.idtemporada}" style="text-decoration: none">  
+          -->
+          <a href="/cart/{$value.idturma}/{$value.idtemporada}/add" style="text-decoration: none">     
           <h5 style="color: #000000"> 
             <span style="font-weight: bold;">
               {$value.descativ} 
             </span><br>
-              Local da aula: {$value.apelidolocal}<br>
-              {$value.diasemana} das {$value.horainicio} às {$value.horatermino} - 
-              Professor(a): {$value.apelidoperson} <br>
+             
+              {$value.diasemana} das {$value.horainicio} às {$value.horatermino} <br>  
+               Local da aula: {$value.apelidolocal}<br>             
               Temporada: {$value.desctemporada} <br>
+
+              {if="$value.fimidade == 99"} 
+               Idade a partir de {$value.initidade} anos <br>
+              {else}
               Idade: {$value.initidade} a {$value.fimidade} anos <br>
+              {/if}
+
               {if="$value.idstatustemporada == 4"} 
                <span style="color: red;">
                 {$value.descstatustemporada}
@@ -95,12 +102,10 @@
         </a>
 
         {if="$value.idstatustemporada == 6"} 
-
-        {else}
-          <a class="btn btn-info" style="background-color: #cc5d1e"  href="/turma/{$value.idturma}/{$value.idtemporada}">Detalhes da turma</a>  
-        {/if}
-          
         
+        {else}
+          <a class="btn btn-info" style="background-color: #cc5d1e"  href="/cart/{$value.idturma}/{$value.idtemporada}/add">Inscrever-se</a>  
+        {/if}           
           
         </div>
       </div> <!-- row 4 -->

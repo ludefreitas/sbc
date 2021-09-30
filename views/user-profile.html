@@ -1,12 +1,14 @@
 
-<div class="single-product-area">
-    <div class="zigzag-bottom"></div>
+<div>
     <div class="container">
         <div class="row">                
-            <div class="col-md-3" style="margin: 0px -5px 0px 0px">
+            <div class="col-md-3" style="margin: 15px -5px 0px 0px">
                 {include="user-profile-menu"}
             </div>
-            <div class="col-md-9" style="margin: 15px 0px 10px 5px;">
+            <div class="col-md-9 alert alert-info"  style="margin: 10px 15px 10px 15px;">
+                <div class="cart-collaterals">
+                    <h5>Alterar Email / Telefone</h5>
+                </div>
                 {if="$profileMsg != ''"}
                 <div class="alert alert-success">
                     {$profileMsg}
@@ -20,7 +22,7 @@
                 <form method="post" action="/user/profile">
                     <div class="form-group">
                     <label for="desperson" style="font-weight: bold; margin: 5px">Nome completo</label>
-                    <input type="text" class="form-control" id="desperson" name="desperson" placeholder="Digite o nome aqui" value="{$user.desperson}">
+                    <input type="text" class="form-control" id="desperson" name="desperson" placeholder="Digite o nome aqui" value="{$user.desperson}" minlength="14">
                     </div>
                     <div class="form-group">
                     <label for="desemail" style="font-weight: bold; margin: 5px">E-mail</label>
@@ -34,6 +36,7 @@
                     <button type="submit" class="btn btn-primary">Salvar</button>
                 </form>
             </div>
+            
         </div>
     </div>
 </div>

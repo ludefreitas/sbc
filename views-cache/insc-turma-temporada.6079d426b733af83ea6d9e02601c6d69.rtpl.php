@@ -18,6 +18,17 @@
   <div class="row">
     <div class="col-md-12">
         <div class="box box-primary">
+
+          <?php if( $error != '' ){ ?>
+                <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
+            <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                </div>
+          <?php } ?>
+          <?php if( $success != '' ){ ?>
+                <div class="alert alert-success" style="margin: 10px 10px 0px 10px">
+            <?php echo htmlspecialchars( $success, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                </div>
+          <?php } ?>
             
             <div class="box-header">
            
@@ -117,7 +128,7 @@
 
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  <?php if( $value1["laudo"] == 1 ){ ?>c/ laudo<?php } ?> - <?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                  <?php if( $value1["laudo"] == 1 ){ ?>c/ laudo<?php } ?>  Inscr[<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>] OrSor[<?php echo htmlspecialchars( $value1["numordem"], ENT_COMPAT, 'UTF-8', FALSE ); ?>] NuSor[<?php echo htmlspecialchars( $value1["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?>]
                 </h5>
               </div>
 
@@ -136,7 +147,8 @@
                   <a href="/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $iduserprof["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA do(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> na turma <?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da temporada <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ?')" class="btn btn-success btn-xs"><i></i> Matricular</a>
                 </h5>
                 </div>
-              
+
+              <!--
               <div>
 
                 <h5 style="font-weight: bold; text-align: left;">                  
@@ -144,16 +156,21 @@
                 </h5>
               </div>
               </div>
+            -->
+
               <?php } ?>
 
+              <!--
               <?php if( $value1["idinscstatus"] == 1 ){ ?>
+              
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
                   <a href="/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $iduserprof["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusDesistente" onclick="return confirm('Deseja realmente marcar como DESISTENTE o(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da turma <?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> na temporada <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ? ')" class="btn btn-primary btn-xs"><i></i> Desistente</a>
                 </h5>
               </div>
+            
               <?php } ?>
-
+              -->
               
               <?php if( $value1["idinscstatus"] == 7 ){ ?>
               <div class="col-md-1" style="margin: 2; padding: 2">

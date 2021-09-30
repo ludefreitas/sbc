@@ -113,30 +113,30 @@
                     <form id="" action="/register" class="register" method="post">
                         <h4>Criar conta</h4>
                         <p >
-                            <label style="font-size: 12px; margin: 0px">Nome Completo *</label>
-                            <input type="text" id="name" name="name" class="form-control" value="<?php echo htmlspecialchars( $registerValues["name"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                            <label style="font-size: 12px; margin: 0px">Nome Completo</label>
+                            <input type="text" id="name" name="name" class="form-control" value="<?php echo htmlspecialchars( $registerValues["name"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required="required">
                         </p>
                         <p >
-                            <label style="font-size: 12px; margin: 0px">Telefone Celular*</label>
+                            <label style="font-size: 12px; margin: 0px">Telefone Celular</label>
 
-                            <input type="text" name="phone" id="phone" pattern="\([0-9]{2}\)[\s][0-9]{5}-[0-9]{5,4}" class="form-control" value="<?php echo htmlspecialchars( $registerValues["phone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" />
+                            <input type="text" name="phone" id="phone" pattern="\([0-9]{2}\)[\s][0-9]{5}-[0-9]{5,4}" class="form-control" value="<?php echo htmlspecialchars( $registerValues["phone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required="required" />
                             <script type="text/javascript">$("#phone").mask("(00) 00000-0009");</script>
                         </p>
                         <p >
-                            <label style="font-size: 12px; margin: 0px">Email *</label>
-                            <input type="email" id="email" name="email" class="form-control" value="<?php echo htmlspecialchars( $registerValues["email"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                            <label style="font-size: 12px; margin: 0px">Email</label>
+                            <input type="email" id="email" name="email" class="form-control" value="<?php echo htmlspecialchars( $registerValues["email"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required="required">
                         </p>
                         <p >
                             <label style="font-size: 12px; margin: 0px">Confirme o Email</label>
-                            <input type="email" id="emailconfirme" name="emailconfirme" class="form-control" value="<?php echo htmlspecialchars( $registerValues["emailconfirme"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                            <input type="email" id="emailconfirme" name="emailconfirme" class="form-control" value="<?php echo htmlspecialchars( $registerValues["emailconfirme"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required="required">
                         </p>
                         <p >                            
-                            <label style="font-size: 12px; margin: 0px">Senha *</label>
-                            <input type="password" id="senha" name="password" class="form-control">
+                            <label style="font-size: 12px; margin: 0px">Senha</label>
+                            <input type="password" id="senha" name="password" class="form-control" required="required">
                         </p>
                         <p>                            
                             <label style="font-size: 12px; margin: 0px">Confirme a senha</label>
-                            <input type="password" id="senhaconfirme" name="passwordrepeat" class="form-control">
+                            <input type="password" id="senhaconfirme" name="passwordrepeat" class="form-control" required="required">
                         </p>
                         
                    <!-- </form>    -->  
@@ -149,13 +149,13 @@
 
                     <p>
                         <label style="font-size: 12px; margin: 0px">Data do Nascimento *</label>
-                        <input onblur="menorDeIdade()" type="date" id="dtnasc" name="dtnasc" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["dtnasc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                        <input onblur="menorDeIdade()" type="date" id="dtnasc" name="dtnasc" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["dtnasc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required="required">
                     </p> 
 
                     <p>
                         <label style="font-size: 12px; margin: 0px">Sexo</label>
                     
-                    <select  class="form-control" name="sexo">                    
+                    <select  class="form-control" name="sexo" required="required">                    
                         <?php if( $registerpessoaValues["sexo"] === '' ){ ?>
                         <option selected="" value="">Selecione</option> 
                         <option value="Masculino">Masculino</option>
@@ -178,7 +178,7 @@
 
                     <p>
                         <label style="font-size: 12px; margin: 0px">Número do CPF</label>
-                         <input style="width: 100%; float: right;" type="text" maxlength="14" id="numcpf" name="numcpf" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}">
+                         <input style="width: 100%; float: right;" type="text" maxlength="14" id="numcpf" name="numcpf" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}" required="required">
                         <script type="text/javascript">$("#numcpf").mask("000.000.000-00");</script>
                     </p>  
                 <!--
@@ -190,13 +190,13 @@
                 -->
                     <p>
                         <label style="font-size: 12px; margin: 0px"><br>Número do Cartão do SUS</label>
-                         <input style="width: 100%; float: right;" type="text" id="numsus" name="numsus" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["numsus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}.[0-9]{3}.[0-9]{3}">
+                         <input style="width: 100%; float: right;" type="text" id="numsus" name="numsus" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["numsus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}.[0-9]{3}.[0-9]{3}" required="required">
                     <script type="text/javascript">$("#numsus").mask("000.000.000.000.000");</script>
                     </p> 
 
                     <p style="margin-bottom: 10px">
                         <label style="font-size: 12px; margin: 0px"><br>Vulnerabilidade Social?</label>
-                         <select onchange="vulnerabilidade()" id="vulnsocial" style="width: 100%; float: right;" class="form-control" name="vulnsocial">
+                         <select onchange="vulnerabilidade()" id="vulnsocial" style="width: 100%; float: right;" class="form-control" name="vulnsocial" required="required">
                         <?php if( $registerpessoaValues["vulnsocial"] === '' ){ ?>
                         <option selected="" value="">Seclecione</option>                            
                         <option value="1">Sim</option>
@@ -221,7 +221,7 @@
 
                     <p>
                     <label style="font-size: 12px; margin: 0px"><br>PCD?</label>
-                    <select id="pcd" style="width: 100%; float: right;" class="form-control" name="pcd">
+                    <select id="pcd" style="width: 100%; float: right;" class="form-control" name="pcd" required="required">
                         <?php if( $registerpessoaValues["pcd"] === '' ){ ?>
                         <option selected="" value="">Seclecione</option>                            
                         <option value="1">Sim</option>
@@ -280,7 +280,7 @@
                     </p>
                     <p>               
                         <label style="font-size: 12px; margin: 0px">CEP</label>
-                        <input style="width: 100%; float: right;" type="text" id="cep" maxlength="8" name="cep" class="form-control" pattern="[0-9]{5}-[0-9]{3}" value="<?php echo htmlspecialchars( $registerpessoaValues["cep"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onblur="getDadosEnderecoPorCep(this.value)">
+                        <input style="width: 100%; float: right;" type="text" id="cep" maxlength="8" name="cep" class="form-control" pattern="[0-9]{5}-[0-9]{3}" value="<?php echo htmlspecialchars( $registerpessoaValues["cep"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onblur="getDadosEnderecoPorCep(this.value)" required="required">
                         <script type="text/javascript">$("#cep").mask("00000-000");</script>                   
                     </p>
                     <p>
@@ -288,7 +288,7 @@
                         <br>Rua / Avenida
                         
                     </label>
-                    <input style="width: 100%; float: right;" type="text" id="rua" name="rua" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                    <input style="width: 100%; float: right;" type="text" id="rua" name="rua" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required="required">
                     </p>
                     <p>
 
@@ -296,7 +296,7 @@
                         <br>Número
                         
                     </label>
-                    <input style="width: 100%; float: right;" type="text" id="numero" name="numero" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                    <input style="width: 100%; float: right;" type="text" id="numero" name="numero" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required="required">
 
                     </p>
                     <p>
@@ -310,38 +310,38 @@
                     <label style="font-size: 12px; margin: 0px">
                         <br>Bairro                        
                     </label>
-                    <input style="width: 100%; float: right;" type="text" id="bairro" name="bairro" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["bairro"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                    <input style="width: 100%; float: right;" type="text" id="bairro" name="bairro" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["bairro"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required="required">
                     </p>
                     <p>
                     <label style="font-size: 12px; margin: 0px">
                         <br>Cidade                        
                     </label>
-                    <input style="width: 100%; float: right;" type="text" id="cidade" name="cidade" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["cidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                    <input style="width: 100%; float: right;" type="text" id="cidade" name="cidade" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["cidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required="required">
                     </p>
                     <p>
                     <label style="font-size: 12px; margin: 0px">
                         <br>Estado                        
                     </label>
-                    <input style="width: 100%; float: right;" type="text" id="uf" name="estado" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["estado"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> 
+                    <input style="width: 100%; float: right;" type="text" id="uf" name="estado" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["estado"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required="required"> 
                     </p>
                     <p>
                     <label style="font-size: 12px; margin: 0px">
                         <br>Telefone Residencial/Celular
                     </label>
-                     <input style="width: 100%; float: right;" type="text" id="telres" name="telres" pattern="\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["telres"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" />
+                     <input style="width: 100%; float: right;" type="text" id="telres" name="telres" pattern="\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["telres"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" / required="required">
                      <script type="text/javascript">$("#telres").mask("(00) 0000-00009");</script>   
                      </p>
                     <p>
                     <label style="font-size: 12px; margin: 0px">
-                        <br>Nome de pessoa para contato em caso de emergência
+                        <br>Nome de uma pessoa para contato em caso de emergência
                     </label>                    
-                    <input style="width: 100%; float: right;" type="text" class="form-control" id="contato" value="<?php echo htmlspecialchars( $registerpessoaValues["contato"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="contato" placeholder="" />
+                    <input style="width: 100%; float: right;" type="text" class="form-control" id="contato" value="<?php echo htmlspecialchars( $registerpessoaValues["contato"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="contato" placeholder="" required="required" />
                     </p>
                     <p>
                     <label style="font-size: 12px; margin: 0px">
-                        <br>Telefone da pessoa de contato em caso emergência
+                        <br>Telefone da pessoa para contato em caso emergência
                     </label>
-                     <input style="width: 100%; float: right;" type="text" id="telemer" name="telemer" pattern="\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["telemer"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" />
+                     <input style="width: 100%; float: right;" type="text" id="telemer" name="telemer" pattern="\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["telemer"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required="required" />
                      <script type="text/javascript">$("#telemer").mask("(00) 0000-00009");</script> 
                  </p>
                 </div> 

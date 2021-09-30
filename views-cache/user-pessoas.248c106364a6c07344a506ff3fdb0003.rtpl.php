@@ -1,6 +1,9 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?> <div class="container"> <!-- container 1 -->
             <div class="row"> <!-- row 2 -->
-              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
+            <div class="col-md-3" style="margin: 15px 0px 0px 0px">
+                <?php require $this->checkTemplate("user-profile-menu");?>
+            </div>
+              <div class="col-md-9" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
 
 
     <?php if( $errorRegister != '' ){ ?>
@@ -23,8 +26,7 @@
                 &nbsp;<strong><?php echo calcularIdade($value1["dtnasc"]); ?>&nbsp; </strong>anos 
                 &nbsp;<strong>Data Nasc:</strong><?php echo formatDate($value1["dtnasc"]); ?>
                 &nbsp;<strong>Sexo: </strong><?php echo htmlspecialchars( $value1["sexo"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-                &nbsp;<strong>CPF: </strong><?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-                &nbsp;<strong>RG: </strong><?php echo htmlspecialchars( $value1["numrg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                &nbsp;<strong>CPF: </strong><?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>                
                 &nbsp;<strong>SUS: </strong><?php echo htmlspecialchars( $value1["numsus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>   
                 &nbsp;<strong>Vuln. Social: </strong> <?php if( $value1["vulnsocial"] == 1 ){ ?>Sim<?php }else{ ?>Não<?php } ?>
                 <?php if( $value1["vulnsocial"] == 1 ){ ?>                

@@ -14,6 +14,24 @@ use \Sbc\Model\Endereco;
 
 $app->get('/', function() {
 
+	if(isset($_COOKIE['sisgen_user']) && isset($_COOKIE['sisgen_pass'])){
+
+		$login = base64_decode($_COOKIE['sisgen_user']);
+		$password = base64_decode($_COOKIE['sisgen_pass']);
+
+		try {
+
+			User::login($login, $password);
+
+		} catch(Exception $e) {
+
+			User::setError($e->getMessage());
+			header("Location: /login");
+			exit;
+		}	
+
+	}
+
 	$search = (isset($_GET['search'])) ? $_GET['search'] : "";
 
 	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
@@ -33,7 +51,7 @@ $app->get('/', function() {
 
 		if(!isset($search) || $search == NULL){
 
-			Cart::setMsgError("Não existe turmas para esta temporada. A temporada pode não estar iniciada, estar em processo de sorteio ou foi encerrada. Aguarde, ou entre em contato com o Centro Esportivo mais próximo a sua casa. ");
+			Cart::setMsgError("Não existem inscrições diponíveis para esta temporada. Para a temporada 2021 o período de inscrições foi de xx/xx/xxxx a xx/xx/xxxx conforme resolução (xxxxx) publicada no jornal Notícias do Município de xx/xx/xxxx. O sorteio acontecerá dia xx/xx/xxxx. A partir do dia xx/xx/xxxx iniciar-se-a a etapa de matrículas, para os contemplados, no Centro Esportivo no dia e horário de sua aula. Acompanhe o status da sua inscrição, clicando aqui.");
 
 		}else{
 
@@ -96,6 +114,7 @@ $app->get('/', function() {
 	$page->setTpl("index", array(
 		'turma'=>Turma::checkList($pagination['data']),
 		"search"=>$search,
+		"idtemporada"=>$idtemporada,
 		'profileMsg'=>User::getSuccess(),
 		//"pages"=>$pages,
 		'error'=>Cart::getMsgError()
@@ -277,7 +296,7 @@ $app->post("/checkout", function(){
 	    session_regenerate_id();
 
 	    $insc->inscricaoEmail($idinsc, $numsorte, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma);
-	   		
+
 		header("Location: /profile/insc/".$insc->getidinsc()."/".$idpess."");
 		exit;	
 });
@@ -296,7 +315,7 @@ $app->get("/turma/:idturma/:idtemporada", function($idturma, $idtemporada){
 		)
 	{
 
-		Turma::setMsgError("Não é possivel Inscrever-se na turma selecionada. A temporada pode não estar iniciada, estar em processo de sorteio ou ainda, a temporada foi encerrada. Aguarde, ou entre em contato com o Centro Esportivo mais próximo a sua casa. ");
+		Turma::setMsgError("Não existem inscrições diponíveis para esta temporada. Para a temporada 2021 o período de inscrições foi de xx/xx/xxxx a xx/xx/xxxx conforme resolução (xxxxx) publicada no jornal Notícias do Município de xx/xx/xxxx. O sorteio acontecerá dia xx/xx/xxxx. A partir do dia xx/xx/xxxx iniciar-se-a a etapa de matrículas, para os contemplados, no Centro Esportivo no dia e horário de sua aula. Acompanhe o status da sua inscrição, clicando aqui.");
 
 	}
 
@@ -347,6 +366,8 @@ $app->post("/login", function(){
 $app->get("/logout", function(){
 
 	User::logout();
+
+	User::forgotUserPass();
 
 	Cart::removeFromSession();
 	

@@ -857,6 +857,23 @@
 			]);
 		}
 
+		public function setNummatriculadosTemporada($idtemporada, $idturma){
+
+				$sql = new Sql();
+
+			$results =  $sql->select("
+				SELECT nummatriculados
+				FROM tb_turmatemporada
+				WHERE idtemporada = :idtemporada 
+				AND idturma = :idturma", [
+				':idtemporada'=>$idtemporada,
+				':idturma'=>$idturma								
+			]);
+
+			return $results[0];		
+
+		}
+
 		public static function setError($msg)
 		{
 

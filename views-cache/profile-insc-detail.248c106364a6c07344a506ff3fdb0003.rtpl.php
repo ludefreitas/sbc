@@ -96,6 +96,7 @@
             <strong><?php echo formatDate($insc["dttermmatricula"]); ?></strong>
         </div>
     </div>
+    <!--
     <div class="row">
         <div class="col-md-12" style="padding-top: 10px">
             
@@ -104,11 +105,12 @@
         </div>
         
     </div>
+    -->
 </div>
 </div> <!-- final da index -->
 
 
-
+<!--
 <style>
 @media print {
 .header-area,
@@ -126,3 +128,4 @@ width: 100%!important;
 }
 }
 </style>
+-->

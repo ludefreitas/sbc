@@ -207,13 +207,17 @@ class Pessoa extends Model {
 
 	}
 
-	public static function checkCpfExist($numcpf)
+	public static function checkCpfExist($numcpf, $iduser)
 	{
 
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT * FROM tb_pessoa WHERE numcpf = :numcpf", [
-			':numcpf'=>$numcpf
+		$results = $sql->select("
+			SELECT * FROM tb_pessoa 
+			WHERE numcpf = :numcpf 
+			AND iduser = :iduser", [
+			':numcpf'=>$numcpf,
+			':iduser'=>$iduser
 		]);
 
 		return (count($results) > 0);

@@ -64,8 +64,12 @@
 
     <div class="container">
         <div class="row" style="padding-bottom: 5px">
+
+            <div class="col-md-3" style="margin: 0px -5px 5px 0px">
+                <?php require $this->checkTemplate("user-profile-menu");?>
+            </div>
         
-            <div class="col-md-12">
+            <div class="col-md-9">
 
                 <div class="alert alert-success" style="text-align-last: center;">
                     <span style="font-weight: bold;">ATUALIZAR PESSOA/DEPENDENTE</span style="font-weight: bold;">
@@ -81,26 +85,19 @@
                 <form id="register-form-wrap" action="/updatepessoa/<?php echo htmlspecialchars( $pessoa["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="register" method="post">
                        
                     <label for="nomepess">
-                        Nome Completo 
-                        <span class="required">
-                        *
-                        </span>
+                        Nome Completo                         
                     </label>
-                    <input style="width: 100%; float: right;" type="text" id="nomepess" name="nomepess" class="input-text" value="<?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" placeholder="Informe o nome completo">
+                    <input style="width: 100%; float: right;" type="text" id="nomepess" name="nomepess" class="input-text" value="<?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" placeholder="Informe o nome completo" required="required">
 
                     <label for="dtnasc">
                         <br>Data do Nascimento
-                        <span class="required">
-                            *
-                        </span>
                     </label>
-                    <input onblur="menorDeIdade()" style="width: 100%; float: right;" type="date" id="dtnasc" name="dtnasc" class="input-text" value="<?php echo htmlspecialchars( $pessoa["dtnasc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">               
+                    <input onblur="menorDeIdade()" style="width: 100%; float: right;" type="date" id="dtnasc" name="dtnasc" class="input-text" value="<?php echo htmlspecialchars( $pessoa["dtnasc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required="required">               
                     
                     <label for="sexo"><br>
                         <br>Sexo
-                    </label>
-                    
-                    <select style="width: 100%; float: right;" class="form-control" name="sexo">
+                    </label>                    
+                    <select style="width: 100%; float: right;" class="form-control" name="sexo" required="required">
                         <option selected="" value="<?php echo htmlspecialchars( $pessoa["sexo"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $pessoa["sexo"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option> 
                         <option value="Masculino">Masculino</option>
                         <option value="Feminino">Feminino</option>
@@ -109,63 +106,49 @@
 
                     <label for="numcpf">
                         <br><br>Número do CPF 
-                        <span class="required">
-                            *
-                        </span>
                     </label>
-                    <input readonly="" style="width: 100%; float: right;" type="text" id="numcpf" name="numcpf" class="input-text" value="<?php echo htmlspecialchars( $pessoa["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}">
+                    <input readonly="" style="width: 100%; float: right;" type="text" id="numcpf" name="numcpf" class="input-text" value="<?php echo htmlspecialchars( $pessoa["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}" required="required">
                     <script type="text/javascript">$("#numcpf").mask("000.000.000-00");</script>
                    
-
+                <!--
                     <label for="numrg">
                         <br><br>Número do RG 
-                        <span class="required">
-                            *
-                        </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="text" id="numrg" name="numrg" class="input-text" value="<?php echo htmlspecialchars( $pessoa["numrg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" pattern="[0-9]{2}.[0-9]{3}.[0-9]{3}-[0-9]{1}">
+                    <input style="width: 100%; float: right;" type="text" id="numrg" name="numrg" class="input-text" value="" pattern="[0-9]{2}.[0-9]{3}.[0-9]{3}-[0-9]{1}" required="required">
                     <script type="text/javascript">$("#numrg").mask("00.000.000-0");</script>
+                -->
 
                     <label for="numsus">
-                        <br><br>Número do Cartão do SUS 
-                        <span class="required">
-                            *
-                        </span>
+                        <br><br>Número do Cartão do SUS
                     </label>
-                    <input style="width: 100%; float: right;" type="text" id="numsus" name="numsus" class="input-text" value="<?php echo htmlspecialchars( $pessoa["numsus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}.[0-9]{3}.[0-9]{3}">
+                    <input style="width: 100%; float: right;" type="text" id="numsus" name="numsus" class="input-text" value="<?php echo htmlspecialchars( $pessoa["numsus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}.[0-9]{3}.[0-9]{3}" required="required">
                     <script type="text/javascript">$("#numsus").mask("000.000.000.000.000");</script>
                     
                     <label for="vulnsocial">
                         <br><br>Vulnerabilidade Social?
                     </label>
-                    <select id="vulnsocial" style="width: 100%; float: right;" class="form-control" name="vulnsocial">
+                    <select id="vulnsocial" style="width: 100%; float: right;" class="form-control" name="vulnsocial" required="required">
                         <option selected="" value="<?php echo htmlspecialchars( $pessoa["vulnsocial"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">Selecione</option>                    
-                        <option value="0">Não</option>                         
-                        <option value="1">Sim</option>    
-                       
-                        
+                        <option value="0">Não</option>
+                        <option value="1">Sim</option>   
                     </select> 
-                    <label for="pcd">
-                        <br><br>PCD?
-                    </label>
-                    <select id="pcd" style="width: 100%; float: right;" class="form-control" name="pcd">
-                        <option selected="" value="<?php echo htmlspecialchars( $pessoa["pcd"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">Selecione</option>                    
-                        <option value="0">Não</option>                         
-                        <option value="1">Sim</option>    
-                       
-                        
-                    </select>                                 
-                    
+
                     <div id="divCadunico">
                     <label for="cadunico">
                         <br><br>Número do CadÚnico / NIS
-                        <span class="required">
-                            *
-                        </span>
                     </label>
                     <input style="width: 100%; float: right;" type="text" id="cadunico" name="cadunico" class="input-text" value="<?php echo htmlspecialchars( $pessoa["cadunico"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" pattern="[0-9]{3}.[0-9]{5}.[0-9]{2}-[0-9]{1}">
                     <script type="text/javascript">$("#cadunico").mask("000.00000.00-0");</script>
                     </div>
+
+                    <label for="pcd">
+                        <br><br>PCD?
+                    </label>
+                    <select id="pcd" style="width: 100%; float: right;" class="form-control" name="pcd" required="required">
+                        <option selected="" value="<?php echo htmlspecialchars( $pessoa["pcd"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">Selecione</option>                    
+                        <option value="0">Não</option>                         
+                        <option value="1">Sim</option> 
+                    </select>
 
                     <div id="maeEpai">
                     <label for="nomemae">
@@ -178,9 +161,6 @@
                     
                     <label for="cpfmae">
                         <br><br>CPF da Mãe
-                        <span class="required">
-                            *
-                        </span>
                     </label>
                     <input style="width: 100%; float: right;" type="text" id="cpfmae" name="cpfmae" class="input-text" value="<?php echo htmlspecialchars( $pessoa["cpfmae"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}">
                     <script type="text/javascript">$("#cpfmae").mask("000.000.000-00");</script>
@@ -194,103 +174,66 @@
                     <input style="width: 100%; float: right;" type="text" id="nomepai" name="nomepai" class="input-text" value="<?php echo htmlspecialchars( $pessoa["nomepai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                     
                     <label for="cpfpai">
-                        CPF da Pai
-                        <span class="required">
-                            *
-                        </span>
+                        CPF da Pai                      
                     </label>
                     <input style="width: 100%; float: right;" type="text" id="cpfpai" name="cpfpai" class="input-text" value="<?php echo htmlspecialchars( $pessoa["cpfpai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}">
                     <script type="text/javascript">$("#cpfpai").mask("000.000.000-00");</script>
 
                     <label for="cep">
                         CEP
-                        <span class="required">
-                                
-                        </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="text" class="form-control" id="cep" value="<?php echo htmlspecialchars( $endereco["cep"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="cep" placeholder="" onblur="getDadosEnderecoPorCep(this.value)" />
-                     <script type="text/javascript">$("#cep").mask("00000-000");</script>                  
-                    
+                    <input style="width: 100%; float: right;" type="text" class="form-control" id="cep" value="<?php echo htmlspecialchars( $endereco["cep"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="cep" placeholder="" pattern="[0-9]{5}-[0-9]{3}" onblur="getDadosEnderecoPorCep(this.value)" required="required" />
+                     <script type="text/javascript">$("#cep").mask("00000-000");</script>
 
                      <label for="rua">
                         Rua / Avenida
-                        <span class="required">
-                                
-                        </span>
                     </label>
                    
-                    <input style="width: 100%; float: right;" type="text" class="form-control" value="<?php echo htmlspecialchars( $endereco["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="rua" placeholder="" id="rua" />
+                    <input style="width: 100%; float: right;" type="text" class="form-control" value="<?php echo htmlspecialchars( $endereco["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="rua" placeholder="" id="rua" required="required" />
                
 
                     <label for="numero">
                         Número
-                        <span class="required">
-                                
-                        </span>
                     </label>
                     
-                    <input style="width: 100%; float: right;" type="text" class="form-control" value="<?php echo htmlspecialchars( $endereco["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="numero" placeholder="" id="numero" />
+                    <input style="width: 100%; float: right;" type="text" class="form-control" value="<?php echo htmlspecialchars( $endereco["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="numero" placeholder="" id="numero" required="required" />
 
                     <label for="complemento">
                         Complemento
-                        <span class="required">
-                                
-                        </span>
                     </label>                    
                     <input style="width: 100%; float: right;" type="text" class="form-control" value="<?php echo htmlspecialchars( $endereco["complemento"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="complemento" placeholder="" id="complemento" />
-               
 
-                <label for="bairro">
+                    <label for="bairro">
                         Bairro
-                        <span class="required">
-                                
-                        </span>
                     </label>                    
-                    <input style="width: 100%; float: right;" type="text" class="form-control" value="<?php echo htmlspecialchars( $endereco["bairro"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="bairro" placeholder="" id="bairro" />
+                    <input style="width: 100%; float: right;" type="text" class="form-control" value="<?php echo htmlspecialchars( $endereco["bairro"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="bairro" placeholder="" id="bairro" required="required" />
 
-                
-
-                <label for="cidade">
-                        Cidade
-                        <span class="required">
-                                
-                        </span>
+                    <label for="cidade">
+                        Cidade                        
                     </label>                    
-                    <input style="width: 100%; float: right;" type="text" class="form-control" value="<?php echo htmlspecialchars( $endereco["cidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="cidade" placeholder=""  id="cidade" />
-                
+                    <input style="width: 100%; float: right;" type="text" class="form-control" value="<?php echo htmlspecialchars( $endereco["cidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="cidade" placeholder=""  id="cidade" required="required" />                
                 
                     <label for="estado">
-                        Estado
-                        <span class="required">
-                                
-                        </span>
+                        Estado                        
                     </label>                    
-                    <input style="width: 100%; float: right;" type="text" class="form-control" value="<?php echo htmlspecialchars( $endereco["estado"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="estado" placeholder=""  id="uf" />
+                    <input style="width: 100%; float: right;" type="text" class="form-control" value="<?php echo htmlspecialchars( $endereco["estado"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="estado" placeholder=""  id="uf" required="required" />
                
 
-                <label for="telres">
+                    <label for="telres">
                         Telefone Residencial/Celular
-                        <span class="required">
-                                
-                        </span>
-                </label>
-                    <input style="width: 100%; float: right;" type="text" name="telres" id="telres" pattern="\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}" class="form-control" value="<?php echo htmlspecialchars( $endereco["telres"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" />
+                    </label>
+                    <input style="width: 100%; float: right;" type="text" name="telres" id="telres" pattern="\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}" class="form-control" value="<?php echo htmlspecialchars( $endereco["telres"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required="required" />
                      <script type="text/javascript">$("#telres").mask("(00) 0000-00009");</script>         
                 
                  <label for="contato">
-                        Nome de pessoa para contato em caso de emergência
-                        <span class="required">
-                                
-                        </span>    
+                        Nome de uma pessoa para contato em caso de emergência
                 </label>                
-                    <input style="width: 100%; float: right;" type="text" class="form-control" value="<?php echo htmlspecialchars( $endereco["contato"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="contato" placeholder=""  id="contato" />
+                    <input style="width: 100%; float: right;" type="text" class="form-control" value="<?php echo htmlspecialchars( $endereco["contato"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="contato" placeholder=""  id="contato" required="required" />
+
                  <label for="contato">
-                        Telefone da pessoa de contato em caso emergência
-                        <span class="required">
-                                
-                        </span>                    
+                        Telefone da pessoa para contato em caso emergência            
                    </label> 
-                    <input style="width: 100%; float: right;" type="text" name="telemer" id="telemer" pattern="\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}" class="form-control" value="<?php echo htmlspecialchars( $endereco["telemer"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" />         
+                    <input style="width: 100%; float: right;" type="text" name="telemer" id="telemer" pattern="\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}" class="form-control" value="<?php echo htmlspecialchars( $endereco["telemer"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required="required" />         
                     <script type="text/javascript">$("#telemer").mask("(00) 0000-00009");</script>         
                 </div> 
 

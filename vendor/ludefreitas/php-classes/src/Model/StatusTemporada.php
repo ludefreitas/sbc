@@ -24,7 +24,7 @@ class StatusTemporada extends Model {
 		return $sql->select("
 			SELECT * 
 			FROM tb_statustemporada
-			ORDER BY descstatustemporada");
+			ORDER BY idstatustemporada");
 	}		
 	
 

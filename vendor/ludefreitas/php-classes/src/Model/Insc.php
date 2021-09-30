@@ -274,6 +274,7 @@ class Insc extends Model {
 			INNER JOIN tb_local j ON j.idlocal = i.idlocal
 			WHERE a.idinsc LIKE :search
 			OR f.desperson LIKE :search
+			OR a.dtinsc LIKE :search
 			OR b.descstatus LIKE :search 
 			OR g.desctemporada LIKE :search 
 			OR d.nomepess LIKE :search

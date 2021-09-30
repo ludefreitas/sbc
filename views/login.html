@@ -6,7 +6,7 @@
 
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         
                         {if="$error != ''"}
                         <div class="alert alert-danger">
@@ -42,14 +42,16 @@
                                 </label>
                                 <input type="password" id="senha" name="password" class="input-text">
                             </p>
+                            <p class="form-row">
+                                <label class="inline" for="lembrar"><input type="checkbox" value="sempre" id="lembrar" name="lembrar"> Manter conectado </label>
+                            </p>
                             <div class="clear"></div>
                             <p class="form-row">
                                 <input type="submit" value="Entrar" class="button">                              
                             </p>
-
-                            <p class="form-row">
-                                <label class="inline" for="rememberme"><input type="checkbox" value="forever" id="rememberme" name="rememberme"> Manter conectado </label>
-                            </p>
+                            
+                            
+                        
                             <p class="lost_password">
                                 <a href="admin/forgot">Esqueceu a senha?</a>
                             </p>

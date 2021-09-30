@@ -18,6 +18,17 @@
   <div class="row">
     <div class="col-md-12">
         <div class="box box-primary">
+
+          {if="$error != ''"}
+                <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
+            {$error}
+                </div>
+          {/if}
+          {if="$success != ''"}
+                <div class="alert alert-success" style="margin: 10px 10px 0px 10px">
+            {$success}
+                </div>
+          {/if}
             
             <div class="box-header">
            
@@ -117,7 +128,7 @@
 
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  {if="$value.laudo == 1"}c/ laudo{/if} - {$value.idinsc}
+                  {if="$value.laudo == 1"}c/ laudo{/if}  Inscr[{$value.idinsc}] OrSor[{$value.numordem}] NuSor[{$value.numsorte}]
                 </h5>
               </div>
 
@@ -136,7 +147,8 @@
                   <a href="/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA do(a) {$value.nomepess} na turma {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-success btn-xs"><i></i> Matricular</a>
                 </h5>
                 </div>
-              
+
+              <!--
               <div>
 
                 <h5 style="font-weight: bold; text-align: left;">                  
@@ -144,16 +156,21 @@
                 </h5>
               </div>
               </div>
+            -->
+
               {/if}
 
+              <!--
               {if="$value.idinscstatus == 1"}
+              
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
                   <a href="/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusDesistente" onclick="return confirm('Deseja realmente marcar como DESISTENTE o(a) {$value.nomepess} da turma {$turma.descturma} na temporada {$temporada.desctemporada} ? ')" class="btn btn-primary btn-xs"><i></i> Desistente</a>
                 </h5>
               </div>
+            
               {/if}
-
+              -->
               
               {if="$value.idinscstatus == 7"}
               <div class="col-md-1" style="margin: 2; padding: 2">

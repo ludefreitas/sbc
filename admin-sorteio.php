@@ -68,7 +68,7 @@ $app->post("/admin/sortear", function() {
 
 				$numeroordenado = $sorteio[$x]['numerodeordem'];
 
-				var_dump($numeroordenado);
+				//var_dump($numeroordenado);
 
 				Sorteio::setNumeroDeOrdem($numeroordenado, $numerosorteado);
 

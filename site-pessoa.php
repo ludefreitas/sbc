@@ -73,12 +73,14 @@ $app->post("/registerpessoa", function(){
 
 	}
 	
-	if (Pessoa::checkCpfExist($_POST['numcpf']) === true) {
+	
+	if (Pessoa::checkCpfExist($_POST['numcpf'], $iduser) === true) {
 
-		Pessoa::setErrorRegister("Este CPF pertence a outro usuário.");
+		Pessoa::setErrorRegister("Este CPF pertence a uma pessoa já cadastrada. Consulte-o no seu perfil em 'Minha Família'");
 		header("Location: /pessoa-create");
 		exit;
 	}
+	
 
 	/*
 	if (!isset($_POST['numrg']) || $_POST['numrg'] == '') {
@@ -147,9 +149,10 @@ $app->post("/registerpessoa", function(){
 			exit;
 		}			
 
-		if($_POST['cpfmae'] === $_POST['cpfpai']){
+		if( ( $_POST['cpfmae'] != '' && $_POST['cpfpai'] != '' ) && ( $_POST['cpfmae'] === $_POST['cpfpai'] ) )
+		{
 
-			Pessoa::setErrorRegister("CPF da mãe não pode ser igual ao do pai!");
+			Pessoa::setErrorRegister("CPF da mãe não pode ser igual ao CPF do pai!");
 			header("Location: /pessoa-create");
 			exit;
 		}			
@@ -168,7 +171,7 @@ $app->post("/registerpessoa", function(){
 			exit;
 		}	
 
-		if($_POST['cpfpai'] !== '' && !Pessoa::validaCPF($_POST['cpfpai'])){
+        if($_POST['cpfpai'] !== '' && !Pessoa::validaCPF($_POST['cpfpai'])){
 
 			Pessoa::setErrorRegister("Informe um número de CPF válido para o pai da pessoa!");
 			header("Location: /pessoa-create");
@@ -225,6 +228,12 @@ $app->post("/registerpessoa", function(){
 		header("Location: /pessoa-create");
 		exit;		
 	}
+
+	if ( $_POST['rua'] == 'undefined' || $_POST['bairro'] == 'undefined' || $_POST['cidade'] == 'undefined' || $_POST['estado'] == 'undefined' ) {
+		Pessoa::setErrorRegister("Verifique o CEP digitado, pode estar incorreto!");
+		header("Location: /pessoa-create");
+		exit;		
+	}	
 
 	if (!isset($_POST['rua']) || $_POST['rua'] == '') {
 		Pessoa::setErrorRegister("Informe o nome da rua, avenida ou logradouro.");
@@ -556,7 +565,8 @@ $app->post("/updatepessoa/:idpess", function($idpess){
 			exit;
 		}			
 
-		if($_POST['cpfmae'] === $_POST['cpfpai']){
+		if( ( $_POST['cpfmae'] != '' && $_POST['cpfpai'] != '' ) && ( $_POST['cpfmae'] === $_POST['cpfpai'] ) )
+		{
 
 			Pessoa::setErrorRegister("CPF da mãe não pode ser igual ao do pai!");
 			header("Location: /user/pessoa/".$idpess."");
@@ -596,6 +606,12 @@ $app->post("/updatepessoa/:idpess", function($idpess){
 		header("Location: /user/pessoa/".$idpess."");
 		exit;		
 	}
+
+	if ( $_POST['rua'] == 'undefined' || $_POST['bairro'] == 'undefined' || $_POST['cidade'] == 'undefined' || $_POST['estado'] == 'undefined' ) {
+		Pessoa::setErrorRegister("Verifique o CEP digitado, pode estar incorreto!");
+		header("Location: /user/pessoa/".$idpess."");
+		exit;		
+	}	
 
 	if (!isset($_POST['rua']) || $_POST['rua'] == '') {
 		Pessoa::setErrorRegister("Informe o nome da rua, avenida ou logradouro.");
@@ -676,7 +692,7 @@ $app->post("/updatepessoa/:idpess", function($idpess){
 		'dtnasc'=>$_POST['dtnasc'],
 		'sexo'=>$_POST['sexo'],
 		'numcpf'=>$_POST['numcpf'],
-		'numrg'=>$_POST['numrg'],
+		//'numrg'=>$_POST['numrg'],
 		'numsus'=>$_POST['numsus'],
 		'vulnsocial'=>$_POST['vulnsocial'],
 		'pcd'=>$_POST['pcd'],

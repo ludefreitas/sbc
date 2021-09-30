@@ -1,7 +1,10 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
  <div class="container"> <!-- container 1 -->
             <div class="row"> <!-- row 2 -->
-              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
+                <div class="col-md-3" style="margin: 15px 0px 0px 0px">
+                <?php require $this->checkTemplate("user-profile-menu");?>
+            </div>
+              <div class="col-md-9" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
 
             <div class="container">
                 <div class="row alert-primary">
@@ -31,10 +34,12 @@
 
                             <?php if( ($value1["idinscstatus"]) === '2' ){ ?>
                             
-                            <a href="/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusCancelada" onclick="return confirm('Deseja realmente excluir PERMANENTEMENTE a inscrição <?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?> do(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da turma <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>? Lembramos que se você clicar em OK a inscrição e a matricula se existir, serão definitivamente canceladas.')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                            <!-- 
+                            <a href="/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusCancelada" onclick="return confirm('Deseja realmente excluir PERMANENTEMENTE a inscrição <?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?> do(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da turma <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>? Lembramos que se você clicar em OK a inscrição e a matricula se existir, serão definitivamente canceladas.')" class="btn btn-success btn-xs"><i></i> Matricular</a> 
+                            -->
                             <?php } ?>
 
-                            <?php if( ($value1["idinscstatus"]) !== '7' ){ ?>
+                            <?php if( ($value1["idinscstatus"]) !== '8' && ($value1["idinscstatus"]) !== '9' ){ ?>
 
                             <a href="/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusCancelada" onclick="return confirm('Deseja realmente excluir PERMANENTEMENTE a inscrição <?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?> do(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da turma <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>? Lembramos que se você clicar em OK a inscrição e a matricula se existir, serão definitivamente canceladas.')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
                             <?php } ?>                      

@@ -195,7 +195,7 @@ class Turma extends Model {
       		OR k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
       		OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
       		OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada) 
-      		ORDER BY RAND()
+      		ORDER BY a.numinscritos, RAND()
 			", [
 				':idstatusTemporadaMatriculasEncerradas'=>$idstatusTemporadaMatriculasEncerradas,
 				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
@@ -273,7 +273,7 @@ class Turma extends Model {
 				OR i.descrfxetaria LIKE :search	
 				OR m.descmodal LIKE :search
 			)	
-			ORDER BY RAND()											
+			ORDER BY a.numinscritos, RAND()											
 			-- ORDER BY a.descturma
 			-- LIMIT $start, $itemsPerPage;
 		", [
@@ -335,7 +335,7 @@ class Turma extends Model {
             OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada 
             OR k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
             OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada ))
-      		ORDER BY RAND()", [
+      		ORDER BY a.numinscritos, RAND()", [
       			':idmodal'=>$idmodal,
 				':idstatusTemporadaMatriculasEncerradas'=>$idstatusTemporadaMatriculasEncerradas,
 				':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada,
@@ -387,7 +387,7 @@ class Turma extends Model {
             OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada 
             OR k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
             OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada))
-      		ORDER BY RAND()", [
+      		ORDER BY a.numinscritos, RAND()", [
       			':idlocal'=>$idlocal,
 				':idstatusTemporadaMatriculasEncerradas'=>$idstatusTemporadaMatriculasEncerradas,
 				':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada,

@@ -368,9 +368,18 @@ class Cart extends Model {
 			"SELECT * FROM tb_insc a
 			INNER JOIN tb_carts b USING(idcart)
 			INNER JOIN tb_pessoa c USING(idpess)
-			INNER JOIN tb_turma d USING(idturma)   
-			INNER JOIN tb_temporada e USING(idtemporada)         
-			WHERE c.numcpf = :numcpf AND c.idpess = :idpess AND d.idturma = :idturma AND e.idtemporada = :idtemporada", [
+			INNER JOIN tb_turma d USING(idturma)  
+			INNER JOIN tb_espaco e USING(idespaco)  
+			INNER JOIN tb_local f USING(idlocal)  
+			INNER JOIN tb_atividade g USING(idativ)    
+			INNER JOIN tb_temporada h USING(idtemporada)  
+            WHERE a.idinscstatus != 8 
+            AND a.idinscstatus != 9
+			AND c.numcpf = :numcpf 
+            AND c.idpess = :idpess
+            AND d.idturma = :idturma      
+            AND h.idtemporada = :idtemporada            
+			", [
 			':numcpf'=>$numcpf,
 			':idpess'=>$idpess,
 			'idturma'=>$idturma,
@@ -398,13 +407,21 @@ class Cart extends Model {
 			INNER JOIN tb_espaco e USING(idespaco)  
 			INNER JOIN tb_local f USING(idlocal)  
 			INNER JOIN tb_atividade g USING(idativ)    
-			INNER JOIN tb_temporada h USING(idtemporada)         
-			WHERE c.numcpf = :numcpf AND c.idpess = :idpess AND d.idturma = :idturma AND f.idlocal = :idlocal AND h.idtemporada = :idtemporada AND g.tipoativ = 'Aquática'", [
+			INNER JOIN tb_temporada h USING(idtemporada)  
+            WHERE a.idinscstatus != 8 
+            AND a.idinscstatus != 9
+			AND c.numcpf = :numcpf 
+            AND c.idpess = :idpess
+            AND d.idturma = :idturma      
+            AND f.idlocal = :idlocal 
+            AND g.tipoativ = 'Aquática'                              
+            AND h.idtemporada = :idtemporada            
+            ", [
 			':numcpf'=>$numcpf,
 			':idpess'=>$idpess,
 			'idturma'=>$idturma,
 			':idtemporada'=>$idtemporada,
-			':idlocal'=>$idlocal
+			':idlocal'=>$idlocal			
 		]);
 
 		return $results;
@@ -415,6 +432,7 @@ class Cart extends Model {
 		}
 
 	}
+	
 }
 
  ?>

@@ -20,7 +20,7 @@ class Espaco extends Model {
 			FROM tb_espaco
 			INNER JOIN tb_local
 			using(idlocal)
-			ORDER BY nomeespaco, apelidolocal");
+			ORDER BY apelidolocal, nomeespaco");
 
 	}	
 

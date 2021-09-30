@@ -1,6 +1,9 @@
  <div class="container"> <!-- container 1 -->
             <div class="row"> <!-- row 2 -->
-              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
+            <div class="col-md-3" style="margin: 15px 0px 0px 0px">
+                {include="user-profile-menu"}
+            </div>
+              <div class="col-md-9" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
 
 
     {if="$errorRegister != ''"}
@@ -23,8 +26,7 @@
                 &nbsp;<strong>{function="calcularIdade($value.dtnasc)"}&nbsp; </strong>anos 
                 &nbsp;<strong>Data Nasc:</strong>{function="formatDate($value.dtnasc)"}
                 &nbsp;<strong>Sexo: </strong>{$value.sexo}
-                &nbsp;<strong>CPF: </strong>{$value.numcpf}
-                &nbsp;<strong>RG: </strong>{$value.numrg}
+                &nbsp;<strong>CPF: </strong>{$value.numcpf}                
                 &nbsp;<strong>SUS: </strong>{$value.numsus}   
                 &nbsp;<strong>Vuln. Social: </strong> {if="$value.vulnsocial == 1"}Sim{else}Não{/if}
                 {if="$value.vulnsocial == 1"}                

@@ -41,7 +41,7 @@
                 <?php } ?>
 
 
-    <form action="/admin/login" method="post">
+    <form action="/login" method="post">
       <div class="form-group has-feedback">
         <input type="text" class="form-control" placeholder="Login" name="login">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -51,13 +51,16 @@
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">
+        
         <div class="col-xs-8">
+          
           <div class="checkbox icheck">
-            <label>
-              <input type="checkbox"> Manter-se conectado
-            </label>
+            <label>              
+              <input type="checkbox" value="sempre" id="lembrar" name="lembrar"> Manter conectado </label>
           </div>
+        
         </div>
+        
         <!-- /.col -->
         <div class="col-xs-4">
           <button type="submit" class="btn btn-primary btn-block btn-flat">Entrar</button>
@@ -66,13 +69,17 @@
       </div>
     </form>
 
+    <!--
     <div class="social-auth-links text-center">
+
       <p>Ou entre com sua conta do</p>
       <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
         Facebook</a>
       <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
         Google+</a>
     </div>
+    -->
+
     <!-- /.social-auth-links -->
 
     <a href="/admin/forgot">Esqueci minha senha</a><br>
