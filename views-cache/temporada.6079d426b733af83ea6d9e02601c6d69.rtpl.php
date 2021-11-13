@@ -32,90 +32,39 @@
 
 
             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
-              
-            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
-              <div class="row">
-
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">
-                    Temporada                                      
-                </h5>
-              </div>
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">  
-                    Status Temporada                     
-                </h5>
-              </div>
-
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    Início das inscrições
-                </h5>
-              </div>
-
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    Fim das inscrições
-                </h5>
-              </div>
-
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    Início das matrículas
-                </h5>
-              </div>
-
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    Fim das matrículas
-                </h5>
-              </div>
-
-            </div>
-          </div>
 
             <?php $counter1=-1;  if( isset($temporada) && ( is_array($temporada) || $temporada instanceof Traversable ) && sizeof($temporada) ) foreach( $temporada as $key1 => $value1 ){ $counter1++; ?>
 
             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
               <div class="row">
 
-              <div class="col-md-1" style="margin: 2; padding: 2">
+              <div class="col-md-2" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                    
-                    <a href="/admin/turma-temporada/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a>
-                </h5>
-              </div>
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">  
-                    <?php echo htmlspecialchars( $value1["idstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["descstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-
+                    <a href="/admin/turma-temporada/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> -  <?php echo htmlspecialchars( $value1["descstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a>
                 </h5>
               </div>
 
               <div class="col-md-2" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                    <?php echo formatDateHour($value1["dtinicinscricao"]); ?>
+                    <?php echo formatDateHour($value1["dtinicinscricao"]); ?> -  Início das inscrições
+                </h5>
+              </div>
 
+              <div class="col-md-2" style="margin: 2; padding: 2;">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    <?php echo formatDateHour($value1["dtterminscricao"]); ?> -  Fim das inscrições
                 </h5>
               </div>
 
               <div class="col-md-2" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                    <?php echo formatDateHour($value1["dtterminscricao"]); ?>
-
+                    <?php echo formatDateHour($value1["dtinicmatricula"]); ?> - Início das matrículas
                 </h5>
               </div>
 
               <div class="col-md-2" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                    <?php echo formatDateHour($value1["dtinicmatricula"]); ?>
-
-                </h5>
-              </div>
-
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    <?php echo formatDateHour($value1["dttermmatricula"]); ?>
-
+                     <?php echo formatDateHour($value1["dttermmatricula"]); ?> - Fim das matrículas
                 </h5>
               </div>
 

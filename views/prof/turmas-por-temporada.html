@@ -35,51 +35,33 @@
           <div class="box-body no-padding col-md-12">
             
                 {loop="$turmas"}
-                <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+                <div class="box-body" style="border: solid 1px lightblue; margin: 2px;">
 
                   <div class="row">
 
-                    <div class="col-md-2" >
+                    <div class="col-md-8" >
                       <h5 style="font-weight: bold; text-align: left;">
-                       {$value.idturma} - {$value.descturma} / {$value.diasemana}
-                        {$value.horainicio} ás {$value.horatermino}
+                       {$value.idturma} - {$value.descturma} - {$value.diasemana}
+                        {$value.horainicio} ás {$value.horatermino} -  {$value.descrfxetaria}  {$value.initidade} a {$value.fimidade} anos -  {$value.apelidolocal} - {$value.nomeespaco}&nbsp; ({$value.vagas} vagas)
                       </h5>
-                    </div>
+                    </div>                      
 
-                    <div class="col-md-2" >
-                      <h5 style="font-weight: bold; text-align: left;">
-                       {$value.descrfxetaria}  {$value.initidade} a {$value.fimidade} anos
+                    <div class="col-md-4">
+                      <h5 style="font-weight: bold; text-align: left; color: green;">
+                        <a href="/prof/insc-turma-temporada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}"> | &nbsp;{$value.numinscritos} inscritos &nbsp;| </a> &nbsp; {$value.nummatriculados} matriculados &nbsp; | &nbsp;&nbsp;     
+
+                        {if="$value.token == 1"}
+                          <a href="/prof/token/{$value.idturma}" style="color: orangered;"><i ></i> Gerar Tokens</a>
+                        {/if}                         
                       </h5>
-                    </div>
-
-                    <div class="col-md-2" >
-                      <h5 style="font-weight: bold; text-align: left;">
-                       Prof. {$value.apelidoperson} 
-                      {$value.apelidolocal} - {$value.nomeespaco}
-                      </h5>
-                    </div>
-
-                    <div class="col-md-1" >
-                      <h5 style="font-weight: bold; text-align: left;">
-                        {$value.vagas} vagas
-                      </h5>
-                    </div>
-
-                      
-
-                    <div class="col-md-2">
-                      <h5 style="font-weight: bold; text-align: left; color: red;">
-                        <a href="/prof/insc-turma-temporada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}">{$value.numinscritos} inscritos</a>
-                        
-                      </h5>
-                    </div>
-
+                    </div>                    
+                    <!--
                     <div class="col-md-2">
                       <h5 style="font-weight: bold; text-align: left; color: darkgreen;">
                         {$value.nummatriculados} matriculados                        
                       </h5>
                     </div>
-                    
+                    -->
                   </div>
                     
                 </div>

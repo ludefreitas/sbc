@@ -169,7 +169,7 @@ class Atividade extends Model {
 		$sql = new Sql();
 
 		$results = $sql->select("
-			SELECT * 
+			SELECT SQL_CALC_FOUND_ROWS * 
 			FROM tb_atividade a 
 			INNER JOIN tb_fxetaria b
 			using(idfxetaria)
@@ -179,6 +179,8 @@ class Atividade extends Model {
 			OR a.prograativ LIKE :search
 			OR a.tipoativ LIKE :search
 			OR b.descrfxetaria LIKE :search 
+			OR b.initidade LIKE :search 
+			OR b.fimidade LIKE :search 
 			ORDER BY a.nomeativ
 			LIMIT $start, $itemsPerPage;
 		", [

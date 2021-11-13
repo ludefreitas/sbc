@@ -34,7 +34,6 @@ $app->get("/admin/turma", function() {
 
 	for ($x = 0; $x < $pagination['pages']; $x++)
 	{
-
 		array_push($pages, [
 			'href'=>'/admin/turma?'.http_build_query([
 				'page'=>$x+1,
@@ -42,13 +41,12 @@ $app->get("/admin/turma", function() {
 			]),
 			'text'=>$x+1
 		]);
-
 	}
 
-	//var_dump($page);
-	//exit;
+	//$idturma = $pagination['data'][0]['idturma'];
 
-	//$users = User::listAll();
+	//$tokens = Turma::listTokenTurma($idturma);
+
 	// carrega uma pagina das páginas do admin
 	$page = new PageAdmin();
 
@@ -58,6 +56,7 @@ $app->get("/admin/turma", function() {
 		"total"=>$pagination['total'],
 		"search"=>$search,
 		"pages"=>$pages,
+		//"tokens"=>$tokens,
 		"error"=>Turma::getMsgError()
 	));
 });
@@ -114,13 +113,13 @@ $app->post("/admin/turma/create", function() {
 		Turma::setMsgError("Selecione um horário.");
 		header("Location: /admin/turma/create");
 		exit;		
-	}																																														
+	}					
 
 	if (!isset($_POST['idativ']) || $_POST['idativ'] == '') {
 		Turma::setMsgError("Selecione uma atividade.");
 		header("Location: /admin/turma/create");
 		exit;		
-	}																							
+	}		
 
 	if (!isset($_POST['idespaco']) || $_POST['idespaco'] == '') {
 		Turma::setMsgError("Selecione um espaço");
@@ -140,6 +139,8 @@ $app->post("/admin/turma/create", function() {
 		header("Location: /admin/turma/create");
 		exit;		
 	}	
+
+	$_POST['token'] = isset($_POST['token']) ?  1 : 0;
 
 	$turma->setData($_POST);
 
@@ -214,13 +215,13 @@ $app->post("/admin/turma/:idturma", function($idturma) {
 		Turma::setMsgError("Selecione um horário.");
 		header("Location: /admin/turma/".$idturma."");
 		exit;		
-	}																																														
+	}						
 
 	if (!isset($_POST['idativ']) || $_POST['idativ'] == '') {
 		Turma::setMsgError("Selecione uma atividade.");
 		header("Location: /admin/turma/".$idturma."");
 		exit;		
-	}																							
+	}					
 
 	if (!isset($_POST['idespaco']) || $_POST['idespaco'] == '') {
 		Turma::setMsgError("Selecione um espaço");
@@ -240,6 +241,8 @@ $app->post("/admin/turma/:idturma", function($idturma) {
 		header("Location: /admin/turma/".$idturma."");
 		exit;		
 	}
+
+	$_POST['token'] = isset($_POST['token']) ?  1 : 0;
 
 	$turma->setData($_POST);
 
@@ -264,6 +267,57 @@ $app->get("/turma/:idturma", function($idturma) {
 	]);	
 
 });
+
+$app->get("/admin/turma/create/token/:idturma", function($idturma) {
+
+	User::verifyLogin();
+
+	$turma = new Turma();
+
+	$token = time();
+	$token = substr($token, 4);
+
+	$_POST['idturma'] = $idturma;
+	$_POST['token'] = $token;
+	$_POST['isused'] = 0;
+
+	$turma->setData($_POST);
+
+	//var_dump($turma);
+	//exit();
+
+	$turma->saveToken();
+
+	header("Location: /admin/token/".$idturma."");
+	exit();	
+});
+
+$app->get("/admin/token/:idturma", function($idturma) {
+
+	User::verifyLogin();
+
+	$turma = new Turma();
+
+	$turma->get((int)$idturma);	
+
+	$tokens = Turma::listAlltokenTurma($idturma);
+
+	if(!isset($turma) || $turma == NULL){
+
+		Turma::setMsgError("Não existem tokens para esta turma.");
+	}
+	
+	$page = new PageAdmin();    
+
+	$page->setTpl("token-turma", [
+		'tokens'=>$tokens,
+		'turma'=>$turma->getValues(),
+		"error"=>Turma::getMsgError()	
+	]);
+});
+
+
+
 
 
 ?>

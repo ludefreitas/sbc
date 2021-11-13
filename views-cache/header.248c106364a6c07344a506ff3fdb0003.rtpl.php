@@ -2,7 +2,7 @@
 <html lang="pt-br">
   <head>
     <!-- Required meta tags -->   
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
@@ -16,10 +16,11 @@
 
     <link rel="stylesheet" type="text/css" href="/../res/site/css/style.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
 
-    <title>C Esportivos SBC</title>
+
+    <title>Cursos Esportivos SBC</title>
     <link rel="icon" type="image/jpg" href="/../res/site/img/corpoacao.png" />
 </head>
   
@@ -74,7 +75,6 @@
                               </span>
                             </a>
                         </div> 
-
                         <?php }else{ ?>
                         <div class="nav-item" >
                             <a style="" class="nav-link" href="/login" >
@@ -117,8 +117,8 @@
               </div>
                          
 
-               <div class="col-md-4" style="text-align: center; margin: 50px 0px 15px 0px;">
-                 <form action="/">
+               <div class="col-md-4" style="text-align: center; margin: 20px 0px 20px 0px;">
+                 <form action="/busca">
                 <input type="text" name="search" placeholder="Pesquisa" style="text-align-last: center;">
                 <button type="submit" class="btn btn-default btn-sm">
                   <i class="fa fa-search"></i>
@@ -128,6 +128,8 @@
 
             </div>
           </div>    
+
+         
 
          
           <hr>

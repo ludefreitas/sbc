@@ -1,6 +1,8 @@
 <?php 
 
 use \Sbc\Model\User;
+use \Sbc\Model\Saude;
+use \Sbc\DB\Sql;
 
 function formatar_mascara($src, $mascara) {
   $campo = $src.value.length;
@@ -17,6 +19,8 @@ function colorStatus($idinscstatus){
        return 'style="background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), transparent);"';
     }else if($idinscstatus === '2'){
        return 'style="background: linear-gradient(to bottom, rgba(0, 255, 0, 0.4), transparent);"'; 
+    }else if($idinscstatus === '3'){
+       return 'style="background: linear-gradient(to bottom, rgba( 96, 96, 192, 0.4), transparent);"'; 
     }else if($idinscstatus === '6'){
        return 'style="background: linear-gradient(to bottom, rgba(0, 0, 255, 0.4), transparent);"';    
     }else if($idinscstatus === '7'){       
@@ -40,6 +44,31 @@ function formatDate($date)
 {
 
 	return date('d/m/Y', strtotime($date));
+
+}
+
+function formatAnoInicial($initIdade)
+{
+    $anoAtual = date('Y');
+
+    $anoInicial = $anoAtual - $initIdade;
+
+    return $anoInicial;
+}
+
+function formatAnoFinal($fimIdade)
+{
+    $anoAtual = date('Y');
+
+    $AnoFinal = $anoAtual - $fimIdade;
+
+    return $AnoFinal;
+}
+
+function formatDateAno($date)
+{
+
+    return date('Y', strtotime($date));
 
 }
 
@@ -146,6 +175,60 @@ function calcularIdade($date){
             return true;
        }
     }
+
+    /*
+if(isset($_POST['cid'])){
+    
+$codigo = $_POST['palavra'];
+
+
+        $sql = new Sql();
+
+        $resultado_cursos = $sql->select("SELECT doenca
+            FROM tb_cid WHERE codigo LIKE :codigo", [
+            ':codigo'=>'%'.$codigo.'%'          
+        ]);
+
+        if(mysql_num_rows($$resultado_cursos) <= 0){
+            echo "Nenhum resultado econtrado...";
+        }else{
+            echo "Resultado econtrado...";
+        }
+}
+
+if(isset($_GET['cid'])){
+    
+
+    $codigo = $_GET['cid'];
+
+   // var_dump($codigo);
+
+       obtemDoencaCid($codigo);
+    
+}
+
+function obtemDoencaCid($codigo){
+
+        $sql = new Sql();
+
+        $sql->select("SELECT doenca
+            FROM tb_cid WHERE codigo = :codigo", [
+            ':codigo'=>$codigo          
+        ]);
+
+        if($sql){
+             
+            $valores = $sql;
+            return $valores;
+            //$valores = implode('', $valores);
+            print_r($valores);
+        }else{
+            $valores = "nãoEncontrado";
+            return $valores;
+            print_r($valores);
+        }
+}
+*/
 
 
  ?>

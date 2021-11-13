@@ -84,7 +84,7 @@
                             
                             <tr>
                                 <th class="product-name"> Aluno desistente? </th>
-                                <td class="product-name"> <a class="btn btn-danger" href="" role="button" onclick="return confirm('Deseja realmente informar como desistente o <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da inscrição <?php echo htmlspecialchars( $insc["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')">Desistente</a> </td>
+                                <td class="product-name"> <a class="btn btn-danger" href="/admin/insc/<?php echo htmlspecialchars( $insc["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idturma, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $pessoa["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusDesistente" role="button" onclick="return confirm('Deseja realmente informar como desistente o <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da inscrição <?php echo htmlspecialchars( $insc["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')">Desistente</a> </td>
                             </tr>
                         -
                             <?php } ?>
@@ -102,6 +102,10 @@
                             
                         </tfoot>
                     </table>
+                    <div>
+                 
+                    <a type="button" class="btn btn-primary" href="javascript:window.history.go(-1)">Voltar</a>
+                </div>  
                     
                 </div>
 

@@ -37,61 +37,13 @@
 
             </div>
 
-          <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
-              
-            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
-              <div class="row">
-
-              <div class="col-md-3" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    Dia semana
-                </h5>
-              </div>
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    Hora de início
-                </h5>
-              </div>
-
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    Hora de término
-                </h5>
-              </div>
-
-              <div class="col-md-3" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    Período
-                </h5>
-              </div>
-
-            </div>
-          </div>
-
             {loop="$horario"}
             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
               <div class="row">
 
-              <div class="col-md-3" style="margin: 2; padding: 2">
+              <div class="col-md-4" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  {$value.diasemana}
-                </h5>
-              </div>
-
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                  {$value.horainicio}
-                </h5>
-              </div>
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    {$value.horatermino}
-                </h5>
-              </div>
-
-              <div class="col-md-3" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    {$value.periodo}
+                  {$value.diasemana} - {$value.horainicio} - {$value.horatermino} - {$value.periodo}
                 </h5>
               </div>
 

@@ -55,6 +55,30 @@
         xmlHttp.send()
         
     }
+
+    /*
+    function getDadosCodigoDoenca(cid){
+
+         let url = 'https://cid.api.mokasoft.org/cid10/'+cid+''
+
+        let xmlHttp = new XMLHttpRequest()
+        xmlHttp.open('GET', url)
+
+        xmlHttp.onreadystatechange = () => {
+            if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
+
+                let dadosJSONText = xmlHttp.responseText
+
+                let dadosJSONObj = JSON.parse(dadosJSONText)
+
+                document.getElementById('dadosDoenca').value = dadosJSONObj.nome                                                               
+            }
+            
+        }
+
+        xmlHttp.send()        
+    }  
+    */
     
 </script>
 
@@ -87,7 +111,7 @@
                     <label for="nomepess">
                         Nome Completo                         
                     </label>
-                    <input style="width: 100%; float: right;" type="text" id="nomepess" name="nomepess" class="input-text" value="<?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" placeholder="Informe o nome completo" required="required">
+                    <input style="width: 100%; float: right;" type="text" id="nomepess" name="nomepess" class="input-text" value="<?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" placeholder="Informe o nome completo" required="required" minlength="14">
 
                     <label for="dtnasc">
                         <br>Data do Nascimento
@@ -157,7 +181,7 @@
                             <span style="font-size: 12px; font-weight: bold">* (Necessário preencher este campo se a pessoa, a cadastrar, for menor de idade)</span>
                         </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="text" id="nomemae" name="nomemae" class="input-text" value="<?php echo htmlspecialchars( $pessoa["nomemae"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">                
+                    <input style="width: 100%; float: right;" type="text" id="nomemae" name="nomemae" class="input-text" value="<?php echo htmlspecialchars( $pessoa["nomemae"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" minlength="14">                
                     
                     <label for="cpfmae">
                         <br><br>CPF da Mãe
@@ -171,7 +195,7 @@
                             <span style="font-size: 12px; font-weight: bold">* (Necessário preencher este campo se a pessoa, a cadasttrar, for menor de idade)</span>
                         </span>
                     </label>
-                    <input style="width: 100%; float: right;" type="text" id="nomepai" name="nomepai" class="input-text" value="<?php echo htmlspecialchars( $pessoa["nomepai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                    <input style="width: 100%; float: right;" type="text" id="nomepai" name="nomepai" class="input-text" value="<?php echo htmlspecialchars( $pessoa["nomepai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" minlength="14">
                     
                     <label for="cpfpai">
                         CPF da Pai                      
@@ -228,7 +252,7 @@
                  <label for="contato">
                         Nome de uma pessoa para contato em caso de emergência
                 </label>                
-                    <input style="width: 100%; float: right;" type="text" class="form-control" value="<?php echo htmlspecialchars( $endereco["contato"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="contato" placeholder=""  id="contato" required="required" />
+                    <input style="width: 100%; float: right;" type="text" class="form-control" value="<?php echo htmlspecialchars( $endereco["contato"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="contato" placeholder=""  id="contato" required="required" minlength="7" />
 
                  <label for="contato">
                         Telefone da pessoa para contato em caso emergência            

@@ -31,7 +31,7 @@
                       Qtde de números para o sorteio: <h3 style="color: black;">{$maxIncritosTemporada.maximoInscritos}</h3>
                     </div> 
 
-                    {if="$temporada.idstatustemporada == 3"}
+                    {if="$temporada.idstatustemporada == 3 && $iduser == 1"}
                     <div style="text-align: center;">
 
                       <input type="hidden" name="desctemporada" value="{$temporada.desctemporada}" >
@@ -47,8 +47,12 @@
                       <input type="hidden" name="desctemporada" value="{$temporada.desctemporada}" >
                       <input type="hidden" name="idtemporada" value="{$temporada.idtemporada}">
                       <input type="hidden" name="maxIncritosTemporada" value="{$maxIncritosTemporada.maximoInscritos}">
-                      
+
+                      {if="$sorteio == NULL"}
                       <input type="submit" disabled="true" name="sortear" value="Realizar Sorteio" class="btn btn-success btn-lg">
+                      {else}
+                      <span style="font-weight: bold; color: darkgreen; font-size: 24px"> Sorteio realizado com sucesso!!</span>
+                      {/if}
                      
                     </div>     
                     {/if}
@@ -63,44 +67,34 @@
               </div>              
             </div>  
 
-            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
-              
-            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
-              <div class="row">
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">  
 
-              <div class="col-md-3" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    Ordem do sorteio
-                </h5>
-              </div>
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    Número sorteado
-                </h5>
-              </div>            
+              <div class="box-body" style="border: solid 1px lightblue; margin: 5px; padding: 5px;">          
 
-            </div>
-          </div>
+                <div class="row">
+                 {loop="$sorteio"}
+                 <div class="col-md-1">              
+                   
+                  <div class="col-md-6" style="text-align: right; margin-left: -10px; margin-bottom: -15px; ">
+                
+                      <h6>                  
+                       <span style="font-size: 14px; font-style: italic; font-weight: bold; color: red;">{$value.numerodeordem}°</span>
+                      </h6>
+                  </div>
 
-            {loop="$sorteio"}
-            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
-              <div class="row">
-
-              <div class="col-md-3" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                  {$value.numerodeordem}
-                </h5>
-              </div>
-
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                  {$value.numerosortear}
-                </h5>
-              </div>
+                  <div class="col-md-6" style="margin: 0px; padding: 0px; border-radius: 50%; border: solid 2px; text-align: center; width: 100%; height: 100%;">
+                
+                    <h1 style="font-weight: bold; padding: 0px; margin: 0px; width: 100%; height: 100%;">                  
+                    {$value.numerosortear}
+                    </h1>
+                 </div>              
+                  
+                </div>
+                {/loop} 
+              </div>   
 
             </div>
-          </div>
-          {/loop} 
+         
 
             <!-- /.box-body -->
             <button type="button" onclick="window.print()" class="btn btn-primary pull-right" style="margin-right: 5px;">

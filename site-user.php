@@ -20,7 +20,7 @@ $app->get("/user-create", function(){
 		'registerpessoaValues'=>(
 				isset($_SESSION['registerpessoaValues'])) 
 				    ? $_SESSION['registerpessoaValues'] 
-			        : ['nomepess'=>'', 'dtnasc'=>'', 'numcpf'=>'', 'numrg'=>'', 'numsus'=>'', 'cadunico'=>'', 'nomemae'=>'', 'cpfmae'=>'', 'nomepai'=>'', 'cpfpai'=>'', 'sexo'=>'', 'vulnsocial'=>'', 'cep'=>'', 'rua'=>'', 'numero'=>'', 'complemento'=>'', 'bairro'=>'', 'cidade'=>'', 'estado'=>'', 'telres'=>'', 'contato'=>'', 'telemer'=>'', 'pcd'=>'']
+			        : ['nomepess'=>'', 'dtnasc'=>'', 'numcpf'=>'', 'numrg'=>'', 'numsus'=>'', 'cadunico'=>'', 'nomemae'=>'', 'cpfmae'=>'', 'nomepai'=>'', 'cpfpai'=>'', 'sexo'=>'', 'vulnsocial'=>'', 'cep'=>'', 'rua'=>'', 'numero'=>'', 'complemento'=>'', 'bairro'=>'', 'cidade'=>'', 'estado'=>'', 'telres'=>'', 'contato'=>'', 'telemer'=>'', 'pcd'=>'', 'cid'=>'', 'dadosDoenca'=>'']
 	]);
 });
 
@@ -548,7 +548,28 @@ $app->post("/register", function(){
 		User::setErrorRegister("Informe se a pessoa é portador de  deficiência (PCD).");
 		header("Location: /user-create");
 		exit;
-	}	
+	}
+
+	/*
+
+	if(isset($_POST['pcd']) && ($_POST['pcd']) === '1'){	
+
+		if (!isset($_POST['cid']) || $_POST['cid'] == '') {
+
+			User::setErrorRegister("Informe o CID.");
+			header("Location: /user-create");
+			exit;
+		}
+
+		if (!isset($_POST['dadosDoenca']) || $_POST['dadosDoenca'] == '' || $_POST['dadosDoenca'] == 'undefined'){
+
+			User::setErrorRegister("Informe a descrição do CID.");
+			header("Location: /user-create");
+			exit;
+		}		
+
+	}
+	*/
 
 	if(calcularIdade($_POST['dtnasc']) < 18){
 
@@ -750,6 +771,8 @@ $app->post("/register", function(){
 	]);
 
 	$pessoa->save();
+	
+	$pessoa = new Pessoa();
 
 	$endereco = new Endereco();	
 
@@ -874,6 +897,7 @@ $app->post("/user/profile", function(){
 	$_POST['statususer'] = 1;
 	$_POST['despassword'] = $user->getdespassword();
 	$_POST['deslogin'] = $_POST['desemail'];
+	$_POST['desemail'] = $_POST['desemail'];
 
 	$user->setData($_POST);
 

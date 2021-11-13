@@ -24,7 +24,7 @@ $app->get("/pessoa-create", function() {
 			'registerpessoaValues'=>(
 				isset($_SESSION['registerpessoaValues'])) 
 				    ? $_SESSION['registerpessoaValues'] 
-			        : ['nomepess'=>'', 'dtnasc'=>'', 'numcpf'=>'', 'numrg'=>'', 'numsus'=>'', 'cadunico'=>'', 'nomemae'=>'', 'cpfmae'=>'', 'nomepai'=>'', 'cpfpai'=>'', 'sexo'=>'', 'vulnsocial'=>'', 'pcd'=>'', 'cep'=>'', 'rua'=>'', 'numero'=>'', 'complemento'=>'', 'bairro'=>'', 'cidade'=>'', 'estado'=>'', 'telres'=>'', 'contato'=>'', 'telemer'=>'']
+			        : ['nomepess'=>'', 'dtnasc'=>'', 'numcpf'=>'', 'numrg'=>'', 'numsus'=>'', 'cadunico'=>'', 'nomemae'=>'', 'cpfmae'=>'', 'nomepai'=>'', 'cpfpai'=>'', 'sexo'=>'', 'vulnsocial'=>'', 'pcd'=>'', 'cep'=>'', 'rua'=>'', 'numero'=>'', 'complemento'=>'', 'bairro'=>'', 'cidade'=>'', 'estado'=>'', 'telres'=>'', 'contato'=>'', 'telemer'=>'', 'cid'=>'', 'dadosDoenca'=>'']
 		]);	
 
 });
@@ -117,6 +117,27 @@ $app->post("/registerpessoa", function(){
 		header("Location: /pessoa-create");
 		exit;
 	}	
+
+
+	/*
+	if(isset($_POST['pcd']) && ($_POST['pcd']) === '1'){	
+
+		if (!isset($_POST['cid']) || $_POST['cid'] == '') {
+
+			User::setErrorRegister("Informe o CID.");
+			header("Location: /pessoa-create");
+			exit;
+		}
+
+		if (!isset($_POST['dadosDoenca']) || $_POST['dadosDoenca'] == '' || $_POST['dadosDoenca'] == 'undefined'){
+
+			User::setErrorRegister("Informe a descrição do CID.");
+			header("Location: /pessoa-create");
+			exit;
+		}		
+
+	}
+	*/
 
 	if(calcularIdade($_POST['dtnasc']) < 18){
 
@@ -379,14 +400,26 @@ $app->get("/user/pessoas", function(){
 
 	$user = User::getFromSession();
 
-	//var_dump($user->getPessoa());
-	//exit();
+	$pessoa = $user->getPessoaSaude();
+	/*
+	echo "<pre>";
+	print_r($pessoa);
+	//print_r($pessoa[1]['idpess']);
+	echo "</pre>";
+	exit;
+	
+	echo "<pre>";
+	print_r($idpess);
+	echo "</pre>";
+	exit;
+	*/
 
 	$page = new Page();
 
 	$page->setTpl("user-pessoas", [
 		'errorRegister'=>User::getErrorRegister(),
-		'pessoas'=>$user->getPessoa()
+		'pessoas'=>$pessoa,
+		'saudeSuccess'=>Cart::getSuccess()
 	]);
 
 });
@@ -396,6 +429,9 @@ $app->get("/user/pessoa/:idpess", function($idpess) {
 	User::verifyLogin(false);
 
 	$pessoa = new Pessoa();
+
+	var_dump($idpess);
+	exit;
 
 	$pessoa->get((int)$idpess);
 

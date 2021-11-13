@@ -47,15 +47,15 @@ class Sorteio extends Model {
 
 	}
 
-	public function updateStatusInscricaosSorteada($numsorte){
+	public function updateStatusInscricaoSorteada($numsorte){
 
-		$idStatusAguardandoMatricula = 2;
+		$idStatusSorteada = 3;
 		$idStatusAguardandoSorteio = 6;
 
 		$sql = new Sql();
 
-		$sql->query("UPDATE tb_insc SET idinscstatus = :idStatusAguardandoMatricula WHERE idinscstatus = :idStatusAguardandoSorteio AND numsorte = :numsorte", array(
-			":idStatusAguardandoMatricula"=>$idStatusAguardandoMatricula,
+		$sql->query("UPDATE tb_insc SET idinscstatus = :idStatusSorteada WHERE idinscstatus = :idStatusAguardandoSorteio AND numsorte = :numsorte", array(
+			":idStatusSorteada"=>$idStatusSorteada,
 			":idStatusAguardandoSorteio"=>$idStatusAguardandoSorteio,
 			":numsorte"=>$numsorte
 		));
@@ -72,10 +72,78 @@ class Sorteio extends Model {
 		));
 	}
 
-	public function sorteioExiste(){
+	//public function sorteioExiste(){
 
 
+	//}
+
+	public function selecionaInscByNumordemNumsorte($idtemporada, $numordem, $numsorte){
+
+		$sql = new Sql();
+
+		$results = $sql->select(
+			"SELECT nomepess, desemail, desperson, descstatus, desctemporada, idinsc, a.idturma
+			FROM tb_insc a 
+			INNER JOIN tb_temporada g
+			ON g.idtemporada = a.idtemporada
+			INNER JOIN 	tb_inscstatus f
+			ON f.idinscstatus = a.idinscstatus
+			INNER JOIN tb_carts b 
+			ON b.idcart = a.idcart 
+			INNER JOIN tb_turma h
+			ON h.idturma = a.idturma
+			INNER JOIN tb_pessoa c
+			ON c.idpess = b.idpess
+			INNER JOIN tb_users d
+			ON d.iduser = c.iduser
+			INNER JOIN tb_persons e
+			ON e.idperson = d.idperson
+			WHERE a.idtemporada = :idtemporada
+			AND numordem = :numordem
+			AND numsorte = :numsorte
+			AND a.idinscstatus = 2", [
+			':idtemporada'=>$idtemporada,	
+			':numordem'=>$numordem,			
+			':numsorte'=>$numsorte					
+		]);		
+
+		return $results;
 	}
+
+	/*
+	public static function sorteioEmail($email, $desperson, $nomepess, $numerosorteado, $status, $numeroordenado, $desctemporada, $idinsc, $turma, $dtnasc){
+	
+		$assunto = "Sorteio Cursos Esportivos ".$desctemporada."";
+		$tplName = "sorteio-insc";		
+		
+        $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
+        		 "email"=>$email,
+                 "nomepess"=>$nomepess,
+                 "desperson"=>$desperson,                  
+                 "numerosorteado"=>$numerosorteado,
+                 "status"=>$status,
+                 "numeroordenado"=>$numeroordenado,
+                 "desctemporada"=>$desctemporada,
+                 "idinsc"=>$idinsc, 
+                 "dtnasc"=>$dtnasc,
+                 "turma"=>$turma->getValues()
+        ));
+
+        $mailer->send();
+        
+        $emailEnviado = $mailer->send();        
+
+        if (!$emailEnviado)
+     	{
+        	User::setError("Não foi possivel enviar email, no entanto, a incrição abaixo foi efetuada!");    header("Location: /profile/insc/".$idinsc."/".$idpess."");
+        		exit();			
+
+     	}else{
+     		User::setSuccess("Um email com os dados desta inscrição foi enviado a você, verifique sua caixa de email cadastrado. Guarde-o com você, se necessário apresente-o quando solicitado");
+     	}
+     	
+	}	
+	*/
 
 	public function listAll($idtemporada){
 

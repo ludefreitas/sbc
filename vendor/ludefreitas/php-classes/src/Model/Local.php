@@ -15,15 +15,33 @@ class Local extends Model {
 	{
 		$sql = new Sql();
 
-		return $sql->select("SELECT * FROM tb_local ORDER BY apelidolocal");
-	}	
+		return $sql->select("SELECT * FROM tb_local a
+			INNER JOIN tb_users b ON b.iduser = a.iduser
+			INNER JOIN tb_persons C ON c.idperson = b.idperson
+			ORDER BY apelidolocal");
+	}
+
+	public static function listAllCrecAtivo()
+
+	{
+		$statuslocalativo = 1;
+		$sql = new Sql();
+
+		return $sql->select("SELECT * FROM tb_local a
+			INNER JOIN tb_users b ON b.iduser = a.iduser
+			INNER JOIN tb_persons C ON c.idperson = b.idperson
+			WHERE statuslocal = :statuslocalativo 
+			ORDER BY apelidolocal", [
+			'statuslocalativo'=>$statuslocalativo
+		]);
+	}		
 
 	// esta função é usada para salvar e editar local
 	public function save()
 	{
 		$sql = new Sql();
 
-		$results = $sql->select("CALL sp_local_save(:idlocal, :apelidolocal, :nomelocal, :rua, :numero, :complemento, :bairro, :cidade, :estado, :telefone, :cep)", array(
+		$results = $sql->select("CALL sp_local_save(:idlocal, :apelidolocal, :nomelocal, :rua, :numero, :complemento, :bairro, :cidade, :estado, :telefone, :cep, :statuslocal, :iduser)", array(
 			":idlocal"=>$this->getidlocal(),
 			":apelidolocal"=>$this->getapelidolocal(),
 			":nomelocal"=>$this->getnomelocal(),
@@ -34,7 +52,9 @@ class Local extends Model {
 			":cidade"=>$this->getcidade(),
 			":estado"=>$this->getestado(),
 			":telefone"=>$this->gettelefone(),
-			":cep"=>$this->getcep()
+			":cep"=>$this->getcep(),
+			":statuslocal"=>$this->getstatuslocal(),
+			":iduser"=>$this->getiduser()
 		));
 
 		$this->setData($results[0]);
@@ -174,8 +194,10 @@ class Local extends Model {
 
 		$results = $sql->select("
 			SELECT SQL_CALC_FOUND_ROWS *
-			FROM tb_local
-			ORDER BY apelidolocal
+			FROM tb_local a
+			INNER JOIN tb_users b ON b.iduser = a.iduser
+			INNER JOIN tb_persons c ON c.idperson = b.idperson
+			ORDER BY a.apelidolocal
 			LIMIT $start, $itemsPerPage;
 		");
 
@@ -198,7 +220,9 @@ class Local extends Model {
 
 		$results = $sql->select("
 			SELECT SQL_CALC_FOUND_ROWS * 
-			FROM tb_local 
+			FROM tb_local a
+			INNER JOIN tb_users b ON b.iduser = a.iduser
+			INNER JOIN tb_persons c ON c.idperson = b.idperson
 			WHERE apelidolocal LIKE :search 
 			OR nomelocal LIKE :search 
 			OR rua LIKE :search

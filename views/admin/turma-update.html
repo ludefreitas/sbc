@@ -3,7 +3,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Editar Turma 
+    Editar Turma {$turma.idturma} - {$turma.descturma}
   </h1>
   <ol class="breadcrumb">
     <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -64,7 +64,7 @@
               <label for="turma">Atividade</label>
                 <select class="form-control" name="idativ">     
                   {loop="$atividade"}
-                  <option {if="$value.idativ === $turma.idativ"}selected="selected"{/if} value="{$value.idativ}">{$value.nomeativ} - {$value.descrfxetaria} - {$value.initidade} a {$value.fimidade} anos</option>
+                  <option {if="$value.idativ === $turma.idativ"}selected="selected"{/if} value="{$value.idativ}">{$value.nomeativ} - {$value.descrfxetaria} - {$value.initidade} a {$value.fimidade} anos{$value.prograativ} - {$value.origativ}</option>
                   {/loop}                            
                 </select>
             </div>            
@@ -83,6 +83,12 @@
            <div class="form-group">
               <label for="turma">Vagas</label>
               <input type="number" class="form-control" id="vagas" name="vagas" placeholder="Informe a quantidade de vagas" value="{$turma.vagas}">
+            </div>
+
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="token" value="1" {if="$turma.token == 1"}checked{/if}> Tem token ?
+              </label>
             </div>
               
             </div>

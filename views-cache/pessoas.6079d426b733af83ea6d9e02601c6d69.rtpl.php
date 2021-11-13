@@ -127,7 +127,7 @@
               </div>
               <div class="col-md-1" >
                 <h5 style="font-weight: bold; text-align: left;">
-                  <?php if( $value1["pcd"] == 1 ){ ?>PCD<?php } ?>
+                  <?php if( $value1["pcd"] == 1 ){ ?>(PCD)<?php } ?>
                 </h5>
               </div>
               <div class="col-md-2" >

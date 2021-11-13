@@ -1,0 +1,251 @@
+
+ <div class="container"> <!-- container 1 -->
+            <div class="row"> <!-- row 2 -->
+
+              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
+
+<div class="container" style="margin: 0px px 0px 0px; ">
+{if="$profileMsg != ''"}
+    <div class="alert alert-success">
+      {$profileMsg}
+    </div>
+  {/if}
+  <div class="row" style="margin: -5px -20px 0px -5px; ">   
+  <div class="col-md-4" style="text-align-last: left; background-color: #0f71b3; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
+    <a href="/locais">                          
+      <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 14px; font-style: normal; margin: 10px 5px 10px 0px; ">                                               
+          Turmas por local
+      </div>
+    </a>
+  </div>
+
+  
+  <div class="col-md-4" style="text-align-last: left; background-color: #cc5d1e; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;"> 
+    <a href="/modalidades">           
+      <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 14px; font-style: normal; margin: 10px 5px 10px 5px; ">                                               
+          Turmas por modalidades
+      </div>
+    </a>
+  </div> 
+
+  <div class="col-md-4" style="text-align-last: left; background-color: #909090; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">
+    <a href="/">    
+      <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 14px; font-style: normal; margin: 10px 5px 10px 5px;  ">                                               
+          Todas turmas
+      </div>
+    </a>
+  </div>
+  </div>
+
+  {if="$error != ''"}
+    <div class="alert alert-danger">
+      {$error}
+    </div>
+  {/if}
+  </div>
+
+
+
+{loop="$turma"}
+
+    <div class="container"> <!-- container 3 -->
+      <div class="row"> <!-- row 4 -->        
+        <!--
+        <div class="col-md-4 col-sm-12" style="text-align-last: left; background-color: white; margin: 5px 0px 5px 0px; padding-right: 0px"><a href="/turma/{$value.idturma}/{$value.idtemporada}">           
+            <img class="img-responsive" style="width: 282px; height: 179px" id="image-preview" src="{$value.desphoto}" alt="Photo"></a>            
+        </div>
+        --> 
+        <div class="col-md-12"style="text-align-last: left; line-height: 20px;  font-size: 14px; font-style: normal; margin: 5px 0px 20px 0px">
+
+          <!--
+          <a href="/turma/{$value.idturma}/{$value.idtemporada}" style="text-decoration: none">  
+          -->
+          <a href="/cart/{$value.idturma}/{$value.idtemporada}/add" style="text-decoration: none">     
+          <h5 style="color: #000000"> 
+            <span style="font-weight: bold;">
+             {$value.idturma} - {$value.descativ} 
+            </span><br>
+             
+              {$value.diasemana} das {$value.horainicio} às {$value.horatermino} <br>  
+               Local da aula: <strong>{$value.apelidolocal}</strong><br>             
+              Temporada: {$value.desctemporada} <br>
+
+              {if="$value.fimidade == 99"} 
+               Para nascidos somente até {$anoAtual - $value.initidade} <br>
+              {else}
+              Para nascidos somente entre: {$anoAtual - $value.fimidade} à {$anoAtual - $value.initidade}<br>
+              {/if}
+
+              {if="$value.idstatustemporada == 4"} 
+               <span style="color: red;">
+                {$value.descstatustemporada}
+              </span> <br> 
+               <span style="font-weight: bold;">
+              {$value.numinscritos} inscritos para {$value.vagas} vagas  
+              </span>                         
+              {/if}
+
+              {if="$value.idstatustemporada == 6"} 
+               <span style="color: red;">
+                {$value.descstatustemporada}. 
+              </span><br>
+                <span style="color: black;">Novas inscrições a partir de {function="formatDate($value.dttermmatricula)"}.</span>
+              {/if}
+              
+
+              {if="$value.numinscritos > $value.vagas && $value.idstatustemporada == 4"} <br>              
+               <span style="color: orange;">
+                Para esta turma terá sorteio de vagas
+              </span>              
+              {/if}
+
+              {if="$value.idstatustemporada == 5"}
+                {if="$value.numinscritos < $value.vagas && $value.idstatustemporada == 5"} 
+
+                   {if="$value.nummatriculados < $value.vagas && $value.idstatustemporada == 5"} 
+                      <span style="color: darkgreen;">
+                        <strong>Há vagas disponíveis</strong>
+                      </span>
+                   {/if}
+
+                {else}
+                
+                   <span style="color: darkred;">
+                    <strong>Não há vagas disponíveis.</strong><br>
+                  </span>
+                    <span>
+                    Faça sua inscrição para a lista de espera<br>
+                  </span>
+                   <span>
+                    Lista de espera com {$value.numinscritos - $value.vagas} pessoas<br>
+                  </span>
+                 
+                {/if}
+              {/if}
+              {if="$value.token == 1"} 
+                      <span style="color: darkblue;">
+                        <strong>Necessário token</strong>
+                      </span>
+              {/if}
+            
+          </h5>
+        </a>
+
+        {if="$value.idstatustemporada == 6"} 
+        
+        {else}
+          <a class="btn btn-info" style="background-color: #cc5d1e"  href="/cart/{$value.idturma}/{$value.idtemporada}/add">Inscrever-se</a>  
+        {/if}           
+          
+        </div>
+      </div> <!-- row 4 -->
+    </div> <!-- container 3 -->
+
+
+  {/loop}
+  
+  </div> <!-- final da index -->
+
+
+              <div class="col-md-4" style="text-align-last: center; background-color: white; margin: 0px 0px 15px 0px ">
+
+                <div class="container">
+                  <div class="row estruturaAcessos">
+
+                     <div class="col-md-12" col-sm-1 style="text-align-last: left; background-color: #0f71b3; margin: 15px 0px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center;">
+                      <div style="text-align-last: center; font-weight: 900; font-size: 60px; color: white; margin: 5px;">
+                          <i class="fas fa-walking"></i>
+                      </div>
+                      <div style="text-align-last: center; font-weight: 600; line-height: 20px; color: white; font-size: 14px; font-style: normal; margin: 5px; ">
+                         Eventos Esportivos
+                      </div>
+                    </div>     
+
+                     <div class="col-md-12" col-sm-1 style="text-align-last: left; background-color: #909090; margin: 15px 0px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center;">
+                      <div style="text-align-last: center; font-weight: 900; font-size: 60px; color: white; margin: 5px;">
+                         <i class="fas fa-swimmer"></i>
+                      </div>
+                      <div style="text-align-last: center; font-weight: 600; line-height: 20px; color: white; font-size: 14px; font-style: normal; margin: 5px; ">
+
+                         Cursos Esportivos
+
+                      </div>
+                    </div> 
+                    <a href="/modalidades">    
+                    <div class="col-md-12" col-sm-1 style="text-align-last: left; background-color: #cc5d1e; margin: 15px 0px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center;">
+                      <div style="text-align-last: center; font-weight: 900; font-size: 60px; color: white; margin: 5px;">
+                         <i class="fas fa-trophy"></i>
+                      </div>
+                      <div style="text-align-last: center; font-weight: 600; line-height: 20px; color: white; font-size: 14px; font-style: normal; margin: 5px; ">
+                                               
+                         Modalidades
+                      </div></a>
+                    </div> 
+
+                    <div class="col-md-12" col-sm-1 style="text-align-last: left; background-color: #15a03f; margin: 15px 0px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center;">
+                      <div style="text-align-last: center; font-weight: 900; font-size: 60px; color: white; margin: 5px;">
+                         <i class="fas fa-futbol"></i>
+                      </div>
+                      <div style="text-align-last: center; font-weight: 600; line-height: 20px; color: white; font-size: 14px; font-style: normal; margin: 5px; ">
+                                               
+                         Campos de Futebol
+                      </div>
+                    </div> 
+                    <a href="/locais">        
+                    <div class="col-md-12" col-sm-1 style="text-align-last: left; background-color: #ce2c3e; margin: 15px 0px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center;">
+                      <div style="text-align-last: center; font-weight: 900; font-size: 60px; color: white; margin: 5px;">
+                      
+                         <i class="fas fa-warehouse"></i>
+                      </div>
+                      <div style="text-align-last: center; font-weight: 600; line-height: 20px; color: white; font-size: 14px; font-style: normal; margin: 5px; ">
+                                               
+                         Crec's
+                      </div>
+                      </a>
+                    </div>     
+                    <div class="col-md-12" col-sm-1 style="text-align-last: left; background-color: #0f71b3; margin: 15px 0px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center;">
+                      <div style="text-align-last: center; font-weight: 900; font-size: 60px; color: white; margin: 5px;">
+                      
+                         <i class="fas fa-bicycle"></i>
+                      </div>
+                      <div style="text-align-last: center; font-weight: 600; line-height: 20px; color: white; font-size: 14px; font-style: normal; margin: 5px; ">
+                                               
+                         Lazer
+                      </div>
+                    </div>     
+                    <div class="col-md-12" col-sm-1 style="text-align-last: left; background-color: #909090; margin: 15px 0px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center;">
+                      <div style="text-align-last: center; font-weight: 900; font-size: 60px; color: white; margin: 5px;">
+                      
+                         <i class="fas fa-handshake"></i>
+                      </div>
+                      <div style="text-align-last: center; font-weight: 600; line-height: 20px; color: white; font-size: 14px; font-style: normal; margin: 5px; ">
+                                               
+                         Parceiros
+                      </div>
+                    </div>     
+                    <div class="col-md-12" col-sm-1 style="text-align-last: left; background-color: #cc5d1e; margin: 15px 0px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center;">
+                      <div style="text-align-last: center; font-weight: 900; font-size: 60px; color: white; margin: 5px;">
+                      
+                         <i class="fas fa-user-plus"></i>
+                      </div>
+                      <div style="text-align-last: center; font-weight: 600; line-height: 20px; color: white; font-size: 14px; font-family: 'Open Sans'; f ">                         
+                         Melhor Idade
+                      </div>
+                    </div>     
+                    <div class="col-md-12" col-sm-1 style="text-align-last: left; background-color: #15a03f; margin: 15px 0px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center;">
+                      <div style="text-align-last: center; font-weight: 900; font-size: 60px; color: white; margin: 5px;">
+                      
+                         <i class="fas fa-map-marker-alt"></i>
+                      </div>
+                      <div style="text-align-last: center; font-weight: 600; line-height: 20px; color: white; font-size: 14px; font-style: normal; margin: 5px; ">
+                                               
+                         Mapas
+                      </div>
+                    </div>         
+                    
+                    
+                  </div>
+                </div>
+
+              </div>
+

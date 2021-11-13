@@ -10,7 +10,7 @@ use \Sbc\Model\Insc;
 use \Sbc\Model\InscStatus;
 use \Sbc\Model\CartsTurmas;
 use \Sbc\Model\Endereco;
-
+use \Sbc\Model\Local;
 
 $app->get('/', function() {
 
@@ -32,18 +32,18 @@ $app->get('/', function() {
 
 	}
 
-	$search = (isset($_GET['search'])) ? $_GET['search'] : "";
+	//$search = (isset($_GET['search'])) ? $_GET['search'] : "";
 
 	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
 
-	if ($search != '') {
+	//if ($search != '') {
 
-		$pagination = Turma::getPageSearchTurmaTemporada($search, $page);
+		//$pagination = Turma::getPageSearchTurmaTemporada($search, $page);
 		
-	} else {
+	//} else {
 
 		$pagination = Turma::getPageTurmaTemporada();
-	}
+	//}
 
 	$temporada = new Temporada();
 
@@ -51,7 +51,8 @@ $app->get('/', function() {
 
 		if(!isset($search) || $search == NULL){
 
-			Cart::setMsgError("Não existem inscrições diponíveis para esta temporada. Para a temporada 2021 o período de inscrições foi de xx/xx/xxxx a xx/xx/xxxx conforme resolução (xxxxx) publicada no jornal Notícias do Município de xx/xx/xxxx. O sorteio acontecerá dia xx/xx/xxxx. A partir do dia xx/xx/xxxx iniciar-se-a a etapa de matrículas, para os contemplados, no Centro Esportivo no dia e horário de sua aula. Acompanhe o status da sua inscrição, clicando aqui.");
+			Cart::setMsgError("Não existem inscrições diponíveis para esta temporada!.");
+			//Cart::setMsgError("Não existem inscrições diponíveis para esta temporada!. Para a temporada 2021 o período de inscrições foi de xx/xx/xxxx a xx/xx/xxxx conforme resolução (xxxxx) publicada no jornal Notícias do Município de xx/xx/xxxx. O sorteio acontecerá dia xx/xx/xxxx. A partir do dia xx/xx/xxxx iniciar-se-a a etapa de matrículas, para os contemplados, no Centro Esportivo no dia e horário de sua aula. Acompanhe o status da sua inscrição, clicando aqui.");
 
 		}else{
 
@@ -72,15 +73,6 @@ $app->get('/', function() {
 		$dtTerminscricao = $temporada->getdtterminscricao();
 		$dtInicmatricula = $temporada->getdtinicmatricula();
 		$dtTermmatricula = $temporada->getdttermmatricula();
-
-		
-
-		/*
-		echo '<pre>';
-		print_r($numerodevagas);
-		echo '</pre>';
-		exit();
-		*/
 
 		if($temporada->getidstatustemporada() == 2){ // statustemporada = Temporada iniciada
 
@@ -108,18 +100,76 @@ $app->get('/', function() {
 			Temporada::alterarStatusTemporadaParaMatriculasEncerradas($dtTermmatricula, $idtemporada);
 		}		
 	}	
+
+	// Aqui verifica se a temporada é igual ao ano atual
+	// Se não for acrescenta (1). Supondo que a inscrição está sendo feita no ano anterior
+	if( (int)date('Y')  == (int)$temporada->getdesctemporada() ){
+
+		$anoAtual = (int)date('Y');	
+
+	}else{
+
+		$anoAtual = (int)date('Y') + 1;		
+	}
+
+	$locais = Local::listAllCrecAtivo();
+
+	if(!isset($locais) || $locais == NULL){
+
+		Cart::setMsgError("Não existe Crecs Cadastrados para esta temporada. A temporada pode não estar iniciada, estar em processo de sorteio ou foi encerrada. Aguarde, ou entre em contato com o Centro Esportivo mais próximo a sua casa. ");
+	}		
 		
 	$page = new Page(); 
 
 	$page->setTpl("index", array(
 		'turma'=>Turma::checkList($pagination['data']),
-		"search"=>$search,
-		"idtemporada"=>$idtemporada,
+		'anoAtual'=>$anoAtual,
 		'profileMsg'=>User::getSuccess(),
-		//"pages"=>$pages,
-		'error'=>Cart::getMsgError()
+		'error'=>Cart::getMsgError(),
+		'locais'=>$locais,
 	));
 });
+
+$app->get('/busca', function() {
+
+	$search = (isset($_GET['search'])) ? $_GET['search'] : "";
+
+	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
+
+		$pagination = Turma::getPageSearchTurmaTemporada($search, $page);
+
+	$temporada = new Temporada();
+
+	if(!isset($search) || $search == ''){
+
+		Cart::setMsgError("Não foram encontradas turmas com a palavra digitada!");	
+			header("Location: /");
+			exit();
+	}
+
+	if(isset($search) && $search != NULL){
+
+		Cart::setMsgError("Encontramos ".$pagination['total']." turmas com a palavra '".$search."' para esta temporada! ");			
+
+		if( (int)date('Y')  == (int)$temporada->getdesctemporada() ){
+			$anoAtual = (int)date('Y');	
+		}else{
+			$anoAtual = (int)date('Y') + 1;		
+		}
+
+		$page = new Page(); 
+
+		$page->setTpl("busca", array(
+			'turma'=>Turma::checkList($pagination['data']),
+			"search"=>$search,
+			'anoAtual'=>$anoAtual,
+			'profileMsg'=>User::getSuccess(),
+			'error'=>Cart::getMsgError(),
+		));	
+	}		
+});
+
+
 
 
 /*
@@ -176,11 +226,15 @@ $app->get("/checkout", function(){
 	User::verifyLogin(false);
 
 	$cart = Cart::getFromSession();
-	$user = User::getFromSession();
+	$user = User::getFromSession();	
 
 	$idperson = (int)$_SESSION[User::SESSION]['idperson'];
 	Endereco::seEnderecoExiste($idperson);
 
+	$_SESSION['token'] = isset($_SESSION['token']) ? $_SESSION['token'] : '';
+
+	$token = $_SESSION['token'];
+	
 	//$insc = new Insc;
 
 	if(Cart::cartIsEmpty((int)$_SESSION[Cart::SESSION]['idcart']) === false){
@@ -192,6 +246,7 @@ $app->get("/checkout", function(){
 	$page = new Page();
 
 	$page->setTpl("checkout", [
+		'token'=>$token,
 		'cart'=>$cart->getValues(),
 		'pessoa'=>$cart->getPessoa(),
 		'turma'=>$cart->getTurma(),
@@ -215,15 +270,31 @@ $app->post("/checkout", function(){
 
 	$temporada->get((int)$idtemporada);
 	
-	if($temporada->getidstatustemporada() == 5){
+	//------- ALTERAR COLOCANDO ESTAS LINHAS --------------------------------
 
-		if(!isset($_POST['laudo']) || $_POST['laudo'] == NULL){
+	if(!isset($_POST['laudo']) || $_POST['laudo'] == NULL){
 
-			Pessoa::setError("Informe se você irá fazer uma inscrição com laudo ou não! ");
+		Pessoa::setError("Informe se você irá confirmar uma inscrição para pessoa com inscicação médica! ");
+		header("Location: /checkout");
+		exit();
+	}
+	
+
+	if(!isset($_POST['inscpcd']) || $_POST['inscpcd'] == NULL){
+
+			Pessoa::setError("Informe se você irá confirmar uma inscrição para pessoa com deficiência! ");
 			header("Location: /checkout");
 			exit();
-		}
 	}
+
+	if(!isset($_POST['edital']) || $_POST['edital'] == NULL){
+
+		Pessoa::setError("Assinale que você leu os termos para as inscrições! ");
+		header("Location: /checkout");
+		exit();
+	}
+
+	//------- ATÉ AQUI ----------------------------------------	
 
 	if(!isset($_POST['ciente']) || $_POST['ciente'] == NULL){
 
@@ -233,6 +304,7 @@ $app->post("/checkout", function(){
 	}
 
 	$laudo = isset($_POST['laudo']) ? (int)$_POST['laudo'] : 0;
+	$inscpcd = isset($_POST['inscpcd']) ? (int)$_POST['inscpcd'] : 0;
 
 	$cartsturmas = CartsTurmas::getCartsTurmasFromId($idcart);
 
@@ -248,11 +320,55 @@ $app->post("/checkout", function(){
 
 	$pessoa->get((int)$idpess);
 
+	$anoNasc = $pessoa->getdtnasc();
+
+	$anoNasc = new DateTime($anoNasc);
+
+	$anoNasc = (int)$anoNasc->format('Y');
+
+	if( (int)date('Y')  == (int)$desctemporada ){
+
+		$anoAtual = (int)date('Y');	
+
+	}else{
+
+		$anoAtual = (int)date('Y') + 1;		
+	}
+
+	$idlocal = $_POST['idlocal'];
+
+	$initidade = $_POST['initidade'];	
+
+	$idmodal = $_POST['idmodal'];
+
+	// idade 40 para idade inicial das hidros da pauliceia
+	// idlocal 21 para comparar com local pauliceia
+	// idmodal para para comparar com modalidade hidroginástica
+
+	if($laudo == 0){
+
+		if($idlocal == 21 && $idmodal == 6){
+
+			if(($anoAtual - $anoNasc) < 40){
+
+				Pessoa::setError("Você deve marcar a opçãp 'Sim' em: 'Esta é uma  inscrição para pessoa com laudo médico (Solicitação Médica)' ");
+				header("Location: /checkout");
+				exit();
+		   }
+
+	    }	
+	}
+
+	var_dump($anoAtual - $anoNasc.' - '.$initidade.' - '.$idlocal.' - '.$laudo.' - '.$idmodal);
+	exit();
+
 	$nomepess = $pessoa->getnomepess();
 
 	$email = $user->getdesemail();	
 
 	$desperson = $user->getdesperson();		
+
+	$turma->get((int)$idturma);
 
 	//if(Insc::statusTemporadaMatriculaIniciada($idtemporada)){
 		//$InscStatus = InscStatus::AGUARDANDO_MATRICULA;
@@ -264,32 +380,77 @@ $app->post("/checkout", function(){
 		$InscStatus = InscStatus::FILA_DE_ESPERA;
 
 		$numOrdemMax = Insc::numMaxNumOrdem($idtemporada, $idturma);
+		$mumMatriculados = Insc::numMatriculados($idtemporada, $idturma);
 
 		$numordem = $numOrdemMax[0]['maxNumOrdem'] + 1;
+		$matriculados = $mumMatriculados[0]['nummatriculados'];
 
-	}else{
-
-		$InscStatus = InscStatus::AGUARDANDO_SORTEIO;
+		$turma->get((int)$idturma);
 		
-		$numordem = 0;
-	}
+		$vagas = $turma->getvagas();
+
+		$token = $_POST['token'];
+
+		$posicao = $numordem - $vagas;
 
 		$insc->setData([
 			'idcart'=>$idcart,
 			'idinscstatus'=>$InscStatus,
 			'numordem'=>$numordem,
 			'laudo'=>$laudo,
+			'inscpcd'=>$inscpcd,
 			'idturma'=>$idturma,
 			'idtemporada'=>$idtemporada	
 		]);
 
 		$insc->save();
 
+		Turma::setUsedToken($idturma, $token);
+
+		$idinsc = $insc->getidinsc();	
+
+		$numsorte = $insc->getnumsorte();	
+
+		$_SESSION['token'] = NULL;	
+
+		$cart->removeTurma($turma, true);
+		Cart::removeFromSession();
+	    session_regenerate_id();
+
+	    $insc->inscricaoEmailPosSorteio($idinsc, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma, $posicao, $matriculados, $vagas);
+
+		header("Location: /profile/insc/".$insc->getidinsc()."/".$idpess."");
+        exit;	
+
+	}else{
+
+		$InscStatus = InscStatus::AGUARDANDO_SORTEIO;
+
+		$token = $_POST['token'];
+		
+		$numordem = 0;	
+
+		$insc->setData([
+			'idcart'=>$idcart,
+			'idinscstatus'=>$InscStatus,
+			'numordem'=>$numordem,
+			'laudo'=>$laudo,
+			'inscpcd'=>$inscpcd,
+			'idturma'=>$idturma,
+			'idtemporada'=>$idtemporada	
+		]);
+
+		$insc->save();
+
+		Turma::setUsedToken($idturma, $token);		
+
 		$idinsc = $insc->getidinsc();	
 
 		$numsorte = $insc->getnumsorte();
 
 		$turma->get((int)$idturma);
+
+		$_SESSION['token'] = NULL;
 
 		$cart->removeTurma($turma, true);
 		Cart::removeFromSession();
@@ -298,7 +459,8 @@ $app->post("/checkout", function(){
 	    $insc->inscricaoEmail($idinsc, $numsorte, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma);
 
 		header("Location: /profile/insc/".$insc->getidinsc()."/".$idpess."");
-		exit;	
+		exit;
+	}	
 });
 
 
@@ -378,7 +540,7 @@ $app->get("/logout", function(){
 });
 
 
-/*
+
 
 $app->get("/forgot", function() {
 
@@ -438,7 +600,7 @@ $app->post("/forgot/reset", function(){
 
 	$page->setTpl("forgot-reset-success");
 });
-*/
+
 
 $app->get("/comprovante", function() {
 

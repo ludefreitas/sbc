@@ -375,9 +375,9 @@ class User extends Model {
              $code = openssl_encrypt($dataRecovery['idrecovery'], 'aes-256-cbc', User::SECRET, 0, $iv);
              $result = base64_encode($iv.$code);
              if ($inadmin === true) {
-                 $link = "http://www.cursosesportivos.com.br/admin/forgot/reset?code=$result";
+                 $link = "https://www.cursosesportivos.com.br/admin/forgot/reset?code=$result";
              } else {
-                 $link = "http://www.cursosesportivos.com.br/forgot/reset?code=$result";
+                 $link = "https://www.cursosesportivos.com.br/forgot/reset?code=$result";
              } 
              $mailer = new Mailer($data['desemail'], $data['desperson'], "Redefinir senha do Cursos Esportivos SBC", "forgot", array(
                  "name"=>$data['desperson'],
@@ -740,14 +740,51 @@ class User extends Model {
 
 		$results = $sql->select(
 			"SELECT * FROM tb_pessoa a
-			-- INNER JOIN 	tb_users b using (iduser)
+			-- LEFT JOIN tb_saude b 
+            -- ON b.idpess = a.idpess
+            -- INNER JOIN tb_cid c
+			-- ON c.idcid = b.idcid
 			WHERE statuspessoa = 1 AND
-			iduser = :iduser", [
+			a.iduser = :iduser", [
 			':iduser'=>$this->getiduser()
 		]);
 
 		return $results;
 	}
+
+	public function getPessoaSaude()	{
+
+		$sql = new Sql();
+
+		$results = $sql->select(
+			"SELECT * FROM tb_pessoa a
+			LEFT JOIN tb_saude b 
+            ON b.idpess = a.idpess
+            INNER JOIN tb_cid c
+			ON c.idcid = b.idcid
+			WHERE statuspessoa = 1 AND
+			a.iduser = :iduser", [
+			':iduser'=>$this->getiduser()
+		]);
+
+		return $results;
+	}
+	/*
+	public function getPessoaByIdUser($iduser)	{
+
+		$sql = new Sql();
+
+		$results = $sql->select(
+			"SELECT * FROM tb_pessoa a
+			INNER JOIN 	tb_saude b
+			WHERE statuspessoa = 1 AND
+			iduser = :iduser", [
+			':iduser'=>$iduser
+		]);
+
+		return $results;
+	}
+	*/
 
 	public function getFromId($iduser)
 	{
@@ -763,6 +800,22 @@ class User extends Model {
 		]);
 
 		$this->setData($rows[0]);
+	}
+
+	public static function getUserIdPess($idpess)
+	{
+
+		$sql = new Sql();
+
+		$result = $sql->select(
+			"SELECT  desperson, desemail FROM tb_pessoa 
+			INNER JOIN 	tb_users USING(iduser)
+			INNER JOIN 	tb_persons USING(idperson)			
+			WHERE idpess = :idpess", [
+			':idpess'=>$idpess
+		]);
+
+		return $result;
 	}
 
 	public function getInsc()
@@ -783,6 +836,7 @@ class User extends Model {
 			INNER JOIN tb_persons f ON f.idperson = e.idperson
 			INNER JOIN tb_temporada j ON j.idtemporada = a.idtemporada
 			WHERE e.iduser = :iduser -- AND a.idinscstatus != 7
+			ORDER BY a.idinsc DESC
 		", [
 			':iduser'=>$this->getiduser()
 		]);
@@ -972,7 +1026,7 @@ class User extends Model {
 		}
 		*/
 		
-		public function getIdUseInTurmaTemporada($idturma, $idtemporada){
+		public static function getIdUseInTurmaTemporada($idturma, $idtemporada){
 
 			$sql = new Sql();
 
@@ -989,6 +1043,45 @@ class User extends Model {
 			return $rows[0];
 			
 		}
+
+		/*
+		public function save2()
+		{
+		$sql = new Sql();
+
+		$results = $sql->select("CALL sp_users2_save(:desperson, :apelidoperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin, :isprof, :statususer, :idpess, :nomepess, :dtnasc, :sexo, :numcpf, :numrg, :numsus, :vulnsocial, :pcd, :cadunico, :nomemae, :cpfmae, :nomepai, :cpfpai, :statuspessoa, :dtinclusao, :dtalteracao)", array(
+			":desperson"=>utf8_decode($this->getdesperson()),
+			":apelidoperson"=>$this->getapelidoperson(),
+			":deslogin"=>$this->getdeslogin(),
+			":despassword"=>User::getPasswordHash($this->getdespassword()),
+			":desemail"=>$this->getdesemail(),
+			":nrphone"=>$this->getnrphone(),
+			":inadmin"=>$this->getinadmin(),
+			":isprof"=>$this->getisprof(),
+			":statususer"=>$this->getstatususer(),		
+			":idpess"=>$this->getidpess(),
+			":nomepess"=>$this->getnomepess(),
+			":dtnasc"=>$this->getdtnasc(),
+			":sexo"=>$this->getsexo(),
+			":numcpf"=>$this->getnumcpf(),
+			":numrg"=>$this->getnumrg(),
+			":numsus"=>$this->getnumsus(),
+			":vulnsocial"=>$this->getvulnsocial(),
+			":pcd"=>$this->getpcd(),
+			":cadunico"=>$this->getcadunico(),
+			":nomemae"=>$this->getnomemae(),
+			":cpfmae"=>$this->getcpfmae(),
+			":nomepai"=>$this->getnomepai(),
+			":cpfpai"=>$this->getcpfpai(),
+			":statuspessoa"=>$this->getstatuspessoa(),
+			":dtinclusao"=>$this->getdtinclusao(),
+			":dtalteracao"=>$this->getdtalteraca()
+		));	
+
+		$this->setData($results[0]);
+	}
+
+	*/
 
 
 

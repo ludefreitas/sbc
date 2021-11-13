@@ -1,19 +1,22 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?> <div class="container"> <!-- container 1 -->
             <div class="row"> <!-- row 2 -->
-            <div class="col-md-3" style="margin: 15px 0px 0px 0px">
+            <div class="col-md-3" style="margin: 5px 0px 0px 0px">
                 <?php require $this->checkTemplate("user-profile-menu");?>
             </div>
-              <div class="col-md-9" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
+              <div class="col-md-9" style="text-align-last: left; background-color: white; margin: 5px 0px 50px 0px;">
 
 
     <?php if( $errorRegister != '' ){ ?>
     <div class="alert alert-danger">
     <?php echo htmlspecialchars( $errorRegister, ENT_COMPAT, 'UTF-8', FALSE ); ?>
     </div>
-    <?php } ?>
-    
+    <?php } ?> 
 
-    
+    <?php if( $saudeSuccess != '' ){ ?>
+    <div class="alert alert-success">
+    <h4><?php echo htmlspecialchars( $saudeSuccess, ENT_COMPAT, 'UTF-8', FALSE ); ?></h4>
+    </div>
+    <?php } ?>       
 
      <div class="container">
                     
@@ -21,7 +24,7 @@
         <div class="row alert alert-primary">
             <div class="col-md-12" >
                 <span style="text-align: center;">
-                <strong><?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </strong>&nbsp; <strong> <?php if( $value1["pcd"] == 1 ){ ?>(PCD)<?php } ?></strong>
+                <strong><?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </strong>
                 <div class="row alert alert-primary"> 
                 &nbsp;<strong><?php echo calcularIdade($value1["dtnasc"]); ?>&nbsp; </strong>anos 
                 &nbsp;<strong>Data Nasc:</strong><?php echo formatDate($value1["dtnasc"]); ?>
@@ -41,19 +44,54 @@
                 <?php if( $value1["nomepai"] != '' ){ ?>
                 &nbsp;<strong>Nome do pai: </strong><?php echo htmlspecialchars( $value1["nomepai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                 &nbsp;<strong>CPF do pai: </strong><?php echo htmlspecialchars( $value1["cpfpai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-                <?php } ?>
-                
+                <?php } ?>                
                 &nbsp;<strong>Incluido: </strong><?php echo formatDateHour($value1["dtinclusao"]); ?>
-                &nbsp;<strong>Alterado: </strong><?php echo formatDateHour($value1["dtalteracao"]); ?>
+                &nbsp;<strong>Alterado: </strong><?php echo formatDateHour($value1["dtalteracao"]); ?> 
                 </span>
                 </div>
+                <?php if( $value1["pcd"] == 1 ){ ?>
+                <div class="row alert alert-warning">
+                    <div class="col-md-12">
+                    <span style="color: blue; font-weight: bold; "> <?php if( $value1["pcd"] == 1 ){ ?>Pessoa Com Deficiência<?php } ?></span>
+                    </div>
+                    <div class="col-md-12">
+                            <span style="color: blue; ">
+                            <?php if( $value1["defauditiva"] ){ ?>
+                            Deficiente Auditivo -
+                            <?php } ?>
+                            <?php if( $value1["defvisual"] ){ ?>
+                            Deficiente Visual -
+                            <?php } ?>
+                            <?php if( $value1["deffisica"] ){ ?>
+                            Deficiente Físico -
+                            <?php } ?>
+                            <?php if( $value1["defintelectual"] ){ ?>
+                            Deficiente Intelectual -
+                            <?php } ?>
+                            <?php if( $value1["defautismo"] ){ ?>
+                            Autista -
+                            <?php } ?>
+                            <?php if( $value1["deftea"] ){ ?>
+                            Pessoa com TEA - 
+                            <?php } ?>
+                            <span style="font-weight: bold; color: black; ">CID.: <?php echo htmlspecialchars( $value1["codigo"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
+                            <?php echo htmlspecialchars( $value1["doenca"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
+
+                            
+                        </div>
+                        <div class="col-md-12">
+                              <h6>  <a href="/saude-atualiza/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">Inserir / Atualizar Dados de Saúde <span style="color: #000"> (Clique aqui)</span></a> </h6>
+                    </div>
+                
+                </div>
+                <?php } ?>
                 <div class="row alert alert-primary">
-                    <div class="col-md-6 btn-primary" style="padding: 5px; text-align-last: center;">
+                    <div class="col-md-6 btn-primary" style="padding: 5px; text-align-last: center; width: 50%;">
                         <form action="post" name="idpess">
                             <a class="btn btn-primary" href="/user/pessoa/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" role="button">EDITAR</a>
                         </form>
                     </div>
-                    <div class="col-md-6 btn-danger" style="padding: 5px; text-align-last: center;">
+                    <div class="col-md-6 btn-danger" style="padding: 5px; text-align-last: center; width: 50%;">
                         <form action="post" name="idpess">
                             <a class="btn btn-danger"  href="/user/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/status" role="button" onclick="return confirm('DESEJA realmente EXCLUIR o cadastro do(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')">EXCLUIR</a>
                         </form>

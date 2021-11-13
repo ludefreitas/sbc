@@ -51,7 +51,7 @@
                     <table class="shop_table">
                         <thead>
                             <tr>
-                                <th colspan="2" class="product-name"><h3>Nome: {$pessoa.nomepess} -  {function="calcularIdade($pessoa.dtnasc)"} anos - <strong>{if="$pessoa.pcd == 1"}(PCD){/if}</strong></h3></th>
+                                <th colspan="2" class="product-name"><h3>Nome: {$pessoa.nomepess} -  {function="calcularIdade($pessoa.dtnasc)"} anos - <strong>{if="$pessoa.pcd == 1"}PCD{/if}</strong></h3></th>
                             </tr>
                             <tr>
                                 <th colspan="2" class="product-name"><h3>número para concorrer no sorteio: {$insc.numsorte}</h3></th>
@@ -81,10 +81,12 @@
                                 <td class="product-name">{$insc.descstatus}</td>
                             </tr>
                             {if="$insc.idinscstatus == 1"}
+                            
                             <tr>
                                 <th class="product-name"> Aluno desistente? </th>
-                                <td class="product-name"> <a class="btn btn-danger" href="" role="button" onclick="return confirm('Deseja realmente informar como desistente o {$pessoa.nomepess} da inscrição {$insc.idinsc}?')">Desistente</a> </td>
+                                <td class="product-name"> <a class="btn btn-danger" href="/prof/insc/{$insc.idinsc}/{$idturma}/{$pessoa.idpess}/statusDesistente" role="button" onclick="return confirm('Deseja realmente informar como desistente o {$pessoa.nomepess} da inscrição {$insc.idinsc}?')">Desistente</a> </td>
                             </tr>
+                        -
                             {/if}
                              <tr>
                                 <th class="product-name"> Início previsto das aulas </th>
@@ -100,6 +102,10 @@
                             
                         </tfoot>
                     </table>
+                    <div>
+                 
+                    <a type="button" class="btn btn-primary" href="javascript:window.history.go(-1)">Voltar</a>
+                </div>  
                     
                 </div>
 

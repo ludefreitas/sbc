@@ -12,6 +12,9 @@
         </div>
             {/if}
             {if="$success != ''"}
+            <script type="text/javascript">  
+                alert('Inscrição efetuada com sucesso!!!');
+            </script>
         <div class="alert alert-info">
             {$success}
         </div>
@@ -24,8 +27,10 @@
                 </div>
                 <div class="col-md-5 alert alert-success">
                    
-                       <p><h5 style="text-align: center"> Nº para concorrer no sorteio: </h5></p>
+                       <p><h5 style="text-align: center"> Nº para concorrer no sorteio: </h5>
                        <p><h3 style="color: red; text-align-last: center">{$insc.numsorte}</h3> </p>
+                       <h6 style="text-align: center; font-size: 12px;"> * Caso esta inscrição vá para sorteio</h6></p>
+                      
                 </div> 
                 
             </div>              
@@ -82,7 +87,15 @@
     </div>
     <div class="row">
         <div class="col-md-3" style="padding-top: 10px">
-            <strong>Status da Inscrição: </strong>
+            <strong>Pessoa com deficiência? </strong>
+        </div>
+        <div class="col-md-9 alert alert-success">
+            <strong>{if="$insc.inscpcd == 0"}Não{else}Sim{/if}</strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3" style="padding-top: 10px;">
+            <strong>STATUS da Inscrição: </strong>
         </div>
         <div class="col-md-9 alert alert-success" {function="colorStatus($insc.idinscstatus)"}>
             <strong>{$insc.descstatus}</strong>

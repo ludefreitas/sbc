@@ -39,49 +39,46 @@
 
           <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">  
           
-            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
-              <div class="row">
-              <div class="col-md-4" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  Nome do Centro Esportivo
-                </h5>
-              </div>
-              <div class="col-md-4" >
-                <h5 style="font-weight: bold; text-align: left;">
-                 Endereço
-                </h5>
-              </div>
-              <div class="col-md-2" >
-                <h5 style="font-weight: bold; text-align: left;">
-                 Telefone
-                </h5>
-              </div>
-            </div>
-          </div>        
             {loop="$local"}
             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
               <div class="row">
               <div class="col-md-4" >
                 <h5 style="font-weight: bold; text-align: left;">
-                  {$value.apelidolocal} <br> {$value.nomelocal}
+                  {$value.apelidolocal} {$value.nomelocal} ( {$value.telefone} )
                 </h5>
               </div>
-              <div class="col-md-4" >
+              <div class="col-md-8" >
                 <h5 style="font-weight: bold; text-align: left;">
                   {$value.rua} - {$value.numero} - {$value.complemento} - {$value.bairro} - Cep: {$value.cep} - {$value.cidade} - {$value.estado}
                 </h5>
               </div>
-              <div class="col-md-2" >
+             
+             
+            </div>
+
+             <div class="row">              
+              
+              <div class="col-md-6" >
                 <h5 style="font-weight: bold; text-align: left;">
-                  {$value.telefone}
+                  {if="$value.statuslocal == 1"}
+                    Local ativo&nbsp; - &nbsp;
+                  {else}
+                    Local desativado&nbsp; - &nbsp;
+                  {/if}
+                  Coordenador:&nbsp; {$value.desperson} 
+
+                </h5>
+
+              </div>
+              <div class="col-md-6" >
+                <h5 style="font-weight: bold; text-align: left;">                  
+
+                   <a href="/admin/local/{$value.idlocal}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
+                  <a href="/admin/local/{$value.idlocal}/delete" onclick="return confirm('Deseja realmente excluir o Crec {$value.apelidolocal}?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
                 </h5>
               </div>
-              <div class="col-md-2" >
-                <h6 style="font-weight: bold; text-align: center;">
-                  <a href="/admin/local/{$value.idlocal}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
-                  <a href="/admin/local/{$value.idlocal}/delete" onclick="return confirm('Deseja realmente excluir o Crec {$value.apelidolocal}?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
-                </h6>                
-              </div>
+               
+              
             </div>
 
            

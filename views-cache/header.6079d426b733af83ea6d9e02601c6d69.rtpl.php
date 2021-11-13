@@ -90,7 +90,7 @@ desired effect
                     <a href="#">
                       <div class="pull-left">
                         <!-- User Image -->
-                        <img src="/res/admin/dist/img/user9-160x120.jpg" class="img-circle" alt="User Image">
+                        <img src="/res/admin/dist/img/boxed-bg.jpg" class="img-circle" alt="User Image">
                       </div>
                       <!-- Message title and timestamp -->
                       <h4>
@@ -173,16 +173,17 @@ desired effect
           <li class="dropdown user user-menu">
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <!-- The user image in the navbar-->
-              <img src="/res/admin/dist/img/user9-160x120.jpg" class="user-image" alt="User Image">
+              <!-- The user image in the navbar -->
+              <img src="/res/admin/dist/img/boxed-bg.jpg" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
               <span class="hidden-xs"><?php echo htmlspecialchars( $user["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
               <li class="user-header">
-                <img src="/res/admin/dist/img/user9-160x120.jpg" class="img-circle" alt="User Image">
-
+                
+                <img src="/res/admin/dist/img/boxed-bg.jpg" class="img-circle" alt="User Image">
+                
                 <p>
                   <?php echo getUserId(); ?> - <?php echo getUserName(); ?> - Web Developer
                   <small>Membro desde Set. 2020</small>
@@ -230,9 +231,11 @@ desired effect
 
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
+        
         <div class="pull-left image">
-          <img src="/res/admin/dist/img/user9-160x120.jpg" class="img-circle" alt="User Image">
+          <img src="/res/admin/dist/img/boxed-bg.jpg" class="img-circle" alt="User Image">
         </div>
+      -->
         <div class="pull-left info">
           <p><?php echo getUserName(); ?></p>
           <!-- Status -->
@@ -271,8 +274,11 @@ desired effect
             <li><a href="/admin/pessoas"><i class="fa fa-users"></i>Alunos</a></li>          
           </ul>
         </li> 
+         <li>
+          <a href="/admin/temporada"><i class="fa fa-link"></i><span>Temporadas</span></a>
+        </li>     
         <li class="treeview">
-          <a href="/admin/insc"><i class="fa fa-link"></i> <span>Turmas por temporada</span>
+          <a href="/admin/insc"><i class="fa fa-link"></i> <span>TURMAS por temporada</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -284,7 +290,7 @@ desired effect
         </li>
 
         <li class="treeview">
-          <a href="/admin/insc"><i class="fa fa-link"></i> <span>Professor por temporada</span>
+          <a href="/admin/insc"><i class="fa fa-link"></i> <span>PROFESSOR</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -296,7 +302,7 @@ desired effect
         </li> 
 
         <li class="treeview">
-          <a href="/admin/insc"><i class="fa fa-link"></i> <span>Sorteio por temporada</span>
+          <a href="/admin/insc"><i class="fa fa-link"></i> <span>SORTEIO</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -317,12 +323,9 @@ desired effect
             <?php require $this->checkTemplate("insc-temporada-menu");?>
 
           </ul>
-        </li> 
+        </li>        
         <li>
-          <a href="/admin/temporada"><i class="fa fa-link"></i><span>Temporadas</span></a>
-        </li>     
-        <li>
-          <a href="/admin/turma"><i class="fa fa-link"></i> <span>Turmas</span></a>
+          <a href="/admin/turma"><i class="fa fa-link"></i> <span>Todas Turmas</span></a>
         </li>                        
         
         <li>
@@ -342,6 +345,9 @@ desired effect
         </li>
         <li>
           <a href="/admin/horario"><i class="fa fa-link"></i> <span>Horários</span></a>
+        </li>
+        <li>
+          <a href="/admin/cid"><i class="fa fa-link"></i> <span>Relação de CID's</span></a>
         </li>
       </ul>
       <!-- /.sidebar-menu -->

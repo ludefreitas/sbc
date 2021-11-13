@@ -8,7 +8,7 @@ class Sql {
 	const USERNAME = "root";
 	const PASSWORD = "";
 	//const DBNAME = "db_cursossbc";
-	const DBNAME = "dbcursos_sbc";
+	const DBNAME = "db_cursosesportivossbc";
 
 	//const HOSTNAME = "50.116.86.90";
 	//const USERNAME = "curs0155_db";

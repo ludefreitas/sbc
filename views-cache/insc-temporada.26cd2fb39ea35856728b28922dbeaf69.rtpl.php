@@ -7,7 +7,7 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="/prof"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active"><a href="/prof/insc">Inscrições todas temporadas</a></li>
+    <li class="active"><a href="/prof/insc/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>">Inscrições todas temporadas</a></li>
   </ol>
 </section>
 

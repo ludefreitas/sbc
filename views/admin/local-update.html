@@ -110,7 +110,23 @@
             <div class="form-group">
               <label for="telefone">Telefone</label>
               <input type="text" class="form-control" id="telefone" name="telefone" placeholder="Informe o númeor do telefone do local" value="{$local.telefone}">
-            </div>                       
+            </div>  
+
+            <div class="checkbox">
+              <label>
+               <input type="checkbox" name="statuslocal" value="" {if="$local.statuslocal == 1"}checked{/if}> Ativar local?
+              </label>
+            </div>
+
+             <div class="box-header">
+              <label for="idlocal">Professor / Coordenador</label>
+              <select class="form-control" name="iduser">
+                 <option selected="selected" value="">Selecione professor</option>
+                  {loop="$prof"}
+                 <option  value="{$value.iduser}">{$value.desperson}</option>
+                  {/loop}
+              </select>
+            </div>                                                
                 
               </div>
 

@@ -55,6 +55,30 @@
         xmlHttp.send()
         
     }
+
+    /*
+    function getDadosCodigoDoenca(cid){
+
+         let url = 'https://cid.api.mokasoft.org/cid10/'+cid+''
+
+        let xmlHttp = new XMLHttpRequest()
+        xmlHttp.open('GET', url)
+
+        xmlHttp.onreadystatechange = () => {
+            if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
+
+                let dadosJSONText = xmlHttp.responseText
+
+                let dadosJSONObj = JSON.parse(dadosJSONText)
+
+                document.getElementById('dadosDoenca').value = dadosJSONObj.nome                                                               
+            }
+            
+        }
+
+        xmlHttp.send()        
+    }  
+    */
     
 </script>
 

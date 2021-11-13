@@ -3,7 +3,8 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Editar Turma 
+    Editar Turma <?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+
   </h1>
   <ol class="breadcrumb">
     <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -70,7 +71,7 @@
                 <select class="form-control" name="idativ">     
                   <?php $counter1=-1;  if( isset($atividade) && ( is_array($atividade) || $atividade instanceof Traversable ) && sizeof($atividade) ) foreach( $atividade as $key1 => $value1 ){ $counter1++; ?>
 
-                  <option <?php if( $value1["idativ"] === $turma["idativ"] ){ ?>selected="selected"<?php } ?> value="<?php echo htmlspecialchars( $value1["idativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["nomeativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["descrfxetaria"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> a <?php echo htmlspecialchars( $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> anos</option>
+                  <option <?php if( $value1["idativ"] === $turma["idativ"] ){ ?>selected="selected"<?php } ?> value="<?php echo htmlspecialchars( $value1["idativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["nomeativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["descrfxetaria"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> a <?php echo htmlspecialchars( $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> anos<?php echo htmlspecialchars( $value1["prograativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["origativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
                   <?php } ?>                            
                 </select>
             </div>            
@@ -90,6 +91,12 @@
            <div class="form-group">
               <label for="turma">Vagas</label>
               <input type="number" class="form-control" id="vagas" name="vagas" placeholder="Informe a quantidade de vagas" value="<?php echo htmlspecialchars( $turma["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+            </div>
+
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="token" value="1" <?php if( $turma["token"] == 1 ){ ?>checked<?php } ?>> Tem token ?
+              </label>
             </div>
               
             </div>

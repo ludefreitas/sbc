@@ -12,6 +12,9 @@
         </div>
             <?php } ?>
             <?php if( $success != '' ){ ?>
+            <script type="text/javascript">  
+                alert('Inscrição efetuada com sucesso!!!');
+            </script>
         <div class="alert alert-info">
             <?php echo htmlspecialchars( $success, ENT_COMPAT, 'UTF-8', FALSE ); ?>
         </div>
@@ -24,8 +27,10 @@
                 </div>
                 <div class="col-md-5 alert alert-success">
                    
-                       <p><h5 style="text-align: center"> Nº para concorrer no sorteio: </h5></p>
+                       <p><h5 style="text-align: center"> Nº para concorrer no sorteio: </h5>
                        <p><h3 style="color: red; text-align-last: center"><?php echo htmlspecialchars( $insc["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h3> </p>
+                       <h6 style="text-align: center; font-size: 12px;"> * Caso esta inscrição vá para sorteio</h6></p>
+                      
                 </div> 
                 
             </div>              
@@ -82,7 +87,15 @@
     </div>
     <div class="row">
         <div class="col-md-3" style="padding-top: 10px">
-            <strong>Status da Inscrição: </strong>
+            <strong>Pessoa com deficiência? </strong>
+        </div>
+        <div class="col-md-9 alert alert-success">
+            <strong><?php if( $insc["inscpcd"] == 0 ){ ?>Não<?php }else{ ?>Sim<?php } ?></strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3" style="padding-top: 10px;">
+            <strong>STATUS da Inscrição: </strong>
         </div>
         <div class="col-md-9 alert alert-success" <?php echo colorStatus($insc["idinscstatus"]); ?>>
             <strong><?php echo htmlspecialchars( $insc["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>

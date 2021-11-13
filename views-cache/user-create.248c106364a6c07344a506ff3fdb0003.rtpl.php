@@ -1,5 +1,16 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
-<script>
+<script language="javascript">
+
+    
+    function IsEmpty() {
+
+      if (document.form.name.value == "") {
+        alert("empty");
+      }
+      return;
+    }
+  
+  
 
     function quantosAnos(nascimento, hoje) {
 
@@ -114,8 +125,10 @@
                         <h4>Criar conta</h4>
                         <p >
                             <label style="font-size: 12px; margin: 0px">Nome Completo</label>
-                            <input type="text" id="name" name="name" class="form-control" value="<?php echo htmlspecialchars( $registerValues["name"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required="required">
+                            <input type="text" id="name" name="name" class="form-control" value="<?php echo htmlspecialchars( $registerValues["name"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required="required" minlength="14">
                         </p>
+                          <input id="insert" onclick="IsEmpty();" type="submit" value="Add Question" />
+
                         <p >
                             <label style="font-size: 12px; margin: 0px">Telefone Celular</label>
 
@@ -131,11 +144,11 @@
                             <input type="email" id="emailconfirme" name="emailconfirme" class="form-control" value="<?php echo htmlspecialchars( $registerValues["emailconfirme"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required="required">
                         </p>
                         <p >                            
-                            <label style="font-size: 12px; margin: 0px">Senha</label>
+                            <label style="font-size: 12px; margin: 0px">Crie uma senha</label>
                             <input type="password" id="senha" name="password" class="form-control" required="required">
                         </p>
                         <p>                            
-                            <label style="font-size: 12px; margin: 0px">Confirme a senha</label>
+                            <label style="font-size: 12px; margin: 0px">Confirme a senha criada</label>
                             <input type="password" id="senhaconfirme" name="passwordrepeat" class="form-control" required="required">
                         </p>
                         
@@ -149,7 +162,7 @@
 
                     <p>
                         <label style="font-size: 12px; margin: 0px">Data do Nascimento *</label>
-                        <input onblur="menorDeIdade()" type="date" id="dtnasc" name="dtnasc" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["dtnasc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required="required">
+                        <input onblur="menorDeIdade()" type="date" id="dtnasc" name="dtnasc" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["dtnasc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required="required"/>
                     </p> 
 
                     <p>
@@ -220,7 +233,7 @@
                     </p> 
 
                     <p>
-                    <label style="font-size: 12px; margin: 0px"><br>PCD?</label>
+                    <label style="font-size: 12px; margin: 0px"><br>Pessoa com deficiência?</label>
                     <select id="pcd" style="width: 100%; float: right;" class="form-control" name="pcd" required="required">
                         <?php if( $registerpessoaValues["pcd"] === '' ){ ?>
                         <option selected="" value="">Seclecione</option>                            
@@ -245,7 +258,7 @@
                                 <br>Nome da Mãe
                                 <span><br>* (Necessário preencher este campo se a pessoa, a cadastrar, for menor de idade)</span>
                             </label>
-                            <input style="width: 100%; float: right;" type="text" id="nomemae" name="nomemae" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["nomemae"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                            <input style="width: 100%; float: right;" type="text" id="nomemae" name="nomemae" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["nomemae"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" minlength="14">
                         </p>    
 
                         <p>
@@ -261,7 +274,7 @@
                                 <br>Nome do Pai
                                 <span><br>* (Necessário preencher este campo se a pessoa, a cadastrar, for menor de idade)</span>
                             </label>
-                            <input style="width: 100%; float: right;" type="text" id="nomepai" name="nomepai" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["nomepai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">                
+                            <input style="width: 100%; float: right;" type="text" id="nomepai" name="nomepai" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["nomepai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" minlength="14">                
                         </p>                          
                         
                         <p>
@@ -335,7 +348,7 @@
                     <label style="font-size: 12px; margin: 0px">
                         <br>Nome de uma pessoa para contato em caso de emergência
                     </label>                    
-                    <input style="width: 100%; float: right;" type="text" class="form-control" id="contato" value="<?php echo htmlspecialchars( $registerpessoaValues["contato"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="contato" placeholder="" required="required" />
+                    <input style="width: 100%; float: right;" type="text" class="form-control" id="contato" value="<?php echo htmlspecialchars( $registerpessoaValues["contato"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" name="contato" placeholder="" required="required" minlength="7" />
                     </p>
                     <p>
                     <label style="font-size: 12px; margin: 0px">

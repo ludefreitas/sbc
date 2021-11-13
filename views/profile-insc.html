@@ -4,7 +4,7 @@
                 <div class="col-md-3" style="margin: 15px 0px 0px 0px">
                 {include="user-profile-menu"}
             </div>
-              <div class="col-md-9" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
+              <div class="col-md-9" style="text-align-last: left; background-color: white; margin: 15px 0px 5px 0px;">
 
             <div class="container">
                 <div class="row alert-primary">
@@ -17,9 +17,10 @@
                     <div class="col-md-12">
                         <hr>
                         <strong>NÚMERO PARA O SORTEIO: </strong><span style="color: red; font-size: 20px">{$value.numsorte}</span><br>
-                        <strong>NÚMERO INSCRIÇÃO: </strong><span>{$value.idinsc}</span><br>
+                        <strong>INSCRIÇÃO Nº: </strong><span>{$value.idinsc}</span><br>
                         <strong>NOME DO ALUNO: </strong> <span>{$value.nomepess}</span><br>
                         <strong>COM LAUDO? </strong> <span>{if="$value.laudo == 0"}Não{else}Sim{/if}</span><br>
+                        <strong>PARA PESSOA COM DEFICIÊNCIA? </strong> <span>{if="$value.inscpcd == 0"}Não{else}Sim{/if}</span><br>
                         <strong>TURMA: </strong>{$value.idturma} - {$value.descativ}<br>
                         <strong>Temporada: </strong>{$value.desctemporada}<br>
 

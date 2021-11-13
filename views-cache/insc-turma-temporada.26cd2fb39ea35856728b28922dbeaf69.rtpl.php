@@ -18,6 +18,17 @@
   <div class="row">
     <div class="col-md-12">
         <div class="box box-primary">
+
+          <?php if( $error != '' ){ ?>
+                <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
+            <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                </div>
+          <?php } ?>
+          <?php if( $success != '' ){ ?>
+                <div class="alert alert-success" style="margin: 10px 10px 0px 10px">
+            <?php echo htmlspecialchars( $success, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                </div>
+          <?php } ?>
             
             <div class="box-header">
            
@@ -27,149 +38,149 @@
             <?php $counter1=-1;  if( isset($insc) && ( is_array($insc) || $insc instanceof Traversable ) && sizeof($insc) ) foreach( $insc as $key1 => $value1 ){ $counter1++; ?>
             <div class="box-body" style=" margin: 5px;">
               <div <?php echo colorStatus($value1["idinscstatus"]); ?> style="margin: 5px" class="row">
+                  
+                  <div class="row">
+                <div class="col-md-12">
+                  <div class="col-md-6" style="margin: 2; padding: 2">
+                    <h5 style="text-align: left;">
+                      <?php echo htmlspecialchars( $value1["numordem"], ENT_COMPAT, 'UTF-8', FALSE ); ?>º -
+                      <strong><?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
+                      &nbsp;<?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>&nbsp;
+                      <strong><?php echo calcularIdade($value1["dtnasc"]); ?> anos</strong>
+                      &nbsp;Nascim.: <?php echo formatDate($value1["dtnasc"]); ?>&nbsp;
+                    </h5>
+                  </div>
 
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                  Nome: <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-                </h5>
-              </div>
-
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                  CPF.: <?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-                </h5>
-              </div> 
-
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                  Data do Nasc.: <?php echo formatDate($value1["dtnasc"]); ?>
-                </h5>
-              </div>
-
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                  Idade: <?php echo calcularIdade($value1["dtnasc"]); ?> anos
-                </h5>
-              </div>
-
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                  Responsável: <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-                </h5>
-              </div>
-
-               <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                  Fone: <?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-                </h5>
-              </div>
-
-               <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                  Data Inscr.: <?php echo formatDate($value1["dtinsc"]); ?>
-                </h5>
+                  <div class="col-md-6" style="margin: 2; padding: 2">
+                    <h5 style="text-align: left;">               
+                      <strong>Resp: <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
+                      &nbsp;Cel: <?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>&nbsp;
+                      <strong> Dt Insc.: <?php echo formatDate($value1["dtinsc"]); ?></strong>
+                    </h5>
+                  </div>                   
+                </div>
               </div>
               
-              <?php if( $value1["idinscstatus"] == 1 ){ ?>
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left; color: blue;">                  
-                  <span><?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
-                </h5>
-              </div>
-              <?php } ?>
+              <div class="row">
+                <div class="col-md-12">                  
+
+                  <div class="col-md-6" style="margin: 2; padding: 2">
+                    <h5 style="text-align: left;">  
+                      <span style="font-weight: bold; text-align: left; color: darkblue;">  
+                        <?php if( $value1["pcd"] == 1 ){ ?> PCD &nbsp;&nbsp;<?php } ?>  
+                      </span>              
+                    
+                      <span style="font-weight: bold; text-align: left; color: brown;">                  
+                        <?php if( $value1["vulnsocial"] == 1 ){ ?> (Vuln. Social) &nbsp;&nbsp;<?php } ?>
+                      </span>               
+                      <span style="text-align: left; color: darkgreen;">                  
+                        <?php if( $value1["laudo"] == 1 ){ ?>c/ laudo  &nbsp;&nbsp;<?php } ?>
+                       </span>
+                   
+                  
+
+                    <?php if( $value1["idinscstatus"] == 1 ){ ?>              
+                    <span style="font-weight: bold; text-align: left; color: blue;">                  
+                      <span><?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
+                    </span>             
+                    <?php } ?>
+
+                  
               
+                    <?php if( $value1["idinscstatus"] == 2 ){ ?>
+              
+                    <span style="font-weight: bold; text-align: left; color: darkgreen;">                  
+                      <span><?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
+                    </span>
+             
+                    <?php } ?>
+               
+
+                      <?php if( $value1["idinscstatus"] == 3 ){ ?>
+                      
+                        <span style="font-weight: bold; text-align: left; color: green;">                  
+                          <span>*<?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>*</span>
+                        </span>
+                      
+                      <?php } ?>
+
+                      <?php if( $value1["idinscstatus"] == 6 ){ ?>
+                        <span style="font-weight: bold; text-align: left; color: darkorange;">                  
+                          <span><?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
+                        </span>
+                      <?php } ?>
+
+
+                      <?php if( $value1["idinscstatus"] == 7 ){ ?>
+                        <span style="font-weight: bold; text-align: left; color: darkblue;">                  
+                          <span><?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
+                        </span>
+                      <?php } ?>
+
+                      
+                      <?php if( $value1["idinscstatus"] == 8 ){ ?>
+                        <span style="font-weight: bold; text-align: left; color: orange;">                  
+                          Status: <span><?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
+                        </span>
+                      <?php } ?>
+                      
+                      <?php if( $value1["idinscstatus"] == 9 ){ ?>
+                      
+                        <span style="font-weight: bold; text-align: left; color: red;">                  
+                          <span><?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
+                        </span>
+                      
+                      <?php } ?> 
+                       </h5>               
+                    </div>       
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/prof/profile/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" role="button">Detalhes</a>
+                </h5>
+              </div>              
+
               <?php if( $value1["idinscstatus"] == 2 ){ ?>
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left; color: darkgreen;">                  
-                  <span><?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
-                </h5>
-              </div>
-              <?php } ?>
-              <?php if( $value1["idinscstatus"] == 6 ){ ?>
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left; color: darkorange;">                  
-                  <span><?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
-                </h5>
-              </div>
-              <?php } ?>
-              <?php if( $value1["idinscstatus"] == 7 ){ ?>
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left; color: darkblue;">                  
-                  <span><?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
-                </h5>
-              </div>
-              <?php } ?>
-              <?php if( $value1["idinscstatus"] == 8 ){ ?>
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left; color: orange;">                  
-                  Status: <span><?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
-                </h5>
-              </div>
-              <?php } ?>
-              <?php if( $value1["idinscstatus"] == 9 ){ ?>
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left; color: red;">                  
-                  <span><?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
-                </h5>
-              </div>
-              <?php } ?>            
-
-
-              <div class="col-md-1" style="margin: 2; padding: 2">
+                <div class="col-md-2" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  <?php if( $value1["laudo"] == 1 ){ ?>c/ laudo<?php } ?> - <?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-                </h5>
-              </div>
-
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                  <a href="/prof/profile/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" role="button">Detalhes</a>
-                </h5>
-              </div>
-
-              
-
-              <?php if( $value1["idinscstatus"] == 2 ){ ?>
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <div>
-                <h5 style="font-weight: bold; text-align: left;">                  
-                  <a href="/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $iduserprof["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA do(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> na turma <?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da temporada <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ?')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                  <a href="/prof/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $iduserprof["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA do(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> na turma <?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da temporada <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ?')" class="btn btn-success btn-xs"><i></i> Matricular</a>
                 </h5>
                 </div>
-              
-              <div>
-
-                <h5 style="font-weight: bold; text-align: left;">                  
-                  <a href="/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $iduserprof["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusDesistente" onclick="return confirm('Deseja realmente marcar como DESISTENTE o(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da turma <?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> na temporada <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ? ')" class="btn btn-primary btn-xs"><i></i> Desistente</a>
-                </h5>
-              </div>
-              </div>
               <?php } ?>
 
-              <?php if( $value1["idinscstatus"] == 1 ){ ?>
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                  <a href="/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $iduserprof["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusDesistente" onclick="return confirm('Deseja realmente marcar como DESISTENTE o(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da turma <?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> na temporada <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ? ')" class="btn btn-primary btn-xs"><i></i> Desistente</a>
+              <?php if( $value1["idinscstatus"] == 3 ){ ?>
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">            
+                  <a href="/prof/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $iduserprof["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/enviarEmailASorteado" onclick="return confirm('Deseja realmente enviar email para que o(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> fique sabendo que foi sorteado na turma de <?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da temporada <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ?')" class="btn btn-info btn-xs"><i></i> Avisar Sorteado </a>
                 </h5>
               </div>
-              <?php } ?>
 
+              <?php } ?>
               
               <?php if( $value1["idinscstatus"] == 7 ){ ?>
-              <div class="col-md-1" style="margin: 2; padding: 2">
+              <div class="col-md-2" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  <a href="/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $iduserprof["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusAguardandoMatricula" onclick="return confirm('Deseja realmente que o(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> fique aguardando matrícula na turma de <?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da temporada <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ?')" class="btn btn-info btn-xs"><i></i> Aguardar matrícula</a>
+                  <a href="/prof/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $iduserprof["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusAguardandoMatricula" onclick="return confirm('Deseja realmente que o(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> fique aguardando matrícula na turma de <?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da temporada <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ?')" class="btn btn-warning btn-xs"><i></i> Informar vaga disponível</a>
                 </h5>
               </div>
+               <?php } ?>
+                  
+                </div>
+              </div>
+              
 
-              <?php } ?>
-                                                                                                          
+              
+               
 
+             
             </div>
           </div>
+           
           <?php } ?>
-
           </div>           
+
+         
             <button type="button" onclick="window.print()" class="btn btn-primary pull-right" style="margin-right: 5px;">
                     <i class="fa fa-print"></i> Imprimir
                 </button>

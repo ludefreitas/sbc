@@ -82,7 +82,7 @@ desired effect
               <span class="label label-success">4</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">Você tem 4 menssagens</li>
+              <li class="header">Você tem 4 mensagens</li>
               <li>
                 <!-- inner menu: contains the messages -->
                 <ul class="menu">
@@ -90,7 +90,7 @@ desired effect
                     <a href="#">
                       <div class="pull-left">
                         <!-- User Image -->
-                        <img src="/res/admin/dist/img/user9-160x120.jpg" class="img-circle" alt="User Image">
+                        <img src="/res/admin/dist/img/boxed-bg.jpg" class="img-circle" alt="User Image">
                       </div>
                       <!-- Message title and timestamp -->
                       <h4>
@@ -174,14 +174,14 @@ desired effect
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
-              <img src="/res/admin/dist/img/user9-160x120.jpg" class="user-image" alt="User Image">
+              <img src="/res/admin/dist/img/boxed-bg.jpg" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
               <span class="hidden-xs"><?php echo htmlspecialchars( $user["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
               <li class="user-header">
-                <img src="/res/admin/dist/img/user9-160x120.jpg" class="img-circle" alt="User Image">
+                <img src="/res/admin/dist/img/boxed-bg.jpg" class="img-circle" alt="User Image">
 
                 <p>
                   <?php echo getUserId(); ?> - <?php echo getUserName(); ?> - Web Developer
@@ -231,7 +231,7 @@ desired effect
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="/res/admin/dist/img/user9-160x120.jpg" class="img-circle" alt="User Image">
+          <img src="/res/admin/dist/img/boxed-bg.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p><?php echo getUserName(); ?></p>

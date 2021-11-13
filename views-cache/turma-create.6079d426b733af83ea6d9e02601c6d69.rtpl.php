@@ -87,14 +87,18 @@
                   <option value="<?php echo htmlspecialchars( $value1["idhorario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </option>
                   <?php } ?>                            
                   </select>
-                </div>  
-
-              
+                </div>                
 
                 <div class="box-header">
                   <label for="turma">Vagas</label>
                   <input type="number" class="form-control" id="vagas" name="vagas" placeholder="Informe a quantidade de vagas" value="<?php echo htmlspecialchars( $createTurmaValues["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-                </div>      
+                </div>    
+
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" name="token" value="1"> Tem token ?
+                  </label>
+                </div>  
                 
               </div>
 

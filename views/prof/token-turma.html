@@ -1,0 +1,64 @@
+
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Tokens da turma: {$turma.idturma} -  {$turma.descturma} - {$turma.periodo} {$turma.diasemana} {$turma.horainicio} ás {$turma.horatermino} 
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="/prof"><i class="fa fa-dashboard"></i> Home</a></li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="row">
+  	<div class="col-md-12">
+  		<div class="box box-primary">
+        {if="$error != ''"}
+          <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
+        {$error}
+          </div>
+        {/if}
+            
+            <div class="box-header">
+              <a href="/prof/turma/create/token/{$turma.idturma}" class="btn btn-success">Gerar token</a>
+
+             
+            </div>
+
+             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              
+            
+
+            {loop="$tokens"}
+                  {if="$value.isused == 0"}
+                <span style="font-weight: bold; text-align: left;">                  
+                  {$value.token} - 
+                </span>
+                {else}
+                 <span style="font-weight: bold; text-align: left; color: red;">                  
+                  {$value.token} - 
+                </span>
+
+                {/if}
+          {/loop}
+
+            <div class="box-body no-padding">
+              
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+              <ul class="pagination pagination-sm no-margin pull-right">
+               </ul>
+            </div>
+            
+          </div>
+  	</div>
+  </div>
+
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

@@ -16,13 +16,27 @@ $app->get("/modalidade/:idmodal", function($idmodal) {
 
 	if(!isset($turma) || $turma == NULL){
 
-		Cart::setMsgError("Não existe turmas para a modalidade ".$modalidade->getdescmodal()." nesta temporada. Aguarde! ");
+		Cart::setMsgError("Não existem turmas para a modalidade ".$modalidade->getdescmodal()." nesta temporada. Aguarde! ");
 	}	
+
+	$desctemporada  = isset($turma[0]['desctemporada']) ? $turma[0]['desctemporada'] : '';
+
+	// Aqui verifica se a temporada é igual ao ano atual
+	// Se não for acrescenta (1). Supondo que a inscrição está sendo feita no ano anterior
+	if( (int)date('Y')  == (int)$desctemporada ){
+
+		$anoAtual = (int)date('Y');	
+
+	}else{
+
+		$anoAtual = (int)date('Y') + 1;		
+	}		
 	
 	$page = new Page();    
 
 	$page->setTpl("modalidade", [
 		'turma'=>Turma::checkList($turma),
+		'anoAtual'=>$anoAtual,
 		'modalidade'=>$modalidade->getValues(),
 		'error'=>Cart::getMsgError()
 	]);

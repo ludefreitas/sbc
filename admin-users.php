@@ -227,7 +227,9 @@ $app->post("/admin/users/:iduser", function($iduser) {
 
 	$_POST["inadmin"] = (isset($_POST["inadmin"]))?1:0;
 	$_POST["isprof"] = (isset($_POST["isprof"]))?1:0;
-	$_POST["statususer"] = (isset($_POST["statususer"]))?1:0;
+	$_POST["statususer"] = 1;
+	// admin não alera status do usuário
+	//$_POST["statususer"] = (isset($_POST["statususer"]))?1:0;
 
 	if(!$_POST['isprof'] == 0){
 

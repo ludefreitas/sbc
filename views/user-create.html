@@ -114,7 +114,7 @@
                         <h4>Criar conta</h4>
                         <p >
                             <label style="font-size: 12px; margin: 0px">Nome Completo</label>
-                            <input type="text" id="name" name="name" class="form-control" value="{$registerValues.name}" required="required"  minlength="14">
+                            <input type="text" id="name" name="name" class="form-control" value="{$registerValues.name}" required="required" minlength="14">
                         </p>
                         <p >
                             <label style="font-size: 12px; margin: 0px">Telefone Celular</label>
@@ -131,11 +131,11 @@
                             <input type="email" id="emailconfirme" name="emailconfirme" class="form-control" value="{$registerValues.emailconfirme}" required="required">
                         </p>
                         <p >                            
-                            <label style="font-size: 12px; margin: 0px">Senha</label>
+                            <label style="font-size: 12px; margin: 0px">Crie uma senha</label>
                             <input type="password" id="senha" name="password" class="form-control" required="required">
                         </p>
                         <p>                            
-                            <label style="font-size: 12px; margin: 0px">Confirme a senha</label>
+                            <label style="font-size: 12px; margin: 0px">Confirme a senha criada</label>
                             <input type="password" id="senhaconfirme" name="passwordrepeat" class="form-control" required="required">
                         </p>
                         
@@ -149,7 +149,7 @@
 
                     <p>
                         <label style="font-size: 12px; margin: 0px">Data do Nascimento *</label>
-                        <input onblur="menorDeIdade()" type="date" id="dtnasc" name="dtnasc" class="form-control" value="{$registerpessoaValues.dtnasc}" required="required">
+                        <input onblur="menorDeIdade()" type="date" id="dtnasc" name="dtnasc" class="form-control" value="{$registerpessoaValues.dtnasc}" required="required"/>
                     </p> 
 
                     <p>
@@ -220,7 +220,7 @@
                     </p> 
 
                     <p>
-                    <label style="font-size: 12px; margin: 0px"><br>PCD?</label>
+                    <label style="font-size: 12px; margin: 0px"><br>Pessoa com deficiência?</label>
                     <select id="pcd" style="width: 100%; float: right;" class="form-control" name="pcd" required="required">
                         {if="$registerpessoaValues.pcd === ''"}
                         <option selected="" value="">Seclecione</option>                            

@@ -53,7 +53,7 @@
                             
                         
                             <p class="lost_password">
-                                <a href="admin/forgot">Esqueceu a senha?</a>
+                                <a href="/forgot">Esqueceu a senha?</a>
                             </p>
                             <div class="clear"></div>
                         </form>  

@@ -5,32 +5,22 @@ use \Sbc\Model\User;
 use \Sbc\Model\Temporada;
 use \Sbc\Model\Sorteio;
 use \Sbc\Model\Insc;
+use \Sbc\Model\Turma;
 
 $app->get("/admin/sorteio/:idtemporada", function($idtemporada) {
 
 	User::verifyLogin();
+
+	$iduser = $_SESSION['User']['iduser'];
 
 	$temporada = new Temporada();
 	$sorteio = new Sorteio();	
 
 	$sorteio = Sorteio::listAll($idtemporada);
 
-	/*
-	for ($x = 0; $x<count($sorteio); $x++) {
-
-		$numerosorteado = $sorteio[$x]['numerosortear'];
-
-		var_dump($numerosorteado);
-
-	}
-	*/
-
 	$maxIncritos = Temporada::numMaxInscritos($idtemporada);
 
 	$temporada->get((int)$idtemporada);
-
-	//var_dump($sorteio);
-	//exit;
 	
 	Temporada::setError("Não há inscrições para realizar o sorteio!");	
 
@@ -38,6 +28,7 @@ $app->get("/admin/sorteio/:idtemporada", function($idtemporada) {
 
 	$page->setTpl("sorteio", [
 		'sorteio'=>$sorteio,
+		'iduser'=>$iduser,
 		'maxIncritosTemporada'=>$maxIncritos[0],
 		'temporada'=>$temporada->getValues(),
 		'error'=>Temporada::getError(),
@@ -55,12 +46,13 @@ $app->post("/admin/sortear", function() {
 	$idtemporada = $_POST['idtemporada'];
 	$maxIncritos = $_POST['maxIncritosTemporada'];
 	
-
 	if(!Sorteio::listAll($idtemporada)){
 
 			$sort = Sorteio::sortear($maxIncritos, $maxIncritos, $idtemporada);
 
 			$sorteio = Sorteio::listAll($idtemporada);
+
+			$turma = new Turma();
 
 			for ($x = 0; $x<count($sorteio); $x++) {
 
@@ -68,14 +60,32 @@ $app->post("/admin/sortear", function() {
 
 				$numeroordenado = $sorteio[$x]['numerodeordem'];
 
-				//var_dump($numeroordenado);
-
 				Sorteio::setNumeroDeOrdem($numeroordenado, $numerosorteado);
 
-				Sorteio::updateStatusInscricaosSorteada($numerosorteado);
+				Sorteio::updateStatusInscricaoSorteada($numerosorteado);
+
+				/*
+				$inscricao = Sorteio::selecionaInscByNumordemNumsorte($idtemporada, $numeroordenado, $numerosorteado);
+
+				for ($y = 0; $y<count($inscricao); $y++) {	
+
+					$email = $inscricao[$y]['desemail'];
+					$nomepess = $inscricao[$y]['nomepess'];
+					$desperson = $inscricao[$y]['desperson'];
+					$status = $inscricao[$y]['descstatus'];
+					$desctemporada = $inscricao[$y]['desctemporada'];
+					$idinsc = $inscricao[$y]['idinsc'];
+					$idturma = $inscricao[$y]['idturma'];
+
+					$turma->get((int)$idturma);
+
+					Sorteio::sorteioEmail($email, $nomepess, $desperson, $numerosorteado, $status, $numeroordenado, $desctemporada, $idinsc, $turma);
+				}
+				*/
 			}
 
 			Insc::alteraStatusInscricaoParaFilaDeEspera($idtemporada);
+			//Insc::alteraStatusInscricaoParaSorteada($idtemporada);
 
 			header("Location: /admin/sorteio/".$idtemporada."");
 			exit();	
@@ -88,6 +98,7 @@ $app->post("/admin/sortear", function() {
 	}	
 
 });
+
 /*
 $app->get("/admin/sorteio:desctemporada/:idtemporada", function($desctemporada, $idtemporada) {
 

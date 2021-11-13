@@ -47,43 +47,22 @@
 
                   <div class="row">
 
-                    <div class="col-md-2" >
+                    <div class="col-md-8" >
                       <h5 style="font-weight: bold; text-align: left;">
-                       {$value.idturma} - {$value.descturma} / {$value.diasemana}
-                        {$value.horainicio} ás {$value.horatermino}
+                       {$value.idturma} - {$value.descturma} - {$value.diasemana}
+                        {$value.horainicio} ás {$value.horatermino} -  {$value.descrfxetaria}  {$value.initidade} a {$value.fimidade} anos -  {$value.apelidolocal} - {$value.nomeespaco} - Professor: {$value.apelidoperson}&nbsp; ({$value.vagas} vagas)
                       </h5>
-                    </div>
+                    </div>      
+                   <div class="col-md-4">
+                      <h5 style="font-weight: bold; text-align: left; color: green;">
+                        <a href="/admin/insc-turma-temporada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}"> | &nbsp;{$value.numinscritos} inscritos &nbsp;| </a> &nbsp; {$value.nummatriculados} matriculados &nbsp; | &nbsp;     
 
-                    <div class="col-md-2" >
-                      <h5 style="font-weight: bold; text-align: left;">
-                       {$value.descrfxetaria}  {$value.initidade} a {$value.fimidade} anos
+                        {if="$value.token == 1"}
+                          <a href="/admin/token/{$value.idturma}" style="color: orangered;"><i ></i>Tokens</a>
+                        {/if}                         
                       </h5>
-                    </div>
-
-                    <div class="col-md-2" >
-                      <h5 style="font-weight: bold; text-align: left;">
-                       Prof. {$value.apelidoperson} 
-                      {$value.apelidolocal} - {$value.nomeespaco}
-                      </h5>
-                    </div>
-
-                  
-
-                    <div class="col-md-2">
-                      <h5 style="font-weight: bold; text-align: left; color: red;">
-                        <a href="/admin/insc-turma-temporada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}">{$value.numinscritos} inscritos</a>
-                        
-                      </h5>
-                    </div>
-
-                    <div class="col-md-2">
-                      <h5 style="font-weight: bold; text-align: left; color: darkgreen;">
-                        {$value.nummatriculados} matriculados                        
-                      </h5>
-                    </div>
-                    
-                  </div>
-                    
+                    </div>                    
+                  </div>                    
                 </div>
                 
                 {/loop}

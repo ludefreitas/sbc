@@ -6,6 +6,7 @@ use \Sbc\Model\Insc;
 use \Sbc\Model\Turma;
 use \Sbc\Model\Temporada;
 use \Sbc\Model\Pessoa;
+use \Sbc\Model\InscStatus;
 
 $app->get("/prof/insc-turma-temporada/:idturma/:idtemporada/user/:iduser", function($idturma, $idtemporada, $iduser) {
 
@@ -30,7 +31,9 @@ $app->get("/prof/insc-turma-temporada/:idturma/:idtemporada/user/:iduser", funct
 		'iduserprof'=>$iduserprof,
 		'insc'=>$insc->getValues(),
 		'turma'=>$turma->getValues(),
-		'temporada'=>$temporada->getValues()
+		'temporada'=>$temporada->getValues(),
+		'error'=>User::getError(),
+		'success'=>User::getSuccess()
 	]);	
 });
 
@@ -91,7 +94,7 @@ $app->get("/prof/insc/:idtemporada", function($idtemporada) {
 	));
 });
 
-$app->get("/prof/profile/insc/:idinsc/:idpess", function($idinsc, $idpess){
+$app->get("/prof/profile/insc/:idinsc/:idpess/:idturma", function($idinsc, $idpess, $idturma){
 
 	User::verifyLogin();
 
@@ -123,8 +126,126 @@ $app->get("/prof/profile/insc/:idinsc/:idpess", function($idinsc, $idpess){
 
 	$page->setTpl("insc-detail", [
 		'insc'=>$insc->getValues(),
+		'idturma'=>$idturma,
 		'pessoa'=>$pessoa->getValues()
 	]);	
+});
+
+$app->get("/prof/insc/:idinsc/:iduserprof/:idturma/statusMatriculada", function($idinsc, $iduserprof, $idturma){
+
+	$insc = new Insc();
+	$turma = new Turma();
+	$temporada = new Temporada();
+	$user = new User();
+	
+	$insc->get((int)$idinsc);	
+
+	$idturma = (int)$idturma;
+	$idtemporada = $insc->getidtemporada();
+	$iduser = (int)$iduserprof;
+
+	$turma->get((int)$idturma);
+
+	$vagas = (int)$turma->getvagas();
+
+	$numMatriculados = $temporada->setNummatriculadosTemporada($idtemporada, $idturma);	
+
+	if($numMatriculados['nummatriculados'] >= $vagas){
+
+		User::setError("Número de vagas insuficiente para efetuar matrícula!");
+		header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
+		exit();	
+
+	}else{			
+
+		$insc->alteraStatusInscricaoMatriculada($idinsc, $idturma, $idtemporada);
+		User::setSuccess("Aluno matriculado com sucesso!");
+		header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
+		exit();
+	}
+
+});
+
+$app->get("/prof/insc/:idinsc/:iduserprof/:idturma/statusAguardandoMatricula", function($idinsc, $iduserprof, $idturma){
+
+	$insc = new Insc();
+	$turma = new Turma();
+	$temporada = new Temporada();
+	$user = new User();
+	
+	$insc->get((int)$idinsc);
+
+	$idturma = (int)$idturma;
+	$idtemporada = $insc->getidtemporada();
+	$iduser = (int)$iduserprof;
+
+	$insc->alteraStatusInscricaoAguardandoMatricula($idinsc);
+
+	header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
+	exit();
+
+});
+
+$app->get("/prof/insc/:idinsc/:iduserprof/:idturma/enviarEmailASorteado", function($idinsc, $iduserprof, $idturma){
+
+	$insc = new Insc();
+	$turma = new Turma();
+	$temporada = new Temporada();
+	$user = new User();
+	$pessoa = new Pessoa();
+	//$sorteio = new Sorteio();	
+	$insc->get((int)$idinsc);
+	$idturma = (int)$idturma;
+	$idtemporada = $insc->getidtemporada();
+	$iduserprof = (int)$iduserprof;
+	$idpess = $insc->getidpess();
+	$pessoa->get((int)$idpess); 
+
+	$insc->alteraStatusInscricaoAguardandoMatricula($idinsc);
+
+	$status = $insc->getdescstatus();
+	//$email = $insc->getdeslogin();
+	$nomepess = $pessoa->getnomepess();
+	$dtnasc = $pessoa->getdtnasc();
+	$idade = calcularIdade($dtnasc);
+	$person = User::getUserIdPess($idpess);
+	$desperson = $person[0]['desperson'];
+	$email = $person[0]['desemail'];
+	$desctemporada = $insc->getdesctemporada();
+	$numerosorteado = $insc->getnumsorte();
+	$numeroordenado = $insc->getnumordem();
+	$turma->get((int)$idturma);
+
+	//$insc->inscricaoEmail($idinsc, $numerosorteado, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma);
+
+	$insc->sorteioEmailProf($idinsc, $numerosorteado, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma, $idade, $numeroordenado, $idtemporada, $iduserprof);
+
+	header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
+	exit();
+
+});
+
+
+
+$app->get("/prof/insc/:idinsc/:idturma/:idpess/statusDesistente", function($idinsc, $idturma, $idpess){
+
+	$insc = new Insc();
+	$turma = new Turma();
+	$temporada = new Temporada();
+	$user = new User();
+	$pessoa = new Pessoa();
+	
+	$insc->get((int)$idinsc);
+
+	$idturma = (int)$idturma;
+	$idtemporada = $insc->getidtemporada();
+	$idpess = (int)$idpess;
+
+	$insc->alteraStatusInscricaoDesistente($idinsc, $idturma, $idtemporada);
+
+	header("Location: /prof/profile/insc/".$idinsc."/".$idpess."/".$idturma."");
+	exit();
+
 });
 
 

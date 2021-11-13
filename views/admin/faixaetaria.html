@@ -92,25 +92,7 @@
             </div>
           </div>
           {/loop}
-
-            <div class="box-body no-padding">
-              <table class="table table-striped">
-                <tbody>
-                  {loop="$faixaetaria"}
-                  <tr>
-                    <td>{$value.initidade}</td>
-                    <td>{$value.fimidade}</td>
-                    <td>{$value.descrfxetaria}</td>
-                    <td>{$value.dtregister}</td>
-                    <td>
-                      <a href="/admin/faixaetaria/{$value.idfxetaria}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
-                      <a href="/admin/faixaetaria/{$value.idfxetaria}/delete" onclick="return confirm('Deseja realmente excluir esta faixa etária de {$value.descrfxetaria}?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
-                    </td>
-                  </tr>
-                  {/loop}
-                </tbody>
-              </table>
-            </div>
+           
             <!-- /.box-body -->
             <div class="box-footer clearfix">
               <ul class="pagination pagination-sm no-margin pull-right">

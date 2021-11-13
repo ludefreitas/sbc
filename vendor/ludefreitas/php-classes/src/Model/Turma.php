@@ -48,7 +48,8 @@ class Turma extends Model {
 		$idStatusTemporadaTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
 		$idStatusTemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
 		$idStatusTemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
-		$idstatusTemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
+		$idStatusTemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
+		$idStatusTemporadaInscricoesEncerradas = StatusTemporada::INSCRICOES_ENCERRADAS;
 
 		$sql = new Sql();
 
@@ -81,13 +82,13 @@ class Turma extends Model {
       		WHERE k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
       		OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
       		OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
-      		OR k.idstatustemporada = :idstatusTemporadaMatriculasEncerradas
+      		OR k.idstatustemporada = :idStatusTemporadaMatriculasEncerradas
 			-- ORDER BY a.descturma
 			ORDER BY RAND()", [
 				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
 				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
 				':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada,
-				':idStatusTemporadaTemporadaIniciada'=>$idstatusTemporadaMatriculasEncerradas
+				':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaMatriculasEncerradas
 			]);
 	}
 	*/
@@ -99,7 +100,8 @@ class Turma extends Model {
 		$idStatusTemporadaTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
 		$idStatusTemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
 		$idStatusTemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
-		$idstatusTemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
+		$idStatusTemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
+		$idStatusTemporadaInscricoesEncerradas = StatusTemporada::INSCRICOES_ENCERRADAS;
 
 		$start = ($page - 1) * $itemsPerPage;
 
@@ -135,13 +137,13 @@ class Turma extends Model {
 			WHERE k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
       		OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
       		OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
-      		OR k.idstatustemporada = :idstatusTemporadaMatriculasEncerradas
+      		OR k.idstatustemporada = :idStatusTemporadaMatriculasEncerradas
 			LIMIT $start, $itemsPerPage;
 			", [
 				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
 				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
 				':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada,
-				':idStatusTemporadaTemporadaIniciada'=>$idstatusTemporadaMatriculasEncerradas
+				':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaMatriculasEncerradas
 			]);
 
 		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
@@ -160,7 +162,8 @@ class Turma extends Model {
 		$idStatusTemporadaTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
 		$idStatusTemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
 		$idStatusTemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
-		$idstatusTemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
+		$idStatusTemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
+		$idStatusTemporadaInscricoesEncerradas = StatusTemporada::INSCRICOES_ENCERRADAS;
 
 		$sql = new Sql();
 
@@ -191,16 +194,18 @@ class Turma extends Model {
 			using(idstatustemporada)
 			INNER JOIN tb_modalidade m         
 			using(idmodal)
-      		WHERE b.iduser != 1 AND (k.idstatustemporada = :idstatusTemporadaMatriculasEncerradas 
+      		WHERE b.iduser != 1 AND (k.idstatustemporada = :idStatusTemporadaMatriculasEncerradas 
       		OR k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
       		OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
-      		OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada) 
+      		OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada
+      		OR k.idstatustemporada = :idStatusTemporadaInscricoesEncerradas)
       		ORDER BY a.numinscritos, RAND()
 			", [
-				':idstatusTemporadaMatriculasEncerradas'=>$idstatusTemporadaMatriculasEncerradas,
+				':idStatusTemporadaMatriculasEncerradas'=>$idStatusTemporadaMatriculasEncerradas,
 				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
 				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
-				':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada
+				':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada,
+				':idStatusTemporadaInscricoesEncerradas'=>$idStatusTemporadaInscricoesEncerradas
 			]);
 
 		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
@@ -210,16 +215,15 @@ class Turma extends Model {
 			'total'=>(int)$resultTotal[0]["nrtotal"]
 			//'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
 		];
-
 	}
-
 
 	public static function getPageSearchTurmaTemporada($search, $page = 1, $itemsPerPage = 50)
 	{
 		$idStatusTemporadaTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
 		$idStatusTemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
 		$idStatusTemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
-		$idstatusTemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
+		$idStatusTemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
+		$idStatusTemporadaInscricoesEncerradas = StatusTemporada::INSCRICOES_ENCERRADAS;
 
 		$start = ($page - 1) * $itemsPerPage;
 
@@ -253,10 +257,11 @@ class Turma extends Model {
 			INNER JOIN tb_modalidade m         
 			using(idmodal)
       		WHERE ( b.iduser != 1 AND (
-      			k.idstatustemporada = :idstatusTemporadaMatriculasEncerradas  
+      			k.idstatustemporada = :idStatusTemporadaMatriculasEncerradas  
       			OR k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
       			OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
-      			OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada)
+      			OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada
+      			OR k.idstatustemporada = :idStatusTemporadaInscricoesEncerradas)
       		) AND (
       			j.descturma LIKE :search
 				OR d.descativ LIKE :search
@@ -277,10 +282,11 @@ class Turma extends Model {
 			-- ORDER BY a.descturma
 			-- LIMIT $start, $itemsPerPage;
 		", [
-			':idstatusTemporadaMatriculasEncerradas'=>$idstatusTemporadaMatriculasEncerradas,
+			':idStatusTemporadaMatriculasEncerradas'=>$idStatusTemporadaMatriculasEncerradas,
 			':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
 			':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
 			':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada,
+			':idStatusTemporadaInscricoesEncerradas'=>$idStatusTemporadaInscricoesEncerradas,
 			':search'=>'%'.$search.'%'
 		]);
 
@@ -299,7 +305,8 @@ class Turma extends Model {
 		$idStatusTemporadaTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
 		$idStatusTemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
 		$idStatusTemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
-		$idstatusTemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
+		$idStatusTemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
+		$idStatusTemporadaInscricoesEncerradas = StatusTemporada::INSCRICOES_ENCERRADAS;
 
 		$sql = new Sql();
 
@@ -331,16 +338,18 @@ class Turma extends Model {
 			using(idmodal)
       		WHERE j.idmodal = :idmodal
             AND ( b.iduser != 1 AND (
-            k.idstatustemporada = :idstatusTemporadaMatriculasEncerradas 
+            k.idstatustemporada = :idStatusTemporadaMatriculasEncerradas 
             OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada 
             OR k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
-            OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada ))
+            OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada 
+            OR k.idstatustemporada = :idStatusTemporadaInscricoesEncerradas))
       		ORDER BY a.numinscritos, RAND()", [
       			':idmodal'=>$idmodal,
-				':idstatusTemporadaMatriculasEncerradas'=>$idstatusTemporadaMatriculasEncerradas,
+				':idStatusTemporadaMatriculasEncerradas'=>$idStatusTemporadaMatriculasEncerradas,
 				':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada,
 				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
-				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada
+				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
+				':idStatusTemporadaInscricoesEncerradas'=>$idStatusTemporadaInscricoesEncerradas
 				
 			]);
 	}
@@ -351,7 +360,8 @@ class Turma extends Model {
 		$idStatusTemporadaTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
 		$idStatusTemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
 		$idStatusTemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
-		$idstatusTemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
+		$idStatusTemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
+		$idStatusTemporadaInscricoesEncerradas = StatusTemporada::INSCRICOES_ENCERRADAS;
 
 		$sql = new Sql();
 
@@ -383,16 +393,18 @@ class Turma extends Model {
 			using(idmodal)
       		WHERE e.idlocal = :idlocal
             AND ( b.iduser != 1 AND (
-            k.idstatustemporada = :idstatusTemporadaMatriculasEncerradas
+            k.idstatustemporada = :idStatusTemporadaMatriculasEncerradas
             OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada 
             OR k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
-            OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada))
+            OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
+            OR k.idstatustemporada = :idStatusTemporadaInscricoesEncerradas))
       		ORDER BY a.numinscritos, RAND()", [
       			':idlocal'=>$idlocal,
-				':idstatusTemporadaMatriculasEncerradas'=>$idstatusTemporadaMatriculasEncerradas,
+				':idStatusTemporadaMatriculasEncerradas'=>$idStatusTemporadaMatriculasEncerradas,
 				':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada,
 				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
-				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada
+				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
+				':idStatusTemporadaInscricoesEncerradas'=>$idStatusTemporadaInscricoesEncerradas
 			]);
 	}
 
@@ -411,12 +423,11 @@ class Turma extends Model {
 
 	}
 
-
 	// esta função é usada para salvar e editar turma
 	public function save()
 	{
 		$sql = new Sql();
-		$results = $sql->select("CALL sp_turma_save(:idturma, :idativ, :idmodal, :idespaco, :idhorario, :descturma, :vagas)", array(
+		$results = $sql->select("CALL sp_turma_save(:idturma, :idativ, :idmodal, :idespaco, :idhorario, :descturma, :vagas, :token)", array(
 			":idturma"=>$this->getidturma(),			
 			":idativ"=>$this->getidativ(),
 			":idmodal"=>$this->getidmodal(),
@@ -424,7 +435,8 @@ class Turma extends Model {
 			":idhorario"=>$this->getidhorario(),
 			//":idturmastatus"=>$this->getidturmastatus(),
 			":descturma"=>$this->getdescturma(),
-			":vagas"=>$this->getvagas()		
+			":vagas"=>$this->getvagas(),
+			":token"=>$this->gettoken()	
 		));	
 
 		$this->setData($results[0]);
@@ -720,7 +732,7 @@ class Turma extends Model {
 
 	}
 
-	public static function getPage($page = 1, $itemsPerPage = 6)
+	public static function getPage($page = 1, $itemsPerPage = 25)
 	{
 
 		$start = ($page - 1) * $itemsPerPage;
@@ -750,7 +762,7 @@ class Turma extends Model {
 			USING(idfxetaria) 
             INNER JOIN tb_modalidade 
             USING(idmodal)
-			ORDER BY a.descturma, h.horainicio, h.diasemana
+			ORDER BY f.apelidolocal,a.descturma, h.diasemana, h.periodo, h.horainicio
 			LIMIT $start, $itemsPerPage;
 		");
 
@@ -764,7 +776,7 @@ class Turma extends Model {
 
 	}
 
-	public static function getPageSearch($search, $page = 1, $itemsPerPage = 5)
+	public static function getPageSearch($search, $page = 1, $itemsPerPage = 25)
 	{
 
 		$start = ($page - 1) * $itemsPerPage;
@@ -809,8 +821,8 @@ class Turma extends Model {
 			OR h.horainicio LIKE :search
 			OR h.periodo LIKE :search
 			OR i.descrfxetaria LIKE :search	
-			OR j.descmodal LIKE :search													
-			ORDER BY a.descturma
+			OR j.descmodal LIKE :search										
+			ORDER BY f.apelidolocal,a.descturma, h.diasemana, h.periodo, h.horainicio
 			LIMIT $start, $itemsPerPage;
 		", [
 			':search'=>'%'.$search.'%'
@@ -879,6 +891,93 @@ class Turma extends Model {
 		$_SESSION[Turma::SUCCESS] = NULL;
 
 	}
+
+	public function saveToken()
+	{
+		$sql = new Sql();
+		$results = $sql->select("CALL sp_tokenturma_save(:idtoken, :idturma, :token, :isused, :dtcriacao, :dtuso)", array(
+			":idtoken"=>$this->getidtoken(),			
+			":idturma"=>$this->getidturma(),
+			":token"=>$this->gettoken(),
+			":isused"=>$this->getisused(),
+			":dtcriacao"=>$this->getdtcriacao(),
+			":dtuso"=>$this->getdtuso()	
+		));	
+
+		//var_dump($results);
+		//exit();
+
+		$this->setData($results[0]);
+	}
+
+	public function temToken($idturma){
+
+		$temtoken = 1;
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_turma WHERE idturma = :idturma AND token = :temtoken", [
+			':idturma'=>$idturma,
+			':temtoken'=>$temtoken
+		]);
+
+		if (count($results) > 0) {
+
+		return true;
+
+		}
+	}
+
+	public function tokemValido($token, $idturma){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_tokenturma WHERE token = :token AND idturma = :idturma AND isused = 0", [
+			':token'=>$token,
+			':idturma'=>$idturma
+		]);
+
+		if (count($results) > 0) {
+
+		return true;
+
+		}
+	}
+	
+	public function listAlltokenTurma($idturma){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_tokenturma WHERE idturma = :idturma", [
+			':idturma'=>$idturma
+		]);
+
+		return $results;
+	}
+
+	public function setUsedToken($idturma, $token){
+
+		$isused = 1;
+
+		$sql = new Sql();
+		$sql->query("UPDATE tb_tokenturma SET isused = :isused, dtuso = current_timestamp() WHERE idturma = :idturma AND token = :token", array(
+			":isused"=>$isused,
+			":idturma"=>$idturma,
+			":token"=>$token
+		));
+
+	}
+	
+	public static function listTokenTurma($idturma)
+	{
+		$sql = new Sql();
+
+		return $sql->select("SELECT * 
+			FROM tb_tokenturma WHERE idturma = :idturma", array(
+			":idturma"=>$idturma,
+		));
+			
+	}	
 
 }
 

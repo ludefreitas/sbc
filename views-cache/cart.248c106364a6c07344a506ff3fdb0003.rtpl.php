@@ -33,6 +33,17 @@ $(document).ready(function(){
             </div>
         </div>
       -->
+
+     <?php if( $error != '' ){ ?>
+        <?php if( $value1["idstatustemporada"] == 2 OR $value1["idstatustemporada"] == 3 OR $value1["idstatustemporada"] == 6 ){ ?>
+            <div class="alert alert-danger" style="text-align-last: center;">
+                <a style="color: darkblue; text-align-last: center;" href="https://www.saobernardo.sp.gov.br/documents/1136654/1245027/Edital+NM/42aa453e-2d70-8651-96e5-41d2d779d24c">Resolução SESP Nº 004 de 28 de outubro de 2021. </a>
+             </div>
+        <?php } ?>   
+    <?php } ?>
+
+
+
          
         <div class="row alert alert-primary"> 
            <!-- 
@@ -42,7 +53,7 @@ $(document).ready(function(){
             -->                      
 
             <div class="col-md-6">
-               TURMA: <span style="color: #cc5d1e;"><?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["periodo"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </span> /
+               TURMA: <span style="color: #cc5d1e;"><?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["periodo"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </span> /
                <span class="amount"> 
                   LOCAL: <?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, Nº <?php echo htmlspecialchars( $value1["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["bairro"], ENT_COMPAT, 'UTF-8', FALSE ); ?> / 
                </span> 
@@ -50,10 +61,14 @@ $(document).ready(function(){
                   HORÁRIO: <?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> / 
                </span> 
                <span class="amount">
-                  FAIXA ETÁRIA: <?php echo htmlspecialchars( $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> a <?php echo htmlspecialchars( $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["descrfxetaria"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                 <?php if( $value1["fimidade"] == 99 ){ ?> 
+               Para nascidos somente até <?php echo htmlspecialchars( $anoAtual - $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <br>
+              <?php }else{ ?>
+              Para nascidos somente entre: <?php echo htmlspecialchars( $anoAtual - $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> à <?php echo htmlspecialchars( $anoAtual - $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
+              <?php } ?>
               </span> 
                <span class="amount">
-                  PROFESSOR: 
+                  PROFESSOR: <?php echo htmlspecialchars( $value1["apelidoperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                </span> 
                 <span class="amount">
                    <br> <br><a title="Remove this item" class="remove" href="/cart/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/remove"> REMOVER <p style="color: green">(Remover esta, selecionar outra turma)</p></a>
@@ -64,8 +79,12 @@ $(document).ready(function(){
                <input type="text" name="initidade" hidden="" value="<?php echo htmlspecialchars( $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                <input type="text" name="fimidade" hidden="" value="<?php echo htmlspecialchars( $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">  
                <input type="text" name="idlocal" hidden="" value="<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">                      
-               <input type="text" name="apelidolocal" hidden="" value="<?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">                      
+               <input type="text" name="apelidolocal" hidden="" value="<?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+               <input type="text" name="sexo" hidden="" value="<?php echo htmlspecialchars( $value1["geneativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> 
+               <input type="text" name="tipoativ" hidden="" value="<?php echo htmlspecialchars( $value1["tipoativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">    
+               <input type="text" name="idmodal" hidden="" value="<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">                   
             </div>
+
             <div class="col-md-6">
                 <div class="">
                     <div class="">
@@ -86,7 +105,8 @@ $(document).ready(function(){
                                 <p><?php echo htmlspecialchars( $msgSuccess, ENT_COMPAT, 'UTF-8', FALSE ); ?></p>
                             </div>
                             <?php } ?>
-                            <!-- form start -->                           
+                            <!-- form start -->    
+                            <!--                       
                             <div class="box-body">                                                               
                                 <select class="form-control" name="idpess" id="link"  onchange="changeFunc(value);">
                                     <option selected="selected" value="0">
@@ -111,17 +131,41 @@ $(document).ready(function(){
                                     </option>
                                     <?php } ?>
                                 </select>
-                            </div>
+                                 </div>
+                                -->
+
+                                <div class="box-body">
+                                    <?php $counter2=-1;  if( isset($pessoa) && ( is_array($pessoa) || $pessoa instanceof Traversable ) && sizeof($pessoa) ) foreach( $pessoa as $key2 => $value2 ){ $counter2++; ?>
+                                    <p>
+                                    <input type="radio" name="idpess" value="<?php echo htmlspecialchars( $value2["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> 
+                                    <?php echo htmlspecialchars( $value2["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>; <?php echo calcularIdade($value2["dtnasc"]); ?> anos; 
+                                    </p>                                
+                                    <?php }else{ ?>
+                                    <p>
+                                         Não há pessoas cadastradas
+                                    </p>                                   
+                                       
+                                    <?php } ?>
+                                    
+                                    <p>
+                                       <a href="/login">  CADASTRAR UMA NOVA PESSOA </a>
+                                    </p>
+                                </div>
+                            
                         </div>
                             <!-- /.box-body -->
                         <div class="box-footer">                                           
                                
                         </div>
+
+                       <?php if( $value1["token"] == 1 ){ ?>
+                        <input type="text" name="token" value="" placeholder="Insira aqui o TOKEN"/>
+                       <?php } ?>
                            
                        <!-- </form> -->
+                      
 
-                        <div>&nbsp;</div>
-                        <div>&nbsp;</div>
+                      
                         <div>&nbsp;</div>
                         <input type="submit" value="Confirmar Inscrição" id="pessoa" class="button alt" formaction="/cart" formmethod="post">
                     </div>
@@ -133,24 +177,21 @@ $(document).ready(function(){
         <?php }else{ ?>
         <div class="row">
             <div class="col-md-12 alert alert-info" style="text-align-last: center; font-weight: bold">
-                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Selecione abaixo uma turma</span>                            
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Clique em uma das opções abaixo para selecionar uma turma</span>                            
             </div>
             
         </div>
 
   <div class="row" style="">
-    <div class="col-md-4 alert" style="text-align-last: center; background-color: #ce2c3e; border: solid 5px; border-color: white;  border-radius: 25px;  padding-left: 0px ">
+    <div class="col-md-6 alert" style="text-align-last: center; background-color: #0f71b3; border: solid 5px; border-color: white;  border-radius: 25px;  padding-left: 0px ">
        <a class="btn" href="/locais" style="color: white; font-weight: bold;">Turmas por LOCAL (Crec)
        </a>
     </div>
-    <div class="col-md-4 alert" style="text-align-last: center; background-color: #cc5d1e; border: solid 5px; border-color: white; border-radius: 25px;  padding-left: 0px">
+    <div class="col-md-6 alert" style="text-align-last: center; background-color: #cc5d1e; border: solid 5px; border-color: white; border-radius: 25px;  padding-left: 0px">
        <a class="btn" href="/modalidades" style="color: white; font-weight: bold" >Turmas por MODALIDADE
        </a>
     </div>
-    <div class="col-md-4 alert" style="text-align-last: center; background-color: #15a03f; border: solid 5px; border-color: white; border-radius: 25px;  padding-left: 0px;">
-       <a class="btn" href="/" style="color: white; font-weight: bold; ">Todas turmas
-       </a>
-    </div>  
+    
   </div>
   <?php } ?>
 </div>                             

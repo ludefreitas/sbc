@@ -189,6 +189,7 @@ class Cart extends Model {
 	public function getTurma()
 	{
 		$idStatustemporadaTemporadaIniciada = 2;
+		$statusTemporadaInscricoesEncerradas = 3;
 		$idStatustemporadaInscricaoIniciada = 4;
 		$idStatusTemporadaMatriculaIniciada = 6;
 		$idstatustemporadaMatriculaEncerrada = 5;
@@ -208,17 +209,20 @@ class Cart extends Model {
 			INNER JOIN tb_persons j ON j.idperson = i.idperson
 			INNER JOIN tb_temporada k ON k.idtemporada = a.idtemporada
             INNER JOIN tb_statustemporada l ON l.idstatustemporada = k.idstatustemporada
-            WHERE b.idcart = :idcart AND b.dtremoved IS NULL 
+            -- INNER JOIN tb_tokenturma m ON m.idturma = a.idturma
+            WHERE b.idcart = :idcart AND b.dtremoved IS NULL
             AND (k.idstatustemporada = :idStatustemporadaTemporadaIniciada 
             OR k.idstatustemporada = :idStatustemporadaInscricaoIniciada 
+            OR k.idstatustemporada = :statusTemporadaInscricoesEncerradas 
             OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
-            OR k.idstatustemporada = :idstatustemporadaMatriculaEncerrada)                        
+            OR k.idstatustemporada = :idstatustemporadaMatriculaEncerrada)          
 			-- GROUP BY b.idturma, b.descturma
 			-- ORDER BY b.descturma
 		", [
 			':idcart'=>$this->getidcart(),
 			'idStatustemporadaTemporadaIniciada'=>$idStatustemporadaTemporadaIniciada,
 			'idStatustemporadaInscricaoIniciada'=>$idStatustemporadaInscricaoIniciada,
+			'statusTemporadaInscricoesEncerradas'=>$statusTemporadaInscricoesEncerradas,
 			'idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
 			'idstatustemporadaMatriculaEncerrada'=>$idstatustemporadaMatriculaEncerrada
 		]);
@@ -395,7 +399,7 @@ class Cart extends Model {
 
 	}
 
-	public function getInscExistAquaticLocal($numcpf, $idpess, $idturma, $idtemporada, $idlocal) {
+	public function getInscExistAquaticLocal($numcpf, $idpess, $idturma, $idtemporada, $idlocal, $tipoativ) {
 
 		$sql = new Sql();
 
@@ -412,16 +416,18 @@ class Cart extends Model {
             AND a.idinscstatus != 9
 			AND c.numcpf = :numcpf 
             AND c.idpess = :idpess
-            AND d.idturma = :idturma      
+            -- AND d.idturma = :idturma      
             AND f.idlocal = :idlocal 
-            AND g.tipoativ = 'Aquática'                              
+            AND g.tipoativ = :tipoativ                              
             AND h.idtemporada = :idtemporada            
             ", [
 			':numcpf'=>$numcpf,
 			':idpess'=>$idpess,
-			'idturma'=>$idturma,
-			':idtemporada'=>$idtemporada,
-			':idlocal'=>$idlocal			
+			//'idturma'=>$idturma,
+			':idlocal'=>$idlocal,			
+			':tipoativ'=>$tipoativ,
+			':idtemporada'=>$idtemporada
+			
 		]);
 
 		return $results;

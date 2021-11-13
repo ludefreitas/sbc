@@ -4,7 +4,7 @@
                 <div class="col-md-3" style="margin: 15px 0px 0px 0px">
                 <?php require $this->checkTemplate("user-profile-menu");?>
             </div>
-              <div class="col-md-9" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
+              <div class="col-md-9" style="text-align-last: left; background-color: white; margin: 15px 0px 5px 0px;">
 
             <div class="container">
                 <div class="row alert-primary">
@@ -17,9 +17,10 @@
                     <div class="col-md-12">
                         <hr>
                         <strong>NÚMERO PARA O SORTEIO: </strong><span style="color: red; font-size: 20px"><?php echo htmlspecialchars( $value1["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span><br>
-                        <strong>NÚMERO INSCRIÇÃO: </strong><span><?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span><br>
+                        <strong>INSCRIÇÃO Nº: </strong><span><?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span><br>
                         <strong>NOME DO ALUNO: </strong> <span><?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span><br>
                         <strong>COM LAUDO? </strong> <span><?php if( $value1["laudo"] == 0 ){ ?>Não<?php }else{ ?>Sim<?php } ?></span><br>
+                        <strong>PARA PESSOA COM DEFICIÊNCIA? </strong> <span><?php if( $value1["inscpcd"] == 0 ){ ?>Não<?php }else{ ?>Sim<?php } ?></span><br>
                         <strong>TURMA: </strong><?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
                         <strong>Temporada: </strong><?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
 

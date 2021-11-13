@@ -28,84 +28,38 @@
                 {/if}
 
             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
-              
-            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
-              <div class="row">
-
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">
-                    Temporada                                      
-                </h5>
-              </div>
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">  
-                    Status Temporada                     
-                </h5>
-              </div>
-
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    Início das inscrições
-                </h5>
-              </div>
-
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    Fim das inscrições
-                </h5>
-              </div>
-
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    Início das matrículas
-                </h5>
-              </div>
-
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    Fim das matrículas
-                </h5>
-              </div>
-
-            </div>
-          </div>
 
             {loop="$temporada"}
             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
               <div class="row">
 
-              <div class="col-md-1" style="margin: 2; padding: 2">
+              <div class="col-md-2" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                    
-                    <a href="/admin/turma-temporada/{$value.idtemporada}">{$value.desctemporada}</a>
-                </h5>
-              </div>
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">  
-                    {$value.idstatustemporada} - {$value.descstatustemporada}
+                    <a href="/admin/turma-temporada/{$value.idtemporada}">{$value.desctemporada} -  {$value.descstatustemporada}</a>
                 </h5>
               </div>
 
               <div class="col-md-2" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                    {function="formatDateHour($value.dtinicinscricao)"}
+                    {function="formatDateHour($value.dtinicinscricao)"} -  Início das inscrições
+                </h5>
+              </div>
+
+              <div class="col-md-2" style="margin: 2; padding: 2;">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                    {function="formatDateHour($value.dtterminscricao)"} -  Fim das inscrições
                 </h5>
               </div>
 
               <div class="col-md-2" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                    {function="formatDateHour($value.dtterminscricao)"}
+                    {function="formatDateHour($value.dtinicmatricula)"} - Início das matrículas
                 </h5>
               </div>
 
               <div class="col-md-2" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                    {function="formatDateHour($value.dtinicmatricula)"}
-                </h5>
-              </div>
-
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    {function="formatDateHour($value.dttermmatricula)"}
+                     {function="formatDateHour($value.dttermmatricula)"} - Fim das matrículas
                 </h5>
               </div>
 

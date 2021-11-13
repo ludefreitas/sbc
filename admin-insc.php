@@ -7,6 +7,7 @@ use \Sbc\Model\Pessoa;
 use \Sbc\Model\Turma;
 use \Sbc\Model\Temporada;
 use \Sbc\Model\InscStatus;
+use \Sbc\Model\Sorteio;
 
 $app->get("/admin/insc", function() {
 
@@ -24,7 +25,6 @@ $app->get("/admin/insc", function() {
 	} else {
 
 		$pagination = Insc::getPageInsc($page, $itemsPerPage = 10);
-
 	}
 
 	$pages = [];
@@ -203,7 +203,7 @@ $app->get("/insc/:idinsc", function($idinsc) {
 });
 */
 
-$app->get("/admin/profile/insc/:idinsc/:idpess", function($idinsc, $idpess){
+$app->get("/admin/profile/insc/:idinsc/:idpess/:idturma", function($idinsc, $idpess, $idturma){
 
 	User::verifyLogin();
 
@@ -235,6 +235,7 @@ $app->get("/admin/profile/insc/:idinsc/:idpess", function($idinsc, $idpess){
 
 	$page->setTpl("insc-detail", [
 		'insc'=>$insc->getValues(),
+		'idturma'=>$idturma,
 		'pessoa'=>$pessoa->getValues()
 	]);	
 });
@@ -323,7 +324,7 @@ $app->get("/admin/insc-turma-temporada/:idturma/:idtemporada/user/:iduser", func
 	]);	
 });
 
-$app->get("/insc/:idinsc/:iduserprof/:idturma/statusMatriculada", function($idinsc, $iduserprof, $idturma){
+$app->get("/admin/insc/:idinsc/:iduserprof/:idturma/statusMatriculada", function($idinsc, $iduserprof, $idturma){
 
 	$insc = new Insc();
 	$turma = new Turma();
@@ -358,7 +359,7 @@ $app->get("/insc/:idinsc/:iduserprof/:idturma/statusMatriculada", function($idin
 
 });
 
-$app->get("/insc/:idinsc/:iduserprof/:idturma/statusAguardandoMatricula", function($idinsc, $iduserprof, $idturma){
+$app->get("/admin/insc/:idinsc/:iduserprof/:idturma/statusAguardandoMatricula", function($idinsc, $iduserprof, $idturma){
 
 	$insc = new Insc();
 	$turma = new Turma();
@@ -378,22 +379,62 @@ $app->get("/insc/:idinsc/:iduserprof/:idturma/statusAguardandoMatricula", functi
 
 });
 
-$app->get("/insc/:idinsc/:iduserprof/:idturma/statusDesistente", function($idinsc, $iduserprof, $idturma){
+$app->get("/admin/insc/:idinsc/:iduserprof/:idturma/enviarEmailASorteado", function($idinsc, $iduserprof, $idturma){
 
 	$insc = new Insc();
 	$turma = new Turma();
 	$temporada = new Temporada();
 	$user = new User();
+	$pessoa = new Pessoa();
+	//$sorteio = new Sorteio();	
+	$insc->get((int)$idinsc);
+	$idturma = (int)$idturma;
+	$idtemporada = $insc->getidtemporada();
+	$iduserprof = (int)$iduserprof;
+	$idpess = $insc->getidpess();
+	$pessoa->get((int)$idpess); 
+
+	$insc->alteraStatusInscricaoAguardandoMatricula($idinsc);
+
+	$status = $insc->getdescstatus();
+	//$email = $insc->getdeslogin();
+	$nomepess = $pessoa->getnomepess();
+	$dtnasc = $pessoa->getdtnasc();
+	$idade = calcularIdade($dtnasc);
+	$person = User::getUserIdPess($idpess);
+	$desperson = $person[0]['desperson'];
+	$email = $person[0]['desemail'];
+	$desctemporada = $insc->getdesctemporada();
+	$numerosorteado = $insc->getnumsorte();
+	$numeroordenado = $insc->getnumordem();
+	$turma->get((int)$idturma);
+
+	//$insc->inscricaoEmail($idinsc, $numerosorteado, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma);
+
+	$insc->sorteioEmail($idinsc, $numerosorteado, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma, $idade, $numeroordenado, $idtemporada, $iduserprof);
+
+	header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
+	exit();
+
+});
+
+$app->get("/admin/insc/:idinsc/:idturma/:idpess/statusDesistente", function($idinsc, $idturma, $idpess){
+
+	$insc = new Insc();
+	$turma = new Turma();
+	$temporada = new Temporada();
+	$user = new User();
+	$pessoa = new Pessoa();
 	
 	$insc->get((int)$idinsc);
 
-	$idturma = (int)$idturma;
+	//$idturma = (int)$idturma;
 	$idtemporada = $insc->getidtemporada();
-	$iduser = (int)$iduserprof;
+	$idpess = (int)$idpess;
 
 	$insc->alteraStatusInscricaoDesistente($idinsc, $idturma, $idtemporada);
 
-	header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
+	header("Location: /admin/profile/insc/".$idinsc."/".$idpess."/".$idturma."");
 	exit();
 
 });

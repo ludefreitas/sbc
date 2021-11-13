@@ -31,7 +31,7 @@
                       Qtde de números para o sorteio: <h3 style="color: black;"><?php echo htmlspecialchars( $maxIncritosTemporada["maximoInscritos"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h3>
                     </div> 
 
-                    <?php if( $temporada["idstatustemporada"] == 3 ){ ?>
+                    <?php if( $temporada["idstatustemporada"] == 3 && $iduser == 1 ){ ?>
                     <div style="text-align: center;">
 
                       <input type="hidden" name="desctemporada" value="<?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" >
@@ -47,8 +47,12 @@
                       <input type="hidden" name="desctemporada" value="<?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" >
                       <input type="hidden" name="idtemporada" value="<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                       <input type="hidden" name="maxIncritosTemporada" value="<?php echo htmlspecialchars( $maxIncritosTemporada["maximoInscritos"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-                      
+
+                      <?php if( $sorteio == NULL ){ ?>
                       <input type="submit" disabled="true" name="sortear" value="Realizar Sorteio" class="btn btn-success btn-lg">
+                      <?php }else{ ?>
+                      <span style="font-weight: bold; color: darkgreen; font-size: 24px"> Sorteio realizado com sucesso!!</span>
+                      <?php } ?>
                      
                     </div>     
                     <?php } ?>
@@ -63,44 +67,34 @@
               </div>              
             </div>  
 
-            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
-              
-            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
-              <div class="row">
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">  
 
-              <div class="col-md-3" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    Ordem do sorteio
-                </h5>
-              </div>
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    Número sorteado
-                </h5>
-              </div>            
+              <div class="box-body" style="border: solid 1px lightblue; margin: 5px; padding: 5px;">          
 
-            </div>
-          </div>
+                 <div class="row">
+                 <?php $counter1=-1;  if( isset($sorteio) && ( is_array($sorteio) || $sorteio instanceof Traversable ) && sizeof($sorteio) ) foreach( $sorteio as $key1 => $value1 ){ $counter1++; ?>
+                 <div class="col-md-1">              
+                   
+                  <div class="col-md-6" style="text-align: right; margin-left: -10px; margin-bottom: -15px; ">
+                
+                      <h6>                  
+                       <span style="font-size: 14px; font-style: italic; font-weight: bold; color: red;"><?php echo htmlspecialchars( $value1["numerodeordem"], ENT_COMPAT, 'UTF-8', FALSE ); ?>°</span>
+                      </h6>
+                  </div>
 
-            <?php $counter1=-1;  if( isset($sorteio) && ( is_array($sorteio) || $sorteio instanceof Traversable ) && sizeof($sorteio) ) foreach( $sorteio as $key1 => $value1 ){ $counter1++; ?>
-            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
-              <div class="row">
-
-              <div class="col-md-3" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                  <?php echo htmlspecialchars( $value1["numerodeordem"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-                </h5>
-              </div>
-
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                  <?php echo htmlspecialchars( $value1["numerosortear"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-                </h5>
-              </div>
+                  <div class="col-md-6" style="margin: 0px; padding: 0px; border-radius: 50%; border: solid 2px; text-align: center; width: 100%; height: 100%;">
+                
+                    <h1 style="font-weight: bold; padding: 0px; margin: 0px; width: 100%; height: 100%;">                  
+                    <?php echo htmlspecialchars( $value1["numerosortear"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                    </h1>
+                 </div>              
+                  
+                </div>
+                <?php } ?> 
+              </div>   
 
             </div>
-          </div>
-          <?php } ?> 
+         
 
             <!-- /.box-body -->
             <button type="button" onclick="window.print()" class="btn btn-primary pull-right" style="margin-right: 5px;">

@@ -17,7 +17,7 @@ class Insc extends Model {
 
 		$sql = new Sql();													        
 
-		$results = $sql->select("CALL sp_insc_save(:idinsc, :idinscstatus, :idcart, :idturma, :idtemporada, :numordem, :numsorte, :laudo)", [
+		$results = $sql->select("CALL sp_insc_save1(:idinsc, :idinscstatus, :idcart, :idturma, :idtemporada, :numordem, :numsorte, :laudo, :inscpcd)", [
 			':idinsc'=>$this->getidinsc(),
 			':idinscstatus'=>$this->getidinscstatus(),
 			':idcart'=>$this->getidcart(),
@@ -25,7 +25,8 @@ class Insc extends Model {
 			':idtemporada'=>$this->getidtemporada(),
 			':numordem'=>$this->getnumordem(),
 			':numsorte'=>$this->getnumsorte(),
-			':laudo'=>$this->getlaudo()
+			':laudo'=>$this->getlaudo(),
+			':inscpcd'=>$this->getinscpcd()
 		]);
 
 		if (count($results) > 0) {
@@ -33,6 +34,7 @@ class Insc extends Model {
 		}
 
 	}
+
 
 	public static function inscricaoEmail($idinsc, $numsorte, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma){
 	
@@ -71,6 +73,110 @@ class Insc extends Model {
      		Insc::setSuccess("Um email com os dados desta inscrição foi enviado a você, verifique sua caixa de email cadastrado. Guarde-o com você, se necessário apresente-o quando solicitado");
      	}
 	}	
+
+	public static function inscricaoEmailPosSorteio($idinsc, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma, $posicao, $matriculados, $vagas){
+	
+		$assunto = "Inscrição Cursos Esportivos ".$desctemporada."";
+		$tplName = "comprovante-insc-pos-sorteio";
+		$link = "http://www.cursosesportivossbc.com.br";
+		
+        $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
+                 "nomepess"=>$nomepess,
+                 "desperson"=>$desperson,
+                 "link"=>$link,
+                 "email"=>$email,
+                 "idinsc"=>$idinsc, 
+                 "posicao"=>$posicao,  
+                 "matriculados"=>$matriculados,
+                 "vagas"=>$vagas,            
+                 "turma"=>$turma->getValues()                
+        )); 
+             
+        $emailEnviado = $mailer->send();        
+
+        if (!$emailEnviado)
+     	{
+        	Insc::setError("Não foi possivel enviar email, no entanto, a incrição abaixo foi efetuada!");      	
+        	header("Location: /profile/insc/".$idinsc."/".$idpess."");
+        	exit();			
+
+     	}else{
+     		Insc::setSuccess("Um email com os dados desta inscrição foi enviado a você, verifique sua caixa de email cadastrado. Guarde-o com você, se necessário apresente-o quando solicitado");
+     	}
+	}
+
+	public static function sorteioEmail($idinsc, $numsorte, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma, $idade, $numeroordenado, $idtemporada, $iduserprof){
+	
+		$assunto = "Inscrição Cursos Esportivos ".$desctemporada."";
+		$tplName = "sorteio-insc";
+		$link = "http://www.cursosesportivossbc.com.br";
+		
+        $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
+                 "nomepess"=>$nomepess,
+                 "desperson"=>$desperson,
+                 "link"=>$link,
+                 "email"=>$email,
+                 "idinsc"=>$idinsc,
+                 "numerosorteado"=>$numsorte,
+                 "turma"=>$turma->getValues(), 
+                 "idade"=>$idade,
+                 "numeroordenado"=>$numeroordenado
+        )); 
+             
+        $emailEnviado = $mailer->send();   
+
+        $idturma = $turma->getidturma();           
+
+        if (!$emailEnviado)
+     	{
+
+        	User::setError("Não foi possivel enviar email, no entanto, o status da inscrição foi atualizada!");        	
+        	header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
+        	exit();			
+
+     	}else{
+     		User::setSuccess("Email enviado com sucesso!");
+     		header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
+        	exit();
+     	}
+	}
+
+	public static function sorteioEmailProf($idinsc, $numsorte, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma, $idade, $numeroordenado, $idtemporada, $iduserprof){
+	
+		$assunto = "Inscrição Cursos Esportivos ".$desctemporada."";
+		$tplName = "sorteio-insc";
+		$link = "http://www.cursosesportivossbc.com.br";
+		
+        $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
+                 "nomepess"=>$nomepess,
+                 "desperson"=>$desperson,
+                 "link"=>$link,
+                 "email"=>$email,
+                 "idinsc"=>$idinsc,
+                 "numerosorteado"=>$numsorte,
+                 "turma"=>$turma->getValues(), 
+                 "idade"=>$idade,
+                 "numeroordenado"=>$numeroordenado
+        )); 
+             
+        $emailEnviado = $mailer->send();   
+
+        $idturma = $turma->getidturma();           
+
+        if (!$emailEnviado)
+     	{
+
+        	User::setError("Não foi possivel enviar email, no entanto, o status da inscrição foi atualizada!");        	
+        	header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
+        	exit();			
+
+     	}else{
+     		User::setSuccess("Email enviado com sucesso!");
+     		header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
+        	exit();			
+     	}
+	}
+
 
 	public function get($idinsc)
 	{
@@ -393,7 +499,7 @@ class Insc extends Model {
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
 			WHERE idturma = :idturma AND idtemporada = :idtemporada
-			ORDER BY a.idinscstatus, a.numordem
+			ORDER BY a.idinscstatus, c.pcd, c.vulnsocial, a.numordem 
 		", [
 			':idturma'=>$idturma,
 			':idtemporada'=>$idtemporada
@@ -535,7 +641,31 @@ class Insc extends Model {
 			return $results;
 	}
 
-	/*
+	// Esta função verifica se a temporada está apenas iniciada 
+	// para setar o status da inscrição no site.php
+	public function statusTemporadaIniciada($idtemporada){
+
+		$idStatusTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT idstatustemporada
+			FROM tb_temporada 					
+			WHERE idtemporada = :idtemporada AND idstatustemporada = :idstatustemporada
+		", [
+			':idtemporada'=>$idtemporada,
+			':idstatustemporada'=>$idStatusTemporadaIniciada
+		]);
+
+		if (count($results) > 0) {			
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	
 	// Esta função verifica se a temporada está com a matricula iniciada 
 	// para setar o status da inscrição no site.php
 	public function statusTemporadaMatriculaIniciada($idtemporada){
@@ -559,7 +689,31 @@ class Insc extends Model {
 			return false;
 		}
 	}
-	*/
+
+	// Esta função verifica se a temporada está com as inscrições encerradas 
+	// para setar o status da inscrição no site.php
+	public function statusTemporadaInscricoesEncerradas($idtemporada){
+
+		$idStatusTemporadaInscricoesEncerradas = StatusTemporada::INSCRICOES_ENCERRADAS;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT idstatustemporada
+			FROM tb_temporada 					
+			WHERE idtemporada = :idtemporada AND idstatustemporada = :idstatustemporada
+		", [
+			':idtemporada'=>$idtemporada,
+			':idstatustemporada'=>$idStatusTemporadaInscricoesEncerradas
+		]);
+
+		if (count($results) > 0) {			
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 
 	// Esta função verifica se a temporada está com a matrículas encerradas 
 	// para setar o status da inscrição no site.php
@@ -651,6 +805,18 @@ class Insc extends Model {
 			return $results;			
 	}
 
+	public function numMatriculados($idtemporada, $idturma){
+
+		$sql = new Sql();
+		
+		$results =  $sql->select("SELECT nummatriculados FROM tb_turmatemporada WHERE idtemporada = :idtemporada AND idturma = :idturma", [
+			'idtemporada'=>$idtemporada,
+			'idturma'=>$idturma
+		]);
+
+		return $results;			
+	}
+	
 	public function alteraStatusInscricaoParaFilaDeEspera($idtemporada){
 
 		$sql = new Sql();
@@ -683,6 +849,43 @@ class Insc extends Model {
 			));
 		}		
 	}
+
+/*
+
+public function alteraStatusInscricaoParaSorteada($idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT a.vagas, b.idtemporada, b.idturma
+			FROM tb_turma a 
+			INNER JOIN tb_turmatemporada b
+			ON	b.idturma = a.idturma		
+			WHERE idtemporada = :idtemporada", [
+				":idtemporada"=>$idtemporada
+		]);
+
+		for($i=0; $i < count($results); $i++) { 
+
+			$idInscStatusSorteada = InscStatus::SORTEADA;
+			$idStatusCancelada = InscStatus::CANCELADA;
+			$idtemporada = $results[$i]['idtemporada'];
+			$idturma = $results[$i]['idturma'];
+			$vagas = $results[$i]['vagas'];
+
+			$sql = new Sql();		
+
+			$sql->query("UPDATE tb_insc SET idinscstatus = :idInscStatusSorteada WHERE idinscstatus != :idStatusCancelada AND idtemporada = :idtemporada AND idturma = :idturma AND numordem > :vagas", array(
+				":idInscStatusSorteada"=>$idInscStatusSorteada,
+				":idStatusCancelada"=>$idStatusCancelada,
+				"idtemporada"=>$idtemporada,
+				"idturma"=>$idturma,
+				"vagas"=>$vagas
+			));
+		}		
+	}
+
+	*/
 	
 
 }

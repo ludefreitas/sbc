@@ -51,7 +51,7 @@
                     <table class="shop_table">
                         <thead>
                             <tr>
-                                <th colspan="2" class="product-name"><h3>Nome: <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> -  <?php echo calcularIdade($pessoa["dtnasc"]); ?> anos - <strong><?php if( $pessoa["pcd"] == 1 ){ ?>(PCD)<?php } ?></strong></h3></th>
+                                <th colspan="2" class="product-name"><h3>Nome: <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> -  <?php echo calcularIdade($pessoa["dtnasc"]); ?> anos - <strong><?php if( $pessoa["pcd"] == 1 ){ ?>PCD<?php } ?></strong></h3></th>
                             </tr>
                             <tr>
                                 <th colspan="2" class="product-name"><h3>número para concorrer no sorteio: <?php echo htmlspecialchars( $insc["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h3></th>
@@ -81,10 +81,12 @@
                                 <td class="product-name"><?php echo htmlspecialchars( $insc["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                             </tr>
                             <?php if( $insc["idinscstatus"] == 1 ){ ?>
+                            
                             <tr>
                                 <th class="product-name"> Aluno desistente? </th>
-                                <td class="product-name"> <a class="btn btn-danger" href="" role="button" onclick="return confirm('Deseja realmente informar como desistente o <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da inscrição <?php echo htmlspecialchars( $insc["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')">Desistente</a> </td>
+                                <td class="product-name"> <a class="btn btn-danger" href="/prof/insc/<?php echo htmlspecialchars( $insc["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idturma, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $pessoa["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusDesistente" role="button" onclick="return confirm('Deseja realmente informar como desistente o <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da inscrição <?php echo htmlspecialchars( $insc["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')">Desistente</a> </td>
                             </tr>
+                        -
                             <?php } ?>
                              <tr>
                                 <th class="product-name"> Início previsto das aulas </th>
@@ -100,6 +102,10 @@
                             
                         </tfoot>
                     </table>
+                    <div>
+                 
+                    <a type="button" class="btn btn-primary" href="javascript:window.history.go(-1)">Voltar</a>
+                </div>  
                     
                 </div>
 

@@ -80,14 +80,18 @@
                   <option value="{$value.idhorario}">{$value.diasemana} - {$value.horainicio} às {$value.horatermino} </option>
                   {/loop}                            
                   </select>
-                </div>  
-
-              
+                </div>                
 
                 <div class="box-header">
                   <label for="turma">Vagas</label>
                   <input type="number" class="form-control" id="vagas" name="vagas" placeholder="Informe a quantidade de vagas" value="{$createTurmaValues.vagas}">
-                </div>      
+                </div>    
+
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" name="token" value="1"> Tem token ?
+                  </label>
+                </div>  
                 
               </div>
 

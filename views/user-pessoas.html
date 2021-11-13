@@ -1,19 +1,22 @@
  <div class="container"> <!-- container 1 -->
             <div class="row"> <!-- row 2 -->
-            <div class="col-md-3" style="margin: 15px 0px 0px 0px">
+            <div class="col-md-3" style="margin: 5px 0px 0px 0px">
                 {include="user-profile-menu"}
             </div>
-              <div class="col-md-9" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
+              <div class="col-md-9" style="text-align-last: left; background-color: white; margin: 5px 0px 50px 0px;">
 
 
     {if="$errorRegister != ''"}
     <div class="alert alert-danger">
     {$errorRegister}
     </div>
-    {/if}
-    
+    {/if} 
 
-    
+    {if="$saudeSuccess != ''"}
+    <div class="alert alert-success">
+    <h4>{$saudeSuccess}</h4>
+    </div>
+    {/if}       
 
      <div class="container">
                     
@@ -21,7 +24,7 @@
         <div class="row alert alert-primary">
             <div class="col-md-12" >
                 <span style="text-align: center;">
-                <strong>{$value.nomepess} </strong>&nbsp; <strong> {if="$value.pcd == 1"}(PCD){/if}</strong>
+                <strong>{$value.nomepess} </strong>
                 <div class="row alert alert-primary"> 
                 &nbsp;<strong>{function="calcularIdade($value.dtnasc)"}&nbsp; </strong>anos 
                 &nbsp;<strong>Data Nasc:</strong>{function="formatDate($value.dtnasc)"}
@@ -41,19 +44,53 @@
                 {if="$value.nomepai != ''"}
                 &nbsp;<strong>Nome do pai: </strong>{$value.nomepai}
                 &nbsp;<strong>CPF do pai: </strong>{$value.cpfpai}
-                {/if}
-                
+                {/if}                
                 &nbsp;<strong>Incluido: </strong>{function="formatDateHour($value.dtinclusao)"}
-                &nbsp;<strong>Alterado: </strong>{function="formatDateHour($value.dtalteracao)"}
+                &nbsp;<strong>Alterado: </strong>{function="formatDateHour($value.dtalteracao)"} 
                 </span>
                 </div>
+                {if="$value.pcd == 1"}
+                <div class="row alert alert-warning">
+                    <div class="col-md-12">
+                            <span style="color: blue; font-weight: bold; "> {if="$value.pcd == 1"}Pessoa Com Deficiência{/if}</span>
+                    </div>
+                    <div class="col-md-12">
+                            <span style="color: blue;">
+                            {if="$value.defauditiva"}
+                            Deficiente Auditivo -
+                            {/if}
+                            {if="$value.defvisual"}
+                            Deficiente Visual -
+                            {/if}
+                            {if="$value.deffisica"}
+                            Deficiente Físico -
+                            {/if}
+                            {if="$value.defintelectual"}
+                            Deficiente Intelectual -
+                            {/if}
+                            {if="$value.defautismo"}
+                            Autista -
+                            {/if}
+                            {if="$value.deftea"}
+                            Pessoa com TEA - 
+                            {/if}
+                            <span style="font-weight: bold; color: black; ">CID.: {$value.codigo}</span>
+                            {$value.doenca}</span>
+                            
+                        </div>
+                        <div class="col-md-12">
+                              <h6>  <a href="/saude-atualiza/{$value.idpess}/{$value.nomepess}">Inserir / Atualizar Dados de Saúde <span style="color: #000"> (Clique aqui)</span></a> </h6>
+                    </div>
+                
+                </div>
+                {/if}
                 <div class="row alert alert-primary">
-                    <div class="col-md-6 btn-primary" style="padding: 5px; text-align-last: center;">
+                    <div class="col-md-6 btn-primary" style="padding: 5px; text-align-last: center; width: 50%;">
                         <form action="post" name="idpess">
                             <a class="btn btn-primary" href="/user/pessoa/{$value.idpess}" role="button">EDITAR</a>
                         </form>
                     </div>
-                    <div class="col-md-6 btn-danger" style="padding: 5px; text-align-last: center;">
+                    <div class="col-md-6 btn-danger" style="padding: 5px; text-align-last: center; width: 50%;">
                         <form action="post" name="idpess">
                             <a class="btn btn-danger"  href="/user/{$value.idpess}/status" role="button" onclick="return confirm('DESEJA realmente EXCLUIR o cadastro do(a) {$value.nomepess}?')">EXCLUIR</a>
                         </form>

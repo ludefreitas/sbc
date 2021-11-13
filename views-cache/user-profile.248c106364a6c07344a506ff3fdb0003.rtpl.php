@@ -2,10 +2,10 @@
 <div>
     <div class="container">
         <div class="row">                
-            <div class="col-md-3" style="margin: 15px -5px 0px 0px">
+            <div class="col-md-3" style="margin: 10px -5px 0px 0px">
                 <?php require $this->checkTemplate("user-profile-menu");?>
             </div>
-            <div class="col-md-9 alert alert-info"  style="margin: 10px 15px 10px 15px;">
+            <div class="col-md-8 alert alert-info"  style="margin: 10px 15px 10px 15px;">
                 <div class="cart-collaterals">
                     <h5>Alterar Email / Telefone</h5>
                 </div>
