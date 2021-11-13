@@ -12,7 +12,7 @@ class Sql {
 
 	//const HOSTNAME = "50.116.86.90";
 	//const USERNAME = "curs0155_db";
-	//const PASSWORD = "Mysql@132419";
+	//const PASSWORD = "";
 	//const DBNAME = "curs0155_dbcursossbc";
 	//const DBNAME = "curs0155_dbcursos_sbc"
 
