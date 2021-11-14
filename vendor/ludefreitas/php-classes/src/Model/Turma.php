@@ -194,7 +194,8 @@ class Turma extends Model {
 			using(idstatustemporada)
 			INNER JOIN tb_modalidade m         
 			using(idmodal)
-      		WHERE b.iduser != 1 AND (k.idstatustemporada = :idStatusTemporadaMatriculasEncerradas 
+      		WHERE b.iduser != 1 
+      		AND (k.idstatustemporada = :idStatusTemporadaMatriculasEncerradas 
       		OR k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
       		OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
       		OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada
@@ -344,6 +345,61 @@ class Turma extends Model {
             OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada 
             OR k.idstatustemporada = :idStatusTemporadaInscricoesEncerradas))
       		ORDER BY a.numinscritos, RAND()", [
+      			':idmodal'=>$idmodal,
+				':idStatusTemporadaMatriculasEncerradas'=>$idStatusTemporadaMatriculasEncerradas,
+				':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada,
+				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
+				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
+				':idStatusTemporadaInscricoesEncerradas'=>$idStatusTemporadaInscricoesEncerradas
+				
+			]);
+	}
+
+	public static function listAllTurmaTemporadaModalidadeLocal($idmodal, $idlocal)
+	{
+		$idStatusTemporadaTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
+		$idStatusTemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
+		$idStatusTemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
+		$idStatusTemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
+		$idStatusTemporadaInscricoesEncerradas = StatusTemporada::INSCRICOES_ENCERRADAS;
+
+		$sql = new Sql();
+
+		return $sql->select("SELECT * 
+			FROM tb_turmatemporada a 
+			INNER JOIN tb_turma j            
+			using(idturma)
+			INNER JOIN tb_users b
+			using(iduser)
+			INNER JOIN tb_persons c
+			using(idperson)
+			INNER JOIN tb_atividade d
+			using(idativ)
+			INNER JOIN tb_espaco e
+			using(idespaco)
+			INNER JOIN tb_local f
+			using(idlocal)
+			-- INNER JOIN tb_turmastatus g
+			-- using(idturmastatus)
+			INNER JOIN tb_horario h
+			using(idhorario)
+			INNER JOIN tb_fxetaria i
+			using(idfxetaria)
+            INNER JOIN tb_temporada k          
+			using(idtemporada)   
+            INNER JOIN tb_statustemporada l          
+			using(idstatustemporada)
+			INNER JOIN tb_modalidade m         
+			using(idmodal)
+      		WHERE j.idmodal = :idmodal AND f.idlocal = :idlocal
+            AND ( b.iduser != 1 AND (
+            k.idstatustemporada = :idStatusTemporadaMatriculasEncerradas 
+            OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada 
+            OR k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
+            OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada 
+            OR k.idstatustemporada = :idStatusTemporadaInscricoesEncerradas))
+      		ORDER BY a.numinscritos, RAND()", [
+      			':idlocal'=>$idlocal,
       			':idmodal'=>$idmodal,
 				':idStatusTemporadaMatriculasEncerradas'=>$idStatusTemporadaMatriculasEncerradas,
 				':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada,

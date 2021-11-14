@@ -1,0 +1,70 @@
+
+ <div class="container"> <!-- container 1 -->
+            <div class="row"> <!-- row 2 -->
+              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
+
+<div class="container" style="margin: 0px 0px 0px 0px; ">
+  <div class="row">   
+
+    {if="$error != ''"}
+    <div class="alert alert-danger">
+      {$error}
+    </div>
+  
+ {else}
+
+  <div class="col-md-12" style="text-align-last: left; background-color:#0f71b3; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;"> 
+    <a href="/modalidades">           
+      <div style="text-align-last: center; font-weight: bold; line-height: 30px; color: white; font-size: 14sx; font-style: normal; margin: 10px 5px 10px 5px; ">
+          Selecione aqui uma MODALIDADE para praticar no {$apelidolocal} e faça a sua inscrição.
+      </div>
+    </a>
+  </div>
+ {/if}
+
+  </div>
+</div>
+<hr style="background-color: orange;">
+
+{loop="$modalidades"}
+<a href="/modalidade/{$value.idmodal}/{$idlocal}">
+  <div class="container"> <!-- container 3 -->
+    <div class="row"> <!-- row 4 -->
+      
+      <!-- <div class="col-md-4" col-sm-1 style="text-align-last: left; background-color: white; margin: 5px 0px 5px 0px; padding-right: 0px">                            
+
+                    <img class="img-responsive" style="width: 282px; height: 179px" id="image-preview" src="" alt="Foto">                                   
+      </div> -->                             
+      
+      <div class="col-md-12" style="text-align-last: left; line-height: 20px;  font-size: 20px; font-style: normal; margin: 5px 0px 5px 0px; padding: 0px 0px 0px 0px">
+
+        <div class="container">
+          <div class="row alert-warning">
+            <div class="col-md-6" style="margin: 10px 0px 5px 0px; ">
+              <a style="color: #0f71b3; text-decoration: none" href="/modalidade/{$value.idmodal}/{$idlocal}">
+                {$value.descmodal}<br>
+              </a>
+            </div>
+            <div class="col-md-6" style="text-align-last: center; margin: 5px 0px 5px 0px; color: white; padding: 0px 0px 0px 0px">
+              <a class="card card-just-text" style="background-color: #cc5d1e; color: white; padding: 5px 0px 5px 0px;  text-decoration: none" href="/modalidade/{$value.idmodal}/{$idlocal}" text-decoration="none">Cursos dísponíveis
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>                        
+    </div> <!-- row 4 -->
+  </div> <!-- container 3 -->
+</a>
+{/loop}
+<hr style="background-color: orange;">
+<div class="row" style="margin: -5px -5px -5px -5px; padding-top: 20px; ">    
+<div class="col-md-12" style="text-align-last: left; background-color: #0f71b3; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
+    <a href="/locais">                          
+      <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 14px; font-style: normal; margin: 10px 5px 10px 0px; ">                                               
+          Turmas por local
+      </div>
+    </a>
+  </div>
+ </div>
+</div> <!-- final da index -->
+

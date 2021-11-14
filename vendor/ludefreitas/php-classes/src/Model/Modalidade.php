@@ -18,7 +18,46 @@ class Modalidade extends Model {
 		return $sql->select("SELECT * 
 			FROM tb_modalidade			
 			ORDER BY descmodal");
+	}
+
+	public static function listAllToLocal($idlocal)
+	{
+		$idStatusTemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
+		$idStatusTemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
+		$idStatusTemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;		
+		$idStatusTemporadaTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;			
+		$idStatusTemporadaInscricoesEncerradas = StatusTemporada::INSCRICOES_ENCERRADAS;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+		SELECT * FROM tb_modalidade a 
+        WHERE idmodal IN (
+        SELECT c.idmodal FROM tb_turmatemporada b
+        INNER JOIN tb_temporada f ON f.idtemporada = b.idtemporada
+        INNER JOIN tb_statustemporada g ON g.idstatustemporada = f.idstatustemporada
+		INNER JOIN tb_turma c ON c.idturma = b.idturma 
+        INNER JOIN tb_espaco d ON d.idespaco = c.idespaco
+        INNER JOIN tb_local e ON e.idlocal = d.idlocal
+		WHERE e.idlocal = :idlocal 
+		AND (g.idstatustemporada = :idStatusTemporadaMatriculasEncerradas
+      		 OR g.idstatustemporada = :idStatusTemporadaInscricaoIniciada
+      		 OR g.idstatustemporada = :idStatusTemporadaMatriculaIniciada
+      		 OR g.idstatustemporada = :idStatusTemporadaTemporadaIniciada
+      		 OR g.idstatustemporada = :idStatusTemporadaInscricoesEncerradas
+            )
+		)",[
+			':idlocal'=>$idlocal,
+			':idStatusTemporadaMatriculasEncerradas'=>$idStatusTemporadaMatriculasEncerradas,
+			':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
+			':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
+			':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada,
+			':idStatusTemporadaInscricoesEncerradas'=>$idStatusTemporadaInscricoesEncerradas
+		]);
+
+		return $results;		
 	}	
+	
 
 	public static function checkList($list)
 	{
