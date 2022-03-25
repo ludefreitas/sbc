@@ -6,6 +6,7 @@ if (!isset($_SESSION)) {
 
 require_once("vendor/autoload.php");
 
+use \Sbc\Model\Agenda;
 use \Sbc\Model\Atividade;
 use \Sbc\Model\Cart;
 use \Sbc\Model\Espaco;
@@ -47,6 +48,7 @@ require_once("prof-insc.php");
 require_once("prof-temporada.php");
 require_once("prof-turma.php");
 require_once("functions.php");
+require_once("site-agenda.php");
 require_once("site-cart.php");
 require_once("site-endereco.php");
 require_once("site-insc.php");

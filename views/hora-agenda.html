@@ -1,0 +1,133 @@
+
+     <div class="container"> <!-- container 1 -->
+                <div class="row"> <!-- row 2 -->
+                  <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 5px 0px 50px 0px;">
+
+    <div class="container">
+        <div class="row" style="padding-bottom: 5px">
+            <div class="col-md-12">
+                    
+                {if="$error != ''"}
+                <div class="alert alert-danger">
+                {$error}
+                </div>
+                {/if}
+            </div>            
+
+
+        
+            <div class="col-md-12">   
+                
+                <form action="/horaagendada" method="post"> 
+                	<div style="color: blue; text-align: center;">
+                		<label>
+                    		DADOS PARA O AGENDAMENTO
+                        </label> 
+                    </div>
+                    <div style="text-align: center;">
+                        <label>
+                        	Nome: {$nomepess}
+                        </label>                        
+                    </div>
+                    <div style="color: blue; text-align: center; font-weight: bold;">
+                        <label>                        	
+                        Data: {function="formatDate($dataPost)"} - {$nomeDiaSemana}
+                         </label> 
+                    </div>
+
+                        <input type="text" name="dataPost" value="{$dataPost}" style="display: none;">                
+                        <input type="text" name="idpess" value="{$idpess}" style="display: none;"> 
+                        <input type="text" name="ispresente" value="{$ispresente}" style="display: none;">
+                        <input type="text" name="idlocal" value="{$idlocal}" style="display: none;"> 
+                                               
+                    <div style="color: blue;">
+                        <label>
+                        Confirme seus dados, a data escolhida e selecione abaixo um horário ou dois horários diferentes e subsequentes e depois clique no botão "ENVIAR".
+                        </label> 
+                    </div>
+                    <div style="margin-bottom: -10px; font-weight: bold; ">
+                    	{loop="$hora700"}
+                    	<input type="radio" name="7:00"> <label>7:00</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                    	{/loop}               	                   	                                           	                       
+                    </div>
+                    <hr> 
+
+                    <div style="margin-bottom: -10px; font-weight: bold; ">
+                    	{loop="$hora730"}
+                    	<input type="radio" name="7:30"> <label>7:30</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                    	{/loop}               	                   	                                           	                       
+                    </div>
+                    <hr>                                           
+
+                     <div style="margin-bottom: -10px; font-weight: bold; ">
+                    	{loop="$hora800"}
+                    	<input type="radio" name="8:00"> <label>8:00 </label>&nbsp;&nbsp;&nbsp;&nbsp;
+                    	{/loop}                     	
+                    </div>
+                    <hr> 
+
+                    <div style="margin-bottom: -10px; font-weight: bold; ">
+                    	{loop="$hora830"}
+                    	<input type="radio" name="8:30"> <label>8:30</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                    	{/loop}               	                   	                                           	                       
+                    </div>
+                    <hr>                       
+
+                     <div style="margin-bottom: -10px; font-weight: bold; ">
+                    	{loop="$hora900"}
+                    	<input type="radio" name="9:00"> <label>9:00</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                    	{/loop} 
+                    	
+                    </div>
+                    <hr>
+
+                    <div style="margin-bottom: -10px; font-weight: bold; ">
+                    	{loop="$hora930"}
+                    	<input type="radio" name="9:30"> <label>9:30</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                    	{/loop} 
+                    	
+                    </div>
+                    <hr>  
+
+                    <div style="margin-bottom: -10px; font-weight: bold; ">
+                    	{loop="$hora1000"}
+                    	<input type="radio" name="10:00"> <label>10:00</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                    	{/loop} 
+                    	
+                    </div>
+                    <hr>
+
+                    <div style="margin-bottom: -10px; font-weight: bold; ">
+                    	{loop="$hora1030"}
+                    	<input type="radio" name="10:30"> <label>10:30</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                    	{/loop} 
+                    	
+                    </div>
+                    <hr>                    	                                           	                                         	                                           	                       
+                    
+            </div>
+        </div>
+    </div>
+    <div class="container">
+            <div class="row" style="padding-bottom: 10px;">
+                <div class="col-md-12" style="margin-top: 10px; text-align-last: center">
+                    <input style="width: 100%; float: right; background-color: #15a03f;" type="submit" class="btn">
+                </div> 
+                <div class="col-md-12" style="margin-top: 10px; text-align-last: center">
+
+                        <a class="btn" style="width: 100%; float: right; background-color: #ce2c3e;  text-decoration: none; color: white;" href="javascript:window.history.go(-1)" text-decoration="none">Voltar
+                        </a>
+                       
+                </div>                  
+            </div>
+    </div>
+    </form>
+
+        </div>    
+    </div>     
+
+   
+
+    </div> <!-- final da index -->               
+
+

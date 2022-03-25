@@ -58,11 +58,11 @@
                             </tr>
                             <tr>
                                 <th class="product-name">Turma / Temporada</th>
-                                <td class="product-name"><?php echo htmlspecialchars( $insc["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $insc["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                                <td class="product-name">[<?php echo htmlspecialchars( $insc["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>] - <?php echo htmlspecialchars( $insc["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $insc["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                             </tr>
                             <tr>
                                 <th class="product-name">Horário / Professor</th>
-                                <td class="product-name"><?php echo htmlspecialchars( $insc["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?> das <?php echo htmlspecialchars( $insc["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $insc["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - Prof. <?php echo htmlspecialchars( $insc["apelidoperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                                <td class="product-name"><?php echo htmlspecialchars( $insc["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?> das <?php echo htmlspecialchars( $insc["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $insc["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </td>
                             </tr>
                             <tr>
                                 <th class="product-name">Local da aula (CREC)</th>
@@ -73,9 +73,17 @@
                                 <td class="product-name"><?php echo formatDateHour($insc["dtinsc"]); ?></td>
                             </tr>
                             <tr>
-                                <th class="product-name">Laudo</th>
+                                <th class="product-name">Laudo ?</th>
                                 <td class="product-name"><?php if( $insc["laudo"] == 1 ){ ?>Sim<?php }else{ ?>Não<?php } ?></td>
-                            </tr>                                                     
+                            </tr> 
+                            <tr>
+                                <th class="product-name">PCD ?</th>
+                                <td class="product-name"><?php if( $insc["inscpcd"] == 1 ){ ?>Sim<?php }else{ ?>Não<?php } ?></td>
+                            </tr>     
+                            <tr>
+                                <th class="product-name">Respons. p/ inscrição</th>
+                                <td class="product-name">&nbsp;&nbsp;<?php echo htmlspecialchars( $insc["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $insc["deslogin"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                            </tr>                                                                                                                                                                                 
                             <tr <?php echo colorStatus($insc["idinscstatus"]); ?>>
                                 <th class="product-name">Status da Inscrição</th>
                                 <td class="product-name"><?php echo htmlspecialchars( $insc["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>

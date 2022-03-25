@@ -36,7 +36,6 @@ $app->get("/admin/sorteio/:idtemporada", function($idtemporada) {
 	]);
 });
 
-
 $app->post("/admin/sortear", function() {
 
 	User::verifyLogin();
@@ -48,7 +47,7 @@ $app->post("/admin/sortear", function() {
 	
 	if(!Sorteio::listAll($idtemporada)){
 
-			$sort = Sorteio::sortear($maxIncritos, $maxIncritos, $idtemporada);
+			Sorteio::sortear($maxIncritos, $maxIncritos, $idtemporada);
 
 			$sorteio = Sorteio::listAll($idtemporada);
 
@@ -61,8 +60,6 @@ $app->post("/admin/sortear", function() {
 				$numeroordenado = $sorteio[$x]['numerodeordem'];
 
 				Sorteio::setNumeroDeOrdem($numeroordenado, $numerosorteado);
-
-				Sorteio::updateStatusInscricaoSorteada($numerosorteado);
 
 				/*
 				$inscricao = Sorteio::selecionaInscByNumordemNumsorte($idtemporada, $numeroordenado, $numerosorteado);
@@ -83,9 +80,12 @@ $app->post("/admin/sortear", function() {
 				}
 				*/
 			}
-
+			
+			Insc::alteraStatusInscricaoParaSorteadaGeral($idtemporada);
+			Insc::alteraStatusInscricaoParaSorteadaPcd($idtemporada);
+			Insc::alteraStatusInscricaoParaSorteadaPlm($idtemporada);
+			Insc::alteraStatusInscricaoParaSorteadaPvs($idtemporada);
 			Insc::alteraStatusInscricaoParaFilaDeEspera($idtemporada);
-			//Insc::alteraStatusInscricaoParaSorteada($idtemporada);
 
 			header("Location: /admin/sorteio/".$idtemporada."");
 			exit();	

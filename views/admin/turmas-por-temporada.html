@@ -47,18 +47,42 @@
 
                   <div class="row">
 
-                    <div class="col-md-8" >
+                    <div class="col-md-6" >
                       <h5 style="font-weight: bold; text-align: left;">
                        {$value.idturma} - {$value.descturma} - {$value.diasemana}
-                        {$value.horainicio} ás {$value.horatermino} -  {$value.descrfxetaria}  {$value.initidade} a {$value.fimidade} anos -  {$value.apelidolocal} - {$value.nomeespaco} - Professor: {$value.apelidoperson}&nbsp; ({$value.vagas} vagas)
+                        {$value.horainicio} ás {$value.horatermino} -  {$value.descrfxetaria}  {$value.initidade} a {$value.fimidade} anos -  {$value.apelidolocal} - {$value.nomeespaco} &nbsp; ({$value.vagas} vagas)
                       </h5>
-                    </div>      
-                   <div class="col-md-4">
+                    </div>   
+
+                    <div class="col-md-6">
                       <h5 style="font-weight: bold; text-align: left; color: green;">
-                        <a href="/admin/insc-turma-temporada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}"> | &nbsp;{$value.numinscritos} inscritos &nbsp;| </a> &nbsp; {$value.nummatriculados} matriculados &nbsp; | &nbsp;     
+
+                        <a href="/admin/insc-turma-temporada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}"> 
+                         | &nbsp; {$value.numinscritos} inscritos &nbsp;
+                         </a> &nbsp; 
+
+                         <a href="/admin/insc-turma-temporada-chamada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: green;"> 
+                         | &nbsp; {$value.nummatriculados} matriculados &nbsp; 
+                         </a> &nbsp; 
+                         
+                         
+                         <!--
+                         <a href="/insc-turma-temporada-classificadas/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: orangered;">
+                         | &nbsp; Classificação </a>  &nbsp; 
+                         &nbsp;  
+                       -->
+                         <!--
+                         &nbsp; <a href="/admin/insc-turma-temporada-matricular/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: darkblue;">
+                         | Lista/Matricular </a>  &nbsp;    
+
+                        -->
+                         
+                      <!--  | &nbsp; <a href="/insc-turma-temporada-para-sorteio/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: orangered;">  Sorteio |</a>  &nbsp;  
+                      -->
+
 
                         {if="$value.token == 1"}
-                          <a href="/admin/token/{$value.idturma}" style="color: orangered;"><i ></i>Tokens</a>
+                          <a href="/admin/token/{$value.idturma}" style="color: orangered;"><i ></i> | Tokens</a>
                         {/if}                         
                       </h5>
                     </div>                    

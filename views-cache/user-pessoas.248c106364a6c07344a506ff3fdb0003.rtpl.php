@@ -52,10 +52,10 @@
                 <?php if( $value1["pcd"] == 1 ){ ?>
                 <div class="row alert alert-warning">
                     <div class="col-md-12">
-                    <span style="color: blue; font-weight: bold; "> <?php if( $value1["pcd"] == 1 ){ ?>Pessoa Com Deficiência<?php } ?></span>
+                            <span style="color: blue; font-weight: bold; "> <?php if( $value1["pcd"] == 1 ){ ?>Pessoa Com Deficiência<?php } ?></span>
                     </div>
                     <div class="col-md-12">
-                            <span style="color: blue; ">
+                            <span style="color: blue;">
                             <?php if( $value1["defauditiva"] ){ ?>
                             Deficiente Auditivo -
                             <?php } ?>
@@ -76,7 +76,6 @@
                             <?php } ?>
                             <span style="font-weight: bold; color: black; ">CID.: <?php echo htmlspecialchars( $value1["codigo"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
                             <?php echo htmlspecialchars( $value1["doenca"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
-
                             
                         </div>
                         <div class="col-md-12">
@@ -112,7 +111,7 @@
     </div>
 
     <div class="alert alert-info" style="text-align-last: center;">
-        <a class="btn btn-primary card-just-text" href="/pessoa-create" role="button" >CADASTRAR NOVA PESSOA OU DEPENDENTE</a>
+        <a class="btn btn-primary card-just-text" href="/pessoa-create" role="button" >INSERIR UMA NOVA PESSOA OU DEPENDENTE</a>
     </div>
 
     </div> <!-- final da index -->

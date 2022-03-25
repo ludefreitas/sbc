@@ -17,8 +17,21 @@ class Local extends Model {
 
 		return $sql->select("SELECT * FROM tb_local a
 			INNER JOIN tb_users b ON b.iduser = a.iduser
-			INNER JOIN tb_persons C ON c.idperson = b.idperson
+			INNER JOIN tb_persons c ON c.idperson = b.idperson
 			ORDER BY apelidolocal");
+	}
+
+	public static function listAllCoord($iduser)
+	{
+		$sql = new Sql();
+
+		return $sql->select("SELECT * FROM tb_local a
+			INNER JOIN tb_users b ON b.iduser = a.iduser
+			INNER JOIN tb_persons c ON c.idperson = b.idperson
+			WHERE a.iduser = :iduser
+			ORDER BY apelidolocal", [
+			'iduser'=>$iduser
+		]);
 	}
 
 	public static function listAllCrecAtivo()
@@ -29,7 +42,7 @@ class Local extends Model {
 
 		return $sql->select("SELECT * FROM tb_local a
 			INNER JOIN tb_users b ON b.iduser = a.iduser
-			INNER JOIN tb_persons C ON c.idperson = b.idperson
+			INNER JOIN tb_persons c ON c.idperson = b.idperson
 			WHERE statuslocal = :statuslocalativo 
 			ORDER BY apelidolocal", [
 			'statuslocalativo'=>$statuslocalativo

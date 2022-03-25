@@ -16,8 +16,17 @@
                 <div class="row alert-info">
                     <div class="col-md-12">
                         <hr>
+                         <?php if( $value1["idinscstatus"] == 9 ){ ?>
+                        <strong>INSCRIÇÃO Nº: </strong><span><?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>&nbsp;&nbsp;[
+                        <strong style="color: red; font-size: 18px;"> <?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </strong>]
+                        
+                        <?php }else{ ?>
                         <strong>NÚMERO PARA O SORTEIO: </strong><span style="color: red; font-size: 20px"><?php echo htmlspecialchars( $value1["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span><br>
-                        <strong>INSCRIÇÃO Nº: </strong><span><?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span><br>
+                        <strong>INSCRIÇÃO Nº: </strong><span><?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
+                       
+
+                        <?php } ?>
+                        <br> 
                         <strong>NOME DO ALUNO: </strong> <span><?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span><br>
                         <strong>COM LAUDO? </strong> <span><?php if( $value1["laudo"] == 0 ){ ?>Não<?php }else{ ?>Sim<?php } ?></span><br>
                         <strong>PARA PESSOA COM DEFICIÊNCIA? </strong> <span><?php if( $value1["inscpcd"] == 0 ){ ?>Não<?php }else{ ?>Sim<?php } ?></span><br>
@@ -25,8 +34,22 @@
                         <strong>Temporada: </strong><?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
 
                         <div class="row">
-                            <div class="col-md-6" <?php echo colorStatus($value1["idinscstatus"]); ?>>
-                                <strong>STATUS: </strong><?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                            <div class="col-md-6" > 
+
+                            <?php if( $value1["idinscstatus"] == 9 ){ ?>
+
+                            
+                                <div <?php echo colorStatus($value1["idinscstatus"]); ?>>
+                                <strong >STATUS: <?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
+                                </div>
+                            
+                            <?php }else{ ?>
+                            <div style="background: linear-gradient(to bottom, rgba(0, 0, 255, 0.4), transparent);">
+                                <strong >STATUS: Aguardando Sorteio</strong>
+                            </div>
+                            <?php } ?>
+
+
                             </div>
 
                             

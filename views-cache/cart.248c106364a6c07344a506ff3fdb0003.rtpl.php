@@ -1,5 +1,11 @@
-<?php if(!class_exists('Rain\Tpl')){exit;}?>
-<script> 
+<?php if(!class_exists('Rain\Tpl')){exit;}?><script type="text/javascript">
+  
+    function alertToken(){
+
+
+      alert("Conforme Resolução SESP Nº 004 de 28/10/2021 Art.7º, Os interessados em participar das turmas de inclusão para Pessoas com Deficiência (PCD) e/ou laudo médico do CREEBA, deverão comparecer pessoalmente (interessado ou representante legal) no Centro Esportivo do Jardim Lavínia, sito à Av. Capitão Casa - 1.500, no horário das 08:30 às 11:30 e das 13:30 às 16:30, nos dias úteis de terça a sexta-feira até o dia 03/12/2021.")
+    }
+
 $(document).ready(function(){
 
     $('#link').on('change', function () {
@@ -10,7 +16,9 @@ $(document).ready(function(){
         return false;
     });
 });
+
 </script>
+
 
  <div class="container"> <!-- container 1 -->
             <div class="row"> <!-- row 2 -->
@@ -142,13 +150,13 @@ $(document).ready(function(){
                                     </p>                                
                                     <?php }else{ ?>
                                     <p>
-                                         Não há pessoas cadastradas
+                                         Não há pessoas inseridas
                                     </p>                                   
                                        
                                     <?php } ?>
                                     
                                     <p>
-                                       <a href="/login">  CADASTRAR UMA NOVA PESSOA </a>
+                                       <a href="/pessoa-create">  INSERIR UMA NOVA PESSOA </a>
                                     </p>
                                 </div>
                             
@@ -159,11 +167,11 @@ $(document).ready(function(){
                         </div>
 
                        <?php if( $value1["token"] == 1 ){ ?>
-                        <input type="text" name="token" value="" placeholder="Insira aqui o TOKEN"/>
+                        <input type="text" name="token" value="" placeholder="Insira aqui o TOKEN"/>&nbsp;
+                        <a href="#" onmousemove="alertToken()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></h5></a>
                        <?php } ?>
                            
-                       <!-- </form> -->
-                      
+                       <!-- </form> -->                     
 
                       
                         <div>&nbsp;</div>

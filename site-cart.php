@@ -11,6 +11,7 @@ use \Sbc\Model\Saude;
 
 $app->get("/cart", function(){
 
+    /*
 	if( !isset($_SESSION['User']) || $_SESSION['User']['iduser'] != 1){
 
 		Cart::setMsgError("A página que você tentou acessar está em MANUTENÇÃO! Por favor aguarde!");
@@ -18,7 +19,8 @@ $app->get("/cart", function(){
 		exit();
 
 	}else{	
-
+	*/
+   
 	$cart = Cart::getFromSession();
 	$user = User::getFromSession();
 	$page = new Page();
@@ -59,7 +61,7 @@ $app->get("/cart", function(){
 	]);
 
 
-   }
+   //}
 
 
 });
@@ -131,28 +133,28 @@ $app->post("/cart", function() {
 		$terminoInscTemporada = date('d/m/Y H:i:s', strtotime($temporada->getdtterminscricao()));
 		$inicioMatriculaTemporada = formatDate($temporada->getdtinicmatricula());
 		$termimoMatriculaTemporada = formatDate($temporada->getdttermmatricula());
-		$dataSorteioTemporada = date('d/m/Y', strtotime($temporada->getdtterminscricao().' + 1 days'));
+		$dataSorteioTemporada = date('d/m/Y', strtotime($temporada->getdtterminscricao().' + 12 days'));
 		//$dataEdital = date('d/m/Y', strtotime($temporada->getdtinicinscricao().' - 1 month'));
 		$dataEdital = "28/10/2021";
 		$numeroResolucao = "004";
 
 		if(Insc::statusTemporadaIniciada($idtemporada)){
 
-			Cart::setMsgError("As inscrições para os Cursos Esportivos para a temporada ".$desctemporada." não estão indisponíveis no momento. Para a temporada ".$desctemporada." o período de inscrições será de ".$inicioInscTemporada." a ".$terminoInscTemporada." conforme resolução SESP Nº ".$numeroResolucao." publicada no jornal Notícias do Município de ".$dataEdital.". O sorteio acontecerá no dia ".$dataSorteioTemporada.". A partir do dia ".$inicioMatriculaTemporada." iniciar-se-á a etapa de matrículas e início das aulas presenciais nos Centros Esportivos, para os contemplados no sorteio.");
+			Cart::setMsgError("As inscrições para os Cursos Esportivos para a temporada ".$desctemporada." não estão disponíveis no momento. Para a temporada ".$desctemporada." o período de inscrições será de ".$inicioInscTemporada." a ".$terminoInscTemporada." conforme resolução SESP Nº ".$numeroResolucao." publicada no jornal Notícias do Município de ".$dataEdital.". O sorteio acontecerá no dia ".$dataSorteioTemporada.". A partir do dia ".$inicioMatriculaTemporada." iniciar-se-á a etapa de matrículas e início das aulas presenciais nos Centros Esportivos, para os inscritos contemplados no sorteio.");
 			header("Location: /cart");
 			exit();
 		}
 
 		if(Insc::statusTemporadaMatriculaIniciada($idtemporada)){
 
-			Cart::setMsgError("As inscrições para os Cursos Esportivos para a temporada ".$desctemporada." não estão indisponíveis no momento. Para a temporada ".$desctemporada." o período de inscrições foi de ".$inicioInscTemporada." a ".$terminoInscTemporada." conforme resolução SESP Nº ".$numeroResolucao." publicada no jornal Notícias do Município de ".$dataEdital.". O sorteio aconteceu no dia ".$dataSorteioTemporada.". A partir do dia ".$inicioMatriculaTemporada." iniciar-se-á a etapa de matrículas e início das aulas presenciais nos Centros Esportivos, para os contemplados no sorteio. A partir do dia ".$termimoMatriculaTemporada." você poderá fazer novas inscrições aqui mesmo no site para uma lista de espera das turmas ou para fazer matrícula caso a turma tenha vagas disponíveis");
+			Cart::setMsgError("As inscrições para os Cursos Esportivos para a temporada ".$desctemporada." não estão disponíveis no momento. Para a temporada ".$desctemporada." o período de inscrições foi de ".$inicioInscTemporada." a ".$terminoInscTemporada." conforme resolução SESP Nº ".$numeroResolucao." publicada no jornal Notícias do Município de ".$dataEdital.". O sorteio aconteceu no dia ".$dataSorteioTemporada.". A partir do dia ".$inicioMatriculaTemporada." iniciar-se-á a etapa de matrículas e início das aulas presenciais nos Centros Esportivos, para os inscritos contemplados no sorteio. A partir do dia ".$termimoMatriculaTemporada." você poderá fazer novas inscrições aqui mesmo no site para uma lista de espera das turmas ou para fazer matrícula caso a turma tenha vagas disponíveis");
 			header("Location: /cart");
 			exit();
 		}
 
 		if(Insc::statusTemporadaInscricoesEncerradas($idtemporada)){
 
-			Cart::setMsgError("As inscrições para os Cursos Esportivos para a temporada ".$desctemporada." não estão indisponíveis no momento. Para a temporada ".$desctemporada." o período de inscrições foi de ".$inicioInscTemporada." a ".$terminoInscTemporada." conforme resolução SESP Nº ".$numeroResolucao." publicada no jornal Notícias do Município de ".$dataEdital.". O sorteio aconteceu no dia ".$dataSorteioTemporada.". A partir do dia ".$inicioMatriculaTemporada." iniciar-se-á a etapa de matrículas e início das aulas presenciais nos Centros Esportivos, para os contemplados no sorteio. A partir do dia ".$termimoMatriculaTemporada." você poderá fazer novas inscrições aqui mesmo no site para uma lista de espera das turmas ou para fazer matrícula caso a turma tenha vagas disponíveis");
+			Cart::setMsgError("As inscrições para os Cursos Esportivos para a temporada ".$desctemporada." não estão disponíveis no momento. Para a temporada ".$desctemporada." o período de inscrições foi de ".$inicioInscTemporada." a ".$terminoInscTemporada." conforme resolução SESP Nº ".$numeroResolucao." publicada no jornal Notícias do Município de ".$dataEdital.". O sorteio aconteceu no dia ".$dataSorteioTemporada.". A partir do dia ".$inicioMatriculaTemporada." iniciar-se-á a etapa de matrículas e início das aulas presenciais nos Centros Esportivos, para os inscritos contemplados no sorteio. A partir do dia ".$termimoMatriculaTemporada." você poderá fazer novas inscrições aqui mesmo no site para uma lista de espera das turmas ou para fazer matrícula caso a turma tenha vagas disponíveis");
 			header("Location: /cart");
 			exit();
 		}

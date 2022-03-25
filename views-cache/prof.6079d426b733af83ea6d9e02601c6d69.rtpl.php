@@ -43,63 +43,29 @@
 
             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
               <div class="row">
-              <div class="col-md-3" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+              <div class="col-md-10" >
+                <h5 style="text-align: left;">
+                  <strong><?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
+                  &nbsp; <?php echo htmlspecialchars( $value1["deslogin"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+
+                  <strong>Tel.: <?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
+                  &nbsp;status: <?php if( $value1["statususer"] == 1 ){ ?>Ativo<?php }else{ ?>Inativo<?php } ?>
+
+                  <?php if( $value1["isprof"] == 1 ){ ?>
+
+                  <strong>Professor</strong>
+                  <?php } ?>
+
+                  <?php if( $value1["inadmin"] == 1 ){ ?>
+
+                  <strong>&nbsp;Admin</strong>
+                  <?php } ?>
 
                 </h5>
-              </div>
-              <div class="col-md-3" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  <?php echo htmlspecialchars( $value1["deslogin"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-
-                </h5>
-              </div>
-              <div class="col-md-1" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  <?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-
-                </h5>
-              </div>
-              <div class="col-md-1" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  <?php if( $value1["statususer"] == 1 ){ ?>Ativo<?php }else{ ?>Inativo<?php } ?>
-
-                </h5>
-              </div>
-              <?php if( $value1["isprof"] == 1 ){ ?>
-
-              <div class="col-md-1" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  Professor
-                </h5>
-              </div>
-              <?php }else{ ?>
-
-              <div class="col-md-1" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  -
-                </h5>
-              </div>
-              <?php } ?>
-
-              <?php if( $value1["inadmin"] == 1 ){ ?>
-
-              <div class="col-md-1" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  Admin
-                </h5>
-              </div>
-              <?php }else{ ?>
-
-              <div class="col-md-1" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  -
-                </h5>
-              </div>
-              <?php } ?>
-
-              <div class="col-md-1" >
+              </div>  
+              
+              
+              <div class="col-md-2" >
                   <a href="/admin/users/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-success"></i>Admin / Prof</a>
               </div>
             </div>           

@@ -32,7 +32,7 @@
             <div class="container">
                 <!-- Logo -->
                 <a href="/" class="navbar-brand">
-                    <img src="/../res/site/icon/ico-home.png" title="CursosEsportivosSBC" width="30">
+                    <img src="/../res/site/icon/ico-home.png" title="CursosEsportivosSBC" width="30"> "Teste"
                 </a>
                 <!-- botão para expandir itens em navegação em tela pequena -->
                 <button class="navbar-toggler" data-toggle="collapse" data-target="#nav-principal" aria-expanded="false">
@@ -65,7 +65,14 @@
                                 Inscrições a confirmar  
                               </span>
                             </a> 
-                        </div>                    
+                        </div>
+                        <div class="nav-item">
+                            <a href="/pessoa-create" class="nav-link">
+                              <span class="text-white" style="font-weight: bold">
+                                Inserir uma pessoa  
+                              </span>
+                            </a> 
+                        </div>                                        
 
 
                         <div class="nav-item" >

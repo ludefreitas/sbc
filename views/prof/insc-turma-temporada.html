@@ -4,7 +4,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-     {$turma.idturma} - {$turma.descturma} {$turma.diasemana}  {$turma.periodo} {$turma.apelidolocal} -   {$temporada.desctemporada} - {$turma.vagas}
+     [{$turma.idturma}]  {$turma.descturma} {$turma.diasemana}  {$turma.periodo} {$turma.apelidolocal} -   {$temporada.desctemporada} - {$turma.vagas} vagas
   </h1>
   <ol class="breadcrumb">
     <li><a href="/prof"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -34,18 +34,22 @@
            
             </div>
           <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+            <div class="box-body" style="text-align: center;">
+                <span style="color: orangered; font-weight: bold">PVS - Lista de pessoas em vulnerabilidade social - {$turma.vagas * 0.1} vagas
+                </span>
+          </div>
               
-            {loop="$insc"}
+            {loop="$inscPvs"}
             <div class="box-body" style=" margin: 5px;">
               <div {function="colorStatus($value.idinscstatus)"} style="margin: 5px" class="row">
-                  
-                  <div class="row">
+              
+              <div class="row">
                 <div class="col-md-12">
                   <div class="col-md-6" style="margin: 2; padding: 2">
                     <h5 style="text-align: left;">
                       {$value.numordem}º -
-                      <strong>{$value.nomepess}</strong>
-                      &nbsp;{$value.numcpf}&nbsp;
+                      <strong>[{$value.idinsc}] - {$value.nomepess}</strong>
+                      &nbsp;{function="formatCpf($value.numcpf)"}&nbsp;
                       <strong>{function="calcularIdade($value.dtnasc)"} anos</strong>
                       &nbsp;Nascim.: {function="formatDate($value.dtnasc)"}&nbsp;
                     </h5>
@@ -60,21 +64,23 @@
                   </div>                   
                 </div>
               </div>
-              
+
               <div class="row">
                 <div class="col-md-12">                  
 
                   <div class="col-md-6" style="margin: 2; padding: 2">
                     <h5 style="text-align: left;">  
-                      <span style="font-weight: bold; text-align: left; color: darkblue;">  
-                        {if="$value.pcd == 1"} PCD &nbsp;&nbsp;{/if}  
-                      </span>              
-                    
+
                       <span style="font-weight: bold; text-align: left; color: brown;">                  
                         {if="$value.vulnsocial == 1"} (Vuln. Social) &nbsp;&nbsp;{/if}
-                      </span>               
-                      <span style="text-align: left; color: darkgreen;">                  
-                        {if="$value.laudo == 1"}c/ laudo  &nbsp;&nbsp;{/if}
+                      </span> 
+                      
+                      <span style="font-weight: bold; text-align: left; color: darkblue;">  
+                        {if="$value.inscpcd == 1"} PCD &nbsp;&nbsp;{/if}  
+                      </span> 
+
+                      <span style="font-weight: bold; text-align: left; color: darkgreen; font-weight: bold;">                  
+                        {if="$value.laudo == 1"}LAUDO  &nbsp;&nbsp;{/if}
                        </span>
                    
                   
@@ -132,7 +138,8 @@
                       
                       {/if} 
                        </h5>               
-                    </div>       
+                    </div>
+
 
               <div class="col-md-2" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
@@ -155,6 +162,12 @@
                   <a href="/prof/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/enviarEmailASorteado" onclick="return confirm('Deseja realmente enviar email para que o(a) {$value.nomepess} fique sabendo que foi sorteado na turma de {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-info btn-xs"><i></i> Avisar Sorteado </a>
                 </h5>
               </div>
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/prof/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA do(a) {$value.nomepess} na turma {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                </h5>
+                </div>
+                
 
               {/if}
               
@@ -164,21 +177,493 @@
                   <a href="/prof/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusAguardandoMatricula" onclick="return confirm('Deseja realmente que o(a) {$value.nomepess} fique aguardando matrícula na turma de {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-warning btn-xs"><i></i> Informar vaga disponível</a>
                 </h5>
               </div>
+
+              
                {/if}
                   
                 </div>
               </div>
               
+            </div>
+          </div>
+           
+          {/loop}
+          </div>  
 
+          <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+            <div class="box-body" style="text-align: center;">
+                <span style="color: orangered; font-weight: bold">PCD - Lista de pessoas com deficiência - {$turma.vagas * 0.1} vagas
+                </span>
+          </div>
               
+            {loop="$inscPcd"}
+            <div class="box-body" style=" margin: 5px;">
+              <div {function="colorStatus($value.idinscstatus)"} style="margin: 5px" class="row">
+              
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="col-md-6" style="margin: 2; padding: 2">
+                    <h5 style="text-align: left;">
+                      {$value.numordem}º -
+                      <strong>[{$value.idinsc}] - {$value.nomepess}</strong>
+                      &nbsp;{function="formatCpf($value.numcpf)"}&nbsp;
+                      <strong>{function="calcularIdade($value.dtnasc)"} anos</strong>
+                      &nbsp;Nascim.: {function="formatDate($value.dtnasc)"}&nbsp;
+                    </h5>
+                  </div>
+
+                  <div class="col-md-6" style="margin: 2; padding: 2">
+                    <h5 style="text-align: left;">               
+                      <strong>Resp: {$value.desperson}</strong>
+                      &nbsp;Cel: {$value.nrphone}&nbsp;
+                      <strong> Dt Insc.: {function="formatDate($value.dtinsc)"}</strong>
+                    </h5>
+                  </div>                   
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">                  
+
+                  <div class="col-md-6" style="margin: 2; padding: 2">
+                    <h5 style="text-align: left;">  
+
+                      <span style="font-weight: bold; text-align: left; color: brown;">                  
+                        {if="$value.vulnsocial == 1"} (Vuln. Social) &nbsp;&nbsp;{/if}
+                      </span>               
+                      
+                      <span style="font-weight: bold; text-align: left; color: darkblue;">  
+                        {if="$value.inscpcd == 1"} PCD &nbsp;&nbsp;{/if}  
+                      </span>                            
+                    
+                      
+                      <span style="font-weight: bold; text-align: left; color: darkgreen; font-weight: bold;">                  
+                        {if="$value.laudo == 1"}LAUDO  &nbsp;&nbsp;{/if}
+                       </span>
+                   
+                  
+
+                    {if="$value.idinscstatus == 1"}              
+                    <span style="font-weight: bold; text-align: left; color: blue;">                  
+                      <span>{$value.descstatus}</span>
+                    </span>             
+                    {/if}
+
+                  
+              
+                    {if="$value.idinscstatus == 2"}
+              
+                    <span style="font-weight: bold; text-align: left; color: darkgreen;">                  
+                      <span>{$value.descstatus}</span>
+                    </span>
+             
+                    {/if}
                
 
+                      {if="$value.idinscstatus == 3"}
+                      
+                        <span style="font-weight: bold; text-align: left; color: green;">                  
+                          <span>*{$value.descstatus}*</span>
+                        </span>
+                      
+                      {/if}
+
+                      {if="$value.idinscstatus == 6"}
+                        <span style="font-weight: bold; text-align: left; color: darkorange;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+
+
+                      {if="$value.idinscstatus == 7"}
+                        <span style="font-weight: bold; text-align: left; color: darkblue;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+
+                      
+                      {if="$value.idinscstatus == 8"}
+                        <span style="font-weight: bold; text-align: left; color: orange;">                  
+                          Status: <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+                      
+                      {if="$value.idinscstatus == 9"}
+                      
+                        <span style="font-weight: bold; text-align: left; color: red;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      
+                      {/if} 
+                       </h5>               
+                    </div>
+
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/prof/profile/insc/{$value.idinsc}/{$value.idpess}/{$turma.idturma}" role="button">Detalhes</a>
+                </h5>
+              </div>              
+
+              {if="$value.idinscstatus == 2"}
+                <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/prof/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA do(a) {$value.nomepess} na turma {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                </h5>
+                </div>
+              {/if}
+
+              {if="$value.idinscstatus == 3"}
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">            
+                  <a href="/prof/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/enviarEmailASorteado" onclick="return confirm('Deseja realmente enviar email para que o(a) {$value.nomepess} fique sabendo que foi sorteado na turma de {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-info btn-xs"><i></i> Avisar Sorteado </a>
+                </h5>
+              </div>
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/prof/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA do(a) {$value.nomepess} na turma {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                </h5>
+                </div>
+                
+
+              {/if}
+              
+              {if="$value.idinscstatus == 7"}
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/prof/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusAguardandoMatricula" onclick="return confirm('Deseja realmente que o(a) {$value.nomepess} fique aguardando matrícula na turma de {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-warning btn-xs"><i></i> Informar vaga disponível</a>
+                </h5>
+              </div>
+
+              
+               {/if}
+                  
+                </div>
+              </div>
+              
+            </div>
+          </div>
+           
+          {/loop}
+          </div>    
+  
+
+
+          <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+            <div class="box-body" style="text-align: center;">
+              <span style="color: orangered; font-weight: bold">PLM - Lista de pessoas com laudo - {$turma.vagas * 0.1} vagas
+              </span>
+            </div>
+              
+            {loop="$inscPlm"}
+            <div class="box-body" style=" margin: 5px;">
+              <div {function="colorStatus($value.idinscstatus)"} style="margin: 5px" class="row">
+              
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="col-md-6" style="margin: 2; padding: 2">
+                    <h5 style="text-align: left;">
+                      {$value.numordem}º -
+                      <strong>[{$value.idinsc}] - {$value.nomepess}</strong>
+                      &nbsp;{function="formatCpf($value.numcpf)"}&nbsp;
+                      <strong>{function="calcularIdade($value.dtnasc)"} anos</strong>
+                      &nbsp;Nascim.: {function="formatDate($value.dtnasc)"}&nbsp;
+                    </h5>
+                  </div>
+
+                  <div class="col-md-6" style="margin: 2; padding: 2">
+                    <h5 style="text-align: left;">               
+                      <strong>Resp: {$value.desperson}</strong>
+                      &nbsp;Cel: {$value.nrphone}&nbsp;
+                      <strong> Dt Insc.: {function="formatDate($value.dtinsc)"}</strong>
+                    </h5>
+                  </div>                   
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">                  
+
+                  <div class="col-md-6" style="margin: 2; padding: 2">
+                    <h5 style="text-align: left;">  
+
+                      <span style="font-weight: bold; text-align: left; color: brown;">                  
+                        {if="$value.vulnsocial == 1"} (Vuln. Social) &nbsp;&nbsp;{/if}
+                      </span>               
+                      
+                      <span style="font-weight: bold; text-align: left; color: darkblue;">  
+                        {if="$value.inscpcd == 1"} PCD &nbsp;&nbsp;{/if}  
+                      </span>                            
+                    
+                      
+                      <span style="font-weight: bold; text-align: left; color: darkgreen;">                  
+                        {if="$value.laudo == 1"}LAUDO  &nbsp;&nbsp;{/if}
+                       </span>
+                   
+                  
+
+                    {if="$value.idinscstatus == 1"}              
+                    <span style="font-weight: bold; text-align: left; color: blue;">                  
+                      <span>{$value.descstatus}</span>
+                    </span>             
+                    {/if}
+
+                  
+              
+                    {if="$value.idinscstatus == 2"}
+              
+                    <span style="font-weight: bold; text-align: left; color: darkgreen;">                  
+                      <span>{$value.descstatus}</span>
+                    </span>
              
+                    {/if}
+               
+
+                      {if="$value.idinscstatus == 3"}
+                      
+                        <span style="font-weight: bold; text-align: left; color: green;">                  
+                          <span>*{$value.descstatus}*</span>
+                        </span>
+                      
+                      {/if}
+
+                      {if="$value.idinscstatus == 6"}
+                        <span style="font-weight: bold; text-align: left; color: darkorange;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+
+
+                      {if="$value.idinscstatus == 7"}
+                        <span style="font-weight: bold; text-align: left; color: darkblue;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+
+                      
+                      {if="$value.idinscstatus == 8"}
+                        <span style="font-weight: bold; text-align: left; color: orange;">                  
+                          Status: <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+                      
+                      {if="$value.idinscstatus == 9"}
+                      
+                        <span style="font-weight: bold; text-align: left; color: red;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      
+                      {/if} 
+                       </h5>               
+                    </div>
+
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/prof/profile/insc/{$value.idinsc}/{$value.idpess}/{$turma.idturma}" role="button">Detalhes</a>
+                </h5>
+              </div>              
+
+              {if="$value.idinscstatus == 2"}
+                <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/prof/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA do(a) {$value.nomepess} na turma {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                </h5>
+                </div>
+              {/if}
+
+              {if="$value.idinscstatus == 3"}
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">            
+                  <a href="/prof/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/enviarEmailASorteado" onclick="return confirm('Deseja realmente enviar email para que o(a) {$value.nomepess} fique sabendo que foi sorteado na turma de {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-info btn-xs"><i></i> Avisar Sorteado </a>
+                </h5>
+              </div>
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/prof/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA do(a) {$value.nomepess} na turma {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                </h5>
+                </div>
+                
+
+              {/if}
+              
+              {if="$value.idinscstatus == 7"}
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/prof/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusAguardandoMatricula" onclick="return confirm('Deseja realmente que o(a) {$value.nomepess} fique aguardando matrícula na turma de {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-warning btn-xs"><i></i> Informar vaga disponível</a>
+                </h5>
+              </div>
+
+              
+               {/if}
+                  
+                </div>
+              </div>
+              
+            </div>
+          </div>
+           
+          {/loop}
+          </div>  
+
+          <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+            <div class="box-body" style="text-align: center;">
+              <span style="color: orangered; font-weight: bold">Lista GERAL de pessoas - {$turma.vagas * 0.7} vagas
+              </span>
+            </div>
+              
+            {loop="$insc"}
+            <div class="box-body" style=" margin: 5px;">
+              <div {function="colorStatus($value.idinscstatus)"} style="margin: 5px" class="row">
+              
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="col-md-6" style="margin: 2; padding: 2">
+                    <h5 style="text-align: left;">
+                      {$value.numordem}º -
+                      <strong>[{$value.idinsc}] - {$value.nomepess}</strong>
+                      &nbsp;{function="formatCpf($value.numcpf)"}&nbsp;
+                      <strong>{function="calcularIdade($value.dtnasc)"} anos</strong>
+                      &nbsp;Nascim.: {function="formatDate($value.dtnasc)"}&nbsp;
+                    </h5>
+                  </div>
+
+                  <div class="col-md-6" style="margin: 2; padding: 2">
+                    <h5 style="text-align: left;">               
+                      <strong>Resp: {$value.desperson}</strong>
+                      &nbsp;Cel: {$value.nrphone}&nbsp;
+                      <strong> Dt Insc.: {function="formatDate($value.dtinsc)"}</strong>
+                    </h5>
+                  </div>                   
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">                  
+
+                  <div class="col-md-6" style="margin: 2; padding: 2">
+                    <h5 style="text-align: left;"> 
+
+                      <span style="font-weight: bold; text-align: left; color: brown;">                  
+                        {if="$value.vulnsocial == 1"} (Vuln. Social) &nbsp;&nbsp;{/if}
+                      </span>                
+                      
+                      <span style="font-weight: bold; text-align: left; color: darkblue;">  
+                        {if="$value.inscpcd == 1"} PCD &nbsp;&nbsp;{/if}  
+                      </span>        
+                      
+                      <span style="font-weight: bold; text-align: left; color: darkgreen;">                  
+                        {if="$value.laudo == 1"}LAUDO  &nbsp;&nbsp;{/if}
+                       </span>
+                   
+                  
+
+                    {if="$value.idinscstatus == 1"}              
+                    <span style="font-weight: bold; text-align: left; color: blue;">                  
+                      <span>{$value.descstatus}</span>
+                    </span>             
+                    {/if}
+
+                  
+              
+                    {if="$value.idinscstatus == 2"}
+              
+                    <span style="font-weight: bold; text-align: left; color: darkgreen;">                  
+                      <span>{$value.descstatus}</span>
+                    </span>
+             
+                    {/if}
+               
+
+                      {if="$value.idinscstatus == 3"}
+                      
+                        <span style="font-weight: bold; text-align: left; color: green;">                  
+                          <span>*{$value.descstatus}*</span>
+                        </span>
+                      
+                      {/if}
+
+                      {if="$value.idinscstatus == 6"}
+                        <span style="font-weight: bold; text-align: left; color: darkorange;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+
+
+                      {if="$value.idinscstatus == 7"}
+                        <span style="font-weight: bold; text-align: left; color: darkblue;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+
+                      
+                      {if="$value.idinscstatus == 8"}
+                        <span style="font-weight: bold; text-align: left; color: orange;">                  
+                          Status: <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+                      
+                      {if="$value.idinscstatus == 9"}
+                      
+                        <span style="font-weight: bold; text-align: left; color: red;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      
+                      {/if} 
+                       </h5>               
+                    </div>
+
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/prof/profile/insc/{$value.idinsc}/{$value.idpess}/{$turma.idturma}" role="button">Detalhes</a>
+                </h5>
+              </div>              
+
+              {if="$value.idinscstatus == 2"}
+                <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/prof/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA do(a) {$value.nomepess} na turma {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                </h5>
+                </div>
+              {/if}
+
+              {if="$value.idinscstatus == 3"}
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">            
+                  <a href="/prof/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/enviarEmailASorteado" onclick="return confirm('Deseja realmente enviar email para que o(a) {$value.nomepess} fique sabendo que foi sorteado na turma de {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-info btn-xs"><i></i> Avisar Sorteado </a>
+                </h5>
+              </div>
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/prof/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA do(a) {$value.nomepess} na turma {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                </h5>
+                </div>
+                
+
+              {/if}
+              
+              {if="$value.idinscstatus == 7"}
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/prof/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusAguardandoMatricula" onclick="return confirm('Deseja realmente que o(a) {$value.nomepess} fique aguardando matrícula na turma de {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-warning btn-xs"><i></i> Informar vaga disponível</a>
+                </h5>
+              </div>              
+               {/if}
+                  
+                </div>
+              </div>
+              
             </div>
           </div>
            
           {/loop}
           </div>           
+         
+       
 
          
             <button type="button" onclick="window.print()" class="btn btn-primary pull-right" style="margin-right: 5px;">

@@ -56,82 +56,25 @@
 
             </div>
 
-            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
-              <div class="row">
-              </div>
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">              
 
-            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
-              <div class="row">
-              <div class="col-md-3" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  Nome do aluno     
-                </h5>
-              </div>
-
-              <div class="col-md-2" >
-                <h5 style="font-weight: bold; text-align: left;">
-                 Data Nasc.
-                </h5>
-              </div>
-
-              <div class="col-md-1" >
-                <h5 style="font-weight: bold; text-align: left;">
-                 Idade
-                </h5>
-              </div>
-              <div class="col-md-2" >
-                <h5 style="font-weight: bold; text-align: left;">
-                 Nome do responsável
-                </h5>
-              </div>
-              <div class="col-md-1" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  Status
-                </h5>
-              </div>
-              <div class="col-md-1" >
-                <h5 style="font-weight: bold; text-align: left;">
-                </h5>
-              </div>
-            </div>           
-            </div>
-           
             {loop="$pessoas"}
             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
               <div class="row">
-              <div class="col-md-3" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  {$value.nomepess}                    
+              <div class="col-md-10" >
+                <h5 style="text-align: left;">
+                         <strong> {$value.nomepess} </strong>   
+                  &nbsp; D.Nasc.:{function="formatDate($value.dtnasc)"}                
+                  &nbsp; <strong> {function="calcularIdade($value.dtnasc)"} anos</strong>   
+                  &nbsp; Resp..: {$value.desperson} 
+                  &nbsp; <strong>Status: {if="$value.statuspessoa == 1"}Ativo{else}Inativo{/if}</strong>   
+                  &nbsp; <span style="color: red">{if="$value.pcd == 1"}(PCD){/if}</span>
                     
                 </h5>
-              </div>
+              </div>                
+              
               <div class="col-md-2" >
-                <h5 style="font-weight: bold; text-align: left;">
-                 {function="formatDate($value.dtnasc)"}
-                </h5>
-              </div>
-              <div class="col-md-1" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  {function="calcularIdade($value.dtnasc)"}
-                </h5>
-              </div>
-              <div class="col-md-2" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  <td>{$value.desperson}</td>
-                </h5>
-              </div>
-              <div class="col-md-1" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  {if="$value.statuspessoa == 1"}Ativo{else}Inativo{/if}
-                </h5>
-              </div>
-              <div class="col-md-1" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  {if="$value.pcd == 1"}(PCD){/if}
-                </h5>
-              </div>
-              <div class="col-md-2" >
-                   <a href="/admin/insc/pessoa/{$value.idpess}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i>Consulta inscrições</a>
+                   <a href="/admin/insc/pessoa/{$value.idpess}" class="btn btn-primary btn-xs"><i class="fa fa-search"></i>&nbsp;Consulta inscrições</a>
               </div>
             </div>           
             </div>

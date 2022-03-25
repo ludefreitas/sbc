@@ -26,6 +26,27 @@
 <hr style="background-color: #0f71b3;">
   <div class="row" style="margin: -5px -5px -5px -5px; ">   
   <div class="col-md-12" style="border: 5px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif;"> 
+
+      <div style="text-align-last: center; font-weight: bold; line-height: 30px; color: red; font-size: 14px; font-style: italic; margin: 0px 5px 0px 5px; ">
+          Inscrições para a temporada 2022 encerradas.
+      </div>
+    <!--
+      <div style="text-align: justify; line-height: 30px; color: blue; font-size: 14px; font-style: italic; margin: 0px 5px 0px 5px; ">          
+          Já está disponível a lista com o resultado final após o sorteio eletrônico. Os inscritos foram reordenados de acordo com a sequência numérica sorteada.
+          Selecione abaixo o local, a modalidade e logo em seguida clique no link da respectiva turma para acessá-la.
+      </div>
+    -->
+      <div style="text-align: justify; line-height: 30px; color: blue; font-size: 14px; font-style: italic; margin: 0px 5px 0px 5px; ">         
+        Você já pode inscever-se em nossos cursos para a temporada 2022. Faça a sua inscrição para as turmas com vagas disponíveis e compareça ao centro esportivo no dia e horário da aula para fazer sua matrícula. Já para as turmas que não têm vagas disponíveis faça a sua inscrição para a lista de espera e aguarde, quando houver uma vaga disponível, informaremos você por email.
+      </div>
+   
+  </div> 
+
+  </div>
+ 
+  <hr style="background-color: #0f71b3;">
+  <div class="row" style="margin: -5px -5px -5px -5px; ">   
+  <div class="col-md-12" style="border: 5px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif;"> 
     
       <div style="text-align-last: center; font-weight: bold; line-height: 30px; color: #0f71b3; font-size: 14sx; font-style: italic; margin: 0px 5px 0px 5px; ">                                               
           SELECIONE ABAIXO UM LOCAL
@@ -35,6 +56,7 @@
 
   </div>
   <hr style="background-color: #0f71b3;">
+
 
 
 
@@ -164,19 +186,27 @@
                  
             </div> -->                             
       
-            <div class="col-md-12" style="text-align-last: left; line-height: 20px;  font-size: 20px; font-style: normal; margin: 5px 0px 0px 0px">
+            <div class="col-md-12" style="text-align: justify; line-height: 20px;  font-size: 20px; font-style: normal; margin: 5px 0px 0px 0px">
 
                    
-                      <h5 style="color: #000000"><span style="font-weight: bold">{$value.apelidolocal}</span><br>
-                      {$value.nomelocal} -
+                      <h5 style=""><span style="font-weight: bold; color: #000000">{$value.apelidolocal} -</span> 
+                        <span style="color: #000000">
+                      {$value.nomelocal} 
                       Endereço: {$value.rua}, 
-                      {$value.numero} - 
-                      {$value.bairro} -
-                      Cep: {$value.cep} -
-                      Telefone: {$value.telefone}<br></h5>
+                      {$value.numero}  
+                      {$value.bairro} 
+                      Cep: {$value.cep} 
+                      Telefone: {$value.telefone}
+                      
+
+                    </span>
+                    <h5>
 
                    <!-- <a href="/local/{$value.idlocal}" class="btn" style="background-color: #0f71b3; color: white; font-weight: bold;" >Cursos dísponíveis</a>  -->
-                     <a href="/modalidades/local/{$value.idlocal}" class="btn" style="background-color: #0f71b3; color: white; font-weight: bold;" >Cursos dísponíveis</a>                                                                    
+                   
+                    
+                    <a href="/modalidades/local/{$value.idlocal}" class="btn" style="background-color: #0f71b3; color: white; font-weight: bold; justify-content: flex-end; display: flex;" >Cursos / Modalidades dísponíveis</a></h5>
+
 
             </div>                        
     </div> <!-- row 4 -->
@@ -211,6 +241,16 @@
   </div>
 
 -->
+  </div>
+
+  <div class="row" style="margin: -5px -5px -5px -5px; ">   
+    <div class="col-md-12" style="text-align-last: left; background-color: green; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
+      <a href="/locaisnatacao">                          
+        <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 14sx; font-style: normal; margin: 10px 5px 10px 0px; ">                          
+            Agendar natação livre
+        </div>
+      </a>
+    </div>
   </div>
   
   </div> <!-- final da index -->

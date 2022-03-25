@@ -123,6 +123,7 @@ $app->get('/', function() {
 
 	$page->setTpl("index", array(
 		'turma'=>Turma::checkList($pagination['data']),
+		'idtemporada'=>$temporada->getidtemporada(),
 		'anoAtual'=>$anoAtual,
 		'profileMsg'=>User::getSuccess(),
 		'error'=>Cart::getMsgError(),
@@ -270,8 +271,6 @@ $app->post("/checkout", function(){
 
 	$temporada->get((int)$idtemporada);
 	
-	//------- ALTERAR COLOCANDO ESTAS LINHAS --------------------------------
-
 	if(!isset($_POST['laudo']) || $_POST['laudo'] == NULL){
 
 		Pessoa::setError("Informe se você irá confirmar uma inscrição para pessoa com inscicação médica! ");
@@ -293,8 +292,6 @@ $app->post("/checkout", function(){
 		header("Location: /checkout");
 		exit();
 	}
-
-	//------- ATÉ AQUI ----------------------------------------	
 
 	if(!isset($_POST['ciente']) || $_POST['ciente'] == NULL){
 
@@ -319,13 +316,13 @@ $app->post("/checkout", function(){
 	$idpess= $cart->getidpess();
 
 	$pessoa->get((int)$idpess);
-
+	
 	$anoNasc = $pessoa->getdtnasc();
-
+	
 	$anoNasc = new DateTime($anoNasc);
-
+	
 	$anoNasc = (int)$anoNasc->format('Y');
-
+	
 	if( (int)date('Y')  == (int)$desctemporada ){
 
 		$anoAtual = (int)date('Y');	
@@ -334,41 +331,40 @@ $app->post("/checkout", function(){
 
 		$anoAtual = (int)date('Y') + 1;		
 	}
-
+	
 	$idlocal = $_POST['idlocal'];
-
-	$initidade = $_POST['initidade'];	
-
+	
+	
+	$initidade = $_POST['initidade'];
+	
 	$idmodal = $_POST['idmodal'];
-
+	
+	
 	// idade 40 para idade inicial das hidros da pauliceia
 	// idlocal 21 para comparar com local pauliceia
 	// idmodal para para comparar com modalidade hidroginástica
-
-	if($laudo == 0){
+	
+	
+    if($laudo == 0){
 
 		if($idlocal == 21 && $idmodal == 6){
 
 			if(($anoAtual - $anoNasc) < 40){
 
-				Pessoa::setError("Você deve marcar a opçãp 'Sim' em: 'Esta é uma  inscrição para pessoa com laudo médico (Solicitação Médica)' ");
+				Pessoa::setError("Você deve marcar a opçãp 'Sim' em: Esta é uma  inscrição para pessoa com laudo médico (Solicitação Médica) ");
 				header("Location: /checkout");
 				exit();
 		   }
 
 	    }	
 	}
-
-	var_dump($anoAtual - $anoNasc.' - '.$initidade.' - '.$idlocal.' - '.$laudo.' - '.$idmodal);
-	exit();
+	
 
 	$nomepess = $pessoa->getnomepess();
 
 	$email = $user->getdesemail();	
 
 	$desperson = $user->getdesperson();		
-
-	$turma->get((int)$idturma);
 
 	//if(Insc::statusTemporadaMatriculaIniciada($idtemporada)){
 		//$InscStatus = InscStatus::AGUARDANDO_MATRICULA;
@@ -386,6 +382,7 @@ $app->post("/checkout", function(){
 		$matriculados = $mumMatriculados[0]['nummatriculados'];
 
 		$turma->get((int)$idturma);
+
 		
 		$vagas = $turma->getvagas();
 
@@ -462,7 +459,6 @@ $app->post("/checkout", function(){
 		exit;
 	}	
 });
-
 
 $app->get("/turma/:idturma/:idtemporada", function($idturma, $idtemporada){
 
@@ -611,6 +607,16 @@ $app->get("/comprovante", function() {
 
 	$page->setTpl("comprovante-insc");	
 });
+/*
+$app->get("/calendario", function() {
+
+	User::verifyLogin(false);
+
+	$page = new Page();
+
+	$page->setTpl("calendario");	
+});
+*/
 
 
 

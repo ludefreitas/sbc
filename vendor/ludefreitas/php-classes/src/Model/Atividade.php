@@ -86,7 +86,7 @@ class Atividade extends Model {
 	{
 		$sql = new Sql();
 
-		$results = $sql->select("DELETE FROM tb_Atividade WHERE idativ = :idativ", [
+		$results = $sql->select("DELETE FROM tb_atividade WHERE idativ = :idativ", [
 			':idativ'=>$this->getidativ()
 		]);		
 

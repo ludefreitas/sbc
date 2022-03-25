@@ -58,7 +58,7 @@
                             </tr>
                             <tr>
                                 <th class="product-name">Turma / Temporada</th>
-                                <td class="product-name">{$value.descturma} ({$value.periodo}) - {$value.desctemporada} </td>
+                                <td class="product-name">[{$value.idturma}] - {$value.descturma} ({$value.periodo}) - {$value.desctemporada} </td>
                             </tr>
                             <tr>
                                 <th class="product-name">Horário / Professor</th>
@@ -73,16 +73,20 @@
                                 <td class="product-name">{function="formatDateHour($value.dtinsc)"}</td>
                             </tr> 
                              <tr>
-                                <th class="product-name">Laudo</th>
-                                <td class="product-name">{if="$value.laudo == 1"}Sim{/if}Não</td>
-                            </tr>                                                       
+                                <th class="product-name">Laudo ?</th>
+                                <td class="product-name">{if="$value.laudo == 1"}Sim{else}Não{/if}</td>
+                            </tr>      
                             <tr>
+                                <th class="product-name">PCD ?</th>
+                                <td class="product-name">{if="$value.inscpcd == 1"}Sim{else}Não{/if}</td>
+                            </tr>                                                                                                        
+                            <tr {function="colorStatus($value.idinscstatus)"}>
                                 <th class="product-name">Status da Inscrição</th>
                                 <td class="product-name">{$value.descstatus}</td>
                             </tr>
                             <tr>
                                 <th class="product-name">Respons. p/ inscrição</th>
-                                <td class="product-name">&nbsp;&nbsp;{$value.desperson}</td>
+                                <td class="product-name">&nbsp;&nbsp;{$value.desperson} {$value.deslogin}</td>
                             </tr>                                        
 
                         </thead>
@@ -101,7 +105,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h3>Não localizamos inscrições para o(a) {$pessoa.nomepess} CPF: {$pessoa.numcpf} </h3>
+                                    <h3>Não localizamos inscrições para o(a) {$pessoa.nomepess} CPF: {function="formatCpf($pessoa.numcpf)"}</h3>
                                 </div>
                             </div>
                         </div>

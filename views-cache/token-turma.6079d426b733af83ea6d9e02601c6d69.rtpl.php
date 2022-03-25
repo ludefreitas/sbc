@@ -38,9 +38,9 @@
                   <?php echo htmlspecialchars( $value1["token"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - 
                 </span>
                 <?php }else{ ?>
-                 <span style="font-weight: bold; text-align: left; color: red;">                  
+                 <s><span style="font-weight: bold; text-align: left; color: red;">                  
                   <?php echo htmlspecialchars( $value1["token"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - 
-                </span>
+                </span></s>
 
                 <?php } ?>
           <?php } ?>

@@ -26,6 +26,27 @@
 <hr style="background-color: #0f71b3;">
   <div class="row" style="margin: -5px -5px -5px -5px; ">   
   <div class="col-md-12" style="border: 5px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif;"> 
+
+      <div style="text-align-last: center; font-weight: bold; line-height: 30px; color: red; font-size: 14px; font-style: italic; margin: 0px 5px 0px 5px; ">
+          Inscrições para a temporada 2022 encerradas.
+      </div>
+    <!--
+      <div style="text-align: justify; line-height: 30px; color: blue; font-size: 14px; font-style: italic; margin: 0px 5px 0px 5px; ">          
+          Já está disponível a lista com o resultado final após o sorteio eletrônico. Os inscritos foram reordenados de acordo com a sequência numérica sorteada.
+          Selecione abaixo o local, a modalidade e logo em seguida clique no link da respectiva turma para acessá-la.
+      </div>
+    -->
+      <div style="text-align: justify; line-height: 30px; color: blue; font-size: 14px; font-style: italic; margin: 0px 5px 0px 5px; ">         
+        Você já pode inscever-se em nossos cursos para a temporada 2022. Faça a sua inscrição para as turmas com vagas disponíveis e compareça ao centro esportivo no dia e horário da aula para fazer sua matrícula. Já para as turmas que não têm vagas disponíveis faça a sua inscrição para a lista de espera e aguarde, quando houver uma vaga disponível, informaremos você por email.
+      </div>
+   
+  </div> 
+
+  </div>
+ 
+  <hr style="background-color: #0f71b3;">
+  <div class="row" style="margin: -5px -5px -5px -5px; ">   
+  <div class="col-md-12" style="border: 5px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif;"> 
     
       <div style="text-align-last: center; font-weight: bold; line-height: 30px; color: #0f71b3; font-size: 14sx; font-style: italic; margin: 0px 5px 0px 5px; ">                                               
           SELECIONE ABAIXO UM LOCAL
@@ -35,6 +56,7 @@
 
   </div>
   <hr style="background-color: #0f71b3;">
+
 
 
 
@@ -164,19 +186,27 @@
                  
             </div> -->                             
       
-            <div class="col-md-12" style="text-align-last: left; line-height: 20px;  font-size: 20px; font-style: normal; margin: 5px 0px 0px 0px">
+            <div class="col-md-12" style="text-align: justify; line-height: 20px;  font-size: 20px; font-style: normal; margin: 5px 0px 0px 0px">
 
                    
-                      <h5 style="color: #000000"><span style="font-weight: bold"><?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span><br>
-                      <?php echo htmlspecialchars( $value1["nomelocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> -
+                      <h5 style=""><span style="font-weight: bold; color: #000000"><?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> -</span> 
+                        <span style="color: #000000">
+                      <?php echo htmlspecialchars( $value1["nomelocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> 
                       Endereço: <?php echo htmlspecialchars( $value1["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, 
-                      <?php echo htmlspecialchars( $value1["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - 
-                      <?php echo htmlspecialchars( $value1["bairro"], ENT_COMPAT, 'UTF-8', FALSE ); ?> -
-                      Cep: <?php echo htmlspecialchars( $value1["cep"], ENT_COMPAT, 'UTF-8', FALSE ); ?> -
-                      Telefone: <?php echo htmlspecialchars( $value1["telefone"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br></h5>
+                      <?php echo htmlspecialchars( $value1["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  
+                      <?php echo htmlspecialchars( $value1["bairro"], ENT_COMPAT, 'UTF-8', FALSE ); ?> 
+                      Cep: <?php echo htmlspecialchars( $value1["cep"], ENT_COMPAT, 'UTF-8', FALSE ); ?> 
+                      Telefone: <?php echo htmlspecialchars( $value1["telefone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                      
+
+                    </span>
+                    <h5>
 
                    <!-- <a href="/local/<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn" style="background-color: #0f71b3; color: white; font-weight: bold;" >Cursos dísponíveis</a>  -->
-                     <a href="/modalidades/local/<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn" style="background-color: #0f71b3; color: white; font-weight: bold;" >Cursos dísponíveis</a>                                                                    
+                   
+                    
+                    <a href="/modalidades/local/<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn" style="background-color: #0f71b3; color: white; font-weight: bold; justify-content: flex-end; display: flex;" >Cursos / Modalidades dísponíveis</a></h5>
+
 
             </div>                        
     </div> <!-- row 4 -->
@@ -211,6 +241,16 @@
   </div>
 
 -->
+  </div>
+
+  <div class="row" style="margin: -5px -5px -5px -5px; ">   
+    <div class="col-md-12" style="text-align-last: left; background-color: green; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
+      <a href="/locaisnatacao">                          
+        <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 14sx; font-style: normal; margin: 10px 5px 10px 0px; ">                          
+            Agendar natação livre
+        </div>
+      </a>
+    </div>
   </div>
   
   </div> <!-- final da index -->

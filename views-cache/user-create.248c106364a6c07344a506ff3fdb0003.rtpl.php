@@ -1,16 +1,5 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
-<script language="javascript">
-
-    
-    function IsEmpty() {
-
-      if (document.form.name.value == "") {
-        alert("empty");
-      }
-      return;
-    }
-  
-  
+<script>
 
     function quantosAnos(nascimento, hoje) {
 
@@ -127,8 +116,6 @@
                             <label style="font-size: 12px; margin: 0px">Nome Completo</label>
                             <input type="text" id="name" name="name" class="form-control" value="<?php echo htmlspecialchars( $registerValues["name"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required="required" minlength="14">
                         </p>
-                          <input id="insert" onclick="IsEmpty();" type="submit" value="Add Question" />
-
                         <p >
                             <label style="font-size: 12px; margin: 0px">Telefone Celular</label>
 
@@ -250,7 +237,7 @@
                         <?php } ?>                                                                                                                            
                     </select> 
                     </p>                      
-
+                    <!--
                     <div id="maeEpai">
 
                         <p>
@@ -258,14 +245,14 @@
                                 <br>Nome da Mãe
                                 <span><br>* (Necessário preencher este campo se a pessoa, a cadastrar, for menor de idade)</span>
                             </label>
-                            <input style="width: 100%; float: right;" type="text" id="nomemae" name="nomemae" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["nomemae"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" minlength="14">
+                            <input style="width: 100%; float: right;" type="text" id="nomemae" name="nomemae" class="form-control" value="" minlength="14">
                         </p>    
 
                         <p>
                             <label style="font-size: 12px; margin: 0px">
                                 <br> CPF da Mãe                                
                             </label>
-                            <input style="width: 100%; float: right;" type="text" maxlength="14" id="cpfmae" name="cpfmae" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["cpfmae"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}">
+                            <input style="width: 100%; float: right;" type="text" maxlength="14" id="cpfmae" name="cpfmae" class="form-control" value="" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}">
                             <script type="text/javascript">$("#cpfmae").mask("000.000.000-00");</script>
                         </p> 
 
@@ -274,17 +261,18 @@
                                 <br>Nome do Pai
                                 <span><br>* (Necessário preencher este campo se a pessoa, a cadastrar, for menor de idade)</span>
                             </label>
-                            <input style="width: 100%; float: right;" type="text" id="nomepai" name="nomepai" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["nomepai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" minlength="14">                
+                            <input style="width: 100%; float: right;" type="text" id="nomepai" name="nomepai" class="form-control" value="" minlength="14">                
                         </p>                          
                         
                         <p>
                             <label style="font-size: 12px; margin: 0px">
                                 <br>CPF do Pai                                
                             </label>
-                            <input style="width: 100%; float: right;" type="text" maxlength="14" id="cpfpai" name="cpfpai" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["cpfpai"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}">
+                            <input style="width: 100%; float: right;" type="text" maxlength="14" id="cpfpai" name="cpfpai" class="form-control" value="" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}">
                         <script type="text/javascript">$("#cpfpai").mask("000.000.000-00");</script>
                         </p> 
-                    </div>         
+                    </div>    
+                    -->     
 
                     <p>
                     <label style="font-size: 12px; margin: 0px">

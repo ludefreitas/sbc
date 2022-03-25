@@ -17,7 +17,8 @@ class Insc extends Model {
 
 		$sql = new Sql();													        
 
-		$results = $sql->select("CALL sp_insc_save1(:idinsc, :idinscstatus, :idcart, :idturma, :idtemporada, :numordem, :numsorte, :laudo, :inscpcd)", [
+		//$results = $sql->select("CALL sp_insc_save1(:idinsc, :idinscstatus, :idcart, :idturma, 
+		$results = $sql->select("CALL sp_insc_save(:idinsc, :idinscstatus, :idcart, :idturma, :idtemporada, :numordem, :numsorte, :laudo, :inscpcd)", [
 			':idinsc'=>$this->getidinsc(),
 			':idinscstatus'=>$this->getidinscstatus(),
 			':idcart'=>$this->getidcart(),
@@ -106,10 +107,21 @@ class Insc extends Model {
 	}
 
 	public static function sorteioEmail($idinsc, $numsorte, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma, $idade, $numeroordenado, $idtemporada, $iduserprof){
+
+		$idturma = $turma->getidturma();           
+
+		if($idturma == 13){
+
+			$assunto = "Matrícula Yoga Cursos Esportivos SBC Crec Paulicéia ".$desctemporada."";
+			$tplName = "cham-matricula-yoga";
+			$link = "http://www.cursosesportivossbc.com.br";
+
+	    }else{
 	
-		$assunto = "Inscrição Cursos Esportivos ".$desctemporada."";
-		$tplName = "sorteio-insc";
-		$link = "http://www.cursosesportivossbc.com.br";
+			$assunto = "Inscrição Cursos Esportivos ".$desctemporada."";
+			$tplName = "sorteio-insc";
+			$link = "http://www.cursosesportivossbc.com.br";
+	    }
 		
         $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
                  "nomepess"=>$nomepess,
@@ -142,9 +154,57 @@ class Insc extends Model {
 	}
 
 	public static function sorteioEmailProf($idinsc, $numsorte, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma, $idade, $numeroordenado, $idtemporada, $iduserprof){
+
+		$idturma = $turma->getidturma();           
+
+		if($idturma == 13){
+
+			$assunto = "Matrícula Yoga Cursos Esportivos SBC Crec Paulicéia ".$desctemporada."";
+			$tplName = "cham-matricula-yoga";
+			$link = "http://www.cursosesportivossbc.com.br";
+
+	    }else{
+
+			$assunto = "Inscrição Cursos Esportivos ".$desctemporada."";
+			$tplName = "sorteio-insc";
+			$link = "http://www.cursosesportivossbc.com.br";
+		}
+		
+        $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
+                 "nomepess"=>$nomepess,
+                 "desperson"=>$desperson,
+                 "link"=>$link,
+                 "email"=>$email,
+                 "idinsc"=>$idinsc,
+                 "numerosorteado"=>$numsorte,
+                 "turma"=>$turma->getValues(), 
+                 "idade"=>$idade,
+                 "numeroordenado"=>$numeroordenado
+        )); 
+             
+        $emailEnviado = $mailer->send();   
+
+        $idturma = $turma->getidturma();           
+
+        if (!$emailEnviado)
+     	{
+
+        	User::setError("Não foi possivel enviar email, no entanto, o status da inscrição foi atualizada!");        	
+        	header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
+        	exit();			
+
+     	}else{
+     		User::setSuccess("Email enviado com sucesso!");
+     		header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
+        	exit();			
+     	}
+	}
+
+	public static function emailMatriculYogaProf($idinsc, $numsorte, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma, $idade, $numeroordenado, $idtemporada, $iduserprof){
 	
-		$assunto = "Inscrição Cursos Esportivos ".$desctemporada."";
-		$tplName = "sorteio-insc";
+
+		$assunto = "Matrícula Yoga Cursos Esportivos SBC ".$desctemporada."";
+		$tplName = "cham-matricula-yoga";
 		$link = "http://www.cursosesportivossbc.com.br";
 		
         $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
@@ -177,26 +237,88 @@ class Insc extends Model {
      	}
 	}
 
+	public static function emailIformarVagaDisponivel($idinsc, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma, $idtemporada, $iduserprof){	
+
+		$assunto = "Vaga Disponível Cursos Esportivos SBC ".$desctemporada."";
+		$tplName = "vaga-dispon-informar";
+		$link = "http://www.cursosesportivossbc.com.br";
+		
+        $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
+                 "nomepess"=>$nomepess,
+                 "desperson"=>$desperson,
+                 "link"=>$link,
+                 "email"=>$email,
+                 "idinsc"=>$idinsc,                
+                 "turma"=>$turma->getValues()                 
+        )); 
+
+        $emailEnviado = $mailer->send();   
+
+        $idturma = $turma->getidturma();           
+
+        if (!$emailEnviado)
+     	{
+        	User::setError("Não foi possivel enviar email, no entanto, o status da inscrição foi atualizada!");        	
+        	header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
+        	exit();			
+     	}else{
+     		User::setSuccess("Email enviado com sucesso!");
+     		header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
+        	exit();			
+     	}
+	}
+
+	public static function emailIformarVagaDisponivelProf($idinsc, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma, $idtemporada, $iduserprof){	
+
+		$assunto = "Vaga Disponível Cursos Esportivos SBC ".$desctemporada."";
+		$tplName = "vaga-dispon-informar";
+		$link = "http://www.cursosesportivossbc.com.br";
+		
+        $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
+                 "nomepess"=>$nomepess,
+                 "desperson"=>$desperson,
+                 "link"=>$link,
+                 "email"=>$email,
+                 "idinsc"=>$idinsc,                
+                 "turma"=>$turma->getValues()                 
+        )); 
+                     
+        $emailEnviado = $mailer->send();   
+
+        $idturma = $turma->getidturma();           
+
+        if (!$emailEnviado)
+     	{
+        	User::setError("Não foi possivel enviar email, no entanto, o status da inscrição foi atualizada!");        	
+        	header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
+        	exit();			
+     	}else{
+     		User::setSuccess("Email enviado com sucesso!");
+     		header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
+        	exit();			
+     	}
+	}
+
 
 	public function get($idinsc)
 	{
-
 		$sql = new Sql();
 
 		$results = $sql->select("
 			SELECT * 
 			FROM tb_insc a 
 			INNER JOIN tb_inscstatus b USING(idinscstatus) 
-			INNER JOIN tb_carts c USING(idcart)	
-            INNER JOIN tb_turma d USING(idturma) 
-			INNER JOIN tb_temporada g USING(idtemporada) 	
-			INNER JOIN tb_turmatemporada h ON h.idtemporada = g.idtemporada		
-			INNER JOIN tb_users e ON e.iduser = h.iduser
+			INNER JOIN tb_carts c USING(idcart)
+			INNER JOIN tb_turma g USING(idturma)
+			INNER JOIN tb_atividade h ON h.idativ = g.idativ
+			INNER JOIN tb_espaco i ON i.idespaco = g.idespaco
+			INNER JOIN tb_pessoa d ON d.idpess = c.idpess
+			INNER JOIN tb_users e ON e.iduser = d.iduser
 			INNER JOIN tb_persons f ON f.idperson = e.idperson
-			INNER JOIN tb_horario USING(idhorario)
-			INNER JOIN tb_espaco USING(idespaco)
-			INNER JOIN tb_local USING(idlocal)
-			INNER JOIN tb_statustemporada USING(idstatustemporada)
+			INNER JOIN tb_temporada j USING(idtemporada)
+			INNER JOIN tb_inscstatus k USING(idinscstatus)
+			INNER JOIN tb_horario l USING(idhorario)
+			INNER JOIN tb_local m USING(idlocal)
 			WHERE a.idinsc = :idinsc
 		", [
 			':idinsc'=>$idinsc
@@ -345,7 +467,7 @@ class Insc extends Model {
 			INNER JOIN tb_turma h USING(idturma)
 			INNER JOIN tb_espaco i ON i.idespaco = h.idespaco
 			INNER JOIN tb_local j ON j.idlocal = i.idlocal
-			-- ORDER BY a.dtinsc DESC
+			ORDER BY a.dtinsc 
 			LIMIT $start, $itemsPerPage;
 		");
 
@@ -387,7 +509,7 @@ class Insc extends Model {
 			OR h.descturma LIKE :search 
 			OR i.descespaco LIKE :search 
 			OR j.apelidolocal LIKE :search 
-			-- ORDER BY a.dtinsc DESC
+			ORDER BY a.dtinsc
 			LIMIT $start, $itemsPerPage;
 		", [
 			':search'=>'%'.$search.'%',
@@ -498,8 +620,8 @@ class Insc extends Model {
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
-			WHERE idturma = :idturma AND idtemporada = :idtemporada
-			ORDER BY a.idinscstatus, c.pcd, c.vulnsocial, a.numordem 
+			WHERE a.idturma = :idturma AND a.idtemporada = :idtemporada AND a.laudo = 0 AND a.inscpcd = 0 AND c.vulnsocial = 0
+			ORDER BY a.inscpcd DESC, a.laudo DESC, c.vulnsocial DESC, a.numordem, a.idinscstatus;
 		", [
 			':idturma'=>$idturma,
 			':idtemporada'=>$idtemporada
@@ -508,6 +630,552 @@ class Insc extends Model {
 		$this->setData($results);
 	}
 
+	public function getInscByTurmaTemporadaPcd($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
+			WHERE a.idturma = :idturma AND a.idtemporada = :idtemporada AND a.inscpcd = 1 AND (a.laudo = 1 OR a.laudo = 0) 
+			ORDER BY a.inscpcd DESC, a.laudo DESC, c.vulnsocial DESC, a.numordem, a.idinscstatus;
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	}
+
+	public function getInscByTurmaTemporadaPlm($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
+			WHERE a.idturma = :idturma AND a.idtemporada = :idtemporada AND a.laudo = 1 AND a.inscpcd = 0 AND c.vulnsocial = 0
+			ORDER BY a.inscpcd DESC, a.laudo DESC, c.vulnsocial DESC, a.numordem, a.idinscstatus;
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	}
+
+	public function getInscByTurmaTemporadaPvs($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
+			WHERE a.idturma = :idturma AND a.idtemporada = :idtemporada AND a.inscpcd = 0 AND c.vulnsocial = 1 AND (a.laudo = 0 OR a.laudo = 1)
+			ORDER BY a.inscpcd DESC, a.laudo DESC, c.vulnsocial DESC, a.numordem, a.idinscstatus;
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	}
+
+	public function getInscByTurmaTemporadaValida($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
+			WHERE idturma = :idturma AND idtemporada = :idtemporada AND a.idinscstatus = 6
+			ORDER BY a.idinsc
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	}
+
+	public function getInscByTurmaTemporadaMatricular($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_endereco g ON g.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
+			WHERE idturma = :idturma 
+			AND idtemporada = :idtemporada 
+			AND (a.idinscstatus = 3 OR a.idinscstatus = 7)
+			ORDER BY a.idinscstatus, a.numordem
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	}
+
+	public function getInscByTurmaTemporadaChamada($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("			
+			CALL sp_select_insc_chamada(:idturma, :idtemporada);
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	}
+
+	public function getInscByTurmaTemporadaParaSorteioGeral($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
+			WHERE idturma = :idturma AND idtemporada = :idtemporada AND a.idinscstatus = 7 
+			ORDER BY a.idinsc
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	}
+
+	public function getInscByTurmaTemporadaParaSorteioAmpla($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
+			WHERE idturma = :idturma AND idtemporada = :idtemporada AND a.idinscstatus = 6 AND a.laudo = 0 AND a.inscpcd = 0 AND c.vulnsocial = 0
+			ORDER BY a.idinsc
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	}
+
+	public function getInscByTurmaTemporadaClassificadasAmpla($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
+			WHERE idturma = :idturma 
+			AND idtemporada = :idtemporada 
+			AND a.idinscstatus != 9 
+			AND a.laudo = 0 
+			AND a.inscpcd = 0 
+			AND c.vulnsocial = 0
+			ORDER BY a.numordem
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	}
+
+	public function getInscByTurmaTemporadaCountClassificadasAmpla($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("			
+			CALL sp_select_insc_classificacao_geral(:idturma, :idtemporada);
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	}
+
+	public function getInscByTurmaTemporadaClassificadasPcd($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
+			WHERE idturma = :idturma 
+			AND idtemporada = :idtemporada 
+			AND a.idinscstatus != 9 
+			AND a.inscpcd = 1 
+			AND (a.laudo = 1 OR a.laudo = 0 OR c.vulnsocial = 1 OR c.vulnsocial = 0)
+			ORDER BY a.numordem
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	}
+
+	public function getInscByTurmaTemporadaCountClassificadasPcd($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("			
+			CALL sp_select_insc_classificacao_pcd(:idturma, :idtemporada);
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	}                        
+
+	public function getInscByTurmaTemporadaClassificadasPlm($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
+			WHERE idturma = :idturma 
+			AND idtemporada = :idtemporada 
+			AND a.idinscstatus != 9 
+			AND a.laudo = 1 
+			AND a.inscpcd = 0 
+			AND c.vulnsocial = 0
+			ORDER BY a.numordem
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	} 
+
+	public function getInscByTurmaTemporadaCountClassificadasPlm($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("			
+			CALL sp_select_insc_classificacao_plm(:idturma, :idtemporada);
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	}                        
+
+	public function getInscByTurmaTemporadaClassificadasPvs($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
+			WHERE idturma = :idturma 
+			AND idtemporada = :idtemporada 
+			AND a.idinscstatus != 9 
+			AND c.vulnsocial = 1 
+            AND a.inscpcd = 0
+            AND (a.laudo = 0 OR a.laudo = 1)
+			ORDER BY a.numordem
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	}
+
+	public function getInscByTurmaTemporadaCountClassificadasPvs($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("			
+			CALL sp_select_insc_classificacao_pvs(:idturma, :idtemporada);
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	}  
+
+	public function getInscByTurmaTemporadaListaEsperaAmpla($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
+			WHERE idturma = :idturma 
+			AND idtemporada = :idtemporada 
+			-- AND a.idinscstatus != 9 
+			AND a.idinscstatus = 7
+			AND a.laudo = 0 
+			AND a.inscpcd = 0 
+			AND c.vulnsocial = 0
+			ORDER BY a.numordem
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	} 
+
+	public function getInscByTurmaTemporadaCountListaEsperaAmpla($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("			
+			CALL sp_select_insc_listaespera_geral(:idturma, :idtemporada);
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	}
+
+	public function getInscByTurmaTemporadaListaEsperaPcd($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
+			WHERE idturma = :idturma 
+			AND idtemporada = :idtemporada 
+			-- AND a.idinscstatus != 9 
+			AND a.idinscstatus = 7 
+			AND a.inscpcd = 1 
+			AND (a.laudo = 1 OR a.laudo = 0 OR c.vulnsocial = 1 OR c.vulnsocial = 0)
+			ORDER BY a.numordem
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	}  
+
+	public function getInscByTurmaTemporadaCountListaEsperaPcd($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("			
+			CALL sp_select_insc_listaespera_pcd(:idturma, :idtemporada);
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	}                        
+
+	public function getInscByTurmaTemporadaListaEsperaPlm($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
+			WHERE idturma = :idturma 
+			AND idtemporada = :idtemporada 
+			-- AND a.idinscstatus != 9 
+			AND a.idinscstatus = 7 
+			AND a.laudo = 1 
+			AND a.inscpcd = 0 
+			AND c.vulnsocial = 0
+			ORDER BY a.numordem
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	} 
+
+	public function getInscByTurmaTemporadaCountListaEsperaPlm($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("			
+			CALL sp_select_insc_listaespera_plm(:idturma, :idtemporada);
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	}                        
+
+	public function getInscByTurmaTemporadaListaEsperaPvs($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
+			WHERE idturma = :idturma 
+			AND idtemporada = :idtemporada 
+			-- AND a.idinscstatus != 9 
+			AND a.idinscstatus = 7 
+			AND c.vulnsocial = 1 
+            AND a.inscpcd = 0
+            AND (a.laudo = 0 OR a.laudo = 1)
+			ORDER BY a.numordem
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	} 
+
+	public function getInscByTurmaTemporadaCountListaEsperaPvs($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("			
+			CALL sp_select_insc_listaespera_pvs(:idturma, :idtemporada);
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	}                    
+
+	public function getInscByTurmaTemporadaCrecValida($idlocal, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart			
+			INNER JOIN tb_turma h ON h.idturma = a.idturma
+			INNER JOIN tb_modalidade i ON i.idmodal = h.idmodal
+			INNER JOIN tb_horario j ON j.idhorario = h.idhorario
+			INNER JOIN tb_espaco k ON k.idespaco = h.idespaco
+			INNER JOIN tb_local l ON l.idlocal = k.idlocal
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
+			WHERE l.idlocal = :idlocal AND idtemporada = :idtemporada AND a.idinscstatus = 6
+			ORDER BY i.descmodal, h.idturma
+		", [
+			':idlocal'=>$idlocal,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	}
+
+	/*
+	public function countInscByTurmaTemporadaValida($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT count(*) as total FROM tb_insc a
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			WHERE idturma = :idturma AND idtemporada = :idtemporada AND a.idinscstatus = 6
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+
+		return $results;
+	}
+	*/
 	public static function getPageInscTemporadaUser($page = 1, $itemsPerPage = 10, $idtemporada, $iduser)
 	{
 
@@ -766,6 +1434,19 @@ class Insc extends Model {
 
 	}
 
+	public function alteraStatusInscricaoSorteada($idinsc){
+
+		$idStatusMatriculada = 3;
+
+		$sql = new Sql();
+
+		$sql->query("UPDATE tb_insc SET idinscstatus = :idStatusMatriculada WHERE idinsc = :idinsc", array(
+			":idinsc"=>$idinsc,
+			"idStatusMatriculada"=>$idStatusMatriculada
+		));
+
+	}
+
 	public function alteraStatusInscricaoCancelada($idinsc){
 
 		$idStatusCancelada = 9;
@@ -832,27 +1513,23 @@ class Insc extends Model {
 
 		for($i=0; $i < count($results); $i++) { 
 
-			$idInscStatusFilaDeEspera = InscStatus::FILA_DE_ESPERA;
-			$idStatusCancelada = InscStatus::CANCELADA;
+			$idInscStatusFilaDeEspera = InscStatus::FILA_DE_ESPERA;			
+			$idStatusAguardandoSorteio = InscStatus::AGUARDANDO_SORTEIO;
 			$idtemporada = $results[$i]['idtemporada'];
-			$idturma = $results[$i]['idturma'];
-			$vagas = $results[$i]['vagas'];
+			$idturma = $results[$i]['idturma'];			
 
 			$sql = new Sql();		
 
-			$sql->query("UPDATE tb_insc SET idinscstatus = :idInscStatusFilaDeEspera WHERE idinscstatus != :idStatusCancelada AND idtemporada = :idtemporada AND idturma = :idturma AND numordem > :vagas", array(
+			$sql->query("UPDATE tb_insc SET idinscstatus = :idInscStatusFilaDeEspera WHERE idinscstatus = :idStatusAguardandoSorteio AND idtemporada = :idtemporada AND idturma = :idturma", array(				
 				":idInscStatusFilaDeEspera"=>$idInscStatusFilaDeEspera,
-				":idStatusCancelada"=>$idStatusCancelada,
+				":idStatusAguardandoSorteio"=>$idStatusAguardandoSorteio,
 				"idtemporada"=>$idtemporada,
-				"idturma"=>$idturma,
-				"vagas"=>$vagas
+				"idturma"=>$idturma				
 			));
 		}		
 	}
 
-/*
-
-public function alteraStatusInscricaoParaSorteada($idtemporada){
+	public function alteraStatusInscricaoParaSorteadaGeral($idtemporada){
 
 		$sql = new Sql();
 
@@ -865,28 +1542,109 @@ public function alteraStatusInscricaoParaSorteada($idtemporada){
 				":idtemporada"=>$idtemporada
 		]);
 
-		for($i=0; $i < count($results); $i++) { 
-
-			$idInscStatusSorteada = InscStatus::SORTEADA;
-			$idStatusCancelada = InscStatus::CANCELADA;
+		for($i=0; $i < count($results); $i++) { 		
+			
 			$idtemporada = $results[$i]['idtemporada'];
 			$idturma = $results[$i]['idturma'];
-			$vagas = $results[$i]['vagas'];
+			$vagas = floor($results[$i]['vagas'] * 0.7);
 
-			$sql = new Sql();		
 
-			$sql->query("UPDATE tb_insc SET idinscstatus = :idInscStatusSorteada WHERE idinscstatus != :idStatusCancelada AND idtemporada = :idtemporada AND idturma = :idturma AND numordem > :vagas", array(
-				":idInscStatusSorteada"=>$idInscStatusSorteada,
-				":idStatusCancelada"=>$idStatusCancelada,
-				"idtemporada"=>$idtemporada,
-				"idturma"=>$idturma,
-				"vagas"=>$vagas
-			));
+			$Results2 = $sql->query("CALL sp_insc_update_insc_sorteada_geral(:idturma, :idtemporada, :vagas)", [			
+				":idturma"=>$idturma,
+				":idtemporada"=>$idtemporada,
+				":vagas"=>$vagas
+			]);
+		
 		}		
 	}
 
-	*/
-	
+	public function alteraStatusInscricaoParaSorteadaPcd($idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT a.vagas, b.idtemporada, b.idturma
+			FROM tb_turma a 
+			INNER JOIN tb_turmatemporada b
+			ON	b.idturma = a.idturma		
+			WHERE idtemporada = :idtemporada", [
+				":idtemporada"=>$idtemporada
+		]);
+
+		for($i=0; $i < count($results); $i++) { 		
+			
+			$idtemporada = $results[$i]['idtemporada'];
+			$idturma = $results[$i]['idturma'];
+			$vagas = floor($results[$i]['vagas'] * 0.1);
+
+
+			$Results2 = $sql->query("CALL sp_insc_update_insc_sorteada_pcd(:idturma, :idtemporada, :vagas)", [			
+				":idturma"=>$idturma,
+				":idtemporada"=>$idtemporada,
+				":vagas"=>$vagas
+			]);
+		
+		}		
+	}
+
+	public function alteraStatusInscricaoParaSorteadaPlm($idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT a.vagas, b.idtemporada, b.idturma
+			FROM tb_turma a 
+			INNER JOIN tb_turmatemporada b
+			ON	b.idturma = a.idturma		
+			WHERE idtemporada = :idtemporada", [
+				":idtemporada"=>$idtemporada
+		]);
+
+		for($i=0; $i < count($results); $i++) { 		
+			
+			$idtemporada = $results[$i]['idtemporada'];
+			$idturma = $results[$i]['idturma'];
+			$vagas = floor($results[$i]['vagas'] * 0.1);
+
+
+			$Results2 = $sql->query("CALL sp_insc_update_insc_sorteada_plm(:idturma, :idtemporada, :vagas)", [			
+				":idturma"=>$idturma,
+				":idtemporada"=>$idtemporada,
+				":vagas"=>$vagas
+			]);
+		
+		}		
+	}
+
+	public function alteraStatusInscricaoParaSorteadaPvs($idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT a.vagas, b.idtemporada, b.idturma
+			FROM tb_turma a 
+			INNER JOIN tb_turmatemporada b
+			ON	b.idturma = a.idturma		
+			WHERE idtemporada = :idtemporada", [
+				":idtemporada"=>$idtemporada
+		]);
+
+		for($i=0; $i < count($results); $i++) { 		
+			
+			$idtemporada = $results[$i]['idtemporada'];
+			$idturma = $results[$i]['idturma'];
+			$vagas = floor($results[$i]['vagas'] * 0.1);
+
+
+			$Results2 = $sql->query("CALL sp_insc_update_insc_sorteada_pvs(:idturma, :idtemporada, :vagas)", [			
+				":idturma"=>$idturma,
+				":idtemporada"=>$idtemporada,
+				":vagas"=>$vagas
+			]);
+		
+		}		
+	}		
+		
 
 }
 

@@ -39,56 +39,26 @@
               <div class="row">
               </div>
 
-              {loop="$prof"}
+            {loop="$prof"}
             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
               <div class="row">
-              <div class="col-md-3" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  {$value.desperson}
+              <div class="col-md-10" >
+                <h5 style="text-align: left;">
+                  <strong>{$value.desperson}</strong>
+                  &nbsp; {$value.deslogin}
+                  <strong>Tel.: {$value.nrphone}</strong>
+                  &nbsp;status: {if="$value.statususer == 1"}Ativo{else}Inativo{/if}
+                  {if="$value.isprof == 1"}
+                  <strong>Professor</strong>
+                  {/if}
+                  {if="$value.inadmin == 1"}
+                  <strong>&nbsp;Admin</strong>
+                  {/if}
                 </h5>
-              </div>
-              <div class="col-md-3" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  {$value.deslogin}
-                </h5>
-              </div>
-              <div class="col-md-1" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  {$value.nrphone}
-                </h5>
-              </div>
-              <div class="col-md-1" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  {if="$value.statususer == 1"}Ativo{else}Inativo{/if}
-                </h5>
-              </div>
-              {if="$value.isprof == 1"}
-              <div class="col-md-1" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  Professor
-                </h5>
-              </div>
-              {else}
-              <div class="col-md-1" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  -
-                </h5>
-              </div>
-              {/if}
-              {if="$value.inadmin == 1"}
-              <div class="col-md-1" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  Admin
-                </h5>
-              </div>
-              {else}
-              <div class="col-md-1" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  -
-                </h5>
-              </div>
-              {/if}
-              <div class="col-md-1" >
+              </div>  
+              
+              
+              <div class="col-md-2" >
                   <a href="/admin/users/{$value.iduser}" class="btn btn-success"></i>Admin / Prof</a>
               </div>
             </div>           

@@ -84,7 +84,7 @@
 
      <div class="container"> <!-- container 1 -->
                 <div class="row"> <!-- row 2 -->
-                  <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
+                  <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 5px 0px 50px 0px;">
 
     <div class="container">
         <div class="row" style="padding-bottom: 5px">

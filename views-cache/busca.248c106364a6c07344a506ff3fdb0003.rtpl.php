@@ -67,6 +67,11 @@
               Para nascidos entre:<strong> <?php echo htmlspecialchars( $anoAtual - $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> à <?php echo htmlspecialchars( $anoAtual - $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong><br>
               <?php } ?>
 
+              <?php if( $value1["idstatustemporada"] == 2 ){ ?> 
+               <span style="font-weight: bold;">
+              <?php echo htmlspecialchars( $value1["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas<br>                          
+              <?php } ?>
+
               <?php if( $value1["idstatustemporada"] == 4 ){ ?> 
                <span style="color: red;">
                 <?php echo htmlspecialchars( $value1["descstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>

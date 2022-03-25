@@ -20,16 +20,22 @@
         </div>
             {/if}
             <div class="row">            
-                <div class="col-md-7 alert alert-primary">
-                    <h5>Nome do aluno: {$pessoa.nomepess} -  {function="calcularIdade($pessoa.dtnasc)"} anos </h5>
-                    <h5>Inscrição Nº {$insc.idinsc}</h5>
+                <div class="col-md-7 alert alert-primary" style="text-align-last: center;">
+                    <h5>{$pessoa.nomepess} -  {function="calcularIdade($pessoa.dtnasc)"} anos </h5>
+                    <h5>Inscrição: {$insc.idinsc}</h5>
                     
                 </div>
-                <div class="col-md-5 alert alert-success">
-                   
+                <div class="col-md-5 alert alert-success" style="text-align-last: center;">
+                        {if="$insc.idinscstatus == 9"}
+
+                        <p><h5 style="text-align: center"><strong style="color: red; font-size: 20px;"> {$insc.descstatus} </strong></h5>
+                        </p>
+
+                        {else}
                        <p><h5 style="text-align: center"> Nº para concorrer no sorteio: </h5>
                        <p><h3 style="color: red; text-align-last: center">{$insc.numsorte}</h3> </p>
                        <h6 style="text-align: center; font-size: 12px;"> * Caso esta inscrição vá para sorteio</h6></p>
+                       {/if}
                       
                 </div> 
                 

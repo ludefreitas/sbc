@@ -64,7 +64,7 @@
               <label for="turma">Atividade</label>
                 <select class="form-control" name="idativ">     
                   {loop="$atividade"}
-                  <option {if="$value.idativ === $turma.idativ"}selected="selected"{/if} value="{$value.idativ}">{$value.nomeativ} - {$value.descrfxetaria} - {$value.initidade} a {$value.fimidade} anos{$value.prograativ} - {$value.origativ}</option>
+                  <option {if="$value.idativ === $turma.idativ"}selected="selected"{/if} value="{$value.idativ}">{$value.nomeativ} - {$value.descrfxetaria} - {$value.initidade} a {$value.fimidade} anos {$value.prograativ} - {$value.origativ}</option>
                   {/loop}                            
                 </select>
             </div>            

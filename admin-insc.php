@@ -276,13 +276,6 @@ $app->get("/admin/insc/pessoa/:idepess", function($idpess){
 
 	$inscricoes = $pessoa->getInsc();
 
-	if(!$inscricoes){
-
-		User::setError("Inscrição(ões) não encontrada(s)!!!");
-		header("Location: /admin/pessoas");
-		exit();			
-	}
-
 	//var_dump($inscricoes[0]['idinsc']);
 	//exit();
 
@@ -300,6 +293,9 @@ $app->get("/admin/insc-turma-temporada/:idturma/:idtemporada/user/:iduser", func
 	User::verifyLogin();
 
 	$insc = new Insc();
+	$inscPcd = new Insc();
+	$inscPlm = new Insc();
+	$inscPvs = new Insc();
 	$turma = new Turma();
 	$user = new User();
 	$temporada = new Temporada();
@@ -311,12 +307,18 @@ $app->get("/admin/insc-turma-temporada/:idturma/:idtemporada/user/:iduser", func
 	$iduserprof = User::getIdUseInTurmaTemporada($idturma, $idtemporada);	
 	
 	$insc->getInscByTurmaTemporada($idturma, $idtemporada);
+	$inscPcd->getInscByTurmaTemporadaPcd($idturma, $idtemporada);
+	$inscPlm->getInscByTurmaTemporadaPlm($idturma, $idtemporada);
+	$inscPvs->getInscByTurmaTemporadaPvs($idturma, $idtemporada);
 	
 	$page = new PageAdmin();	
 
 	$page->setTpl("insc-turma-temporada", [
 		'iduserprof'=>$iduserprof,
 		'insc'=>$insc->getValues(),
+		'inscPcd'=>$inscPcd->getValues(),
+		'inscPlm'=>$inscPlm->getValues(),
+		'inscPvs'=>$inscPvs->getValues(),
 		'turma'=>$turma->getValues(),
 		'temporada'=>$temporada->getValues(),
 		'error'=>User::getError(),
@@ -365,6 +367,38 @@ $app->get("/admin/insc/:idinsc/:iduserprof/:idturma/statusAguardandoMatricula", 
 	$turma = new Turma();
 	$temporada = new Temporada();
 	$user = new User();
+	$pessoa = new Pessoa();
+	
+	$insc->get((int)$idinsc);
+	$idpess = $insc->getidpess();
+	$pessoa->get((int)$idpess);
+	$nomepess = $pessoa->getnomepess();
+
+	$person = User::getUserIdPess($idpess);
+	$desperson = $person[0]['desperson'];
+	$email = $person[0]['desemail'];
+
+	$idturma = (int)$idturma;
+	$idtemporada = $insc->getidtemporada();
+	$desctemporada = $insc->getdesctemporada();
+	$iduser = (int)$iduserprof;
+	$turma->get((int)$idturma);
+
+	$insc->alteraStatusInscricaoAguardandoMatricula($idinsc);
+
+	$insc->emailIformarVagaDisponivel($idinsc, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma, $idtemporada, $iduser);
+
+	header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
+	exit();
+
+});
+
+$app->get("/admin/insc/:idinsc/:iduserprof/:idturma/statusSorteada", function($idinsc, $iduserprof, $idturma){
+
+	$insc = new Insc();
+	$turma = new Turma();
+	$temporada = new Temporada();
+	$user = new User();
 	
 	$insc->get((int)$idinsc);
 
@@ -372,7 +406,7 @@ $app->get("/admin/insc/:idinsc/:iduserprof/:idturma/statusAguardandoMatricula", 
 	$idtemporada = $insc->getidtemporada();
 	$iduser = (int)$iduserprof;
 
-	$insc->alteraStatusInscricaoAguardandoMatricula($idinsc);
+	$insc->alteraStatusInscricaoSorteada($idinsc);
 
 	header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
 	exit();
@@ -438,5 +472,74 @@ $app->get("/admin/insc/:idinsc/:idturma/:idpess/statusDesistente", function($idi
 	exit();
 
 });
+
+$app->get("/admin/insc-turma-temporada-matricular/:idturma/:idtemporada/user/:iduser", function($idturma, $idtemporada, $iduser) {
+
+	User::verifyLogin(false);
+
+	$insc = new Insc();
+	$turma = new Turma();
+	$user = new User();
+	$temporada = new Temporada();
+	$temporada->get((int)$idtemporada);
+	$turma->get((int)$idturma);
+
+	$idusersessao = (int)$_SESSION['User']['iduser'];
+
+	$iduserprof = User::getIdUseInTurmaTemporada($idturma, $idtemporada);	
+	
+	$insc->getInscByTurmaTemporadaMatricular($idturma, $idtemporada);
+
+	$page = new PageAdmin([
+		'header'=>false,
+		'footer'=>false
+	]);
+	
+	$page->setTpl("insc-turma-temporada-matricular", [
+		'iduserprof'=>$iduserprof,
+		//'total'=>$total,
+		'insc'=>$insc->getValues(),
+		'turma'=>$turma->getValues(),
+		'temporada'=>$temporada->getValues(),
+		'error'=>User::getError(),
+		'success'=>User::getSuccess()
+	]);	
+});
+
+$app->get("/admin/insc-turma-temporada-chamada/:idturma/:idtemporada/user/:iduser", function($idturma, $idtemporada, $iduser) {
+
+	User::verifyLogin(false);
+
+	$insc = new Insc();
+	$inscCountChamada = new Insc();
+	$turma = new Turma();
+	$user = new User();
+	$temporada = new Temporada();
+	$temporada->get((int)$idtemporada);
+	$turma->get((int)$idturma);
+
+	$idusersessao = (int)$_SESSION['User']['iduser'];
+
+	$iduserprof = User::getIdUseInTurmaTemporada($idturma, $idtemporada);	
+	
+	$insc->getInscByTurmaTemporadaChamada($idturma, $idtemporada);
+
+	$page = new PageAdmin([
+		'header'=>false,
+		'footer'=>false
+	]);
+	
+	$page->setTpl("insc-turma-temporada-chamada", [
+		'iduserprof'=>$iduserprof,
+		//'total'=>$total,
+		'insc'=>$insc->getValues(),
+		'turma'=>$turma->getValues(),
+		'temporada'=>$temporada->getValues(),
+		'error'=>User::getError(),
+		'success'=>User::getSuccess()
+	]);	
+});
+
+
 
 ?>

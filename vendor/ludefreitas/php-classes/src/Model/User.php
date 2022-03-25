@@ -139,14 +139,17 @@ class User extends Model {
 	{
 
 		if (!User::checkLogin($inadmin)) {
-
+			
+			/*
 			if ($inadmin) {
 				header("Location: /login");
 			} else {
-				header("Location: /user-create");
+				header("Location: /login");
 			}
 			exit;
-
+			*/
+			header("Location: /login");
+			exit;
 		}
 
 	}
@@ -155,14 +158,16 @@ class User extends Model {
 	{
 
 		if (!User::checkLoginProf($isprof)) {
-
+			/*
 			if ($isprof) {
 				header("Location: /login");
 			} else {
-				header("Location: /user-create");
+				header("Location: /login");
 			}
 			exit;
-
+			*/
+			header("Location: /login");
+			exit;
 		}
 
 	}
@@ -760,10 +765,10 @@ class User extends Model {
 			"SELECT * FROM tb_pessoa a
 			LEFT JOIN tb_saude b 
             ON b.idpess = a.idpess
-            INNER JOIN tb_cid c
+            LEFT JOIN tb_cid c
 			ON c.idcid = b.idcid
-			WHERE statuspessoa = 1 AND
-			a.iduser = :iduser", [
+			WHERE a.iduser = :iduser  
+			AND a.statuspessoa = 1", [
 			':iduser'=>$this->getiduser()
 		]);
 
@@ -836,7 +841,7 @@ class User extends Model {
 			INNER JOIN tb_persons f ON f.idperson = e.idperson
 			INNER JOIN tb_temporada j ON j.idtemporada = a.idtemporada
 			WHERE e.iduser = :iduser -- AND a.idinscstatus != 7
-			ORDER BY a.idinsc DESC
+			ORDER BY a.idinscstatus, a.idinsc DESC 
 		", [
 			':iduser'=>$this->getiduser()
 		]);
@@ -925,7 +930,7 @@ class User extends Model {
 					-- INNER JOIN tb_turmastatus 
 					-- using(idturmastatus) 	
 					-- WHERE a.iduser = 0 OR a.iduser is null 			
-					WHERE a.iduser != :iduser  
+					WHERE a.iduser != :iduser AND a.iduser = 1
 					AND a.idtemporada = :idtemporada
 				", [
 					':iduser'=>$iduser,

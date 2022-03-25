@@ -16,8 +16,17 @@
                 <div class="row alert-info">
                     <div class="col-md-12">
                         <hr>
+                         {if="$value.idinscstatus == 9"}
+                        <strong>INSCRIÇÃO Nº: </strong><span>{$value.idinsc}</span>&nbsp;&nbsp;[
+                        <strong style="color: red; font-size: 18px;"> {$value.descstatus} </strong>]
+                        
+                        {else}
                         <strong>NÚMERO PARA O SORTEIO: </strong><span style="color: red; font-size: 20px">{$value.numsorte}</span><br>
-                        <strong>INSCRIÇÃO Nº: </strong><span>{$value.idinsc}</span><br>
+                        <strong>INSCRIÇÃO Nº: </strong><span>{$value.idinsc}</span>
+                       
+
+                        {/if}
+                        <br> 
                         <strong>NOME DO ALUNO: </strong> <span>{$value.nomepess}</span><br>
                         <strong>COM LAUDO? </strong> <span>{if="$value.laudo == 0"}Não{else}Sim{/if}</span><br>
                         <strong>PARA PESSOA COM DEFICIÊNCIA? </strong> <span>{if="$value.inscpcd == 0"}Não{else}Sim{/if}</span><br>
@@ -25,8 +34,10 @@
                         <strong>Temporada: </strong>{$value.desctemporada}<br>
 
                         <div class="row">
-                            <div class="col-md-6" {function="colorStatus($value.idinscstatus)"}>
-                                <strong>STATUS: </strong>{$value.descstatus}
+                            <div class="col-md-6" > 
+                                <div {function="colorStatus($value.idinscstatus)"}>
+                                <strong >STATUS: {$value.descstatus}</strong>
+                                </div>
                             </div>
 
                             

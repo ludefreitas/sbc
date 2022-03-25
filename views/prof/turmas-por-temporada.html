@@ -28,30 +28,60 @@
 
         <div class="box-header"> 
 
+          {if="$local == null"}
+
           <h3>Todos locais</h3>
+
+          {else}
+
+          <h3>{$local.apelidolocal}</h3>
+
+          {/if}       
 
        </div>
       <div class="box-body" style="border: solid 1px lightblue; margin: 5px;"> 
-          <div class="box-body no-padding col-md-12">
+          <div class="box-body no-padding col-md-10">
             
                 {loop="$turmas"}
                 <div class="box-body" style="border: solid 1px lightblue; margin: 2px;">
 
                   <div class="row">
 
-                    <div class="col-md-8" >
+                    <div class="col-md-6" >
                       <h5 style="font-weight: bold; text-align: left;">
                        {$value.idturma} - {$value.descturma} - {$value.diasemana}
-                        {$value.horainicio} ás {$value.horatermino} -  {$value.descrfxetaria}  {$value.initidade} a {$value.fimidade} anos -  {$value.apelidolocal} - {$value.nomeespaco}&nbsp; ({$value.vagas} vagas)
+                        {$value.horainicio} ás {$value.horatermino} -  {$value.descrfxetaria}  {$value.initidade} a {$value.fimidade} anos -  {$value.apelidolocal} - {$value.nomeespaco} &nbsp; ({$value.vagas} vagas)
                       </h5>
                     </div>                      
 
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <h5 style="font-weight: bold; text-align: left; color: green;">
-                        <a href="/prof/insc-turma-temporada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}"> | &nbsp;{$value.numinscritos} inscritos &nbsp;| </a> &nbsp; {$value.nummatriculados} matriculados &nbsp; | &nbsp;&nbsp;     
+
+                        <a href="/prof/insc-turma-temporada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}"> 
+                         | &nbsp; {$value.numinscritos} inscritos &nbsp;
+                         </a> &nbsp; 
+
+                         <a href="/prof/insc-turma-temporada-chamada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: green;"> 
+                         | &nbsp; {$value.nummatriculados} matriculados &nbsp; 
+                         </a> &nbsp; 
+                         
+                         <!--
+                         <a href="/insc-turma-temporada-classificadas/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: orangered;">
+                         | &nbsp; Classificação </a>  &nbsp; 
+                         &nbsp;  
+                        -->
+
+                        <!--
+                         &nbsp; <a href="/prof/insc-turma-temporada-matricular/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: darkblue;">
+                         | Lista/Matricular </a>  &nbsp;   
+                        -->
+
+                      <!--  | &nbsp; <a href="/insc-turma-temporada-para-sorteio/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: orangered;">  Sorteio |</a>  &nbsp;  
+                      -->
+
 
                         {if="$value.token == 1"}
-                          <a href="/prof/token/{$value.idturma}" style="color: orangered;"><i ></i> Gerar Tokens</a>
+                          <a href="/prof/token/{$value.idturma}" style="color: orangered;"><i ></i> | Tokens</a>
                         {/if}                         
                       </h5>
                     </div>                    
@@ -75,7 +105,32 @@
           </div>
           
           
-          <!-- /.box-body -->            
+          <!-- /.box-body -->   
+
+          <div class="box-body col-md-2">
+                  <table class="table table-striped">
+                      <thead>
+                          <tr>
+                           <th>Turmas da temporada por centro esportivo</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+
+                          <tr>
+                          <td>
+                              <a href="/prof/turma-temporada/{$temporada.idtemporada}"><i class=""></i>Minhas turmas - Temporada {$temporada.desctemporada}</a>
+                          </td>
+                          {loop="$locais"}
+                          <tr>
+                          <td>
+                              <a href="/prof/turma-temporada/{$temporada.idtemporada}/local/{$value.idlocal}"><i class=""></i> {$value.idlocal} - {$value.apelidolocal}</a>
+                          </td>
+                          </tr>
+                          {/loop}
+
+                      </tbody>
+                  </table>
+              </div>         
 
           <div class="box-footer clearfix">
             <ul class="pagination pagination-sm no-margin pull-right">

@@ -32,6 +32,14 @@ function colorStatus($idinscstatus){
     }   
 }
 
+function formatCpf($cpf){
+
+    $cpf1 = substr($cpf, 0, 4);
+    $cpf2 = substr($cpf, 11, 11);
+
+    return $cpf1."###.###".$cpf2;
+}
+
 function formatDateEng($date)
 {
 

@@ -56,82 +56,25 @@
 
             </div>
 
-            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
-              <div class="row">
-              </div>
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">              
 
-            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
-              <div class="row">
-              <div class="col-md-3" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  Nome do aluno     
-                </h5>
-              </div>
-
-              <div class="col-md-2" >
-                <h5 style="font-weight: bold; text-align: left;">
-                 Data Nasc.
-                </h5>
-              </div>
-
-              <div class="col-md-1" >
-                <h5 style="font-weight: bold; text-align: left;">
-                 Idade
-                </h5>
-              </div>
-              <div class="col-md-2" >
-                <h5 style="font-weight: bold; text-align: left;">
-                 Nome do responsável
-                </h5>
-              </div>
-              <div class="col-md-1" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  Status
-                </h5>
-              </div>
-              <div class="col-md-1" >
-                <h5 style="font-weight: bold; text-align: left;">
-                </h5>
-              </div>
-            </div>           
-            </div>
-           
             <?php $counter1=-1;  if( isset($pessoas) && ( is_array($pessoas) || $pessoas instanceof Traversable ) && sizeof($pessoas) ) foreach( $pessoas as $key1 => $value1 ){ $counter1++; ?>
             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
               <div class="row">
-              <div class="col-md-3" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>                    
+              <div class="col-md-10" >
+                <h5 style="text-align: left;">
+                         <strong> <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </strong>   
+                  &nbsp; D.Nasc.:<?php echo formatDate($value1["dtnasc"]); ?>                
+                  &nbsp; <strong> <?php echo calcularIdade($value1["dtnasc"]); ?> anos</strong>   
+                  &nbsp; Resp..: <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> 
+                  &nbsp; <strong>Status: <?php if( $value1["statuspessoa"] == 1 ){ ?>Ativo<?php }else{ ?>Inativo<?php } ?></strong>   
+                  &nbsp; <span style="color: red"><?php if( $value1["pcd"] == 1 ){ ?>(PCD)<?php } ?></span>
                     
                 </h5>
-              </div>
+              </div>                
+              
               <div class="col-md-2" >
-                <h5 style="font-weight: bold; text-align: left;">
-                 <?php echo formatDate($value1["dtnasc"]); ?>
-                </h5>
-              </div>
-              <div class="col-md-1" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  <?php echo calcularIdade($value1["dtnasc"]); ?>
-                </h5>
-              </div>
-              <div class="col-md-2" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  <td><?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                </h5>
-              </div>
-              <div class="col-md-1" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  <?php if( $value1["statuspessoa"] == 1 ){ ?>Ativo<?php }else{ ?>Inativo<?php } ?>
-                </h5>
-              </div>
-              <div class="col-md-1" >
-                <h5 style="font-weight: bold; text-align: left;">
-                  <?php if( $value1["pcd"] == 1 ){ ?>(PCD)<?php } ?>
-                </h5>
-              </div>
-              <div class="col-md-2" >
-                   <a href="/admin/insc/pessoa/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i>Consulta inscrições</a>
+                   <a href="/admin/insc/pessoa/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-search"></i>&nbsp;Consulta inscrições</a>
               </div>
             </div>           
             </div>

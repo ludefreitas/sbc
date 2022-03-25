@@ -64,43 +64,16 @@
         }
         xmlHttp.send()        
     }
-
-    function getDadosCodigoDoenca(cid){
-
-         let url = 'https://cid.api.mokasoft.org/cid10/'+cid+''
-
-        let xmlHttp = new XMLHttpRequest()
-        xmlHttp.open('GET', url)
-
-        xmlHttp.onreadystatechange = () => {
-            if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
-
-                let dadosJSONText = xmlHttp.responseText
-
-                let dadosJSONObj = JSON.parse(dadosJSONText)
-
-                document.getElementById('dadosDoenca').value = dadosJSONObj.nome                                                               
-            }
-            
-        }
-
-        xmlHttp.send()        
-    }  
-
 </script>
 
      <div class="container"> <!-- container 1 -->
                 <div class="row"> <!-- row 2 -->
-                  <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
+                  <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 5px 0px 50px 0px;">
 
     <div class="container">
         <div class="row" style="padding-bottom: 5px">
         
             <div class="col-md-12">
-
-                <div class="alert alert-success" style="text-align-last: center;">
-                    <a class="btn btn-success" href="/user/pessoas" role="button">Meus dependentes</a>
-                </div>
         
                 <?php if( $errorRegister != '' ){ ?>
                 <div class="alert alert-danger" style="text-align-last: center;">
@@ -114,7 +87,7 @@
                 </div>
                 <?php }else{ ?>
                 <div class="alert alert-success" style="text-align-last: center;">
-                    <span style="font-weight: bold;">Cadastrar uma nova pessoa</span style="font-weight: bold;">
+                    <span style="font-weight: bold;">Inserir uma nova pessoa</span style="font-weight: bold;">
                 </div>                
                 <?php } ?>
 
@@ -123,8 +96,7 @@
                     <label for="nomepess">
                         Nome Completo                        
                     </label>
-                    <input style="width: 100%; float: right;" type="text" id="nomepess" name="nomepess" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" placeholder="Informe o nome completo" required="required" minlength="14">     
-                               
+                    <input style="width: 100%; float: right;" type="text" id="nomepess" name="nomepess" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" placeholder="Informe o nome completo" required="required" minlength="14">                
                     <label for="dtnasc">
                         <br>Data do Nascimento
                     </label>
@@ -164,7 +136,7 @@
                     <label for="numrg">
                         <br><br>Número do RG                         
                     </label>
-                    <input style="width: 100%; float: right;" type="text" id="numrg" name="numrg" class="input-text" value="" pattern="[0-9]{2}.[0-9]{3}.[0-9]{3}-[0-9]{1}" required="required">
+                    <input style="width: 100%; float: right;" type="text" id="numrg" name="numrg" class="input-text" value="{}" pattern="[0-9]{2}.[0-9]{3}.[0-9]{3}-[0-9]{1}" required="required">
                     <script type="text/javascript">$("#numrg").mask("00.000.000-0");</script>
                 -->
 
@@ -177,7 +149,7 @@
                     <label for="vulnsocial">
                         <br><br>Vulnerabilidade Social?
                     </label>
-                    <select onblur="vulnerabilidade()" id="vulnsocial" style="width: 100%; float: right;" class="form-control" name="vulnsocial" required="required">
+                    <select onchange="vulnerabilidade()" id="vulnsocial" style="width: 100%; float: right;" class="form-control" name="vulnsocial" required="required">
                         <?php if( $registerpessoaValues["vulnsocial"] === '' ){ ?>
                         <option selected="" value="">Seclecione</option>                            
                         <option value="1">Sim</option>
@@ -218,44 +190,12 @@
                         <option sected="" value="0">Não</option>
                         <option value="1">Sim</option>  
                         <?php } ?>                                                                              
-                    </select> 
-
-                    <!--
-                    <label for="tipodeficiencia"><br>
-                        <br>TIPO DEFICIÊNCIA 
-                    </label>
-
-                    <p>                        
-                        <input type="checkbox" name="deficiencia" value="1"> Auditiva                        
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="deficiencia" value="2"> Visual
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="deficiencia" value="3"> Física
-                    </p>
-
-                    <p>               
-                        <input type="checkbox" name="deficiencia" value="4"> Intelectual
-                        &nbsp;&nbsp;<input type="checkbox" name="deficiencia" value="5"> Psicosocial
-                        &nbsp;&nbsp;<input type="checkbox" name="deficiencia" value="6"> Múltipla
-                    </p>
-
-                    <p>               
-                        <label>CID (Código Internacional de Doença)</label>
-                        <input style="width: 100%; float: right;" type="text" id="cid" maxlength="8" name="cid" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["cid"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onblur="getDadosCodigoDoenca(this.value)">
-                        <script type="text/javascript">$("#cid").mask("A00.000");</script>   
-                    </p>
-
-                    <p>
-                    <label>
-                        <br>Descrição do CID
-                        
-                    </label>
-                    <input style="width: 100%; float: right;" type="text" id="dadosDoenca" name="dadosDoenca" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["dadosDoenca"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-                    </p> 
-                    -->     
+                    </select>       
 
                     <div id="maeEpai">
 
                         <label for="nomemae">
-                            <br>Nome da Mãe
+                            <br><br>Nome da Mãe
                             <span class="required">
                                 <span style="font-size: 12px; font-weight: bold">* (Necessário preencher este campo se a pessoa, a cadastrar, for menor de idade)</span>
                             </span>

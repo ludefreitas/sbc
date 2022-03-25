@@ -16,11 +16,12 @@ $app->get("/user-create", function(){
 		'success'=>Pessoa::getSuccess(),
 		'errorRegister'=>User::getErrorRegister(),
 		'errorRegisterSendmail'=>User::getErrorRegisterSendmail(),
-		'registerValues'=>(isset($_SESSION['registerValues'])) ? $_SESSION['registerValues'] : ['name'=>'', 'email'=>'','emailconfirme'=>'', 'phone'=>''],		
+		'registerValues'=>(isset($_SESSION['registerValues'])) ? $_SESSION['registerValues'] : ['name'=>'', 'email'=>'','emailconfirme'=>'', 'phone'=>''],	
 		'registerpessoaValues'=>(
 				isset($_SESSION['registerpessoaValues'])) 
 				    ? $_SESSION['registerpessoaValues'] 
-			        : ['nomepess'=>'', 'dtnasc'=>'', 'numcpf'=>'', 'numrg'=>'', 'numsus'=>'', 'cadunico'=>'', 'nomemae'=>'', 'cpfmae'=>'', 'nomepai'=>'', 'cpfpai'=>'', 'sexo'=>'', 'vulnsocial'=>'', 'cep'=>'', 'rua'=>'', 'numero'=>'', 'complemento'=>'', 'bairro'=>'', 'cidade'=>'', 'estado'=>'', 'telres'=>'', 'contato'=>'', 'telemer'=>'', 'pcd'=>'', 'cid'=>'', 'dadosDoenca'=>'']
+			        : ['nomepess'=>'', 'dtnasc'=>'', 'numcpf'=>'', 'numrg'=>'', 'numsus'=>'', 'cadunico'=>'', 'nomemae'=>'', 'cpfmae'=>'', 'nomepai'=>'', 'cpfpai'=>'', 'sexo'=>'', 'vulnsocial'=>'', 'cep'=>'', 'rua'=>'', 'numero'=>'', 'complemento'=>'', 'bairro'=>'', 'cidade'=>'', 'estado'=>'', 'telres'=>'', 'contato'=>'', 'telemer'=>'', 'pcd'=>'', 'cid'=>'', 'dadosDoenca'=>'']	
+		
 	]);
 });
 
@@ -573,6 +574,15 @@ $app->post("/register", function(){
 
 	if(calcularIdade($_POST['dtnasc']) < 18){
 
+		User::setErrorRegister("Para realizar inscrições no nosso site, você deverá ser maior de 18 anos (o responsável pela inscrição). Para inscrever pessoas menores de idade ou não em nossos cursos esportivos, depois de cadastrado no nosso sistema com login e senha, você poderá 'inserir novas pessoas', e assim fazer inscrições para estas.");
+			header("Location: /user-create");
+			exit;
+	}
+
+
+	/*
+	if(calcularIdade($_POST['dtnasc']) < 18){
+
 	
 		if ((!isset($_POST['nomemae']) || $_POST['nomemae'] == '') && (!isset($_POST['nomepai']) || $_POST['nomepai'] == '')) {
 
@@ -638,7 +648,9 @@ $app->post("/register", function(){
 			exit;
 
 		}	
-	}		 
+	}	
+
+	*/	 
 
 	$cepMenor = '09600000';
 	$cepMaior = '09899999';	

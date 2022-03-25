@@ -73,9 +73,17 @@
                                 <td class="product-name"><?php echo formatDateHour($insc["dtinsc"]); ?></td>
                             </tr>
                             <tr>
-                                <th class="product-name">Laudo</th>
+                                <th class="product-name">Laudo ?</th>
                                 <td class="product-name"><?php if( $insc["laudo"] == 1 ){ ?>Sim<?php }else{ ?>Não<?php } ?></td>
-                            </tr>                                                     
+                            </tr> 
+                            <tr>
+                                <th class="product-name">PCD ?</th>
+                                <td class="product-name"><?php if( $insc["inscpcd"] == 1 ){ ?>Sim<?php }else{ ?>Não<?php } ?></td>
+                            </tr> 
+                            <tr>
+                                <th class="product-name">Respons. p/ inscrição</th>
+                                <td class="product-name">&nbsp;&nbsp;<?php echo htmlspecialchars( $insc["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $insc["deslogin"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                            </tr>                                                                                                                                                
                             <tr <?php echo colorStatus($insc["idinscstatus"]); ?>>
                                 <th class="product-name">Status da Inscrição</th>
                                 <td class="product-name"><?php echo htmlspecialchars( $insc["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>

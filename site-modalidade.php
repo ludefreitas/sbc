@@ -76,7 +76,7 @@ $app->get("/modalidade/:idmodal/:idlocal", function($idmodal, $idlocal) {
 
 		Cart::setMsgError("Não existem turmas para a modalidade ".$modalidade->getdescmodal()." nesta temporada. Aguarde! ");
 	}	
-
+	
 	$desctemporada  = isset($turma[0]['desctemporada']) ? $turma[0]['desctemporada'] : '';
 
 	// Aqui verifica se a temporada é igual ao ano atual

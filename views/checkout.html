@@ -1,7 +1,7 @@
 
   <div class="container"> <!-- container 1 -->
             <div class="row"> <!-- row 2 -->
-              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
+              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 0px 0px 0px 0px;">
   
     <form action="/checkout" class="checkout" method="post" name="checkout">
         <div id="container">
@@ -13,28 +13,22 @@
                     {$error}
                     </div>
                     {/if}                  
-
-                     <h3 id="order_review_heading" style="margin-top:30px;">Detalhes da Inscrição</h3>
-                
+                    <div style="text-align-last: center; margin-top: 0px; margin-bottom: 0px; color: orange">       
+                        <h4>Confirme os detalhes da inscrição</h4>
+                    </div>                
                       
-                    <div class="row">
-                        <div class="col-md-12 alert alert-primary" style="text-align-last: left; ">
-                           <h5 style="font-weight: bold; padding-top: 10px">Nome do aluno: {$pessoa.nomepess} -  {function="calcularIdade($pessoa.dtnasc)"} anos </h5>
-                         
+                    <div class="row" style="padding-bottom: 5px; margin-bottom: 0px">
+                        <div class="col-md-12 alert-primary" style="text-align-last: center; margin-bottom: 0px; padding-top: 5px; padding-bottom: 0px;">
+                           <h5 style="font-weight: bold;">Aluno: {$pessoa.nomepess} -  {function="calcularIdade($pessoa.dtnasc)"} anos </h5>                         
                         </div>
                     </div>                    
 
                     {loop="$turma"}
-                    <div class="row" style="padding-top: 0px">
-                        <div class="col-md-3" style="padding-top: 10px">
-                           <strong>Turma / Temporada: </strong>
-                       </div>
-                       <div class="col-md-9 alert alert-success">
-                            <strong>{$value.descativ} {$value.desctemporada} {$value.periodo}  ({$value.numinscritos} inscritos para {$value.vagas} vagas)</strong><hr>
-                            
-                            {$value.descrfxetaria} de {$value.initidade} a {$value.fimidade} anos,
-                            com o professor {$value.apelidoperson}, 
-                            no {$value.apelidolocal} - {$value.rua} - Nº {$value.numero} - bairro {$value.bairro} - {$value.cidade}
+                    <div class="row" style="margin-top: 0px; margin-bottom: 0px;">
+                        <div class="col-md-12 alert alert-success" style="text-align: justify; padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px;">
+                            <strong>[{$value.idturma}] - {$value.descativ} -</strong> Temporada <strong>{$value.desctemporada} -</strong>{$value.periodo}  das <strong>{$value.horainicio} às {$value.horatermino} </strong>de {$value.diasemana}, para  {$value.descrfxetaria} de {$value.initidade} a {$value.fimidade} anos,
+                            com o(a) professor(a) {$value.apelidoperson}, 
+                            no <strong>{$value.apelidolocal}</strong> - {$value.rua} - Nº {$value.numero} - bairro {$value.bairro} - {$value.cidade} <span style="color: red;">({$value.numinscritos} inscritos para {$value.vagas} vagas)</span>
                             <input type="hidden" name="idtemporada" value="{$value.idtemporada}">
                             <input type="hidden" name="idturma" value="{$value.idturma}">
                             <input type="hidden" name="idlocal" value="{$value.idlocal}">
@@ -45,7 +39,7 @@
                         </div>                    
                         
 
-                        <div class="col-md-12 alert alert-success" style="padding-bottom: 1px;">
+                        <div class="col-md-12 alert alert-success" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px;">
                            
                             <div class="checkbox">
                                 <strong>Esta inscrição é para pessoa com laudo médico ?<br> (Indicação Médica com CID)
@@ -63,7 +57,7 @@
 
     <! ------- ALTERAR COLOCANDO ESTAS LINHAS -------------------------------->
 
-                        <div class="col-md-12 alert alert-success" style="padding-bottom: 1px;">
+                        <div class="col-md-12 alert alert-success" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px;">
                            
                             <div class="checkbox">
                                 <strong>Esta inscrição é para Pessoa Com Deficiência?
@@ -80,7 +74,7 @@
     <! ------- ATÉ AQUI ---------------------------------------->
 
 
-                         <div class="col-md-12 alert alert-warning" style="padding-bottom: 1px; text-align-last: center;">
+                         <div class="col-md-12 alert alert-warning" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align-last: center;">
                             <input type="radio" name="edital" required="required">&nbsp;&nbsp; Li e concordo com os termos do processo de inscrições para os cursos esportivos<strong> 2022 </strong>coforme <a href="https://www.saobernardo.sp.gov.br/documents/1136654/1245027/Edital+NM/42aa453e-2d70-8651-96e5-41d2d779d24c"><br>Resolução SESP Nº 004 de 28 de outubro de 2021</a>
 
                         </div> 
@@ -97,21 +91,22 @@
                    
                     
                     <div class="row" style="padding-top: 0px;">
-                        <div class="col-md-12 alert-primary" style="text-align-last: left; padding-top: 10px; padding-bottom: 10px;">
+                        <div class="col-md-12 alert-primary" style="text-align-last: left; padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px;">
                             Ao clicar no botão <strong>FINALIZAR</strong> você está ciente que...<br>
                              - inscreve o(a) <strong>{$pessoa.nomepess}</strong> na turma de <strong> {$value.descativ}</strong>;<br>
                              - a inscrição <strong>NÃO GARANTE</strong> vaga na respectiva turma<br>
                                                           - a INSCRIÇÃO para o respectivo curso esportivo está sujeito a <strong>SORTEIO</strong>, caso a quantidade de inscritos supere o número de vagas;<br>
-                             - deverá confirmar a matrícula, se sorteado,<strong> PRESENCIALMENTE, </strong>a partir do dia <strong>{function="formatDate($value.dtinicmatricula)"}</strong> ao <strong>{function="formatDate($value.dttermmatricula)"}</strong>, no horário da aula.<br>                           
+                             - deverá confirmar a matrícula, se sorteado,<strong> PRESENCIALMENTE, </strong>a partir do dia <strong>{function="formatDate($value.dtinicmatricula)"}</strong> ao <strong>{function="formatDate($value.dttermmatricula)"}</strong>, no horário da aula.<br>
+                             E declara que as infromações prestadas neste site são verdadeiras<br>                
                         </div>
                     </div>  
 
-                    <div class="row" style="padding-top: 10px;">
+                    <div class="row" style="padding-top: 0px;">
                         
-                       <div class="col-md-6 alert alert-success" style="text-align-last: center;">
+                       <div class="col-md-6 alert alert-success" style="text-align-last: center; padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px;">
                             <input type="radio" name="ciente" required="required"><label style="color: red; padding-top: 10px;">&nbsp; Estou ciente</label>
                         </div>
-                        <div class="col-md-6 alert alert-success" style="text-align-last: center;">
+                        <div class="col-md-6 alert alert-success" style="text-align-last: center; padding-top: 5px; margin-top: 5px; margin-bottom: 15px; padding-bottom: 5px;">
                              <input type="submit" data-value="Place order" value="Finalizar" id="place_order" name="insc" class="button alt" >                     
                         </div>                        
             

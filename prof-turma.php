@@ -4,9 +4,6 @@ use \Sbc\PageProf;
 use \Sbc\Model\User;
 use \Sbc\Model\Turma;
 
-
-
-
 $app->get("/prof/turma/create/token/:idturma", function($idturma) {
 
 	User::verifyLoginProf();

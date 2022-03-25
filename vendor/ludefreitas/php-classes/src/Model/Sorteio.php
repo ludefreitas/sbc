@@ -40,7 +40,7 @@ class Sorteio extends Model {
 		}
 
 		// Depois de sortear altera status da temporada para matrículas iniciadas
-		Temporada::updateStatusTemporadaParaMatriculasIniciadas($idtemporada);
+		//Temporada::updateStatusTemporadaParaMatriculasIniciadas($idtemporada);
 		//var_dump($sql);
 		//	exit();
 		return $response;		
@@ -72,10 +72,37 @@ class Sorteio extends Model {
 		));
 	}
 
-	//public function sorteioExiste(){
+	/*
+	public function setNumeroDeOrdemGeral($numordem, $numsorte){
 
+		$sql = new Sql();
 
-	//}
+		$sql->query("CALL sp_insc_update_numordem_geral(:numordem, :numsorte)", array(
+			":numordem"=>$numordem,
+			":numsorte"=>$numsorte
+		));
+	}
+
+	public function setNumeroDeOrdemPlm($numordem, $numsorte){
+
+		$sql = new Sql();
+
+		$sql->query("CALL sp_insc_update_numordem_plm(:numordem, :numsorte)", array(
+			":numordem"=>$numordem,
+			":numsorte"=>$numsorte
+		));
+	}
+
+	public function setNumeroDeOrdemPcd($numordem, $numsorte){
+
+		$sql = new Sql();
+
+		$sql->query("CALL sp_insc_update_numordem_pcd(:numordem, :numsorte)", array(
+			":numordem"=>$numordem,
+			":numsorte"=>$numsorte
+		));
+	}
+	*/
 
 	public function selecionaInscByNumordemNumsorte($idtemporada, $numordem, $numsorte){
 

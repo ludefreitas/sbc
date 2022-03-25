@@ -1,4 +1,13 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
+<script type="text/javascript">
+  
+    function alertToken(){
+
+
+      alert("Conforme Resolução SESP Nº 004 de 28/10/2021 Art.7º, Os interessados em participar das turmas de inclusão para Pessoas com Deficiência (PCD) e/ou laudo médico do CREEBA, deverão comparecer pessoalmente (interessado ou representante legal) no Centro Esportivo do Jardim Lavínia, sito à Av. Capitão Casa - 1.500, no horário das 08:30 às 11:30 e das 13:30 às 16:30, nos dias úteis de terça a sexta-feira até o dia 03/12/2021.")
+    }
+
+</script>
   <div class="container"> <!-- container 1 -->
             <div class="row"> <!-- row 2 -->
               <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
@@ -33,7 +42,11 @@
           <a href="/cart/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/add" style="text-decoration: none">     
         <h5 style="color: #000000"> 
             <span style="font-weight: bold;">
-                <?php echo htmlspecialchars( $value1["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>               
+              <?php if( $value1["idstatustemporada"] == 3 ){ ?> 
+              [ <span style="font-weight: bold; font-size: 14px; color: darkorange;">
+              <?php echo htmlspecialchars( $value1["descstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  </span>]
+              <?php } ?>            
+              <?php echo htmlspecialchars( $value1["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>   
             </span><br>
             <span style="color: darkgreen; font-size: 16px">
                 [<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>] - <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
@@ -93,32 +106,56 @@
                     <span>
                     Faça sua inscrição para a lista de espera<br>
                   </span>
-                   <span>
-                    Lista de espera com <?php echo htmlspecialchars( $value1["numinscritos"] - $value1["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?> pessoas<br>
-                  </span>
-                 
+                    <h6 style="color: blue; font-weight: bold">              
+                     <a href="/insc-turma-temporada-listaespera/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/user/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: orangered;">Acesse a lista de espera, clicando aqui.  </a>
+                    </h6>
                 <?php } ?>
-              <?php } ?>
-              <?php if( $value1["token"] == 1 ){ ?> 
-          <span style="color: darkblue;">
-            <strong>Necessário token</strong>
-          </span>
-        <?php } ?>    
+              <?php } ?>                
             
           </h5>
+
         </a>
+
+        <?php if( $value1["token"] == 1 ){ ?> 
+          <h5><span style="color: darkblue;" >
+            <strong>Necessário token</strong>&nbsp;             
+          </span>
+          <a href="#" onmousemove="alertToken()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></h5></a>
+        <?php } ?> 
           
         <?php if( $value1["idstatustemporada"] == 6 ){ ?> 
         
         <?php }else{ ?>
+          <?php if( $value1["idstatustemporada"] == 3 ){ ?> 
+
+            <!--
+            <h6 style="color: blue; font-weight: bold">
+              Consulte as inscrições válidas para esta turma, 
+              <a href="/insc-turma-temporada-valida/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/user/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" >clicando aqui. </a>
+            </h6>
+          -->
+
+            <h6 style="color: blue; font-weight: bold">
+              Acesse lista com o resultado final após o sorteio para esta turma,
+             <a href="/insc-turma-temporada-classificadas/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/user/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: orangered;">clicando aqui.  </a>
+            </h6>
+            
+            
+
+          <?php }else{ ?>
+
           <a class="btn btn-info" style="background-color: #cc5d1e"  href="/cart/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/add">Inscrever-se</a>  
+          <?php } ?>
         <?php } ?>           
 
-            
+           
       </div>
     </div> <!-- row 4 -->
   </div> <!-- container 3 -->
+
+
   <?php } ?>
+
   <?php if( $error != '' ){ ?>
    
 <div class="container" >
