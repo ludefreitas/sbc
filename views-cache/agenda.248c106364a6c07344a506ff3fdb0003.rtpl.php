@@ -42,23 +42,41 @@
                 <?php } ?>
             </div>
 
-            <div class="col-md-12">
-                Selecione uma pessoa e uma data disponível para agendar a natação espontânea
+            <div class="col-md-12" style="font-weight: bold; color: darkgreen;">
+                Selecione um horário e uma pessoa, <br>  
+                logo em seguida clique no botão "Enviar"<br>
             </div>
 
 
         
             <div class="col-md-12">   
                 
-                <form action="/agendarhorario" method="post"> 
+                <form action="/hora-agenda" method="post"> 
 
                         <input type="text" name="idlocal" value="<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;"> 
                          <input type="text" name="ispresente" value="0" style="display: none;"> 
+                          <input type="text" name="dataSemSemana" value="<?php echo htmlspecialchars( $dataSemSemana, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;">
+                          <input type="text" name="data" value="<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;">
+                   
+                         
+
+                         <label style="color: blue;"><br>SELECIONE UM HORÁRIO para: </label>
+                         <span style="font-weight: bold;"><?php echo htmlspecialchars( $nomediadasemana, ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $dataformatada, ENT_COMPAT, 'UTF-8', FALSE ); ?></span><br>
+                        
+                        <?php $counter1=-1;  if( isset($horariosDiaSemana) && ( is_array($horariosDiaSemana) || $horariosDiaSemana instanceof Traversable ) && sizeof($horariosDiaSemana) ) foreach( $horariosDiaSemana as $key1 => $value1 ){ $counter1++; ?>
+
+                        <input type="radio" name="idhoradiasemana" value="<?php echo htmlspecialchars( $value1["idhoradiasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+
+                        <?php echo htmlspecialchars( $value1["horamarcadainicial"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ás <?php echo htmlspecialchars( $value1["horamarcadafinal"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
+
+                        <input type="text" name="horamarcadainicial" value="<?php echo htmlspecialchars( $value1["horamarcadainicial"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;">
+                        <input type="text" name="horamarcadafinal" value="<?php echo htmlspecialchars( $value1["horamarcadafinal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none">
+
+                        <?php } ?>   
+                        <br>
 
                         <label style="color: blue;">
-                        <br>Selecione uma pessoa<br>
-
-
+                            SELECIONE UMA PESSOA<br>
                         </label>
                         
                         <?php $counter1=-1;  if( isset($pessoa) && ( is_array($pessoa) || $pessoa instanceof Traversable ) && sizeof($pessoa) ) foreach( $pessoa as $key1 => $value1 ){ $counter1++; ?>
@@ -75,14 +93,7 @@
                         
                         <p>
                            <a href="/pessoa-create">  INSERIR UMA NOVA PESSOA </a>
-                        </p>
-         
-                    
-                    <label for="dataagenda" style="color: blue;">
-                        
-
-                    </label>
-                    <input style="width: 100%; float: right;" type="date" id="dataagenda" name="dataagenda" class="input-text" value="" required="required">                
+                        </p>                  
                 
             </div>
         </div>

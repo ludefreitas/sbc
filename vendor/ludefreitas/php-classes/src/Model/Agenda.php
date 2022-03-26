@@ -42,13 +42,14 @@ class Agenda extends Model {
 	{
 		$sql = new Sql();
 
-		$results = $sql->select("CALL sp_agenda_save(:idagen, :idlocal, :idpess, :titulo, :dia, :hora, :observacao, :ispresente, :dtagenda)", array(
+		$results = $sql->select("CALL sp_agenda_save(:idagen, :idlocal, :idpess, :titulo, :dia, :horainicial, :horafinal, :observacao, :ispresente, :dtagenda)", array(
 			":idagen"=>$this->getidagen(),
 			":idlocal"=>$this->getidlocal(),
 			":idpess"=>$this->getidpess(),			
 			":titulo"=>$this->gettitulo(),
 			":dia"=>$this->getdia(),
-			":hora"=>$this->gethora(),			
+			":horainicial"=>$this->gethorainicial(),			
+			":horafinal"=>$this->gethorafinal(),			
 			":observacao"=>$this->getobservacao(),		
 			":ispresente"=>$this->getispresente(),		
 			":dtagenda"=>$this->getdtagenda()		
@@ -56,7 +57,7 @@ class Agenda extends Model {
 
 		$this->setData($results[0]);
 
-		Agenda::updateFile();
+		//Agenda::updateFile();
 
 	}
 
@@ -102,14 +103,14 @@ class Agenda extends Model {
 	public static function updateFile()	
 	{
 		/*
-		$atividade = Atividade::listAll();
+		$agenda = Agenda::listAll();
 
 		$html = [];
 
 		foreach ($atividade as $row) {
 			array_push($html, '<li><a href="/atividade/'.$row['idativ'].'">'.$row['nomeativ'].'</a></li>');
 		}
-		file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."atividade-menu.html", implode('', $html));
+		file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."agenda-menu.html", implode('', $html));
 
 		*/
 
@@ -216,7 +217,8 @@ class Agenda extends Model {
 			WHERE a.titulo LIKE :search 
 			OR a.observacao LIKE :search 
 			OR a.dia LIKE :search
-			OR a.hora LIKE :search
+			OR a.horainicial LIKE :search
+			OR a.horafinal LIKE :search
 			OR b.nomepess LIKE :search 
 			OR b.idpess LIKE :search 
 			OR b.numcpf LIKE :search 
@@ -237,6 +239,79 @@ class Agenda extends Model {
 		];
 
 	}
+
+	// Seleciona horários diponíveis para agendar natação livre
+	public static function listAllHoraDiaSemanaLocal($idlocal, $diasemana){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT *
+			FROM tb_horadiasemana 
+			WHERE idlocal = :idlocal AND diasemana = :diasemana", [
+			':idlocal'=>$idlocal,
+			':diasemana'=>$diasemana
+		]);
+
+		return $results;
+		//$this->setData($results[0]);		
+		
+	}
+
+	public static function getNumeroDeVagas($idhoradiasemana){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT vagas
+			FROM tb_horadiasemana 
+			WHERE idhoradiasemana = :idhoradiasemana", [
+			':idhoradiasemana'=>$idhoradiasemana
+		]);
+
+		return $results;		
+	}
+
+	public static function contaQtdAgendamPorData($data, $idlocal){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT count(*)
+			FROM tb_agenda 
+			WHERE dia = :data AND idlocal = :idlocal", [
+			':data'=>$data,
+			':idlocal'=>$idlocal
+		]);
+
+		return $results;		
+	}
+
+	public static function getHoraInicialDiaSemana($idhoradiasemana){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT horamarcadainicial
+			FROM tb_horadiasemana 
+			WHERE idhoradiasemana = :idhoradiasemana", [
+			':idhoradiasemana'=>$idhoradiasemana
+		]);
+
+		return $results;		
+
+	}
+
+	public static function getHoraFinalDiaSemana($idhoradiasemana){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT horamarcadafinal
+			FROM tb_horadiasemana 
+			WHERE idhoradiasemana = :idhoradiasemana", [
+			':idhoradiasemana'=>$idhoradiasemana
+		]);
+
+		return $results;		
+
+	}
+
 
 	public static function setMsgError($msg)
 	{

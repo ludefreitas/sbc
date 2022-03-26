@@ -47,7 +47,7 @@ table {
   <h4>
     Cursos Esportivos SBC
     <br>
-    <span style="font-weight: bold">LISTA COM A CLASSIFICAÇÃO FINAL</span>
+    <span style="font-weight: bold">LISTA DE ESPERA</span>
     <br> <span style="font-weight: bold"><?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </span> <?php echo htmlspecialchars( $turma["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  das <span style="font-weight: bold"><?php echo htmlspecialchars( $turma["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $turma["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  </span>
     <span style="font-weight: bold"> <?php echo htmlspecialchars( $turma["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  <br>
     <?php echo htmlspecialchars( $turma["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas</span>      
@@ -115,7 +115,7 @@ table {
           <tr>
               <td colspan="5" style="border: solid 1px; text-align: center;">
                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                 Lista com a CLASSIFICAÇÃO FINAL de pessoas com laudo (indicação médica)
+                 Lista de ESPERA de pessoas com laudo (indicação médica)
                  &nbsp;&nbsp;&nbsp;
               </td>
               
@@ -168,7 +168,7 @@ table {
           <?php }else{ ?>
           <tr style="font-weight: bold; color: red; font-size: 22px; text-align: center; ">
             <td colspan="5">
-              Não há lista de classificação para este grupo de pessoas!
+              Não há Lista de ESPERA para este grupo de pessoas!
             </td>
           </tr>
           <?php } ?>
@@ -215,7 +215,7 @@ table {
         <tr>
               <td colspan="5" style="border: solid 1px; text-align: center;">
                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                 Lista com a CLASSIFICAÇÃO FINAL de pessoas com deficiência
+                 Lista de ESPERA de pessoas com deficiência
                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               </td>
               
@@ -267,7 +267,7 @@ table {
           <?php }else{ ?>
           <tr style="font-weight: bold; color: red; font-size: 22px; text-align: center; ">
             <td colspan="5">
-              Não há lista de classificação para este grupo de pessoas!
+              Não há Lista de ESPERA para este grupo de pessoas!
             </td>
           </tr>
           <?php } ?>
@@ -314,7 +314,7 @@ table {
         <tr>
               <td colspan="5" style="border: solid 1px; text-align: center;">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                 Lista com a CLASSIFICAÇÃO FINAL de pessoas em vulnerabilidade social
+                 Lista de ESPERA de pessoas em vulnerabilidade social
                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               </td>
               
@@ -366,7 +366,7 @@ table {
           <?php }else{ ?>
           <tr style="font-weight: bold; color: red; font-size: 22px; text-align: center; ">
             <td colspan="5">
-              Não há lista de classificação para este grupo de pessoas!
+              Não há Lista de ESPERA para este grupo de pessoas!
             </td>
           </tr>
           <?php } ?>
@@ -400,7 +400,8 @@ table {
           </tr>
           <?php }else{ ?>
           <tr style="font-weight: bold; color: red; font-size: 22px; text-align: center; ">
-            <td>           
+            <td class="class1" style="text-align: center; border: solid 1px;">
+              0
             </td>
           </tr>
           <?php } ?>        
@@ -411,7 +412,7 @@ table {
         <tr>
               <td colspan="5" style="border: solid 1px; text-align: center;">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                 Lista com a CLASSIFICAÇÃO FINAL ampla concorrência (GERAL)
+                 Lista de ESPERA ampla concorrência (GERAL)
                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               </td>
               
@@ -463,7 +464,7 @@ table {
           <?php }else{ ?>
           <tr style="font-weight: bold; color: red; font-size: 22px; text-align: center; ">
             <td colspan="5">
-              Não há lista de classificação para este grupo de pessoas!
+              Não há Lista de ESPERA para este grupo de pessoas!
             </td>
           </tr>
           <?php } ?>

@@ -247,7 +247,7 @@
     <div class="col-md-12" style="text-align-last: left; background-color: green; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
       <a href="/locaisnatacao">                          
         <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 14sx; font-style: normal; margin: 10px 5px 10px 0px; ">                          
-            Agendar natação livre
+            Agendar Natação Espontânea
         </div>
       </a>
     </div>

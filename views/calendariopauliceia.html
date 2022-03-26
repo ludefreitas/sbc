@@ -52,20 +52,38 @@
             let datasemanas = new Date(info.dateStr);
             let data = info.dateStr;
 
-            let strDiaSemana = datasemanas.getDay();
+            function dataAtualFormatada(){
+              let data = new Date(),
+              dia  = data.getDate().toString().padStart(2, '0'),
+              mes  = (data.getMonth()+1).toString().padStart(2, '0'),
+              ano  = data.getFullYear();
+              //return `${dia}/${mes}/${ano}`;
+              return `${ano}-${mes}-${dia}`;
+            }
 
-           
+            let hoje = dataAtualFormatada();
+
+            let strDiaSemana = datasemanas.getDay();           
 
            if(local == 21 && strDiaSemana == 4){
+
+                if(hoje > data){
+
+                  alert('Data escolhida não pode ser anterior ao dia de hoje!');                  
+                  return;
+
+                }else{
               
-               window.location.href=`http://www.cursosesportivos.com.br/agenda/` + local + '/' + info.dateStr;
+                   window.location.href=`http://www.cursosesportivos.com.br/agenda/` + local + '/' + info.dateStr;
+                }           
+               
             }else{
-              alert('A natação espontânea no Paulicéia só acontece nas sextas-feiras. Escolha uma data na sexta-feira para agendar sua natação!');
-             }
+                
+                alert('A natação espontânea no Paulicéia só acontece nas sextas-feiras. Escolha uma data na sexta-feira para agendar sua natação!');
+                return;               
+             }           
 
-            
-
-                   /*
+            /*
             alert('Clicked on: ' + info.dateStr + ' - ' + local);
             alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
             alert('Current view: ' + info.view.type);

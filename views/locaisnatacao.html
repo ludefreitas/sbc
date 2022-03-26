@@ -44,21 +44,21 @@
                    
                     </h5>                  
                     <div>
-                     <h5 style="">
-                     <a href="/calendariobaetao/3" class="btn btn-success" style="background-color: lightgreen; color: blue; font-weight: bold; fon"  >
+                     <h5 >
+                     <a href="/calendariobaetao/3" class="btn btn-success" style="background-color: lightgreen; color: blue; font-weight: bold;"  >
                       BAETÃO<br>
                       Agendar natação livre<br> 
-                      (agenda somente para quem sabe nadar, acima de 18 anos)</a>
+                      (agenda somente para quem sabe nadar, acima<br> de 18 anos)</a>
                      </h5> 
                      </div>
 
                      </h5>                  
                     <div>
-                     <h5 style="">
-                     <a href="/calendariopauliceia/21" class="btn btn-success" style="background-color: lightgreen; color: blue; font-weight: bold; fon"  >
+                     <h5 >
+                     <a href="/calendariopauliceia/21" class="btn btn-success" style="background-color: lightgreen; color: blue; font-weight: bold;"  >
                       CREC PAULICÉIA<br>
                       Agendar natação livre<br> 
-                      (agenda somente para quem sabe nadar, acima de 18 anos)</a>
+                      (agenda somente para quem sabe nadar, acima<br> de 18 anos)</a>
                      </h5> 
                      </div>  
                    

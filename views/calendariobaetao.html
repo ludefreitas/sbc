@@ -8,10 +8,6 @@
 
     <script src="/../res/site/js/fullcalendar/main.min.js"></script>    
     <script>
-
-
-     
-
      
       /*
       (function(win,doc){
@@ -53,15 +49,36 @@
             let datasemanas = new Date(info.dateStr);
             let data = info.dateStr;
 
+            function dataAtualFormatada(){
+              let data = new Date(),
+              dia  = data.getDate().toString().padStart(2, '0'),
+              mes  = (data.getMonth()+1).toString().padStart(2, '0'),
+              ano  = data.getFullYear();
+              //return `${dia}/${mes}/${ano}`;
+              return `${ano}-${mes}-${dia}`;
+            }
+
+            let hoje = dataAtualFormatada();
+
             let strDiaSemana = datasemanas.getDay();
 
+            if(local == 3 && strDiaSemana == 5){
 
-             if(local == 3 && strDiaSemana == 5){
+                if(hoje > data){
+
+                  alert('Data escolhida não pode ser anterior ao dia de hoje!');                  
+                  return;
+
+                }else{
               
-               window.location.href=`http://www.cursosesportivos.com.br/agenda/` + local + '/' + data;
+                   window.location.href=`http://www.cursosesportivos.com.br/agenda/` + local + '/' + info.dateStr;
+                }           
+               
             }else{
-              alert('A natação espontânea no Baetão só acontece aos sábados. Escolha uma data no sábado para agendar sua natação!');
-             }
+                
+                alert('A natação espontânea no Baetão só acontece aos sábados. Escolha uma data no sábado para agendar sua natação!');
+                return;               
+             }           
                    /*
             alert('Clicked on: ' + info.dateStr + ' - ' + local);
             alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);

@@ -9,7 +9,7 @@ use \Sbc\Model\Pessoa;
 
 $app->get("/calendariobaetao/:idlocal", function($idlocal) {
 
-	User::verifyLogin(false);
+	//User::verifyLogin(false);
 
 	$agenda = new Agenda();
 	$local = new Local();
@@ -31,7 +31,7 @@ $app->get("/calendariobaetao/:idlocal", function($idlocal) {
 
 $app->get("/calendariopauliceia/:idlocal", function($idlocal) {
 
-	User::verifyLogin(false);
+	//User::verifyLogin(false);
 
 	$agenda = new Agenda();
 	$local = new Local();
@@ -53,7 +53,7 @@ $app->get("/calendariopauliceia/:idlocal", function($idlocal) {
 
 $app->get("/locaisnatacao", function() {
 
-	User::verifyLogin(false);
+	//User::verifyLogin(false);
 
 	$locais = Local::listAllCrecAtivo();
 
@@ -66,20 +66,45 @@ $app->get("/locaisnatacao", function() {
 
 $app->get("/agenda/:idlocal/:data", function($idlocal, $data) {
 
-	User::verifyLogin(false);
+	//User::verifyLogin(false);
 
 	$local = new Local();
 	$user = User::getFromSession();
 	$agenda = new Agenda();
 	$local = new Local();
 
-	//$datamenor = $data - date('YYYY-MM-DD');
-
 	$datalimite = date('Y-m-d l', strtotime('+4 week'));
 	$dataatual = date('Y-m-d');
 	$data = date('Y-m-d l', strtotime($data));
 
 	$nameweekday = date('l', strtotime($data));
+
+	$dataSemSemana = date('Y-m-d', strtotime($data));
+
+	if($nameweekday == 'Sunday'){
+
+		$nomediadasemana = 'Domingo';
+	}
+
+	if($nameweekday == 'Monday'){
+
+		$nomediadasemana = 'Segunda-feira';
+	}
+
+	if($nameweekday == 'Tuesday'){
+
+		$nomediadasemana = 'Terça-feira';
+	}
+
+	if($nameweekday == 'Wednesday'){
+
+		$nomediadasemana = 'Quarta-feira';
+	}
+
+	if($nameweekday == 'Thursday'){
+
+		$nomediadasemana = 'Quinta-feira';
+	}
 
 	if($nameweekday == 'Friday'){
 
@@ -93,11 +118,9 @@ $app->get("/agenda/:idlocal/:data", function($idlocal, $data) {
 
 	$dataformatada = date('d/m/Y', strtotime($data));
 
-	//var_dump($dataformatada.' - '.$nomediadasemana);
-	//exit();
+	$horariosDiaSemana = $agenda->listAllHoraDiaSemanaLocal($idlocal, $nomediadasemana);
 
-
-
+	/*
 	if($idlocal == 21){
 		if($dataatual > $data){
 
@@ -129,6 +152,7 @@ $app->get("/agenda/:idlocal/:data", function($idlocal, $data) {
 		exit();
 		}
 	}
+	*/
 
 	$local->get($idlocal);
 
@@ -139,12 +163,17 @@ $app->get("/agenda/:idlocal/:data", function($idlocal, $data) {
 	$page->setTpl("agenda", [		
 		//'datalimite'=>$datalimite,
 		'idlocal'=>$idlocal,
+		'nomediadasemana'=>$nomediadasemana,
+		'dataformatada'=>$dataformatada,
+		'data'=>$data,
+		'dataSemSemana'=>$dataSemSemana,
+		'horariosDiaSemana'=>$horariosDiaSemana,
 		'error'=>Agenda::getMsgError(),
 		'pessoa'=>$user->getPessoa(),
 	]);	
 });
 
-$app->post("/agendarhorario", function() {
+$app->post("/hora-agenda", function() {
 
 	User::verifyLogin(false);
 
@@ -152,28 +181,64 @@ $app->post("/agendarhorario", function() {
 	$agenda = new Agenda();
 	$local = new Local();	
 
+	
 	if(!isset($_POST['idpess']) || $_POST['idpess'] <= 0){	
 		Agenda::setMsgError("Selecione uma pessoa! ");
-		header("Location: /agenda/".$_POST['idlocal']."");
+		header("Location: /agenda/".$_POST['idlocal']."/".$_POST['dataSemSemana']."");
+		exit();
+	}	
+
+	if(!isset($_POST['idhoradiasemana']) || $_POST['idhoradiasemana'] <= 0){	
+		Agenda::setMsgError("Selecione um horário! ");
+		header("Location: /agenda/".$_POST['idlocal']."/".$_POST['dataSemSemana']."");
 		exit();
 	}
 
 	$hoje = Date('Y-m-d');
 
-	if($_POST['dataagenda'] < $hoje){	
+	if($_POST['data'] < $hoje){	
 		Agenda::setMsgError("Data não pode ser anterior ao dia de hoje! ");
-		header("Location: /agenda/".$_POST['idlocal']."");
+		header("Location: /agenda/".$_POST['idlocal']."/".$_POST['dataSemSemana']."");
 		exit();
 	}
 
-	if(!isset($_POST['dataagenda']) || $_POST['dataagenda'] <= 0){	
+	if(!isset($_POST['data']) || $_POST['data'] <= 0){	
 		Agenda::setMsgError("Selecione uma data! ");
-		header("Location: /agenda/".$_POST['idlocal']."");
+		header("Location: /agenda/".$_POST['idlocal']."/".$_POST['dataSemSemana']."");
 		exit();
 	}
+
+	$idlocal = $_POST['idlocal'];
+
+	$dataSemSemana= $_POST['dataSemSemana'];
+
+	$idhoradiasemana = $_POST['idhoradiasemana'];
+
+	$horarioinicial = $agenda->getHoraInicialDiaSemana($idhoradiasemana);
+	$horariofinal = $agenda->getHoraFinalDiaSemana($idhoradiasemana);
+
+	$horarioinicial = $horarioinicial[0]['horamarcadainicial'];
+	$horariofinal = $horariofinal[0]['horamarcadafinal'];
+
+	$numvagashoradiasemana = $agenda->getNumeroDeVagas($idhoradiasemana);
+
+	$numvagashoradiasemana = $numvagashoradiasemana[0]['vagas'];
+
+	$qtdagendamentopordata = $agenda->contaQtdAgendamPorData($dataSemSemana, $idlocal);
+
+	$qtdagendamentopordata = $qtdagendamentopordata[0]['count(*)'];	
+
+
+	if($qtdagendamentopordata >= $numvagashoradiasemana){
+
+		Agenda::setMsgError("Não há mais vagas para este horário! Escolha outro ");
+		header("Location: /agenda/".$_POST['idlocal']."/".$_POST['dataSemSemana']."");
+		exit();
+
+	}	
 
 	$idlocal = (int)$_POST['idlocal'];
-	$dataPost = $_POST['dataagenda'];
+	$dataPost = $_POST['data'];
 	$idpess = (int)$_POST['idpess'];
 	$ispresente = (int)$_POST['ispresente'];
 
@@ -188,12 +253,12 @@ $app->post("/agendarhorario", function() {
 
 	if($anoDiferença < 18 ){
 		Agenda::setMsgError("O agendamento para a natação espontânea só e permitido para maiores de 18 anos");
-		header("Location: /agenda/".$_POST['idlocal']."");
+		header("Location: /agenda/".$_POST['idlocal']."/".$_POST['dataSemSemana']."");
 		exit;
 	}
 
 	$diasemana = date('w', strtotime($dataPost));
-	$maisumasemana = date('Y-m-d', strtotime('+1 week'));
+	$maisumasemana = date('Y-m-d', strtotime('+4 week'));
 
 	if($diasemana == 0){
 		$nomediasemana = "Domingo";
@@ -218,104 +283,67 @@ $app->post("/agendarhorario", function() {
 	}
 
 	$nomepess = $pessoa->getnomepess();
-	
 
 	if($dataPost > $maisumasemana){
 
 		Agenda::setMsgError("A agenda para este dia ainda não foi aberta");
-		header("Location: /agenda/".$_POST['idlocal']."");
+		header("Location: /agenda/".$_POST['idlocal']."/".$_POST['dataSemSemana']."");
 		exit;
 
 	}
-	
-	# var_dump($dataPost." -Dia Semana ".$nomediasemana." -DT limite ".$maisumasemana." -Diferença ".$anoDiferença." -nome ".$nomepess." -DT ".$dtnasc." - Local ".$idlocal." -Presente ".$ispresente);
 
-	$hora = "07:00:00";	
-	$hora700quant = Agenda::temHorario($hora, $dataPost);	
-	$raias = 6;
-	$i700 = ($raias - $hora700quant['total']);	
-	for($i=0; $i < $i700 ;$i++){
-		$hora700 [$i] = array();
-	}
-	$hora = "07:30:00";	
-	$hora730quant = Agenda::temHorario($hora, $dataPost);	
-	$raias = 6;
-	$i730 = ($raias - $hora730quant['total']);	
-	for($i=0; $i < $i730 ;$i++){
-		$hora730 [$i] = array();
-	}
-	$hora = "08:00:00";	
-	$hora800quant = Agenda::temHorario($hora, $dataPost);	
-	$raias = 6;
-	$i800 = ($raias - $hora800quant['total']);	
-	for($i=0; $i < $i800 ;$i++){
-		$hora800 [$i] = array();
-	}
-	$hora = "08:30:00";	
-	$hora830quant = Agenda::temHorario($hora, $dataPost);	
-	$raias = 6;
-	$i830 = ($raias - $hora830quant['total']);	
-	for($i=0; $i < $i830 ;$i++){
-		$hora830 [$i] = array();
-	}
-	$hora = "09:00:00";	
-	$hora900quant = Agenda::temHorario($hora, $dataPost);	
-	$raias = 6;
-	$i900 = ($raias - $hora900quant['total']);	
-	for($i=0; $i < $i900 ;$i++){
-		$hora900 [$i] = array();
-	}
-	$hora = "09:30:00";	
-	$hora930quant = Agenda::temHorario($hora, $dataPost);	
-	$raias = 6;
-	$i930 = ($raias - $hora930quant['total']);	
-	for($i=0; $i < $i930 ;$i++){
-		$hora930 [$i] = array();
-	}
-	$hora = "10:00:00";	
-	$hora1000quant = Agenda::temHorario($hora, $dataPost);	
-	$raias = 6;
-	$i1000 = ($raias - $hora1000quant['total']);	
-	for($i=0; $i < $i1000 ;$i++){
-		$hora1000 [$i] = array();
-	}
-	$hora = "10:30:00";	
-	$hora1030quant = Agenda::temHorario($hora, $dataPost);	
-	$raias = 6;
-	$i1030 = ($raias - $hora1030quant['total']);	
-	for($i=0; $i < $i1030 ;$i++){
-		$hora1030 [$i] = array();
-	}
+    //var_dump($dataPost." - Dia Semana ".$nomediasemana." - DT limite ".$maisumasemana." - Diferença ".$anoDiferença." - nome ".$nomepess." - DT ".$dtnasc." - Local ".$idlocal." - Presente ".$ispresente." - Horainicial ".$horarioinicial." - Horafinal ".$horariofinal);
+
+   //exit;
+	
 
 	$page = new Page();
 	
-	$page->setTpl("hora-agenda", [		
+	$page->setTpl("hora-agenda", [
+		'dataSemSemana'=>$dataSemSemana,		
 		'dataPost'=>$dataPost,		
 		'nomeDiaSemana'=>$nomediasemana,
 		'idpess'=>$idpess,
 		'nomepess'=>$nomepess,
 		'ispresente'=>$ispresente,
 		'idlocal'=>$idlocal,
-		'hora700'=>$hora700,
-		'hora730'=>$hora730,
-		'hora800'=>$hora800,
-		'hora830'=>$hora830,
-		'hora900'=>$hora900,
-		'hora930'=>$hora930,
-		'hora1000'=>$hora1000,
-		'hora1030'=>$hora1030,
+		'horarioinicial'=>$horarioinicial,
+		'horariofinal'=>$horariofinal,
 		'error'=>Agenda::getMsgError()
-
-	]);	
-	
-	
-
-
-	
+	]);		
 });
 
 
+$app->post("/horaagendada", function() {
 
+	User::verifyLogin(false);
 
+	$agenda = new Agenda();
+
+	$idlocal = $_POST['idlocal'];
+	$idpess = $_POST['idpess'];
+	$titulo = 'raia';
+	$dia = $_POST['dataSemSemana'];
+	$horainicial = $_POST['horarioinicial'];
+	$horafinal = $_POST['horariofinal'];
+	$observacao = 'natação';
+	$ispresente = $_POST['ispresente'];
+
+	$agenda->setData([
+			'idlocal'=>$idlocal,
+			'idpess'=>$idpess,
+			'titulo'=>$titulo,
+			'dia'=>$dia,
+			'horainicial'=>$horainicial,
+			'horafinal'=>$horafinal,
+			'observacao'=>$observacao,
+			'ispresente'=>$ispresente	
+		]);
+
+	//Criar Call no banco de dados
+
+	$agenda->save();
+
+});
 
 ?>

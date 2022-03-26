@@ -19,91 +19,46 @@
             <div class="col-md-12">   
                 
                 <form action="/horaagendada" method="post"> 
-                	<div style="color: blue; text-align: center;">
+                	<div style="color: blue; text-align: left;">
                 		<label>
-                    		DADOS PARA O AGENDAMENTO
+                    		DADOS PARA O AGENDAMENTO DA NATAÇÃO ESPONTÂNEA
                         </label> 
                     </div>
-                    <div style="text-align: center;">
+                    <div style="text-align: center; color: blue; font-weight: bold;">
                         <label>
                         	Nome: {$nomepess}
                         </label>                        
                     </div>
                     <div style="color: blue; text-align: center; font-weight: bold;">
                         <label>                        	
-                        Data: {function="formatDate($dataPost)"} - {$nomeDiaSemana}
+                        Data: {function="formatDate($dataPost)"}
                          </label> 
+                         <br>
+                         <label>                            
+                        {$nomeDiaSemana} - {$horarioinicial} ás {$horariofinal}
+                         </label> 
+                        
+                        
                     </div>
 
-                        <input type="text" name="dataPost" value="{$dataPost}" style="display: none;">                
+
+                        <input type="text" name="dataPost" value="{$dataPost}" style="display: none;">               
                         <input type="text" name="idpess" value="{$idpess}" style="display: none;"> 
                         <input type="text" name="ispresente" value="{$ispresente}" style="display: none;">
                         <input type="text" name="idlocal" value="{$idlocal}" style="display: none;"> 
+                         <input type="text" name="nomediasemana" value="{$nomeDiaSemana}" style="display: none;"> 
+                         <input type="text" name="horarioinicial" value="{$horarioinicial}" style="display: none;"> 
+                         <input type="text" name="horariofinal" value="{$horariofinal}" style="display: none;"> 
+                         <input type="text" name="dataSemSemana" value="{$dataSemSemana}" style="display: none;"> 
+
+                       
                                                
                     <div style="color: blue;">
                         <label>
-                        Confirme seus dados, a data escolhida e selecione abaixo um horário ou dois horários diferentes e subsequentes e depois clique no botão "ENVIAR".
+                        Confirme seus dados, a data escolhida, o horário e clique no botão "ENVIAR".
                         </label> 
                     </div>
-                    <div style="margin-bottom: -10px; font-weight: bold; ">
-                    	{loop="$hora700"}
-                    	<input type="radio" name="7:00"> <label>7:00</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                    	{/loop}               	                   	                                           	                       
-                    </div>
-                    <hr> 
-
-                    <div style="margin-bottom: -10px; font-weight: bold; ">
-                    	{loop="$hora730"}
-                    	<input type="radio" name="7:30"> <label>7:30</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                    	{/loop}               	                   	                                           	                       
-                    </div>
-                    <hr>                                           
-
-                     <div style="margin-bottom: -10px; font-weight: bold; ">
-                    	{loop="$hora800"}
-                    	<input type="radio" name="8:00"> <label>8:00 </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                    	{/loop}                     	
-                    </div>
-                    <hr> 
-
-                    <div style="margin-bottom: -10px; font-weight: bold; ">
-                    	{loop="$hora830"}
-                    	<input type="radio" name="8:30"> <label>8:30</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                    	{/loop}               	                   	                                           	                       
-                    </div>
-                    <hr>                       
-
-                     <div style="margin-bottom: -10px; font-weight: bold; ">
-                    	{loop="$hora900"}
-                    	<input type="radio" name="9:00"> <label>9:00</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                    	{/loop} 
-                    	
-                    </div>
-                    <hr>
-
-                    <div style="margin-bottom: -10px; font-weight: bold; ">
-                    	{loop="$hora930"}
-                    	<input type="radio" name="9:30"> <label>9:30</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                    	{/loop} 
-                    	
-                    </div>
-                    <hr>  
-
-                    <div style="margin-bottom: -10px; font-weight: bold; ">
-                    	{loop="$hora1000"}
-                    	<input type="radio" name="10:00"> <label>10:00</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                    	{/loop} 
-                    	
-                    </div>
-                    <hr>
-
-                    <div style="margin-bottom: -10px; font-weight: bold; ">
-                    	{loop="$hora1030"}
-                    	<input type="radio" name="10:30"> <label>10:30</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                    	{/loop} 
-                    	
-                    </div>
-                    <hr>                    	                                           	                                         	                                           	                       
+                                                          	                                           	                       
                     
             </div>
         </div>
