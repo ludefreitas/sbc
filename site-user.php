@@ -819,9 +819,6 @@ $app->post("/register", function(){
 });
 
 
-
-
-
 $app->get("/user/profile", function(){
 
 	User::verifyLogin(false);

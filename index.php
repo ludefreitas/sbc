@@ -29,6 +29,7 @@ $app = new Slim();
 
 $app->config('debug', true);
 
+require_once("admin-agenda.php");
 require_once("admin-atividades.php");
 require_once("admin-espaco.php");
 require_once("admin-faixaetarias.php");
@@ -44,6 +45,7 @@ require_once("admin-turma.php");
 require_once("admin-users.php");
 require_once("admin.php");
 require_once("prof.php");
+require_once("prof-agenda.php");
 require_once("prof-insc.php");
 require_once("prof-temporada.php");
 require_once("prof-turma.php");

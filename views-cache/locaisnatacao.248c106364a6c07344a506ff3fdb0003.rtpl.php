@@ -19,10 +19,19 @@
   </div> 
 
   </div>
+
  
   <hr style="background-color: #0f71b3;">
+
+                <?php if( $error != '' ){ ?>
+                <div class="alert alert-success col-md-12">
+                <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                </div>
+                <?php }else{ ?>
+
   <div class="row" style="margin: -5px -5px -5px -5px; ">   
   <div class="col-md-12" style="border: 5px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif;"> 
+
     
       <div style="text-align-last: center; font-weight: bold; line-height: 30px; color: #0f71b3; font-size: 14sx; font-style: italic; margin: 0px 5px 0px 5px; ">                                               
           SELECIONE ABAIXO UM LOCAL PARA PRATICAR A NATAÇÃO ESPONTÂNEA
@@ -33,8 +42,7 @@
   </div>
 
  <hr style="background-color: #0f71b3;">
-
-
+            
 <a href="" style="text-decoration: none">
   <div class="container"> <!-- container 3 -->
     <div class="row"> <!-- row 4 -->
@@ -43,22 +51,24 @@
 
                    
                     </h5>                  
-                    <div>
+                    <div style="text-align-last: center">
                      <h5 >
                      <a href="/calendariobaetao/3" class="btn btn-success" style="background-color: lightgreen; color: blue; font-weight: bold;"  >
                       BAETÃO<br>
-                      Agendar natação livre<br> 
-                      (agenda somente para quem sabe nadar, acima<br> de 18 anos)</a>
+                      <hr style="margin: 0; padding: 0">
+                      Agendar Natação Espontânea<br> 
+                     <span style="color: red;">(agenda somente para quem sabe nadar, acima<br> de 18 anos)</span></a>
                      </h5> 
                      </div>
 
                      </h5>                  
-                    <div>
+                    <div style="text-align-last: center">
                      <h5 >
                      <a href="/calendariopauliceia/21" class="btn btn-success" style="background-color: lightgreen; color: blue; font-weight: bold;"  >
                       CREC PAULICÉIA<br>
-                      Agendar natação livre<br> 
-                      (agenda somente para quem sabe nadar, acima<br> de 18 anos)</a>
+                      <hr style="margin: 0; padding: 0">
+                      Agendar Natação Espontânea<br> 
+                      <span style="color: red;">(agenda somente para quem sabe nadar, acima<br> de 18 anos)</span></a>
                      </h5> 
                      </div>  
                    
@@ -67,6 +77,7 @@
     </div> <!-- row 4 -->
   </div> <!-- container 3 -->
 </a>
+<?php } ?>
 <hr style="background-color: #0f71b3;">
 
 

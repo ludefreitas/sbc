@@ -42,10 +42,11 @@ class Agenda extends Model {
 	{
 		$sql = new Sql();
 
-		$results = $sql->select("CALL sp_agenda_save(:idagen, :idlocal, :idpess, :titulo, :dia, :horainicial, :horafinal, :observacao, :ispresente, :dtagenda)", array(
+		$results = $sql->select("CALL sp_agenda_save(:idagen, :idlocal, :idpess, :idhoradiasemana, :titulo, :dia, :horainicial, :horafinal, :observacao, :ispresente, :dtagenda)", array(
 			":idagen"=>$this->getidagen(),
 			":idlocal"=>$this->getidlocal(),
 			":idpess"=>$this->getidpess(),			
+			":idhoradiasemana"=>$this->getidhoradiasemana(),			
 			":titulo"=>$this->gettitulo(),
 			":dia"=>$this->getdia(),
 			":horainicial"=>$this->gethorainicial(),			
@@ -309,8 +310,62 @@ class Agenda extends Model {
 		]);
 
 		return $results;		
+	}
+
+	public static function getAgendaByIduser($iduser){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_agenda a
+			INNER JOIN tb_pessoa b USING (idpess)
+			INNER JOIN tb_users c USING (iduser)
+			INNER JOIN tb_local d USING (idlocal)
+			INNER JOIN tb_horadiasemana e USING (idhoradiasemana)
+			WHERE c.iduser = :iduser
+			ORDER BY a.dia", [
+			':iduser'=>$iduser
+		]);
+
+		return $results;		
 
 	}
+
+	public static function getAgendaByLocalData($idlocal, $data){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_agenda a
+			INNER JOIN tb_pessoa b USING (idpess)
+			INNER JOIN tb_users c USING (iduser)
+			INNER JOIN tb_local d USING (idlocal)
+			INNER JOIN tb_horadiasemana e USING (idhoradiasemana)
+			WHERE a.idlocal = :idlocal AND a.dia = :data
+			ORDER BY a.dia, a.horainicial", [
+			':idlocal'=>$idlocal,
+			':data'=>$data
+		]);
+
+		return $results;		
+
+	}
+
+	public static function getAgendaAll(){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_agenda a
+			INNER JOIN tb_pessoa b USING (idpess)
+			INNER JOIN tb_users c USING (iduser)
+			INNER JOIN tb_local d USING (idlocal)
+			INNER JOIN tb_horadiasemana e USING (idhoradiasemana)
+			-- WHERE iduser = iduser
+			ORDER BY a.dia"
+		);
+
+		return $results;		
+
+	}
+
 
 
 	public static function setMsgError($msg)

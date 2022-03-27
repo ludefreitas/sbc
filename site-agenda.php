@@ -60,7 +60,8 @@ $app->get("/locaisnatacao", function() {
 	$page = new Page();
 
 	$page->setTpl("locaisnatacao", [
-		'locais'=>$locais
+		'locais'=>$locais,
+		'error'=>Agenda::getMsgError(),
 	]);	
 });
 
@@ -258,7 +259,7 @@ $app->post("/hora-agenda", function() {
 	}
 
 	$diasemana = date('w', strtotime($dataPost));
-	$maisumasemana = date('Y-m-d', strtotime('+4 week'));
+	$maisumasemana = date('Y-m-d', strtotime('+12 week'));
 
 	if($diasemana == 0){
 		$nomediasemana = "Domingo";
@@ -292,7 +293,7 @@ $app->post("/hora-agenda", function() {
 
 	}
 
-    //var_dump($dataPost." - Dia Semana ".$nomediasemana." - DT limite ".$maisumasemana." - Diferença ".$anoDiferença." - nome ".$nomepess." - DT ".$dtnasc." - Local ".$idlocal." - Presente ".$ispresente." - Horainicial ".$horarioinicial." - Horafinal ".$horariofinal);
+    //var_dump($dataPost." - Dia Semana ".$nomediasemana." - DT limite ".$maisumasemana." - Diferença ".$anoDiferença." - nome ".$nomepess." - DT ".$dtnasc." - Local ".$idlocal." - Presente ".$ispresente." - Horainicial ".$horarioinicial." - Horafinal ".$horariofinal." - idhoradiasemana ".$idhoradiasemana);
 
    //exit;
 	
@@ -302,6 +303,7 @@ $app->post("/hora-agenda", function() {
 	$page->setTpl("hora-agenda", [
 		'dataSemSemana'=>$dataSemSemana,		
 		'dataPost'=>$dataPost,		
+		'idhoradiasemana'=>$idhoradiasemana,
 		'nomeDiaSemana'=>$nomediasemana,
 		'idpess'=>$idpess,
 		'nomepess'=>$nomepess,
@@ -319,9 +321,9 @@ $app->post("/horaagendada", function() {
 	User::verifyLogin(false);
 
 	$agenda = new Agenda();
-
 	$idlocal = $_POST['idlocal'];
 	$idpess = $_POST['idpess'];
+	$idhoradiasemana = $_POST['idhoradiasemana'];
 	$titulo = 'raia';
 	$dia = $_POST['dataSemSemana'];
 	$horainicial = $_POST['horarioinicial'];
@@ -332,6 +334,7 @@ $app->post("/horaagendada", function() {
 	$agenda->setData([
 			'idlocal'=>$idlocal,
 			'idpess'=>$idpess,
+			'idhoradiasemana'=>$idhoradiasemana,
 			'titulo'=>$titulo,
 			'dia'=>$dia,
 			'horainicial'=>$horainicial,
@@ -344,6 +347,38 @@ $app->post("/horaagendada", function() {
 
 	$agenda->save();
 
+	Agenda::setMsgError("Agendamento para natação espontânea realizada com sucesso");
+	header('Location: /locaisnatacao');
+	exit;
+
 });
+
+$app->get("/minhaagenda", function() {
+
+	User::verifyLogin(false);
+
+	$agenda = new Agenda();
+	$user = User::getFromSession();	
+
+	$iduser = $user->getiduser();
+	
+	$agenda = $agenda->getAgendaByIduser($iduser);
+	//$agenda = $agenda->getAgendaAll();
+
+	//var_dump($agenda);
+	//exit;
+
+	$page = new Page([
+		'header'=>false,
+		'footer'=>false
+	]);
+
+	$page->setTpl("minhaagenda", [
+		'agenda'=>$agenda,
+		'error'=>Agenda::getMsgError()
+	]);
+		
+});
+
 
 ?>

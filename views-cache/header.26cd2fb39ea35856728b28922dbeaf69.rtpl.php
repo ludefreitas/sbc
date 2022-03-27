@@ -281,6 +281,28 @@ desired effect
 
           </ul>
         </li> 
+
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>Natação Espontânea</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="treeview">
+                      <a href="/prof/calendarioagendabaetao/3">
+                        <i class="fa fa-link"></i> 
+                        Agenda Baetão - 2022
+                      </a>                      
+                  </li>
+            <li class="treeview">
+                      <a href="/prof/calendarioagendapauliceia/21">
+                        <i class="fa fa-link"></i> 
+                        Agenda Paulicéia - 2022
+                      </a>                      
+                  </li>
+          </ul>
+        </li> 
         
       </ul>
       <!-- /.sidebar-menu -->

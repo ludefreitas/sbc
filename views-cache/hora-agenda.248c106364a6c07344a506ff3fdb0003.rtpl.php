@@ -48,6 +48,7 @@
                         <input type="text" name="idlocal" value="<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;"> 
                          <input type="text" name="nomediasemana" value="<?php echo htmlspecialchars( $nomeDiaSemana, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;"> 
                          <input type="text" name="horarioinicial" value="<?php echo htmlspecialchars( $horarioinicial, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;"> 
+                         <input type="text" name="idhoradiasemana" value="<?php echo htmlspecialchars( $idhoradiasemana, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;"> 
                          <input type="text" name="horariofinal" value="<?php echo htmlspecialchars( $horariofinal, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;"> 
                          <input type="text" name="dataSemSemana" value="<?php echo htmlspecialchars( $dataSemSemana, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;"> 
 
