@@ -1,7 +1,7 @@
 
  <div class="container"> <!-- container 1 -->
             <div class="row"> <!-- row 2 -->
-              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
+              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 15px 0px 0px 0px;">
 
 <div class="container" style="margin: 0px 0px 0px 0px; ">
   <div class="row">   
@@ -27,41 +27,25 @@
 </div>
 <hr style="background-color: orange;">
 
-{loop="$locais"}
-<a href="/modalidades/local/{$value.idlocal}" style="text-decoration: none">
-  <div class="container"> <!-- container 3 -->
-    <div class="row"> <!-- row 4 -->
-      
-           <!-- <div class="col-md-4" col-sm-1 style="text-align-last: left; background-color: white; margin: 5px 0px 5px 0px; padding-right: 0px">
-              
-
-                    <img class="img-responsive" style="width: 282px; height: 179px" id="image-preview" src="" alt="Foto">
-
-                 
-            </div> -->                             
-      
-            <div class="col-md-12" style="text-align: justify; line-height: 20px;  font-size: 20px; font-style: normal; margin: 5px 0px 0px 0px">
-
+<div class="container"> <!-- container 3 -->
+    <div class="row" style="te"> <!-- row 4 -->   
+     
+      {loop="$locais"}
+            
                    
-                      <h5 style=""><span style="font-weight: bold; color: #000000">{$value.apelidolocal} -</span> 
-                        <span style="color: #000000">
-                      {$value.nomelocal} 
-                      Endereço: {$value.rua}, 
-                      {$value.numero}  
-                      {$value.bairro} 
-                      Cep: {$value.cep} 
-                      Telefone: {$value.telefone}
-                    </span>
+                      
+                    <h5>                 
+                    
+                    <a  href="/modalidades/local/{$value.idlocal}" class="btn" style="background-color: #0f71b3; color: white; font-weight: bold; justify-content: flex-end; margin: 5px; padding-top: 20px; padding-bottom: 20px; font-size: 18px; width: 150px; text-align: center;" >{$value.apelidolocal}</a></h5>
 
-                   <!-- <a href="/local/{$value.idlocal}" class="btn" style="background-color: #0f71b3; color: white; font-weight: bold;" >Cursos dísponíveis</a>  -->
-                     <a href="/modalidades/local/{$value.idlocal}" class="btn" style="background-color: #0f71b3; color: white; font-weight: bold; justify-content: flex-end; display: flex;" >Cursos / Modalidades dísponíveis</a></h5>                                                                    
-
-            </div>                        
+      {/loop}
+      
+            
     </div> <!-- row 4 -->
   </div> <!-- container 3 -->
-</a>
+
 <hr style="background-color: orange;">
-{/loop}
+
 <div class="row" style="margin: -5px -5px -5px -5px; padding-top: 20px; ">    
   <div class="col-md-12" style="text-align-last: left; background-color: #cc5d1e; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;"> 
     <a href="/modalidades">           
@@ -70,6 +54,8 @@
       </div>
     </a>
   </div> 
+  <hr style="background-color: orange;">
 </div> <!-- final da index -->
+<hr style="background-color: orange;">
 
 

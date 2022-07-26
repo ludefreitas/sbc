@@ -3,6 +3,206 @@
 use \Sbc\Model\User;
 use \Sbc\Model\Saude;
 use \Sbc\DB\Sql;
+use \Sbc\Model\Temporada;
+use \Sbc\Model\Insc;
+
+function statusPresenca($dia, $mes, $idinsc, $idturma, $idtemporada)
+{
+    $statusPresenca = new Insc();
+    $statusPresenca = Insc::getStatusPresencaByIdinscIdturmaIdtemporada($dia, $mes, $idinsc, $idturma, $idtemporada);
+
+    if($statusPresenca == 0){
+        return '<span style="color: red;">F</span>';
+    }
+    if($statusPresenca == 1){
+        return '<span style="color: black;">P</span>';
+    }
+    if($statusPresenca == 2){
+        return '<span style="color: blue;">J</span>';
+    }
+    if($statusPresenca == 4){
+        return '-';
+    }
+    
+}
+
+function ControleFrequenciaAnoAnt($idturma, $idtemporada, $desctemporada)
+{
+    $controleAnoAnt = new Temporada();
+    $controleAnoAnt = Temporada::listAllTurmaTemporadaControleFrequenciaAnoAnt($idturma, $idtemporada, $desctemporada);
+    return $controleAnoAnt;
+}
+
+function ControleFrequenciaJan($idturma, $idtemporada, $desctemporada)
+{    
+    $data = date('m');
+    $controleJan = new Temporada();    
+    $controleJan = Temporada::listAllTurmaTemporadaControleFrequenciaJan($idturma, $idtemporada, $desctemporada);
+    $controleAnoAnt = new Temporada();    
+    $controleAnoAnt = Temporada::listAllTurmaTemporadaControleFrequenciaAnoAnt($idturma, $idtemporada, $desctemporada);
+    if($data < 1){
+        return 0;
+    }else{
+       return $controleJan + $controleAnoAnt; 
+    }
+}
+
+function ControleFrequenciaFev($idturma, $idtemporada, $desctemporada)
+{    
+    $data = date('m');
+    $controleFev = new Temporada();    
+    $controleFev = Temporada::listAllTurmaTemporadaControleFrequenciaFev($idturma, $idtemporada, $desctemporada);
+    $controleAnoAnt = new Temporada();    
+    $controleAnoAnt = Temporada::listAllTurmaTemporadaControleFrequenciaAnoAnt($idturma, $idtemporada, $desctemporada);
+    if($data < 2){
+        return 0;
+    }else{
+       return $controleFev + $controleAnoAnt; 
+    }
+}
+
+function ControleFrequenciaMar($idturma, $idtemporada, $desctemporada)
+{    
+    $data = date('m');
+    $controleMar = new Temporada();    
+    $controleMar = Temporada::listAllTurmaTemporadaControleFrequenciaMar($idturma, $idtemporada, $desctemporada);
+    $controleAnoAnt = new Temporada();    
+    $controleAnoAnt = Temporada::listAllTurmaTemporadaControleFrequenciaAnoAnt($idturma, $idtemporada, $desctemporada);
+    if($data < 3){
+        return 0;
+    }else{
+       return $controleMar + $controleAnoAnt; 
+    }
+}
+
+function ControleFrequenciaAbr($idturma, $idtemporada, $desctemporada)
+{    
+    $data = date('m');
+    $controleAbr = new Temporada();    
+    $controleAbr = Temporada::listAllTurmaTemporadaControleFrequenciaAbr($idturma, $idtemporada, $desctemporada);
+    $controleAnoAnt = new Temporada();    
+    $controleAnoAnt = Temporada::listAllTurmaTemporadaControleFrequenciaAnoAnt($idturma, $idtemporada, $desctemporada);
+    if($data < 4){
+        return 0;
+    }else{
+       return $controleAbr + $controleAnoAnt; 
+    }
+}
+
+function ControleFrequenciaMai($idturma, $idtemporada, $desctemporada)
+{    
+    $data = date('m');
+    $controleMai = new Temporada();    
+    $controleMai = Temporada::listAllTurmaTemporadaControleFrequenciaMai($idturma, $idtemporada, $desctemporada);
+    $controleAnoAnt = new Temporada();    
+    $controleAnoAnt = Temporada::listAllTurmaTemporadaControleFrequenciaAnoAnt($idturma, $idtemporada, $desctemporada);
+    if($data < 5){
+        return 0;
+    }else{
+       return $controleMai + $controleAnoAnt; 
+    }
+}
+
+function ControleFrequenciaJun($idturma, $idtemporada, $desctemporada)
+{    
+    $data = date('m');    
+    $controleJun = new Temporada();    
+    $controleJun = Temporada::listAllTurmaTemporadaControleFrequenciaJun($idturma, $idtemporada, $desctemporada);
+    $controleAnoAnt = new Temporada();    
+    $controleAnoAnt = Temporada::listAllTurmaTemporadaControleFrequenciaAnoAnt($idturma, $idtemporada, $desctemporada);
+    if($data < 6){
+        return 0;
+    }else{
+       return $controleJun + $controleAnoAnt; 
+    }
+    
+}
+
+function ControleFrequenciaJul($idturma, $idtemporada, $desctemporada)
+{   
+    $data = date('m'); 
+    $controleJul = new Temporada();    
+    $controleJul = Temporada::listAllTurmaTemporadaControleFrequenciaJul($idturma, $idtemporada, $desctemporada);    
+    $controleAnoAnt = new Temporada();    
+    $controleAnoAnt = Temporada::listAllTurmaTemporadaControleFrequenciaAnoAnt($idturma, $idtemporada, $desctemporada);
+    if($data < 7){
+        return 0;
+    }else{
+       return $controleJul + $controleAnoAnt; 
+    }
+}
+
+function ControleFrequenciaAgo($idturma, $idtemporada, $desctemporada)
+{    
+    $data = date('m');
+    $controleAgo = new Temporada();    
+    $controleAgo = Temporada::listAllTurmaTemporadaControleFrequenciaAgo($idturma, $idtemporada, $desctemporada);    
+    $controleAnoAnt = new Temporada();    
+    $controleAnoAnt = Temporada::listAllTurmaTemporadaControleFrequenciaAnoAnt($idturma, $idtemporada, $desctemporada);
+    if($data < 8){
+        return 0;
+    }else{
+       return $controleAgo + $controleAnoAnt; 
+    }
+}
+
+function ControleFrequenciaSet($idturma, $idtemporada, $desctemporada)
+{    
+    $data = date('m');
+    $controleSet = new Temporada();    
+    $controleSet = Temporada::listAllTurmaTemporadaControleFrequenciaSet($idturma, $idtemporada, $desctemporada);    
+    $controleAnoAnt = new Temporada();    
+    $controleAnoAnt = Temporada::listAllTurmaTemporadaControleFrequenciaAnoAnt($idturma, $idtemporada, $desctemporada);
+    if($data < 9){
+        return 0;
+    }else{
+       return $controleSet + $controleAnoAnt; 
+    }
+}
+
+function ControleFrequenciaOut($idturma, $idtemporada, $desctemporada)
+{    
+    $data = date('m');
+    $controleOut = new Temporada();    
+    $controleOut = Temporada::listAllTurmaTemporadaControleFrequenciaOut($idturma, $idtemporada, $desctemporada);    
+    $controleAnoAnt = new Temporada();    
+    $controleAnoAnt = Temporada::listAllTurmaTemporadaControleFrequenciaAnoAnt($idturma, $idtemporada, $desctemporada);
+    if($data < 10){
+        return 0;
+    }else{
+       return $controleOut + $controleAnoAnt; 
+    }
+}
+
+function ControleFrequenciaNov($idturma, $idtemporada, $desctemporada)
+{    
+    $data = date('m');
+    $controleNov = new Temporada();    
+    $controleNov = Temporada::listAllTurmaTemporadaControleFrequenciaNov($idturma, $idtemporada, $desctemporada);
+    $controleAnoAnt = new Temporada();    
+    $controleAnoAnt = Temporada::listAllTurmaTemporadaControleFrequenciaAnoAnt($idturma, $idtemporada, $desctemporada);
+    if($data < 11){
+        return 0;
+    }else{
+       return $controleNov + $controleAnoAnt; 
+    }
+}
+
+/*
+function ControleFrequenciaDez($idturma, $idtemporada, $desctemporada)
+{    
+    $data = date('m');
+    $controleDez = new Temporada();    
+    $controleDez = Temporada::listAllTurmaTemporadaControleFrequenciaDez($idturma, $idtemporada, $desctemporada);
+    $controleAnoAnt = new Temporada();    
+    $controleAnoAnt = Temporada::listAllTurmaTemporadaControleFrequenciaAnoAnt($idturma, $idtemporada, $desctemporada);
+    if($data < 12){
+        return 0;
+    }else{
+       return $controleDez + $controleAnoAnt; 
+    }
+}
+*/
 
 function formatar_mascara($src, $mascara) {
   $campo = $src.value.length;

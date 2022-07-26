@@ -340,6 +340,35 @@ $app->get("/admin/turma-temporada/:idtemporada", function($idtemporada) {
 	]);	
 });
 
+$app->get("/admin/controle-frequencia/:idtemporada", function($idtemporada) {
+
+	User::verifyLogin();
+
+	$temporada = new Temporada();
+	$turma = new Turma();
+	$local = new Local();
+
+	$temporada->get((int)$idtemporada);
+
+	$local = $local->setapelidolocal('');
+
+	$page = new PageAdmin([
+		'header'=>false,
+		'footer'=>false
+	]);
+
+	$page->setTpl("controle-frequencia", [
+		'local'=>$local,
+		'locais'=>Local::listAll(),
+		'temporada'=>$temporada->getValues(),
+		//'turmaRelated'=>$temporada->getTurma(true)
+		'turmas'=>Temporada::listAllTurmaTemporadaControleFrequencia($idtemporada),
+		//'turmaNotRelated'=>$temporada->getTurma(false)
+		//'countIncricoesJan'=>$countIncricoesJan,
+		'error'=>User::getError()
+	]);	
+});
+
 $app->get("/admin/turma-temporada/:idtemporada/local/:idlocal", function($idtemporada, $idlocal) {
 
 	User::verifyLogin();

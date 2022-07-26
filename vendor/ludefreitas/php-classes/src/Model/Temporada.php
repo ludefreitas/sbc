@@ -61,6 +61,224 @@
 			]);
 		}
 
+		public static function listAllTurmaTemporadaControleFrequencia($idtemporada)
+		{
+			$sql = new Sql();
+
+			return $sql->select("SELECT * 
+				FROM tb_turmatemporada a 
+				INNER JOIN tb_turma i            
+				using(idturma)
+				INNER JOIN tb_users b
+				using(iduser)
+				INNER JOIN tb_atividade c
+				using(idativ)
+				INNER JOIN tb_espaco d
+				using(idespaco)
+				INNER JOIN tb_local e
+				using(idlocal)
+				-- INNER JOIN tb_turmastatus f
+				-- using(idturmastatus)
+				INNER JOIN tb_horario g
+				using(idhorario)
+				INNER JOIN tb_fxetaria h
+				using(idfxetaria)	            
+	            INNER JOIN tb_temporada j           
+				using(idtemporada)   
+	            INNER JOIN tb_statustemporada k          
+				using(idstatustemporada)
+				INNER JOIN tb_modalidade l
+				using(idmodal)
+	            INNER JOIN tb_persons m
+				using(idperson)            
+				WHERE idtemporada = :idtemporada
+				ORDER BY e.apelidolocal, l.descmodal, g.diasemana, g.periodo, g.horainicio", [
+				':idtemporada'=>$idtemporada 
+			]);
+		}
+
+		/*
+		public static function listAllTurmaTemporadaControleFrequenciaFev($idtemporada, $desctemporada)
+
+		{
+			$sql = new Sql();
+
+			$results = $sql->select("SELECT count(*) FROM tb_insc a
+			INNER JOIN tb_temporada j           
+			WHERE j.idtemporada = :idtemporada
+			AND MID (dtinsc, 6, 2) <= 09 
+			AND MID (dtinsc, 1, 4) = :desctemporada
+			AND (idinscstatus != 8 
+			AND idinscstatus != 9)", [
+			':idtemporada'=>$idtemporada,
+		    ':desctemporada'=>$desctemporada 
+			]);
+
+			//var_dump($results);
+			//exit;
+
+			//return $results;
+
+			
+		}
+		*/
+
+		public static function listAllTurmaTemporadaControleFrequenciaAnoAnt($idturma, $idtemporada, $desctemporada)
+		{
+			$desctemporada = $desctemporada - 1;
+			$sql = new Sql();
+			$results = $sql->select("CALL sp_select_insc_numInscritosAnoAnt(:idturma, :idtemporada, :desctemporada)", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada,
+		    ':desctemporada'=>$desctemporada 
+			]);
+			return (int)$results[0]['count(*)'];			
+		}
+
+		public static function listAllTurmaTemporadaControleFrequenciaJan($idturma, $idtemporada, $desctemporada)
+		{
+			$sql = new Sql();
+			$results = $sql->select("CALL sp_select_insc_numInscritosJan(:idturma, :idtemporada, :desctemporada)", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada,
+		    ':desctemporada'=>$desctemporada 
+			]);
+
+			return (int)$results[0]['count(*)'];			
+		}
+
+		public static function listAllTurmaTemporadaControleFrequenciaFev($idturma, $idtemporada, $desctemporada)
+		{
+			$sql = new Sql();
+			$results = $sql->select("CALL sp_select_insc_numInscritosFev(:idturma, :idtemporada, :desctemporada)", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada,
+		    ':desctemporada'=>$desctemporada 
+			]);
+
+			return (int)$results[0]['count(*)'];			
+		}
+
+		public static function listAllTurmaTemporadaControleFrequenciaMar($idturma, $idtemporada, $desctemporada)
+		{
+			$sql = new Sql();
+			$results = $sql->select("CALL sp_select_insc_numInscritosMar(:idturma, :idtemporada, :desctemporada)", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada,
+		    ':desctemporada'=>$desctemporada 
+			]);
+
+			return (int)$results[0]['count(*)'];			
+		}
+
+		public static function listAllTurmaTemporadaControleFrequenciaAbr($idturma, $idtemporada, $desctemporada)
+		{
+			$sql = new Sql();
+			$results = $sql->select("CALL sp_select_insc_numInscritosAbr(:idturma, :idtemporada, :desctemporada)", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada,
+		    ':desctemporada'=>$desctemporada 
+			]);
+
+			return (int)$results[0]['count(*)'];			
+		}
+
+		public static function listAllTurmaTemporadaControleFrequenciaMai($idturma, $idtemporada, $desctemporada)
+		{
+			$sql = new Sql();
+			$results = $sql->select("CALL sp_select_insc_numInscritosMai(:idturma, :idtemporada, :desctemporada)", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada,
+		    ':desctemporada'=>$desctemporada 
+			]);
+
+			return (int)$results[0]['count(*)'];			
+		}
+
+		public static function listAllTurmaTemporadaControleFrequenciaJun($idturma, $idtemporada, $desctemporada)
+		{
+			$sql = new Sql();
+			$results = $sql->select("CALL sp_select_insc_numInscritosJun(:idturma, :idtemporada, :desctemporada)", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada,
+		    ':desctemporada'=>$desctemporada 
+			]);
+
+			return (int)$results[0]['count(*)'];			
+		}
+
+		public static function listAllTurmaTemporadaControleFrequenciaJul($idturma, $idtemporada, $desctemporada)
+		{
+			$sql = new Sql();
+			$results = $sql->select("CALL sp_select_insc_numInscritosJul(:idturma, :idtemporada, :desctemporada)", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada,
+		    ':desctemporada'=>$desctemporada 
+			]);
+
+			return (int)$results[0]['count(*)'];			
+		}
+
+		public static function listAllTurmaTemporadaControleFrequenciaAgo($idturma, $idtemporada, $desctemporada)
+		{
+			$sql = new Sql();
+			$results = $sql->select("CALL sp_select_insc_numInscritosAgo(:idturma, :idtemporada, :desctemporada)", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada,
+		    ':desctemporada'=>$desctemporada 
+			]);
+
+			return (int)$results[0]['count(*)'];			
+		}
+
+		public static function listAllTurmaTemporadaControleFrequenciaSet($idturma, $idtemporada, $desctemporada)
+		{
+			$sql = new Sql();
+			$results = $sql->select("CALL sp_select_insc_numInscritosSet(:idturma, :idtemporada, :desctemporada)", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada,
+		    ':desctemporada'=>$desctemporada 
+			]);
+
+			return (int)$results[0]['count(*)'];			
+		}
+
+		public static function listAllTurmaTemporadaControleFrequenciaOut($idturma, $idtemporada, $desctemporada)
+		{
+			$sql = new Sql();
+			$results = $sql->select("CALL sp_select_insc_numInscritosOut(:idturma, :idtemporada, :desctemporada)", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada,
+		    ':desctemporada'=>$desctemporada 
+			]);
+
+			return (int)$results[0]['count(*)'];			
+		}
+
+		public static function listAllTurmaTemporadaControleFrequenciaNov($idturma, $idtemporada, $desctemporada)
+		{
+			$sql = new Sql();
+			$results = $sql->select("CALL sp_select_insc_numInscritosNov(:idturma, :idtemporada, :desctemporada)", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada,
+		    ':desctemporada'=>$desctemporada 
+			]);
+
+			return (int)$results[0]['count(*)'];			
+		}
+
+		public static function listAllTurmaTemporadaControleFrequenciaDez($idturma, $idtemporada, $desctemporada)
+		{
+			$sql = new Sql();
+			$results = $sql->select("CALL sp_select_insc_numInscritosDez(:idturma, :idtemporada, :desctemporada)", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada,
+		    ':desctemporada'=>$desctemporada 
+			]);
+
+			return (int)$results[0]['count(*)'];			
+		}
+
 		public static function listAllTurmaTemporadaLocal($idtemporada, $idlocal)
 		{
 			$sql = new Sql();

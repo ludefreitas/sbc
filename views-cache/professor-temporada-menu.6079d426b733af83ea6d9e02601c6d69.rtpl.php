@@ -16,6 +16,6 @@
 									   		</li><li class="treeview">
 									   			<a href="/admin/professor-temporada/4">
 									   				<i class="fa fa-link"></i>
-									   				Profs Temporada 2021
+									   				Profs Temporada 2022
 									   			</a>
 									   		</li>

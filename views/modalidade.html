@@ -10,7 +10,7 @@
 </script>
   <div class="container"> <!-- container 1 -->
             <div class="row"> <!-- row 2 -->
-              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
+              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 15px 0px 0px 0px;">
 
 <div class="container" style="margin: 0px px 0px 0px; ">
 
@@ -30,6 +30,8 @@
 </div>      
 
   {loop="$turma"}
+
+  {if="($value.idturma == 264) OR ($value.idturma == 265) OR ($value.idturma == 266) OR ($value.idturma == 267) OR ($value.idturma == 447) OR ($value.idturma == 448) OR ($value.idturma == 449)"}
 
   <div class="container"> <!-- container 3 -->
     <div class="row"> <!-- row 4 --> 
@@ -52,7 +54,8 @@
                 [{$value.idturma}] - {$value.descativ}
             </span><br>
              
-              {$value.diasemana} das {$value.horainicio} às {$value.horatermino} <br>  
+               <span style="font-size: 19px"> {$value.diasemana} das {$value.horainicio} às {$value.horatermino} </span> <br>  
+               
                Local da aula: <strong>{$value.apelidolocal}</strong><br>             
               Temporada: {$value.desctemporada} <br>
 
@@ -93,9 +96,23 @@
                 {if="$value.numinscritos < $value.vagas && $value.idstatustemporada == 5"} 
 
                    {if="$value.nummatriculados < $value.vagas && $value.idstatustemporada == 5"} 
-                      <span style="color: darkgreen;">
+
+                   
+
+                       {if="($value.idlocal == 5) OR ($value.idlocal == 21)"}
+
+                        <span style="color: darkgreen;">
                         <strong>Há vagas disponíveis</strong><br>
                       </span>
+
+                      {else}
+
+                       <span style="color: darkgreen;">
+                        <strong>Clique para fazer sua rematrícula</strong><br>
+                      </span>
+
+                      {/if}
+
                    {/if}
 
                 {else}
@@ -152,7 +169,7 @@
       </div>
     </div> <!-- row 4 -->
   </div> <!-- container 3 -->
-
+{/if}
 
   {/loop}
 

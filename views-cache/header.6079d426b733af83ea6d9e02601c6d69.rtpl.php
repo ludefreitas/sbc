@@ -278,7 +278,7 @@ desired effect
           <a href="/admin/temporada"><i class="fa fa-link"></i><span>Temporadas</span></a>
         </li>     
         <li class="treeview">
-          <a href="/admin/insc"><i class="fa fa-link"></i> <span>TURMAS por temporada</span>
+          <a href="/admin"><i class="fa fa-link"></i> <span>TURMAS por temporada</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -288,6 +288,24 @@ desired effect
 
           </ul>
         </li>
+
+        <li class="treeview">
+          <a href="/admin"><i class="fa fa-link"></i> <span>Controle de Frequência</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li>
+              <a href="/admin/controle-frequencia/4"><i class="fa fa-link"></i> <span> Contr. Freq. 2021</span>
+              <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            </a>
+            </li>
+          </ul>
+        </li>
+
 
         <li class="treeview">
           <a href="/admin/insc"><i class="fa fa-link"></i> <span>PROFESSOR</span>

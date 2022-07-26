@@ -4,18 +4,61 @@
             </div>  <!-- container  1 -->
               
       </section> 
+      <style>
+        .fa-instagram {
+          color: transparent;
+   background: -webkit-radial-gradient(30% 107%, circle, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+        background: -o-radial-gradient(30% 107%, circle, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+          background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+  background: -webkit-radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+          background-clip: text;
+          -webkit-background-clip: text;
+      }       
+       
+      </style>
 
-      <footer>    
-        
+      <footer>  
+       
           <div class="container">
             <div class="row">
 
-              <div class="col-md-12" col-sm-1 style="text-align-last: center; background-color: #0f71b3;">
+              <div class="col-md-8" style="text-align-last: center; margin-top: 0px; margin-bottom: 10px;">     
+                        <span style="font-weight: bold; font-style: italic; color: blue;">Fale conosco e curta<br> Cursos Esportivos SBC através das redes sociais</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="https://www.facebook.com/cursosesportivossbc" target="_blank" >
+                          <i class="fa fa-facebook-square fa-2x" style="background-color: white; color: blue;"> 
+                             <span style="color: black; text-align-last: center; font-weight: bold; font-style: italic; font-size: 16px;">facebook.com/cursosesportivossbc </span>                         
+                          </i> 
+                          
+                        </a>
+
+                        
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                        <a href="https://instagram.com/cursosesportivossbc" target="_blank">
+                          <i class="fa fa-instagram fa-2x" >    <span style="color: black; text-align-last: center; font-weight: bold; font-style: italic; font-size: 16px;">instagram.com/cursosesportivossbc</span>
+                        </i>
+                         
+                           
+                      </a>
+                       <br>
+                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                        <a href="https://www.youtube.com/cursosesportivossbc" target="_blank">
+                          <i class="fa fa-youtube-play fa-2x" style="background-color: white; color: red;">
+                              <span style="color: black; text-align-last: center; font-weight: bold;font-style: italic; font-style: italic; font-size: 16px;">youtube.com/cursosesportivossbc</span>
+                        </i>
+                        
+                        </a>               
+              </div>
+
+              <div class="col-md-8" col-sm-1 style="text-align-last: center; background-color: #0f71b3;">
                 <div style="text-align-last: center; font-weight: 600; font-size: 14px; color: white; margin: 5px;"> 
                   <p> Secretaria de Esportes - Prefeitura de São Bernardo do Campo<br> Secretário: ALEX MOGNON<br> Av. Kennedy, 1155 - Bairro Anchieta - 09726-263 - Tel.: 11 2630-7466 </p> 
                 </div> 
-              </div>                                                                           
-                          
+
+              </div>   
+
             </div>
           </div>
 

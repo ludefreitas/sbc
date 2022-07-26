@@ -22,22 +22,30 @@
             <div class="row">            
                 <div class="col-md-7 alert alert-primary" style="text-align-last: center;">
                     <h5><?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> -  <?php echo calcularIdade($pessoa["dtnasc"]); ?> anos </h5>
-                    <h5>Inscrição: <?php echo htmlspecialchars( $insc["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h5>
+                    <h5>Inscrição <?php echo htmlspecialchars( $insc["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h5>
                     
                 </div>
-                <div class="col-md-5 alert alert-success" style="text-align-last: center;">
-                        <?php if( $insc["idinscstatus"] == 9 ){ ?>
-
+                
+                   
+                <?php if( $insc["idinscstatus"] == 9 ){ ?>
+                    <div class="col-md-5 alert alert-success" style="text-align-last: center;">
                         <p><h5 style="text-align: center"><strong style="color: red; font-size: 20px;"> <?php echo htmlspecialchars( $insc["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </strong></h5>
                         </p>
+                    </div> 
 
-                        <?php }else{ ?>
-                       <p><h5 style="text-align: center"> Nº para concorrer no sorteio: </h5>
-                       <p><h3 style="color: red; text-align-last: center"><?php echo htmlspecialchars( $insc["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h3> </p>
-                       <h6 style="text-align: center; font-size: 12px;"> * Caso esta inscrição vá para sorteio</h6></p>
-                       <?php } ?>
-                      
-                </div> 
+                <?php }else{ ?>
+                    <?php if( $insc["idstatustemporada"] == 5 ){ ?>
+
+                    <?php }else{ ?>
+                        <div class="col-md-5 alert alert-success" style="text-align-last: center;">
+                                <p><h5 style="text-align: center"> Nº para concorrer no sorteio: </h5>
+                                <p><h3 style="color: red; text-align-last: center"><?php echo htmlspecialchars( $insc["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h3> </p>
+                                <h6 style="text-align: center; font-size: 12px;"> * Caso esta inscrição vá para sorteio</h6></p>
+                        </div> 
+                    <?php } ?>
+                
+                <?php } ?>
+                
                 
             </div>              
         </div>
@@ -100,26 +108,12 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-3" style="padding-top: 10px;">
-            <strong>STATUS da Inscrição: </strong>
+        <div class="col-md-3" style="padding-top: 10px">
+            <strong>Status da Inscrição: </strong>
         </div>
-
-         <?php if( $insc["idinscstatus"] == 9 ){ ?>
-
         <div class="col-md-9 alert alert-success" <?php echo colorStatus($insc["idinscstatus"]); ?>>
             <strong><?php echo htmlspecialchars( $insc["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
         </div>
-
-        <?php }else{ ?>
-
-        <div class="col-md-9 alert alert-success" style="background: linear-gradient(to bottom, rgba(0, 0, 255, 0.4), transparent);">
-            <strong>Aguardando Sorteio</strong>
-        </div>
-
-        <?php } ?>
-
-
-
     </div>
     <div class="row">
         <div class="col-md-3" style="padding-top: 10px">
@@ -127,6 +121,14 @@
         </div>
         <div class="col-md-9 alert alert-success">
             <strong><?php echo formatDate($insc["dttermmatricula"]); ?></strong>
+        </div>
+    </div>
+    <div class="row">
+        
+         <div style="text-align-last: center" class="col-md-9 alert alert-info" <?php echo colorStatus($insc["idinscstatus"]); ?>>
+            <strong>
+                <a href="/profile/insc" role="button"> Detalhes </a>
+            </strong>
         </div>
     </div>
     <!--

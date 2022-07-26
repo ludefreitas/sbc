@@ -10,7 +10,7 @@
 </script>
   <div class="container"> <!-- container 1 -->
             <div class="row"> <!-- row 2 -->
-              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
+              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 15px 0px 0px 0px;">
 
 <div class="container" style="margin: 0px px 0px 0px; ">
 
@@ -93,9 +93,23 @@
                 <?php if( $value1["numinscritos"] < $value1["vagas"] && $value1["idstatustemporada"] == 5 ){ ?> 
 
                    <?php if( $value1["nummatriculados"] < $value1["vagas"] && $value1["idstatustemporada"] == 5 ){ ?> 
-                      <span style="color: darkgreen;">
+
+                   
+
+                       <?php if( ($value1["idlocal"] == 5) OR ($value1["idlocal"] == 21) ){ ?>
+
+                        <span style="color: darkgreen;">
                         <strong>Há vagas disponíveis</strong><br>
                       </span>
+
+                      <?php }else{ ?>
+
+                       <span style="color: darkgreen;">
+                        <strong>Clique para fazer sua rematrícula</strong><br>
+                      </span>
+
+                      <?php } ?>
+
                    <?php } ?>
 
                 <?php }else{ ?>

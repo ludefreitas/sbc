@@ -15,7 +15,7 @@ $app->get("/local/:idlocal", function($idlocal) {
 
 	if(!isset($turma) || $turma == NULL){
 
-		Cart::setMsgError("N達o existem turmas para o Crec ".$local->getapelidolocal()." nesta temporada. Aguarde! ");
+		Cart::setMsgError("Não existem turmas para o Crec ".$local->getapelidolocal()." nesta temporada. Aguarde! ");
 	}	
 	
 	$desctemporada  = isset($turma[0]['desctemporada']) ? $turma[0]['desctemporada'] : '';

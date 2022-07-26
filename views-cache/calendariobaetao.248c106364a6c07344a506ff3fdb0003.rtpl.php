@@ -44,10 +44,49 @@
           dateClick: function(info) {
 
             let local = document.getElementById('local').value;          
-
-
             let datasemanas = new Date(info.dateStr);
             let data = info.dateStr;
+
+            if(data >= '2022-07-09' && data <= '2022-07-31'){
+                  alert('No período de 09/07 e 31/07/2022 não haverá natação espontânea nas nossas piscinas.');             
+                  return;
+            }
+
+            if(data == '2022-06-18'){
+                  alert('A data escolhida é emenda de feriado, não haverá natação espontânea');             
+                  return;
+            }
+
+            if(data == '2022-04-30'){
+                  alert('A natação espontânea no Baetão terá início a partir do dia 02/05/2022');             
+                  return;
+            }
+
+            Date.prototype.addDias = function(dias){
+              this.setDate(this.getDate() + dias)
+            };
+
+            let hojeMaisUmaSemana = new Date();
+
+            hojeMaisUmaSemana.addDias(7);
+
+            function maisUmaSemanaFormatada(){
+              let dataMaisUmaSemana = new Date(hojeMaisUmaSemana),
+              dia  = dataMaisUmaSemana.getDate().toString().padStart(2, '0'),
+              mes  = (dataMaisUmaSemana.getMonth()+1).toString().padStart(2, '0'),
+              ano  = dataMaisUmaSemana.getFullYear();
+              //return `${dia}/${mes}/${ano}`;
+              return `${ano}-${mes}-${dia}`;
+            }
+
+            let hojeMaisUmaSemanaFormatada = maisUmaSemanaFormatada();    
+
+            if(hojeMaisUmaSemanaFormatada <= data){    
+
+              alert('A agenda para esta data ainda não está aberta!');                  
+              return;
+
+            }
 
             function dataAtualFormatada(){
               let data = new Date(),
@@ -62,7 +101,7 @@
 
             let strDiaSemana = datasemanas.getDay();
 
-            if(local == 3 && strDiaSemana == 5){
+             if(local == 3 && (strDiaSemana == 2 || strDiaSemana == 5)){
 
                 if(hoje > data){
 
@@ -76,9 +115,11 @@
                
             }else{
                 
-                alert('A natação espontânea no Baetão só acontece aos sábados. Escolha uma data no sábado para agendar sua natação!');
+                 alert('A natação espontânea no Baetão acontece somente às quartas e sábados. Escolha uma data em um destes dias semana para agendar sua natação!');
                 return;               
-             }           
+             }    
+
+             alert('Informamos que a partir de 01/06/2022 o munícipe, interessado em participar da natação espontânea, deverá apresentar, no momento de acessar a piscina, o atestado dermatológico. A não apresentação do atestado impede o munícipe de acessar a piscina ');       
                    /*
             alert('Clicked on: ' + info.dateStr + ' - ' + local);
             alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);

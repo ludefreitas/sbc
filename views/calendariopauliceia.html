@@ -7,10 +7,7 @@
      <link href="/../res/site/js/fullcalendar/main.css" rel="stylesheet" />
 
     <script src="/../res/site/js/fullcalendar/main.min.js"></script>    
-    <script>
-
-
-     
+    <script>   
 
      
       /*
@@ -52,6 +49,40 @@
             let datasemanas = new Date(info.dateStr);
             let data = info.dateStr;
 
+            if(data == '2022-04-15'){
+                  alert('A data escolhida é um feriado, não haverá natação espontânea');                  
+                  return;
+            }
+
+            if(data == '2022-04-22'){
+                  alert('A data escolhida é emenda de feriado, não haverá natação espontânea');             
+                  return;
+            }
+
+            if(data == '2022-06-17'){
+                  alert('A data escolhida é emenda de feriado, não haverá natação espontânea');             
+                  return;
+            }
+
+            Date.prototype.addDias = function(dias){
+              this.setDate(this.getDate() + dias)
+            };
+
+            let hojeMaisUmaSemana = new Date();
+
+            hojeMaisUmaSemana.addDias(7);
+
+            function maisUmaSemanaFormatada(){
+              let dataMaisUmaSemana = new Date(hojeMaisUmaSemana),
+              dia  = dataMaisUmaSemana.getDate().toString().padStart(2, '0'),
+              mes  = (dataMaisUmaSemana.getMonth()+1).toString().padStart(2, '0'),
+              ano  = dataMaisUmaSemana.getFullYear();
+              //return `${dia}/${mes}/${ano}`;
+              return `${ano}-${mes}-${dia}`;
+            }
+
+            let hojeMaisUmaSemanaFormatada = maisUmaSemanaFormatada();               
+
             function dataAtualFormatada(){
               let data = new Date(),
               dia  = data.getDate().toString().padStart(2, '0'),
@@ -60,12 +91,20 @@
               //return `${dia}/${mes}/${ano}`;
               return `${ano}-${mes}-${dia}`;
             }
+            
 
             let hoje = dataAtualFormatada();
 
             let strDiaSemana = datasemanas.getDay();           
 
            if(local == 21 && strDiaSemana == 4){
+
+                if(hojeMaisUmaSemanaFormatada <= data){    
+
+                 alert('A agenda para esta data ainda não está aberta!');                  
+                  return;
+
+                }
 
                 if(hoje > data){
 
@@ -83,31 +122,8 @@
                 return;               
              }           
 
-            /*
-            alert('Clicked on: ' + info.dateStr + ' - ' + local);
-            alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
-            alert('Current view: ' + info.view.type);
-            // change the day's background color just for fun
-            info.dayEl.style.backgroundColor = 'red';
-            */
-          
-          },
-
-           /*
-           events: '/../res/site/js/events.json',
-           */
-
-           //events: '/../res/site/js/agenda.json',
-
-          /*
-          events: [
-            { // this object will be "parsed" into an Event Object
-              title: 'natação', // a property!
-              start: '2022-01-06', // a property!
-              end: '2022-02-07' // a property! ** see important note below about 'end' **
-             }
-          ]
-          */
+            
+          },     
 
           eventClick: function(info) {
 
@@ -137,11 +153,12 @@
     </script>
   </head>
   
-                {if="$error != ''"}
-                <div class="alert alert-danger">
-                {$error}
-                </div>
-                {/if}
+    {if="$error != ''"}
+    <div class="alert alert-danger">
+    {$error}
+    </div>
+    {/if}
+    
     <div id='calendar' class="calendar"></div>
 
      <input type="text" name="local" id="local" value="{$idlocal}" hidden="true">

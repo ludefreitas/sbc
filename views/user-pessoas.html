@@ -56,26 +56,29 @@
                     </div>
                     <div class="col-md-12">
                             <span style="color: blue;">
-                            {if="$value.defauditiva"}
+                            {if="isset($value.defauditiva)"}
                             Deficiente Auditivo -
                             {/if}
-                            {if="$value.defvisual"}
+                            {if="isset($value.defvisual)"}
+                                    {if="$value.defvisual == null"}
+                                           
+                                    {/if}
                             Deficiente Visual -
                             {/if}
-                            {if="$value.deffisica"}
+                            {if="isset($value.deffisica)"}
                             Deficiente Físico -
                             {/if}
-                            {if="$value.defintelectual"}
+                            {if="isset($value.defintelectual)"}
                             Deficiente Intelectual -
                             {/if}
-                            {if="$value.defautismo"}
+                            {if="isset($value.defautismo)"}
                             Autista -
                             {/if}
-                            {if="$value.deftea"}
+                            {if="isset($value.deftea)"}
                             Pessoa com TEA - 
                             {/if}
-                            <span style="font-weight: bold; color: black; ">CID.: {$value.codigo}</span>
-                            {$value.doenca}</span>
+                            
+
                             
                         </div>
                         <div class="col-md-12">

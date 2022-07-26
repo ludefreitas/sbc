@@ -40,6 +40,12 @@
                 <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
                 </div>
                 <?php } ?>
+
+                <?php if( $idlocal == 3 ){ ?>
+                <div class="alert alert-info" style="font-size: 12px">
+                Agora você já pode agendar dois horário seguidos de 30 minutos para praticar a natação espontânea no Baetão, aos sábados se o horário estiver diponível. Aproveite!!
+                </div>
+                <?php } ?>
             </div>
 
             <div class="col-md-12" style="font-weight: bold; color: darkgreen;">
@@ -64,6 +70,8 @@
                          <span style="font-weight: bold;"><?php echo htmlspecialchars( $nomediadasemana, ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $dataformatada, ENT_COMPAT, 'UTF-8', FALSE ); ?></span><br>
                         
                         <?php $counter1=-1;  if( isset($horariosDiaSemana) && ( is_array($horariosDiaSemana) || $horariosDiaSemana instanceof Traversable ) && sizeof($horariosDiaSemana) ) foreach( $horariosDiaSemana as $key1 => $value1 ){ $counter1++; ?>
+
+                        
 
                         <input type="radio" name="idhoradiasemana" value="<?php echo htmlspecialchars( $value1["idhoradiasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
 
@@ -101,11 +109,11 @@
     <div class="container">
             <div class="row" style="padding-bottom: 10px;">
                 <div class="col-md-12" style="margin-top: 10px; text-align-last: center">
-                    <input style="width: 100%; float: right; background-color: #15a03f;" type="submit" class="btn">
+                    <input onclick="alert('Lembramos que ao fazer seu agendamento, você está ciente da necessidade de se apresentar em nossas piscinas, no dia agendado para nadar, com sunga (para os homens) maiô (para as mulheres) e touca de natação')" style="width: 100%; float: right; background-color: #15a03f;" type="submit" class="btn">
                 </div> 
                 <div class="col-md-12" style="margin-top: 10px; text-align-last: center">
 
-                        <a class="btn" style="width: 100%; float: right; background-color: #ce2c3e;  text-decoration: none; color: white;" href="javascript:window.history.go(-1)" text-decoration="none">CANCELAR
+                        <a class="btn" style="width: 100%; float: right; background-color: #ce2c3e;  text-decoration: none; color: white;" href="javascript:window.history.go(-1)" text-decoration="none">CANCELAR/VOLTAR
                         </a>
                        
                 </div>                  

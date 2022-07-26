@@ -260,17 +260,19 @@
                   <div class="row"> 
                     
                     <div class="col-md-4" style="border: 1px solid black;">
-                      
-                      <div class="row" style="margin: 0; padding: 0">
-                        <div class="col-md-1" style="text-align: center;">
-                          {$value.numordem} 
+                        
+                      <div class="row">
+                        
+                        <div class="col-md-12">
+                          {$value.nomepess} 
+                            {if="$value.idinscstatus == 9"} 
+                            [<span style="font-weight: bold; font-size: 8px; color: red;"> 
+                              CANCELADA 
+                            </span>]  
+                          {/if}                     
                         </div>
-                        <div class="col-md-10">
-                              {$value.nomepess}                        
-                        </div>
-                      </div>  
-
-                    </div> 
+                      </div>      
+                    </div>
 
                     <div class="col-md-4">
 
@@ -375,15 +377,17 @@
                   <div class="row"> 
                     
                     <div class="col-md-4" style="border: 1px solid black;">
-                      <div class="row">
+                        
+                     <div class="row">
                         <div class="col-md-1">
-                          
+                         
                         </div>
                         <div class="col-md-10">
                           
                         </div>
-                      </div>               
-                    </div> 
+                      </div>
+                      
+                     </div>
 
                     <div class="col-md-4">
 

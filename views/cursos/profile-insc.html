@@ -1,0 +1,82 @@
+
+ <div class="container"> <!-- container 1 -->
+            <div class="row"> <!-- row 2 -->
+                <div class="col-md-3" style="margin: 15px 0px 0px 0px">
+                {include="user-profile-menu"}
+            </div>
+              <div class="col-md-9" style="text-align-last: left; background-color: white; margin: 15px 0px 5px 0px;">
+
+            <div class="container">
+                <div class="row alert-primary">
+                    <div class="col-md-12" style="padding-top: 10px; padding-bottom: 10px">
+                        <strong> Minhas inscrições</strong>
+                    </div>
+                </div>
+                 {loop="$insc"}
+                <div class="row alert-info">
+                    <div class="col-md-12">
+                        <hr>
+                         {if="$value.idinscstatus == 9"}
+                        <strong>INSCRIÇÃO Nº: </strong><span>{$value.idinsc}</span>&nbsp;&nbsp;[
+                        <strong style="color: red; font-size: 18px;"> {$value.descstatus} </strong>]
+                        
+                        {else}
+                        
+                            {if="$value.idstatustemporada == 5"}
+                            
+                            {else}
+                                <strong>NÚMERO PARA O SORTEIO: </strong><span style="color: red; font-size: 20px">{$value.numsorte}</span><br>
+                                <strong>INSCRIÇÃO Nº: </strong><span>{$value.idinsc}</span>
+                            {/if}
+                       
+
+                        {/if}
+                        <br> 
+                        <strong>NOME DO ALUNO: </strong> <span>{$value.nomepess}</span><br>
+                        <strong>COM LAUDO? </strong> <span>{if="$value.laudo == 0"}Não{else}Sim{/if}</span><br>
+                        <strong>PARA PESSOA COM DEFICIÊNCIA? </strong> <span>{if="$value.inscpcd == 0"}Não{else}Sim{/if}</span><br>
+                        <strong>TURMA: </strong>{$value.idturma} - {$value.descativ}<br>
+                        <strong>Temporada: </strong>{$value.desctemporada}<br>
+
+                        <div class="row">
+                            <div class="col-md-6" > 
+                                <div {function="colorStatus($value.idinscstatus)"}>
+                                <strong >STATUS: {$value.descstatus}</strong>
+                                </div>
+                            </div>
+
+                            
+                            <div class="col-md-6">
+                                <a class="btn btn-primary" href="/cursos/profile/insc/{$value.idinsc}/{$value.idpess}" role="button">Detalhes</a>
+
+                            {if="($value.idinscstatus) === '2'"}
+                            
+                            <!-- 
+                            <a href="/insc/{$value.idinsc}/statusCancelada" onclick="return confirm('Deseja realmente excluir PERMANENTEMENTE a inscrição {$value.idinsc} do(a) {$value.nomepess} da turma {$value.descativ} - {$value.desctemporada}? Lembramos que se você clicar em OK a inscrição e a matricula se existir, serão definitivamente canceladas.')" class="btn btn-success btn-xs"><i></i> Matricular</a> 
+                            -->
+                            {/if}
+
+                            {if="($value.idinscstatus) !== '8' && ($value.idinscstatus) !== '9'"}
+
+                            <a href="/cursos/insc/{$value.idinsc}/statusCancelada" onclick="return confirm('Deseja realmente excluir PERMANENTEMENTE a inscrição {$value.idinsc} do(a) {$value.nomepess} da turma {$value.descativ} - {$value.desctemporada}? Lembramos que se você clicar em OK a inscrição e a matricula se existir, serão definitivamente canceladas.')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
+                            {/if}                      
+                            
+                            </div>
+                        </div>        
+
+                        <hr>
+                    </div>
+                </div>
+                {else}
+                <div class="row alert-danger">
+                    <div class="col-md-12" style="padding-top: 10px; padding-bottom: 0px">
+                       <hr> Nenhuma inscrição foi encontrada.<hr>
+                    </div>
+                </div>
+            
+           
+            {/loop}
+            </div>  
+            </div> <!-- final da index -->
+            
+

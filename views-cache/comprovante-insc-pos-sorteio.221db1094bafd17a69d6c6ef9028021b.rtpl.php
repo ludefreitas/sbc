@@ -420,13 +420,19 @@
                           </tr>
 
                           <tr>
-                            <td class="body-text-cell">
+                            <td class="body-text-cell">  
+                              <!--
                               <?php if( $matriculados < $vagas ){ ?>
                                  O(A) <?php echo htmlspecialchars( $nomepess, ENT_COMPAT, 'UTF-8', FALSE ); ?> está inscrito na <?php echo htmlspecialchars( $turma["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> e já pode fazer a matrícula presencialmente nos dias e horários da aula no <?php echo htmlspecialchars( $turma["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> com o professor da turma.<br>                                
                               <?php }else{ ?>
 
-                                 O(A) <?php echo htmlspecialchars( $nomepess, ENT_COMPAT, 'UTF-8', FALSE ); ?> está inscrito na <?php echo htmlspecialchars( $turma["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> e está numa lista de espera, na <?php echo htmlspecialchars( $posicao, ENT_COMPAT, 'UTF-8', FALSE ); ?>ª posicao. Fique atento ao status desta e outras inscrições acessando o site, clicando no link abaixo. 
+                                O(A) <?php echo htmlspecialchars( $nomepess, ENT_COMPAT, 'UTF-8', FALSE ); ?> está inscrito na <?php echo htmlspecialchars( $turma["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> e está numa lista de espera, na <?php echo htmlspecialchars( $posicao, ENT_COMPAT, 'UTF-8', FALSE ); ?>ª posicao. Fique atento ao status desta e outras inscrições acessando o site, clicando no link abaixo. 
                               <?php } ?>
+                              -->   
+
+                              O(A) <?php echo htmlspecialchars( $nomepess, ENT_COMPAT, 'UTF-8', FALSE ); ?> está inscrito(a) na <?php echo htmlspecialchars( $turma["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> dos nossos cursos esportivos para a temporada 2022. Para saber sobre os próximos passos, faça o login em sua conta, no nosso site, acessando seu perfil, clicando na aba "Minhas inscrições" e verifique o status desta inscrição. Se a inscrição estiver com o status "Aguardando matrícula" isto quer dizer que você fez a inscrição para uma turma com vaga disponível, então compareça ao <?php echo htmlspecialchars( $turma["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> no dia e horário da aula para fazer sua matrícula. Já se a inscrição estiver com status "Lista de Espera" na <?php echo htmlspecialchars( $posicao, ENT_COMPAT, 'UTF-8', FALSE ); ?>ª posicao, isto quer dizer que a turma, por enquanto não tem vaga disponível, então aguarde, quando houver uma vaga disponível, informaremos você por email.
+
+                              
                              
                             </td>
                           </tr>

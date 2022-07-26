@@ -47,6 +47,43 @@ $app->get("/prof/listaagendapordata/:idlocal/:data", function($idlocal, $data) {
 
 	$local->get((int)$idlocal);
 
+	$nameweekday = date('l', strtotime($data));
+
+	if($nameweekday == 'Sunday'){
+
+		$nomediadasemana = 'Domingo';
+	}
+
+	if($nameweekday == 'Monday'){
+
+		$nomediadasemana = 'Segunda-feira';
+	}
+
+	if($nameweekday == 'Tuesday'){
+
+		$nomediadasemana = 'Terça-feira';
+	}
+
+	if($nameweekday == 'Wednesday'){
+
+		$nomediadasemana = 'Quarta-feira';
+	}
+
+	if($nameweekday == 'Thursday'){
+
+		$nomediadasemana = 'Quinta-feira';
+	}
+
+	if($nameweekday == 'Friday'){
+
+		$nomediadasemana = 'Sexta-feira';
+	}
+
+	if($nameweekday == 'Saturday'){
+
+		$nomediadasemana = 'Sábado';
+	}
+
 	$apelidolocal = $local->getapelidolocal();
 
 	$page = new PageProf([
@@ -59,8 +96,30 @@ $app->get("/prof/listaagendapordata/:idlocal/:data", function($idlocal, $data) {
 		'apelidolocal'=>$apelidolocal,
 		'agenda'=>$agenda,
 		'data'=>$data,
+		'nomediadasemana'=>$nomediadasemana,
 		'error'=>Agenda::getMsgError(),
 	]);	
+});
+
+$app->get("/agendamarcarpresenca/:idagen/:idlocal/:data", function($idagen, $idlocal, $data) {
+
+	$agenda = new Agenda();
+
+	$hoje = new DateTime();
+
+	$hoje = date('Y-m-d');
+
+	if($hoje != $data){
+		Agenda::setMsgError("Você não pode confirmar presença para dia posterior!");
+		header("Location: /prof/listaagendapordata/".$idlocal."/".$data);
+		exit;
+	}
+
+	$agenda->marcarPresença($idagen);
+
+	Agenda::setMsgError("Presença confirmada com sucesso");
+	header("Location: /prof/listaagendapordata/".$idlocal."/".$data);
+	exit;
 });
 
 

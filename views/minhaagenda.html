@@ -23,19 +23,25 @@
     <link rel="icon" type="image/jpg" href="/../res/site/img/corpoacao.png" />
 
     <style type="text/css">
-body {
-    margin: 10px;
-     padding: 20px;
-}
+      body {
+          margin: 10px;
+          padding: 20px;
+      }
 
- #div1 {
-    display: flex;
-}
-table {
-    border: 1px solid #000;
-    flex-shrink:0;
-}
-</style>
+      #div1 {
+          display: flex;
+      }
+
+      table {
+
+          border: 1px solid #000;
+          flex-shrink:0;
+         
+      }
+      tr:nth-child(even){
+          background: lightgray;
+      }
+    </style>
 
 
    
@@ -52,30 +58,34 @@ table {
   </h4>
 </div>
 <div id="div1">  
-    <a href="javascript:window.history.go(-1)">
+    <a href="/">
         <i class="fa fa-arrow-left"></i> 
-            Voltar
+            Início
     </a> 
 </div>
 <hr>
 
 
-          {if="$error != ''"}
-                <div id="div1" class="alert alert-danger" style="margin: 10px 10px 0px 10px">
-            {$error}
-                </div>
-          {/if}
           
-
 
 <!----------------------------------------GERAL-------------------------------------------->
 
 
-<div id="div1">
+<div id="div1" style="padding-right: 20px;">
 
-      
       <table>
-          
+          {if="$error != ''"}
+          <tr>
+            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; color: red;" colspan="7">{$error}</th>
+          </tr>
+          {/if}
+
+          {if="$success != ''"}
+          <tr>
+            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; color: green;" colspan="7">{$success}</th>
+          </tr>
+          {/if}
+
 
           <tr>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Data</th>
@@ -84,6 +94,7 @@ table {
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Nome</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Local (Crec)</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Compareceu?</th>
+              <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Excluir?</th>
           </tr>
           {loop="$agenda"}
           
@@ -105,19 +116,29 @@ table {
               </td>
               {if="$value.ispresente == 0"}
                 <td style="text-align: center; border: solid 1px; padding: 5px;"> 
-                  <span style="color: red">Não comprareceu</span>
+                  <span style="color: red"> X </span>
               {else}
                 <td style="text-align: center; border: solid 1px;  padding: 5px;">     
-                  <span style="color: blue">Comprareceu</span>
+                  <span style="color: green;"> <i class="fa fa-check"></i> </span>
               {/if}           
+              </td>
+              <td style="text-align: center; border: solid 1px; padding: 5px;">
+                {if="$data > $value.dia OR $value.ispresente == 1"}
+
+                {else}
+                <a href="/agendadelete/{$value.idagen}" class="btn btn-danger">
+                <i class="fa fa-trash"></i>
+                </a>
+
+                {/if}
               </td>
               
               
           </tr>
           {else}
           <tr style="font-weight: bold; color: red; font-size: 22px; text-align: center; padding: 5px;">
-            <td colspan="5">
-              Não data agendada para natação espontânea!
+            <td colspan="7">
+              Não há horário agendado para natação espontânea!
             </td>
           </tr>
           {/loop}

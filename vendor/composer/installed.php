@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '7c13d539fc64449ad27029ea6ca87f6869b298fe',
+        'reference' => 'f8af10a6751a324243c9f819a0eb8fefd7c99fa4',
         'name' => 'ludefreitas/sbc',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '7c13d539fc64449ad27029ea6ca87f6869b298fe',
+            'reference' => 'f8af10a6751a324243c9f819a0eb8fefd7c99fa4',
             'dev_requirement' => false,
         ),
         'phpmailer/phpmailer' => array(

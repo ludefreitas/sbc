@@ -1,0 +1,158 @@
+
+ <div class="container"> <!-- container 1 -->
+            <div class="row"> <!-- row 2 -->
+              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            {if="$erroInsc != ''"}
+        <div class="alert alert-danger">
+            {$erroInsc}
+        </div>
+            {/if}
+            {if="$success != ''"}
+            <script type="text/javascript">  
+                alert('Inscrição efetuada com sucesso!!!');
+            </script>
+        <div class="alert alert-info">
+            {$success}
+        </div>
+            {/if}
+            <div class="row">            
+                <div class="col-md-7 alert alert-primary" style="text-align-last: center;">
+                    <h5>{$pessoa.nomepess} -  {function="calcularIdade($pessoa.dtnasc)"} anos </h5>
+                    <h5>Inscrição {$insc.idinsc}</h5>
+                    
+                </div>
+                
+                   
+                {if="$insc.idinscstatus == 9"}
+                    <div class="col-md-5 alert alert-success" style="text-align-last: center;">
+                        <p><h5 style="text-align: center"><strong style="color: red; font-size: 20px;"> {$insc.descstatus} </strong></h5>
+                        </p>
+                    </div> 
+
+                {else}
+                    {if="$insc.idstatustemporada == 5"}
+
+                    {else}
+                        <div class="col-md-5 alert alert-success" style="text-align-last: center;">
+                                <p><h5 style="text-align: center"> Nº para concorrer no sorteio: </h5>
+                                <p><h3 style="color: red; text-align-last: center">{$insc.numsorte}</h3> </p>
+                                <h6 style="text-align: center; font-size: 12px;"> * Caso esta inscrição vá para sorteio</h6></p>
+                        </div> 
+                    {/if}
+                
+                {/if}
+                
+                
+            </div>              
+        </div>
+        
+    </div>
+    <div class="row">
+        <div class="col-md-3" style="padding-top: 10px">
+            <strong>Turma / Temporada: </strong>
+        </div>
+        <div class="col-md-9 alert alert-success">
+            <strong>{$insc.descturma} - {$insc.desctemporada}</strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3" style="padding-top: 10px">
+            <strong>Horário: </strong>
+        </div>
+        <div class="col-md-9 alert alert-success">
+            <strong>{$insc.diasemana} das {$insc.horainicio} às {$insc.horatermino}</strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3" style="padding-top: 10px">
+            <strong>Professor: </strong>
+        </div>
+        <div class="col-md-9 alert alert-success">
+            <strong>{$insc.apelidoperson}</strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3" style="padding-top: 5px">
+            <strong>Local da aula (CREC): </strong>
+        </div>
+        <div class="col-md-9 alert alert-success">
+            <strong>{$insc.descespaco} - {$insc.apelidolocal}</strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3" style="padding-top: 10px">
+            <strong>Data da Inscrição: </strong>
+        </div>
+        <div class="col-md-9 alert alert-success">
+            <strong>{function="formatDateHour($insc.dtinsc)"}</strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3" style="padding-top: 10px">
+            <strong>Com laudo? </strong>
+        </div>
+        <div class="col-md-9 alert alert-success">
+            <strong>{if="$insc.laudo == 0"}Não{else}Sim{/if}</strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3" style="padding-top: 10px">
+            <strong>Pessoa com deficiência? </strong>
+        </div>
+        <div class="col-md-9 alert alert-success">
+            <strong>{if="$insc.inscpcd == 0"}Não{else}Sim{/if}</strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3" style="padding-top: 10px">
+            <strong>Detalhes: </strong>
+        </div>
+        <div class="col-md-9 alert alert-success" {function="colorStatus($insc.idinscstatus)"}>
+            <strong>--</strong>
+        </div>
+    </div>
+    <div class="row">
+        
+         <div style="text-align-last: center" class="col-md-9 alert alert-info" {function="colorStatus($insc.idinscstatus)"}>
+            <strong>
+                <a href="/cursos/profile/insc" role="button"> Detalhes </a>
+            </strong>
+        </div>
+    </div>
+    <!--
+    <div class="row">
+        <div class="col-md-12" style="padding-top: 10px">
+            
+            <input type="submit" value="Imprimir" class="button alt" onclick="window.print()">
+        
+        </div>
+        
+    </div>
+    -->
+</div>
+</div> <!-- final da index -->
+
+
+<!--
+<style>
+@media print {
+.header-area,
+.site-branding-area,
+.sticky-wrapper,
+.footer-top-area,
+.footer-bottom-area,
+.single-product-area .col-md-3,
+.button.alt,
+.product-big-title-area {
+display:none!important;
+}
+.single-product-area .col-md-9 {
+width: 100%!important;
+}
+}
+</style>
+-->

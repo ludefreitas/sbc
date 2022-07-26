@@ -59,6 +59,14 @@
                         Confirme seus dados, a data escolhida, o horário e clique no botão "ENVIAR".
                         </label> 
                     </div>
+
+                    <div class="row" style="padding-top: 0px;">
+                        <div class="col-md-12 alert-primary" style="text-align-last: left; padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; font-size: 12px;">
+
+                            Ao clicar no botão <strong>ENVIAR</strong> você <strong>declara</strong> a precisão das infromações prestadas neste site, assim como que <strong>se encontra APTO(A)</strong> a prática de ATIVIDADES FÍSICAS, isentando o professor e a Secretaria de Esportes e Lazer do Município de São Bernardo do Campo de qualquer responsabilidade. Declaro ainda estar Ciente do Art. 5º da Lei 10.848/2001 que trata da obrigatoriedade da apresentação de <strong>ATESTADO MÉDICO.</strong> Declara ainda que autoriza a divulgação de eventuais imagens registradas em momentos de aula espontânea para arquivo e divulgação institucional<br>  
+
+                        </div>
+                    </div>  
                                                           	                                           	                       
                     
             </div>

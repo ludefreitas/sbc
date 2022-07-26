@@ -56,26 +56,29 @@
                     </div>
                     <div class="col-md-12">
                             <span style="color: blue;">
-                            <?php if( $value1["defauditiva"] ){ ?>
+                            <?php if( isset($value1["defauditiva"]) ){ ?>
                             Deficiente Auditivo -
                             <?php } ?>
-                            <?php if( $value1["defvisual"] ){ ?>
+                            <?php if( isset($value1["defvisual"]) ){ ?>
+                                    <?php if( $value1["defvisual"] == null ){ ?>
+                                           
+                                    <?php } ?>
                             Deficiente Visual -
                             <?php } ?>
-                            <?php if( $value1["deffisica"] ){ ?>
+                            <?php if( isset($value1["deffisica"]) ){ ?>
                             Deficiente Físico -
                             <?php } ?>
-                            <?php if( $value1["defintelectual"] ){ ?>
+                            <?php if( isset($value1["defintelectual"]) ){ ?>
                             Deficiente Intelectual -
                             <?php } ?>
-                            <?php if( $value1["defautismo"] ){ ?>
+                            <?php if( isset($value1["defautismo"]) ){ ?>
                             Autista -
                             <?php } ?>
-                            <?php if( $value1["deftea"] ){ ?>
+                            <?php if( isset($value1["deftea"]) ){ ?>
                             Pessoa com TEA - 
                             <?php } ?>
-                            <span style="font-weight: bold; color: black; ">CID.: <?php echo htmlspecialchars( $value1["codigo"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
-                            <?php echo htmlspecialchars( $value1["doenca"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
+                            
+
                             
                         </div>
                         <div class="col-md-12">

@@ -10,6 +10,7 @@ class Agenda extends Model {
 
 	const SESSION = "Agenda";
 	const SESSION_ERROR = "AgendaError";
+	const SUCCESS = "AgendaSucess";
 
 	public static function listAll()
 	{
@@ -89,16 +90,29 @@ class Agenda extends Model {
 		
 	}
 
-	public function delete()
+	public function delete($idagen)
 	{
 		$sql = new Sql();
 
-		$results = $sql->select("DELETE FROM tb_agenda WHERE idagen = :idagen", [
-			':idagen'=>$this->getidagen()
+		$results = $sql->select("DELETE FROM tb_agenda 
+			WHERE idagen = :idagen", [
+			':idagen'=>$idagen
 		]);		
 
-		Agenda::updateFile();
+		//Agenda::updateFile();
 	}
+
+
+	public function marcarPresença($idagen)
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("UPDATE tb_agenda SET ispresente = 1 WHERE idagen = :idagen", [
+			':idagen'=>$idagen
+		]);		
+
+	}
+
 
 	// atualiza lista de Agenda no site (no rodapé) Agenda-menu.html
 	public static function updateFile()	
@@ -271,15 +285,18 @@ class Agenda extends Model {
 		return $results;		
 	}
 
-	public static function contaQtdAgendamPorData($data, $idlocal){
+	public static function contaQtdAgendamPorDataEIdHora($data, $idlocal, $idhoradiasemana){
 
 		$sql = new Sql();
 
 		$results = $sql->select("SELECT count(*)
 			FROM tb_agenda 
-			WHERE dia = :data AND idlocal = :idlocal", [
+			WHERE dia = :data 
+			AND idlocal = :idlocal
+			AND idhoradiasemana = :idhoradiasemana", [
 			':data'=>$data,
-			':idlocal'=>$idlocal
+			':idlocal'=>$idlocal,
+			':idhoradiasemana'=>$idhoradiasemana
 		]);
 
 		return $results;		
@@ -322,7 +339,7 @@ class Agenda extends Model {
 			INNER JOIN tb_local d USING (idlocal)
 			INNER JOIN tb_horadiasemana e USING (idhoradiasemana)
 			WHERE c.iduser = :iduser
-			ORDER BY a.dia", [
+			ORDER BY a.dia DESC", [
 			':iduser'=>$iduser
 		]);
 
@@ -340,7 +357,7 @@ class Agenda extends Model {
 			INNER JOIN tb_local d USING (idlocal)
 			INNER JOIN tb_horadiasemana e USING (idhoradiasemana)
 			WHERE a.idlocal = :idlocal AND a.dia = :data
-			ORDER BY a.dia, a.horainicial", [
+			ORDER BY a.dia, a.horainicial, b.nomepess", [
 			':idlocal'=>$idlocal,
 			':data'=>$data
 		]);
@@ -349,24 +366,73 @@ class Agenda extends Model {
 
 	}
 
-	public static function getAgendaAll(){
+	public static function getAgendaPorPessoaLocalDia($idpess, $idlocal, $data){
 
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT * FROM tb_agenda a
-			INNER JOIN tb_pessoa b USING (idpess)
-			INNER JOIN tb_users c USING (iduser)
-			INNER JOIN tb_local d USING (idlocal)
-			INNER JOIN tb_horadiasemana e USING (idhoradiasemana)
-			-- WHERE iduser = iduser
-			ORDER BY a.dia"
-		);
+		$results = $sql->select("SELECT * FROM tb_agenda 
+			WHERE idpess = :idpess 
+			AND idlocal = :idlocal 
+			AND dia = :data", [
+				':idpess'=>$idpess,
+				':idlocal'=>$idlocal,
+				':data'=>$data
+			]);
 
-		return $results;		
-
+		if($results){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
+	public static function countAgendaPorPessoaLocalDia($idpess, $idlocal, $data){
 
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT count(*) FROM tb_agenda 
+			WHERE idpess = :idpess 
+			AND idlocal = :idlocal 
+			AND dia = :data", [
+				':idpess'=>$idpess,
+				':idlocal'=>$idlocal,
+				':data'=>$data
+			]);
+
+		return $results;		
+	}
+
+	public static function getHoraExistenteInicial($idpess, $idlocal, $data){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT horainicial, dia FROM tb_agenda 
+			WHERE idpess = :idpess 
+			AND idlocal = :idlocal 
+			AND dia = :data", [
+				':idpess'=>$idpess,
+				':idlocal'=>$idlocal,
+				':data'=>$data
+			]);
+
+			return $results;		
+	}
+
+	public static function getHoraExistenteFinal($idpess, $idlocal, $data){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT horafinal, dia FROM tb_agenda 
+			WHERE idpess = :idpess 
+			AND idlocal = :idlocal 
+			AND dia = :data", [
+				':idpess'=>$idpess,
+				':idlocal'=>$idlocal,
+				':data'=>$data
+			]);
+
+			return $results;		
+	}
 
 	public static function setMsgError($msg)
 	{

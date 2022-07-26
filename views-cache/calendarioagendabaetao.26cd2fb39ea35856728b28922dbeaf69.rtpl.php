@@ -61,8 +61,6 @@
           
           },
 
-           
-
           eventClick: function(info) {
 
             window.location.href=`http://www.cursosesportivos.com.br/admin/turma/${info.event.id}`

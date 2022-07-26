@@ -16,6 +16,6 @@
 									</li><li class="treeview">
 								   		<a href="/admin/insc/4">
 								   			<i class="fa fa-link"></i> 
-								   			Inscrições - 2021
+								   			Inscrições - 2022
 								   		</a>								   		
 									</li>

@@ -58,18 +58,18 @@
                       <h5 style="font-weight: bold; text-align: left; color: green;">
 
                         <a href="/prof/insc-turma-temporada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}"> 
-                         | &nbsp; {$value.numinscritos} inscritos &nbsp;
+                         | &nbsp; Consultar {$value.numinscritos} inscritos &nbsp;
                          </a> &nbsp; 
 
                          <a href="/prof/insc-turma-temporada-chamada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: green;"> 
-                         | &nbsp; {$value.nummatriculados} matriculados &nbsp; 
+                         | &nbsp;  imprimir lista chamada ({$value.nummatriculados}) &nbsp; 
                          </a> &nbsp; 
                          
-                         <!--
-                         <a href="/insc-turma-temporada-classificadas/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: orangered;">
-                         | &nbsp; Classificação </a>  &nbsp; 
+                         
+                         <a href="/prof/calendario-lista-presenca/{$value.idtemporada}/{$value.idturma}" style="color: orangered;">
+                         | &nbsp; Fazer Chamada </a>  &nbsp; 
                          &nbsp;  
-                        -->
+                        
 
                         <!--
                          &nbsp; <a href="/prof/insc-turma-temporada-matricular/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: darkblue;">

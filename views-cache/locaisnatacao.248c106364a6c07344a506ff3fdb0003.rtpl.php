@@ -50,9 +50,9 @@
                     
 
                    
-                    </h5>                  
+                                      
                     <div style="text-align-last: center">
-                     <h5 >
+                     <h5>
                      <a href="/calendariobaetao/3" class="btn btn-success" style="background-color: lightgreen; color: blue; font-weight: bold;"  >
                       BAETÃO<br>
                       <hr style="margin: 0; padding: 0">
@@ -61,9 +61,9 @@
                      </h5> 
                      </div>
 
-                     </h5>                  
+                     
                     <div style="text-align-last: center">
-                     <h5 >
+                     <h5>
                      <a href="/calendariopauliceia/21" class="btn btn-success" style="background-color: lightgreen; color: blue; font-weight: bold;"  >
                       CREC PAULICÉIA<br>
                       <hr style="margin: 0; padding: 0">

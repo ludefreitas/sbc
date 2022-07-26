@@ -522,6 +522,17 @@ $app->get("/admin/insc-turma-temporada-chamada/:idturma/:idtemporada/user/:iduse
 
 	$iduserprof = User::getIdUseInTurmaTemporada($idturma, $idtemporada);	
 	
+	/*
+	if(($idturma == 264) || ($idturma == 265) || ($idturma == 266) || ($idturma == 267) || ($idturma == 447) || ($idturma == 448) || ($idturma == 449)){
+
+		$insc->getInscByTurmaTemporadaChamadaCursos($idturma, $idtemporada);
+
+	}else{
+		
+		$insc->getInscByTurmaTemporadaChamada($idturma, $idtemporada);
+	}
+	*/
+
 	$insc->getInscByTurmaTemporadaChamada($idturma, $idtemporada);
 
 	$page = new PageAdmin([
@@ -539,7 +550,5 @@ $app->get("/admin/insc-turma-temporada-chamada/:idturma/:idtemporada/user/:iduse
 		'success'=>User::getSuccess()
 	]);	
 });
-
-
 
 ?>

@@ -265,7 +265,7 @@
                         <div class="col-md-1" style="text-align: center;">
                           <?php echo htmlspecialchars( $value1["numordem"], ENT_COMPAT, 'UTF-8', FALSE ); ?> 
                         </div>
-                        <div class="col-md-11">
+                        <div class="col-md-10">
                           <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>                        
                         </div>
                       </div>               
@@ -380,7 +380,7 @@
                         <div class="col-md-1">
                           
                         </div>
-                        <div class="col-md-11">
+                        <div class="col-md-10">
                                                  
                         </div>
                       </div>               

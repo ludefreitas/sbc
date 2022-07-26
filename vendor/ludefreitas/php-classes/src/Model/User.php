@@ -154,6 +154,25 @@ class User extends Model {
 
 	}
 
+	public static function verifyLoginCursos($inadmin = true)
+	{
+
+		if (!User::checkLogin($inadmin)) {
+			
+			/*
+			if ($inadmin) {
+				header("Location: /login");
+			} else {
+				header("Location: /login");
+			}
+			exit;
+			*/
+			header("Location: /cursos/login");
+			exit;
+		}
+
+	}
+
 	public static function verifyLoginProf($isprof = true)
 	{
 
@@ -380,9 +399,9 @@ class User extends Model {
              $code = openssl_encrypt($dataRecovery['idrecovery'], 'aes-256-cbc', User::SECRET, 0, $iv);
              $result = base64_encode($iv.$code);
              if ($inadmin === true) {
-                 $link = "https://www.cursosesportivos.com.br/admin/forgot/reset?code=$result";
+                 $link = "https://www.cursosesportivos.com/admin/forgot/reset?code=$result";
              } else {
-                 $link = "https://www.cursosesportivos.com.br/forgot/reset?code=$result";
+                 $link = "https://www.cursosesportivos.com/forgot/reset?code=$result";
              } 
              $mailer = new Mailer($data['desemail'], $data['desperson'], "Redefinir senha do Cursos Esportivos SBC", "forgot", array(
                  "name"=>$data['desperson'],

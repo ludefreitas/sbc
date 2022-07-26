@@ -16,6 +16,6 @@
 									   		</li><li class="treeview">
 									   			<a href="/admin/sorteio/4">
 									   				<i class="fa fa-link"></i>
-									   				Sorteio Temporada 2021
+									   				Sorteio Temporada 2022
 									   			</a>
 									   		</li>

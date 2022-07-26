@@ -16,6 +16,6 @@
 									</li><li class="treeview">
 										<a href="/prof/turma-temporada/4">
 								   			<i class="fa fa-link"></i> 
-								   			Turmas 2021
+								   			Turmas 2022
 								   		</a>								   		
 									</li>

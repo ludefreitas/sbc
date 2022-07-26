@@ -11,6 +11,7 @@ use \Sbc\Model\InscStatus;
 use \Sbc\Model\CartsTurmas;
 use \Sbc\Model\Endereco;
 use \Sbc\Model\Local;
+use \Sbc\Model\Saude;
 
 $app->get('/', function() {
 
@@ -32,18 +33,18 @@ $app->get('/', function() {
 
 	}
 
-	//$search = (isset($_GET['search'])) ? $_GET['search'] : "";
+	$search = (isset($_GET['search'])) ? $_GET['search'] : "";
 
 	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
 
-	//if ($search != '') {
+	if ($search != '') {
 
-		//$pagination = Turma::getPageSearchTurmaTemporada($search, $page);
+		$pagination = Turma::getPageSearchTurmaTemporada($search, $page);
 		
-	//} else {
+	} else {
 
 		$pagination = Turma::getPageTurmaTemporada();
-	//}
+	}
 
 	$temporada = new Temporada();
 
@@ -124,6 +125,7 @@ $app->get('/', function() {
 	$page->setTpl("index", array(
 		'turma'=>Turma::checkList($pagination['data']),
 		'idtemporada'=>$temporada->getidtemporada(),
+		'search'=>$search,
 		'anoAtual'=>$anoAtual,
 		'profileMsg'=>User::getSuccess(),
 		'error'=>Cart::getMsgError(),
@@ -169,9 +171,6 @@ $app->get('/busca', function() {
 		));	
 	}		
 });
-
-
-
 
 /*
 $app->get('/', function() {
@@ -236,8 +235,6 @@ $app->get("/checkout", function(){
 
 	$token = $_SESSION['token'];
 	
-	//$insc = new Insc;
-
 	if(Cart::cartIsEmpty((int)$_SESSION[Cart::SESSION]['idcart']) === false){
 		Cart::setMsgError("Selecione uma turma e a pessoa que irá fazer a aula! ");
 		header("Location: /cart");
@@ -251,6 +248,7 @@ $app->get("/checkout", function(){
 		'cart'=>$cart->getValues(),
 		'pessoa'=>$cart->getPessoa(),
 		'turma'=>$cart->getTurma(),
+		'cid'=>$cid = Saude::listAllCid(),
 		'error'=>Pessoa::getError()
 	]);
 });
@@ -262,6 +260,8 @@ $app->post("/checkout", function(){
 	$user = User::getFromSession();
 	$cart = Cart::getFromSession();
 
+	$saude = new Saude();
+
 	$idcart = (int)$cart->getidcart();
 
 	$idtemporada = $_POST['idtemporada'];
@@ -270,22 +270,81 @@ $app->post("/checkout", function(){
 	$temporada = new Temporada();
 
 	$temporada->get((int)$idtemporada);
-	
+
+	if(!isset($_POST['tipoinsc']) || $_POST['tipoinsc'] == NULL){
+
+		Pessoa::setError("A inscrição NÃO foi finalizada!!! Informe se você irá confirmar uma inscrição para PÚBLICO em GERAL ou COM LAUDO ou para PESSOA COM DEFICIÊNCIA ou PARA PESSOA EM VULNERABILIDADE SOCIAL. ");
+		header("Location: /checkout");
+		exit();
+	}
+	/*
 	if(!isset($_POST['laudo']) || $_POST['laudo'] == NULL){
 
 		Pessoa::setError("Informe se você irá confirmar uma inscrição para pessoa com inscicação médica! ");
 		header("Location: /checkout");
 		exit();
 	}
-	
+	*/
 
+	if(isset($_POST['tipoinsc']) && $_POST['tipoinsc'] == 3 && $_POST['temlaudo'] == NULL){
+
+		Pessoa::setError("Você está confirmando uma inscrição com laudo médico. Então, informe o CID que consta no laudo! ");
+		header("Location: /checkout");
+		exit();
+	}
+
+	if(isset($_POST['tipoinsc']) && $_POST['tipoinsc'] == 3 && $_POST['temlaudo'] != NULL){
+
+		$codigolaudo = $_POST['temlaudo'];
+
+		if(!$saude->obtemDoencaCid($codigolaudo)){
+
+    		Pessoa::setError("CID não encontrado! Verifique se o CID foi digitado corretamente. O CID deve ser igual ao que consta no laudo médico. Exemplo: A00.0 ou A00");
+			header("Location: /checkout");
+			exit;
+
+		}
+		
+	}
+	
+    /*
 	if(!isset($_POST['inscpcd']) || $_POST['inscpcd'] == NULL){
 
 			Pessoa::setError("Informe se você irá confirmar uma inscrição para pessoa com deficiência! ");
 			header("Location: /checkout");
 			exit();
 	}
+	*/
 
+	if(isset($_POST['tipoinsc']) && $_POST['tipoinsc'] == 4 && $_POST['deficiente'] == NULL){
+
+		Pessoa::setError("Você está confirmando uma inscrição para Pessoa Com Deficiência. Então, informe o CID da doença, igual ao que você informou nos dados de saúde da pessoa que você está inscrevendo nesta turma! Exemplo: A00.0 ou A00 ");
+		header("Location: /checkout");
+		exit();
+	}
+
+	if(isset($_POST['tipoinsc']) && $_POST['tipoinsc'] == 4 && $_POST['deficiente'] != NULL){
+
+		$codigodeficiencia = $_POST['deficiente'];
+
+		if(!$saude->obtemDoencaCid($codigodeficiencia)){
+
+    		Pessoa::setError("Dados de doença não encontrado! Verifique se o CID foi digitado corretamente e informe o CID da doença, igual ao que você informou nos dados de saude da pessoa que você está inscrevendo na turma");
+				header("Location: /checkout");
+			exit;
+
+    	}
+	}
+
+    /*
+	if(!isset($_POST['inscvuln']) || $_POST['inscvuln'] == NULL){
+
+			Pessoa::setError("Informe se você irá confirmar uma inscrição para pessoa em condições de vulnerabiliade social (Sim ou Não)! ");
+			header("Location: /checkout");
+			exit();
+	}
+	*/
+	
 	if(!isset($_POST['edital']) || $_POST['edital'] == NULL){
 
 		Pessoa::setError("Assinale que você leu os termos para as inscrições! ");
@@ -300,8 +359,20 @@ $app->post("/checkout", function(){
 		exit();
 	}
 
-	$laudo = isset($_POST['laudo']) ? (int)$_POST['laudo'] : 0;
-	$inscpcd = isset($_POST['inscpcd']) ? (int)$_POST['inscpcd'] : 0;
+	if($_POST['tipoinsc'] == 3){
+		$laudo = 1;
+	}else{
+		$laudo = 0;
+	}
+
+	if($_POST['tipoinsc'] == 4){
+		$inscpcd = 1;
+	}else{
+		$inscpcd = 0;
+	}
+
+	//$laudo = isset($_POST['laudo']) ? (int)$_POST['laudo'] : 0;
+	//$inscpcd = isset($_POST['inscpcd']) ? (int)$_POST['inscpcd'] : 0;
 
 	$cartsturmas = CartsTurmas::getCartsTurmasFromId($idcart);
 
@@ -332,18 +403,26 @@ $app->post("/checkout", function(){
 		$anoAtual = (int)date('Y') + 1;		
 	}
 	
-	$idlocal = $_POST['idlocal'];
-	
+	$idlocal = $_POST['idlocal'];	
 	
 	$initidade = $_POST['initidade'];
 	
 	$idmodal = $_POST['idmodal'];
-	
+
+	// Verifica se pessoa possui número CadÚnico cadastrado
+
+	$checkcadunicoexist = Pessoa::checkCadunicoExist($idpess);
+
+	if(empty($checkcadunicoexist) AND $_POST['tipoinsc'] == 5 ){	
+
+		Pessoa::setError("Você informou que esta inscrição é para pessoa em condições de vulnerabiliade social (que participa de programas sociais do governo). Para prosseguir, você precisa atualizar/alterar o cadastro do(a) ".$pessoa->getnomepess().", informado o número do CadÚnico/NIS.");				
+				header("Location: /checkout");
+				exit();
+	}
 	
 	// idade 40 para idade inicial das hidros da pauliceia
 	// idlocal 21 para comparar com local pauliceia
-	// idmodal para para comparar com modalidade hidroginástica
-	
+	// idmodal para para comparar com modalidade hidroginástica	
 	
     if($laudo == 0){
 
@@ -351,14 +430,12 @@ $app->post("/checkout", function(){
 
 			if(($anoAtual - $anoNasc) < 40){
 
-				Pessoa::setError("Você deve marcar a opçãp 'Sim' em: Esta é uma  inscrição para pessoa com laudo médico (Solicitação Médica) ");
+				Pessoa::setError("Você deve marcar a opçãp 'Sim' em: Esta é uma inscrição para pessoa com laudo médico (Solicitação Médica) ");
 				header("Location: /checkout");
 				exit();
 		   }
-
 	    }	
-	}
-	
+	}	
 
 	$nomepess = $pessoa->getnomepess();
 
@@ -382,7 +459,6 @@ $app->post("/checkout", function(){
 		$matriculados = $mumMatriculados[0]['nummatriculados'];
 
 		$turma->get((int)$idturma);
-
 		
 		$vagas = $turma->getvagas();
 

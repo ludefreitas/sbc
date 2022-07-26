@@ -14,11 +14,9 @@ class Insc extends Model {
 
 	public function save()
 	{
+		$sql = new Sql();												        
 
-		$sql = new Sql();													        
-
-		//$results = $sql->select("CALL sp_insc_save1(:idinsc, :idinscstatus, :idcart, :idturma, 
-		$results = $sql->select("CALL sp_insc_save(:idinsc, :idinscstatus, :idcart, :idturma, :idtemporada, :numordem, :numsorte, :laudo, :inscpcd)", [
+		$results = $sql->select("CALL sp_insc_save1(:idinsc, :idinscstatus, :idcart, :idturma, :idtemporada, :numordem, :numsorte, :laudo, :inscpcd)", [
 			':idinsc'=>$this->getidinsc(),
 			':idinscstatus'=>$this->getidinscstatus(),
 			':idcart'=>$this->getidcart(),
@@ -33,9 +31,246 @@ class Insc extends Model {
 		if (count($results) > 0) {
 			$this->setData($results[0]);
 		}
+	}
+
+	public function save_presenca($idinsc, $statuspresenca, $data)
+	{
+		$idpresenca = 0;
+		$sql = new Sql();												        
+
+		$results = $sql->select("CALL sp_presenca_save(:idpresenca, :idinsc, :statuspresenca, :dtpresenca)", [
+			':idpresenca'=>$idpresenca,
+			':idinsc'=>$idinsc,
+			':statuspresenca'=>$statuspresenca,
+			':dtpresenca'=>$data
+		]);
+	}
+
+	public function update_presente($idinsc, $data){
+
+		$statuspresenca = 1;
+
+		$sql = new Sql();
+
+		$sql->query("UPDATE tb_presenca SET statuspresenca = :statuspresenca 
+			WHERE idinsc = :idinsc
+			AND dtpresenca = :data", array(
+			":statuspresenca"=>$statuspresenca,
+			":idinsc"=>$idinsc,
+			"data"=>$data
+		));
 
 	}
 
+	public function update_ausente($idinsc, $data){
+
+		$statuspresenca = 0;
+
+		$sql = new Sql();
+
+		$sql->query("UPDATE tb_presenca SET statuspresenca = :statuspresenca 
+			WHERE idinsc = :idinsc
+			AND dtpresenca = :data", array(
+			":statuspresenca"=>$statuspresenca,
+			":idinsc"=>$idinsc,
+			"data"=>$data
+		));
+
+	}
+
+	public function update_justificar($idinsc, $data){
+
+		$statuspresenca = 2;
+
+		$sql = new Sql();
+
+		$sql->query("UPDATE tb_presenca SET statuspresenca = :statuspresenca 
+			WHERE idinsc = :idinsc
+			AND dtpresenca = :data", array(
+			":statuspresenca"=>$statuspresenca,
+			":idinsc"=>$idinsc,
+			"data"=>$data
+		));
+
+	}
+
+	public static function temChamadaData($data, $idturma){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT *
+			FROM tb_presenca a
+            INNER JOIN tb_insc b ON b.idinsc = a.idinsc
+            INNER JOIN tb_turma c ON c.idturma = b.idturma
+			WHERE dtpresenca = :data 
+            AND b.idturma = :idturma", [			
+			':data'=>$data,	
+			':idturma'=>$idturma				
+		]);
+
+		return $results;		
+	}
+
+	public function getInscByTurmaTemporadaMatriculadosDataListaChamada($idturma, $idtemporada, $data){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus
+			INNER JOIN tb_presenca g ON g.idinsc = a.idinsc			
+			WHERE a.idturma = :idturma 
+			AND a.idtemporada = :idtemporada 
+			AND g.dtpresenca = :data
+			AND f.idinscstatus = 1
+			ORDER BY c.nomepess;
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada,
+			':data'=>$data
+		]);
+		
+		return $results;
+	}
+
+	public function getInscByTurmaTemporadaMatriculadosListaChamada($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus
+			INNER JOIN tb_presenca g ON g.idinsc = a.idinsc			
+			WHERE a.idturma = :idturma 
+			AND a.idtemporada = :idtemporada 
+			-- AND g.dtpresenca = :data
+			AND f.idinscstatus = 1
+			ORDER BY c.nomepess;
+			-- ORDER BY a.inscpcd DESC, a.laudo DESC, c.vulnsocial DESC, a.numordem, a.idinscstatus;
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+			//':data'=>$data
+		]);
+			
+		$this->setData($results);
+	}
+
+	public function getInscByTurmaTemporadaMatriculados($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus
+			-- INNER JOIN tb_presenca g ON g.idinsc = a.idinsc			
+			WHERE a.idturma = :idturma 
+			AND a.idtemporada = :idtemporada 
+			AND f.idinscstatus = 1
+			ORDER BY c.nomepess;
+			-- ORDER BY a.inscpcd DESC, a.laudo DESC, c.vulnsocial DESC, a.numordem, a.idinscstatus;
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		return $results;
+	}
+
+	public function getInscByTurmaTemporadaMatriculadosDataListaChamadaCursos($idturma, $idtemporada, $data){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus
+			INNER JOIN tb_presenca g ON g.idinsc = a.idinsc			
+			WHERE a.idturma = :idturma 
+			AND a.idtemporada = :idtemporada 
+			AND g.dtpresenca = :data
+			-- AND f.idinscstatus = 1
+			ORDER BY c.nomepess;
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada,
+			':data'=>$data
+		]);
+		
+		return $results;
+	}
+
+	public function getInscByTurmaTemporadaMatriculadosCursos($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus
+			-- INNER JOIN tb_presenca g ON g.idinsc = a.idinsc			
+			WHERE a.idturma = :idturma 
+			AND a.idtemporada = :idtemporada 
+			-- AND f.idinscstatus = 1
+			ORDER BY c.nomepess;
+			-- ORDER BY a.inscpcd DESC, a.laudo DESC, c.vulnsocial DESC, a.numordem, a.idinscstatus;
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		return $results;
+	}
+
+	public function GetDiasDoMesPresenca($idtemporada, $idturma, $mes){
+		$sql = new Sql();
+			$results = $sql->select("CALL sp_select_dias_mes_presenca(:idtemporada, :idturma, :mes)", [
+			':idtemporada'=>$idtemporada,
+			':idturma'=>$idturma,			
+		    ':mes'=>$mes 
+		]);
+		return $results;
+	}
+
+	public function getStatusPresencaByIdinscIdturmaIdtemporada($dia, $mes, $idinsc, $idturma, $idtemporada){
+		$sql = new Sql();
+			$results = $sql->select("CALL sp_select_status_presenca(:dia, :mes, :idinsc, :idturma, :idtemporada)", [
+			':dia'=>$dia,
+			':mes'=>$mes,
+			':idinsc'=>$idinsc,
+			':idturma'=>$idturma,			
+			':idtemporada'=>$idtemporada	    
+		]);
+		if($results == NULL){
+			return 4;
+		}else{
+			return (int)$results[0]['statuspresenca'];
+		}		
+	}
 
 	public static function inscricaoEmail($idinsc, $numsorte, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma){
 	
@@ -43,7 +278,7 @@ class Insc extends Model {
 		//$user = "Luciano Freitas";
 		$assunto = "Inscrição Cursos Esportivos ".$desctemporada."";
 		$tplName = "comprovante-insc";
-		$link = "http://www.cursosesportivossbc.com.br";
+		$link = "https://www.cursosesportivossbc.com";
 
 		/*
 		$mailer = new Mailer($data['desemail'], $data['desperson'], "Redefinir senha do Cursos Esportivos SBC", "forgot", array(
@@ -66,12 +301,45 @@ class Insc extends Model {
         if (!$emailEnviado)
      	{
 
-        	Insc::setError("Não foi possivel enviar email, no entanto, a incrição abaixo foi efetuada!");        	
+        	Insc::setError("Não foi possivel enviar email, no entanto, a incrição abaixo foi efetuada! Clique, logo abaixo, em 'Detalhes' e depois em 'Minhas inscrições', para saber mais.");        	
         	header("Location: /profile/insc/".$idinsc."/".$idpess."");
         	exit();			
 
      	}else{
-     		Insc::setSuccess("Um email com os dados desta inscrição foi enviado a você, verifique sua caixa de email cadastrado. Guarde-o com você, se necessário apresente-o quando solicitado");
+     		Insc::setSuccess("Um email com os dados desta inscrição foi enviado a você, verifique sua caixa de email cadastrado. Guarde-o com você, se necessário apresente-o quando solicitado! Clique, logo abaixo, em 'Detalhes' e depois em 'Minhas inscrições', para saber mais.");
+     	}
+	}
+
+	public static function inscricaoEmailCursos($idinsc, $numsorte, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma){
+	
+		//$email = "lulufreitas08@hotmail.com";
+		//$user = "Luciano Freitas";
+		$assunto = "Inscrição Cursos Esportivos ".$desctemporada."";
+		$tplName = "comprovante-insc-cursos";
+		$link = "https://www.cursosesportivossbc.com/cursos";
+
+
+        $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
+                 "nomepess"=>$nomepess,
+                 "desperson"=>$desperson,
+                 "link"=>$link,
+                 "email"=>$email,
+                 "idinsc"=>$idinsc,
+                 "numsorte"=>$numsorte,
+                 "turma"=>$turma->getValues()                
+        )); 
+             
+        $emailEnviado = $mailer->send();        
+
+        if (!$emailEnviado)
+     	{
+
+        	Insc::setError("Não foi possivel enviar email, no entanto, a incrição abaixo foi efetuada! Clique, logo abaixo, em 'Detalhes' e depois em 'Minhas inscrições', para saber mais.");        	
+        	header("Location: /cursos/profile/insc/".$idinsc."/".$idpess."");
+        	exit();			
+
+     	}else{
+     		Insc::setSuccess("Um email com os dados desta inscrição foi enviado a você, verifique sua caixa de email cadastrado. Guarde-o com você, se necessário apresente-o quando solicitado! Clique, logo abaixo, em 'Detalhes' e depois em 'Minhas inscrições', para saber mais.");
      	}
 	}	
 
@@ -79,7 +347,7 @@ class Insc extends Model {
 	
 		$assunto = "Inscrição Cursos Esportivos ".$desctemporada."";
 		$tplName = "comprovante-insc-pos-sorteio";
-		$link = "http://www.cursosesportivossbc.com.br";
+		$link = "https://www.cursosesportivossbc.com";
 		
         $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
                  "nomepess"=>$nomepess,
@@ -97,12 +365,43 @@ class Insc extends Model {
 
         if (!$emailEnviado)
      	{
-        	Insc::setError("Não foi possivel enviar email, no entanto, a incrição abaixo foi efetuada!");      	
+        	Insc::setError("Não foi possivel enviar email, no entanto, a incrição abaixo foi efetuada! Clique, logo abaixo, em 'Detalhes' e depois em 'Minhas inscrições', para saber mais.");        	
         	header("Location: /profile/insc/".$idinsc."/".$idpess."");
         	exit();			
 
      	}else{
-     		Insc::setSuccess("Um email com os dados desta inscrição foi enviado a você, verifique sua caixa de email cadastrado. Guarde-o com você, se necessário apresente-o quando solicitado");
+     		Insc::setSuccess("Um email com os dados desta inscrição foi enviado a você, verifique sua caixa de email cadastrado. Guarde-o com você, se necessário apresente-o quando solicitado! Clique, logo abaixo, em 'Detalhes' e depois em 'Minhas inscrições', para saber mais.");
+     	}
+	}
+
+	public static function inscricaoEmailPosSorteioCursos($idinsc, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma, $posicao, $matriculados, $vagas){
+	
+		$assunto = "Inscrição Cursos Esportivos ".$desctemporada."";
+		$tplName = "comprovante-insc-pos-sorteio-cursos";
+		$link = "https://www.cursosesportivossbc.com/cursos";
+		
+        $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
+                 "nomepess"=>$nomepess,
+                 "desperson"=>$desperson,
+                 "link"=>$link,
+                 "email"=>$email,
+                 "idinsc"=>$idinsc, 
+                 "posicao"=>$posicao,  
+                 "matriculados"=>$matriculados,
+                 "vagas"=>$vagas,            
+                 "turma"=>$turma->getValues()                
+        )); 
+             
+        $emailEnviado = $mailer->send();        
+
+        if (!$emailEnviado)
+     	{
+        	Insc::setError("Não foi possivel enviar email, no entanto, a incrição abaixo foi efetuada! Clique, logo abaixo, em 'Detalhes' e depois em 'Minhas inscrições', para saber mais.");        	
+        	header("Location: /cursos/profile/insc/".$idinsc."/".$idpess."");
+        	exit();			
+
+     	}else{
+     		Insc::setSuccess("Um email com os dados desta inscrição foi enviado a você, verifique sua caixa de email cadastrado. Guarde-o com você, se necessário apresente-o quando solicitado! Clique, logo abaixo, em 'Detalhes' e depois em 'Minhas inscrições', para saber mais.");
      	}
 	}
 
@@ -114,13 +413,13 @@ class Insc extends Model {
 
 			$assunto = "Matrícula Yoga Cursos Esportivos SBC Crec Paulicéia ".$desctemporada."";
 			$tplName = "cham-matricula-yoga";
-			$link = "http://www.cursosesportivossbc.com.br";
+			$link = "https://www.cursosesportivossbc.com";
 
 	    }else{
 	
 			$assunto = "Inscrição Cursos Esportivos ".$desctemporada."";
 			$tplName = "sorteio-insc";
-			$link = "http://www.cursosesportivossbc.com.br";
+			$link = "https://www.cursosesportivossbc.com";
 	    }
 		
         $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
@@ -147,6 +446,7 @@ class Insc extends Model {
         	exit();			
 
      	}else{
+
      		User::setSuccess("Email enviado com sucesso!");
      		header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
         	exit();
@@ -161,13 +461,13 @@ class Insc extends Model {
 
 			$assunto = "Matrícula Yoga Cursos Esportivos SBC Crec Paulicéia ".$desctemporada."";
 			$tplName = "cham-matricula-yoga";
-			$link = "http://www.cursosesportivossbc.com.br";
+			$link = "https://www.cursosesportivossbc.com";
 
 	    }else{
 
 			$assunto = "Inscrição Cursos Esportivos ".$desctemporada."";
 			$tplName = "sorteio-insc";
-			$link = "http://www.cursosesportivossbc.com.br";
+			$link = "https://www.cursosesportivossbc.com";
 		}
 		
         $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
@@ -205,7 +505,7 @@ class Insc extends Model {
 
 		$assunto = "Matrícula Yoga Cursos Esportivos SBC ".$desctemporada."";
 		$tplName = "cham-matricula-yoga";
-		$link = "http://www.cursosesportivossbc.com.br";
+		$link = "https://www.cursosesportivossbc.com";
 		
         $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
                  "nomepess"=>$nomepess,
@@ -239,22 +539,40 @@ class Insc extends Model {
 
 	public static function emailIformarVagaDisponivel($idinsc, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma, $idtemporada, $iduserprof){	
 
-		$assunto = "Vaga Disponível Cursos Esportivos SBC ".$desctemporada."";
-		$tplName = "vaga-dispon-informar";
-		$link = "http://www.cursosesportivossbc.com.br";
-		
-        $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
-                 "nomepess"=>$nomepess,
-                 "desperson"=>$desperson,
-                 "link"=>$link,
-                 "email"=>$email,
-                 "idinsc"=>$idinsc,                
-                 "turma"=>$turma->getValues()                 
-        )); 
+		 $idturma = $turma->getidturma();  
 
-        $emailEnviado = $mailer->send();   
+		 if(($idturma == 264) || ($idturma == 265) || ($idturma == 266) || ($idturma == 267) || ($idturma == 447) || ($idturma == 448) || ($idturma == 449)){
 
-        $idturma = $turma->getidturma();           
+		 	$assunto = "Projeto 'Perca o Medo de Nadar' ".$desctemporada."";
+			$tplName = "vaga-dispon-informar-cursos";
+			$link = "https://www.cursosesportivossbc.com/cursos";
+			
+	        $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
+	                 "nomepess"=>$nomepess,
+	                 "desperson"=>$desperson,
+	                 "link"=>$link,
+	                 "email"=>$email,
+	                 "idinsc"=>$idinsc,                
+	                 "turma"=>$turma->getValues()                 
+	        )); 
+
+		 }else{
+
+			$assunto = "Vaga Disponível Cursos Esportivos SBC ".$desctemporada."";
+			$tplName = "vaga-dispon-informar";
+			$link = "https://www.cursosesportivossbc.com";
+			
+	        $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
+	                 "nomepess"=>$nomepess,
+	                 "desperson"=>$desperson,
+	                 "link"=>$link,
+	                 "email"=>$email,
+	                 "idinsc"=>$idinsc,                
+	                 "turma"=>$turma->getValues()                 
+	        )); 
+    	}
+
+        $emailEnviado = $mailer->send();          
 
         if (!$emailEnviado)
      	{
@@ -270,22 +588,40 @@ class Insc extends Model {
 
 	public static function emailIformarVagaDisponivelProf($idinsc, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma, $idtemporada, $iduserprof){	
 
-		$assunto = "Vaga Disponível Cursos Esportivos SBC ".$desctemporada."";
-		$tplName = "vaga-dispon-informar";
-		$link = "http://www.cursosesportivossbc.com.br";
-		
-        $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
-                 "nomepess"=>$nomepess,
-                 "desperson"=>$desperson,
-                 "link"=>$link,
-                 "email"=>$email,
-                 "idinsc"=>$idinsc,                
-                 "turma"=>$turma->getValues()                 
-        )); 
+		$idturma = $turma->getidturma();  
+
+		 if(($idturma == 264) || ($idturma == 265) || ($idturma == 266) || ($idturma == 267) || ($idturma == 447) || ($idturma == 448) || ($idturma == 449)){
+
+		 	$assunto = "Projeto 'Perca o Medo de Nadar' ".$desctemporada."";
+			$tplName = "vaga-dispon-informar-cursos";
+			$link = "https://www.cursosesportivossbc.com/cursos";
+			
+	        $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
+	                 "nomepess"=>$nomepess,
+	                 "desperson"=>$desperson,
+	                 "link"=>$link,
+	                 "email"=>$email,
+	                 "idinsc"=>$idinsc,                
+	                 "turma"=>$turma->getValues()                 
+	        )); 
+
+		 }else{
+
+			$assunto = "Vaga Disponível Cursos Esportivos SBC ".$desctemporada."";
+			$tplName = "vaga-dispon-informar";
+			$link = "https://www.cursosesportivossbc.com";
+			
+	        $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
+	                 "nomepess"=>$nomepess,
+	                 "desperson"=>$desperson,
+	                 "link"=>$link,
+	                 "email"=>$email,
+	                 "idinsc"=>$idinsc,                
+	                 "turma"=>$turma->getValues()                 
+	        )); 
+    	}
                      
         $emailEnviado = $mailer->send();   
-
-        $idturma = $turma->getidturma();           
 
         if (!$emailEnviado)
      	{
@@ -316,6 +652,7 @@ class Insc extends Model {
 			INNER JOIN tb_users e ON e.iduser = d.iduser
 			INNER JOIN tb_persons f ON f.idperson = e.idperson
 			INNER JOIN tb_temporada j USING(idtemporada)
+			INNER JOIN tb_statustemporada n USING(idstatustemporada)
 			INNER JOIN tb_inscstatus k USING(idinscstatus)
 			INNER JOIN tb_horario l USING(idhorario)
 			INNER JOIN tb_local m USING(idlocal)
@@ -756,6 +1093,44 @@ class Insc extends Model {
 		
 		$this->setData($results);
 	}
+	/*
+	public function getInscByTurmaTemporadaChamadaCursos($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("			
+			CALL sp_select_insc_chamada_cursos(:idturma, :idtemporada);
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	}
+	*/
+
+	public function getInscByTurmaTemporadaChamadaCursos($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("			
+			SELECT c.nomepess, a.idinscstatus FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_endereco g ON g.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
+			WHERE idturma = :idturma
+			AND idtemporada = :idtemporada
+			ORDER BY c.nomepess, a.idinscstatus;
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	}		
 
 	public function getInscByTurmaTemporadaParaSorteioGeral($idturma, $idtemporada){
 
@@ -1643,8 +2018,24 @@ class Insc extends Model {
 			]);
 		
 		}		
-	}		
-		
+	}	
+
+	public function countInscCursos($idtemporada, $idturma){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT count(*) FROM tb_insc a			
+			WHERE idtemporada = :idtemporada
+            AND idturma = :idturma
+			-- AND (idinscstatus != 8 
+			-- AND idinscstatus != 9)", [
+				":idtemporada"=>$idtemporada,
+				":idturma"=>$idturma
+		]);
+
+		return $results[0]['count(*)'];
+	}	
 
 }
 

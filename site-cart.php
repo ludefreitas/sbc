@@ -70,6 +70,28 @@ $app->post("/cart", function() {
 
 	User::verifyLogin(false);
 
+	//var_dump($_POST['idlocal']);
+	//exit();
+
+		/* if($_POST['idlocal'] != 5 && $_POST['idlocal'] != 21){
+		Cart::setMsgError("As inscrições para esta turma estarão aberta somente a partir de 04/07/2022");
+		header("Location: /cart");
+		exit();
+	}
+	*/
+	
+	if($_POST['idlocal'] != 5 && $_POST['idlocal'] != 21 && ($_POST['idturma'] == 264 || $_POST['idturma'] == 265 || $_POST['idturma'] == 266 || $_POST['idturma'] == 267)){
+		Cart::setMsgError("As inscrições para esta turma especial estarão abertas somente a partir de 01/07/2022 !!!");
+		header("Location: /cart");
+		exit();
+	}
+	
+	if($_POST['idlocal'] != 5 && $_POST['idlocal'] != 21 && ($_POST['idturma'] != 264 && $_POST['idturma'] != 265 && $_POST['idturma'] != 266 && $_POST['idturma'] != 267)){
+		Cart::setMsgError("As inscrições para esta turma estarão abertas somente a partir de 04/07/2022 !!!");
+		header("Location: /cart");
+		exit();
+	}
+
 	if(Cart::cartIsEmpty((int)$_SESSION[Cart::SESSION]['idcart']) === false){
 		Cart::setMsgError("Não há inscrições a confirmar! selecione uma turma! ");
 		header("Location: /cart");

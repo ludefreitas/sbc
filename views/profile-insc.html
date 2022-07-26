@@ -21,8 +21,13 @@
                         <strong style="color: red; font-size: 18px;"> {$value.descstatus} </strong>]
                         
                         {else}
-                        <strong>NÚMERO PARA O SORTEIO: </strong><span style="color: red; font-size: 20px">{$value.numsorte}</span><br>
-                        <strong>INSCRIÇÃO Nº: </strong><span>{$value.idinsc}</span>
+                        
+                            {if="$value.idstatustemporada == 5"}
+                            
+                            {else}
+                                <strong>NÚMERO PARA O SORTEIO: </strong><span style="color: red; font-size: 20px">{$value.numsorte}</span><br>
+                                <strong>INSCRIÇÃO Nº: </strong><span>{$value.idinsc}</span>
+                            {/if}
                        
 
                         {/if}

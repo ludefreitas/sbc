@@ -1,5 +1,5 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
-<php $x = 1; ?&gt;
+
 <head>
     <!-- Required meta tags -->   
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
@@ -23,100 +23,107 @@
     <link rel="icon" type="image/jpg" href="/../res/site/img/corpoacao.png" />
 
     <style type="text/css">
-body {
-    margin: 10px;
-     padding: 20px;
-}
+      body {
+          margin: 10px;
+          padding: 20px;
+      }
 
- #div1 {
-    display: flex;
-}
-table {
-    border: 1px solid #000;
-    flex-shrink:0;
-}
-</style>
+       #div1 {
+          display: flex;
+      }
 
-
+      table {
+          padding: 30px;
+          border: 1px solid #000;
+          flex-shrink:0;
+         
+      }
+      tr:nth-child(even){
+          background: lightgray;
+      }
+    </style>
    
 
 </head>
 
-<hr>
-<div id="div1" style="text-align: center;">
-  <h4>
-    Cursos Esportivos SBC
-    <br>
-    <span style="font-weight: bold">LISTA DA AGENDA DE NATAÇÃO ESPONTÂNEA (  <?php echo htmlspecialchars( $apelidolocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>  )</span>
-    <br> 
-    <span style="font-weight: bold"> <?php echo formatDate($data); ?>  </span>
-  </h4>
-</div>
+
 <div id="div1">  
     <a href="javascript:window.history.go(-1)">
         <i class="fa fa-arrow-left"></i> 
             Voltar
     </a> 
 </div>
-<hr>
-
-
-          <?php if( $error != '' ){ ?>
-                <div id="div1" class="alert alert-danger" style="margin: 10px 10px 0px 10px">
-            <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
-                </div>
-          <?php } ?>
-          
-
 
 <!----------------------------------------GERAL-------------------------------------------->
 
-
-<div id="div1">
-
-      
+<div id="div1">      
       <table>
-          
+
+          <?php if( $error != '' ){ ?>
+          <tr>
+            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; color: green;" colspan="7">
+            <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+          </th>
+          </tr>
+          <?php } ?>
 
           <tr>
-              <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Data</th>
-              <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Dia</th>
+            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; " colspan="6"; >
+              Cursos esportivos SBC
+            <h5 style="margin: 0 0 0 0";>LISTA DA AGENDA DE NATAÇÃO ESPONTÂNEA (  <?php echo htmlspecialchars( $apelidolocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>  )
+            <br>
+            <?php echo formatDate($data); ?> <?php echo htmlspecialchars( $nomediadasemana, ENT_COMPAT, 'UTF-8', FALSE ); ?></h5>
+            </th>
+          </tr>
+          
+
+          <tr>            
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Horário</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Nome</th>
-              <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Local (Crec)</th>
+              <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">CPF</th>
+             
 
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">DT Agendam.</th>
 
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Compareceu?</th>
-          </tr>
+               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Marcar <br>Presença</th>
+
+              </tr>
+
+              </tr>
           <?php $counter1=-1;  if( isset($agenda) && ( is_array($agenda) || $agenda instanceof Traversable ) && sizeof($agenda) ) foreach( $agenda as $key1 => $value1 ){ $counter1++; ?>
           
           <tr style="padding: 5px">
               <td style="text-align: center; border: solid 1px; padding: 5px;">
-                <?php echo formatDate($value1["dia"]); ?>
-              </td>              
-              <td style="text-align: center; border: solid 1px; color: darkblue; padding: 5px;">
-                <?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-              </td>
-              <td style="text-align: center; border: solid 1px; padding: 5px;">
                 <?php echo htmlspecialchars( $value1["horainicial"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $value1["horafinal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
               </td>              
-              <td style="text-align: center; border: solid 1px; color: darkblue; padding: 5px;">
+              <td style="text-align: left; border: solid 1px; color: darkblue; padding: 5px;">
                 <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
               </td>
               <td style="text-align: center; border: solid 1px; padding: 5px;">
-                <?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                <?php echo formatCpf($value1["numcpf"]); ?>
               </td>
-              <td style="text-align: center; border: solid 1px; color: darkblue; padding: 5px;">
-                <?php echo formatDate($value1["dtagenda"]); ?>
+              <td style="text-align: center; border: solid 1px; padding: 5px;">
+                <?php echo formatDateHour($value1["dtagenda"]); ?>
               </td>
               <?php if( $value1["ispresente"] == 0 ){ ?>
                 <td style="text-align: center; border: solid 1px; padding: 5px;"> 
-                  <span style="color: red">Não comprareceu</span>
+                  <span style="color: red"> X </span>
               <?php }else{ ?>
                 <td style="text-align: center; border: solid 1px;  padding: 5px;">     
-                  <span style="color: blue">Comprareceu</span>
+                  <span style="color: green;"><i class="fa fa-check"></i></span>
               <?php } ?>           
+              </td>
+
+              <td style="text-align: center; border: solid 1px; padding: 5px;">
+                <?php if( $data > $value1["dia"] OR $value1["ispresente"] == 1 ){ ?>
+
+                <?php }else{ ?>
+                <a href="/agendamarcarpresenca/<?php echo htmlspecialchars( $value1["idagen"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-success">
+                <i class="fa fa-check"></i>
+                </a>
+
+                <?php } ?>
               </td>
               
               

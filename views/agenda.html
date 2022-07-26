@@ -40,6 +40,12 @@
                 {$error}
                 </div>
                 {/if}
+
+                {if="$idlocal == 3"}
+                <div class="alert alert-info" style="font-size: 12px">
+                Agora você já pode agendar dois horário seguidos de 30 minutos para praticar a natação espontânea no Baetão, aos sábados se o horário estiver diponível. Aproveite!!
+                </div>
+                {/if}
             </div>
 
             <div class="col-md-12" style="font-weight: bold; color: darkgreen;">
@@ -64,6 +70,8 @@
                          <span style="font-weight: bold;">{$nomediadasemana} - {$dataformatada}</span><br>
                         
                         {loop="$horariosDiaSemana"}
+
+                        
 
                         <input type="radio" name="idhoradiasemana" value="{$value.idhoradiasemana}">
 
@@ -101,11 +109,11 @@
     <div class="container">
             <div class="row" style="padding-bottom: 10px;">
                 <div class="col-md-12" style="margin-top: 10px; text-align-last: center">
-                    <input style="width: 100%; float: right; background-color: #15a03f;" type="submit" class="btn">
+                    <input onclick="alert('Lembramos que ao fazer seu agendamento, você está ciente da necessidade de se apresentar em nossas piscinas, no dia agendado para nadar, com sunga (para os homens) maiô (para as mulheres) e touca de natação')" style="width: 100%; float: right; background-color: #15a03f;" type="submit" class="btn">
                 </div> 
                 <div class="col-md-12" style="margin-top: 10px; text-align-last: center">
 
-                        <a class="btn" style="width: 100%; float: right; background-color: #ce2c3e;  text-decoration: none; color: white;" href="javascript:window.history.go(-1)" text-decoration="none">CANCELAR
+                        <a class="btn" style="width: 100%; float: right; background-color: #ce2c3e;  text-decoration: none; color: white;" href="javascript:window.history.go(-1)" text-decoration="none">CANCELAR/VOLTAR
                         </a>
                        
                 </div>                  

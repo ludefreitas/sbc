@@ -260,17 +260,19 @@
                   <div class="row"> 
                     
                     <div class="col-md-4" style="border: 1px solid black;">
-                      
-                      <div class="row" style="margin: 0; padding: 0">
-                        <div class="col-md-1" style="text-align: center;">
-                          <?php echo htmlspecialchars( $value1["numordem"], ENT_COMPAT, 'UTF-8', FALSE ); ?> 
+                        
+                      <div class="row">
+                        
+                        <div class="col-md-12">
+                          <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> 
+                            <?php if( $value1["idinscstatus"] == 9 ){ ?> 
+                            [<span style="font-weight: bold; font-size: 8px; color: red;"> 
+                              CANCELADA 
+                            </span>]  
+                          <?php } ?>                     
                         </div>
-                        <div class="col-md-10">
-                              <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>                        
-                        </div>
-                      </div>  
-
-                    </div> 
+                      </div>      
+                    </div>
 
                     <div class="col-md-4">
 
@@ -375,15 +377,17 @@
                   <div class="row"> 
                     
                     <div class="col-md-4" style="border: 1px solid black;">
-                      <div class="row">
+                        
+                     <div class="row">
                         <div class="col-md-1">
-                          
+                         
                         </div>
                         <div class="col-md-10">
                           
                         </div>
-                      </div>               
-                    </div> 
+                      </div>
+                      
+                     </div>
 
                     <div class="col-md-4">
 

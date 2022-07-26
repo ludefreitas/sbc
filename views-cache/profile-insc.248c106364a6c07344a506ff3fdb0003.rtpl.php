@@ -21,8 +21,13 @@
                         <strong style="color: red; font-size: 18px;"> <?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </strong>]
                         
                         <?php }else{ ?>
-                        <strong>NÚMERO PARA O SORTEIO: </strong><span style="color: red; font-size: 20px"><?php echo htmlspecialchars( $value1["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span><br>
-                        <strong>INSCRIÇÃO Nº: </strong><span><?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
+                        
+                            <?php if( $value1["idstatustemporada"] == 5 ){ ?>
+                            
+                            <?php }else{ ?>
+                                <strong>NÚMERO PARA O SORTEIO: </strong><span style="color: red; font-size: 20px"><?php echo htmlspecialchars( $value1["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span><br>
+                                <strong>INSCRIÇÃO Nº: </strong><span><?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
+                            <?php } ?>
                        
 
                         <?php } ?>
@@ -35,21 +40,9 @@
 
                         <div class="row">
                             <div class="col-md-6" > 
-
-                            <?php if( $value1["idinscstatus"] == 9 ){ ?>
-
-                            
                                 <div <?php echo colorStatus($value1["idinscstatus"]); ?>>
                                 <strong >STATUS: <?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
                                 </div>
-                            
-                            <?php }else{ ?>
-                            <div style="background: linear-gradient(to bottom, rgba(0, 0, 255, 0.4), transparent);">
-                                <strong >STATUS: Aguardando Sorteio</strong>
-                            </div>
-                            <?php } ?>
-
-
                             </div>
 
                             

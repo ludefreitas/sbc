@@ -125,13 +125,14 @@ $app->post("/registerpessoa", function(){
 			header("Location: /pessoa-create");
 			exit;
 		}
-
+		/*
 		if($_POST['nomemae'] !== '' && $_POST['cpfmae'] === ''){
 
 			User::setErrorRegister("Informe um número do CPF da mãe!");
 			header("Location: /pessoa-create");
 			exit;
 		}
+		*/
 
 		if($_POST['cpfmae'] === $_POST['numcpf']){
 
@@ -162,12 +163,14 @@ $app->post("/registerpessoa", function(){
 			exit;
 		}
 
+		/*
 		if($_POST['nomepai'] !== '' && $_POST['cpfpai'] === ''){
 
-			User::setErrorRegister("Informe um número do CPF do pai!");
+			User::setErrorRegister("Informe o número do CPF do pai!");
 			header("Location: /pessoa-create");
 			exit;
 		}	
+		*/
 
 		if($_POST['cpfpai'] !== '' && !Pessoa::validaCPF($_POST['cpfpai'])){
 

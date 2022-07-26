@@ -23,19 +23,25 @@
     <link rel="icon" type="image/jpg" href="/../res/site/img/corpoacao.png" />
 
     <style type="text/css">
-body {
-    margin: 10px;
-     padding: 20px;
-}
+      body {
+          margin: 10px;
+          padding: 20px;
+      }
 
- #div1 {
-    display: flex;
-}
-table {
-    border: 1px solid #000;
-    flex-shrink:0;
-}
-</style>
+      #div1 {
+          display: flex;
+      }
+
+      table {
+
+          border: 1px solid #000;
+          flex-shrink:0;
+         
+      }
+      tr:nth-child(even){
+          background: lightgray;
+      }
+    </style>
 
 
    
@@ -52,30 +58,34 @@ table {
   </h4>
 </div>
 <div id="div1">  
-    <a href="javascript:window.history.go(-1)">
+    <a href="/">
         <i class="fa fa-arrow-left"></i> 
-            Voltar
+            Início
     </a> 
 </div>
 <hr>
 
 
-          <?php if( $error != '' ){ ?>
-                <div id="div1" class="alert alert-danger" style="margin: 10px 10px 0px 10px">
-            <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
-                </div>
-          <?php } ?>
           
-
 
 <!----------------------------------------GERAL-------------------------------------------->
 
 
-<div id="div1">
+<div id="div1" style="padding-right: 20px;">
 
-      
       <table>
-          
+          <?php if( $error != '' ){ ?>
+          <tr>
+            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; color: red;" colspan="7"><?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?></th>
+          </tr>
+          <?php } ?>
+
+          <?php if( $success != '' ){ ?>
+          <tr>
+            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; color: green;" colspan="7"><?php echo htmlspecialchars( $success, ENT_COMPAT, 'UTF-8', FALSE ); ?></th>
+          </tr>
+          <?php } ?>
+
 
           <tr>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Data</th>
@@ -84,6 +94,7 @@ table {
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Nome</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Local (Crec)</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Compareceu?</th>
+              <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Excluir?</th>
           </tr>
           <?php $counter1=-1;  if( isset($agenda) && ( is_array($agenda) || $agenda instanceof Traversable ) && sizeof($agenda) ) foreach( $agenda as $key1 => $value1 ){ $counter1++; ?>
           
@@ -105,19 +116,29 @@ table {
               </td>
               <?php if( $value1["ispresente"] == 0 ){ ?>
                 <td style="text-align: center; border: solid 1px; padding: 5px;"> 
-                  <span style="color: red">Não comprareceu</span>
+                  <span style="color: red"> X </span>
               <?php }else{ ?>
                 <td style="text-align: center; border: solid 1px;  padding: 5px;">     
-                  <span style="color: blue">Comprareceu</span>
+                  <span style="color: green;"> <i class="fa fa-check"></i> </span>
               <?php } ?>           
+              </td>
+              <td style="text-align: center; border: solid 1px; padding: 5px;">
+                <?php if( $data > $value1["dia"] OR $value1["ispresente"] == 1 ){ ?>
+
+                <?php }else{ ?>
+                <a href="/agendadelete/<?php echo htmlspecialchars( $value1["idagen"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-danger">
+                <i class="fa fa-trash"></i>
+                </a>
+
+                <?php } ?>
               </td>
               
               
           </tr>
           <?php }else{ ?>
           <tr style="font-weight: bold; color: red; font-size: 22px; text-align: center; padding: 5px;">
-            <td colspan="5">
-              Não data agendada para natação espontânea!
+            <td colspan="7">
+              Não há horário agendado para natação espontânea!
             </td>
           </tr>
           <?php } ?>
