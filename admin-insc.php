@@ -310,6 +310,12 @@ $app->get("/admin/insc-turma-temporada/:idturma/:idtemporada/user/:iduser", func
 	$inscPcd->getInscByTurmaTemporadaPcd($idturma, $idtemporada);
 	$inscPlm->getInscByTurmaTemporadaPlm($idturma, $idtemporada);
 	$inscPvs->getInscByTurmaTemporadaPvs($idturma, $idtemporada);
+
+	$vagas = (int)$turma->getvagas();
+
+	$numMatriculados = $temporada->setNummatriculadosTemporada($idtemporada, $idturma);	
+
+	$numMatriculados= $numMatriculados['nummatriculados'];
 	
 	$page = new PageAdmin();	
 
@@ -322,7 +328,9 @@ $app->get("/admin/insc-turma-temporada/:idturma/:idtemporada/user/:iduser", func
 		'turma'=>$turma->getValues(),
 		'temporada'=>$temporada->getValues(),
 		'error'=>User::getError(),
-		'success'=>User::getSuccess()
+		'success'=>User::getSuccess(),
+		'vagas'=>$vagas,
+		'numMatriculados'=>$numMatriculados
 	]);	
 });
 
@@ -345,19 +353,35 @@ $app->get("/admin/insc/:idinsc/:iduserprof/:idturma/statusMatriculada", function
 
 	$numMatriculados = $temporada->setNummatriculadosTemporada($idtemporada, $idturma);	
 
-	if($numMatriculados['nummatriculados'] == $vagas){
+	if($numMatriculados['nummatriculados'] >= $vagas){
 
-		User::setError("Número de vagas insuficiente para efetuar matrícula!");
-		header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
-		exit();	
+		$numcpf = $insc->getnumcpf();	
 
-	}else{			
+		if(Turma::temTokenCpf($idturma, $numcpf)){
+
+			$insc->alteraStatusInscricaoMatriculada($idinsc, $idturma, $idtemporada);
+			Turma::setUsedTokenCpf($idturma, $numcpf);
+			//User::setSuccess("Aluno matriculado com sucesso!");		
+			echo "<script>alert('Aluno matriculado com sucesso!');";
+			echo "javascript:history.go(-1)</script>";
+			//header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
+			//exit();
+
+		}else{
+
+			//User::setError("Número de vagas insuficiente para efetuar matrícula!");
+			echo "<script>alert('Número de vagas insuficiente para efetuar matrícula! Gere um token para autorizar a matrícula.');";
+			echo "javascript:history.go(-1)</script>";	
+			exit;	
+			//header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
+			//exit();
+		}	
+	}else{
 
 		$insc->alteraStatusInscricaoMatriculada($idinsc, $idturma, $idtemporada);
-		User::setSuccess("Aluno matriculado com sucesso!");
-		header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
-		exit();
-	}
+		echo "<script>alert('Aluno matriculado com sucesso!');";
+			echo "javascript:history.go(-1)</script>";
+	}	
 
 });
 
@@ -388,8 +412,8 @@ $app->get("/admin/insc/:idinsc/:iduserprof/:idturma/statusAguardandoMatricula", 
 
 	$insc->emailIformarVagaDisponivel($idinsc, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma, $idtemporada, $iduser);
 
-	header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
-	exit();
+	//header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
+	//exit();
 
 });
 
@@ -408,8 +432,10 @@ $app->get("/admin/insc/:idinsc/:iduserprof/:idturma/statusSorteada", function($i
 
 	$insc->alteraStatusInscricaoSorteada($idinsc);
 
-	header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
-	exit();
+	echo '<script>javascript:history.go(-1)</script>';
+
+	//header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
+	//exit();
 
 });
 
@@ -447,8 +473,8 @@ $app->get("/admin/insc/:idinsc/:iduserprof/:idturma/enviarEmailASorteado", funct
 
 	$insc->sorteioEmail($idinsc, $numerosorteado, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma, $idade, $numeroordenado, $idtemporada, $iduserprof);
 
-	header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
-	exit();
+	//header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
+	//exit();
 
 });
 
@@ -468,8 +494,9 @@ $app->get("/admin/insc/:idinsc/:idturma/:idpess/statusDesistente", function($idi
 
 	$insc->alteraStatusInscricaoDesistente($idinsc, $idturma, $idtemporada);
 
-	header("Location: /admin/profile/insc/".$idinsc."/".$idpess."/".$idturma."");
-	exit();
+	echo '<script>javascript:history.go(-1)</script>';
+	//header("Location: /admin/profile/insc/".$idinsc."/".$idpess."/".$idturma."");
+	//exit();
 
 });
 

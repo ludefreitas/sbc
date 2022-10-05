@@ -117,7 +117,7 @@
                             <input type="text" id="name" name="name" class="form-control" value="<?php echo htmlspecialchars( $registerValues["name"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required="required" minlength="14">
                         </p>
                         <p >
-                            <label style="font-size: 12px; margin: 0px">Telefone Celular</label>
+                            <label style="font-size: 12px; margin: 0px">Telefone Celular (WhatsApp)</label>
 
                             <input type="text" name="phone" id="phone" pattern="\([0-9]{2}\)[\s][0-9]{5}-[0-9]{5,4}" class="form-control" value="<?php echo htmlspecialchars( $registerValues["phone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required="required" />
                             <script type="text/javascript">$("#phone").mask("(00) 00000-0009");</script>

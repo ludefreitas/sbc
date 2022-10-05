@@ -15,6 +15,8 @@ class User extends Model {
 	const ERROR_REGISTER = "UserErrorRegister";
 	const ERROR_REGISTER_SENDMAIL = "UserErrorRegisterSendmail";
 	const SUCCESS = "UserSucesss";	
+	const MAX_USERS = 10;
+	
 
 	public static function getFromSession()
 	{
@@ -354,6 +356,40 @@ class User extends Model {
 
 	}
 
+	public static function getForgotSite($email, $inadmin = true)
+	{
+     $sql = new Sql();
+     $results = $sql->select("
+         SELECT *
+         FROM tb_persons a
+         INNER JOIN tb_users b USING(idperson)
+         WHERE a.desemail = :email;
+     ", array(
+         ":email"=>$email
+     ));
+
+     if (count($results) === 0)
+     {         
+		echo "<script>alert('Não foi possível recuperar a senha!! Usuário ou email não cadastrado!');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+
+     }
+     
+ 	}
+
+ 	public function setPasswordSite($password, $desemail)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->query("UPDATE tb_users SET despassword = :password WHERE deslogin = :desemail", array(
+			":password"=>$password,
+			":password"=>User::getPasswordHash($password),
+			":desemail"=>$desemail
+		));
+	}
+
 	public static function getForgot($email, $inadmin = true)
 	{
      $sql = new Sql();
@@ -384,6 +420,7 @@ class User extends Model {
              ":iduser"=>$data['iduser'],
              ":desip"=>$_SERVER['REMOTE_ADDR']
          ));
+
          if (count($results2) === 0)
          {
              //throw new \Exception("Não foi possível recuperar a senha.");
@@ -407,11 +444,23 @@ class User extends Model {
                  "name"=>$data['desperson'],
                  "link"=>$link
              )); 
+
              $mailer->send();
-             return $link;
-         }
-     }
- }
+
+            $emailEnviado = $mailer->send();        
+
+            if (!$emailEnviado)
+     		{
+
+        		User::setError("Não foi possivel enviar email. Verifique se o email foi digitado corretamente ou entre em contato conosco.");        	
+        		header("Location: /login");
+				exit();			
+     		}
+
+            return $link;
+         	}
+     	}
+ 	}
  public static function validForgotDecrypt($result)
  {
      $result = base64_decode($result);
@@ -1066,52 +1115,86 @@ class User extends Model {
 
 			return $rows[0];
 			
-		}
+		}		
 
-		/*
-		public function save2()
-		{
+		public static function verifica_ip_online($ip){	
+
 		$sql = new Sql();
 
-		$results = $sql->select("CALL sp_users2_save(:desperson, :apelidoperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin, :isprof, :statususer, :idpess, :nomepess, :dtnasc, :sexo, :numcpf, :numrg, :numsus, :vulnsocial, :pcd, :cadunico, :nomemae, :cpfmae, :nomepai, :cpfpai, :statuspessoa, :dtinclusao, :dtalteracao)", array(
-			":desperson"=>utf8_decode($this->getdesperson()),
-			":apelidoperson"=>$this->getapelidoperson(),
-			":deslogin"=>$this->getdeslogin(),
-			":despassword"=>User::getPasswordHash($this->getdespassword()),
-			":desemail"=>$this->getdesemail(),
-			":nrphone"=>$this->getnrphone(),
-			":inadmin"=>$this->getinadmin(),
-			":isprof"=>$this->getisprof(),
-			":statususer"=>$this->getstatususer(),		
-			":idpess"=>$this->getidpess(),
-			":nomepess"=>$this->getnomepess(),
-			":dtnasc"=>$this->getdtnasc(),
-			":sexo"=>$this->getsexo(),
-			":numcpf"=>$this->getnumcpf(),
-			":numrg"=>$this->getnumrg(),
-			":numsus"=>$this->getnumsus(),
-			":vulnsocial"=>$this->getvulnsocial(),
-			":pcd"=>$this->getpcd(),
-			":cadunico"=>$this->getcadunico(),
-			":nomemae"=>$this->getnomemae(),
-			":cpfmae"=>$this->getcpfmae(),
-			":nomepai"=>$this->getnomepai(),
-			":cpfpai"=>$this->getcpfpai(),
-			":statuspessoa"=>$this->getstatuspessoa(),
-			":dtinclusao"=>$this->getdtinclusao(),
-			":dtalteracao"=>$this->getdtalteraca()
-		));	
+		$results = $sql->select(
+			"SELECT count(*) as linha FROM tb_users_online
+			WHERE ip = :ip", [
+			':ip'=>$ip
+			]);
 
-		$this->setData($results[0]);
-	}
+			return (int)$results[0]['linha'];
+		}
 
-	*/
+		public static function deleta_linhas(){
+			date_default_timezone_set('America/Sao_Paulo');
+			$time = time();			
+			$tempo  = $time - (60 * 20);
+			$sql = new Sql();
+			$results = $sql->select("DELETE FROM tb_users_online 
+				WHERE tempo < :tempo", [
+				':tempo'=>$tempo
+			]);	
+		}
 
+		public static function grava_ip_online($ip, $tempo, $sessao){
 
+			User::deleta_linhas();		
+			User::verifica_ip_online($ip);
+
+			$sql = new Sql();
+
+			if(User::verifica_ip_online($ip) <= 0){
+
+				if(!$sessao){
+					$results = $sql->query("INSERT INTO tb_users_online (tempo, ip) VALUES(:tempo, :ip)", array(
+						":tempo"=>$tempo,
+						":ip"=>$ip			
+					));
+				}else{						
+					$results = $sql->query("INSERT INTO tb_users_online (tempo, ip, sessao) VALUES(:tempo, :ip, :sessao)", array(
+						":tempo"=>$tempo,
+						":ip"=>$ip,
+						":sessao"=>$sessao
+					));					
+				}
+
+			}else{ 
+
+				if(!$sessao){					
+					$results = $sql->query("SET SQL_SAFE_UPDATES=0; UPDATE tb_users_online SET tempo = :tempo, ip = :ip WHERE ip = :ip; SET SQL_SAFE_UPDATES=1;", array(
+						":tempo"=>$tempo,
+						":ip"=>$ip			
+					));
+				}else{					
+					$results = $sql->query("SET SQL_SAFE_UPDATES=0; UPDATE tb_users_online SET tempo = :tempo, ip = :ip, sessao = :sessao WHERE ip = :ip; SET SQL_SAFE_UPDATES=1;", [
+						":tempo"=>$tempo,
+						":ip"=>$ip,			
+						":sessao"=>$sessao
+					]);
+				}
+			}
+		}
+
+		function pega_totalUsuariosOnline(){
+
+			$sql = new Sql();
+			$results = $sql->select("SELECT count(*) as useron FROM tb_users_online WHERE sessao IS NOT NULL");
+			return $results[0]['useron'];
+
+		}
+
+		function pega_totalVisitantesOnline(){
+
+			$sql = new Sql();
+			$results = $sql->select("SELECT count(*) as uservis FROM tb_users_online WHERE sessao IS NULL");
+			return $results[0]['uservis'];
+		}
 
 }
-
-
-
 
 ?>

@@ -1,8 +1,8 @@
-<?php if(!class_exists('Rain\Tpl')){exit;}?><div class="list-group" id="menu" style="font-weight: bold;">   
-    <a href="/profile/insc" class="list-group-item list-group-item-action">Minhas Incrições</a>
-    <a href="/minhaagenda" class="list-group-item list-group-item-action">Agenda de Natação</a>
-    <a href="/user/pessoas" class="list-group-item list-group-item-action">Meus Dependentes</a>
-    <a href="/user/profile" class="list-group-item list-group-item-action">Alterar Email / Telefone</a>
-    <a href="/user-change-password" class="list-group-item list-group-item-action">Alterar Senha</a>
-    <a href="/logout" class="list-group-item list-group-item-action">Sair</a>
+<?php if(!class_exists('Rain\Tpl')){exit;}?><div style="font-weight: bold; text-align: justify-all;">   
+    <a href="/profile/insc" style="color: blue;" >Minhas Incrições</a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="/minhaagenda" >Agenda de Natação</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="/user/pessoas" style="color: blue;" >Meus Dependentes</a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="/user/profile" >Alterar Email/Telefone</a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="/user-change-password" style="color: blue;">Alterar Senha</a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="/logout">Sair</a>
 </div>

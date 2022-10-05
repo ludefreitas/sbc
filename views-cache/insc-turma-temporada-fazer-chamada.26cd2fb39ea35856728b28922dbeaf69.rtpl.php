@@ -15,69 +15,81 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
-
-
     
     <title>Cursos Esportivos SBC</title>
     <link rel="icon" type="image/jpg" href="/../res/site/img/corpoacao.png" />
 
     <script type="text/javascript">
+
+
       
-      $(document).ready(function(){
+      function requisitarPaginaPresente(url){
 
-        $('#presente').on("click", function(){
+        let ajax = new XMLHttpRequest();
+        idurl = url.substr(51);                
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
 
-          let idtemporada = $("#idtemporada").val();
-          let idturma = $("#idturma").val();
-          let data = $("#data").val();
-          let idinsc = $("#idinsc").val();
-
-          // '/prof/insc-turma-temporada-presente/'+idtemporada+'/'+idturma+'/'+data+'/'+idinsc
-
-          $.post('/prof/insc-turma-temporada-presente/'+idtemporada+'/'+idturma+'/'+data+'/'+idinsc);
-
-          alert('/prof/insc-turma-temporada-presente/'+idtemporada+'/'+idturma+'/'+data+'/'+idinsc);
-
-          // Criar inputs escondidos
-
-          // Criar arquivo statuspresenca.php e statusausente.php 
-          // ou fazer um if no arquivo para atualizar sem refresh
-
-        });
-
-        $('#ausente').on("click", function(){
-
-          let idtemporada = $("#idtemporada").val();
-          let idturma = $("#idturma").val();
-          let data = $("#data").val();
-          let idinsc = $("#idinsc").val();
-
-          // '/prof/insc-turma-temporada-ausente/'+idtemporada+'/'+idturma+'/'+data+'/'+idinsc
-
-          $.post('/prof/insc-turma-temporada-ausente/'+idtemporada+'/'+idturma+'/'+data+'/'+idinsc);
-
-          alert('/prof/insc-turma-temporada-ausente/'+idtemporada+'/'+idturma+'/'+data+'/'+idinsc);
+          if(result){            
+            //document.getElementById('spanpresente'+idurl).hidden = false
+            //document.getElementById('spanausente'+idurl).hidden = true
+            //document.getElementById('spanjustificar'+idurl).hidden = true
+            //document.getElementById('spantraco'+idurl).hidden = true
+          }else{
+            alert('Não foi possível marcar presença')
+          }
 
         });
+      }
 
-        $('#justificar').on("click", function(){
+      function requisitarPaginaAusente(url){
 
-           let idtemporada = $("#idtemporada").val();
-          let idturma = $("#idturma").val();
-          let data = $("#data").val();
-          let idinsc = $("#idinsc").val();
+        let ajax = new XMLHttpRequest();
+        let idurl = url.substr(50);          
+        ajax.open('GET', 'url');
 
-          // '/prof/insc-turma-temporada-justificar/'+idtemporada+'/'+idturma+'/'+data+'/'+idinsc
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
 
-          $.post('/prof/insc-turma-temporada-justificar/'+idtemporada+'/'+idturma+'/'+data+'/'+idinsc);
-
-          alert('/prof/insc-turma-temporada-justificar/'+idtemporada+'/'+idturma+'/'+data+'/'+idinsc);
-
-
-
+          if(result){            
+            //document.getElementById('spanausente'+idurl ).hidden = false  
+            //document.getElementById('spanpresente'+idurl ).hidden = true
+            //document.getElementById('spanjustificar'+idurl ).hidden = true
+            //document.getElementById('spantraco'+idurl ).hidden = true
+          }else{
+            alert('Não foi possível marcar presença')
+          }
         });
+      }
 
-      });
+      function requisitarPaginaJustificar(url){
+
+        let ajax = new XMLHttpRequest();
+        let idurl = url.substr(53);              
+        ajax.open('GET', 'url');
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if(result){              
+            
+            //document.getElementById('spanjustificar'+idurl ).hidden = false       
+            //document.getElementById('spanausente'+idurl ).hidden = true  
+            //document.getElementById('spanpresente'+idurl ).hidden = true
+            //document.getElementById('spantraco'+idurl ).hidden = true
+          }else{
+            alert('Não foi possível marcar presença')
+          }
+        });
+      }   
 
     </script>
 
@@ -97,7 +109,9 @@
     </style>
 </head>
 
-<tbody>
+
+
+
             <hr>
 
             <div class="container">
@@ -156,9 +170,7 @@
                     <div class="col-md-12" style="border: 1px solid black; margin: 0; padding: 0; text-align: center; font-weight: bold; background-color: #ccc;" >
                           <div class="col-md-12">
 
-
                              <?php echo FormatDate($data); ?> - Dia Semana
-
 
                           </div>   
                     </div>
@@ -184,68 +196,77 @@
                   <div class="row">                     
                     <div class="col-md-12" style="border: 1px solid black;">                        
                       <div class="row">  
-                        <div class="col-md-12" style="margin: 5 0 5 0; text-align: center; font-weight: bold;">
-
-                          <?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  - 
+                        <div class="col-md-12" style="margin: 5 0 5 0; text-align: left; font-weight: bold;">
 
                           <?php if( $value1["statuspresenca"] == 1 ){ ?>
-                          <span style="color: green;">( <i class="fa fa-check"></i> )</span> 
+                          <span hidden id="spantraco<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="">( - )</span>
+                          <span id="spanpresente<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">( <i class="fa fa-check" style="color: green;"></i> )</span>
+                          <span hidden id="spanausente<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: red;">( X )</span>    
+                          <span hidden id="spanjustificar<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: blue;">( J )</span>    
+
                           <?php } ?>
+
                           <?php if( $value1["statuspresenca"] == 0 ){ ?>
-                           <span style="color: red;">( X )</span>
-                          <?php } ?>
-                          <?php if( $value1["statuspresenca"] == 2 ){ ?>
-                          <span style="color: blue;">( J )</span>
-                          <?php } ?>
-                          <?php if( $value1["statuspresenca"] == 4 ){ ?>
-                          ( - )
-                          <?php } ?>
-                          <br>
+                          <span hidden id="spantraco<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="">( - )</span>
+                          <span hidden id="spanpresente<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: green;">( <i class="fa fa-check"></i> )</span>
+                          <span id="spanausente<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">(<span style="color: red;"> X </span>)</span>    
+                          <span hidden id="spanjustificar<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">(<span style="color: blue;"> J </span>)</span>                     
                           
-                          <?php if( $value1["idinscstatus"] == 9 ){ ?>
+                          <?php } ?>
+
+                          <?php if( $value1["statuspresenca"] == 2 ){ ?>
+                          <span hidden id="spantraco<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="">( - )</span>
+                          <span hidden id="spanpresente<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: green;">( <i class="fa fa-check"></i> )</span>
+                          <span hidden id="spanausente<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: red;">( X )</span>    
+                          <span id="spanjustificar<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">(<span style="color: blue;"> J </span>)</span>                     
+
+                          <?php } ?>
+
+                          <?php if( $value1["statuspresenca"] == 4 ){ ?>
+                          <span id="spantraco<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="">( - )</span>
+                          <span hidden id="spanpresente<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: green;">( <i class="fa fa-check"></i> )</span>
+                          <span hidden id="spanausente<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: red;">( X )</span>    
+                          <span hidden id="spanjustificar<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: blue;">( J )</span>                  
+                          
+                          <?php } ?>                       
+                        
+
+
+                           &nbsp;&nbsp;<?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                          <br>
+                                                      
+                                  
+                        <?php if( $value1["idinscstatus"] == 9 ){ ?>
                           <span style="color: red;">CANCELADA</span>
                           <?php }else{ ?>
                             <?php if( $value1["idinscstatus"] == 8 ){ ?>
                                 <span style="color: red;">DESISTENTE</span>
                             <?php }else{ ?>
-                              <?php if( $value1["statuspresenca"] != 1 ){ ?>
-                              <input hidden class="idtemporada" id="idtemporada" type="text" name="idtemporada" value="<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-                              <input hidden class="idturma" id="idturma" type="text" name="idturma" value="<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-                              <input hidden class="data" id="data" type="text" name="data" value="<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-                              <input hidden class="idinsc" id="idinsc" type="text" name="idinsc" value="<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-
+                             
+                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onchange="requisitarPaginaPresente('/prof/insc-turma-temporada-presente/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>')" name=""><label style="color: green;">Presente</label>&nbsp;&nbsp;&nbsp;&nbsp;
                                 <!--
-                                  <a class="presente" id="presente" href="/prof/insc-turma-temporada-presente/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: green;">Presente?</i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                   <a class="presente" id="<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" href="#" onclick="requisitarPaginaPresente('/prof/insc-turma-temporada-presente/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>')" style="color: green;">Presente?</i></a>&nbsp;&nbsp;&nbsp;&nbsp;                                 
+
+                                  
+                                  <a href="/prof/insc-turma-temporada-presente/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: green;">Presente?</a>&nbsp;&nbsp;&nbsp;&nbsp;
                                 -->
-                                  <button class="presente" id="presente" style="color: green;">Presente?</i></button>&nbsp;&nbsp;&nbsp;&nbsp;
-                              <?php } ?>                         
-                          
-                              <?php if( $value1["statuspresenca"] != 0 ){ ?>
-                              <input hidden class="idtemporada" id="idtemporada" type="text" name="idtemporada" value="<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-                              <input hidden class="idturma" id="idturma" type="text" name="idturma" value="<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-                              <input hidden class="data" id="data" type="text" name="data" value="<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-                              <input hidden class="idinsc" id="idinsc" type="text" name="idinsc" value="<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                                    <input type="checkbox" id="<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onchange="requisitarPaginaAusente('/prof/insc-turma-temporada-ausente/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>')" name=""> <label style="color: red;">Ausente</label>&nbsp;&nbsp;&nbsp;&nbsp;
                                   <!--
-                                  <a class="ausente" id="ausente" href="/prof/insc-turma-temporada-ausente/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><span style="font-weight: bold; margin: 0 3 0 3; color: red;">Ausente?</span></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                                  -->
-                                  <button class="ausente" id="ausente"><span style="font-weight: bold; margin: 0 3 0 3; color: red;">Ausente?</span></button>&nbsp;&nbsp;&nbsp;&nbsp;
-
-                              <?php } ?>
-
-                              <?php if( $value1["statuspresenca"] != 2 ){ ?>
-
-                              <input hidden class="idtemporada" id="idtemporada" type="text" name="idtemporada" value="<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-                              <input hidden class="idturma" id="idturma" type="text" name="idturma" value="<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-                              <input hidden class="data" id="data" type="text" name="data" value="<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-                              <input hidden class="idinsc" id="idinsc" type="text" name="idinsc" value="<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-                                  <!--
-                                  <a class="justificar" id="justificar" href="/prof/insc-turma-temporada-justificar/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><span style="font-weight: bold; margin: 5 3 5 3; color: blue;"> Justificar? </span></a>&nbsp;&nbsp;&nbsp;&nbsp; 
+                                  <a class="ausente" id="<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" href="#" onclick="requisitarPaginaAusente('/prof/insc-turma-temporada-ausente/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>')" style="color: red;">Ausente?</i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                
+                                  <a href="/prof/insc-turma-temporada-ausente/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><span style="font-weight: bold; margin: 0 3 0 3; color: red;">Ausente?</span></a>&nbsp;&nbsp;&nbsp;&nbsp;
                                 -->
 
-                                  <button class="justificar" id="justificar"><span style="font-weight: bold; margin: 5 3 5 3; color: blue;"> Justificar? </span></button>&nbsp;&nbsp;&nbsp;&nbsp; 
-                              <?php } ?>
+                                <input type="checkbox" id="<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onchange="requisitarPaginaJustificar('/prof/insc-turma-temporada-justificar/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>')" name=""><label style="color: blue;">Justificar</label>
+                              
+                                <!--
+                                  <a class="justificar" id="<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" href="#" onclick="requisitarPaginaJustificar('/prof/insc-turma-temporada-justificar/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>')" style="color: blue;">Justificar?</i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                
+                                  <a href="/prof/insc-turma-temporada-justificar/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><span style="font-weight: bold; margin: 5 3 5 3; color: blue;"> Justificar? </span></a>&nbsp;&nbsp;&nbsp;&nbsp; 
+                                -->
+                              
                             <?php } ?>
-                         <?php } ?> 
+                         <?php } ?>  
 
                         </div>
                       </div>      
@@ -258,21 +279,21 @@
                 <div class="col-md-12" style="font-weight: bold; color: red; font-size: 22px; text-align: center; ">
                   Não há pessoas matriculadas 
                 </div>
-                <?php } ?>  
-                </div> 
-
+                <?php } ?>
+                <div class="col-md-12 btn btn-primary" style="font-weight: bold; color: red; font-size: 26px; text-align: center; ">
+                  <a style="color: white;" href="/prof/insc-turma-temporada-fazer-chamada/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>">Atualizar Lista</a>
+                </div>  
                 
-              
+                </div>              
              
                   
                 </div>
                 
               </div>
-            </tbody>
+            
 
 <hr>
 
-<thead>
 <div class="container">
 
   <div class="row">
@@ -305,10 +326,6 @@
   </div>
   
 </div>       
-</thead>    
-<tbody>
-
-
            
             <div class="container">
 
@@ -367,8 +384,7 @@
                   <div class="row">
                     <div class="col-md-12" style="border: 1px solid black; margin: 0; padding: 0; text-align: center; font-weight: bold;" >
                    <table class="col-md-12">
-
-                      <thead>   
+   
 
                         <tr>
                           
@@ -380,8 +396,7 @@
                             <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;"><?php echo htmlspecialchars( $value1["dias"], ENT_COMPAT, 'UTF-8', FALSE ); ?></th>
                           <?php } ?>
                         </tr>
-                      </thead>
-                      <tbody>
+                      
                         <?php $counter1=-1;  if( isset($insc) && ( is_array($insc) || $insc instanceof Traversable ) && sizeof($insc) ) foreach( $insc as $key1 => $value1 ){ $counter1++; ?>
 
                         <?php $INSC = $value1["idinsc"]; ?>
@@ -397,7 +412,7 @@
 
                         </tr>
                         <?php } ?>
-                      </tbody>                                   
+                                                         
                       
                     </table>  
                     </div>
@@ -425,7 +440,7 @@
               </div>
                 
               </div>
-            </tbody>
+            
          
         
     

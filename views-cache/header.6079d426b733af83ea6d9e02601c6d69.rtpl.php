@@ -296,6 +296,11 @@ desired effect
             </span>
           </a>
           <ul class="treeview-menu">
+            <?php require $this->checkTemplate("controle-frequencia-menu");?>
+
+          </ul>
+          <!--
+          <ul class="treeview-menu">
             <li>
               <a href="/admin/controle-frequencia/4"><i class="fa fa-link"></i> <span> Contr. Freq. 2021</span>
               <span class="pull-right-container">
@@ -304,6 +309,8 @@ desired effect
             </a>
             </li>
           </ul>
+        -->
+
         </li>
 
 

@@ -22,10 +22,16 @@ $app->get("/cart", function(){
 	*/
    
 	$cart = Cart::getFromSession();
-	$user = User::getFromSession();
-	$page = new Page();
+	$user = User::getFromSession();	
 
 	$turma = $cart->getTurma();
+
+	if(!$turma){
+		echo "<script>alert('Não há inscrições a confirmar! Selecione um local; uma modalidade; em seguida selecione uma turma!');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}
+
 	$idturma  = isset($turma[0]['idturma']) ? $turma[0]['idturma'] : '';
 	$desctemporada  = isset($turma[0]['desctemporada']) ? $turma[0]['desctemporada'] : '';
 
@@ -39,13 +45,14 @@ $app->get("/cart", function(){
 
 		$anoAtual = (int)date('Y') + 1;		
 	}	
-
-
-	if(Turma::temToken($idturma)){
+	
+	if(Turma::turmatemToken($idturma)){	
 		$temtoken = 1;
 	}else{
-		$temtoken = 0;
-	}	
+		$temtoken = 0;	
+	}
+
+	$page = new Page();
 
 	$page->setTpl("cart", [
 		'cart'=>$cart->getValues(),
@@ -59,49 +66,33 @@ $app->get("/cart", function(){
 		'msgError'=>Cart::getMsgError(),
 		'msgSuccess'=>Cart::getMsgSuccess()
 	]);
-
-
-   //}
-
-
 });
 
 $app->post("/cart", function() {
 
 	User::verifyLogin(false);
-
-	//var_dump($_POST['idlocal']);
-	//exit();
-
-		/* if($_POST['idlocal'] != 5 && $_POST['idlocal'] != 21){
-		Cart::setMsgError("As inscrições para esta turma estarão aberta somente a partir de 04/07/2022");
-		header("Location: /cart");
-		exit();
-	}
-	*/
 	
 	if($_POST['idlocal'] != 5 && $_POST['idlocal'] != 21 && ($_POST['idturma'] == 264 || $_POST['idturma'] == 265 || $_POST['idturma'] == 266 || $_POST['idturma'] == 267)){
 		Cart::setMsgError("As inscrições para esta turma especial estarão abertas somente a partir de 01/07/2022 !!!");
 		header("Location: /cart");
 		exit();
 	}
-	
-	if($_POST['idlocal'] != 5 && $_POST['idlocal'] != 21 && ($_POST['idturma'] != 264 && $_POST['idturma'] != 265 && $_POST['idturma'] != 266 && $_POST['idturma'] != 267)){
-		Cart::setMsgError("As inscrições para esta turma estarão abertas somente a partir de 04/07/2022 !!!");
-		header("Location: /cart");
-		exit();
-	}
 
 	if(Cart::cartIsEmpty((int)$_SESSION[Cart::SESSION]['idcart']) === false){
-		Cart::setMsgError("Não há inscrições a confirmar! selecione uma turma! ");
-		header("Location: /cart");
+		echo "<script>alert('Não há inscrições a confirmar! selecione uma turma!');";
+		echo "javascript:history.go(-1)</script>";
 		exit();
+		//Cart::setMsgError("Não há inscrições a confirmar! selecione uma turma! ");
+		//header("Location: /cart");
+		//exit();
 	}
 	
 	if(!isset($_POST['idpess']) || $_POST['idpess'] <= 0){	
-		Cart::setMsgError("Você precisa selecionar uma pessoa! ");
-		header("Location: /cart");
-		exit();
+		echo "<script>alert('Você precisa selecionar uma pessoa! Se não há pessoas inseridas, você precisa fazer o login, se você já fez o cadastro. Se você ainda não tem o cadastro, cadastre-se. ');";
+		echo "javascript:history.go(-1)</script>";
+		//Cart::setMsgError("Você precisa selecionar uma pessoa! ");
+		//header("Location: /cart");
+		//exit();
 
 	}else{
 
@@ -117,7 +108,9 @@ $app->post("/cart", function() {
 
 		$pessoa->get((int)$idpess);
 
-		$nomepess = $pessoa->getnomepess();	
+		$nomepess = $pessoa->getnomepess();
+
+		$insc = new Insc();	
 
 		if($pessoa->getpcd() && !Saude::getSaudeExist($idpess)){
 
@@ -181,42 +174,111 @@ $app->post("/cart", function() {
 			exit();
 		}
 
-		if(Turma::temToken($idturma)){	
-			
-			if(!isset($_POST['token']) || $_POST['token'] == ''){
+		//var_dump($_POST['tokencpf']);
+		//exit();
 
-				Cart::setMsgError("Você precisa inserir o número do TOKEN que você recebeu do professor quando ele indicou você para inscrever ".$pessoa->getnomepess()." nesta turma!");
-				header("Location: /cart");
-				exit();
+		if($_POST['temtoken'] == 1){
+
+			if(!isset($_POST['tokencpf'])){
+				echo "<script>alert('Conforme Resolução SESP Nº 004 de 28/10/2021 Art.7º, Os interessados em participar das turmas de inclusão para Pessoas com Deficiência (PCD) e/ou laudo médico do CREEBA, deverão comparecer pessoalmente (interessado ou representante legal) no CREEBA');";
+			    echo "javascript:history.go(-1)</script>";
+			    exit;
 			}
+		}
+			
+		
 
-			if(!Turma::tokemValido($_POST['token'], $_POST['idturma'])){
+		if(isset($_POST['token'])){
 
-				Cart::setMsgError("Este token não é valido ou já foi utilizado!");
-				header("Location: /cart");
-				exit();
-			}		
+			if(Turma::turmatemToken($idturma)){	
+				
+				if($_POST['token'] == ''){
 
-			$_SESSION['token'] = $_POST['token'];
-		}		
+					echo "<script>alert('Você precisa inserir o número do TOKEN que você recebeu do professor quando ele indicou você para inscrever ".$pessoa->getnomepess()." nesta turma!');";
+					echo "javascript:history.go(-1)</script>";
+					exit();
+					//Cart::setMsgError("Você precisa inserir o número do TOKEN que você recebeu do professor quando ele indicou você para inscrever ".$pessoa->getnomepess()." nesta turma!");
+					//header("Location: /cart");
+					//exit();
+				}
 
-		if($sexodeclarado != $sexoTurma && $sexoTurma != ''){		
+				if(!Turma::tokemValido($_POST['token'], $_POST['idturma'])){
 
-			Cart::setMsgError('Esta turma é exclusiva para pessoas do sexo '.$sexoTurma.'. Verifique, no perfil do(a) '.$nomepess.', em "Minha Família" o sexo declarado dele(a). Se for necessário faça a alteração.');
-			header("Location: /cart");
-			exit();
+					echo "<script>alert('Este TOKEN não é válido ou já foi utilizado!');";
+					echo "javascript:history.go(-1)</script>";
+					exit();
+					//Cart::setMsgError("Este token não é valido ou já foi utilizado!");
+					//header("Location: /cart");
+					//exit();
+				}		
+
+				$_SESSION['token'] = $_POST['token'];
+			}
 		}
 
 		$anoAtual = date('Y');
 		$anoFinal = $anoAtual - $fimidade;
 		$anoInicial = $anoAtual - $initidade;
 
-		if(($anoNasc > $anoInicial) || ($anoNasc < $anoFinal)){		
-		//if(($idade < $initidade) || ($idade > $fimidade)){		
+		if(isset($_POST['tokencpf'])){
 
-			Cart::setMsgError('Esta turma é exclusiva para pessoas nascidas entre os anos de '.$anoFinal.' e '.$anoInicial.'. Remova a turma atual e escolha outra turma compatível com o ano de nascimento do(a) '.$nomepess.'. Ele(a) nasceu no ano de '.$anoNasc.'.');
+			if(Turma::temTokenCpf($idturma, $numcpf)){	
+				
+				if($_POST['tokencpf'] == ''){
+
+					echo "<script>alert('Você precisa inserir o número do TOKEN, associado ao CPF, que você recebeu do professor quando ele indicou você para inscrever ".$pessoa->getnomepess()." nesta turma!');";
+					echo "javascript:history.go(-1)</script>";
+					exit();
+				}
+
+				if(!Turma::comparaCpfToken($idturma, $_POST['tokencpf'], $numcpf)){
+
+					echo "<script>alert('Este TOKEN não pertence ao CPF da pessoa selecionada');";
+					echo "javascript:history.go(-1)</script>";
+					exit();
+				}	
+
+				if(!Turma::tokenValidoCpf((int)$_POST['tokencpf'], $_POST['idturma'], $numcpf)){
+
+					echo "<script>alert('Este TOKEN(cpf) não é válido ou já foi utilizado!');";
+					echo "javascript:history.go(-1)</script>";
+					exit();
+				}			
+			}	
+
+			
+			$_SESSION['tokencpf'] = $_POST['tokencpf'];	
+			
+		}else{
+
+			if(($anoNasc > $anoInicial) || ($anoNasc < $anoFinal)){		
+			//if(($idade < $initidade) || ($idade > $fimidade)){		
+
+				Cart::setMsgError('Esta turma é exclusiva para pessoas nascidas entre os anos de '.$anoFinal.' e '.$anoInicial.'. Remova a turma atual e escolha outra turma compatível com o ano de nascimento do(a) '.$nomepess.'. Ele(a) nasceu no ano de '.$anoNasc.'.');
+				header("Location: /cart");
+				exit();
+			}
+		}
+
+		if($sexodeclarado != $sexoTurma && $sexoTurma != ''){		
+
+			Cart::setMsgError('Esta turma é exclusiva para pessoas do sexo '.$sexoTurma.'. Verifique, no perfil do(a) '.$nomepess.', em "Minha Família" o sexo declarado dele(a). Se for necessário faça a alteração.');
 			header("Location: /cart");
 			exit();
+
+		}
+
+		 $porcentVagas = $_POST['vagas'] * 1.20;
+	    
+	    //var_dump($porcentVagas.' - '.$insc->countInscTurma($idtemporada, $idturma));
+		//exit();
+
+		if($insc->countInscTurma($idtemporada, $idturma) >= $porcentVagas){
+
+			 echo "<script>alert('Não há mais vagas para para a lista de espera desta turma! Fique atento(a) e continue acompanhando aqui no nosso site para ver se aparecem novas vagas.');";
+	    	echo "javascript:history.go(-1)</script>";
+	    	exit();
+
 		}	
 
 		//var_dump($numcpf.' - '.$idpess.' - '.$idturma.' - '.$idtemporada.' - '.$idlocal.' - '.$tipoativ');
@@ -226,8 +288,11 @@ $app->post("/cart", function() {
 
 			if ($cart->getInscExistAquaticLocal($numcpf, $idpess, $idturma, $idtemporada, $idlocal, $tipoativ)){
 
-				Cart::setMsgError($nomepess.' já está inscrito(a) para uma turma do tipo '.$tipoativ.' no '.$local.'!');
-				header("Location: /cart");
+				//Cart::setMsgError($nomepess.' já está inscrito(a) para uma turma do tipo '.$tipoativ.' no '.$local.'!');
+				//header("Location: /cart");
+				//exit();
+				echo "<script>alert('".$nomepess." já está inscrito(a) para uma turma do tipo ".$tipoativ." no ".$local."!');";
+				echo "javascript:history.go(-1)</script>";
 				exit();
 
 			}
@@ -268,7 +333,7 @@ $app->get("/cart/:idturma/:idtemporada/add", function($idturma, $idtemporada){
 
 	if( Cart::cartIsEmpty($idcart) > 0){
 
-		Cart::setMsgError("Você já selecionou uma turma! remova a atual, se você quiser selecionar uma outra.");
+		Cart::setMsgError("Você já selecionou uma turma! Confirme se é realmente esta turma que você quer fazer a inscrição. Se for, selecione a pessoa que irá fazer a aula e clique no botão CONFIRMAR INSCRIÇÃO. Se não for esta turma clique em REMOVER e selecione a turma que você quer se inscrever.");
 		header("Location: /cart");
 		exit();
 
@@ -294,8 +359,9 @@ $app->get("/cart/:idturma/remove", function($idturma){
 	Cart::removeFromSession();
     session_regenerate_id();
 
-	header("Location: /");
-	exit;
+    echo "<script>javascript:history.go(-2)</script>";
+	//header("Location: /");
+	//exit;
 });
 
 

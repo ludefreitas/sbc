@@ -467,7 +467,7 @@ class Turma extends Model {
 	public static function checkList($list)
 	{
 
-		foreach ($list as &$row) {
+		foreach ($list as $row) {
 			
 			$p = new Turma();
 			$p->setData($row);
@@ -483,7 +483,7 @@ class Turma extends Model {
 	public function save()
 	{
 		$sql = new Sql();
-		$results = $sql->select("CALL sp_turma_save(:idturma, :idativ, :idmodal, :idespaco, :idhorario, :descturma, :vagas, :token)", array(
+		$results = $sql->select("CALL sp_turma_save(:idturma, :idativ, :idmodal, :idespaco, :idhorario, :descturma, :obs, :vagas, :token)", array(
 			":idturma"=>$this->getidturma(),			
 			":idativ"=>$this->getidativ(),
 			":idmodal"=>$this->getidmodal(),
@@ -491,6 +491,7 @@ class Turma extends Model {
 			":idhorario"=>$this->getidhorario(),
 			//":idturmastatus"=>$this->getidturmastatus(),
 			":descturma"=>$this->getdescturma(),
+			":obs"=>$this->getobs(),
 			":vagas"=>$this->getvagas(),
 			":token"=>$this->gettoken()	
 		));	
@@ -862,7 +863,8 @@ class Turma extends Model {
 			USING(idfxetaria) 
             INNER JOIN tb_modalidade j
             USING(idmodal)
-      		WHERE a.descturma LIKE :search
+      		WHERE a.idturma LIKE :search 
+      		OR a.descturma LIKE :search
 			-- OR b.deslogin LIKE :search
 			-- OR c.desperson LIKE :search
 			-- OR c.apelidoperson LIKE :search
@@ -948,25 +950,45 @@ class Turma extends Model {
 
 	}
 
+	public function saveToken2($idturma, $numcpf, $token, $isused)
+	{
+		$sql = new Sql();
+		$results = $sql->query("INSERT INTO tb_tokenturma (idturma, numcpf, token, isused) VALUES(:idturma, :numcpf, :token, :isused)", array(
+			":idturma"=>$idturma,
+			":numcpf"=>$numcpf,
+			":token"=>$token,
+			":isused"=>$isused			
+		));
+
+		if($results){
+		echo "<script>alert('Token ".$turma->gettoken()." criado com sucesso!');";
+		echo "javascript:history.go(-1)</script>";
+	}else{
+
+			echo "<script>alert('Não foi possível criar o token!');";
+			echo "javascript:history.go(-1)</script>";
+    }
+		
+		
+	}
+
 	public function saveToken()
 	{
 		$sql = new Sql();
-		$results = $sql->select("CALL sp_tokenturma_save(:idtoken, :idturma, :token, :isused, :dtcriacao, :dtuso)", array(
+		$results = $sql->select("CALL sp_tokenturma_save(:idtoken, :idturma, :numcpf, :token, :isused, :dtcriacao, :dtuso)", array(
 			":idtoken"=>$this->getidtoken(),			
 			":idturma"=>$this->getidturma(),
+			":numcpf"=>$this->getnumcpf(),
 			":token"=>$this->gettoken(),
 			":isused"=>$this->getisused(),
 			":dtcriacao"=>$this->getdtcriacao(),
 			":dtuso"=>$this->getdtuso()	
 		));	
 
-		//var_dump($results);
-		//exit();
-
 		$this->setData($results[0]);
 	}
 
-	public function temToken($idturma){
+	public function turmatemToken($idturma){
 
 		$temtoken = 1;
 
@@ -984,13 +1006,86 @@ class Turma extends Model {
 		}
 	}
 
+	public function temTokenCpf($idturma, $numcpf){
+
+		$isused = 0;
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * 
+			FROM tb_tokenturma 
+			WHERE idturma = :idturma 
+			AND numcpf = :numcpf 
+			AND isused = :isused", [
+			':idturma'=>$idturma,
+			':numcpf'=>$numcpf,
+			':isused'=>$isused
+		]);
+
+		if (count($results) > 0) {
+
+			return true;
+		}
+	}
+
+	public function comparaCpfToken($idturma, $token, $numcpf){
+
+		$isused = 0;
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_tokenturma 
+			WHERE idturma = :idturma 
+			AND token = :token
+			AND numcpf = :numcpf 
+			AND isused = :isused", [
+			':idturma'=>$idturma,
+			':token'=>$token,
+			':numcpf'=>$numcpf,
+			':isused'=>$isused
+		]);
+
+		if (count($results) > 0) {
+			return true;
+		}
+	}
+
 	public function tokemValido($token, $idturma){
 
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT * FROM tb_tokenturma WHERE token = :token AND idturma = :idturma AND isused = 0", [
+		$results = $sql->select("SELECT * 
+			FROM tb_tokenturma 
+			WHERE token = :token 
+			AND idturma = :idturma 
+			AND isused = 0", [
 			':token'=>$token,
 			':idturma'=>$idturma
+		]);
+
+		if (count($results) > 0) {
+
+				return true;
+
+		}
+	}
+
+	public function tokenValidoCpf($token, $idturma, $numcpf){
+
+		$isused = 0;
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * 
+			FROM tb_tokenturma 
+			WHERE token = :token 
+			AND idturma = :idturma 
+			AND isused = :isused
+			AND numcpf = :numcpf", [
+			':token'=>$token,
+			':idturma'=>$idturma,
+			'isused'=>$isused,
+			':numcpf'=>$numcpf
 		]);
 
 		if (count($results) > 0) {
@@ -1004,7 +1099,9 @@ class Turma extends Model {
 
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT * FROM tb_tokenturma WHERE idturma = :idturma", [
+		$results = $sql->select("SELECT * 
+			FROM tb_tokenturma 
+			WHERE idturma = :idturma", [
 			':idturma'=>$idturma
 		]);
 
@@ -1016,12 +1113,29 @@ class Turma extends Model {
 		$isused = 1;
 
 		$sql = new Sql();
-		$sql->query("UPDATE tb_tokenturma SET isused = :isused, dtuso = current_timestamp() WHERE idturma = :idturma AND token = :token", array(
+		$sql->query("UPDATE tb_tokenturma 
+			SET isused = :isused, dtuso = current_timestamp() 
+			WHERE idturma = :idturma 
+			AND token = :token", array(
 			":isused"=>$isused,
 			":idturma"=>$idturma,
 			":token"=>$token
 		));
+	}
 
+	public function setUsedTokenCpf($idturma, $tokencpf){
+
+		$isused = 1;
+
+		$sql = new Sql();
+		$sql->query("UPDATE tb_tokenturma 
+			SET isused = :isused, dtuso = current_timestamp() 
+			WHERE idturma = :idturma 
+			AND token = :tokencpf", array(
+			":isused"=>$isused,
+			":idturma"=>$idturma,
+			":tokencpf"=>$tokencpf
+		));
 	}
 	
 	public static function listTokenTurma($idturma)

@@ -42,7 +42,7 @@ $app->get("/cursos/cart", function(){
 	}	
 
 
-	if(Turma::temToken($idturma)){
+	if(Turma::turmatemToken($idturma)){
 		$temtoken = 1;
 	}else{
 		$temtoken = 0;
@@ -71,10 +71,14 @@ $app->post("/cursos/cart", function() {
 
 	User::verifyLoginCursos(false);
 
+	/*
+
 	Cart::setMsgError("Sistema em manutenção! Tente novamente mais tarde!!!");
 	header("Location: /cursos/cart");
 	exit();
+	*/
 
+	/*
 	$diainicioinscrição = date('2022-07-09');
 	$diaterminoinscrição = date('2022-07-14');
 	$diahoje = date('Y-m-d');
@@ -88,7 +92,23 @@ $app->post("/cursos/cart", function() {
 			header("Location: /cursos/cart");
 			exit();
 		}
-	}	
+	}
+	*/
+
+	$diainicioinscrição = date('2023-08-29');
+	$diaterminoinscrição = date('2023-08-30');
+	$diahoje = date('Y-m-d');
+
+	if(($diahoje >= $diainicioinscrição) && ($diahoje <= $diaterminoinscrição)){
+
+	}else{
+
+		if($_POST['idturma'] == 455){
+			Cart::setMsgError("As inscrições para esta turma acontecem somente entre os dias 18 e 19/08/2022 !!!");
+			header("Location: /cursos/cart");
+			exit();
+		}
+	}		
 
 	if(Cart::cartIsEmpty((int)$_SESSION[Cart::SESSION]['idcart']) === false){
 		Cart::setMsgError("Não há inscrições a confirmar! selecione uma turma! ");
@@ -219,12 +239,29 @@ $app->post("/cursos/cart", function() {
 
 		$insc = new Insc();	
 
+		/*
 		if($insc->countInscCursos($idtemporada, $idturma) >= 50){
 
 			Cart::setMsgError('Não há mais vagas para esta turma. Clique em "REMOVER" e selecione outra turma, que pode ter ou não vagas, ou aguarde a abertura de um novo curso.');
 					header("Location: /cursos/cart");
 					exit();
 		}
+		*/	
+
+
+		if($insc->countInscCursos($idtemporada, $idturma) <= 80){
+
+			 echo "<script>alert('Não há mais vagas para para a lista de espera desta turma! Aguarde a abertura de uma nova turma.');";
+	    	echo "javascript:history.go(-1)</script>";
+	    	exit();
+
+
+			//Cart::setMsgError('Não há mais vagas para a lista de espera.  Aguarde a abertura de um novo curso');
+				//header("Location: /cursos/cart");
+				//exit();
+		}
+
+		/*
 
 		if(($idturma == 264) || ($idturma == 265) || ($idturma == 266) || ($idturma == 267) || ($idturma == 447) || ($idturma == 448) || ($idturma == 449)){
 				
@@ -293,8 +330,9 @@ $app->post("/cursos/cart", function() {
 					exit();
 				}																							
 		}
+		*/
 
-		if(($idturma != 264) && ($idturma != 265) && ($idturma != 266) && ($idturma != 267) && ($idturma != 447) && ($idturma != 448) && ($idturma != 449)){
+		if(($idturma != 264) && ($idturma != 265) && ($idturma != 266) && ($idturma != 267) && ($idturma != 447) && ($idturma != 448) && ($idturma != 449) && ($idturma != 452)){
 
 			if(($idmodal === 6) || ($idmodal === 14)){
 

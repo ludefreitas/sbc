@@ -242,6 +242,26 @@ class Pessoa extends Model {
 		}
 	}
 
+	public function getFromIdUser($iduser)
+	{
+
+		$sql = new Sql();
+
+		$rows = $sql->select(
+			"SELECT * FROM tb_pessoa 
+			INNER JOIN 	tb_users USING(iduser)
+			
+			WHERE iduser = :iduser", [
+			':iduser'=>$iduser
+		]);
+
+		return $rows;
+
+		//if (count($rows) > 0) {
+			//$this->setData($rows[0]);
+		//}
+	}
+
 	public function getPessoaExist()	{
 
 		$sql = new Sql();

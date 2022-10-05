@@ -79,7 +79,12 @@
 
           <tr>            
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Horário</th>
+
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Nome</th>
+
+              <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Email</th>
+              <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Whats/Fone</th>
+
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">CPF</th>
              
 
@@ -99,6 +104,13 @@
               </td>              
               <td style="text-align: left; border: solid 1px; color: darkblue; padding: 5px;">
                 <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+              </td>
+              <td style="text-align: left; border: solid 1px; color: darkblue; padding: 5px;">
+                <?php echo htmlspecialchars( $value1["deslogin"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+              </td>
+              <td style="text-align: left; border: solid 1px; color: darkblue; padding: 5px;">
+                
+                <a href="https://wa.me/+55<?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?text=Olá%20<?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>,%20tudo%20bem?!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp com a msg de saudação')"><i></i><?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a>
               </td>
               <td style="text-align: center; border: solid 1px; padding: 5px;">
                 <?php echo formatCpf($value1["numcpf"]); ?>
@@ -130,7 +142,7 @@
           </tr>
           <?php }else{ ?>
           <tr style="font-weight: bold; color: red; font-size: 22px; text-align: center; padding: 10px;">
-            <td colspan="6" style="padding: 10px">
+            <td colspan="7" style="padding: 10px">
               Não há horário agendado para natação espontânea nesta data !
             </td>
           </tr>

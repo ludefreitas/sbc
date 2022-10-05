@@ -57,6 +57,11 @@
                   return;
             }
 
+            if(data == '2022-08-20'){
+                  alert('A data escolhida é feriado, não haverá natação espontânea');             
+                  return;
+            }
+
             if(data == '2022-04-30'){
                   alert('A natação espontânea no Baetão terá início a partir do dia 02/05/2022');             
                   return;

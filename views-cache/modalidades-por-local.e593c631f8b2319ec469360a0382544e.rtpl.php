@@ -22,6 +22,8 @@
       <div style="text-align-last: center; font-weight: bold; line-height: 30px; color: red; font-size: 14px; font-style: italic; margin: 0px 5px 0px 5px; ">
           Projeto Perca o Medo de Nadar
       </div>
+
+
 <!--
       <div style="text-align: justify; line-height: 30px; color: blue; font-size: 14px; font-style: italic; margin: 0px 5px 0px 5px; "> 
 
@@ -63,7 +65,61 @@
             </h6>       
       </div>
 -->
+<!--
+<div style="text-align: justify; line-height: 30px; color: blue; font-size: 14px; font-style: italic; margin: 0px 5px 0px 5px; "> 
 
+           <h6>- Este projeto é destinado para pessoas que tem <span style="font-weight: bold;">MEDO / PÂNICO</span> de entrar na água;<br>
+            - Nas duas semanas de aula serão desenvolvidas atividades que estimulem a pessoa a entrar na piscina sem medo, permanecer e vivenciar momentos lúdicos semelhantes à natação;<br>
+            - Se você já sabe nadar, deve aguardar as inscrições para o curso anual de natação.</h6>
+
+           <h6 style="font-weight: bold; font-size: 12px">-> INSCRIÇÕES:  16 à 19 de agosto/2022 </h6>
+
+           <h6 style="font-weight: bold; font-size: 12px">-> PERÍODO DAS AULAS: 23 de agosto a 02 de setembro/2022 </h6>
+
+           <h6 style="font-weight: bold; font-size: 12px">-> FAIXA ETÁRIA: acima de 16 anoss </h6>
+
+           <h6 style="font-weight: bold; font-size: 12px">-> LOCAL: Centro Esportivo Baetão</h6>
+           <h6 style="font-weight: bold; font-size: 12px">-> DIAS:  de Terça à Sexta </h6>
+
+           <h6>
+
+            <span style="font-weight: bold; bold; font-size: 10px">HORÁRIOS: </span><br>
+            <span style="font-weight: bold; font-size: 10px">
+                Turma 452  -</span> 13:30 ás 14:15&nbsp;&nbsp;
+            
+
+            
+
+            </h6>       
+      </div>
+  -->
+
+      <div style="text-align: justify; line-height: 30px; color: blue; font-size: 14px; font-style: italic; margin: 0px 5px 0px 5px; "> 
+
+           <h6>- Este projeto é destinado para pessoas que tem <span style="font-weight: bold;">MEDO / PÂNICO</span> de entrar na água;<br>
+            - Nas duas semanas de aula serão desenvolvidas atividades que estimulem a pessoa a entrar na piscina sem medo, permanecer e vivenciar momentos lúdicos semelhantes à natação;<br>
+            - Se você já sabe nadar, deve aguardar as inscrições para o curso anual de natação.</h6>
+
+           <h6 style="font-weight: bold; font-size: 12px">-> INSCRIÇÕES:  23 à 27 de setembro/2022 </h6>
+
+           <h6 style="font-weight: bold; font-size: 12px">-> PERÍODO DAS AULAS: 18 à 28 de outubro/2022 </h6>
+
+           <h6 style="font-weight: bold; font-size: 12px">-> FAIXA ETÁRIA: acima de 16 anoss </h6>
+
+           <h6 style="font-weight: bold; font-size: 12px">-> LOCAL: Centro Esportivo Baetão</h6>
+           <h6 style="font-weight: bold; font-size: 12px">-> DIAS:  de Terça à Sexta </h6>
+
+           <h6>
+
+            <span style="font-weight: bold; bold; font-size: 10px">HORÁRIOS: </span><br>
+            <span style="font-weight: bold; font-size: 10px">
+                Turma 452  -</span> 13:30 ás 14:10&nbsp;&nbsp;           
+
+            </h6>       
+      </div>
+    
+
+    
       <div style="text-align: justify; line-height: 30px; color: blue; font-size: 14px; font-style: italic; margin: 0px 5px 0px 5px; "> 
 
            <h6> <span style="font-weight: bold;">ATENÇÃO </span><br> <br>
@@ -76,6 +132,7 @@
             </h6>       
       </div>
     
+    
    
   </div> 
     
@@ -87,6 +144,11 @@
 </div>
 
 <?php $counter1=-1;  if( isset($modalidades) && ( is_array($modalidades) || $modalidades instanceof Traversable ) && sizeof($modalidades) ) foreach( $modalidades as $key1 => $value1 ){ $counter1++; ?>
+<?php if( $value1["numinscritos"] == 4 ){ ?>
+
+  <script type="text/javascript">alert('não mais vagas disponíveis')</script>
+
+  <?php } ?>
 <?php if( $value1["idmodal"] == 14 ){ ?>
 <a href="/cursos/modalidade/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>">
   <div class="container"> <!-- container 3 -->
@@ -95,12 +157,12 @@
       <div class="col-md-12" style="text-align-last: left; line-height: 20px;  font-size: 20px; font-style: normal; margin: 5px 0px 5px 0px; padding: 0px 0px 0px 0px">
 
         <div class="container">
-          <div class="row alert-warning">            
+          <div class="row">            
             <div class="col-md-12" style="text-align-last: center; margin: 5px 0px 5px 0px; color: white; padding: 0px 0px 0px 0px">
-              <!--
-              <a class="card card-just-text" style="background-color: #cc5d1e; color: white; padding: 5px 0px 5px 0px;  text-decoration: none" href="/cursos/modalidade/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>" text-decoration="none">Selecione, clicando aqui, uma das 07 turmas para se inscrever!
+          
+              <a class="card card-just-text" style="background-color: #cc5d1e; color: white; padding: 5px 0px 5px 0px;  text-decoration: none" href="/cursos/modalidade/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>" text-decoration="none">Selecione, clicando aqui, a turma para se inscrever!
               </a>
-            -->
+            
             </div>
           </div>
         </div>

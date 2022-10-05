@@ -15,6 +15,35 @@ use \Sbc\Model\Saude;
 
 $app->get('/', function() {
 
+	$_SESSION['User'] = isset($_SESSION['User']) ? $_SESSION['User'] : $_SESSION['User'] = NULL;
+	
+	if(isset($_SESSION['User']) && $_SESSION['User']['inadmin'] != 1){
+
+		$userOnline = User::pega_totalUsuariosOnline();
+
+		if($userOnline > 0){
+
+			User::logout();
+			User::forgotUserPass();
+			User::setError('Limite de usuários online excedido! TTENTE NOVAMENTE MAIS TARDE');
+			header('Location: /login');
+			exit();
+		}
+	}	
+
+	if(!$_SESSION['User']){
+		$sessao = NULL;
+	}else{
+		$sessao = session_id();
+	}	
+
+	$ip = $_SERVER['REMOTE_ADDR'];
+	date_default_timezone_set('America/Sao_Paulo');
+	$time = time();	
+	$tempo  = $time - (60 * 10);
+
+	User::grava_ip_online($ip, $tempo, $sessao);
+
 	if(isset($_COOKIE['sisgen_user']) && isset($_COOKIE['sisgen_pass'])){
 
 		$login = base64_decode($_COOKIE['sisgen_user']);
@@ -53,8 +82,7 @@ $app->get('/', function() {
 		if(!isset($search) || $search == NULL){
 
 			Cart::setMsgError("Não existem inscrições diponíveis para esta temporada!.");
-			//Cart::setMsgError("Não existem inscrições diponíveis para esta temporada!. Para a temporada 2021 o período de inscrições foi de xx/xx/xxxx a xx/xx/xxxx conforme resolução (xxxxx) publicada no jornal Notícias do Município de xx/xx/xxxx. O sorteio acontecerá dia xx/xx/xxxx. A partir do dia xx/xx/xxxx iniciar-se-a a etapa de matrículas, para os contemplados, no Centro Esportivo no dia e horário de sua aula. Acompanhe o status da sua inscrição, clicando aqui.");
-
+			
 		}else{
 
 			Cart::setMsgError("Não encontramos nenhuma turma com a palavra '".$search."' nesta temporada! A temporada pode não estar iniciada, estar em processo de sorteio ou foi encerrada. Aguarde, ou entre em contato com o Centro Esportivo mais próximo à sua casa.");
@@ -172,55 +200,6 @@ $app->get('/busca', function() {
 	}		
 });
 
-/*
-$app->get('/', function() {
-
-	$turma = Turma::listAllTurmaTemporada();
-	$temporada = new Temporada();
-
-	if(!isset($turma) || $turma == NULL){
-
-		Cart::setMsgError("Não existe turmas para esta temporada. Aguarde! ");
-
-	}else{
-
-		$idtemporada = $turma[0]['idtemporada']; 
-
-		$temporada->get((int)$idtemporada);
-
-		$dtInicinscricao = $temporada->getdtinicinscricao();
-		$dtTerminscricao = $temporada->getdtterminscricao();
-		$dtTermmatricula = $temporada->getdttermmatricula();
-
-		if($temporada->getidstatustemporada() == 2){
-
-			Temporada::alterarStatusTemporadaParaIncricoesIniciadas($dtInicinscricao, $idtemporada);
-
-		}	
-
-		if($temporada->getidstatustemporada() == 4){
-
-			Temporada::alterarStatusTemporadaParaMatriculasIniciadas($dtTerminscricao, $idtemporada);
-
-		}	
-
-		if($temporada->getidstatustemporada() == 6){
-
-			Temporada::alterarStatusTemporadaParaMatriculasEncerradas($dtTermmatricula, $idtemporada);
-
-		}				
-
-	}	
-		
-	$page = new Page();  	
-
-	$page->setTpl("index", [
-		'turma'=>Turma::checkList($turma),
-		'error'=>Cart::getMsgError()
-	]);
-});
-*/
-
 $app->get("/checkout", function(){
 
 	User::verifyLogin(false);
@@ -232,8 +211,10 @@ $app->get("/checkout", function(){
 	Endereco::seEnderecoExiste($idperson);
 
 	$_SESSION['token'] = isset($_SESSION['token']) ? $_SESSION['token'] : '';
+	$_SESSION['tokencpf'] = isset($_SESSION['tokencpf']) ? $_SESSION['tokencpf'] : '';
 
 	$token = $_SESSION['token'];
+	$tokencpf = $_SESSION['tokencpf'];
 	
 	if(Cart::cartIsEmpty((int)$_SESSION[Cart::SESSION]['idcart']) === false){
 		Cart::setMsgError("Selecione uma turma e a pessoa que irá fazer a aula! ");
@@ -245,6 +226,7 @@ $app->get("/checkout", function(){
 
 	$page->setTpl("checkout", [
 		'token'=>$token,
+		'tokencpf'=>$tokencpf,
 		'cart'=>$cart->getValues(),
 		'pessoa'=>$cart->getPessoa(),
 		'turma'=>$cart->getTurma(),
@@ -463,6 +445,7 @@ $app->post("/checkout", function(){
 		$vagas = $turma->getvagas();
 
 		$token = $_POST['token'];
+		$tokencpf = $_POST['tokencpf'];
 
 		$posicao = $numordem - $vagas;
 
@@ -479,12 +462,14 @@ $app->post("/checkout", function(){
 		$insc->save();
 
 		Turma::setUsedToken($idturma, $token);
+		Turma::setUsedTokenCpf($idturma, $tokencpf);
 
 		$idinsc = $insc->getidinsc();	
 
 		$numsorte = $insc->getnumsorte();	
 
 		$_SESSION['token'] = NULL;	
+		$_SESSION['tokencpf'] = NULL;	
 
 		$cart->removeTurma($turma, true);
 		Cart::removeFromSession();
@@ -500,6 +485,7 @@ $app->post("/checkout", function(){
 		$InscStatus = InscStatus::AGUARDANDO_SORTEIO;
 
 		$token = $_POST['token'];
+		$tokencpf = $_POST['tokencpf'];
 		
 		$numordem = 0;	
 
@@ -516,6 +502,7 @@ $app->post("/checkout", function(){
 		$insc->save();
 
 		Turma::setUsedToken($idturma, $token);		
+		Turma::setUsedTokenCpf($idturma, $tokencpf);		
 
 		$idinsc = $insc->getidinsc();	
 
@@ -524,6 +511,7 @@ $app->post("/checkout", function(){
 		$turma->get((int)$idturma);
 
 		$_SESSION['token'] = NULL;
+		$_SESSION['tokencpf'] = NULL;
 
 		$cart->removeTurma($turma, true);
 		Cart::removeFromSession();
@@ -611,8 +599,33 @@ $app->get("/logout", function(){
 	exit;
 });
 
+$app->get("/forgot/site", function() {
 
 
+	$page = new Page([
+		"header"=>false,
+		"footer"=>false
+	]);
+
+	$page->setTpl("forgot-site");	
+});
+
+$app->post("/forgot-site", function(){
+
+	User::getForgotSite($_POST["email"]);
+
+	if($_POST['novasenha'] != $_POST['repetesenha']){
+		echo "<script>alert('As senhas digitadas são  diferentes');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}	
+
+	User::setPasswordSite($_POST["novasenha"], $_POST["email"]);
+
+	echo "<script>alert('Senha alterada com sucesso!');";
+		echo "location.href='/login'</script>";
+		exit();	
+});
 
 $app->get("/forgot", function() {
 
@@ -633,6 +646,7 @@ $app->post("/forgot", function($email){
 	header("Location: /forgot/sent");
 	exit;
 });
+
 
 $app->get("/forgot/sent", function(){
 

@@ -15,7 +15,6 @@ class Insc extends Model {
 	public function save()
 	{
 		$sql = new Sql();												        
-
 		$results = $sql->select("CALL sp_insc_save1(:idinsc, :idinscstatus, :idcart, :idturma, :idtemporada, :numordem, :numsorte, :laudo, :inscpcd)", [
 			':idinsc'=>$this->getidinsc(),
 			':idinscstatus'=>$this->getidinscstatus(),
@@ -36,7 +35,7 @@ class Insc extends Model {
 	public function save_presenca($idinsc, $statuspresenca, $data)
 	{
 		$idpresenca = 0;
-		$sql = new Sql();												        
+		$sql = new Sql();							        
 
 		$results = $sql->select("CALL sp_presenca_save(:idpresenca, :idinsc, :statuspresenca, :dtpresenca)", [
 			':idpresenca'=>$idpresenca,
@@ -59,7 +58,6 @@ class Insc extends Model {
 			":idinsc"=>$idinsc,
 			"data"=>$data
 		));
-
 	}
 
 	public function update_ausente($idinsc, $data){
@@ -75,7 +73,6 @@ class Insc extends Model {
 			":idinsc"=>$idinsc,
 			"data"=>$data
 		));
-
 	}
 
 	public function update_justificar($idinsc, $data){
@@ -91,7 +88,6 @@ class Insc extends Model {
 			":idinsc"=>$idinsc,
 			"data"=>$data
 		));
-
 	}
 
 	public static function temChamadaData($data, $idturma){
@@ -128,6 +124,7 @@ class Insc extends Model {
 			WHERE a.idturma = :idturma 
 			AND a.idtemporada = :idtemporada 
 			AND g.dtpresenca = :data
+			AND a.dtmatric < g.dtpresenca 
 			AND f.idinscstatus = 1
 			ORDER BY c.nomepess;
 		", [
@@ -193,6 +190,16 @@ class Insc extends Model {
 		return $results;
 	}
 
+	public function GetDiasDoMesPresenca($idtemporada, $idturma, $mes){
+		$sql = new Sql();
+			$results = $sql->select("CALL sp_select_dias_mes_presenca(:idtemporada, :idturma, :mes)", [
+			':idtemporada'=>$idtemporada,
+			':idturma'=>$idturma,			
+		    ':mes'=>$mes 
+		]);
+		return $results;
+	}
+
 	public function getInscByTurmaTemporadaMatriculadosDataListaChamadaCursos($idturma, $idtemporada, $data){
 
 		$sql = new Sql();
@@ -209,7 +216,8 @@ class Insc extends Model {
 			WHERE a.idturma = :idturma 
 			AND a.idtemporada = :idtemporada 
 			AND g.dtpresenca = :data
-			-- AND f.idinscstatus = 1
+			AND a.dtmatric < g.dtpresenca 
+			AND f.idinscstatus = 1
 			ORDER BY c.nomepess;
 		", [
 			':idturma'=>$idturma,
@@ -243,16 +251,6 @@ class Insc extends Model {
 			':idtemporada'=>$idtemporada
 		]);
 		
-		return $results;
-	}
-
-	public function GetDiasDoMesPresenca($idtemporada, $idturma, $mes){
-		$sql = new Sql();
-			$results = $sql->select("CALL sp_select_dias_mes_presenca(:idtemporada, :idturma, :mes)", [
-			':idtemporada'=>$idtemporada,
-			':idturma'=>$idturma,			
-		    ':mes'=>$mes 
-		]);
 		return $results;
 	}
 
@@ -300,7 +298,6 @@ class Insc extends Model {
 
         if (!$emailEnviado)
      	{
-
         	Insc::setError("Não foi possivel enviar email, no entanto, a incrição abaixo foi efetuada! Clique, logo abaixo, em 'Detalhes' e depois em 'Minhas inscrições', para saber mais.");        	
         	header("Location: /profile/insc/".$idinsc."/".$idpess."");
         	exit();			
@@ -318,7 +315,6 @@ class Insc extends Model {
 		$tplName = "comprovante-insc-cursos";
 		$link = "https://www.cursosesportivossbc.com/cursos";
 
-
         $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
                  "nomepess"=>$nomepess,
                  "desperson"=>$desperson,
@@ -333,7 +329,6 @@ class Insc extends Model {
 
         if (!$emailEnviado)
      	{
-
         	Insc::setError("Não foi possivel enviar email, no entanto, a incrição abaixo foi efetuada! Clique, logo abaixo, em 'Detalhes' e depois em 'Minhas inscrições', para saber mais.");        	
         	header("Location: /cursos/profile/insc/".$idinsc."/".$idpess."");
         	exit();			
@@ -378,8 +373,7 @@ class Insc extends Model {
 	
 		$assunto = "Inscrição Cursos Esportivos ".$desctemporada."";
 		$tplName = "comprovante-insc-pos-sorteio-cursos";
-		$link = "https://www.cursosesportivossbc.com/cursos";
-		
+		$link = "https://www.cursosesportivossbc.com/cursos";	
         $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
                  "nomepess"=>$nomepess,
                  "desperson"=>$desperson,
@@ -415,8 +409,7 @@ class Insc extends Model {
 			$tplName = "cham-matricula-yoga";
 			$link = "https://www.cursosesportivossbc.com";
 
-	    }else{
-	
+	    }else{	
 			$assunto = "Inscrição Cursos Esportivos ".$desctemporada."";
 			$tplName = "sorteio-insc";
 			$link = "https://www.cursosesportivossbc.com";
@@ -440,16 +433,18 @@ class Insc extends Model {
 
         if (!$emailEnviado)
      	{
-
-        	User::setError("Não foi possivel enviar email, no entanto, o status da inscrição foi atualizada!");        	
-        	header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
-        	exit();			
+     	echo "<script>alert('Não foi possivel enviar email, no entanto, o status da inscrição foi atualizada!');";
+			echo "javascript:history.go(-1)</script>";
+        	//User::setError("Não foi possivel enviar email, no entanto, o status da inscrição foi atualizada!");        	
+        	//header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
+        	//exit();			
 
      	}else{
-
-     		User::setSuccess("Email enviado com sucesso!");
-     		header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
-        	exit();
+     		echo "<script>alert('Email enviado com sucesso!');";
+			echo "javascript:history.go(-1)</script>";
+     		//User::setSuccess("Email enviado com sucesso!");
+     		//header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
+        	//exit();			
      	}
 	}
 
@@ -464,7 +459,6 @@ class Insc extends Model {
 			$link = "https://www.cursosesportivossbc.com";
 
 	    }else{
-
 			$assunto = "Inscrição Cursos Esportivos ".$desctemporada."";
 			$tplName = "sorteio-insc";
 			$link = "https://www.cursosesportivossbc.com";
@@ -488,15 +482,127 @@ class Insc extends Model {
 
         if (!$emailEnviado)
      	{
-
-        	User::setError("Não foi possivel enviar email, no entanto, o status da inscrição foi atualizada!");        	
-        	header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
-        	exit();			
+     		echo "<script>alert('Não foi possivel enviar email, no entanto, o status da inscrição foi atualizada!');";
+			echo "javascript:history.go(-1)</script>";
+        	//User::setError("Não foi possivel enviar email, no entanto, o status da inscrição foi atualizada!");        	
+        	//header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
+        	//exit();			
 
      	}else{
-     		User::setSuccess("Email enviado com sucesso!");
-     		header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
-        	exit();			
+     		echo "<script>alert('Email enviado com sucesso!');";
+			echo "javascript:history.go(-1)</script>";
+     		//User::setSuccess("Email enviado com sucesso!");
+     		//header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
+        	//exit();			
+     	}
+	}
+
+	public static function emailIformarVagaDisponivel($idinsc, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma, $idtemporada, $iduserprof){	
+
+		 $idturma = $turma->getidturma();  
+
+		 if(($idturma == 264) || ($idturma == 265) || ($idturma == 266) || ($idturma == 267) || ($idturma == 447) || ($idturma == 448) || ($idturma == 449) || ($idturma == 452)){
+
+		 	$assunto = "Projeto 'Perca o Medo de Nadar' ".$desctemporada."";
+			$tplName = "vaga-dispon-informar-cursos";
+			$link = "https://www.cursosesportivossbc.com/cursos";
+			
+	        $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
+	                 "nomepess"=>$nomepess,
+	                 "desperson"=>$desperson,
+	                 "link"=>$link,
+	                 "email"=>$email,
+	                 "idinsc"=>$idinsc,                
+	                 "turma"=>$turma->getValues()            
+	        )); 
+
+		 }else{
+
+			$assunto = "Vaga Disponível Cursos Esportivos SBC ".$desctemporada."";
+			$tplName = "vaga-dispon-informar";
+			$link = "https://www.cursosesportivossbc.com";
+			
+	        $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
+	                 "nomepess"=>$nomepess,
+	                 "desperson"=>$desperson,
+	                 "link"=>$link,
+	                 "email"=>$email,
+	                 "idinsc"=>$idinsc,                
+	                 "turma"=>$turma->getValues()                 
+	        )); 
+    	}
+
+        $emailEnviado = $mailer->send();          
+
+        if (!$emailEnviado)
+     	{
+        	//User::setError("Não foi possivel enviar email, no entanto, o status da inscrição foi atualizada!");        	
+        	//header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
+        	//exit();	
+        	echo "<script>alert('Não foi possivel enviar email. Se possível ligue para o aluno ou responsável. No entanto, o status da inscrição foi atualizada!');";
+			echo "javascript:history.go(-1)</script>";
+     	}else{
+     		//User::setSuccess("Email enviado com sucesso!");
+     		//header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
+        	//exit();			
+        	echo "<script>alert('Email enviado com sucesso!');";
+			echo "javascript:history.go(-1)</script>";
+     	}
+	}
+
+	public static function emailIformarVagaDisponivelProf($idinsc, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma, $idtemporada, $iduserprof){	
+
+		$idturma = $turma->getidturma();  
+
+		 if(($idturma == 264) || ($idturma == 265) || ($idturma == 266) || ($idturma == 267) || ($idturma == 447) || ($idturma == 448) || ($idturma == 449) || ($idturma == 452)){
+
+		 	$assunto = "Projeto 'Perca o Medo de Nadar' ".$desctemporada."";
+			$tplName = "vaga-dispon-informar-cursos";
+			$link = "https://www.cursosesportivossbc.com/cursos";
+			
+	        $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
+	                 "nomepess"=>$nomepess,
+	                 "desperson"=>$desperson,
+	                 "link"=>$link,
+	                 "email"=>$email,
+	                 "idinsc"=>$idinsc,                
+	                 "turma"=>$turma->getValues()            
+	        )); 
+
+		 }else{
+
+			$assunto = "Vaga Disponível Cursos Esportivos SBC ".$desctemporada."";
+			$tplName = "vaga-dispon-informar";
+			$link = "https://www.cursosesportivossbc.com";
+			
+	        $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
+	                 "nomepess"=>$nomepess,
+	                 "desperson"=>$desperson,
+	                 "link"=>$link,
+	                 "email"=>$email,
+	                 "idinsc"=>$idinsc,                
+	                 "turma"=>$turma->getValues()            
+	        )); 
+    	}
+                     
+        $emailEnviado = $mailer->send();   
+
+        if (!$emailEnviado)
+     	{
+        	//User::setError("Não foi possivel enviar email, no entanto, o status da inscrição foi atualizada!");        	
+        	//header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
+        	//exit();			
+        	//echo "<script>alert('Não foi possivel enviar email. Se possível ligue para o aluno ou responsável. No entanto, o status da inscrição foi atualizada!');";
+        	echo "<script>alert('Status alterado comsucesso!');";
+			echo "javascript:history.go(-1)</script>";
+     	}else{
+     		//User::setSuccess("Email enviado com sucesso!");
+     		//header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
+        	//exit();
+        	//echo "<script>alert('Email enviado com sucesso!');";	
+        	echo "<script>alert('Status alterado comsucesso!');";
+			echo "javascript:history.go(-1)</script>";
+
      	}
 	}
 
@@ -535,106 +641,7 @@ class Insc extends Model {
      		header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
         	exit();			
      	}
-	}
-
-	public static function emailIformarVagaDisponivel($idinsc, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma, $idtemporada, $iduserprof){	
-
-		 $idturma = $turma->getidturma();  
-
-		 if(($idturma == 264) || ($idturma == 265) || ($idturma == 266) || ($idturma == 267) || ($idturma == 447) || ($idturma == 448) || ($idturma == 449)){
-
-		 	$assunto = "Projeto 'Perca o Medo de Nadar' ".$desctemporada."";
-			$tplName = "vaga-dispon-informar-cursos";
-			$link = "https://www.cursosesportivossbc.com/cursos";
-			
-	        $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
-	                 "nomepess"=>$nomepess,
-	                 "desperson"=>$desperson,
-	                 "link"=>$link,
-	                 "email"=>$email,
-	                 "idinsc"=>$idinsc,                
-	                 "turma"=>$turma->getValues()                 
-	        )); 
-
-		 }else{
-
-			$assunto = "Vaga Disponível Cursos Esportivos SBC ".$desctemporada."";
-			$tplName = "vaga-dispon-informar";
-			$link = "https://www.cursosesportivossbc.com";
-			
-	        $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
-	                 "nomepess"=>$nomepess,
-	                 "desperson"=>$desperson,
-	                 "link"=>$link,
-	                 "email"=>$email,
-	                 "idinsc"=>$idinsc,                
-	                 "turma"=>$turma->getValues()                 
-	        )); 
-    	}
-
-        $emailEnviado = $mailer->send();          
-
-        if (!$emailEnviado)
-     	{
-        	User::setError("Não foi possivel enviar email, no entanto, o status da inscrição foi atualizada!");        	
-        	header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
-        	exit();			
-     	}else{
-     		User::setSuccess("Email enviado com sucesso!");
-     		header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
-        	exit();			
-     	}
-	}
-
-	public static function emailIformarVagaDisponivelProf($idinsc, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma, $idtemporada, $iduserprof){	
-
-		$idturma = $turma->getidturma();  
-
-		 if(($idturma == 264) || ($idturma == 265) || ($idturma == 266) || ($idturma == 267) || ($idturma == 447) || ($idturma == 448) || ($idturma == 449)){
-
-		 	$assunto = "Projeto 'Perca o Medo de Nadar' ".$desctemporada."";
-			$tplName = "vaga-dispon-informar-cursos";
-			$link = "https://www.cursosesportivossbc.com/cursos";
-			
-	        $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
-	                 "nomepess"=>$nomepess,
-	                 "desperson"=>$desperson,
-	                 "link"=>$link,
-	                 "email"=>$email,
-	                 "idinsc"=>$idinsc,                
-	                 "turma"=>$turma->getValues()                 
-	        )); 
-
-		 }else{
-
-			$assunto = "Vaga Disponível Cursos Esportivos SBC ".$desctemporada."";
-			$tplName = "vaga-dispon-informar";
-			$link = "https://www.cursosesportivossbc.com";
-			
-	        $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
-	                 "nomepess"=>$nomepess,
-	                 "desperson"=>$desperson,
-	                 "link"=>$link,
-	                 "email"=>$email,
-	                 "idinsc"=>$idinsc,                
-	                 "turma"=>$turma->getValues()                 
-	        )); 
-    	}
-                     
-        $emailEnviado = $mailer->send();   
-
-        if (!$emailEnviado)
-     	{
-        	User::setError("Não foi possivel enviar email, no entanto, o status da inscrição foi atualizada!");        	
-        	header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
-        	exit();			
-     	}else{
-     		User::setSuccess("Email enviado com sucesso!");
-     		header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduserprof."");
-        	exit();			
-     	}
-	}
-
+	}	
 
 	public function get($idinsc)
 	{
@@ -956,7 +963,8 @@ class Insc extends Model {
 			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
-			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus		
+			-- INNER JOIN tb_endereco g ON g.idpess = c.idpess				
 			WHERE a.idturma = :idturma AND a.idtemporada = :idtemporada AND a.laudo = 0 AND a.inscpcd = 0 AND c.vulnsocial = 0
 			ORDER BY a.inscpcd DESC, a.laudo DESC, c.vulnsocial DESC, a.numordem, a.idinscstatus;
 		", [
@@ -978,7 +986,8 @@ class Insc extends Model {
 			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
-			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus		
+			-- INNER JOIN tb_endereco g ON g.idpess = c.idpess					
 			WHERE a.idturma = :idturma AND a.idtemporada = :idtemporada AND a.inscpcd = 1 AND (a.laudo = 1 OR a.laudo = 0) 
 			ORDER BY a.inscpcd DESC, a.laudo DESC, c.vulnsocial DESC, a.numordem, a.idinscstatus;
 		", [
@@ -1000,7 +1009,8 @@ class Insc extends Model {
 			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
-			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus	
+			-- INNER JOIN tb_endereco g ON g.idpess = c.idpess						
 			WHERE a.idturma = :idturma AND a.idtemporada = :idtemporada AND a.laudo = 1 AND a.inscpcd = 0 AND c.vulnsocial = 0
 			ORDER BY a.inscpcd DESC, a.laudo DESC, c.vulnsocial DESC, a.numordem, a.idinscstatus;
 		", [
@@ -1022,7 +1032,8 @@ class Insc extends Model {
 			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
-			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus	
+			-- INNER JOIN tb_endereco g ON g.idpess = c.idpess						
 			WHERE a.idturma = :idturma AND a.idtemporada = :idtemporada AND a.inscpcd = 0 AND c.vulnsocial = 1 AND (a.laudo = 0 OR a.laudo = 1)
 			ORDER BY a.inscpcd DESC, a.laudo DESC, c.vulnsocial DESC, a.numordem, a.idinscstatus;
 		", [
@@ -1794,6 +1805,19 @@ class Insc extends Model {
 		));
 
 		Temporada::updateNumMatriculadosMais($idturma, $idtemporada);
+		Insc::alteraDataMatriculaInscricao($idinsc);
+	}
+
+	public function alteraDataMatriculaInscricao($idinsc){
+
+		$dtmatric = date('Y-m-d H:i:s');
+
+		$sql = new Sql();
+
+		$sql->query("UPDATE tb_insc SET dtmatric = :dtmatric WHERE idinsc = :idinsc", array(
+			":idinsc"=>$idinsc,
+			"dtmatric"=>$dtmatric
+		));
 	}
 
 	public function alteraStatusInscricaoAguardandoMatricula($idinsc){
@@ -1806,7 +1830,6 @@ class Insc extends Model {
 			":idinsc"=>$idinsc,
 			"idStatusMatriculada"=>$idStatusMatriculada
 		));
-
 	}
 
 	public function alteraStatusInscricaoSorteada($idinsc){
@@ -1868,6 +1891,17 @@ class Insc extends Model {
 		$results =  $sql->select("SELECT nummatriculados FROM tb_turmatemporada WHERE idtemporada = :idtemporada AND idturma = :idturma", [
 			'idtemporada'=>$idtemporada,
 			'idturma'=>$idturma
+		]);
+
+		return $results;			
+	}
+
+	public function numMatriculadosTemporada($idtemporada){
+
+		$sql = new Sql();
+		
+		$results =  $sql->select("SELECT SUM(nummatriculados) as matriculados FROM tb_turmatemporada WHERE idtemporada = :idtemporada", [
+			'idtemporada'=>$idtemporada
 		]);
 
 		return $results;			
@@ -2021,6 +2055,23 @@ class Insc extends Model {
 	}	
 
 	public function countInscCursos($idtemporada, $idturma){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT count(*) FROM tb_insc a			
+			WHERE idtemporada = :idtemporada
+            AND idturma = :idturma
+			-- AND (idinscstatus != 8 
+			-- AND idinscstatus != 9)", [
+				":idtemporada"=>$idtemporada,
+				":idturma"=>$idturma
+		]);
+
+		return $results[0]['count(*)'];
+	}
+
+	public function countInscTurma($idtemporada, $idturma){
 
 		$sql = new Sql();
 

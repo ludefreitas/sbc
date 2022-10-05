@@ -48,7 +48,7 @@
   </div>
   <!-- /.lockscreen-item -->
   <div class="help-block text-center">
-    Digite seu e-mail agora e receba as instruções para redefinir a sua senha.
+    Digite seu e-mail e receba as instruções para redefinir a sua senha.
   </div>
   <div class="text-center">
     <a href="/login">Entrar com um usuário diferente <br> VOLTAR</a>

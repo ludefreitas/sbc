@@ -103,6 +103,13 @@
               </div>
 
             </div>
+
+            <div class="col-md-12">
+
+             <div class="form-group">
+              <label for="obs">Observação</label>
+              <input type="text" class="form-control" id="obs" name="obs" placeholder="Observação" value="">
+            </div>
             
           </div>
           <!-- /.box-body -->

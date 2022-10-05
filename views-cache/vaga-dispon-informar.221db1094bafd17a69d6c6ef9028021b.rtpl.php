@@ -402,7 +402,7 @@
                 <td>
                   <table class="soapbox">
                     <tr>
-                      <td class="soapbox-title">Matrícula Yoga Crec Paulicéia</td>
+                      <td class="soapbox-title">Vaga disponível <?php echo htmlspecialchars( $turma["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </td>
                     </tr>
                   </table>
                   <table class="body">
@@ -426,7 +426,7 @@
 
                               Temos uma vaga disponível para a turma <?php echo htmlspecialchars( $turma["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                               <br>
-                               Então, convidamos o o(a) <?php echo htmlspecialchars( $nomepess, ENT_COMPAT, 'UTF-8', FALSE ); ?> que foi inscrito com o Nº <?php echo htmlspecialchars( $idinsc, ENT_COMPAT, 'UTF-8', FALSE ); ?>, se ainda estiver interessado, a comprarecer (Se for menor, acompanhado do responsável) ao <?php echo htmlspecialchars( $turma["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, rua <?php echo htmlspecialchars( $turma["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $turma["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, com documentos pessoais (RG, CPF), comprovante de residência, comprovante de vacinação contra COVID-19, e laudo médico (se for o caso), para fazer a matrícula.
+                               Então, convidamos o(a) <?php echo htmlspecialchars( $nomepess, ENT_COMPAT, 'UTF-8', FALSE ); ?> a comprarecer (Se for menor, acompanhado do responsável) ao <?php echo htmlspecialchars( $turma["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, rua <?php echo htmlspecialchars( $turma["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $turma["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, com documentos pessoais (RG, CPF), comprovante de residência, comprovante de vacinação contra COVID-19, e laudo médico (se for o caso), para fazer a matrícula.
                               <br>
                               Solicitamos ainda, que o(a) <?php echo htmlspecialchars( $nomepess, ENT_COMPAT, 'UTF-8', FALSE ); ?> compareça no prazo máximo de 15(quinze) dias, para efetuar a matrícula, caso contrario perderá o direito a vaga.
                               <br> 

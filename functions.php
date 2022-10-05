@@ -1,13 +1,47 @@
-<?php 
+
+        <?php 
 
 use \Sbc\Model\User;
 use \Sbc\Model\Saude;
 use \Sbc\DB\Sql;
 use \Sbc\Model\Temporada;
 use \Sbc\Model\Insc;
+use \Sbc\Model\Turma;
+
+
+
+ function Update_Ausente($idinsc, $data){
+
+        $statuspresenca = 0;
+
+        $sql = new Sql();
+
+        $sql->query("UPDATE tb_presenca SET statuspresenca = :statuspresenca 
+            WHERE idinsc = :idinsc
+            AND dtpresenca = :data", array(
+            ":statuspresenca"=>$statuspresenca,
+            ":idinsc"=>$idinsc,
+            "data"=>$data
+        ));
+
+    }
+
+
+function temTokenPorTurmaCpf($idturma, $numcpf){
+
+    $html = [];
+
+    array_push($html, '<input type="text" name="tokencpf" value="" placeholder="Insira aqui o TOKENcpf"/>');
+
+    if(Turma::temtokenCpf($idturma, $numcpf)){
+
+        return $html[0];
+    }    
+}
 
 function statusPresenca($dia, $mes, $idinsc, $idturma, $idtemporada)
 {
+
     $statusPresenca = new Insc();
     $statusPresenca = Insc::getStatusPresencaByIdinscIdturmaIdtemporada($dia, $mes, $idinsc, $idturma, $idtemporada);
 

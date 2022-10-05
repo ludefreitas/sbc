@@ -21,12 +21,28 @@
         <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
           </div>
         <?php } ?>
-            
+
+
+         <form method="post" action="/prof/turma/create/token">
+
             <div class="box-header">
-              <a href="/prof/turma/create/token/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-success">Gerar token</a>
+             <!-- <a href="/prof/turma/create/token/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-success">Gerar token</a> -->
 
              
+
+            <input hidden type="text" name="idturma" value="<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"/>
+            <!--<input type="text" name="numcpf" placeholder="Digite o CPF, se necessário">-->
+            <input style="width: 170px; float: left;" type="text" maxlength="14" id="numcpf" name="numcpf" class="input-text" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}"  placeholder="000.000.000-00"/>
+                    <script type="text/javascript">$("#numcpf").mask("000.000.000-00");</script>
             </div>
+            <div class="box-header">
+            <input class="btn btn-success" type="submit" name="" value="Gerar Token">
+
+            </div>
+
+
+
+        </form>
 
              <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
               

@@ -410,6 +410,8 @@ $app->post("/cursos/verifica", function(){
 			'idtemporada'=>$idtemporada	
 		]);
 
+		
+
 		$insc->save();
 
 		Turma::setUsedToken($idturma, $token);

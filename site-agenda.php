@@ -175,11 +175,12 @@ $app->get("/agenda/:idlocal/:data", function($idlocal, $data) {
 
 $app->post("/hora-agenda", function() {
 
-	User::verifyLogin(false);
+	//User::verifyLogin(false);
 
 	$pessoa = new Pessoa();
 	$agenda = new Agenda();
 	$local = new Local();	
+
 	
 	if(!isset($_POST['idpess']) || $_POST['idpess'] <= 0){	
 		Agenda::setMsgError("Selecione uma pessoa! ");
@@ -206,21 +207,18 @@ $app->post("/hora-agenda", function() {
 		header("Location: /agenda/".$_POST['idlocal']."/".$_POST['dataSemSemana']."");
 		exit();
 	}
-	
+
 	$idlocal = $_POST['idlocal'];
 
-	$dataSemSemana = $_POST['dataSemSemana'];
+	$dataSemSemana= $_POST['dataSemSemana'];
 
 	$idhoradiasemana = $_POST['idhoradiasemana'];
 
 	$horarioinicial = $agenda->getHoraInicialDiaSemana($idhoradiasemana);
 	$horariofinal = $agenda->getHoraFinalDiaSemana($idhoradiasemana);
 
-	$horarioinicial = $horarioinicial[0]['horamarcadainicial'];
-	$horariofinal = $horariofinal[0]['horamarcadafinal'];
-
-	$horarioinicialdate = date('H:i', strtotime($horarioinicial));
-	$horariofinaldate = date('H:i', strtotime($horariofinal));
+	$horarioinicialdate = $horarioinicial[0]['horamarcadainicial'];
+	$horariofinaldate = $horariofinal[0]['horamarcadafinal'];
 
 	$numvagashoradiasemana = $agenda->getNumeroDeVagas($idhoradiasemana);
 
@@ -229,13 +227,14 @@ $app->post("/hora-agenda", function() {
 	$qtdagendamentopordata = $agenda->contaQtdAgendamPorDataEIdHora($dataSemSemana, $idlocal, $idhoradiasemana);
 
 	$qtdagendamentopordata = $qtdagendamentopordata[0]['count(*)'];	
-	
+
 	if($qtdagendamentopordata >= $numvagashoradiasemana){
 
 		Agenda::setMsgError("Não há mais vagas para este horário! Escolha outro ");
-		header("Location: /agenda/".$_POST['idlocal']."/".$_POST['dataSemSemana']."");
-		exit();
+	    header("Location: /agenda/".$_POST['idlocal']."/".$_POST['dataSemSemana']."");
+	    exit();
 	}
+	
 
 	$idlocal = (int)$_POST['idlocal'];
 	$dataPost = $_POST['data'];
@@ -243,21 +242,22 @@ $app->post("/hora-agenda", function() {
 	$ispresente = (int)$_POST['ispresente'];
 
 	$pessoa->get($idpess);
+	
+	$nomepess = $pessoa->getnomepess();
 
 	$dtnasc = $pessoa->getdtnasc();
-	$nomepess = $pessoa->getnomepess();
 
 	$anoNasc = date('Y', strtotime($dtnasc));
 	$anoAtual = date('Y');
 
-	$anoDiferença = (int)$anoAtual - (int)$anoNasc;	
+	$anoDiferença = (int)$anoAtual - (int)$anoNasc;
 
 	if($anoDiferença < 18 ){
 		Agenda::setMsgError("O agendamento para a natação espontânea só e permitido para maiores de 18 anos");
 		header("Location: /agenda/".$_POST['idlocal']."/".$_POST['dataSemSemana']."");
 		exit;
 	}
-
+	
 	$qtdAgendamento = Agenda::countAgendaPorPessoaLocalDia($idpess, $idlocal, $dataSemSemana);
 
 	if((int)$qtdAgendamento[0]['count(*)'] >= 2){
@@ -318,9 +318,9 @@ $app->post("/hora-agenda", function() {
 			$trintaminutosdepois = date('H:i', $trintaminutosdepoisstrtotime);
 
 			$diferencaHoraExistenteInicialHoraSolicitadaInicial = $horarioinicialstrtotime - $horaExistenteinicialstrtotime;
-
+			
 			//var_dump($diferencaHoraExistenteInicialHoraSolicitadaInicial.' = '.$horarioinicialstrtotime.' - '.$horaExistenteinicialstrtotime);
-			//exit();
+			//exit;
 
 			if(($diferencaHoraExistenteInicialHoraSolicitadaInicial != -1800) && ($diferencaHoraExistenteInicialHoraSolicitadaInicial != 1800)){
 
@@ -329,7 +329,7 @@ $app->post("/hora-agenda", function() {
 				exit();	
 			}
 		}
-	}	
+	}
 
 	$diasemana = date('w', strtotime($dataPost));
 	$maisumasemana = date('Y-m-d', strtotime('+1 week'));
@@ -365,15 +365,13 @@ $app->post("/hora-agenda", function() {
 		exit;
 
 	}
-
+	
 	$hojeDiaHoraMaisDuas = date('H:i', strtotime('+2 hours'));
 	$hojeDiaHoraAtual = date('H:i');
 	
 	$dataPostSemSemana = Date('Y-m-d', strtotime($dataPost));	
 	
 	if(($dataPostSemSemana == $hoje) && (($hojeDiaHoraMaisDuas >= $horarioinicialdate) || ($hojeDiaHoraAtual > $horarioinicialdate))){
-
-	//if(($dataPostSemSemana == $hoje) && ($hojeDiaHoraMaisDuas >= $horarioinicial)){
 	
 	//if( ($hojeDiaHoraMaisDuas >= $horarioinicial) || ($hojeDiaHoraAtual > $horarioinicial) ){
 
@@ -382,8 +380,35 @@ $app->post("/hora-agenda", function() {
 		exit;
 
 	}
+	
+	//var_dump($horarioinicial);
+	//exit;
+	
+	if( $horarioinicial[0]['horamarcadainicial'] == '08:30' ||
+		//$horarioinicial[0]['horamarcadainicial'] == '09:00' ||
+		//$horarioinicial[0]['horamarcadainicial'] == '09:30' ||
+		//$horarioinicial[0]['horamarcadainicial'] == '10:00' ||
+		//$horarioinicial[0]['horamarcadainicial'] == '10:30' || 		
+		$horarioinicial[0]['horamarcadainicial'] == '11:00' ||
+		$horarioinicial[0]['horamarcadainicial'] == '13:30' ||
+		//$horarioinicial[0]['horamarcadainicial'] == '14:00' ||
+		//$horarioinicial[0]['horamarcadainicial'] == '14:30' ||
+		//$horarioinicial[0]['horamarcadainicial'] == '15:00' ||
+		//$horarioinicial[0]['horamarcadainicial'] == '15:30' ||
+	    $horarioinicial[0]['horamarcadainicial'] == '16:00'){
 
-    //var_dump($dataPost." - Dia Semana ".$nomediasemana." - DT limite ".$maisumasemana." - Diferença ".$anoDiferença." - nome ".$nomepess." - DT ".$dtnasc." - Local ".$idlocal." - Presente ".$ispresente." - Horainicial ".$horarioinicial." - Horafinal ".$horariofinal." - idhoradiasemana ".$idhoradiasemana);
+
+		echo "<script>alert('A agenda para o horário a partir das ".$horarioinicial[0]['horamarcadainicial']." não está disponível');";
+	   echo "javascript:history.go(-1)</script>";
+	   exit();
+
+		//Agenda::setMsgError("A agenda para o horário não está disponível");
+		//header("Location: /agenda/".$_POST['idlocal']."/".$_POST['dataSemSemana']."");
+		//exit;
+
+	}
+
+    //var_dump($dataPost." - Dia Semana ".$nomediasemana." - DT limite ".$maisumasemana." - Diferença ".$anoDiferença." - nome ".$nomepess." - DT ".$dtnasc." - Local ".$idlocal." - Presente ".$ispresente." - Horainicial ".$horarioinicial." - Horafinal ".$horariofinal);
 
    //exit;
 	
@@ -399,8 +424,8 @@ $app->post("/hora-agenda", function() {
 		'nomepess'=>$nomepess,
 		'ispresente'=>$ispresente,
 		'idlocal'=>$idlocal,
-		'horarioinicial'=>$horarioinicial,
-		'horariofinal'=>$horariofinal,
+		'horarioinicial'=>$horarioinicialdate,
+		'horariofinal'=>$horariofinaldate,
 		'error'=>Agenda::getMsgError()
 	]);		
 });

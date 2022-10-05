@@ -1,10 +1,10 @@
 
     <script type="text/javascript">
 
-
+        alert('Lembramos que esta inscrição NÃO GARANTE VAGA')
 
         function enormal(){ 
-
+s
            //document.getElementById('enormal').hidden = false
            document.getElementById('temlaudo').hidden = true
            document.getElementById('deficiente').hidden = true
@@ -97,6 +97,7 @@
                             <input type="hidden" name="initidade" value="{$value.initidade}">
                              <input type="hidden" name="idmodal" value="{$value.idmodal}">
                             <input type="hidden" name="token" value="{$token}">
+                            <input type="hidden" name="tokencpf" value="{$tokencpf}">
 
                         </div> 
 
@@ -217,8 +218,17 @@
                         </div>  
                         --> 
 
+                        {if="$value.numinscritos > $value.vagas"} 
 
-                         <div class="col-md-12 alert alert-warning" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align-last: center;">
+                         <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
+                            <input type="radio" name="espera" required="required">&nbsp;&nbsp; Estou ciente que esta inscrição não garante vaga e que estou numa lista de espera aguardando ser comunicado de uma eventual vaga. Confirmo que tenho cadastrado e atualizado, neste site, meu número de telefone com whatsapp para receber o comunicado.
+
+                        </div> 
+
+                        {/if}
+
+
+                         <div class="col-md-12 alert alert-warning" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align-last: justify;">
                             <input type="radio" name="edital" required="required">&nbsp;&nbsp; Li e concordo com os termos do processo de inscrições para os cursos esportivos<strong> 2022 </strong>coforme <a href="https://www.saobernardo.sp.gov.br/documents/1136654/1245027/Edital+NM/42aa453e-2d70-8651-96e5-41d2d779d24c"><br>Resolução SESP Nº 004 de 28 de outubro de 2021</a>
 
                         </div> 

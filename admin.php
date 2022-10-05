@@ -2,15 +2,44 @@
 
 use \Sbc\PageAdmin;
 use \Sbc\Model\User;
+use \Sbc\Model\Pessoa;
+use \Sbc\Model\Insc;
+use \Sbc\Model\Temporada;
 
 
 $app->get("/admin", function() {
 
 	User::verifyLogin();
 
+	$userOnline = User::pega_totalUsuariosOnline();
+
+	$visitOnline = User::pega_totalVisitantesOnline();
+
+	$idtemporada = Temporada::selecionaTemporadaMatriEncerrada();
+
+	$idtemporada = $idtemporada[0]['idtemporada'];
+
+	$pagina = 1;
+	$todosUsuarios = User::getPage($pagina);
+	$todosAlunos = Pessoa::getPage($pagina);
+	$todosProfessores = User::getPageProf($pagina);
+	$todasInscrições = Insc::getPageInsc($pagina);
+	$matriculadosTemporada = Insc::numMatriculadosTemporada($idtemporada);
+
+	$matriculadosTemporada = $matriculadosTemporada[0]['matriculados'];
+
 	$page = new PageAdmin();
 
-	$page->setTpl("index");
+	$page->setTpl("index", [
+		'useronline'=>$userOnline,
+		'visitante'=>$visitOnline,
+		'totalUsuarios'=>$todosUsuarios['total'],
+		'totalAlunos'=>$todosAlunos['total'],
+		'totalProfessores'=>$todosProfessores['total'],
+		'totalInscricoes'=>$todasInscrições['total'],
+		'matriculadosTemporada'=>$matriculadosTemporada,
+	
+	]);
 });
 
 $app->get("/admin/login", function() {

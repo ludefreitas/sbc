@@ -30,7 +30,7 @@
             <div class="row">              
               <div class="col-md-12" style="text-align: center; margin: 10px 0px 10px 0px;">
                 <a href="/cursos/modalidades/local/<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="">
-                  <img src="/../res/site/img/projeto_perdendo_medo1.jpg" title="Perdendo Medo" height="724" width="1024">
+                  <img src="/../res/site/img/projeto_perdendo_medo5.jpg" title="Perdendo Medo" height="724" width="1024">
                   
                 </a>                 
               </div>

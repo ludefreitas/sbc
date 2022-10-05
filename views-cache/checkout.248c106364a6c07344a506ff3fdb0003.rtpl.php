@@ -1,10 +1,10 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
     <script type="text/javascript">
 
-
+        alert('Lembramos que esta inscrição NÃO GARANTE VAGA')
 
         function enormal(){ 
-
+s
            //document.getElementById('enormal').hidden = false
            document.getElementById('temlaudo').hidden = true
            document.getElementById('deficiente').hidden = true
@@ -97,6 +97,7 @@
                             <input type="hidden" name="initidade" value="<?php echo htmlspecialchars( $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                              <input type="hidden" name="idmodal" value="<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                             <input type="hidden" name="token" value="<?php echo htmlspecialchars( $token, ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                            <input type="hidden" name="tokencpf" value="<?php echo htmlspecialchars( $tokencpf, ENT_COMPAT, 'UTF-8', FALSE ); ?>">
 
                         </div> 
 

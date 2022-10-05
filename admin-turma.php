@@ -10,6 +10,7 @@ use \Sbc\Model\Atividade;
 use \Sbc\Model\TurmaStatus;
 use \Sbc\Model\Turma;
 use \Sbc\Model\Modalidade;
+use \Sbc\Model\Pessoa;
 
 $app->get("/admin/turma", function() {
 
@@ -134,6 +135,9 @@ $app->post("/admin/turma/create", function() {
 	}
 	*/
 
+	$_POST['obs'] = isset($_POST['obs']) ?  $_POST['obs'] = $_POST['obs'] : $_POST['obs'] = '';
+
+
 	if (!isset($_POST['vagas']) || $_POST['vagas'] == '') {
 		Turma::setMsgError("Informe o número de vagas.");
 		header("Location: /admin/turma/create");
@@ -203,7 +207,10 @@ $app->post("/admin/turma/:idturma", function($idturma) {
 		Turma::setMsgError("Informe uma descrição para a turma.");
 		header("Location: /admin/turma/".$idturma."");
 		exit;		
-	}	
+	}
+
+	$_POST['obs'] = isset($_POST['obs']) ?  $_POST['obs'] = $_POST['obs'] : $_POST['obs'] = '';
+	
 
 	if (!isset($_POST['idmodal']) || $_POST['idmodal'] == '') {
 		Turma::setMsgError("Selecione uma modalidade.");
@@ -268,6 +275,7 @@ $app->get("/turma/:idturma", function($idturma) {
 
 });
 
+
 $app->get("/admin/turma/create/token/:idturma", function($idturma) {
 
 	User::verifyLogin();
@@ -278,18 +286,97 @@ $app->get("/admin/turma/create/token/:idturma", function($idturma) {
 	$token = substr($token, 4);
 
 	$_POST['idturma'] = $idturma;
+	$_POST['numcpf'] = (isset($_POST['numcpf'])) ? $_POST['numcpf'] : "";
 	$_POST['token'] = $token;
 	$_POST['isused'] = 0;
 
 	$turma->setData($_POST);
 
-	//var_dump($turma);
-	//exit();
-
 	$turma->saveToken();
 
-	header("Location: /admin/token/".$idturma."");
-	exit();	
+    echo "<script>alert('Token ".$turma->gettoken()." criado com sucesso!');";
+	echo "javascript:history.go(-1)</script>";
+	//header("Location: /admin/token/".$idturma."");
+	//exit();	
+});
+
+$app->get("/admin/turma/create/token/:idturma/:numcpf", function($idturma, $numcpf) {
+
+	User::verifyLogin();
+
+	$turma = new Turma();
+
+	$token = time();
+	$token = substr($token, 4);
+
+	$_POST['idturma'] = $idturma;
+	$_POST['numcpf'] = $numcpf;
+	$_POST['token'] = $token;
+	$_POST['isused'] = 0;
+
+	$turma->setData($_POST);
+
+	if(!Turma::temTokenCpf($idturma, $numcpf)){
+
+		$turma->saveToken();
+	    echo "<script>alert('Token ".$turma->gettoken()." criado com sucesso!');";
+		echo "javascript:history.go(-1)</script>";
+	}else{
+
+		echo "<script>alert('Já existe um token para este aluno nesta turma!');";
+		echo "javascript:history.go(-1)</script>";
+	}
+});
+
+$app->post("/admin/turma/create/token", function() {
+
+	User::verifyLoginProf();
+
+	$turma = new Turma();
+
+	$token = time();
+	$token = substr($token, 4);
+
+	if(isset($_POST['numcpf']) && $_POST['numcpf'] == ""){
+		echo "<script>alert('Informe o número do CPF!');";
+	  	echo "javascript:history.go(-1)</script>";
+	   	exit;
+	}
+
+	if(!Pessoa::validaCPF($_POST['numcpf'])){
+		echo "<script>alert('Informe um número de cpf válido!');";
+	    echo "javascript:history.go(-1)</script>";
+		exit;
+	}
+	
+
+	$_POST['idturma'] = $_POST['idturma'];
+	$_POST['numcpf'] = $_POST['numcpf'];
+	$_POST['token'] = $token;
+	$_POST['isused'] = 0;
+
+	$turma->setData($_POST);
+
+	$idturma = $_POST['idturma'];
+	$numcpf = $_POST['numcpf'];
+
+	if(!Turma::temTokenCpf($idturma, $numcpf)){
+
+		$turma->saveToken();
+	    echo "<script>alert('Token ".$turma->gettoken()." criado com sucesso!');";
+		echo "javascript:history.go(-1)</script>";
+
+	}else{
+
+		if($numcpf != ""){
+			echo "<script>alert('Já existe um token para este aluno nesta turma!');";
+			echo "javascript:history.go(-1)</script>";
+		}else{
+			$turma->saveToken();
+	   		echo "<script>alert('Token ".$turma->gettoken()." criado com sucesso!');";
+			echo "javascript:history.go(-1)</script>";
+		}		
+	}
 });
 
 $app->get("/admin/token/:idturma", function($idturma) {

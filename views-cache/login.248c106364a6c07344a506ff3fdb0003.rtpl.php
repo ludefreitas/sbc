@@ -51,9 +51,14 @@
                             </p>
                             
                             
-                        
+                            <!--
                             <p class="lost_password">
-                                <a href="/forgot">Esqueceu a senha?</a>
+                                <a href="/forgot/site">Esqueceu a senha?</a>
+                            </p>
+                            -->
+                            
+                            <p class="lost_password">
+                                <a href="/forgot/site">Esqueceu a senha?</a>
                             </p>
                             <div class="clear"></div>
                         </form>  

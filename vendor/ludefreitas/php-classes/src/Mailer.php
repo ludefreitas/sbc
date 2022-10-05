@@ -5,14 +5,8 @@ namespace Sbc;
 use Rain\Tpl;
 
 class Mailer {
-	
-	/*
-	const USERNAME = "contato@cursosesportivossbc.com";
-	const PASSWORD = "";
-	const NAME_FROM = "Cursos Esportivos SBC";
-	*/
 
-	const USERNAME = "contato@cursosesportivossbc.com.br";
+	const USERNAME = "contato@cursosesportivossbc.com";
 	const PASSWORD = "";
 	const NAME_FROM = "Cursos Esportivos SBC";
 

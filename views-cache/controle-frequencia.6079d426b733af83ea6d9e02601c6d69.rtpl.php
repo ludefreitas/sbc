@@ -145,7 +145,7 @@
                <?php echo htmlspecialchars( $value1["descespaco"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
               </td>
               <td style="text-align: center; border: solid 1px; padding: 5px;">
-                <?php if( $value1["iduser"] == 7 ){ ?>
+                <?php if( $value1["idperson"] == 7 ){ ?>
                 SBC
                 <?php }else{ ?>
                <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>

@@ -1,4 +1,20 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript">
+
+$( window ).unload(function() {
+      alert("hello!")
+});
+
+/*
+  window.onbeforeunload = function(){alert("Deseja mesmo sair do site?")};
+  
+  alert('Estamos no período de rematrícula. Qualquer inscrição feita aqui está sujeita a disponibilidade de vagas, respeitando a lista de espera que está com o professor da turma. Então, caso você faça inscrição, neste período, a mesma NÃO GARANTE VAGA')
+*/
+
+</script>
+
+
  <div class="container" style="margin-top: 0px;"> <!-- container 1 -->
             <div class="row"> <!-- row 2 -->
               <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 0px 0px 0px 0px;">

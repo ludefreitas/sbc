@@ -258,12 +258,17 @@ class Agenda extends Model {
 	// Seleciona horários diponíveis para agendar natação livre
 	public static function listAllHoraDiaSemanaLocal($idlocal, $diasemana){
 
+		$statushora = 1;
+
 		$sql = new Sql();
 
 		$results = $sql->select("SELECT *
 			FROM tb_horadiasemana 
-			WHERE idlocal = :idlocal AND diasemana = :diasemana", [
+			WHERE idlocal = :idlocal 
+			AND statushora = :statushora
+			AND diasemana = :diasemana", [
 			':idlocal'=>$idlocal,
+			':statushora'=>$statushora,
 			':diasemana'=>$diasemana
 		]);
 
@@ -354,6 +359,7 @@ class Agenda extends Model {
 		$results = $sql->select("SELECT * FROM tb_agenda a
 			INNER JOIN tb_pessoa b USING (idpess)
 			INNER JOIN tb_users c USING (iduser)
+			INNER JOIN tb_persons f USING (idperson)
 			INNER JOIN tb_local d USING (idlocal)
 			INNER JOIN tb_horadiasemana e USING (idhoradiasemana)
 			WHERE a.idlocal = :idlocal AND a.dia = :data

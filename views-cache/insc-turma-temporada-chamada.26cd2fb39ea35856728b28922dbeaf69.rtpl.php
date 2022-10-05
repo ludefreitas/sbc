@@ -265,11 +265,7 @@
                         
                         <div class="col-md-12">
                           <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> 
-                            <?php if( $value1["idinscstatus"] == 9 ){ ?> 
-                            [<span style="font-weight: bold; font-size: 8px; color: red;"> 
-                              CANCELADA 
-                            </span>]  
-                          <?php } ?>                     
+                            
                         </div>
                       </div>      
                     </div>

@@ -125,7 +125,7 @@
     </div>
     <div class="row">
         
-         <div style="text-align-last: center" class="col-md-9 alert alert-info" <?php echo colorStatus($insc["idinscstatus"]); ?>>
+         <div style="text-align-last: center" class="col-md-12 alert alert-info" <?php echo colorStatus($insc["idinscstatus"]); ?>>
             <strong>
                 <a href="/profile/insc" role="button"> Detalhes </a>
             </strong>

@@ -58,7 +58,7 @@
   </h4>
 </div>
 <div id="div1">  
-    <a href="/">
+    <a href="javascript:history.go(-2)">
         <i class="fa fa-arrow-left"></i> 
             Início
     </a> 

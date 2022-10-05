@@ -3,8 +3,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Administração dos Cursos Esportivos SBC </br>
-      </h1>
+        Administração dos Cursos Esportivos SBC <br>
+      </h1>     
       <h3>
         Olá! {$user.desperson}, seja Bem vindo!
       </h3>
@@ -17,7 +17,44 @@
     <!-- Main content -->
     <section class="content">
 
-      <!-- Your Page Content Here -->
+      <div class="container">
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;">Usuário Online: {$useronline}</div>
+          
+        </div> 
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;">Usuário Visitante: {$visitante}</div>
+          
+        </div>     
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;">Todos Usuários: {$totalUsuarios}</div>
+          
+        </div> 
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;">Todos Alunos: {$totalAlunos}</div>
+          
+        </div>    
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;">Todos Professores: {$totalProfessores}</div>
+          
+        </div>         
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;">Todas Inscrições: {$totalInscricoes}</div>
+          
+        </div> 
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;">Alunos matriculados: {$matriculadosTemporada}</div>
+          
+        </div>                      
+                  
+      </div>
 
     </section>
     <!-- /.content -->

@@ -38,7 +38,7 @@
     </div>
   </div>
   <div class="lockscreen-footer text-center">
-    Copyright &copy; 2020-2021 <b><a href="/" class="text-black">Cursos Esportivos SBC</a></b><br>
+    Copyright &copy; 2020-2021 <b><a href="javascript:window.history.go(-1)" class="text-black">Cursos Esportivos SBC - Voltar</a></b><br>
     Todos os direitos reservados
   </div>
 </div>

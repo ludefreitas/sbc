@@ -52,13 +52,19 @@
                   return;
             }
 
-            if(data == '2022-06-18'){
-                  alert('A data escolhida é emenda de feriado, não haverá natação espontânea');             
+            if(data == '2022-09-28'){
+                  alert('Agenda da natação espontânea para este dia está fechada');             
                   return;
             }
 
-            if(data == '2022-04-30'){
-                  alert('A natação espontânea no Baetão terá início a partir do dia 02/05/2022');             
+            if(data == '2022-09-29'){
+                  alert('Agenda da natação espontânea para este dia está fechada');             
+                  return;
+            }
+            
+
+            if(data == '2022-09-30'){
+                  alert('Agenda da natação espontânea para este dia está fechada');             
                   return;
             }
 
@@ -101,7 +107,7 @@
 
             let strDiaSemana = datasemanas.getDay();
 
-             if(local == 3 && (strDiaSemana == 2 || strDiaSemana == 5)){
+             if(local == 3 && (strDiaSemana == 1 || strDiaSemana == 2 || strDiaSemana == 3 || strDiaSemana == 4 || strDiaSemana == 5)){
 
                 if(hoje > data){
 
@@ -115,7 +121,7 @@
                
             }else{
                 
-                 alert('A natação espontânea no Baetão acontece somente às quartas e sábados. Escolha uma data em um destes dias semana para agendar sua natação!');
+                 alert('Aos domingos e na segunda-feira não tem natação espontânea no Baetão. Escolha outros dias da semana para agendar sua natação!');
                 return;               
              }    
 

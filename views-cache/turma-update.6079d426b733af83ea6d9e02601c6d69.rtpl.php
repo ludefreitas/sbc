@@ -102,6 +102,16 @@
             </div>
              
            </div>
+
+           <div class="col-md-12">
+
+             <div class="form-group">
+              <label for="obs">Observação</label>
+              <textarea type="text" class="form-control" id="obs" name="obs" placeholder="Observação" value="<?php echo htmlspecialchars( $turma["obs"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"></textarea> 
+            </div>
+             
+
+           </div>
             
         </div>                  
             
