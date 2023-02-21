@@ -1,5 +1,4 @@
-
-        <?php 
+<?php 
 
 use \Sbc\Model\User;
 use \Sbc\Model\Saude;
@@ -8,7 +7,89 @@ use \Sbc\Model\Temporada;
 use \Sbc\Model\Insc;
 use \Sbc\Model\Turma;
 
+function usuariosOnline(){
 
+    $userOnline = User::pega_totalUsuariosOnline();
+    return $userOnline;
+}
+
+function usuariosVisitantes(){
+
+    $visitOnline = User::pega_totalVisitantesOnline();
+    return $visitOnline;
+}
+
+function todosInscricoes($desctemporada){
+
+    $todosUsuarios = new Insc();
+    $todosUsuarios = Insc::getInscGeralDesctemporada($desctemporada);
+    return $todosUsuarios;
+}
+
+function todosInscricoesValidas($desctemporada){
+
+    $todosUsuarios = new Insc();
+    $todosUsuarios = Insc::getInscGeralDesctemporadaValidas($desctemporada);
+    return $todosUsuarios;
+}
+
+function MatriculadosDesctemporada($desctemporada){
+
+    $todosMatriculados = new Insc();
+    $todosMatriculados = (int)Insc::numMatriculadosDescTemporada($desctemporada);
+    return $todosMatriculados;
+}
+
+function pegaInscTemporadaModalidade($desctemporada, $idmodal){
+
+    $InscTemporadaModalidade = new Insc();
+    $InscTemporadaModalidade = (int)Insc::getInscTemporadaModalidade($desctemporada, $idmodal);
+    return $InscTemporadaModalidade;
+}
+
+function pegaSomaVagasByTurmaIdmodal($desctemporada, $idmodal){
+
+    $SomaVagasByTurmaIdmodal = new Turma();
+    $SomaVagasByTurmaIdmodal = (int)Turma::getSomaVagasByTurmaIdmodal($desctemporada, $idmodal);
+    return $SomaVagasByTurmaIdmodal;
+}
+
+function pegaSomaVagasByDescTemporada($desctemporada){
+
+    $SomaVagasByTemporada = new Turma();
+    $SomaVagasByTemporada = (int)Turma::getSomaVagasByDescTemporada($desctemporada);
+    return $SomaVagasByTemporada;
+}
+
+function NumAlunosPresentesPorData(){
+
+    date_default_timezone_set('America/Sao_Paulo');    
+    $diaHoje = date('Y-m-d'); 
+
+    $alunosPresentesPorData = new Insc();
+    $alunosPresentesPorData = (int)Insc::getAlunosPresentesPorData($diaHoje);
+    return $alunosPresentesPorData;
+}
+
+function NumAlunosAusentesPorData(){
+
+    date_default_timezone_set('America/Sao_Paulo');    
+    $diaHoje = date('Y-m-d');  
+
+    $alunosAusentesPorData = new Insc();
+    $alunosAusentesPorData = (int)Insc::getAlunosAusentesPorData($diaHoje);
+    return $alunosAusentesPorData;
+}
+
+function NumAlunosJustificadosPorData(){
+
+    date_default_timezone_set('America/Sao_Paulo');    
+    $diaHoje = date('Y-m-d');  
+
+    $alunosJustificadosPorData = new Insc();
+    $alunosJustificadosPorData = (int)Insc::getAlunosJustificadosPorData($diaHoje);
+    return $alunosJustificadosPorData;
+}
 
  function Update_Ausente($idinsc, $data){
 
@@ -374,6 +455,24 @@ function getUserIsAdmin()
 
     if ($user->getinadmin() == 1){
         return $html[0];
+    }
+}
+
+function UserIsAdmin()
+{
+    $user = User::getFromSession();
+
+    if ($user->getinadmin() == 1){
+        return true;
+    }
+}
+
+function UserIsProf()
+{
+    $user = User::getFromSession();
+
+    if ($user->getisprof() == 1){
+        return true;
     }
 }
 

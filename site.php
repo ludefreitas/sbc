@@ -16,20 +16,39 @@ use \Sbc\Model\Saude;
 $app->get('/', function() {
 
 	$_SESSION['User'] = isset($_SESSION['User']) ? $_SESSION['User'] : $_SESSION['User'] = NULL;
+
 	
-	if(isset($_SESSION['User']) && $_SESSION['User']['inadmin'] != 1){
+	//if(isset($_SESSION['User']) && ($_SESSION['User']['inadmin'] != 1) && ($_SESSION['User']['isprof'] != 1)) {
 
-		$userOnline = User::pega_totalUsuariosOnline();
+	
 
-		if($userOnline > 0){
+	if(isset($_SESSION['User']) && $_SESSION['User']['inadmin'] != 1) {
+	    
+	    $userVisitante = User::pega_totalVisitantesOnline();
+		if($userVisitante > 200){
 
 			User::logout();
 			User::forgotUserPass();
 			User::setError('Limite de usuários online excedido! TTENTE NOVAMENTE MAIS TARDE');
-			header('Location: /login');
+			header('Location: /redirecionando');
+		}
+	}
+	
+	if(isset($_SESSION['User']) && $_SESSION['User']['inadmin'] != 1) {
+
+		$userOnline = User::pega_totalUsuariosOnline();
+
+		if($userOnline > 50){
+		    User::logout();
+			User::forgotUserPass();
+			User::setError('Limite de usuários online excedido! TENTE NOVAMENTE MAIS TARDE.');
+			header('Location: /redirecionando');
 			exit();
 		}
+		
 	}	
+
+	
 
 	if(!$_SESSION['User']){
 		$sessao = NULL;
@@ -211,7 +230,7 @@ $app->get("/checkout", function(){
 	Endereco::seEnderecoExiste($idperson);
 
 	$_SESSION['token'] = isset($_SESSION['token']) ? $_SESSION['token'] : '';
-	$_SESSION['tokencpf'] = isset($_SESSION['tokencpf']) ? $_SESSION['tokencpf'] : '';
+	$_SESSION['tokencpf'] = isset($_SESSION['tokencpf']) ? $_SESSION['tokencpf'] : 0;
 
 	$token = $_SESSION['token'];
 	$tokencpf = $_SESSION['tokencpf'];
@@ -220,7 +239,50 @@ $app->get("/checkout", function(){
 		Cart::setMsgError("Selecione uma turma e a pessoa que irá fazer a aula! ");
 		header("Location: /cart");
 		exit();
-	}	
+	}
+
+	$idcart = (int)$cart->getidcart();
+	$idturma = (int)Cart::getIdturmaByCart($idcart);
+	$idtemporada = $cart->getTurma()[0]['idtemporada'];
+	$idmodal = $cart->getTurma()[0]['idmodal'];
+	$vagas = (int)Turma::getVagasByIdTurma($idturma);
+
+	//$pegainscGeral = (int)Insc::getInscGeral($idturma, $idtemporada);
+	$pegainscGeral = 50;
+	$pegainscPlm = (int)Insc::pegaInscPlm($idturma, $idtemporada);
+	$pegainscPcd = (int)Insc::pegaInscPcd($idturma, $idtemporada);
+	$pegainscPvs = (int)Insc::pegaInscPvs($idturma, $idtemporada);
+
+	if($idturma == 598 || $idturma == 599 || $idturma == 600 || $idturma == 601){
+		$vagasGeral = round($vagas * 0.0);
+		$vagasPlm = round($vagas * 0.8);
+		$vagasPcd = round($vagas * 0.1);
+		$vagasPvs = round($vagas * 0.1);
+	}else{
+		$vagasGeral = round($vagas * 0.7);
+		$vagasPlm = round($vagas * 0.1);
+		$vagasPcd = round($vagas * 0.1);
+		$vagasPvs = round($vagas * 0.1);
+	}
+
+	if($idmodal == 25){
+
+		$maxListaEsperaGeral = round($vagasGeral * 2);
+		$maxListaEsperaPlm = round($vagasPlm * 2);
+		$maxListaEsperaPcd = round($vagasPcd * 2);
+		$maxListaEsperaPvs = round($vagasPvs * 2);
+
+	}else{
+
+		$maxListaEsperaGeral = round($vagasGeral * 1.2);
+		$maxListaEsperaPlm = round($vagasPlm * 1.2);
+		$maxListaEsperaPcd = round($vagasPcd * 1.2);
+		$maxListaEsperaPvs = round($vagasPvs * 1.2);
+	}
+
+	//var_dump($maxListaEsperaGeral);
+	//var_dump($tokencpf);
+
 
 	$page = new Page();
 
@@ -231,6 +293,18 @@ $app->get("/checkout", function(){
 		'pessoa'=>$cart->getPessoa(),
 		'turma'=>$cart->getTurma(),
 		'cid'=>$cid = Saude::listAllCid(),
+		'vagasGeral'=>$vagasGeral,
+		'inscGeral'=>$pegainscGeral,
+		'vagasPlm'=>$vagasPlm,
+		'inscPlm'=>$pegainscPlm,
+		'vagasPcd'=>$vagasPcd,
+		'inscPcd'=>$pegainscPcd,
+		'vagasPvs'=>$vagasPvs,
+		'inscPvs'=>$pegainscPvs,
+		'maxListaEsperaGeral'=>$maxListaEsperaGeral,
+		'maxListaEsperaPlm'=>$maxListaEsperaPlm,
+		'maxListaEsperaPcd'=>$maxListaEsperaPcd,
+		'maxListaEsperaPvs'=>$maxListaEsperaPvs,
 		'error'=>Pessoa::getError()
 	]);
 });
@@ -353,6 +427,12 @@ $app->post("/checkout", function(){
 		$inscpcd = 0;
 	}
 
+	if($_POST['tipoinsc'] == 5){
+		$inscpvs = 1;
+	}else{
+		$inscpvs = 0;
+	}
+
 	//$laudo = isset($_POST['laudo']) ? (int)$_POST['laudo'] : 0;
 	//$inscpcd = isset($_POST['inscpcd']) ? (int)$_POST['inscpcd'] : 0;
 
@@ -369,6 +449,8 @@ $app->post("/checkout", function(){
 	$idpess= $cart->getidpess();
 
 	$pessoa->get((int)$idpess);
+
+	$numcpf = $pessoa->getnumcpf();
 	
 	$anoNasc = $pessoa->getdtnasc();
 	
@@ -432,7 +514,69 @@ $app->post("/checkout", function(){
 
 	if(Insc::statusTemporadaMatriculasEncerradas($idtemporada)){
 
+		/*
+		Status da inscrição, sem sorteio é aguardando matrícula ou fila de espera
+		conforme 'if' abaixo
+
 		$InscStatus = InscStatus::FILA_DE_ESPERA;
+		*/
+
+		$vagas = (int)Turma::getVagasByIdTurma($idturma);
+		$pegainscGeral = (int)Insc::getInscGeral($idturma, $idtemporada);
+		$pegaInscPlm = (int)Insc::pegaInscPlm($idturma, $idtemporada);
+		$pegaInscPcd = (int)Insc::pegaInscPcd($idturma, $idtemporada);
+		$pegaInscPvs = (int)Insc::pegaInscPvs($idturma, $idtemporada);
+		if($idturma == 598 || $idturma == 599 || $idturma == 600 || $idturma == 601){
+    		$vagasGeral = round($vagas * 0.0);
+    		$vagasPlm = round($vagas * 0.8);
+    		$vagasPcd = round($vagas * 0.1);
+    		$vagasPvs = round($vagas * 0.1);
+    	}else{
+    		$vagasGeral = round($vagas * 0.7);
+    		$vagasPlm = round($vagas * 0.1);
+    		$vagasPcd = round($vagas * 0.1);
+    		$vagasPvs = round($vagas * 0.1);
+    	}
+
+    	
+
+		if($laudo === 0 AND $inscpcd === 0 AND $inscpvs === 0 ){
+			if($pegainscGeral >= $vagasGeral){
+				$InscStatus = InscStatus::FILA_DE_ESPERA;
+			}else{
+				$InscStatus = InscStatus::AGUARDANDO_MATRICULA;
+			}
+		}else{
+			if($laudo === 1 AND $inscpcd === 0 AND $inscpvs === 0 ){
+
+				if($pegaInscPlm >= $vagasPlm){
+					$InscStatus = InscStatus::FILA_DE_ESPERA;
+				}else{
+					$InscStatus = InscStatus::AGUARDANDO_MATRICULA;
+				}
+			}elseif($laudo === 0 AND $inscpcd === 1 AND $inscpvs === 0 ){
+
+				if($pegaInscPcd >= $vagasPcd){
+					$InscStatus = InscStatus::FILA_DE_ESPERA;
+				}else{
+					$InscStatus = InscStatus::AGUARDANDO_MATRICULA;
+				}
+			}elseif($laudo === 0 AND $inscpcd === 0 AND $inscpvs === 1 ){
+
+				if($pegaInscPvs >= $vagasPvs){
+					$InscStatus = InscStatus::FILA_DE_ESPERA;
+				}else{
+					$InscStatus = InscStatus::AGUARDANDO_MATRICULA;
+				}
+			}
+		}
+		
+
+		/*****/
+
+		$InscStatus = InscStatus::FILA_DE_ESPERA;
+
+		/*****/
 
 		$numOrdemMax = Insc::numMaxNumOrdem($idtemporada, $idturma);
 		$mumMatriculados = Insc::numMatriculados($idtemporada, $idturma);
@@ -455,11 +599,14 @@ $app->post("/checkout", function(){
 			'numordem'=>$numordem,
 			'laudo'=>$laudo,
 			'inscpcd'=>$inscpcd,
+			'inscpvs'=>$inscpvs,
 			'idturma'=>$idturma,
 			'idtemporada'=>$idtemporada	
 		]);
 
-		$insc->save();
+		if(!$cart->getInscExist($numcpf, $idpess, $idturma, $idtemporada)){
+			$insc->save();
+		}
 
 		Turma::setUsedToken($idturma, $token);
 		Turma::setUsedTokenCpf($idturma, $tokencpf);
@@ -475,14 +622,90 @@ $app->post("/checkout", function(){
 		Cart::removeFromSession();
 	    session_regenerate_id();
 
+	    /*
+	    ### Envio de Email desativado
 	    $insc->inscricaoEmailPosSorteio($idinsc, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma, $posicao, $matriculados, $vagas);
+	    */
 
+	    if($InscStatus == 2){
+
+	    	Insc::setSuccess("Inscrição EFETUADA COM SUCESSO! Lembre-se: As aulas já começaram. Então você deve comprarecer com os documentos pessoais, sem falta, já na próxima aula, no Centro Esportivo no dia e horário da aula escolhida.");        	
+			header("Location: /profile/insc/".$insc->getidinsc()."/".$idpess."");
+        	exit;
+
+        }
+
+        if($InscStatus == 7){
+
+	    	Insc::setSuccess("Inscrição EFETUADA COM SUCESSO! Lembre-se: Não há vagas para esta turma. Esta inscrição está em uma lista de espera, aguardando o comunicado de uma eventual vaga. Mantenha atualizado, neste site, seu número de telefone celular, com whatsapp, para receber o comunicado.");        	
+			header("Location: /profile/insc/".$insc->getidinsc()."/".$idpess."");
+        	exit;
+
+        }
+
+	    /*
+	    Insc::setSuccess("Inscrição EFETUADA COM SUCESSO! Clique, logo abaixo, em 'Detalhes' e depois em 'Minhas inscrições', para saber mais.");        	
 		header("Location: /profile/insc/".$insc->getidinsc()."/".$idpess."");
         exit;	
+        */
 
 	}else{
 
+		/*
+		Status da inscrição, sem sorteio é aguardando matrícula ou fila de espera
+		conforme 'if' abaixo
+
 		$InscStatus = InscStatus::AGUARDANDO_SORTEIO;
+
+		*/
+
+		$vagas = (int)Turma::getVagasByIdTurma($idturma);
+		$inscGeral = (int)Insc::getInscGeral($idturma, $idtemporada);
+		$pegaInscPlm = (int)Insc::pegaInscPlm($idturma, $idtemporada);
+		$pegaInscPcd = (int)Insc::pegaInscPcd($idturma, $idtemporada);
+		$pegaInscPvs = (int)Insc::pegaInscPvs($idturma, $idtemporada);
+		if($idturma == 598 || $idturma == 599 || $idturma == 600 || $idturma == 601){
+    		$vagasGeral = round($vagas * 0.0);
+    		$vagasPlm = round($vagas * 0.8);
+    		$vagasPcd = round($vagas * 0.1);
+    		$vagasPvs = round($vagas * 0.1);
+    	}else{
+    		$vagasGeral = round($vagas * 0.7);
+    		$vagasPlm = round($vagas * 0.1);
+    		$vagasPcd = round($vagas * 0.1);
+    		$vagasPvs = round($vagas * 0.1);
+    	}
+
+		if($laudo === 0 AND $inscpcd === 0 AND $inscpvs === 0 ){
+			if($pegainscGeral >= $vagasGeral){
+				$InscStatus = InscStatus::FILA_DE_ESPERA;
+			}else{
+				$InscStatus = InscStatus::AGUARDANDO_MATRICULA;
+			}
+		}else{
+			if($laudo === 1 AND $inscpcd === 0 AND $inscpvs === 0 ){
+
+				if($pegaInscPlm >= $vagasPlm){
+					$InscStatus = InscStatus::FILA_DE_ESPERA;
+				}else{
+					$InscStatus = InscStatus::AGUARDANDO_MATRICULA;
+				}
+			}elseif($laudo === 0 AND $inscpcd === 1 AND $inscpvs === 0 ){
+
+				if($pegaInscPcd >= $vagasPcd){
+					$InscStatus = InscStatus::FILA_DE_ESPERA;
+				}else{
+					$InscStatus = InscStatus::AGUARDANDO_MATRICULA;
+				}
+			}elseif($laudo === 0 AND $inscpcd === 0 AND $inscpvs === 1 ){
+
+				if($pegaInscPvs >= $vagasPvs){
+					$InscStatus = InscStatus::FILA_DE_ESPERA;
+				}else{
+					$InscStatus = InscStatus::AGUARDANDO_MATRICULA;
+				}
+			}
+		}
 
 		$token = $_POST['token'];
 		$tokencpf = $_POST['tokencpf'];
@@ -495,11 +718,14 @@ $app->post("/checkout", function(){
 			'numordem'=>$numordem,
 			'laudo'=>$laudo,
 			'inscpcd'=>$inscpcd,
+			'inscpvs'=>$inscpvs,
 			'idturma'=>$idturma,
 			'idtemporada'=>$idtemporada	
 		]);
 
-		$insc->save();
+		if(!$cart->getInscExist($numcpf, $idpess, $idturma, $idtemporada)){
+			$insc->save();
+		}
 
 		Turma::setUsedToken($idturma, $token);		
 		Turma::setUsedTokenCpf($idturma, $tokencpf);		
@@ -517,10 +743,33 @@ $app->post("/checkout", function(){
 		Cart::removeFromSession();
 	    session_regenerate_id();
 
-	    $insc->inscricaoEmail($idinsc, $numsorte, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma);
+	    /*
+	     ### Envio de Email desativado
 
+	    $insc->inscricaoEmail($idinsc, $numsorte, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma);
+	    */
+
+	    if($InscStatus == 2){
+
+	    	Insc::setSuccess("Inscrição EFETUADA COM SUCESSO! Lembre-se: As aulas já começaram. Então você deve comprarecer com os documentos pessoais, sem falta, já na próxima aula, no Centro Esportivo no dia e horário da aula escolhida.");        	
+			header("Location: /profile/insc/".$insc->getidinsc()."/".$idpess."");
+        	exit;
+
+        }
+
+        if($InscStatus == 7){
+
+	    	Insc::setSuccess("Inscrição EFETUADA COM SUCESSO! Lembre-se: Não há vagas para esta turma. Esta inscrição está em uma lista de espera, aguardando o comunicado de uma eventual vaga. Mantenha atualizado, neste site, seu número de telefone celular, com whatsapp, para receber o comunicado.");        	
+			header("Location: /profile/insc/".$insc->getidinsc()."/".$idpess."");
+        	exit;
+
+        }
+
+        /*
+	    Insc::setSuccess("Inscrição EFETUADA COM SUCESSO! Clique, logo abaixo, em 'Detalhes' e depois em 'Minhas inscrições', para saber mais.");        	
 		header("Location: /profile/insc/".$insc->getidinsc()."/".$idpess."");
-		exit;
+        exit;	
+        */
 	}	
 });
 
@@ -582,6 +831,7 @@ $app->post("/login", function(){
 	}
 
 	header("Location: /");
+	//echo "<script>javascript:history.go(-2)</script>";
 	exit;
 });
 
@@ -697,6 +947,96 @@ $app->get("/comprovante", function() {
 
 	$page->setTpl("comprovante-insc");	
 });
+
+
+$app->get("/tutorial", function() {
+
+	$page = new Page();
+
+	$page->setTpl("tutorial");	
+});
+
+
+$app->get("/enderecolocais", function() {
+
+	$local = new Local();
+
+	$local = $local->listAll();
+
+	$page = new Page();
+
+	$page->setTpl("enderecolocais", array(
+		"locais"=>$local
+		));
+});
+
+$app->get("/redirecionando", function() {
+
+	$page = new Page([
+		"header"=>false,
+		"footer"=>false
+	]);
+
+	$page->setTpl("redirecionando");
+});
+
+$app->get("/transparent", function() {
+
+	$page = new Page([
+		"header"=>false,
+		"footer"=>false
+	]);
+
+	$page->setTpl("transparent");
+});
+
+$app->get("/par-q", function() {
+
+	$page = new Page([
+		"header"=>false,
+		"footer"=>false
+	]);
+
+	$page->setTpl("par-q");
+});
+
+$app->post("/par-q/enviar", function() {
+
+	var_dump($_POST);
+	
+});
+
+$app->get("/craquesdofuturo", function() {
+
+	$page = new Page();
+
+	$page->setTpl("craquesdofuturo");
+});
+
+$app->get("/endereco-craques", function() {
+
+	$page = new Page([
+		"header"=>false,
+		"footer"=>false
+	]);
+
+	$page->setTpl("endereco-craques");
+});
+
+$app->get("/judo", function() {
+
+	$page = new Page();
+
+	$page->setTpl("judo");
+});
+
+$app->get("/zumba", function() {
+
+	$page = new Page();
+
+	$page->setTpl("zumba");
+});
+
 /*
 $app->get("/calendario", function() {
 

@@ -79,7 +79,11 @@
                             <tr>
                                 <th class="product-name">PCD ?</th>
                                 <td class="product-name">{if="$value.inscpcd == 1"}Sim{else}Não{/if}</td>
-                            </tr>                                                                                                        
+                            </tr>
+                            <tr>
+                                <th class="product-name">PVS ?</th>
+                                <td class="product-name">{if="$value.inscpvs == 1"}Sim{else}Não{/if}</td>
+                            </tr>                                                                                                                                                                        
                             <tr {function="colorStatus($value.idinscstatus)"}>
                                 <th class="product-name">Status da Inscrição</th>
                                 <td class="product-name">{$value.descstatus}</td>

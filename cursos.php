@@ -185,14 +185,36 @@ $app->get("/cursos/verifica", function(){
 	Endereco::seEnderecoExiste($idperson);
 
 	$_SESSION['token'] = isset($_SESSION['token']) ? $_SESSION['token'] : '';
+	$_SESSION['tokencpf'] = isset($_SESSION['tokencpf']) ? $_SESSION['tokencpf'] : '';
 
 	$token = $_SESSION['token'];
+	$tokencpf = $_SESSION['tokencpf'];
 	
 	if(Cart::cartIsEmpty((int)$_SESSION[Cart::SESSION]['idcart']) === false){
 		Cart::setMsgError("Selecione uma turma e a pessoa que irá fazer a aula! ");
 		header("Location: /cursos/cart");
 		exit();
 	}	
+
+	$idcart = (int)$cart->getidcart();
+	$idturma = (int)Cart::getIdturmaByCart($idcart);
+	$idtemporada = $cart->getTurma()[0]['idtemporada'];
+	$vagas = (int)Turma::getVagasByIdTurma($idturma);
+
+	$inscGeral = Insc::getInscGeral($idturma, $idtemporada);
+	$inscPlm = Insc::pegaInscPlm($idturma, $idtemporada);
+	$inscPcd = Insc::pegaInscPcd($idturma, $idtemporada);
+	$inscPvs = Insc::pegaInscPvs($idturma, $idtemporada);
+
+	$vagasGeral = round($vagas * 0.7);
+	$vagasPlm = round($vagas * 0.1);
+	$vagasPcd = round($vagas * 0.1);
+	$vagasPvs = round($vagas * 0.1);
+
+	$maxListaEsperaGeral = round($vagasGeral * 1.2);
+	$maxListaEsperaPlm = round($vagasPlm * 1.2);
+	$maxListaEsperaPcd = round($vagasPcd * 1.2);
+	$maxListaEsperaPvs = round($vagasPvs * 1.2);
 
 	$page = new PageCursos(); 
 
@@ -202,6 +224,18 @@ $app->get("/cursos/verifica", function(){
 		'pessoa'=>$cart->getPessoa(),
 		'turma'=>$cart->getTurma(),
 		'cid'=>$cid = Saude::listAllCid(),
+		'vagasGeral'=>$vagasGeral,
+		'inscGeral'=>$inscGeral,
+		'vagasPlm'=>$vagasPlm,
+		'inscPlm'=>$inscPlm,
+		'vagasPcd'=>$vagasPcd,
+		'inscPcd'=>$inscPcd,
+		'vagasPvs'=>$vagasPvs,
+		'inscPvs'=>$inscPvs,
+		'maxListaEsperaGeral'=>$maxListaEsperaGeral,
+		'maxListaEsperaPlm'=>$maxListaEsperaPlm,
+		'maxListaEsperaPcd'=>$maxListaEsperaPcd,
+		'maxListaEsperaPvs'=>$maxListaEsperaPvs,
 		'error'=>Pessoa::getError()
 	]);
 });

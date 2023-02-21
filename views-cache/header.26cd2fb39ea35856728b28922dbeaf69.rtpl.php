@@ -303,6 +303,22 @@ desired effect
                   </li>
           </ul>
         </li> 
+
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>Avaliação Natação</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="treeview">
+                      <a href="/prof/calendarioagendabaetaoavaliacao/3">
+                        <i class="fa fa-link"></i> 
+                        Agenda Baetão
+                      </a>                      
+                  </li>            
+          </ul>
+        </li>  
         
       </ul>
       <!-- /.sidebar-menu -->

@@ -42,9 +42,11 @@
                                 </label>
                                 <input type="password" id="senha" name="password" class="input-text">
                             </p>
+                            <!--
                             <p class="form-row">
                                 <label class="inline" for="lembrar"><input type="checkbox" value="sempre" id="lembrar" name="lembrar"> Manter conectado </label>
                             </p>
+                        -->
                             <div class="clear"></div>
                             <p class="form-row">
                                 <input type="submit" value="Entrar" class="button">                              

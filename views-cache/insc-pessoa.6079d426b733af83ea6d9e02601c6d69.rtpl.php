@@ -79,7 +79,11 @@
                             <tr>
                                 <th class="product-name">PCD ?</th>
                                 <td class="product-name"><?php if( $value1["inscpcd"] == 1 ){ ?>Sim<?php }else{ ?>Não<?php } ?></td>
-                            </tr>                                                                                                        
+                            </tr>
+                            <tr>
+                                <th class="product-name">PVS ?</th>
+                                <td class="product-name"><?php if( $value1["inscpvs"] == 1 ){ ?>Sim<?php }else{ ?>Não<?php } ?></td>
+                            </tr>                                                                                                                                                                        
                             <tr <?php echo colorStatus($value1["idinscstatus"]); ?>>
                                 <th class="product-name">Status da Inscrição</th>
                                 <td class="product-name"><?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>

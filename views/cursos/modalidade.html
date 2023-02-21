@@ -10,13 +10,47 @@
 
 <hr style="background-color: orange;">
   {loop="$turma"}
-  {if="($value.idturma == 15) OR ($value.idturma == 16) OR ($value.idturma == 17) OR ($value.idturma == 18)"}
+  {if="($value.idturma == 455)"}
+
   <div class="container"> <!-- container 3 -->
     <div class="row"> <!-- row 4 --> 
     
-      <div class="col-md-12"style="text-align-last: left; line-height: 20px;  font-size: 14px; font-style: normal; margin: 5px 0px 20px 0px">
+    <div class="col-md-12" style="color: black; text-align-last: center; font-size: 20px;">
 
+      <div>
+         ETAPA <span style="font-weight: bold;">2</span> de <span style="font-weight: bold;">4</span> 
+      </div>
+      <hr style="background-color: orange;">
+      
+      <div class="col-md-12" style="text-align-last: left; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; border-radius: 15px;"> 
 
+    {if="checkLogin(false)"} 
+
+           Olá <span style="color: black; font-weight: bold;">  {function="getUserName()"}, </span>seja bem vindo! <br><br>           
+                                                       
+           Nesta etapa, selecione abaixo uma turma para praticar a aula de <span style="font-weight: bold; font-size: 20px; color: orange;">{$modalidade.descmodal}</span>, e faça a sua inscrição ou a inscrição de seu dependente.
+
+    {else}            
+      
+            <a href="/cursos/user-create">             
+                     CADASTRE-SE               
+            </a> 
+             <span> ou faça o  </span>           
+            <a href="/cursos/login" >                
+                 LOGIN 
+            </a>
+             e nesta etapa selecione abaixo uma turma para praticar a aula de <span style="font-weight: bold; font-size: 20px; color: orange;">{$modalidade.descmodal} </span>, faça a sua inscrição ou a inscrição de seu dependente.
+          
+      {/if}
+
+    </div>
+    
+    <hr style="background-color: orange;">
+
+    </div>
+    
+    
+      <div class="col-md-12" style="text-align-last: left; line-height: 20px;  font-size: 14px; font-style: normal; margin: 5px 0px 20px 0px">
           <a href="/cursos/cart/{$value.idturma}/{$value.idtemporada}/add" style="text-decoration: none">     
         <h5 style="color: #000000"> 
             <span style="font-weight: bold;">
@@ -24,13 +58,13 @@
               [ <span style="font-weight: bold; font-size: 14px; color: darkorange;">
               {$value.descstatustemporada}  </span>]
               {/if}            
-              {$value.descturma}  - {$value.numinscritos}   
+              {$value.descturma}   
             </span><br>
             <span style="color: darkgreen; font-size: 16px">
                 [{$value.idturma}] - {$value.descativ}
             </span><br>
              
-              {$value.diasemana} das {$value.horainicio} às {$value.horatermino} <br>  
+             <span style="font-size: 19px"> {$value.diasemana} das {$value.horainicio} às {$value.horatermino} </span> <br>
 
                {if="$value.fimidade == 99"} 
                Para maiores de 16 anos <br>
@@ -83,7 +117,7 @@
                     <strong>Não há vagas disponíveis.</strong><br>
                   </span>
                     <span>
-                      Faça sua inscrição para a lista de espera<br>
+                        Faça sua inscrição para a lista de espera<br>
                 <!--
                     Faça sua inscrição para a lista de espera<br>
                 

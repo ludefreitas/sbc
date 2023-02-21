@@ -4,6 +4,8 @@ use \Sbc\PageProf;
 use \Sbc\Model\User;
 use \Sbc\Model\Turma;
 use \Sbc\Model\Pessoa;
+use \Sbc\Model\Insc;
+use \Sbc\Model\Temporada;
 
 $app->get("/prof/turma/create/token/:idturma", function($idturma) {
 
@@ -66,6 +68,25 @@ $app->post("/prof/turma/create/token", function() {
 	$token = time();
 	$token = substr($token, 4);
 
+	$idtemporada = $_POST['idtemporada'];
+	$idturma = $_POST['idturma'];
+	
+	$iduserSession = (int)$_SESSION[User::SESSION]['iduser'];
+
+	$iduserTurmaTemporada = $user->getIdUseInTurmaTemporada($idturma, $idtemporada);
+	
+	$iduserTurmaTemporada = (int)$iduserTurmaTemporada['iduser'];
+	
+	if($iduserTurmaTemporada === $iduserSession){
+	    
+	    var_dump("igual -> ".$iduserTurmaTemporada.' = '.$iduserSession);
+	    exit;
+	}else{
+	    
+	    var_dump("diferente -> ".$iduserTurmaTemporada.' != '.$iduserSession);
+	    exit;
+	}
+	
 	if(isset($_POST['numcpf']) && $_POST['numcpf'] == ""){
 		echo "<script>alert('Informe o número d0 CPF!');";
 	  	echo "javascript:history.go(-1)</script>";
@@ -91,7 +112,7 @@ $app->post("/prof/turma/create/token", function() {
 	echo "javascript:history.go(-1)</script>";
 });
 
-$app->get("/prof/token/:idturma", function($idturma) {
+$app->get("/prof/token/:idturma/:idtemporada", function($idturma, $idtemporada) {
 
 	User::verifyLoginProf();
 
@@ -110,9 +131,44 @@ $app->get("/prof/token/:idturma", function($idturma) {
 
 	$page->setTpl("token-turma", [
 		'tokens'=>$tokens,
+		'idtemporada'=>$idtemporada,
 		'turma'=>$turma->getValues(),
 		"error"=>Turma::getMsgError()	
 	]);
+});
+
+$app->get("/prof/listapessoasporturma/:idturma/:idtemporada", function($idturma, $idtemporada) {
+
+	User::verifyLoginProf();
+
+	$insc = new Insc();
+	$turma = new Turma();
+	$temporada = new Temporada();
+
+	$turma->get((int)$idturma);	
+	$temporada->get((int)$idtemporada);	
+
+	$descturma = $turma->getdescturma();
+
+	$listapessoas = Insc::listaPessoasPorTurmaTemporada($idturma, $idtemporada);
+
+	if(!isset($listapessoas) || $listapessoas == NULL){
+		echo "<script>alert('Não há inscritos para esta turma');";
+		echo "javascript:history.go(-1)</script>";
+	}else{
+
+		$page = new PageProf([
+		"header"=>false,
+		"footer"=>false
+		]);
+
+		$page->setTpl("listapessoasporturma", [
+		'listapessoas'=>$listapessoas,
+		'descturma'=>$descturma	,
+		'idturma'=>$idturma	
+		]);
+	}
+	
 });
 
 ?>

@@ -219,6 +219,8 @@
                     <script type="text/javascript">$("#cadunico").mask("000.00000.00-0");</script>
                     </p> 
 
+                    <span style="color: red; font-size: 10px; font-style: italic;"> * Atenção! Para efetuar uma inscrição, nos nossos cursos esportivos, para pessoa em vulnerabilidade social (pessoa participante de programas sociais do governo), você deve selecionar acima a opção 'SIM' e informar, <strong>OBRIGATÓRIAMENTE,</strong> o número de inscrição no Cadùnico/NIS.</span>                     
+
                     <p>
                     <label style="font-size: 12px; margin: 0px"><br>Pessoa com deficiência?</label>
                     <select id="pcd" style="width: 100%; float: right;" class="form-control" name="pcd" required="required">

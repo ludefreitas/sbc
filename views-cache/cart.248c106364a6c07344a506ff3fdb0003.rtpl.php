@@ -1,14 +1,21 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?><script type="text/javascript">
   
-	function alertToken(){
+  	//alert('As inscrições para o ano de 2022 estão encerradas! Para o ano de 2023 as inscrições começam a partir de 01/11/2022');
+  	//history.go(-1)
 
 
-	  alert("Conforme Resolução SESP Nº 004 de 28/10/2021 Art.7º, Os interessados em participar das turmas de inclusão para Pessoas com Deficiência (PCD) e/ou laudo médico do CREEBA, deverão comparecer pessoalmente (interessado ou representante legal) no Centro Esportivo do Jardim Lavínia, sito à Av. Capitão Casa - 1.500, no horário das 08:30 às 11:30 e das 13:30 às 16:30, nos dias úteis de terça a sexta-feira até o dia 03/12/2021.")
-	}
+	function alertTokenCreeba(){
+
+      alert("Conforme Resolução SESP Nº 004 de 28/10/2021 Art.7º, Os interessados em participar das turmas de inclusão para Pessoas com Deficiência (PCD) e/ou laudo médico do CREEBA, deverão comparecer pessoalmente (interessado ou representante legal) no CREEBA")
+    }
+    
+    function alertTokenBaetao(){
+
+      alert("Para fazer a inscrição nas turmas de natação intermediário, avançado e aperfeiçoamento para o ano de 2023 é necessário ser egresso das turmas do ano de 2022 e ter autorização fornecida pelo professor.")
+    }
 
 	function alertTokenCpf(){
-
-
+		
 	  alert("Você deverá inserir, no campo token, o número que o professor te entregou")
 	}
 
@@ -33,6 +40,14 @@ $(document).ready(function(){
 
 <form action="/checkout">
 
+	<div class="col-md-12" style="color: black; text-align-last: center; font-size: 20px;">
+
+      <div>
+         ETAPA <span style="font-weight: bold;">4</span> de <span style="font-weight: bold;">5</span> 
+      </div>
+
+    </div>
+
 	<?php if( $error != '' ){ ?>
 	<div class="alert alert-danger" role="alert">
 	<?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
@@ -54,19 +69,35 @@ $(document).ready(function(){
 				<a style="color: darkblue; text-align-last: center;" href="https://www.saobernardo.sp.gov.br/documents/1136654/1245027/Edital+NM/42aa453e-2d70-8651-96e5-41d2d779d24c">Resolução SESP Nº 004 de 28 de outubro de 2021. </a>
 			 </div>
 		<?php } ?>   
-	<?php } ?>
+	<?php } ?>		
 
-		<div class="col-md-12" style="margin-top: 0px; margin-bottom: 0px; color: darkblue; text-align: center; font-size: 18px;">       
-						Selecione a pessoa que irá fazer a aula e clique no botão <strong style="color: red;"> CONFIRMAR INSCRIÇÃO </strong>
-					</div>  
+    <div class="col-md-12" style="text-align-last: left; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; border-radius: 15px;"> 
+
+    <?php if( checkLogin(false) ){ ?> 
+
+           <span style="color: black; font-weight: bold;">  <?php echo getUserName(); ?> </span><br>           
+                                                       
+          nesta etapa, já com a turma <strong><?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong> selecionada, selecione a pessoa que irá fazer a aula e clique no botão <strong style="color: red;"> CONFIRMAR INSCRIÇÃO </strong>
+          
+
+    <?php }else{ ?>      
+           
+      
+            <a href="/user-create">             
+                     CADASTRE-SE               
+            </a> 
+             <span> ou faça o  </span>           
+            <a href="/login" >                
+                 LOGIN 
+            </a>
+            e nesta etapa, já com a turma <strong> <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong> selecionada, selecione a pessoa que irá fazer a aula e clique no botão <strong style="color: red;"> CONFIRMAR INSCRIÇÃO</strong>.
+          
+      <?php } ?>
+
+    </div>
 		 
 		<div class="row alert alert-primary"> 
-		   <!-- 
-		   <div class="col-md-3">
-				<a href="/turma/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src=""></a>
-			</div>
-			-->                      
-
+		   
 			<div class="col-md-6">
 			   TURMA: <span style="color: #cc5d1e;"><?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["periodo"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </span> /
 			   <span class="amount"> 
@@ -79,14 +110,18 @@ $(document).ready(function(){
 				 <?php if( $value1["fimidade"] == 99 ){ ?> 
 			   Para nascidos somente até <?php echo htmlspecialchars( $anoAtual - $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <br>
 			  <?php }else{ ?>
-			  Para nascidos somente entre: <?php echo htmlspecialchars( $anoAtual - $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> à <?php echo htmlspecialchars( $anoAtual - $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
+			  Para adultos nascidos somente entre: <?php echo htmlspecialchars( $anoAtual - $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> à <?php echo htmlspecialchars( $anoAtual - $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
+			  <?php } ?>
+
+			  <?php if( $value1["obs"] ){ ?>
+			  OBSERVAÇÃO: <strong><?php echo htmlspecialchars( $value1["obs"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong><br>
 			  <?php } ?>
 			  </span> 
 			   <span class="amount">
 				  PROFESSOR: <?php echo htmlspecialchars( $value1["apelidoperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
 			   </span> 
 				<span class="amount">
-				   <br> <br><a title="Remove this item" class="remove" href="/cart/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/remove"> REMOVER <p style="color: green">(Remover esta, selecionar outra turma)</p></a>
+				   <br> <span style="color: red; font-weight: bold;">Se esta não é a turma que você quer fazer a inscrição clique aqui <a title="Remove this item" class="remove" href="/cart/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/remove"> <i class="fa fa-arrow-right" style="color: green;"></i> <i class="fa fa-trash" style="color: green;"></i> <i class="fa fa-arrow-left" style="color: green;"></i></span><p style="color: green;">(Selecionar uma outra turma)</p></a>
 			   </span>  
 
 			   <input type="text" name="idturma" hidden="" value="<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
@@ -157,7 +192,7 @@ $(document).ready(function(){
 									<?php $counter2=-1;  if( isset($pessoa) && ( is_array($pessoa) || $pessoa instanceof Traversable ) && sizeof($pessoa) ) foreach( $pessoa as $key2 => $value2 ){ $counter2++; ?>
 									
 										<p>
-											<input type="radio" name="idpess" value="<?php echo htmlspecialchars( $value2["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> 
+											<input type="radio" name="idpess" value="<?php echo htmlspecialchars( $value2["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="height: 20px; width: 20px;">
 											<?php echo htmlspecialchars( $value2["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>; <?php echo calcularIdade($value2["dtnasc"]); ?> anos; 
 
 											

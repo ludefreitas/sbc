@@ -51,11 +51,19 @@
               <input type="email" class="form-control" id="desemail" name="desemail" placeholder="Digite o e-mail" value="<?php echo htmlspecialchars( $user["desemail"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
           -->
-            <div class="checkbox">
-              <label>
-                <input type="checkbox" name="inadmin" value="1" <?php if( $user["inadmin"] == 1 ){ ?>checked<?php } ?>> Acesso de Administrador
-              </label>
-            </div>
+            <?php if( getUserId() == 2 OR getUserId() == 7 OR getUserId() == 156 ){ ?>
+
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="inadmin" value="1" <?php if( $user["inadmin"] == 1 ){ ?>checked<?php } ?>> Acesso de Administrador
+                    </label>
+               </div>
+
+            <?php } ?>
+
+            
+
             <div class="checkbox">
               <label>
                 <input type="checkbox" name="isprof" value="1" <?php if( $user["isprof"] == 1 ){ ?>checked<?php } ?>> Acesso de Professor

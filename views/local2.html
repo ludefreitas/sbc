@@ -67,6 +67,7 @@
                Para nascidos somente até {function="formatAnoInicial($value.initidade)"} <br>
               {else}
               Para nascidos somente entre: {function="formatAnoFinal($value.fimidade)"} à {function="formatAnoInicial($value.initidade)"}<br>
+              OBSERVAÇÃO: <strong>{$value.obs}</strong><br>
               {/if}
 
               {if="$value.idstatustemporada == 4"} 

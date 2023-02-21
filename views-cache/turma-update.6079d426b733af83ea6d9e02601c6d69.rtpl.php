@@ -107,7 +107,7 @@
 
              <div class="form-group">
               <label for="obs">Observação</label>
-              <textarea type="text" class="form-control" id="obs" name="obs" placeholder="Observação" value="<?php echo htmlspecialchars( $turma["obs"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"></textarea> 
+              <input type="text" class="form-control" id="obs" name="obs" value="<?php echo htmlspecialchars( $turma["obs"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"/>
             </div>
              
 

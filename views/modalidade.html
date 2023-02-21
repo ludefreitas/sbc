@@ -1,23 +1,82 @@
 
 <script type="text/javascript">
+
+    function encerradas(){
+
+        alert('As inscrições para o ano de 2022 estão encerradas! Para o ano de 2023 as inscrições começam a partir de 01/11/2022')
+    }
   
-    function alertToken(){
+    function alertTokenCreeba(){
 
+      alert("Conforme Resolução SESP Nº 004 de 28/10/2021 Art.7º, Os interessados em participar das turmas de inclusão para Pessoas com Deficiência (PCD) e/ou laudo médico do CREEBA, deverão comparecer pessoalmente (interessado ou representante legal) no CREEBA.")
+    }
 
-      alert("Conforme Resolução SESP Nº 004 de 28/10/2021 Art.7º, Os interessados em participar das turmas de inclusão para Pessoas com Deficiência (PCD) e/ou laudo médico do CREEBA, deverão comparecer pessoalmente (interessado ou representante legal) no Centro Esportivo do Jardim Lavínia, sito à Av. Capitão Casa - 1.500, no horário das 08:30 às 11:30 e das 13:30 às 16:30, nos dias úteis de terça a sexta-feira até o dia 03/12/2021.")
+    function alertTokenBaetao(){
+
+      alert("Para fazer a inscrição nas turmas de natação intermediário, avançado e aperfeiçoamento para o ano de 2023 é necessário ser egresso das turmas do ano de 2022 e ter autorização fornecida pelo professor.")
+    }
+
+    function alertTokenPauliceia(){
+
+      alert("Para fazer a inscrição nas turmas de natação intermediário, avançado e aperfeiçoamento para o ano de 2023 é necessário ser egresso das turmas do ano de 2022 e ter autorização fornecida pelo professor.")
     }
 
 </script>
   <div class="container"> <!-- container 1 -->
             <div class="row"> <!-- row 2 -->
-              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 15px 0px 0px 0px;">
+              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 0px 0px 0px 0px;">
 
 <div class="container" style="margin: 0px px 0px 0px; ">
-
   
-<div class="container">
+<div class="row">
 
-   <div class="row" style="margin: -5px -5px -5px -5px; ">   
+    <div class="col-md-12" style="color: black; text-align: justify; font-size: 20px;">
+
+      <div>
+         ETAPA <span style="font-weight: bold;">3</span> de <span style="font-weight: bold;">5</span> 
+      </div>
+
+    </div>
+
+    <div class="col-md-12" style="text-align-last: left; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; border-radius: 15px;"> 
+
+
+    {if="$modalidade.idmodal == 38"}
+        Para fazer a inscrição e matrícula na modalidade Karatê, você deve entrar em contato com o Sensei Guto através Whatsapp abaixo.
+    {else}
+    
+        {if="$modalidade.idmodal == 39"}
+             Para fazer a inscrição na modalidade Judô, Clique no link abaixo.
+        
+        {else}
+
+            {if="checkLogin(false)"} 
+      
+                 <span style="color: black; font-weight: bold;">  {function="getUserName()"}</span>!<br>           
+                                                             
+                Nesta etapa, selecione abaixo uma turma para praticar a aula de <span style="font-weight: bold; font-size: 20px; color: orange;">{$modalidade.descmodal}</span> e faça a sua inscrição ou a inscrição de seu dependente.
+      
+            {else}      
+               
+          
+                <a href="/user-create">             
+                         CADASTRE-SE               
+                </a> 
+                 <span> ou faça o  </span>           
+                <a href="/login" >                
+                     LOGIN 
+                </a>
+                e nesta etapa selecione abaixo uma turma para praticar a aula de <span style="font-weight: bold; font-size: 20px; color: orange;">{$modalidade.descmodal}</span>, faça a sua inscrição ou a inscrição de seu dependente.
+              
+            {/if}
+         {/if}
+    {/if}
+
+    </div>
+ 
+
+  <!--
+
   <div class="col-md-12" style="text-align-last: left; background-color: #cc5d1e; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
    
       <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 14px; font-style: normal; margin: 10px 5px 10px 0px; ">                                               
@@ -25,7 +84,10 @@
       </div>
    
   </div>
-</div> 
+
+-->
+
+<hr style="background-color: #0f71b3;">
 
 </div>      
 
@@ -41,14 +103,24 @@
          <!--
           <a href="/turma/{$value.idturma}/{$value.idtemporada}" style="text-decoration: none">  
           -->
-          <a href="/cart/{$value.idturma}/{$value.idtemporada}/add" style="text-decoration: none">     
+          {if="UserIsAdmin() OR UserIsProf()"}
+
+              <a href="/cart/{$value.idturma}/{$value.idtemporada}/add" style="text-decoration: none"> 
+
+              {else}
+
+              <a onclick="encerradas()" href="#" style="text-decoration: none"> 
+
+              {/if}
+          
+
         <h5 style="color: #000000"> 
             <span style="font-weight: bold;">
               {if="$value.idstatustemporada == 3"} 
               [ <span style="font-weight: bold; font-size: 14px; color: darkorange;">
               {$value.descstatustemporada}  </span>]
               {/if}            
-              {$value.descturma}   
+              {$value.descturma}   {$value.desctemporada}
             </span><br>
             <span style="color: darkgreen; font-size: 16px">
                 [{$value.idturma}] - {$value.descativ}
@@ -57,13 +129,14 @@
                <span style="font-size: 19px"> {$value.diasemana} das {$value.horainicio} às {$value.horatermino} </span> <br>  
                
                Local da aula: <strong>{$value.apelidolocal}</strong><br>             
-              Temporada: {$value.desctemporada} <br>
 
                {if="$value.fimidade == 99"} 
-               Para nascidos até<strong> {$anoAtual - $value.initidade}</strong> <br>
+               Para adultos nascidos até<strong> {$anoAtual - $value.initidade}</strong> <br>
               {else}
               Para nascidos entre:<strong> {$anoAtual - $value.fimidade} à {$anoAtual - $value.initidade}</strong><br>
               {/if}
+
+              OBSERVAÇÃO: <strong>{$value.obs}</strong><br>
 
               {if="$value.idstatustemporada == 2"} 
                <span style="font-weight: bold;">
@@ -96,22 +169,12 @@
                 {if="$value.numinscritos < $value.vagas && $value.idstatustemporada == 5"} 
 
                    {if="$value.nummatriculados < $value.vagas && $value.idstatustemporada == 5"} 
+                       
 
-                   
-
-                       {if="($value.idlocal == 5) OR ($value.idlocal == 21)"}
-
-                        <span style="color: darkgreen;">
-                        <strong>Há vagas disponíveis</strong><br>
+                      <span style="color: green;">
+                        {$value.numinscritos} inscritos para {$value.vagas} vagas                          
                       </span>
 
-                      {else}
-
-                       <span style="color: darkgreen;">
-                        <strong>Clique para fazer sua rematrícula</strong><br>
-                      </span>
-
-                      {/if}
 
                    {/if}
 
@@ -134,10 +197,31 @@
         </a>
 
         {if="$value.token == 1"} 
-          <h5><span style="color: darkblue;" >
-            <strong>Necessário token</strong>&nbsp;             
-          </span>
-          <a href="#" onmousemove="alertToken()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></h5></a>
+
+            {if="$value.idlocal == 5"}
+
+              <h5><span style="color: darkblue;" >
+                <strong>Necessário token</strong>&nbsp;             
+              </span>
+              <a href="#" onmousemove="alertTokenCreeba()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></h5></a>
+            {/if}
+
+            {if="$value.idlocal == 3"}
+
+              <h5><span style="color: darkblue;" >
+                <strong>Necessário token</strong>&nbsp;             
+              </span>
+              <a href="#" onmousemove="alertTokenBaetao()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></h5></a>
+            {/if}
+
+            {if="$value.idlocal == 21"}
+
+              <h5><span style="color: darkblue;" >
+                <strong>Necessário token</strong>&nbsp;             
+              </span>
+              <a href="#" onmousemove="alertTokenPauliceia()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></h5></a>
+            {/if}
+
         {/if} 
           
         {if="$value.idstatustemporada == 6"} 
@@ -161,7 +245,16 @@
 
           {else}
 
-          <a class="btn btn-info" style="background-color: #cc5d1e"  href="/cart/{$value.idturma}/{$value.idtemporada}/add">Inscrever-se</a>  
+              {if="UserIsAdmin() OR UserIsProf()"}
+
+              <a class="btn btn-info" style="background-color: #cc5d1e"  href="/cart/{$value.idturma}/{$value.idtemporada}/add">Inscrever-se</a>  
+
+              {else}
+
+              <a onclick="encerradas()" class="btn btn-info" style="background-color: #cc5d1e"  href="#">Inscrever-se</a>  
+
+              {/if}
+
           {/if}
         {/if}           
 
@@ -178,8 +271,27 @@
   <div class="row">
     <div class="col-md-12 alert alert-info" style="font-size: 20px; text-align-last: center ">
        <span style="font-size: 20px; font-weight: bold;"> 
-       {$error}
+
+    {if="$modalidade.idmodal == 38"}
+
+      FAÇA SUA INSCRIÇÃO E MATRICULA PELO WHATSAPP (<a href="https://wa.me/+5511970760944?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do Sensei Guto. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: darkgreen; font-weight: bold;"></i><span style="color: black;"> 979760944&nbsp;</span></a>)
+
+    {else}
+
+      {if="$modalidade.idmodal == 39"}
+
+         Faça a sua inscrição para o <br> JUDÔ <br> <a href="/judo"><span style="color: red;"> &nbsp;clique aqui</span></a>
+
+      {else}
+
+          {$error}
+
+      {/if}       
+
+    {/if}
+
      </span>
+    
     </div>     
   </div>
 </div>
@@ -190,14 +302,14 @@
   <div class="col-md-6" style="text-align-last: left; background-color: #cc5d1e; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;"> 
     <a href="/modalidades">           
       <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 14px; font-style: normal; margin: 10px 5px 10px 5px; ">                                               
-          Turmas por modalidades
+          Cursos por modalidade
       </div>
     </a>
   </div> 
   <div class="col-md-6" style="text-align-last: left; background-color: #0f71b3; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
     <a href="/locais">                          
       <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 14px; font-style: normal; margin: 10px 5px 10px 0px; ">                                               
-          Turmas por local
+          Cursos por Centro Esportivo
       </div>
     </a>
   </div>

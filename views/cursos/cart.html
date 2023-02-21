@@ -6,6 +6,12 @@
       alert("Conforme Resolução SESP Nº 004 de 28/10/2021 Art.7º, Os interessados em participar das turmas de inclusão para Pessoas com Deficiência (PCD) e/ou laudo médico do CREEBA, deverão comparecer pessoalmente (interessado ou representante legal) no Centro Esportivo do Jardim Lavínia, sito à Av. Capitão Casa - 1.500, no horário das 08:30 às 11:30 e das 13:30 às 16:30, nos dias úteis de terça a sexta-feira até o dia 03/12/2021.")
     }
 
+    function alertTokenCpf(){
+
+
+      alert("Você deverá inserir, no campo token, o número que o professor te entregou")
+    }
+
 $(document).ready(function(){
 
     $('#link').on('change', function () {
@@ -26,6 +32,16 @@ $(document).ready(function(){
 
 
 <form action="/verifica">
+     <hr style="background-color: orange;">
+
+    <div class="col-md-12" style="color: black; text-align-last: center; font-size: 20px;">
+
+      <div>
+         ETAPA <span style="font-weight: bold;">3</span> de <span style="font-weight: bold;">4</span> 
+      </div>
+
+    </div>
+     <hr style="background-color: orange;">
 
     {if="$error != ''"}
     <div class="alert alert-danger" role="alert">
@@ -50,12 +66,33 @@ $(document).ready(function(){
         {/if}   
     {/if}
 
-        <div class="col-md-12" style="margin-top: 0px; margin-bottom: 0px; color: darkblue; text-align: center; font-size: 18px;">       
-                        Selecione a pessoa que irá fazer a aula e clique no botão <strong style="color: red;"> CONFIRMAR INSCRIÇÃO </strong>
-                    </div>  
+        <div class="col-md-12" style="text-align-last: left; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; border-radius: 15px;"> 
+
+    {if="checkLogin(false)"} 
+
+           <span style="color: black; font-weight: bold;">  {function="getUserName()"} </span><br>           
+                                                       
+          nesta etapa, já com a turma <strong>{$value.descativ}</strong> selecionada, selecione a pessoa que irá fazer a aula e clique no botão <strong style="color: red;"> CONFIRMAR INSCRIÇÃO </strong>
+          
+
+    {else}      
+           
+      
+            <a href="/cursos/user-create">             
+                     CADASTRE-SE               
+            </a> 
+             <span> ou faça o  </span>           
+            <a href="/cursos/login" >                
+                 LOGIN 
+            </a>
+            e nesta etapa, já com a turma <strong> {$value.descativ}</strong> selecionada, selecione a pessoa que irá fazer a aula e clique no botão <strong style="color: red;"> CONFIRMAR INSCRIÇÃO</strong>.
+          
+      {/if}
+
+    </div>
+     <hr style="background-color: orange;">
          
         <div class="row alert alert-primary"> 
-           
 
             <div class="col-md-6">
                TURMA: <span style="color: #cc5d1e;">{$value.idturma} - {$value.descativ} - {$value.periodo} </span> /
@@ -69,12 +106,15 @@ $(document).ready(function(){
                  {if="$value.fimidade == 99"} 
                Para nascidos somente até {$anoAtual - $value.initidade} <br>
               {else}
-              Para nascidos somente entre: {$anoAtual - $value.fimidade} à {$anoAtual - $value.initidade}
+              Para adultos nascidos somente entre: {$anoAtual - $value.fimidade} à {$anoAtual - $value.initidade}
               {/if}
               </span> 
+              <span class="amount">
+                  PROFESSOR: {$value.apelidoperson}
+               </span> 
                
                 <span class="amount">
-                   <br><a title="Remove this item" class="remove" href="/cursos/cart/{$value.idturma}/remove"> REMOVER <p style="color: green">(Remover esta, selecionar outra turma)</p></a>
+                   <br> <span style="color: red; font-weight: bold;">Se esta não é a turma que você quer fazer a inscrição clique <a title="Remove this item" class="remove" href="cursos/cart/{$value.idturma}/remove">aqui <i class="fa fa-arrow-right"></i> <i class="fa fa-trash"></i> <i class="fa fa-arrow-left"></i></span><p style="color: green;">(Selecionar uma outra turma)</p></a>
                </span>  
 
                <input type="text" name="idturma" hidden="" value="{$value.idturma}">
@@ -86,7 +126,8 @@ $(document).ready(function(){
                <input type="text" name="apelidolocal" hidden="" value="{$value.apelidolocal}">
                <input type="text" name="sexo" hidden="" value="{$value.geneativ}"> 
                <input type="text" name="tipoativ" hidden="" value="{$value.tipoativ}">    
-               <input type="text" name="idmodal" hidden="" value="{$value.idmodal}">                   
+               <input type="text" name="idmodal" hidden="" value="{$value.idmodal}"> 
+               <input type="text" name="temtoken" hidden="" value="{$temtoken}">                  
             </div>
 
             <div class="col-md-6">
@@ -112,7 +153,7 @@ $(document).ready(function(){
                                 <div class="box-body">
                                     {loop="$pessoa"}
                                     <p>
-                                    <input type="radio" name="idpess" value="{$value.idpess}"> 
+                                    <input type="radio" name="idpess" value="{$value.idpess}" style="height: 20px; width: 20px;">
                                     {$value.nomepess}; {function="calcularIdade($value.dtnasc)"} anos; 
                                     </p>                                
                                     {else}
@@ -152,7 +193,7 @@ $(document).ready(function(){
         {else}
         <div class="row">
             <div class="col-md-12 alert alert-info" style="text-align-last: center; font-weight: bold">
-                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Não há curso seleionado, volte a página inicial e selecione.</span>                            
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Não há curso selecionado, volte a página inicial e selecione.</span>                            
             </div>            
         </div>
   

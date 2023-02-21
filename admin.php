@@ -28,6 +28,9 @@ $app->get("/admin", function() {
 
 	$matriculadosTemporada = $matriculadosTemporada[0]['matriculados'];
 
+	//var_dump($matriculadosTemporada);
+	//	exit();
+
 	$page = new PageAdmin();
 
 	$page->setTpl("index", [
@@ -37,7 +40,7 @@ $app->get("/admin", function() {
 		'totalAlunos'=>$todosAlunos['total'],
 		'totalProfessores'=>$todosProfessores['total'],
 		'totalInscricoes'=>$todasInscrições['total'],
-		'matriculadosTemporada'=>$matriculadosTemporada,
+		//'matriculadosTemporada'=>$matriculadosTemporada,
 	
 	]);
 });

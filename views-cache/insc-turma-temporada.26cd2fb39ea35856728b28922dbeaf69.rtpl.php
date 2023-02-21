@@ -1,4 +1,26 @@
-<?php if(!class_exists('Rain\Tpl')){exit;}?>
+<?php if(!class_exists('Rain\Tpl')){exit;}?><script type="text/javascript">
+
+
+      function requisitarPaginaEndereco(url){
+
+        let ajax = new XMLHttpRequest();
+        let idurl = url.substr(53);              
+        ajax.open('GET', 'url');
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if(result){              
+                alert(result)
+          }else{
+            alert('Endereço não encontrado!')
+          }
+        });
+      }   
+
+</script>
 
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
@@ -49,7 +71,11 @@
                     <h5 style="text-align: left;">
                       <?php echo htmlspecialchars( $value1["numordem"], ENT_COMPAT, 'UTF-8', FALSE ); ?>º -
                       <strong>[<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>] - <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
+                      <?php if( UserIsAdmin() ){ ?>
+                      &nbsp;<?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>&nbsp;
+                      <?php }else{ ?>
                       &nbsp;<?php echo formatCpf($value1["numcpf"]); ?>&nbsp;
+                      <?php } ?>                      
                       <strong><?php echo calcularIdade($value1["dtnasc"]); ?> anos</strong>
                       &nbsp;Nascim.: <?php echo formatDate($value1["dtnasc"]); ?>&nbsp;
                     </h5>
@@ -57,11 +83,20 @@
 
                   <div class="col-md-6" style="margin: 1; padding: 1">
                     <h5 style="text-align: left;">               
-                      <strong>Resp: <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["deslogin"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
-                      &nbsp;Cel: <?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>&nbsp; 
-                      <strong>Resp: <?php echo htmlspecialchars( $value1["telemer"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["contato"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
-                      &nbsp;Tel emerg.: <?php echo htmlspecialchars( $value1["telemer"], ENT_COMPAT, 'UTF-8', FALSE ); ?>&nbsp;
-                      <strong> Dt Insc.: <?php echo formatDate($value1["dtinsc"]); ?></strong>
+                       <strong>Resp: <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>&nbsp;
+                       &nbsp;
+                       <a href="https://wa.me/+55<?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: green;"></i><span style="color: black;"> <?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>&nbsp;</span></a>
+
+                       &nbsp;&nbsp;&nbsp;&nbsp;
+
+                       <a style="font-weight: bold;" onclick="requisitarPaginaEndereco('/prof/insc-turma-temporada-endereco/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>')"><i class="fas fa-map-marker-alt"></i> Endereço </a>         
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                      
+                       
+                       
+                      <strong>Dt Insc.: <?php echo formatDate($value1["dtinsc"]); ?></strong>
+                      &nbsp;Dt Matric.: <?php echo formatDate($value1["dtmatric"]); ?>&nbsp;
                     </h5>
                   </div>                   
                 </div>
@@ -196,10 +231,10 @@
              
               <div class="col-md-2" style="margin: 1; padding: 1">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  <a href="https://wa.me/+55<?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?text=Olá,%20informamos%20que%20temos%20uma%20vaga%20disponível%20para%20o(a)%20<?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20na%20turma%20de%20<?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20<?php echo htmlspecialchars( $turma["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20das%20<?php echo htmlspecialchars( $turma["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20às%20<?php echo htmlspecialchars( $turma["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20no%20<?php echo htmlspecialchars( $turma["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20<?php echo htmlspecialchars( $turma["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20Nº%20<?php echo htmlspecialchars( $turma["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20<?php echo htmlspecialchars( $turma["bairro"], ENT_COMPAT, 'UTF-8', FALSE ); ?>,%20da%20qual%20você%20fez%20inscrição.%20Compareça%20no%20dia%20e%20horário%20da%20aula,%20com%20os%20documentos%20informados%20na%20inscrição,%20para%20fazer%20a%20matrícula%20no%20prazo%20máximo%20de%2015%20dias,%20para%20não%20perder%20a%20vaga." target="_blank" onclick="return confirm('Você será direcionado para o whatsapp com a mensagem referente a vaga disponível já preenchida. No app clique em enviar msg.')" class="btn btn-success btn-xs"><i></i>Informar vaga pelo WhatsApp</a>
+                  <a href="https://wa.me/+55<?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?text=Olá,%20informamos%20que%20temos%20uma%20vaga%20disponível%20para%20o(a)%20<?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20na%20turma%20de%20<?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20<?php echo htmlspecialchars( $turma["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20das%20<?php echo htmlspecialchars( $turma["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20às%20<?php echo htmlspecialchars( $turma["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20no%20<?php echo htmlspecialchars( $turma["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20<?php echo htmlspecialchars( $turma["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20Nº%20<?php echo htmlspecialchars( $turma["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20<?php echo htmlspecialchars( $turma["bairro"], ENT_COMPAT, 'UTF-8', FALSE ); ?>,%20da%20qual%20você%20fez%20inscrição.%20Se%20você%20ainda%20tem%20interesse%20na%20vaga,%20responda%20SIM%20nas%20próximas%2024%20horas,%20que%20vamos%20passar%20mais%20informações.%20Se%20você%20não%20tiver%20interesse%20ou%20não%20responder,%20vamos%20chamar%20o%20próximo%20inscrito%20da%20lista%20de%20espera%20e%20você%20terá%20que%20fazer%20uma%20nova%20inscrição%20para%20esta%20turma." target="_blank" onclick="return confirm('Você será direcionado para o whatsapp com a mensagem referente a vaga disponível já preenchida. No app clique em enviar msg.')" class="btn btn-success btn-xs"><i></i>Informar vaga pelo WhatsApp</a>
               
               
-              &nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;  
               
                
                   <a href="/prof/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $iduserprof["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusAguardandoMatricula" onclick="return confirm('Você já informou, por telefone ou whatsapp, o(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> sobre a vaga disponível para a turma de <?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>? Se sim, clique em OK, se não imformou, clique em cancelar e informe o aluno sobre a vaga.')" class="btn btn-warning btn-xs"><i></i> Marcar aguardandado matrícula</a>
@@ -233,8 +268,13 @@
                   <div class="col-md-6" style="margin: 1; padding: 1">
                     <h5 style="text-align: left;">
                       <?php echo htmlspecialchars( $value1["numordem"], ENT_COMPAT, 'UTF-8', FALSE ); ?>º -
+                     
                       <strong>[<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>] - <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
+                      <?php if( UserIsAdmin() ){ ?>
+                      &nbsp;<?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>&nbsp;
+                      <?php }else{ ?>
                       &nbsp;<?php echo formatCpf($value1["numcpf"]); ?>&nbsp;
+                      <?php } ?>
                       <strong><?php echo calcularIdade($value1["dtnasc"]); ?> anos</strong>
                       &nbsp;Nascim.: <?php echo formatDate($value1["dtnasc"]); ?>&nbsp;
                     </h5>
@@ -242,9 +282,21 @@
 
                   <div class="col-md-6" style="margin: 1; padding: 1">
                     <h5 style="text-align: left;">               
-                      <strong>Resp: <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
-                      &nbsp;Cel: <?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>&nbsp;
-                      <strong> Dt Insc.: <?php echo formatDate($value1["dtinsc"]); ?></strong>
+                       <strong>Resp: <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
+
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                       <a href="https://wa.me/+55<?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: green;"></i><span style="color: black;"> <?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>&nbsp;</span></a>
+
+              &nbsp;&nbsp;&nbsp;&nbsp;
+
+                       <a style="font-weight: bold;" onclick="requisitarPaginaEndereco('/prof/insc-turma-temporada-endereco/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>')"> Endereço </a>         
+
+              &nbsp;&nbsp;&nbsp;&nbsp;
+                       
+                       
+                      <strong>Dt Insc.: <?php echo formatDate($value1["dtinsc"]); ?></strong>
+                      &nbsp;Dt Matric.: <?php echo formatDate($value1["dtmatric"]); ?>&nbsp;
                     </h5>
                   </div>                   
                 </div>
@@ -380,7 +432,7 @@
              
               <div class="col-md-2" style="margin: 1; padding: 1">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  <a href="https://wa.me/+55<?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?text=Olá,%20informamos%20que%20temos%20uma%20vaga%20disponível%20para%20o(a)%20<?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20na%20turma%20de%20<?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20<?php echo htmlspecialchars( $turma["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20das%20<?php echo htmlspecialchars( $turma["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20às%20<?php echo htmlspecialchars( $turma["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20no%20<?php echo htmlspecialchars( $turma["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20<?php echo htmlspecialchars( $turma["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20Nº%20<?php echo htmlspecialchars( $turma["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20<?php echo htmlspecialchars( $turma["bairro"], ENT_COMPAT, 'UTF-8', FALSE ); ?>,%20da%20qual%20você%20fez%20inscrição.%20Compareça%20no%20dia%20e%20horário%20da%20aula,%20com%20os%20documentos%20informados%20na%20inscrição,%20para%20fazer%20a%20matrícula%20no%20prazo%20máximo%20de%2015%20dias,%20para%20não%20perder%20a%20vaga." target="_blank" onclick="return confirm('Você será direcionado para o whatsapp com a mensagem referente a vaga disponível já preenchida. No app clique em enviar msg.')" class="btn btn-success btn-xs"><i></i>Informar vaga pelo WhatsApp</a>
+                  <a href="https://wa.me/+55<?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?text=Olá,%20informamos%20que%20temos%20uma%20vaga%20disponível%20para%20o(a)%20<?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20na%20turma%20de%20<?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20<?php echo htmlspecialchars( $turma["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20das%20<?php echo htmlspecialchars( $turma["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20às%20<?php echo htmlspecialchars( $turma["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20no%20<?php echo htmlspecialchars( $turma["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20<?php echo htmlspecialchars( $turma["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20Nº%20<?php echo htmlspecialchars( $turma["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20<?php echo htmlspecialchars( $turma["bairro"], ENT_COMPAT, 'UTF-8', FALSE ); ?>,%20da%20qual%20você%20fez%20inscrição.%20Se%20você%20ainda%20tem%20interesse%20na%20vaga,%20responda%20SIM%20nas%20próximas%2024%20horas,%20que%20vamos%20passar%20mais%20informações.%20Se%20você%20não%20tiver%20interesse%20ou%20não%20responder,%20vamos%20chamar%20o%20próximo%20inscrito%20da%20lista%20de%20espera%20e%20você%20terá%20que%20fazer%20uma%20nova%20inscrição%20para%20esta%20turma." target="_blank" onclick="return confirm('Você será direcionado para o whatsapp com a mensagem referente a vaga disponível já preenchida. No app clique em enviar msg.')" class="btn btn-success btn-xs"><i></i>Informar vaga pelo WhatsApp</a>
               
               
               &nbsp;&nbsp;&nbsp;&nbsp;
@@ -419,8 +471,13 @@
                   <div class="col-md-6" style="margin: 1; padding: 1">
                     <h5 style="text-align: left;">
                       <?php echo htmlspecialchars( $value1["numordem"], ENT_COMPAT, 'UTF-8', FALSE ); ?>º -
+                      
                       <strong>[<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>] - <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
+                      <?php if( UserIsAdmin() ){ ?>
+                      &nbsp;<?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>&nbsp;
+                      <?php }else{ ?>
                       &nbsp;<?php echo formatCpf($value1["numcpf"]); ?>&nbsp;
+                      <?php } ?>
                       <strong><?php echo calcularIdade($value1["dtnasc"]); ?> anos</strong>
                       &nbsp;Nascim.: <?php echo formatDate($value1["dtnasc"]); ?>&nbsp;
                     </h5>
@@ -428,9 +485,19 @@
 
                   <div class="col-md-6" style="margin: 1; padding: 1">
                     <h5 style="text-align: left;">               
-                      <strong>Resp: <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
-                      &nbsp;Cel: <?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>&nbsp;
-                      <strong> Dt Insc.: <?php echo formatDate($value1["dtinsc"]); ?></strong>
+                       <strong>Resp: <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
+                      &nbsp;
+                       <a href="https://wa.me/+55<?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: green;"></i><span style="color: black;"> <?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>&nbsp;</span></a>
+
+                       &nbsp;&nbsp;&nbsp;&nbsp;
+
+                       <a style="font-weight: bold;" onclick="requisitarPaginaEndereco('/prof/insc-turma-temporada-endereco/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>')"> Endereço </a>         
+
+                       &nbsp;&nbsp;&nbsp;&nbsp;
+                       
+                       
+                      <strong>Dt Insc.: <?php echo formatDate($value1["dtinsc"]); ?></strong>
+                      &nbsp;Dt Matric.: <?php echo formatDate($value1["dtmatric"]); ?>&nbsp;
                     </h5>
                   </div>                   
                 </div>
@@ -566,8 +633,7 @@
              
               <div class="col-md-2" style="margin: 1; padding: 1">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  <a href="https://wa.me/+55<?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?text=Olá,%20informamos%20que%20temos%20uma%20vaga%20disponível%20para%20o(a)%20<?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20na%20turma%20de%20<?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20<?php echo htmlspecialchars( $turma["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20das%20<?php echo htmlspecialchars( $turma["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20às%20<?php echo htmlspecialchars( $turma["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20no%20<?php echo htmlspecialchars( $turma["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20<?php echo htmlspecialchars( $turma["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20Nº%20<?php echo htmlspecialchars( $turma["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20<?php echo htmlspecialchars( $turma["bairro"], ENT_COMPAT, 'UTF-8', FALSE ); ?>,%20da%20qual%20você%20fez%20inscrição.%20Compareça%20no%20dia%20e%20horário%20da%20aula,%20com%20os%20documentos%20informados%20na%20inscrição,%20para%20fazer%20a%20matrícula%20no%20prazo%20máximo%20de%2015%20dias,%20para%20não%20perder%20a%20vaga." target="_blank" onclick="return confirm('Você será direcionado para o whatsapp com a mensagem referente a vaga disponível já preenchida. No app clique em enviar msg.')" class="btn btn-success btn-xs"><i></i>Informar vaga pelo WhatsApp</a>
-              
+                  <a href="https://wa.me/+55<?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?text=Olá,%20informamos%20que%20temos%20uma%20vaga%20disponível%20para%20o(a)%20<?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20na%20turma%20de%20<?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20<?php echo htmlspecialchars( $turma["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20das%20<?php echo htmlspecialchars( $turma["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20às%20<?php echo htmlspecialchars( $turma["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20no%20<?php echo htmlspecialchars( $turma["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20<?php echo htmlspecialchars( $turma["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20Nº%20<?php echo htmlspecialchars( $turma["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20<?php echo htmlspecialchars( $turma["bairro"], ENT_COMPAT, 'UTF-8', FALSE ); ?>,%20da%20qual%20você%20fez%20inscrição.%20Se%20você%20ainda%20tem%20interesse%20na%20vaga,%20responda%20SIM%20nas%20próximas%2024%20horas,%20que%20vamos%20passar%20mais%20informações.%20Se%20você%20não%20tiver%20interesse%20ou%20não%20responder,%20vamos%20chamar%20o%20próximo%20inscrito%20da%20lista%20de%20espera%20e%20você%20terá%20que%20fazer%20uma%20nova%20inscrição%20para%20esta%20turma." target="_blank" onclick="return confirm('Você será direcionado para o whatsapp com a mensagem referente a vaga disponível já preenchida. No app clique em enviar msg.')" class="btn btn-success btn-xs"><i></i>Informar vaga pelo WhatsApp</a>
               
               &nbsp;&nbsp;&nbsp;&nbsp;
               
@@ -578,7 +644,8 @@
 
               
                <?php } ?>
-                  
+
+
                 </div>
               </div>
               
@@ -603,8 +670,13 @@
                   <div class="col-md-6" style="margin: 1; padding: 1">
                     <h5 style="text-align: left;">
                       <?php echo htmlspecialchars( $value1["numordem"], ENT_COMPAT, 'UTF-8', FALSE ); ?>º -
+                      
                       <strong>[<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>] - <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
+                      <?php if( UserIsAdmin() ){ ?>
+                      &nbsp;<?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>&nbsp;
+                      <?php }else{ ?>
                       &nbsp;<?php echo formatCpf($value1["numcpf"]); ?>&nbsp;
+                      <?php } ?>
                       <strong><?php echo calcularIdade($value1["dtnasc"]); ?> anos</strong>
                       &nbsp;Nascim.: <?php echo formatDate($value1["dtnasc"]); ?>&nbsp;
                     </h5>
@@ -612,9 +684,18 @@
 
                   <div class="col-md-6" style="margin: 1; padding: 1">
                     <h5 style="text-align: left;">               
-                      <strong>Resp: <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
-                      &nbsp;Cel: <?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>&nbsp;
-                      <strong> Dt Insc.: <?php echo formatDate($value1["dtinsc"]); ?></strong>
+                       <strong>Resp: <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
+                      &nbsp;
+                       <a href="https://wa.me/+55<?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: green;"></i><span style="color: black;"> <?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>&nbsp;</span></a>
+                       
+                       &nbsp;&nbsp;&nbsp;&nbsp;
+
+                       <a style="font-weight: bold;" onclick="requisitarPaginaEndereco('/prof/insc-turma-temporada-endereco/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>')"> Endereço </a>         
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                       
+                      <strong>Dt Insc.: <?php echo formatDate($value1["dtinsc"]); ?></strong>
+                      &nbsp;Dt Matric.: <?php echo formatDate($value1["dtmatric"]); ?>&nbsp;
                     </h5>
                   </div>                   
                 </div>
@@ -748,8 +829,7 @@
              
               <div class="col-md-2" style="margin: 1; padding: 1">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  <a href="https://wa.me/+55<?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?text=Olá,%20informamos%20que%20temos%20uma%20vaga%20disponível%20para%20o(a)%20<?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20na%20turma%20de%20<?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20<?php echo htmlspecialchars( $turma["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20das%20<?php echo htmlspecialchars( $turma["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20às%20<?php echo htmlspecialchars( $turma["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20no%20<?php echo htmlspecialchars( $turma["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20<?php echo htmlspecialchars( $turma["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20Nº%20<?php echo htmlspecialchars( $turma["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20<?php echo htmlspecialchars( $turma["bairro"], ENT_COMPAT, 'UTF-8', FALSE ); ?>,%20da%20qual%20você%20fez%20inscrição.%20Compareça%20no%20dia%20e%20horário%20da%20aula,%20com%20os%20documentos%20informados%20na%20inscrição,%20para%20fazer%20a%20matrícula%20no%20prazo%20máximo%20de%2015%20dias,%20para%20não%20perder%20a%20vaga." target="_blank" onclick="return confirm('Você será direcionado para o whatsapp com a mensagem referente a vaga disponível já preenchida. No app clique em enviar msg.')" class="btn btn-success btn-xs"><i></i>Informar vaga pelo WhatsApp</a>
-              
+                  <a href="https://wa.me/+55<?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?text=Olá,%20informamos%20que%20temos%20uma%20vaga%20disponível%20para%20o(a)%20<?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20na%20turma%20de%20<?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20<?php echo htmlspecialchars( $turma["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20das%20<?php echo htmlspecialchars( $turma["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20às%20<?php echo htmlspecialchars( $turma["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20no%20<?php echo htmlspecialchars( $turma["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20<?php echo htmlspecialchars( $turma["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20Nº%20<?php echo htmlspecialchars( $turma["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?>%20-%20<?php echo htmlspecialchars( $turma["bairro"], ENT_COMPAT, 'UTF-8', FALSE ); ?>,%20da%20qual%20você%20fez%20inscrição.%20Se%20você%20ainda%20tem%20interesse%20na%20vaga,%20responda%20SIM%20nas%20próximas%2024%20horas,%20que%20vamos%20passar%20mais%20informações.%20Se%20você%20não%20tiver%20interesse%20ou%20não%20responder,%20vamos%20chamar%20o%20próximo%20inscrito%20da%20lista%20de%20espera%20e%20você%20terá%20que%20fazer%20uma%20nova%20inscrição%20para%20esta%20turma." target="_blank" onclick="return confirm('Você será direcionado para o whatsapp com a mensagem referente a vaga disponível já preenchida. No app clique em enviar msg.')" class="btn btn-success btn-xs"><i></i>Informar vaga pelo WhatsApp</a>              
               
               &nbsp;&nbsp;&nbsp;&nbsp;
               
@@ -767,8 +847,8 @@
             </div>
           </div>
            
-          <?php } ?>
-          </div>           
+          <?php } ?>     
+        </div>           
          
        
 

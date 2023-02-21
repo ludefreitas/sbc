@@ -119,20 +119,30 @@
           <div class="container">
             <div class="row">
 
-                <div class="col-md-8" style="text-align: center; margin: 10px 0px 10px 0px;">
+                <div class="col-md-6" style="text-align: center; margin: 0px 0px 0px 0px;">
+
+                 <a href="/" class="">
+                  <img src="/../res/site/img/cursosesportivos.jpg" title="Cursos Esportivos SBC" width="40%">
+                </a> 
+
+                <!--
                 <a href="/" class="">
                   <img src="/../res/site/img/horatreino.png" title="HoraTreino" height="50" width="120">
                 </a> 
-                <a href="/" class="">
-                  <img src="/../res/site/img/campeoesvida.png" title="CampeoesDaVida" height="50" width="120">
-                </a>                
+                
                 <a href="/" class="">
                   <img src="/../res/site/img/corpoacao.png" title="CorpoEmAcao" height="50" width="120">
-                </a>                                  
+                </a> 
+
+                <a href="/" class="">
+                  <img src="/../res/site/img/campeoesvida.png" title="CampeoesDaVida" height="50" width="120">
+                </a>     
+                -->            
+                                              
               </div>
                          
 
-               <div class="col-md-4" style="text-align: center; margin: 20px 0px 20px 0px;">
+               <div class="col-md-6" style="text-align: center; margin: 10px 0px 0px 0px;">
                  <form action="/busca">
                 <input type="text" name="search" placeholder="Pesquisa" style="text-align-last: center;">
                 <button type="submit" class="btn btn-default btn-sm">

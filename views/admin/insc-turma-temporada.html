@@ -58,9 +58,10 @@
                   <div class="col-md-6" style="margin: 2; padding: 2">
                     <h5 style="text-align: left;">               
                        <strong>Resp: </strong>{$value.desperson}
-                      &nbsp; <strong>Cel: </strong>{$value.nrphone}&nbsp;
-                       <strong>Tel emerg.: </strong>{$value.telemer}
-                       &nbsp; <strong>Contato: </strong>{$value.contato}&nbsp;
+                      &nbsp;
+                       <a href="https://wa.me/+55{$value.nrphone}?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: green;"></i><span style="color: black;"> {$value.nrphone}&nbsp;</span></a>
+
+                       &nbsp; <strong>Contato: </strong>&nbsp;
                       <strong>Dt Insc.: </strong>{function="formatDate($value.dtinsc)"}
                       &nbsp;<strong>Dt Matric.: </strong>{function="formatDate($value.dtmatric)"}&nbsp;
                     </h5>
@@ -243,9 +244,9 @@
                   <div class="col-md-6" style="margin: 2; padding: 2">
                     <h5 style="text-align: left;">               
                       <strong>Resp: {$value.desperson}</strong>
-                      &nbsp;Cel: {$value.nrphone}&nbsp;
-                       <strong>Tel emerg.: {$value.telemer}</strong>
-                       &nbsp;Contato: {$value.contato}&nbsp;
+                     &nbsp;
+                       <a href="https://wa.me/+55{$value.nrphone}?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: darkgreen; font-weight: bold;"></i><span style="color: black;"> {$value.nrphone}&nbsp;</span></a>
+
                       <strong>Dt Insc.: {function="formatDate($value.dtinsc)"}</strong>
                       &nbsp;Dt Matric.: {function="formatDate($value.dtmatric)"}&nbsp;
                     </h5>
@@ -379,7 +380,7 @@
               {if="$value.idinscstatus == 7"}
 
               <div class="col-md-2" style="margin: 1; padding: 1">
-                <h5 style="font-weight: bold; text-align: left;">                  
+                <h5 style="font-weight: bold; text-align: left; color: darkgreen;">                  
                   <a href="https://wa.me/+55{$value.nrphone}?text=Olá,%20informamos%20que%20temos%20uma%20vaga%20disponível%20para%20o(a)%20{$value.nomepess}%20na%20turma%20de%20{$turma.descturma}%20-%20{$turma.diasemana}%20das%20{$turma.horainicio}%20às%20{$turma.horatermino}%20no%20{$turma.apelidolocal}%20-%20{$turma.rua}%20-%20Nº%20{$turma.numero}%20-%20{$turma.bairro},%20da%20qual%20você%20fez%20inscrição.%20Se%20você%20ainda%20tem%20interesse%20na%20vaga,%20responda%20SIM%20nas%20próximas%2024%20horas,%20que%20vamos%20passar%20mais%20informações.%20Se%20você%20não%20tiver%20interesse%20ou%20não%20responder,%20vamos%20chamar%20o%20próximo%20inscrito%20da%20lista%20de%20espera%20e%20você%20terá%20que%20fazer%20uma%20nova%20inscrição%20para%20esta%20turma." target="_blank" onclick="return confirm('Você será direcionado para o whatsapp com a mensagem referente a vaga disponível já preenchida. No app clique em enviar msg.')" class="btn btn-success btn-xs"><i></i>Informar vaga pelo WhatsApp</a>
               
               
@@ -451,9 +452,9 @@
                   <div class="col-md-6" style="margin: 2; padding: 2">
                     <h5 style="text-align: left;">               
                        <strong>Resp: {$value.desperson}</strong>
-                      &nbsp;Cel: {$value.nrphone}&nbsp;
-                       <strong>Tel emerg.: {$value.telemer}</strong>
-                       &nbsp;Contato: {$value.contato}&nbsp;
+                      &nbsp;
+                       <a href="https://wa.me/+55{$value.nrphone}?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: green;"></i><span style="color: black;"> {$value.nrphone}&nbsp;</span></a>
+                       
                       <strong>Dt Insc.: {function="formatDate($value.dtinsc)"}</strong>
                       &nbsp;Dt Matric.: {function="formatDate($value.dtmatric)"}&nbsp;
                     </h5>
@@ -647,9 +648,9 @@
                   <div class="col-md-6" style="margin: 2; padding: 2">
                     <h5 style="text-align: left;">               
                        <strong>Resp: {$value.desperson}</strong>
-                      &nbsp;Cel: {$value.nrphone}&nbsp;
-                       <strong>Tel emerg.: {$value.telemer}</strong>
-                       &nbsp;Contato: {$value.contato}&nbsp;
+                      &nbsp;
+                       <a href="https://wa.me/+55{$value.nrphone}?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: green;"></i><span style="color: black;"> {$value.nrphone}&nbsp;</span></a>                       
+
                       <strong>Dt Insc.: {function="formatDate($value.dtinsc)"}</strong>
                       &nbsp;Dt Matric.: {function="formatDate($value.dtmatric)"}&nbsp;
                     </h5>

@@ -25,8 +25,10 @@
                             <?php if( $value1["idstatustemporada"] == 5 ){ ?>
                             
                             <?php }else{ ?>
+                            <!--
                                 <strong>NÚMERO PARA O SORTEIO: </strong><span style="color: red; font-size: 20px"><?php echo htmlspecialchars( $value1["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span><br>
                                 <strong>INSCRIÇÃO Nº: </strong><span><?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
+                            -->
                             <?php } ?>
                        
 
@@ -35,6 +37,7 @@
                         <strong>NOME DO ALUNO: </strong> <span><?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span><br>
                         <strong>COM LAUDO? </strong> <span><?php if( $value1["laudo"] == 0 ){ ?>Não<?php }else{ ?>Sim<?php } ?></span><br>
                         <strong>PARA PESSOA COM DEFICIÊNCIA? </strong> <span><?php if( $value1["inscpcd"] == 0 ){ ?>Não<?php }else{ ?>Sim<?php } ?></span><br>
+                        <strong>PESSOA EM SITUAÇÃO DE VULNERABILIDADE SOCIAL? </strong> <span><?php if( $value1["inscpvs"] == 0 ){ ?>Não<?php }else{ ?>Sim<?php } ?></span><br>
                         <strong>TURMA: </strong><?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
                         <strong>Temporada: </strong><?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
 

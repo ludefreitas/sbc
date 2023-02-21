@@ -661,8 +661,8 @@ $app->get("/admin/temporada/:idtemporada/turma/:idturma/add", function($idtempor
 
 	$temporada->addTurma($turma);
 
-	header("Location: /admin/temporada/".$idtemporada."/turma");
-	exit;
+	//header("Location: /admin/temporada/".$idtemporada."/turma");
+	//exit;
 	echo '<script>javascript:history.go(-1)</script>';
 });
 

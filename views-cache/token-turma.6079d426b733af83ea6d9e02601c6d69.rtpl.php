@@ -29,6 +29,7 @@
              
 
             <input hidden type="text" name="idturma" value="<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+            <input hidden type="text" name="iduser" value="<?php echo htmlspecialchars( $turma["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             <!--<input type="text" name="numcpf" placeholder="Digite o CPF, se necessário">-->
             <input style="width: 170px; float: left;" type="text" maxlength="14" id="numcpf" name="numcpf" class="input-text" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}"  placeholder="000.000.000-00">
                     <script type="text/javascript">$("#numcpf").mask("000.000.000-00");</script>
@@ -37,40 +38,39 @@
             <input class="btn btn-success" type="submit" name="" value="Gerar Token">
 
             </div>
-
-
-
         </form>
 
-             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
-              
-            
+        <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+            <div class="row" style="margin: 5px;">
+              <?php $counter1=-1;  if( isset($tokens) && ( is_array($tokens) || $tokens instanceof Traversable ) && sizeof($tokens) ) foreach( $tokens as $key1 => $value1 ){ $counter1++; ?>
+                <div class="col-md-2" style="border: solid 1px; text-align: center;">
 
-            <?php $counter1=-1;  if( isset($tokens) && ( is_array($tokens) || $tokens instanceof Traversable ) && sizeof($tokens) ) foreach( $tokens as $key1 => $value1 ){ $counter1++; ?>
-                  <?php if( $value1["isused"] == 0 ){ ?>
-                <span style="font-weight: bold; text-align: left;">                  
-                  <?php echo htmlspecialchars( $value1["token"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - 
-                </span>
-                <?php }else{ ?>
-                 <s><span style="font-weight: bold; text-align: left; color: red;">                  
-                  <?php echo htmlspecialchars( $value1["token"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - 
-                </span></s>
+                    <?php if( $value1["isused"] == 0 ){ ?>
+                    <span style="font-weight: bold; color: darkblue;">                  
+                        <?php echo htmlspecialchars( $value1["token"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span> <br>
+                        <?php if( $value1["numcpf"] ){ ?>
+                            <?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                        <?php }else{ ?>
+                            NULL
+                        <?php } ?>
+               
+                    <?php }else{ ?>
+                    <span style="font-weight: bold; color: red;">                  
+                        <s><?php echo htmlspecialchars( $value1["token"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </s><i class="fa fa-check" style="color: green;"></i>
+                    </span><br>
 
-                <?php } ?>
-          <?php } ?>
-
-            <div class="box-body no-padding">
-              
-            </div>
+                        <?php if( $value1["numcpf"] ){ ?>
+                            <?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                        <?php }else{ ?>
+                            NULL
+                        <?php } ?>               
+                    <?php } ?>
+            </div>               
+          <?php } ?>           
             <!-- /.box-body -->
-            <div class="box-footer clearfix">
-              <ul class="pagination pagination-sm no-margin pull-right">
-               </ul>
-            </div>
-            
-          </div>
+        </div>
     </div>
-  </div>
+</div>
 
 </section>
 <!-- /.content -->

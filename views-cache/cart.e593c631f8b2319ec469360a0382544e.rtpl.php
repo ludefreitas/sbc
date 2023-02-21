@@ -6,6 +6,12 @@
       alert("Conforme Resolução SESP Nº 004 de 28/10/2021 Art.7º, Os interessados em participar das turmas de inclusão para Pessoas com Deficiência (PCD) e/ou laudo médico do CREEBA, deverão comparecer pessoalmente (interessado ou representante legal) no Centro Esportivo do Jardim Lavínia, sito à Av. Capitão Casa - 1.500, no horário das 08:30 às 11:30 e das 13:30 às 16:30, nos dias úteis de terça a sexta-feira até o dia 03/12/2021.")
     }
 
+    function alertTokenCpf(){
+
+
+      alert("Você deverá inserir, no campo token, o número que o professor te entregou")
+    }
+
 $(document).ready(function(){
 
     $('#link').on('change', function () {
@@ -26,6 +32,14 @@ $(document).ready(function(){
 
 
 <form action="/verifica">
+
+    <div class="col-md-12" style="color: black; text-align-last: center; font-size: 20px;">
+
+      <div>
+         ETAPA <span style="font-weight: bold;">4</span> de <span style="font-weight: bold;">5</span> 
+      </div>
+
+    </div>
 
     <?php if( $error != '' ){ ?>
     <div class="alert alert-danger" role="alert">
@@ -50,12 +64,32 @@ $(document).ready(function(){
         <?php } ?>   
     <?php } ?>
 
-        <div class="col-md-12" style="margin-top: 0px; margin-bottom: 0px; color: darkblue; text-align: center; font-size: 18px;">       
-                        Selecione a pessoa que irá fazer a aula e clique no botão <strong style="color: red;"> CONFIRMAR INSCRIÇÃO </strong>
-                    </div>  
+        <div class="col-md-12" style="text-align-last: left; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; border-radius: 15px;"> 
+
+    <?php if( checkLogin(false) ){ ?> 
+
+           <span style="color: black; font-weight: bold;">  <?php echo getUserName(); ?> </span><br>           
+                                                       
+          nesta etapa, já com a turma <strong><?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong> selecionada, selecione a pessoa que irá fazer a aula e clique no botão <strong style="color: red;"> CONFIRMAR INSCRIÇÃO </strong>
+          
+
+    <?php }else{ ?>      
+           
+      
+            <a href="cursos/user-create">             
+                     CADASTRE-SE               
+            </a> 
+             <span> ou faça o  </span>           
+            <a href="cursos/login" >                
+                 LOGIN 
+            </a>
+            e nesta etapa, já com a turma <strong> <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong> selecionada, selecione a pessoa que irá fazer a aula e clique no botão <strong style="color: red;"> CONFIRMAR INSCRIÇÃO</strong>.
+          
+      <?php } ?>
+
+    </div>
          
         <div class="row alert alert-primary"> 
-           
 
             <div class="col-md-6">
                TURMA: <span style="color: #cc5d1e;"><?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["periodo"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </span> /
@@ -69,12 +103,15 @@ $(document).ready(function(){
                  <?php if( $value1["fimidade"] == 99 ){ ?> 
                Para nascidos somente até <?php echo htmlspecialchars( $anoAtual - $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <br>
               <?php }else{ ?>
-              Para nascidos somente entre: <?php echo htmlspecialchars( $anoAtual - $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> à <?php echo htmlspecialchars( $anoAtual - $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+              Para adultos nascidos somente entre: <?php echo htmlspecialchars( $anoAtual - $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> à <?php echo htmlspecialchars( $anoAtual - $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
               <?php } ?>
               </span> 
+              <span class="amount">
+                  PROFESSOR: <?php echo htmlspecialchars( $value1["apelidoperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+               </span> 
                
                 <span class="amount">
-                   <br><a title="Remove this item" class="remove" href="/cursos/cart/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/remove"> REMOVER <p style="color: green">(Remover esta, selecionar outra turma)</p></a>
+                   <br> <span style="color: red; font-weight: bold;">Se esta não é a turma que você quer fazer a inscrição clique <a title="Remove this item" class="remove" href="cursos/cart/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/remove">aqui <i class="fa fa-arrow-right"></i> <i class="fa fa-trash"></i> <i class="fa fa-arrow-left"></i></span><p style="color: green;">(Selecionar uma outra turma)</p></a>
                </span>  
 
                <input type="text" name="idturma" hidden="" value="<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
@@ -86,7 +123,8 @@ $(document).ready(function(){
                <input type="text" name="apelidolocal" hidden="" value="<?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                <input type="text" name="sexo" hidden="" value="<?php echo htmlspecialchars( $value1["geneativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> 
                <input type="text" name="tipoativ" hidden="" value="<?php echo htmlspecialchars( $value1["tipoativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">    
-               <input type="text" name="idmodal" hidden="" value="<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">                   
+               <input type="text" name="idmodal" hidden="" value="<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> 
+               <input type="text" name="temtoken" hidden="" value="<?php echo htmlspecialchars( $temtoken, ENT_COMPAT, 'UTF-8', FALSE ); ?>">                  
             </div>
 
             <div class="col-md-6">
@@ -112,7 +150,7 @@ $(document).ready(function(){
                                 <div class="box-body">
                                     <?php $counter2=-1;  if( isset($pessoa) && ( is_array($pessoa) || $pessoa instanceof Traversable ) && sizeof($pessoa) ) foreach( $pessoa as $key2 => $value2 ){ $counter2++; ?>
                                     <p>
-                                    <input type="radio" name="idpess" value="<?php echo htmlspecialchars( $value2["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> 
+                                    <input type="radio" name="idpess" value="<?php echo htmlspecialchars( $value2["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="height: 20px; width: 20px;">
                                     <?php echo htmlspecialchars( $value2["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>; <?php echo calcularIdade($value2["dtnasc"]); ?> anos; 
                                     </p>                                
                                     <?php }else{ ?>

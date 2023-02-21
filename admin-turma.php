@@ -11,6 +11,8 @@ use \Sbc\Model\TurmaStatus;
 use \Sbc\Model\Turma;
 use \Sbc\Model\Modalidade;
 use \Sbc\Model\Pessoa;
+use \Sbc\Model\Insc;
+use \Sbc\Model\Temporada;
 
 $app->get("/admin/turma", function() {
 
@@ -86,7 +88,7 @@ $app->get("/admin/turma/create", function() {
 		'modalidade'=>$modalidade,
 		//'turmastatus'=>$turmastatus,
 		'error'=>Turma::getMsgError(),
-		'createTurmaValues'=>(isset($_SESSION['createTurmaValues'])) ? $_SESSION['createTurmaValues'] : ['descturma'=>'', 'idmodal'=>'', 'idhorario'=>'', 'idativ'=>'', 'idespaco'=>'', 'idturmastatus'=>'', 'vagas'=>'']
+		'createTurmaValues'=>(isset($_SESSION['createTurmaValues'])) ? $_SESSION['createTurmaValues'] : ['descturma'=>'', 'idmodal'=>'', 'idhorario'=>'', 'idativ'=>'', 'idespaco'=>'', 'idturmastatus'=>'', 'vagas'=>'', 'obs'=>'']
 	]);
 });
 
@@ -249,6 +251,7 @@ $app->post("/admin/turma/:idturma", function($idturma) {
 		exit;		
 	}
 
+
 	$_POST['token'] = isset($_POST['token']) ?  1 : 0;
 
 	$turma->setData($_POST);
@@ -257,8 +260,11 @@ $app->post("/admin/turma/:idturma", function($idturma) {
 
 	//$turma->setPhoto($_FILES["file"]);
 
-	header("Location: /admin/turma");
-	exit();	
+	echo "<script>alert('Turma atualizada com sucesso');";
+	echo "javascript:history.go(-2)</script>";
+
+	//header("Location: /admin/turma");
+	//exit();	
 });
 
 $app->get("/turma/:idturma", function($idturma) {
@@ -330,9 +336,18 @@ $app->get("/admin/turma/create/token/:idturma/:numcpf", function($idturma, $numc
 
 $app->post("/admin/turma/create/token", function() {
 
-	User::verifyLoginProf();
+	User::verifyLogin();
 
 	$turma = new Turma();
+
+	$iduserSession = (int)$_SESSION[User::SESSION]['iduser'];
+
+	if($iduserSession != 5){
+
+		echo "<script>alert('Você deve solicitar ao professor desta turma para que ele gere o token!');";
+	  	echo "javascript:history.go(-1)</script>";
+	   	exit;
+	}
 
 	$token = time();
 	$token = substr($token, 4);
@@ -401,6 +416,40 @@ $app->get("/admin/token/:idturma", function($idturma) {
 		'turma'=>$turma->getValues(),
 		"error"=>Turma::getMsgError()	
 	]);
+});
+
+$app->get("/admin/listapessoasporturma/:idturma/:idtemporada", function($idturma, $idtemporada) {
+
+	User::verifyLoginProf();
+
+	$insc = new Insc();
+	$turma = new Turma();
+	$temporada = new Temporada();
+
+	$turma->get((int)$idturma);	
+	$temporada->get((int)$idtemporada);	
+
+	$descturma = $turma->getdescturma();
+
+	$listapessoas = Insc::listaPessoasPorTurmaTemporada($idturma, $idtemporada);
+
+	if(!isset($listapessoas) || $listapessoas == NULL){
+		echo "<script>alert('Não há inscritos para esta turma');";
+		echo "javascript:history.go(-1)</script>";
+	}else{
+
+		$page = new PageAdmin([
+		"header"=>false,
+		"footer"=>false
+		]);
+
+		$page->setTpl("listapessoasporturma", [
+		'listapessoas'=>$listapessoas,
+		'descturma'=>$descturma	,
+		'idturma'=>$idturma	
+		]);
+	}
+	
 });
 
 

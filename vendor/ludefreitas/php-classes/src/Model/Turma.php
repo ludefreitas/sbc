@@ -789,6 +789,55 @@ class Turma extends Model {
 
 	}
 
+	public static function getVagasByIdTurma($idturma)
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT vagas FROM tb_turma
+ 			WHERE idturma = :idturma", [
+			':idturma'=>$idturma
+		]);
+
+		return $results[0]['vagas'];
+	}
+
+	public static function getSomaVagasByTurmaIdmodal($desctemporada, $idmodal)
+	{
+		$sql = new Sql();
+
+		$results =  $sql->select("SELECT SUM(vagas) as qtdvagas 
+			FROM tb_turmatemporada a
+			INNER JOIN tb_turma b USING(idturma)
+			INNER JOIN tb_temporada c USING(idtemporada)
+            INNER JOIN tb_modalidade d USING(idmodal)			
+			WHERE c.desctemporada = :desctemporada 
+			AND d.idmodal = :idmodal", [
+			':desctemporada'=>$desctemporada,
+			':idmodal'=>$idmodal
+		]);		
+
+		return $results[0]['qtdvagas'];
+	}
+
+	public static function getSomaVagasByDescTemporada($desctemporada)
+	{
+		$sql = new Sql();
+
+		$results =  $sql->select("SELECT SUM(vagas) as qtdvagas 
+			FROM tb_turmatemporada a
+			INNER JOIN tb_turma b USING(idturma)
+			INNER JOIN tb_temporada c USING(idtemporada)
+            -- INNER JOIN tb_modalidade d USING(idmodal)			
+			WHERE c.desctemporada = :desctemporada 
+			-- AND d.idmodal = :idmodal", [
+			':desctemporada'=>$desctemporada
+			//':idmodal'=>$idmodal
+		]);		
+
+		return $results[0]['qtdvagas'];
+	}
+
 	public static function getPage($page = 1, $itemsPerPage = 25)
 	{
 
@@ -1101,7 +1150,8 @@ class Turma extends Model {
 
 		$results = $sql->select("SELECT * 
 			FROM tb_tokenturma 
-			WHERE idturma = :idturma", [
+			WHERE idturma = :idturma
+			ORDER BY numcpf", [
 			':idturma'=>$idturma
 		]);
 
@@ -1147,7 +1197,32 @@ class Turma extends Model {
 			":idturma"=>$idturma,
 		));
 			
-	}	
+	}
+
+	public static function getTokenPorCpfeTurma($numcpf, $idturma)
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT token
+			FROM tb_tokenturma 
+			WHERE numcpf = :numcpf
+			AND idturma = :idturma
+			AND isused = 0", array(
+			":numcpf"=>$numcpf,
+			":idturma"=>$idturma,
+		));
+
+		if($results){
+			return true;
+		}else{
+			return false;
+		}
+
+		//return $results[0]['token'];	
+
+		
+	}		
 
 }
 

@@ -13,7 +13,7 @@
             <?php } ?>
             <?php if( $success != '' ){ ?>
             <script type="text/javascript">  
-                alert('Inscrição efetuada com sucesso!!!');
+                alert('Inscrição EFETUADA COM SUCESSO! As aulas já começaram, então você deve comprarecer com os documentos pessoais, sem falta, já na próxima aula, no Centro Esportivo no dia e horário da aula escolhida');
             </script>
         <div class="alert alert-info">
             <?php echo htmlspecialchars( $success, ENT_COMPAT, 'UTF-8', FALSE ); ?>
@@ -37,11 +37,13 @@
                     <?php if( $insc["idstatustemporada"] == 5 ){ ?>
 
                     <?php }else{ ?>
+                    <!--
                         <div class="col-md-5 alert alert-success" style="text-align-last: center;">
                                 <p><h5 style="text-align: center"> Nº para concorrer no sorteio: </h5>
                                 <p><h3 style="color: red; text-align-last: center"><?php echo htmlspecialchars( $insc["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h3> </p>
                                 <h6 style="text-align: center; font-size: 12px;"> * Caso esta inscrição vá para sorteio</h6></p>
                         </div> 
+                    -->
                     <?php } ?>
                 
                 <?php } ?>
@@ -109,6 +111,14 @@
     </div>
     <div class="row">
         <div class="col-md-3" style="padding-top: 10px">
+            <strong>Pessoa em situação de vulnerabilidade social? </strong>
+        </div>
+        <div class="col-md-9 alert alert-success">
+            <strong><?php if( $insc["inscpvs"] == 0 ){ ?>Não<?php }else{ ?>Sim<?php } ?></strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3" style="padding-top: 10px">
             <strong>Status da Inscrição: </strong>
         </div>
         <div class="col-md-9 alert alert-success" <?php echo colorStatus($insc["idinscstatus"]); ?>>
@@ -117,10 +127,25 @@
     </div>
     <div class="row">
         <div class="col-md-3" style="padding-top: 10px">
-            <strong>Início previsto das aulas: </strong>
+            <strong>Início previsto das aulas e matrícula: </strong>
         </div>
         <div class="col-md-9 alert alert-success">
-            <strong><?php echo formatDate($insc["dttermmatricula"]); ?></strong>
+             <?php if( $insc["idinscstatus"] == 1 ){ ?>
+             As aulas já começaram. Se o status desta inscrição é "Matriculada", então você está matriculado(a) nesta turma. Frequente as aulas e evite faltar sem justificativa para que você não perca sua vaga.
+             <?php } ?>
+
+             <?php if( $insc["idinscstatus"] == 2 ){ ?>
+             As aulas já começaram. Se o status desta inscrição é "Aguardando matrícula", então você deve comprarecer com os documentos pessoais, sem falta, já na próxima aula, no Centro Esportivo no dia e horário da aula escolhida.
+             <?php } ?>
+
+             <?php if( $insc["idinscstatus"] == 7 ){ ?>
+             Se o status desta inscrição é "Lista de Espera", então você está em uma lista de espera, aguardando o comunicado de uma eventual vaga. Mantenha atualizado, neste site, seu número de telefone celular, com whatsapp, para receber o comunicado.
+             <?php } ?>
+
+             <strong>Leia a observção abaixo, se existir.</strong>
+            <?php if( $insc["obs"] ){ ?>
+            <br> <span style="color: red; font-weight: bold;"> Atenção! </span> <span style="color: red;"><?php echo htmlspecialchars( $insc["obs"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
+            <?php } ?>
         </div>
     </div>
     <div class="row">

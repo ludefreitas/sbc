@@ -64,6 +64,20 @@ $app->get("/locaisnatacao", function() {
 	]);	
 });
 
+$app->get("/locaisnatacao-avaliacao", function() {
+
+	//User::verifyLogin(false);
+
+	$locais = Local::listAllCrecAtivo();
+
+	$page = new Page();
+
+	$page->setTpl("locaisnatacao-avaliacao", [
+		'locais'=>$locais,
+		'error'=>Agenda::getMsgError(),
+	]);	
+});
+
 $app->get("/agenda/:idlocal/:data", function($idlocal, $data) {
 
 	//User::verifyLogin(false);
@@ -208,6 +222,8 @@ $app->post("/hora-agenda", function() {
 		exit();
 	}
 
+	$titulo = $_POST['titulo'];
+
 	$idlocal = $_POST['idlocal'];
 
 	$dataSemSemana= $_POST['dataSemSemana'];
@@ -252,8 +268,8 @@ $app->post("/hora-agenda", function() {
 
 	$anoDiferença = (int)$anoAtual - (int)$anoNasc;
 
-	if($anoDiferença < 18 ){
-		Agenda::setMsgError("O agendamento para a natação espontânea só e permitido para maiores de 18 anos");
+	if($anoDiferença < 16 ){
+		Agenda::setMsgError("O agendamento para a natação espontânea só e permitido para maiores de 16 anos");
 		header("Location: /agenda/".$_POST['idlocal']."/".$_POST['dataSemSemana']."");
 		exit;
 	}
@@ -385,16 +401,16 @@ $app->post("/hora-agenda", function() {
 	//exit;
 	
 	if( $horarioinicial[0]['horamarcadainicial'] == '08:30' ||
-		//$horarioinicial[0]['horamarcadainicial'] == '09:00' ||
-		//$horarioinicial[0]['horamarcadainicial'] == '09:30' ||
-		//$horarioinicial[0]['horamarcadainicial'] == '10:00' ||
-		//$horarioinicial[0]['horamarcadainicial'] == '10:30' || 		
+		$horarioinicial[0]['horamarcadainicial'] == '09:00' ||
+		$horarioinicial[0]['horamarcadainicial'] == '09:30' ||
+		$horarioinicial[0]['horamarcadainicial'] == '10:00' ||
+		$horarioinicial[0]['horamarcadainicial'] == '10:30' || 		
 		$horarioinicial[0]['horamarcadainicial'] == '11:00' ||
 		$horarioinicial[0]['horamarcadainicial'] == '13:30' ||
-		//$horarioinicial[0]['horamarcadainicial'] == '14:00' ||
-		//$horarioinicial[0]['horamarcadainicial'] == '14:30' ||
-		//$horarioinicial[0]['horamarcadainicial'] == '15:00' ||
-		//$horarioinicial[0]['horamarcadainicial'] == '15:30' ||
+		$horarioinicial[0]['horamarcadainicial'] == '14:00' ||
+		$horarioinicial[0]['horamarcadainicial'] == '14:30' ||
+		$horarioinicial[0]['horamarcadainicial'] == '15:00' ||
+		$horarioinicial[0]['horamarcadainicial'] == '15:30' ||
 	    $horarioinicial[0]['horamarcadainicial'] == '16:00'){
 
 
@@ -421,6 +437,7 @@ $app->post("/hora-agenda", function() {
 		'idhoradiasemana'=>$idhoradiasemana,
 		'nomeDiaSemana'=>$nomediasemana,
 		'idpess'=>$idpess,
+		'titulo'=>$titulo,
 		'nomepess'=>$nomepess,
 		'ispresente'=>$ispresente,
 		'idlocal'=>$idlocal,
@@ -439,7 +456,7 @@ $app->post("/horaagendada", function() {
 	$idlocal = $_POST['idlocal'];
 	$idpess = $_POST['idpess'];
 	$idhoradiasemana = $_POST['idhoradiasemana'];
-	$titulo = 'raia';
+	$titulo = $_POST['titulo'];
 	$dia = $_POST['dataSemSemana'];
 	$horainicial = $_POST['horarioinicial'];
 	$horafinal = $_POST['horariofinal'];
@@ -460,13 +477,20 @@ $app->post("/horaagendada", function() {
 
 	//Criar Call no banco de dados
 
-
-
 	$agenda->save();
 
-	Agenda::setMsgSuccess("Agendamento para natação espontânea realizada com sucesso");
-	header('Location: /minhaagenda');
-	exit;
+	if($titulo == 'avaliacao'){
+
+		Agenda::setMsgSuccess("Agendamento para avaliação da natação realizada com sucesso");
+		header('Location: /minhaagenda-avaliacao');
+		exit;
+
+	}else{
+
+		Agenda::setMsgSuccess("Agendamento para natação espontânea realizada com sucesso");
+		header('Location: /minhaagenda');
+		exit;
+	}
 
 });
 
@@ -479,12 +503,14 @@ $app->get("/minhaagenda", function() {
 
 	$iduser = $user->getiduser();
 
+	$titulo = 'raia';
+
 	$data = new DateTime();
 
 	$data = date('Y-m-d');
 
 	
-	$agenda = $agenda->getAgendaByIduser($iduser);
+	$agenda = $agenda->getAgendaByIduser($iduser, $titulo);
 	//$agenda = $agenda->getAgendaAll();
 
 	//var_dump($data);
@@ -509,10 +535,218 @@ $app->get("/agendadelete/:idagen", function($idagen) {
 
 
 	$agenda->delete($idagen);
+		
+	echo "<script>alert('Exclusão efetuada com sucesso');";
+	echo "javascript:history.go(-1)</script>";
+	exit();
+});
 
-	Agenda::setMsgError("Exclusão efetuada com sucesso");
-	header("Location: /minhaagenda");
-	exit;
+
+$app->get("/agenda-avaliacao/:idlocal", function($idlocal) {
+
+	//User::verifyLogin(false);
+
+	$local = new Local();
+	$user = User::getFromSession();
+	$agenda = new Agenda();
+	//$data = "2022-04-01";
+
+	$datalimite = date('Y-m-d l', strtotime('+4 week'));
+	$dataatual = date('Y-m-d');
+	
+	$local->get($idlocal);
+
+	$idlocal = $local->getidlocal();
+
+	$page = new Page();
+
+	$page->setTpl("agenda-avaliacao", [		
+		'idlocal'=>$idlocal,		
+		'error'=>Agenda::getMsgError(),
+		'pessoa'=>$user->getPessoa(),
+	]);	
+});
+
+$app->post("/hora-agenda-avaliacao", function() {
+
+	//User::verifyLogin(false);
+
+	$pessoa = new Pessoa();
+	$agenda = new Agenda();
+	$local = new Local();		
+	
+	if(!isset($_POST['datahoramarcada']) || $_POST['datahoramarcada'] == ''){			
+		echo "<script>alert('Selecione um horário!');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}	
+
+	if(!isset($_POST['idpess']) || $_POST['idpess'] <= 0){			
+		echo "<script>alert('Selecione uma pessoa!');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}		
+
+	$dados = $_POST['datahoramarcada'];
+
+	$data = Date(substr($dados, 7, 10));
+	$diasemana = substr($dados, 0, 6);
+	$horarioinicial = substr($dados, 18, 5);
+	$horariofinal = substr($dados, 24, 5);
+	$vagas = substr($dados, 35, 2);
+	$idlocal = $_POST['idlocal'];
+	$titulo = $_POST['titulo'];
+	$idhoradiasemana = '69';
+
+	$hoje = Date('Y-m-d');
+
+	if($data < $hoje){	
+		echo "<script>alert('A data não pode ser anterior ao dia de hoje! ');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}	
+
+
+	$qtdagendamentopordata = $agenda->contaQtdAgendamPorDataHorarioTitulo($data, $idlocal, $titulo, $horarioinicial);
+
+	$qtdagendamentopordata = $qtdagendamentopordata[0]['count(*)'];	
+
+	if($qtdagendamentopordata >= $vagas){
+
+		echo "<script>alert('Não há mais vagas para avaliação neste horário! Escolha outro ');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}
+	
+
+	$idlocal = (int)$_POST['idlocal'];
+	$dataPost = $data;
+	$idpess = (int)$_POST['idpess'];
+	$ispresente = (int)$_POST['ispresente'];
+
+	$titulo = $_POST['titulo'];
+
+	$pessoa->get($idpess);
+	
+	$nomepess = $pessoa->getnomepess();
+
+	$dtnasc = $pessoa->getdtnasc();
+
+
+	$anoNasc = date('Y', strtotime($dtnasc));
+	$anoAtual = date('Y');
+
+	$anoDiferença = (int)$anoAtual - (int)$anoNasc;
+
+	if($anoDiferença < 12 ){
+		echo "<script>alert('O agendamento para a avaliação só e permitido para maiores de 12 anos');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}
+
+
+	//$qtdAgendamento = Agenda::countAgendaPorPessoaLocalDiaTitulo($idpess, $idlocal, $titulo);
+	$qtdAgendamento = Agenda::countAgendaPorPessoaDiaTitulo($idpess, $titulo);
+
+	if((int)$qtdAgendamento[0]['count(*)'] >= 1){
+
+		echo "<script>alert('".$nomepess." já tem agendamento para avaliação reservados para esta temporada');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+
+	}
+
+	$maisumasemana = date('Y-m-d', strtotime('+4 week'));
+
+	
+	if($diasemana == "Quinta"){
+		$nomediasemana = "Quinta-feira";
+	}
+	if($diasemana == "Sexta-"){
+		$nomediasemana = "Sexta-feira";
+	}
+	
+
+	$nomepess = $pessoa->getnomepess();
+
+	if($dataPost > $maisumasemana){
+
+		echo "<script>alert('A agenda para este dia ainda não foi aberta');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+
+	}
+	
+	$hojeDiaHoraMaisDuas = date('H:i', strtotime('+2 hours'));
+	$hojeDiaHoraAtual = date('H:i');
+
+	$horarioinicialdate = $horarioinicial;
+	$horariofinaldate = $horariofinal;
+
+	$dataDiaAgendado = Date('Y-m-d', strtotime($data));	
+
+	//var_dump($horarioinicialdate.' - '. $dataDiaAgendado.' - '. $hojeDiaHoraMaisDuas.' - '.$hojeDiaHoraAtual);
+	//exit;
+	
+	if(($dataDiaAgendado == $hoje) && (($hojeDiaHoraMaisDuas >= $horarioinicialdate) || ($hojeDiaHoraAtual > $horarioinicialdate))){
+	
+	//if( ($hojeDiaHoraMaisDuas >= $horarioinicial) || ($hojeDiaHoraAtual > $horarioinicial) ){
+
+		echo "<script>alert('A agenda para o horário das ".$horarioinicialdate." às ".$horariofinaldate." já foi fechada!');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+
+	}
+	
+
+	$page = new Page();
+	
+	$page->setTpl("hora-agenda-avaliacao", [
+		'dataSemSemana'=>$data,		
+		'dataPost'=>$dataPost,		
+		'idhoradiasemana'=>$idhoradiasemana,
+		'nomeDiaSemana'=>$nomediasemana,
+		'idpess'=>$idpess,
+		'nomepess'=>$nomepess,
+		'dtnasc'=>$dtnasc,
+		'titulo'=>$titulo,
+		'ispresente'=>$ispresente,
+		'idlocal'=>$idlocal,
+		'horarioinicial'=>$horarioinicialdate,
+		'horariofinal'=>$horariofinaldate,
+		'error'=>Agenda::getMsgError()
+	]);		
+});
+
+$app->get("/minhaagenda-avaliacao", function() {
+
+	User::verifyLogin(false);
+
+	$agenda = new Agenda();
+	$user = User::getFromSession();	
+
+	$iduser = $user->getiduser();
+
+	$titulo = 'avaliacao';
+
+	$data = new DateTime();
+
+	$data = date('Y-m-d');
+
+	
+	$agenda = $agenda->getAgendaAvaliacaoByIduser($iduser, $titulo);
+
+	$page = new Page([
+		'header'=>false,
+		'footer'=>false
+	]);
+
+	$page->setTpl("minhaagenda-avaliacao", [
+		'agenda'=>$agenda,
+		'data'=>$data,
+		'error'=>Agenda::getMsgError(),
+		'success'=>Agenda::getMsgSuccess()
+	]);	
 });
 
 

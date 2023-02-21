@@ -61,14 +61,14 @@
 
           <?php if( $error != '' ){ ?>
           <tr>
-            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; color: green;" colspan="7">
+            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; color: green;" colspan="8">
             <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
           </th>
           </tr>
           <?php } ?>
 
           <tr>
-            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; " colspan="6"; >
+            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; " colspan="8"; >
               Cursos esportivos SBC
             <h5 style="margin: 0 0 0 0";>LISTA DA AGENDA DE NATAÇÃO ESPONTÂNEA (  <?php echo htmlspecialchars( $apelidolocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>  )
             <br>
@@ -142,7 +142,7 @@
           </tr>
           <?php }else{ ?>
           <tr style="font-weight: bold; color: red; font-size: 22px; text-align: center; padding: 10px;">
-            <td colspan="7" style="padding: 10px">
+            <td colspan="8" style="padding: 10px">
               Não há horário agendado para natação espontânea nesta data !
             </td>
           </tr>

@@ -46,6 +46,8 @@ $app->get("/prof/turma-temporada/:idtemporada/local/:idlocal", function($idtempo
 	$temporada->get((int)$idtemporada);
 	$local->get((int)$idlocal);
 
+	$iduser = (int)$_SESSION[User::SESSION]['iduser'];
+
 	//var_dump($local);
 	//exit();
 
@@ -53,7 +55,8 @@ $app->get("/prof/turma-temporada/:idtemporada/local/:idlocal", function($idtempo
 
 	$page->setTpl("turmas-por-temporada", [
 		'local'=>$local->getValues(),
-		'locais'=>Local::listAll(),
+		//'locais'=>Local::listAll(),
+		'locais'=>Local::listAllCoord($iduser),
 		'temporada'=>$temporada->getValues(),
 		//'turmaRelated'=>$temporada->getTurma(true)
 		'turmas'=>Temporada::listAllTurmatemporadaLocal($idtemporada, $idlocal),

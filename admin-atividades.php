@@ -220,8 +220,11 @@ $app->post("/admin/atividade/:idativ", function($idativ) {
 
 	$atividade->save();
 
-	header("Location: /admin/atividade");
-	exit();	
+	echo "<script>alert('Atividade atualizada com sucesso');";
+	echo "javascript:history.go(-2)</script>";
+
+	//header("Location: /admin/atividade");
+	//exit();	
 });
 
 $app->get("/atividade/:idativ", function($idativ) {

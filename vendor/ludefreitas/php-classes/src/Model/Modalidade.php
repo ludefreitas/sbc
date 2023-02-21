@@ -40,6 +40,7 @@ class Modalidade extends Model {
         INNER JOIN tb_espaco d ON d.idespaco = c.idespaco
         INNER JOIN tb_local e ON e.idlocal = d.idlocal
 		WHERE e.idlocal = :idlocal 
+		-- AND b.idtemporada = 5
 		AND (g.idstatustemporada = :idStatusTemporadaMatriculasEncerradas
       		 OR g.idstatustemporada = :idStatusTemporadaInscricaoIniciada
       		 OR g.idstatustemporada = :idStatusTemporadaMatriculaIniciada

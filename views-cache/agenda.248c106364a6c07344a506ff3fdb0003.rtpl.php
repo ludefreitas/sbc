@@ -43,7 +43,7 @@
 
                 <?php if( $idlocal == 3 ){ ?>
                 <div class="alert alert-info" style="font-size: 12px">
-                Agora você já pode agendar dois horário seguidos de 30 minutos para praticar a natação espontânea no Baetão, aos sábados se o horário estiver diponível. Aproveite!!
+                Agora você já pode agendar dois horário seguidos de 30 minutos para praticar a natação espontânea no Baetão, aos sábados, se o horário estiver diponível. Aproveite!!
                 </div>
                 <?php } ?>
             </div>
@@ -61,6 +61,7 @@
 
                         <input type="text" name="idlocal" value="<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;"> 
                          <input type="text" name="ispresente" value="0" style="display: none;"> 
+                          <input type="text" name="titulo" value="raia" style="display: none;"> 
                           <input type="text" name="dataSemSemana" value="<?php echo htmlspecialchars( $dataSemSemana, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;">
                           <input type="text" name="data" value="<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;">
                    

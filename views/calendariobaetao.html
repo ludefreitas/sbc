@@ -68,6 +68,11 @@
                   return;
             }
 
+            if(data >= '2023-02-17' && data <= '2023-02-22'){
+                  alert('No período de 17/02 e 22/02/2023 é carnaval, não haverá natação espontânea nas nossas piscinas.');             
+                  return;
+            }
+
             Date.prototype.addDias = function(dias){
               this.setDate(this.getDate() + dias)
             };
@@ -75,6 +80,7 @@
             let hojeMaisUmaSemana = new Date();
 
             hojeMaisUmaSemana.addDias(7);
+
 
             function maisUmaSemanaFormatada(){
               let dataMaisUmaSemana = new Date(hojeMaisUmaSemana),
@@ -106,6 +112,52 @@
             let hoje = dataAtualFormatada();
 
             let strDiaSemana = datasemanas.getDay();
+
+            let hora = datasemanas.getHours();
+
+            /*
+            function diaSemanaEscohidoFormatado(){
+              let data = new Date(info.dateStr),
+              //dia  = data.getDate().toString().padStart(2, '0');
+              dia  = data.getDay();
+              return `${dia}`;
+            }
+            let diaSemanaEscohido = diaSemanaEscohidoFormatado();
+
+            */
+
+            function diaSemanaEmQueFoiEscolhidoFormatado(){
+              let data = new Date(),
+              dia  = (data.getDay());
+              return `${dia}`;
+            }
+
+            /*
+            let diaSemanaDaEscolha = diaSemanaEmQueFoiEscolhidoFormatado();
+
+            if( (local == 3 && strDiaSemana == 5 && hora >= 12 && diaSemanaDaEscolha == 5) || (local == 3 && diaSemanaDaEscolha == 6 && strDiaSemana == 5)) {
+
+              alert('A agenda para este sábado está fechada');
+              return;
+
+            }    
+            */
+
+            let diaSemanaDaEscolha = diaSemanaEmQueFoiEscolhidoFormatado();
+
+            if( local == 3 && strDiaSemana == 5 && hora >= 12 && diaSemanaDaEscolha == 5 ) {
+
+              alert('A agenda para este sábado está fechada');
+              return;
+
+            }  
+
+            if( local == 3 && diaSemanaDaEscolha == 6 && strDiaSemana == 5 ) {
+
+              alert('A agenda para este sábado está fechada');
+              return;
+
+            }         
 
              if(local == 3 && (strDiaSemana == 1 || strDiaSemana == 2 || strDiaSemana == 3 || strDiaSemana == 4 || strDiaSemana == 5)){
 

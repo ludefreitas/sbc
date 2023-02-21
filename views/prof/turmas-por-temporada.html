@@ -70,6 +70,10 @@
                          <a href="/prof/calendario-lista-presenca/{$value.idtemporada}/{$value.idturma}" style="color: orangered;">
                          | &nbsp; Fazer Chamada </a>  &nbsp; 
                          &nbsp;  
+
+                         <a href="/prof/listapessoasporturma/{$value.idturma}/{$value.idtemporada}" style="color: black;">
+                         | &nbsp; Lista com endereços </a>  &nbsp; 
+                         &nbsp;  
                         
 
                         <!--
@@ -82,7 +86,7 @@
 
 
                         
-                          <a href="/prof/token/{$value.idturma}" style="color: darkblue;"><i ></i> | Tokens</a>
+                          <a href="/prof/token/{$value.idturma}/{$temporada.idtemporada}" style="color: darkblue;"><i ></i> | Tokens</a>
                         
                       </h5>
                     </div>                    

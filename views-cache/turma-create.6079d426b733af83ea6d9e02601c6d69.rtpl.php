@@ -108,7 +108,7 @@
 
              <div class="form-group">
               <label for="obs">Observação</label>
-              <input type="text" class="form-control" id="obs" name="obs" placeholder="Observação" value="">
+               <textarea type="text" class="form-control" id="obs" name="obs" placeholder="Observação" value=""></textarea> 
             </div>
             
           </div>

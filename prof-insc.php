@@ -8,6 +8,7 @@ use \Sbc\Model\Temporada;
 use \Sbc\Model\Pessoa;
 use \Sbc\Model\InscStatus;
 use \Sbc\Model\Agenda;
+use \Sbc\Model\Endereco;
 
 $app->get("/prof/insc-turma-temporada/:idturma/:idtemporada/user/:iduser", function($idturma, $idtemporada, $iduser) {
 
@@ -162,41 +163,67 @@ $app->get("/prof/insc/:idinsc/:iduserprof/:idturma/statusMatriculada", function(
 	$idtemporada = $insc->getidtemporada();
 	$iduser = (int)$iduserprof;
 
-	$turma->get((int)$idturma);
+	$dtInicmatricula = $insc->getdtinicmatricula();
+	$hoje = date('Y-m-d H:i:s');
 
-	$vagas = (int)$turma->getvagas();
+	if($hoje > $dtInicmatricula){
+	    
+	    //if($idturma != 756){
+	        /*
+    	    $dtInicmatricula = date('Y-m-d H:i:s', strtotime($dtInicmatricula));
+    
+    		echo "<script>alert('A matrícula só poderá ser efetuada a partir de ".$dtInicmatricula."!');";
+    			echo "javascript:history.go(-1)</script>";
+    		*/
+    
+    	//}else{		
 
-	$numMatriculados = $temporada->setNummatriculadosTemporada($idtemporada, $idturma);	
-
-	if($numMatriculados['nummatriculados'] >= $vagas){
-
-		$numcpf = $insc->getnumcpf();	
-
-		if(Turma::temTokenCpf($idturma, $numcpf)){
-
-			$insc->alteraStatusInscricaoMatriculada($idinsc, $idturma, $idtemporada);
-			Turma::setUsedTokenCpf($idturma, $numcpf);
-			//User::setSuccess("Aluno matriculado com sucesso!");		
-			echo "<script>alert('Aluno matriculado com sucesso!');";
-			echo "javascript:history.go(-1)</script>";
-			//header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
-			//exit();
-
-		}else{
-
-			//User::setError("Número de vagas insuficiente para efetuar matrícula!");
-			echo "<script>alert('Número de vagas insuficiente para efetuar matrícula! Gere um token para autorizar a matrícula.');";
-			echo "javascript:history.go(-1)</script>";	
-			exit;	
-			//header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
-			//exit();
-		}	
+        	$turma->get((int)$idturma);
+        
+        	$vagas = (int)$turma->getvagas();
+        
+        	$numMatriculados = $temporada->setNummatriculadosTemporada($idtemporada, $idturma);	
+        
+        	if($numMatriculados['nummatriculados'] >= $vagas){
+        
+        		$numcpf = $insc->getnumcpf();
+        		
+        		$tokencpf = Turma::getTokenPorCpfeTurma($numcpf, $idturma);	
+        
+        		if(Turma::temTokenCpf($idturma, $numcpf)){
+        
+        			$insc->alteraStatusInscricaoMatriculada($idinsc, $idturma, $idtemporada);
+        			Turma::setUsedTokenCpf($idturma, $tokencpf);
+        			//User::setSuccess("Aluno matriculado com sucesso!");		
+        			echo "<script>alert('Aluno matriculado com sucesso!');";
+        			echo "javascript:history.go(-1)</script>";
+        			//header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
+        			//exit();
+        
+        		}else{
+        
+        			//User::setError("Número de vagas insuficiente para efetuar matrícula!");
+        			echo "<script>alert('Número de vagas insuficiente para efetuar matrícula! Gere um token para autorizar a matrícula.');";
+        			echo "javascript:history.go(-1)</script>";	
+        			exit;	
+        			//header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
+        			//exit();
+        		}	
+        	}else{
+        
+        		$insc->alteraStatusInscricaoMatriculada($idinsc, $idturma, $idtemporada);
+        		echo "<script>alert('Aluno matriculado com sucesso!');";
+        			echo "javascript:history.go(-1)</script>";
+        	}
+        	
 	}else{
-
-		$insc->alteraStatusInscricaoMatriculada($idinsc, $idturma, $idtemporada);
-		echo "<script>alert('Aluno matriculado com sucesso!');";
-			echo "javascript:history.go(-1)</script>";
+	    
+	     $dtInicmatricula = date('d-m-Y H:i:s', strtotime($dtInicmatricula));
+    
+    		echo "<script>alert('A matrícula só poderá ser efetuada a partir de ".$dtInicmatricula."!');";
+    			echo "javascript:history.go(-1)</script>";
 	}
+    	//}	
 });
 
 $app->get("/prof/insc/:idinsc/:iduserprof/:idturma/statusAguardandoMatricula", function($idinsc, $iduserprof, $idturma){
@@ -329,6 +356,11 @@ $app->get("/prof/insc-turma-temporada-matricular/:idturma/:idtemporada/user/:idu
 	$temporada = new Temporada();
 	$temporada->get((int)$idtemporada);
 	$turma->get((int)$idturma);
+
+	$dtInicmatricula = $temporada->getdtinicmatricula();
+
+	var_dump($dtInicmatricula);
+	exit();
 
 	$idusersessao = (int)$_SESSION['User']['iduser'];
 
@@ -950,6 +982,20 @@ $app->get("/prof/insc-turma-temporada-justificar/:idtemporada/:idturma/:data/:id
 	$insc->update_justificar($idinsc, $data);
 
 	echo '<script>javascript:history.go(-1)</script>';
+
+	//header("Location: /prof/insc-turma-temporada-fazer-chamada/".$idtemporada."/".$idturma."/".$data."");
+		//exit();				
+});
+
+$app->get("/prof/insc-turma-temporada-endereco/:idpess", function($idpess) {
+
+	$insc = new Insc();
+	$endereco = new Endereco();
+	
+	$enderecoAluno = $endereco->getEnderecoPessoaInsc($idpess);
+
+	echo 'Endereço: '.$enderecoAluno['rua'].' - '.$enderecoAluno['numero'].' - '.$enderecoAluno['bairro'].' - '.$enderecoAluno['cidade'].' - '.$enderecoAluno['estado'].' - CEP: '.$enderecoAluno['cep'].' - Tel.Res.: '.$enderecoAluno['telres'].' - Contato Emergência: '.$enderecoAluno['contato'].' -  '.$enderecoAluno['telemer'].'';
+	//echo '<script>javascript:history.go(-1)</script>';
 
 	//header("Location: /prof/insc-turma-temporada-fazer-chamada/".$idtemporada."/".$idturma."/".$data."");
 		//exit();				

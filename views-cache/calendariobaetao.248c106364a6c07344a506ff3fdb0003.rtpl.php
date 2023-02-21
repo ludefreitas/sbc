@@ -52,18 +52,24 @@
                   return;
             }
 
-            if(data == '2022-06-18'){
-                  alert('A data escolhida é emenda de feriado, não haverá natação espontânea');             
+            if(data == '2022-09-28'){
+                  alert('Agenda da natação espontânea para este dia está fechada');             
                   return;
             }
 
-            if(data == '2022-08-20'){
-                  alert('A data escolhida é feriado, não haverá natação espontânea');             
+            if(data == '2022-09-29'){
+                  alert('Agenda da natação espontânea para este dia está fechada');             
+                  return;
+            }
+            
+
+            if(data == '2022-09-30'){
+                  alert('Agenda da natação espontânea para este dia está fechada');             
                   return;
             }
 
-            if(data == '2022-04-30'){
-                  alert('A natação espontânea no Baetão terá início a partir do dia 02/05/2022');             
+            if(data >= '2023-02-17' && data <= '2023-02-22'){
+                  alert('No período de 17/02 e 22/02/2023 é carnaval, não haverá natação espontânea nas nossas piscinas.');             
                   return;
             }
 
@@ -74,6 +80,7 @@
             let hojeMaisUmaSemana = new Date();
 
             hojeMaisUmaSemana.addDias(7);
+
 
             function maisUmaSemanaFormatada(){
               let dataMaisUmaSemana = new Date(hojeMaisUmaSemana),
@@ -106,7 +113,53 @@
 
             let strDiaSemana = datasemanas.getDay();
 
-             if(local == 3 && (strDiaSemana == 2 || strDiaSemana == 5)){
+            let hora = datasemanas.getHours();
+
+            /*
+            function diaSemanaEscohidoFormatado(){
+              let data = new Date(info.dateStr),
+              //dia  = data.getDate().toString().padStart(2, '0');
+              dia  = data.getDay();
+              return `${dia}`;
+            }
+            let diaSemanaEscohido = diaSemanaEscohidoFormatado();
+
+            */
+
+            function diaSemanaEmQueFoiEscolhidoFormatado(){
+              let data = new Date(),
+              dia  = (data.getDay());
+              return `${dia}`;
+            }
+
+            /*
+            let diaSemanaDaEscolha = diaSemanaEmQueFoiEscolhidoFormatado();
+
+            if( (local == 3 && strDiaSemana == 5 && hora >= 12 && diaSemanaDaEscolha == 5) || (local == 3 && diaSemanaDaEscolha == 6 && strDiaSemana == 5)) {
+
+              alert('A agenda para este sábado está fechada');
+              return;
+
+            }    
+            */
+
+            let diaSemanaDaEscolha = diaSemanaEmQueFoiEscolhidoFormatado();
+
+            if( local == 3 && strDiaSemana == 5 && hora >= 12 && diaSemanaDaEscolha == 5 ) {
+
+              alert('A agenda para este sábado está fechada');
+              return;
+
+            }  
+
+            if( local == 3 && diaSemanaDaEscolha == 6 && strDiaSemana == 5 ) {
+
+              alert('A agenda para este sábado está fechada');
+              return;
+
+            }         
+
+             if(local == 3 && (strDiaSemana == 1 || strDiaSemana == 2 || strDiaSemana == 3 || strDiaSemana == 4 || strDiaSemana == 5)){
 
                 if(hoje > data){
 
@@ -120,7 +173,7 @@
                
             }else{
                 
-                 alert('A natação espontânea no Baetão acontece somente às quartas e sábados. Escolha uma data em um destes dias semana para agendar sua natação!');
+                 alert('Aos domingos e na segunda-feira não tem natação espontânea no Baetão. Escolha outros dias da semana para agendar sua natação!');
                 return;               
              }    
 

@@ -31,6 +31,8 @@
              
 
             <input hidden type="text" name="idturma" value="{$turma.idturma}"/>
+            <input hidden type="text" name="iduser" value="{$turma.iduser}"/>
+            <input hidden type="text" name="idtemporada" value="{$idtemporada}"/>
             <!--<input type="text" name="numcpf" placeholder="Digite o CPF, se necessário">-->
             <input style="width: 170px; float: left;" type="text" maxlength="14" id="numcpf" name="numcpf" class="input-text" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}"  placeholder="000.000.000-00"/>
                     <script type="text/javascript">$("#numcpf").mask("000.000.000-00");</script>
@@ -45,32 +47,35 @@
         </form>
 
              <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
-              
-            
+            <div class="row" style="margin: 5px;">
+              {loop="$tokens"}
+                <div class="col-md-2" style="border: solid 1px; text-align: center;">
 
-            {loop="$tokens"}
-                  {if="$value.isused == 0"}
-                <span style="font-weight: bold; text-align: left;">                  
-                  {$value.token} - 
-                </span>
-                {else}
-                 <s><span style="font-weight: bold; text-align: left; color: red;">                  
-                  {$value.token} - 
-                </span></s>
+                    {if="$value.isused == 0"}
+                    <span style="font-weight: bold; color: darkblue;">                  
+                        {$value.token}</span> <br>
+                        {if="$value.numcpf"}
+                            {$value.numcpf}
+                        {else}
+                            NULL
+                        {/if}
+               
+                    {else}
+                    <span style="font-weight: bold; color: red;">                  
+                        <s>{$value.token} </s><i class="fa fa-check" style="color: green;"></i>
+                    </span><br>
 
-                {/if}
-          {/loop}
-
-            <div class="box-body no-padding">
-              
-            </div>
+                        {if="$value.numcpf"}
+                            {$value.numcpf}
+                        {else}
+                            NULL
+                        {/if}               
+                    {/if}
+            </div>               
+          {/loop}           
             <!-- /.box-body -->
-            <div class="box-footer clearfix">
-              <ul class="pagination pagination-sm no-margin pull-right">
-               </ul>
-            </div>
-            
-          </div>
+        </div>
+    </div>
   	</div>
   </div>
 

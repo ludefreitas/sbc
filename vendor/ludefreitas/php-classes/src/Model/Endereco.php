@@ -180,6 +180,26 @@ class Endereco extends Model {
 			return $results[0];		
 	}
 
+	public function getEnderecoPessoaInsc($idpess)	{
+
+		$sql = new Sql();
+
+		$results = $sql->select(
+			"SELECT * FROM tb_endereco a
+			-- INNER JOIN tb_persons b using (idperson)
+			WHERE idpess = :idpess", [
+			':idpess'=>$idpess			
+		]);		
+
+		if(!$results){
+			return null;
+		}else{
+			return $results[0];		
+		}
+
+		
+	}
+
 
 	public static function setMsgError($msg)
 	{

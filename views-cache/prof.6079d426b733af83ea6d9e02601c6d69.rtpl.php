@@ -39,7 +39,7 @@
               <div class="row">
               </div>
 
-              <?php $counter1=-1;  if( isset($prof) && ( is_array($prof) || $prof instanceof Traversable ) && sizeof($prof) ) foreach( $prof as $key1 => $value1 ){ $counter1++; ?>
+            <?php $counter1=-1;  if( isset($prof) && ( is_array($prof) || $prof instanceof Traversable ) && sizeof($prof) ) foreach( $prof as $key1 => $value1 ){ $counter1++; ?>
 
             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
               <div class="row">

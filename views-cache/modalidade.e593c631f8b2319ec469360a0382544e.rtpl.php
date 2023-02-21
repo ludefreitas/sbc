@@ -10,13 +10,47 @@
 
 <hr style="background-color: orange;">
   <?php $counter1=-1;  if( isset($turma) && ( is_array($turma) || $turma instanceof Traversable ) && sizeof($turma) ) foreach( $turma as $key1 => $value1 ){ $counter1++; ?>
-  <?php if( ($value1["idturma"] == 15) OR ($value1["idturma"] == 16) OR ($value1["idturma"] == 17) OR ($value1["idturma"] == 18) ){ ?>
+  <?php if( ($value1["idturma"] == 455) ){ ?>
+
   <div class="container"> <!-- container 3 -->
     <div class="row"> <!-- row 4 --> 
     
-      <div class="col-md-12"style="text-align-last: left; line-height: 20px;  font-size: 14px; font-style: normal; margin: 5px 0px 20px 0px">
+    <div class="col-md-12" style="color: black; text-align-last: center; font-size: 20px;">
 
+      <div>
+         ETAPA <span style="font-weight: bold;">2</span> de <span style="font-weight: bold;">4</span> 
+      </div>
+      <hr style="background-color: orange;">
+      
+      <div class="col-md-12" style="text-align-last: left; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; border-radius: 15px;"> 
 
+    <?php if( checkLogin(false) ){ ?> 
+
+           Olá <span style="color: black; font-weight: bold;">  <?php echo getUserName(); ?>, </span>seja bem vindo! <br><br>           
+                                                       
+           Nesta etapa, selecione abaixo uma turma para praticar a aula de <span style="font-weight: bold; font-size: 20px; color: orange;"><?php echo htmlspecialchars( $modalidade["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>, e faça a sua inscrição ou a inscrição de seu dependente.
+
+    <?php }else{ ?>            
+      
+            <a href="/cursos/user-create">             
+                     CADASTRE-SE               
+            </a> 
+             <span> ou faça o  </span>           
+            <a href="/cursos/login" >                
+                 LOGIN 
+            </a>
+             e nesta etapa selecione abaixo uma turma para praticar a aula de <span style="font-weight: bold; font-size: 20px; color: orange;"><?php echo htmlspecialchars( $modalidade["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </span>, faça a sua inscrição ou a inscrição de seu dependente.
+          
+      <?php } ?>
+
+    </div>
+    
+    <hr style="background-color: orange;">
+
+    </div>
+    
+    
+      <div class="col-md-12" style="text-align-last: left; line-height: 20px;  font-size: 14px; font-style: normal; margin: 5px 0px 20px 0px">
           <a href="/cursos/cart/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/add" style="text-decoration: none">     
         <h5 style="color: #000000"> 
             <span style="font-weight: bold;">
@@ -24,13 +58,13 @@
               [ <span style="font-weight: bold; font-size: 14px; color: darkorange;">
               <?php echo htmlspecialchars( $value1["descstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  </span>]
               <?php } ?>            
-              <?php echo htmlspecialchars( $value1["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  - <?php echo htmlspecialchars( $value1["numinscritos"], ENT_COMPAT, 'UTF-8', FALSE ); ?>   
+              <?php echo htmlspecialchars( $value1["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>   
             </span><br>
             <span style="color: darkgreen; font-size: 16px">
                 [<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>] - <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
             </span><br>
              
-              <?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?> das <?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <br>  
+             <span style="font-size: 19px"> <?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?> das <?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </span> <br>
 
                <?php if( $value1["fimidade"] == 99 ){ ?> 
                Para maiores de 16 anos <br>
@@ -83,6 +117,7 @@
                     <strong>Não há vagas disponíveis.</strong><br>
                   </span>
                     <span>
+                        Faça sua inscrição para a lista de espera<br>
                 <!--
                     Faça sua inscrição para a lista de espera<br>
                 

@@ -34,7 +34,9 @@
           method: 'GET'  
         }).done(function(result){
 
-          if(result){            
+          if(result){  
+
+              alert('presente' + result)          
             //document.getElementById('spanpresente'+idurl).hidden = false
             //document.getElementById('spanausente'+idurl).hidden = true
             //document.getElementById('spanjustificar'+idurl).hidden = true

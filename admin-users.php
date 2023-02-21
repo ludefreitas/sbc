@@ -101,6 +101,53 @@ $app->get("/admin/prof", function() {
 	));
 });
 
+$app->get("/admin/admins", function() {
+
+	User::verifyLogin();
+	// na linha abaixo retorna um array com todos os dados do usuário
+
+	$search = (isset($_GET['search'])) ? $_GET['search'] : "";
+
+	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
+
+	if ($search != '') {
+
+		$pagination = User::getPageSearchAdmins($search, $page);
+
+	} else {
+
+		$pagination = User::getPageAdmins($page);
+
+	}
+
+	$pages = [];
+
+	for ($x = 0; $x < $pagination['pages']; $x++)
+	{
+
+		array_push($pages, [
+			'href'=>'/admin/admins?'.http_build_query([
+				'page'=>$x+1,
+				'search'=>$search
+			]),
+			'text'=>$x+1
+		]);
+
+	}
+
+	//$users = User::listAll();
+	// carrega uma pagina das páginas do admin
+	$page = new PageAdmin();
+
+	// envia para a página o array retornado pelo listAll
+	$page->setTpl("admins", array( // aqui temos um array com muitos arrays
+		"prof"=>$pagination['data'],
+		"total"=>$pagination['total'],
+		"search"=>$search,
+		"pages"=>$pages
+	));
+});
+
 $app->get("/admin/users-cliente", function() {
 
 	User::verifyLogin();
@@ -246,8 +293,9 @@ $app->post("/admin/users/:iduser", function($iduser) {
 	
 	$user->update();
 
-	header("Location: /admin/users");
-	exit();
+	echo "<script>javascript:history.go(-2)</script>";
+	//header("Location: /admin/users");
+	//exit();
 });
 
 /*

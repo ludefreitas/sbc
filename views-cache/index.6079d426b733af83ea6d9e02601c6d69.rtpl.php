@@ -4,7 +4,7 @@
     <section class="content-header">
       <h1>
         Administração dos Cursos Esportivos SBC <br>
-      </h1>     
+      </h1>
       <h3>
         Olá! <?php echo htmlspecialchars( $user["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, seja Bem vindo!
       </h3>
@@ -18,41 +18,149 @@
     <section class="content">
 
       <div class="container">
+
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Usuários</div>          
+        </div>  
+
         <div class="row">
 
-          <div class="col-md-3" style="border: solid 1px black;">Usuário Online: <?php echo htmlspecialchars( $useronline, ENT_COMPAT, 'UTF-8', FALSE ); ?></div>
+          <div class="col-md-3" style="border: solid 1px black;">Usuários Visitante: <?php echo htmlspecialchars( $visitante, ENT_COMPAT, 'UTF-8', FALSE ); ?></div>
+          <div class="col-md-3" style="border: solid 1px black;">
+              <span style="color: green;">Usuários &nbsp;&nbsp;&nbsp;&nbsp;Online: </span> <?php echo htmlspecialchars( $useronline, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+
+          </div>         
           
         </div> 
-        <div class="row">
 
-          <div class="col-md-3" style="border: solid 1px black;">Usuário Visitante: <?php echo htmlspecialchars( $visitante, ENT_COMPAT, 'UTF-8', FALSE ); ?></div>
+        <div class="row">
+           <div class="col-md-3" style="border: solid 1px black;">Todos Usuários: <?php echo htmlspecialchars( $totalUsuarios, ENT_COMPAT, 'UTF-8', FALSE ); ?></div>
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">Todos &nbsp;&nbsp;&nbsp;&nbsp;Alunos</span>: <?php echo htmlspecialchars( $totalAlunos, ENT_COMPAT, 'UTF-8', FALSE ); ?></div>
           
-        </div>     
-        <div class="row">
+        </div>  
 
-          <div class="col-md-3" style="border: solid 1px black;">Todos Usuários: <?php echo htmlspecialchars( $totalUsuarios, ENT_COMPAT, 'UTF-8', FALSE ); ?></div>
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Chamadas de hoje</div>
+          
+        </div>       
+        
+        <div class="row">
+          <div class="col-md-2" style="border: solid 1px black;">
+             Presentes: <?php echo NumAlunosPresentesPorData(); ?>
+
+          </div>
+          <div class="col-md-2" style="border: solid 1px black;">
+             Ausentes: <?php echo NumAlunosAusentesPorData(); ?>
+
+          </div>
+           <div class="col-md-2" style="border: solid 1px black;"> 
+           Justificados <?php echo NumAlunosJustificadosPorData(); ?>
+
+           </div>
+          
+        </div>
+       
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Vagas / Inscrições / Matriculados 2022</div>
+          
+        </div>       
+        
+        <div class="row">
+          <div class="col-md-2" style="border: solid 1px black;">
+             &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByDescTemporada(2022); ?>
+
+          </div>
+          <div class="col-md-2" style="border: solid 1px black;">
+             <span style="color: green;">Inscrições</span>: <?php echo todosInscricoesValidas(2022); ?>            
+          </div>
+           <div class="col-md-2" style="border: solid 1px black;"> matriculados: <?php echo MatriculadosDesctemporada(2022); ?></div>
           
         </div> 
+        
         <div class="row">
-
-          <div class="col-md-3" style="border: solid 1px black;">Todos Alunos: <?php echo htmlspecialchars( $totalAlunos, ENT_COMPAT, 'UTF-8', FALSE ); ?></div>
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Vagas / Inscrições / Matriculados 2023</div>
           
-        </div>    
+        </div>       
+        
+        
         <div class="row">
+          
+          <div class="col-md-2" style="border: solid 1px black;">         
+          &nbsp;V a g a s :&nbsp; <?php echo pegaSomaVagasByDescTemporada(2023); ?>
 
-          <div class="col-md-3" style="border: solid 1px black;">Todos Professores: <?php echo htmlspecialchars( $totalProfessores, ENT_COMPAT, 'UTF-8', FALSE ); ?></div>
+          </div>
+          
+        <div class="col-md-2" style="border: solid 1px black;">
+          <span style="color: green;">Inscrições</span>: <?php echo todosInscricoesValidas(2023); ?>
+
+          </div>
+           <div class="col-md-2" style="border: solid 1px black;"> matriculados: <?php echo MatriculadosDesctemporada(2023); ?></div>
           
         </div>         
+
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Hidroginástica 2023</div>
+          
+        </div>           
+
         <div class="row">
 
-          <div class="col-md-3" style="border: solid 1px black;">Todas Inscrições: <?php echo htmlspecialchars( $totalInscricoes, ENT_COMPAT, 'UTF-8', FALSE ); ?></div>
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s :&nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2023, 6); ?></div>
+
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2023, 6); ?></div>
+          
+        </div>    
+
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Natação 2023</div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2023, 14); ?></div>
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2023, 14); ?></div>
+          
+        </div>  
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Ginástica 2023</div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2023, 5); ?></div>
+
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2023, 5); ?></div>
+          
+        </div>  
+
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Pilates 2023</div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2023, 19); ?></div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2023, 5); ?></div>
           
         </div> 
+
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Alongamento 2023</div>
+          
+        </div>           
+
         <div class="row">
 
-          <div class="col-md-3" style="border: solid 1px black;">Alunos matriculados: <?php echo htmlspecialchars( $matriculadosTemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?></div>
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2023, 18); ?></div>
           
-        </div>                      
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2023, 18); ?></div>
+          
+        </div>           
                   
       </div>
 

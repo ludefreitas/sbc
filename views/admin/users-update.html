@@ -48,11 +48,17 @@
               <input type="email" class="form-control" id="desemail" name="desemail" placeholder="Digite o e-mail" value="{$user.desemail}">
             </div>
           -->
-            <div class="checkbox">
-              <label>
-                <input type="checkbox" name="inadmin" value="1" {if="$user.inadmin == 1"}checked{/if}> Acesso de Administrador
-              </label>
-            </div>
+            {if="getUserId() == 2 OR getUserId() == 7 OR getUserId() == 156"}
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="inadmin" value="1" {if="$user.inadmin == 1"}checked{/if}> Acesso de Administrador
+                    </label>
+               </div>
+
+            {/if}
+            
+
             <div class="checkbox">
               <label>
                 <input type="checkbox" name="isprof" value="1" {if="$user.isprof == 1"}checked{/if}> Acesso de Professor

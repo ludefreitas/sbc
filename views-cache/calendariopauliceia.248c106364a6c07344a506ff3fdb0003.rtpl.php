@@ -64,6 +64,11 @@
                   return;
             }
 
+            if(data == '2022-12-02'){
+                  alert('Na data escolhida não haverá natação espontânea');             
+                  return;
+            }
+
             Date.prototype.addDias = function(dias){
               this.setDate(this.getDate() + dias)
             };
@@ -97,7 +102,7 @@
 
             let strDiaSemana = datasemanas.getDay();           
 
-           if(local == 21 && strDiaSemana == 4){
+           if(local == 21 && (strDiaSemana == 0 || strDiaSemana == 2 || strDiaSemana == 4)){
 
                 if(hojeMaisUmaSemanaFormatada <= data){    
 
@@ -118,7 +123,7 @@
                
             }else{
                 
-                alert('A natação espontânea no Paulicéia só acontece nas sextas-feiras. Escolha uma data na sexta-feira para agendar sua natação!');
+                alert('A natação espontânea no Paulicéia acontece às segundas, quartas e  sextas-feiras. Escolha uma data nestes dias da semana para agendar sua natação!');
                 return;               
              }           
 

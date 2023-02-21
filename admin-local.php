@@ -132,13 +132,13 @@ $app->post("/admin/local/create", function() {
 		exit;		
 	}
 
+	$_POST['statuslocal'] = isset($_POST['statuslocal']) ? 1 : 0;
+
 	if (!isset($_POST['iduser']) || $_POST['iduser'] == '') {
 		Local::setMsgError("Informe o nome do professor coordenador.");
 		header("Location: /admin/local/create");
 		exit;		
-	}
-
-	$_POST['statuslocal'] = isset($_POST['statuslocal']) ? 1 : 0;
+	}	
 
 	$local->setData($_POST);
 

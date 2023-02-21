@@ -269,6 +269,13 @@ desired effect
           </a>
           <ul class="treeview-menu">
             <li><a href="/admin/users"><i class="fa fa-users"></i>Todos Usuários</a></li>
+
+            {if="getUserId() == 1 OR getUserId() == 7 OR getUserId() == 156"}
+
+            <li><a href="/admin/admins"><i class="fa fa-users"></i>Administradores</a></li>
+
+            {/if}
+
             <li><a href="/admin/prof"><i class="fa fa-users"></i>Professores</a></li>
             <li><a href="/admin/users-cliente"><i class="fa fa-users"></i>Clientes</a></li>
             <li><a href="/admin/pessoas"><i class="fa fa-users"></i>Alunos</a></li>          
@@ -343,7 +350,30 @@ desired effect
           <ul class="treeview-menu">
             {include="insc-temporada-menu"}
           </ul>
-        </li>        
+        </li>   
+
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>Avaliação Natação</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="treeview">
+                      <a href="/admin/calendarioagendabaetao-avaliacao/3">
+                        <i class="fa fa-link"></i> 
+                        Agenda Baetão
+                      </a>                      
+                  </li> 
+            <li class="treeview">
+                      <a href="/admin/calendarioagendabaetao-avaliacao/21">
+                        <i class="fa fa-link"></i> 
+                        Agenda Baetão
+                      </a>                      
+                  </li>                       
+          </ul>
+        </li>  
+
         <li>
           <a href="/admin/turma"><i class="fa fa-link"></i> <span>Todas Turmas</span></a>
         </li>                        

@@ -239,6 +239,40 @@ $app->post("/cursos/cart", function() {
 
 		$insc = new Insc();	
 
+		$idcart = $_POST['idcart'];
+			$cart->get((int)$idcart);
+			$idturma = $_POST['idturma'];
+			$idtemporada = $cart->getTurma()[0]['idtemporada'];
+			$vagas = $_POST['vagas'];
+
+			$inscGeral = Insc::getInscGeral($idturma, $idtemporada);
+			$inscPlm = Insc::pegaInscPlm($idturma, $idtemporada);
+			$inscPcd = Insc::pegaInscPcd($idturma, $idtemporada);
+			$inscPvs = Insc::pegaInscPvs($idturma, $idtemporada);
+
+			$vagasGeral = round($vagas * 0.7);
+			$vagasPlm = round($vagas * 0.1);
+			$vagasPcd = round($vagas * 0.1);
+			$vagasPvs = round($vagas * 0.1);
+
+			$maxListaEsperaGeral = round($vagasGeral * 1.2);
+			$maxListaEsperaPlm = round($vagasPlm * 1.2);
+			$maxListaEsperaPcd = round($vagasPcd * 1.2);
+			$maxListaEsperaPvs = round($vagasPvs * 1.2);			
+
+
+			if(($inscGeral >= $maxListaEsperaGeral) 
+				&& ($inscPlm >= $maxListaEsperaPlm) 
+				&& ($inscPcd >= $maxListaEsperaPcd) 
+				&& ($inscPvs >= $maxListaEsperaPvs)){
+
+				 echo "<script>alert('Não há mais vagas para para a lista de espera desta turma! Fique atento(a) e continue acompanhando aqui no nosso site para ver se aparecem novas vagas.');";
+		    	echo "javascript:history.go(-1)</script>";
+		    	exit();
+
+			}
+
+
 		/*
 		if($insc->countInscCursos($idtemporada, $idturma) >= 50){
 
@@ -248,7 +282,7 @@ $app->post("/cursos/cart", function() {
 		}
 		*/	
 
-
+		/*
 		if($insc->countInscCursos($idtemporada, $idturma) <= 80){
 
 			 echo "<script>alert('Não há mais vagas para para a lista de espera desta turma! Aguarde a abertura de uma nova turma.');";
@@ -260,6 +294,7 @@ $app->post("/cursos/cart", function() {
 				//header("Location: /cursos/cart");
 				//exit();
 		}
+		*/
 
 		/*
 
@@ -332,7 +367,7 @@ $app->post("/cursos/cart", function() {
 		}
 		*/
 
-		if(($idturma != 264) && ($idturma != 265) && ($idturma != 266) && ($idturma != 267) && ($idturma != 447) && ($idturma != 448) && ($idturma != 449) && ($idturma != 452)){
+		if(($idturma != 264) && ($idturma != 265) && ($idturma != 266) && ($idturma != 267) && ($idturma != 447) && ($idturma != 448) && ($idturma != 449) && ($idturma != 452) && ($idturma != 455)){
 
 			if(($idmodal === 6) || ($idmodal === 14)){
 
@@ -381,7 +416,7 @@ $app->get("/cursos/cart/:idturma/:idtemporada/add", function($idturma, $idtempor
 
 	if( Cart::cartIsEmpty($idcart) > 0){
 
-		Cart::setMsgError("Você já selecionou uma turma! remova a atual, se você quiser selecionar uma outra.");
+		Cart::setMsgError("Você já selecionou uma turma! Confirme se é realmente esta turma que você quer fazer a inscrição. Se for, selecione a pessoa que irá fazer a aula e clique no botão CONFIRMAR INSCRIÇÃO. Se não for esta turma clique em 'Selecionar uma outra turma' e selecione a turma que você quer se inscrever.");
 		header("Location: /cursos/cart");
 		exit();
 

@@ -25,8 +25,10 @@
                             {if="$value.idstatustemporada == 5"}
                             
                             {else}
+                            <!--
                                 <strong>NÚMERO PARA O SORTEIO: </strong><span style="color: red; font-size: 20px">{$value.numsorte}</span><br>
                                 <strong>INSCRIÇÃO Nº: </strong><span>{$value.idinsc}</span>
+                            -->
                             {/if}
                        
 
@@ -35,6 +37,7 @@
                         <strong>NOME DO ALUNO: </strong> <span>{$value.nomepess}</span><br>
                         <strong>COM LAUDO? </strong> <span>{if="$value.laudo == 0"}Não{else}Sim{/if}</span><br>
                         <strong>PARA PESSOA COM DEFICIÊNCIA? </strong> <span>{if="$value.inscpcd == 0"}Não{else}Sim{/if}</span><br>
+                        <strong>PESSOA EM SITUAÇÃO DE VULNERABILIDADE SOCIAL? </strong> <span>{if="$value.inscpvs == 0"}Não{else}Sim{/if}</span><br>
                         <strong>TURMA: </strong>{$value.idturma} - {$value.descativ}<br>
                         <strong>Temporada: </strong>{$value.desctemporada}<br>
 

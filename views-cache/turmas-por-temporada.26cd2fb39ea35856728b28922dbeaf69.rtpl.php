@@ -70,6 +70,10 @@
                          <a href="/prof/calendario-lista-presenca/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: orangered;">
                          | &nbsp; Fazer Chamada </a>  &nbsp; 
                          &nbsp;  
+
+                         <a href="/prof/listapessoasporturma/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: black;">
+                         | &nbsp; Lista com endereços </a>  &nbsp; 
+                         &nbsp;  
                         
 
                         <!--
@@ -82,7 +86,7 @@
 
 
                         
-                          <a href="/prof/token/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: darkblue;"><i ></i> | Tokens</a>
+                          <a href="/prof/token/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: darkblue;"><i ></i> | Tokens</a>
                         
                       </h5>
                     </div>                    

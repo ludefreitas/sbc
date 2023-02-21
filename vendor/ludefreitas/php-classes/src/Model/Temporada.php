@@ -962,7 +962,7 @@
 						INNER JOIN tb_turmatemporada b ON b.idturma = a.idturma
 						INNER JOIN tb_turmastatus d ON d.idturmastatus = b.idturmastatus
 						WHERE b.idtemporada = :idtemporada ORDER BY descturma
-					);
+					) ORDER BY idturma;
 				", [
 					':idtemporada'=>$this->getidtemporada()
 				]);
@@ -996,7 +996,7 @@
 						INNER JOIN tb_users c ON c.iduser = b.iduser
 						INNER JOIN tb_turmastatus d ON d.idturmastatus = b.idturmastatus
 						WHERE b.idtemporada = :idtemporada ORDER BY a.descturma
-					);
+					)ORDER BY idturma;
 				", [
 					':idtemporada'=>$this->getidtemporada()
 				]);

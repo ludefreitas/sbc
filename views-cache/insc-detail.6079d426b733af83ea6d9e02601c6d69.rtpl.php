@@ -81,6 +81,10 @@
                                 <td class="product-name"><?php if( $insc["inscpcd"] == 1 ){ ?>Sim<?php }else{ ?>Não<?php } ?></td>
                             </tr>     
                             <tr>
+                                <th class="product-name">PVS ?</th>
+                                <td class="product-name"><?php if( $insc["inscpvs"] == 1 ){ ?>Sim<?php }else{ ?>Não<?php } ?></td>
+                            </tr>     
+                            <tr>
                                 <th class="product-name">Respons. p/ inscrição</th>
                                 <td class="product-name">&nbsp;&nbsp;<?php echo htmlspecialchars( $insc["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $insc["deslogin"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                             </tr>                                                                                                                                                                                 

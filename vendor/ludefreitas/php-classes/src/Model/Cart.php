@@ -231,6 +231,22 @@ class Cart extends Model {
 
 	}
 
+	public static function getIdturmaByCart($idcart){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT idturma 
+			FROM tb_cartsturmas 			
+			WHERE idcart = :idcart
+		", [
+			':idcart'=>$idcart
+		]);		
+
+		return $results[0]['idturma'];
+	}
+
+
 	public function getPessoa()
 	{
 
@@ -364,6 +380,31 @@ class Cart extends Model {
 		return $rows;
 	}
 
+	public function getCountInscExistTemporada($numcpf, $idtemporada) {
+
+		$sql = new Sql();
+
+		$results = $sql->select(
+			"SELECT count(*) FROM tb_insc a
+			INNER JOIN tb_carts b USING(idcart)
+			INNER JOIN tb_pessoa c USING(idpess)
+			INNER JOIN tb_temporada h USING(idtemporada)  
+            WHERE a.idinscstatus != 8 
+            AND a.idinscstatus != 9
+			AND c.numcpf = :numcpf 
+            AND h.idtemporada = :idtemporada            
+			", [
+			':numcpf'=>$numcpf,
+			':idtemporada'=>$idtemporada
+		]);
+		return $results[0]['count(*)'];
+
+		if(count($results) === 0)
+		{
+			throw new \Exception("Esta pessoa já tem mais de uma inscrição para esta temporada!", 1);	
+		}
+	}
+
 	public function getInscExist($numcpf, $idpess, $idturma, $idtemporada) {
 
 		$sql = new Sql();
@@ -380,12 +421,46 @@ class Cart extends Model {
             WHERE a.idinscstatus != 8 
             AND a.idinscstatus != 9
 			AND c.numcpf = :numcpf 
-            AND c.idpess = :idpess
+            -- AND c.idpess = :idpess
             AND d.idturma = :idturma      
             AND h.idtemporada = :idtemporada            
 			", [
 			':numcpf'=>$numcpf,
-			':idpess'=>$idpess,
+			//':idpess'=>$idpess,
+			'idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+
+		return $results;
+
+		if(count($results) === 0)
+		{
+			throw new \Exception("Esta pessoa já está inscrita nesta turma!", 1);			
+		}
+
+	}
+
+	public function getInscDesistenteExist($numcpf, $idpess, $idturma, $idtemporada) {
+
+		$sql = new Sql();
+
+		$results = $sql->select(
+			"SELECT * FROM tb_insc a
+			INNER JOIN tb_carts b USING(idcart)
+			INNER JOIN tb_pessoa c USING(idpess)
+			INNER JOIN tb_turma d USING(idturma)  
+			INNER JOIN tb_espaco e USING(idespaco)  
+			INNER JOIN tb_local f USING(idlocal)  
+			INNER JOIN tb_atividade g USING(idativ)    
+			INNER JOIN tb_temporada h USING(idtemporada)  
+            WHERE a.idinscstatus = 8 
+			AND c.numcpf = :numcpf 
+            -- AND c.idpess = :idpess
+            AND d.idturma = :idturma      
+            AND h.idtemporada = :idtemporada            
+			", [
+			':numcpf'=>$numcpf,
+			//':idpess'=>$idpess,
 			'idturma'=>$idturma,
 			':idtemporada'=>$idtemporada
 		]);
@@ -415,14 +490,14 @@ class Cart extends Model {
             WHERE a.idinscstatus != 8 
             AND a.idinscstatus != 9
 			AND c.numcpf = :numcpf 
-            AND c.idpess = :idpess
+            -- AND c.idpess = :idpess
             -- AND d.idturma = :idturma      
             AND f.idlocal = :idlocal 
             AND g.tipoativ = :tipoativ                              
             AND h.idtemporada = :idtemporada            
             ", [
 			':numcpf'=>$numcpf,
-			':idpess'=>$idpess,
+			//':idpess'=>$idpess,
 			//'idturma'=>$idturma,
 			':idlocal'=>$idlocal,			
 			':tipoativ'=>$tipoativ,

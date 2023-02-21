@@ -174,19 +174,36 @@ $app->post("/cart", function() {
 			exit();
 		}
 
-		//var_dump($_POST['tokencpf']);
+		//var_dump($_POST['idlocal']);
 		//exit();
 
 		if($_POST['temtoken'] == 1){
-
-			if(!isset($_POST['tokencpf'])){
+			
+			if($_POST['idlocal'] == 5){
+				if(!isset($_POST['tokencpf'])){
 				echo "<script>alert('Conforme Resolução SESP Nº 004 de 28/10/2021 Art.7º, Os interessados em participar das turmas de inclusão para Pessoas com Deficiência (PCD) e/ou laudo médico do CREEBA, deverão comparecer pessoalmente (interessado ou representante legal) no CREEBA');";
 			    echo "javascript:history.go(-1)</script>";
 			    exit;
+				}
 			}
-		}
-			
-		
+
+			if($_POST['idlocal'] == 3){
+				if(!isset($_POST['tokencpf'])){
+				echo "<script>alert('Para fazer a inscrição nas turmas de natação intermediário, avançado e aperfeiçoamento para o ano de 2023 é necessário ser egresso das turmas do ano de 2022 e ter autorização fornecida pelo professor.');";
+			    echo "javascript:history.go(-1)</script>";
+			    exit;
+				}
+			}
+
+			if($_POST['idlocal'] == 21){
+				if(!isset($_POST['tokencpf'])){
+				echo "<script>alert('Para fazer a inscrição nas turmas de natação intermediário, avançado e aperfeiçoamento para o ano de 2023 é necessário ser egresso das turmas do ano de 2022 e ter autorização fornecida pelo professor.');";
+			    echo "javascript:history.go(-1)</script>";
+			    exit;
+				}
+			}		
+
+		}		
 
 		if(isset($_POST['token'])){
 
@@ -216,7 +233,15 @@ $app->post("/cart", function() {
 			}
 		}
 
-		$anoAtual = date('Y');
+		if( (int)date('Y')  == (int)$desctemporada ){
+
+			$anoAtual = (int)date('Y');	
+
+		}else{
+
+			$anoAtual = (int)date('Y') + 1;		
+		}
+				
 		$anoFinal = $anoAtual - $fimidade;
 		$anoInicial = $anoAtual - $initidade;
 
@@ -245,7 +270,6 @@ $app->post("/cart", function() {
 					exit();
 				}			
 			}	
-
 			
 			$_SESSION['tokencpf'] = $_POST['tokencpf'];	
 			
@@ -258,6 +282,64 @@ $app->post("/cart", function() {
 				header("Location: /cart");
 				exit();
 			}
+
+			$insc = new Insc();	
+
+			$idcart = $_POST['idcart'];
+			$cart->get((int)$idcart);
+			$idturma = $_POST['idturma'];
+			$idtemporada = $cart->getTurma()[0]['idtemporada'];
+			$vagas = $_POST['vagas'];
+
+			$inscGeral = (int)Insc::getInscGeral($idturma, $idtemporada);
+			$inscPlm = (int)Insc::pegaInscPlm($idturma, $idtemporada);
+			$inscPcd = (int)Insc::pegaInscPcd($idturma, $idtemporada);
+			$inscPvs = (int)Insc::pegaInscPvs($idturma, $idtemporada);
+
+			$vagasGeral = round($vagas * 0.7);
+			$vagasPlm = round($vagas * 0.1);
+			$vagasPcd = round($vagas * 0.1);
+			$vagasPvs = round($vagas * 0.1);
+
+			$maxListaEsperaGeral = round($vagasGeral * 1.2);
+			$maxListaEsperaPlm = round($vagasPlm * 1.2);
+			$maxListaEsperaPcd = round($vagasPcd * 1.2);
+			$maxListaEsperaPvs = round($vagasPvs * 1.2);			
+
+
+			if(($inscGeral >= $maxListaEsperaGeral) 
+				&& ($inscPlm >= $maxListaEsperaPlm) 
+				&& ($inscPcd >= $maxListaEsperaPcd) 
+				&& ($inscPvs >= $maxListaEsperaPvs)){
+
+				 echo "<script>alert('Não há mais vagas para para a lista de espera desta turma! Fique atento(a) e continue acompanhando aqui no nosso site para ver se aparecem novas vagas.');";
+		    	echo "javascript:history.go(-1)</script>";
+		    	exit();
+
+			}
+
+			if($idmodal == 14){
+
+				if ($cart->getInscDesistenteExist($numcpf, $idpess, $idturma, $idtemporada)){
+
+				echo "<script>alert('".$nomepess." é desistente desta turma. Assim, não poderá fazer uma nova inscrição para esta turma, nesta temporada.');";
+					echo "javascript:history.go(-1)</script>";
+					exit();
+				}
+			}
+
+
+		    /*
+		    $porcentVagas = $_POST['vagas'] * 1.20;
+
+			if($insc->countInscTurma($idtemporada, $idturma) >= $porcentVagas){
+
+				 echo "<script>alert('Não há mais vagas para para a lista de espera desta turma! Fique atento(a) e continue acompanhando aqui no nosso site para ver se aparecem novas vagas.');";
+		    	echo "javascript:history.go(-1)</script>";
+		    	exit();
+
+			}	
+			*/
 		}
 
 		if($sexodeclarado != $sexoTurma && $sexoTurma != ''){		
@@ -267,22 +349,6 @@ $app->post("/cart", function() {
 			exit();
 
 		}
-
-		 $porcentVagas = $_POST['vagas'] * 1.20;
-	    
-	    //var_dump($porcentVagas.' - '.$insc->countInscTurma($idtemporada, $idturma));
-		//exit();
-
-		if($insc->countInscTurma($idtemporada, $idturma) >= $porcentVagas){
-
-			 echo "<script>alert('Não há mais vagas para para a lista de espera desta turma! Fique atento(a) e continue acompanhando aqui no nosso site para ver se aparecem novas vagas.');";
-	    	echo "javascript:history.go(-1)</script>";
-	    	exit();
-
-		}	
-
-		//var_dump($numcpf.' - '.$idpess.' - '.$idturma.' - '.$idtemporada.' - '.$idlocal.' - '.$tipoativ');
-		//exit();
 
 		if($idmodal === 6 || $idmodal === 14){
 
@@ -296,6 +362,33 @@ $app->post("/cart", function() {
 				exit();
 
 			}
+		}
+
+		//Verifica-se, por CPF, se já existe inscrição, limitando 01 para o mês de
+		// novembro e dezembro
+
+		$mesCorrente = (int)date('m', strtotime('now'));
+
+		if($mesCorrente === 11 || $mesCorrente === 12){
+
+			$inscPorTemporada = (int)$cart->getCountInscExistTemporada($numcpf, $idtemporada);
+
+			if($inscPorTemporada === 1){
+				echo "<script>alert(' ".$nomepess." já tem uma inscrição válida para a temporada ".$desctemporada.". A partir de janeiro de ".$desctemporada." você poderá fazer mais uma inscrição');";
+				echo "javascript:history.go(-1)</script>";
+				exit();
+			}		
+		}
+
+		if($mesCorrente === 01 || $mesCorrente === 02){
+
+			$inscPorTemporada = (int)$cart->getCountInscExistTemporada($numcpf, $idtemporada);
+
+			if($inscPorTemporada >= 2){
+				echo "<script>alert('".$nomepess." já tem 02 inscrições válidas para a temporada ".$desctemporada.". A partir de março de ".$desctemporada." você poderá fazer mais uma inscrição');";
+				echo "javascript:history.go(-1)</script>";
+				exit();
+			}		
 		}
 
 		if ($cart->getInscExist($numcpf, $idpess, $idturma, $idtemporada)){
@@ -333,7 +426,7 @@ $app->get("/cart/:idturma/:idtemporada/add", function($idturma, $idtemporada){
 
 	if( Cart::cartIsEmpty($idcart) > 0){
 
-		Cart::setMsgError("Você já selecionou uma turma! Confirme se é realmente esta turma que você quer fazer a inscrição. Se for, selecione a pessoa que irá fazer a aula e clique no botão CONFIRMAR INSCRIÇÃO. Se não for esta turma clique em REMOVER e selecione a turma que você quer se inscrever.");
+		Cart::setMsgError("Você já selecionou uma turma! Confirme se é realmente esta turma que você quer fazer a inscrição. Se for, selecione a pessoa que irá fazer a aula e clique no botão CONFIRMAR INSCRIÇÃO. Se não for esta turma clique em 'Selecionar uma outra turma' e selecione a turma que você quer se inscrever.");
 		header("Location: /cart");
 		exit();
 
