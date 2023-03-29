@@ -95,6 +95,37 @@ class User extends Model {
 		}
 	}
 
+	public static function checkLoginAudi($isaudi = true)
+	{
+
+		if (
+			!isset($_SESSION[User::SESSION])
+			||
+			!$_SESSION[User::SESSION]
+			||
+			!(int)$_SESSION[User::SESSION]["iduser"] > 0
+		) {
+			//Não está logado
+			return false;
+
+		} else {
+
+			if ($isaudi === true && (bool)$_SESSION[User::SESSION]['isaudi'] === true) {
+
+				return true;
+
+			} else if ($isaudi === false) {
+
+				return true;
+
+			} else {
+
+				return false;
+
+			}
+		}
+	}
+
 	public function login($login, $password)
 	{
 
@@ -193,6 +224,24 @@ class User extends Model {
 
 	}
 
+	public static function verifyLoginAudi($isaudi = true)
+	{
+
+		if (!User::checkLoginAudi($isaudi)) {
+			/*
+			if ($isaudi) {
+				header("Location: /login");
+			} else {
+				header("Location: /login");
+			}
+			exit;
+			*/
+			header("Location: /login");
+			exit;
+		}
+
+	}
+
 	public static function logout()
 	{
 
@@ -247,15 +296,29 @@ class User extends Model {
 			SELECT * FROM tb_users a 
 			INNER JOIN tb_persons b 
 			using(idperson) 
-			WHERE isprof = 1;
+			WHERE isprof = 1
 			ORDER BY b.desperson");
 	}
+
+		public static function listAllAudi()
+	{
+
+		$sql = new Sql();
+
+		return $sql->select("
+			SELECT * FROM tb_users a 
+			INNER JOIN tb_persons b 
+			using(idperson) 
+			WHERE isaudi = 1
+			ORDER BY b.desperson");
+	}
+
 	
 	public function save()
 	{
 		$sql = new Sql();
 
-		$results = $sql->select("CALL sp_users_save(:desperson, :apelidoperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin, :isprof, :statususer)", array(
+		$results = $sql->select("CALL sp_users_save(:desperson, :apelidoperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin, :isprof, :isaudi, :statususer)", array(
 			":desperson"=>$this->getdesperson(),
 			":apelidoperson"=>$this->getapelidoperson(),
 			":deslogin"=>$this->getdeslogin(),
@@ -264,6 +327,7 @@ class User extends Model {
 			":nrphone"=>$this->getnrphone(),
 			":inadmin"=>$this->getinadmin(),
 			":isprof"=>$this->getisprof(),
+			":isaudi"=>$this->getisaudi(),
 			":statususer"=>$this->getstatususer()
 		));
 
@@ -300,7 +364,7 @@ class User extends Model {
 	{
 		$sql = new Sql();
 
-		$results = $sql->select("CALL sp_usersupdate_save(:iduser, :desperson, :apelidoperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin, :isprof, :statususer)", array(
+		$results = $sql->select("CALL sp_usersupdate_save(:iduser, :desperson, :apelidoperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin, :isprof, :isaudi, :statususer)", array(
 			":iduser"=>$this->getiduser(),
 			":desperson"=>$this->getdesperson(),
 			":apelidoperson"=>$this->getapelidoperson(),
@@ -311,6 +375,7 @@ class User extends Model {
 			":nrphone"=>$this->getnrphone(),
 			":inadmin"=>$this->getinadmin(),
 			":isprof"=>$this->getisprof(),
+			":isaudi"=>$this->getisaudi(),
 			":statususer"=>$this->getstatususer()
 		));
 
@@ -321,7 +386,7 @@ class User extends Model {
 	{
 		$sql = new Sql();
 
-		$results = $sql->select("CALL sp_usersupdate_save(:iduser, :desperson, :apelidoperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin, :isprof, :statususer)", array(
+		$results = $sql->select("CALL sp_usersupdate_save(:iduser, :desperson, :apelidoperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin, :isprof, :isaudi, :statususer)", array(
 			":iduser"=>$this->getiduser(),
 			":desperson"=>$this->getdesperson(),
 			":apelidoperson"=>$this->getapelidoperson(),
@@ -332,6 +397,7 @@ class User extends Model {
 			":nrphone"=>$this->getnrphone(),
 			":inadmin"=>$this->getinadmin(),
 			":isprof"=>$this->getisprof(),
+			":isaudi"=>$this->getisaudi(),
 			":statususer"=>$this->getstatususer()
 		));
 
@@ -366,6 +432,31 @@ class User extends Model {
          WHERE a.desemail = :email;
      ", array(
          ":email"=>$email
+     ));
+
+     if (count($results) === 0)
+     {         
+		echo "<script>alert('Não foi possível recuperar a senha!! Usuário ou email não cadastrado!');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+
+     }
+     
+ 	}
+
+ 	public static function getForgotSiteEmailCpf($email, $numcpf, $inadmin = true)
+	{
+     $sql = new Sql();
+     $results = $sql->select("
+         SELECT *
+         FROM tb_persons a
+         INNER JOIN tb_users b ON b.idperson = a.idperson
+         INNER JOIN tb_pessoa c ON c.iduser = b.iduser
+         WHERE a.desemail = :email
+         AND c.numcpf = :numcpf;
+     ", array(
+         ":email"=>$email,
+         ":numcpf"=>$numcpf
      ));
 
      if (count($results) === 0)
@@ -581,6 +672,32 @@ class User extends Model {
 
 	}
 
+	public static function getPageAudi($page = 1, $itemsPerPage = 10)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_users a 
+			INNER JOIN tb_persons b USING(idperson) 
+			WHERE isaudi = 1
+			ORDER BY b.desperson
+			LIMIT $start, $itemsPerPage;
+		");
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+
 	public static function getPageAdmins($page = 1, $itemsPerPage = 10)
 	{
 
@@ -665,6 +782,35 @@ class User extends Model {
 
 	}
 
+	public static function getPageSearchAudi($search, $page = 1, $itemsPerPage = 10)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_users a 
+			INNER JOIN tb_persons b USING(idperson)
+
+			WHERE isaudi = 1 AND b.desperson LIKE :search OR b.desemail = :search OR a.deslogin LIKE :search
+			ORDER BY b.desperson
+			LIMIT $start, $itemsPerPage;
+		", [
+			':search'=>'%'.$search.'%'
+		]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+
 	public static function getPageSearchAdmins($search, $page = 1, $itemsPerPage = 10)
 	{
 
@@ -705,7 +851,7 @@ class User extends Model {
 			SELECT SQL_CALC_FOUND_ROWS *
 			FROM tb_users a 
 			INNER JOIN tb_persons b USING(idperson) 
-			WHERE isprof = 0 AND inadmin = 0
+			WHERE isprof = 0 AND inadmin = 0 AND isaudi = 0
 			ORDER BY b.desperson
 			LIMIT $start, $itemsPerPage;
 		");
@@ -731,7 +877,7 @@ class User extends Model {
 			SELECT SQL_CALC_FOUND_ROWS *
 			FROM tb_users a 
 			INNER JOIN tb_persons b USING(idperson)
-			WHERE isprof = 0 AND inadmin = 0 AND b.desperson LIKE :search OR b.desemail = :search OR a.deslogin LIKE :search
+			WHERE isprof = 0 AND inadmin = 0 AND isaudi = 0 AND b.desperson LIKE :search OR b.desemail = :search OR a.deslogin LIKE :search
 			ORDER BY b.desperson
 			LIMIT $start, $itemsPerPage;
 		", [
@@ -868,15 +1014,14 @@ class User extends Model {
 
 		$results = $sql->select(
 			"SELECT * FROM tb_pessoa a
-			-- LEFT JOIN tb_saude b 
-            -- ON b.idpess = a.idpess
+			INNER JOIN tb_saude b 
+            ON b.idpess = a.idpess
             -- INNER JOIN tb_cid c
 			-- ON c.idcid = b.idcid
 			WHERE statuspessoa = 1 AND
 			a.iduser = :iduser", [
 			':iduser'=>$this->getiduser()
 		]);
-
 		return $results;
 	}
 
@@ -944,6 +1089,22 @@ class User extends Model {
 		]);
 
 		return $result;
+	}
+
+	public static function getUserNameById($iduser)
+	{
+
+		$sql = new Sql();
+
+		$result = $sql->select(
+			"SELECT  * FROM tb_users a
+			INNER JOIN 	tb_persons b USING(idperson)			
+			WHERE a.iduser = :iduser", [
+			':iduser'=>$iduser
+		]);
+		
+		return $result;		
+
 	}
 
 	public function getInsc()

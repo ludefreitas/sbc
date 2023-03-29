@@ -1,5 +1,4 @@
-<script type="text/javascript">
-  
+<script type="text/javascript">  
   
   function msgPelc(){
 
@@ -14,7 +13,29 @@ function msgProjetoSinais(){
    };
 }
 
+function leiamais(){
+  var pontos = document.getElementById("pontos");
+  var maisTexto = document.getElementById("mais");
+  var btnLeiaMais = document.getElementById("btnLeiaMais");
+
+  if(pontos.style.display === "none"){
+    pontos.style.display="inline";
+    maisTexto.style.display="none";
+    btnLeiaMais.innerHTML="Leia Mais";    
+  }else{
+    pontos.style.display="none";
+    maisTexto.style.display="inline";
+    btnLeiaMais.innerHTML="Leia Menos";
+  }
+}
+
 </script>
+
+<style type="text/css">
+  #mais{
+    display: none;
+  }
+</style>
 
  <div class="container" style="margin-top: 0px;"> <!-- container 1 -->
             <div class="row"> <!-- row 2 -->
@@ -74,13 +95,15 @@ function msgProjetoSinais(){
 
         {/if}
 
-        <span style="color: red;">(Atualizado 20/01/2023)</span>
+        <span>(Atualizado 20/01/2023)
         <br><br>
-
+        
         A Secretaria de Esportes e Lazer do Município de São Bernardo do Campo, por intermédio da Seção de Educação e Formação Esportiva, oferece gratuitamente, Cursos Esportivos para todas as idades, através dos Programas: “Corpo em Ação”, “PELC” e “Hora do Treino”, nos diferentes Centros Esportivos da Cidade.
-        <br><br>
+        </span><span id="pontos">...</span>
+        
  
-
+        <span id="mais">
+        <br><br>
         O Programa “Hora do Treino” oferece cursos de iniciação esportiva, direcionados às crianças e adolescentes, com idade entre 7 e 17 anos, e compreende a iniciação esportiva nas modalidades de futsal, vôlei, basquete, handebol, badminton, natação entre outros.
         <br><br>
 
@@ -108,6 +131,10 @@ function msgProjetoSinais(){
         <br><br>           
 
         Maiores informações pelos whatsapp (11) 2630-7415, ou (11) 2630-7421, ou pelos telefones: 2630-7419, 2630-7420 ou 2630-7433 na Secretaria de Esportes e Lazer, Seção de Educação e Formação Esportiva.
+
+        </span>
+
+        <a onclick="leiamais()" id="btnLeiaMais" class="btn btn-default" style="font-size: 14px; color: red;">Leia Mais</a>
 
        <!--
         Estamos no período de rematricula. As vagas disponíveis são para pessoas já matriculadas e que já fazem aulas em alguma turma de nossos cursos esportivos. Então, quem se inscrever em alguma turma e que NÃO está matriculado e NÃO faz parte de nenhuma turma, irá se inscrever para uma lista de espera, respeitando uma lista de espera já existente com os professores e também a ordem de inscrições feitas a partir de agora.

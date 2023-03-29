@@ -1,4 +1,4 @@
- <link href="/../res/site/js/fullcalendar/main.css" rel="stylesheet" />
+<?php if(!class_exists('Rain\Tpl')){exit;}?> <link href="/../res/site/js/fullcalendar/main.css" rel="stylesheet" />
 
     <script src="/../res/site/js/fullcalendar/main.min.js"></script> 
 
@@ -92,10 +92,15 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
        <h3>
-        Olá Professor(a) {$user.desperson}!
+        Olá Professor(a) <?php echo htmlspecialchars( $user["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>!
       </h3>
       <h1>
+        <?php if( $idlocal == 3 ){ ?>
           Consulta Agenda de Avaliação Crec Baetão
+        <?php } ?>
+        <?php if( $idlocal == 21 ){ ?>
+          Consulta Agenda de Avaliação Crec Paulicéia
+        <?php } ?>
       </h1>
      
       <ol class="breadcrumb">
@@ -105,7 +110,7 @@
     </section>
 
      <div id='calendar' class="calendar" style="padding: 30px; font-family: Arial, sans-serif;"></div>
-     <input type="text" name="local" id="local" value="{$idlocal}" hidden="true">
+     <input type="text" name="local" id="local" value="<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>" hidden="true">
 
     <!-- Main content -->
     <section class="content">

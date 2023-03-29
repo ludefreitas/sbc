@@ -1,9 +1,9 @@
 <?php
 
 use \Sbc\PageAdmin;
-
 use \Sbc\Model\Saude;
 use \Sbc\Model\User;
+use \Sbc\Model\Pessoa;
 
 $app->get("/admin/cid", function() {
 
@@ -43,4 +43,72 @@ $app->get("/admin/cid", function() {
 		"error"=>Saude::getError()
 	));
 });
+
+$app->get("/admin/saude/atulizaatestado/:idpess/:data/:observ", function($idpess, $data, $observ) {
+
+	User::verifyLogin();
+
+	$saude = new Saude();
+
+	$iduser = $_SESSION['User']['iduser'];
+
+	$data = strtotime($data);
+
+	$maisUmAno = $data + (365 * 24 * 60 * 60);
+
+	$validade = $maisUmAno;
+
+	$data = date('Y-m-d', $data);
+
+	$validade = date('Y-m-d', $validade);
+
+
+	$saude->setData([
+		'idpess'=>$idpess,
+		'iduser'=>$iduser,
+		'dataemissao'=>$data,
+		'datavalidade'=>$validade,
+		'observ'=>$observ
+	]);
+
+	$saude->saveatestado();
+
+	echo 'Atestado atualizado com sucesso!!!';
+	
+});
+
+$app->get("/admin/saude/dadosatestado/:idpess", function($idpess) {
+
+	User::verifyLogin();
+
+	$saude = new Saude();
+	$pessoa = new Pessoa();
+
+	$pessoa->get((int)$idpess);
+
+	$nomepess = $pessoa->getnomepess();
+
+	$saude->getAtestadoUltimoByIdPess($idpess);
+
+	$validade = $saude->getdatavalidade();
+	$observ = $saude->getobserv();
+
+	$validade = new Date();
+
+	$validade = $validade->format('d/m/Y');
+	
+	$dataatualizacao = $saude->getdataatualizacao();
+
+	if($dataatualizacao == ''){
+		
+		$texto = 'Atestado de '.$nomepess.' não encontrado!!';
+
+	}else{
+
+		$texto = ''.$nomepess."\r\n".'Observação: '.$observ."\r\n".'Validade Atestado: '.$validade.'';		
+	}
+	echo  $texto;
+	
+});
+
 ?>

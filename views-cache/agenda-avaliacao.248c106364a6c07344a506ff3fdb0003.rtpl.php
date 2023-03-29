@@ -73,7 +73,7 @@
            </div>
 
             <div class="col-md-12" style="font-weight: bold; color: darkgreen;">
-                Selecione um horário e uma pessoa, que irá participar da avaliação <br>  
+                Selecione um horário e uma pessoa, que irá participar da avaliação, <br>  
                 logo em seguida clique no botão "Enviar"<br>
                 
             </div>
@@ -93,14 +93,7 @@
                          <?php if( $idlocal == 3 ){ ?>
                          <label style="color: blue;">Local da Avaliação - Baetão<br>Avenida Armando Ítalo Setti, 901 - Baeta Neves - SBC </label>
                          <br>   
-                         <?php } ?>                      
-
-                         <?php if( $idlocal == 21 ){ ?>
-                         <label style="color: blue;">Local da Avaliação - Paulicéia <br>Rua Francisco Alves, 460 - Paulicéia - SBC </label>
-                         <br>   
-                         <?php } ?>                      
-
-
+                         
 
                          <span style="font-weight: bold;">02/03/2023 - quinta-feira </span><br>
                          <input type="radio" name="datahoramarcada" value="Quinta-2023-03-02-10:00-10:30-vagas20">
@@ -110,7 +103,13 @@
                          <input type="radio" name="datahoramarcada" value="Quinta-2023-03-02-16:00-16:30-vagas20">
                          &nbsp;16:00 às 16:30 <br>
                          <input type="radio" name="datahoramarcada" value="Quinta-2023-03-02-16:30-17:00-vagas20">
-                         &nbsp;16:30 às 17:00 <br><br>
+                         &nbsp;16:30 às 17:00 <br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2023-03-02-19:30-20:00-vagas20">
+                         &nbsp;19:30 às 20:00 <br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2023-03-02-20:00-20:30-vagas20">
+                         &nbsp;20:00 às 20:30 <br>
+
+                         <br>
 
                          <span style="font-weight: bold;">03/03/2023 - sexta-feira </span><br>
                          <input type="radio" name="datahoramarcada" value="Sexta--2023-03-03-10:00-10:30-vagas20">
@@ -120,7 +119,10 @@
                          <input type="radio" name="datahoramarcada" value="Sexta--2023-03-03-16:00-16:30-vagas20">
                          &nbsp;16:00 às 16:30 <br>
                          <input type="radio" name="datahoramarcada" value="Sexta--2023-03-03-16:30-17:00-vagas20">
-                         &nbsp;16:30 às 17:00 <br><br>
+                         &nbsp;16:30 às 17:00 <br>
+                         
+
+                         <br>
 
                          <span style="font-weight: bold;">30/03/2023 - quinta-feira </span><br>
                          <input type="radio" name="datahoramarcada" value="Quinta-2023-03-30-10:00-10:30-vagas20">
@@ -130,7 +132,13 @@
                          <input type="radio" name="datahoramarcada" value="Quinta-2023-03-30-16:00-16:30-vagas20">
                          &nbsp;16:00 às 16:30 <br>
                          <input type="radio" name="datahoramarcada" value="Quinta-2023-03-30-16:30-17:00-vagas20">
-                         &nbsp;16:30 às 17:00 <br><br>
+                         &nbsp;16:30 às 17:00 <br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2023-03-30-19:30-20:00-vagas20">
+                         &nbsp;19:30 às 20:00 <br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2023-03-30-20:00-20:30-vagas20">
+                         &nbsp;20:00 às 20:30 <br>
+
+                         <br>
 
                          <span style="font-weight: bold;">31/03/2023 - sexta-feira </span><br>
                          <input type="radio" name="datahoramarcada" value="Sexta--2023-03-31-10:00-10:30-vagas20">
@@ -140,7 +148,10 @@
                          <input type="radio" name="datahoramarcada" value="Sexta--2023-03-31-16:00-16:30-vagas20">
                          &nbsp;16:00 às 16:30 <br>
                          <input type="radio" name="datahoramarcada" value="Sexta--2023-03-31-16:30-17:00-vagas20">
-                         &nbsp;16:30 às 17:00 <br><br>
+                         &nbsp;16:30 às 17:00 <br>
+                         
+
+                         <br>
 
                          <span style="font-weight: bold;">27/04/2023 - quinta-feira </span><br>
                          <input type="radio" name="datahoramarcada" value="Quinta-2023-04-27-10:00-10:30-vagas20">
@@ -150,7 +161,13 @@
                          <input type="radio" name="datahoramarcada" value="Quinta-2023-04-27-16:00-16:30-vagas20">
                          &nbsp;16:00 às 16:30 <br>
                          <input type="radio" name="datahoramarcada" value="Quinta-2023-04-27-16:30-17:00-vagas20">
-                         &nbsp;16:30 às 17:00 <br><br>
+                         &nbsp;16:30 às 17:00 <br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2023-04-27-19:30-20:00-vagas20">
+                         &nbsp;19:30 às 20:00 <br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2023-04-27-20:00-20:30-vagas20">
+                         &nbsp;20:00 às 20:30 <br>
+
+                         <br>
 
                          <span style="font-weight: bold;">28/04/2023 - sexta-feira </span><br>
                          <input type="radio" name="datahoramarcada" value="Sexta--2023-04-28-10:00-10:30-vagas20">
@@ -160,7 +177,10 @@
                          <input type="radio" name="datahoramarcada" value="Sexta--2023-04-28-16:00-16:30-vagas20">
                          &nbsp;16:00 às 16:30 <br>
                          <input type="radio" name="datahoramarcada" value="Sexta--2023-04-28-16:30-17:00-vagas20">
-                         &nbsp;16:30 às 17:00 <br><br>
+                         &nbsp;16:30 às 17:00 <br>
+                        
+
+                         <br>
 
                          <span style="font-weight: bold;">01/06/2023 - quinta-feira </span><br>
                          <input type="radio" name="datahoramarcada" value="Quinta-2023-06-01-10:00-10:30-vagas20">
@@ -170,7 +190,13 @@
                          <input type="radio" name="datahoramarcada" value="Quinta-2023-06-01-16:00-16:30-vagas20">
                          &nbsp;16:00 às 16:30 <br>
                          <input type="radio" name="datahoramarcada" value="Quinta-2023-06-01-16:30-17:00-vagas20">
-                         &nbsp;16:30 às 17:00 <br><br>
+                         &nbsp;16:30 às 17:00 <br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2023-06-01-19:30-20:00-vagas20">
+                         &nbsp;19:30 às 20:00 <br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2023-06-01-20:00-20:30-vagas20">
+                         &nbsp;20:00 às 20:30 <br>
+
+                         <br>
 
                          <span style="font-weight: bold;">02/06/2023 - sexta-feira </span><br>
                          <input type="radio" name="datahoramarcada" value="Sexta--2023-06-02-10:00-10:30-vagas20">
@@ -180,7 +206,85 @@
                          <input type="radio" name="datahoramarcada" value="Sexta--2023-06-02-16:00-16:30-vagas20">
                          &nbsp;16:00 às 16:30 <br>
                          <input type="radio" name="datahoramarcada" value="Sexta--2023-06-02-16:30-17:00-vagas20">
-                         &nbsp;16:30 às 17:00 <br><br>
+                         &nbsp;16:30 às 17:00 <br>
+                         
+
+                         <br>
+
+                         <?php } ?> 
+
+
+                         <?php if( $idlocal == 21 ){ ?>
+                         <label style="color: blue;">Local da Avaliação - Paulicéia <br>Rua Francisco Alves, 460 - Paulicéia - SBC </label>
+                         <br>  
+
+                         <span style="font-weight: bold;">02/03/2023 - quinta-feira </span><br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2023-03-02-09:00-09:30-vagas12">
+                         &nbsp;10:00 às 10:30 <br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2023-03-02-18:30-19:00-vagas12">
+                         &nbsp;10:30 às 11:00 <br>
+
+                         <br>
+
+                         <span style="font-weight: bold;">03/03/2023 - sexta-feira </span><br>
+                         <input type="radio" name="datahoramarcada" value="Sexta--2023-03-03-09:00-09:30-vagas12">
+                         &nbsp;09:00 às 09:30 <br>
+                         <input type="radio" name="datahoramarcada" value="Sexta--2023-03-03-18:30-19:00-vagas12">
+                         &nbsp;18:30 às 19:00 <br>
+
+                         <br>
+
+                         <span style="font-weight: bold;">30/03/2023 - quinta-feira </span><br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2023-03-30-09:00-09:30-vagas12">
+                         &nbsp;09:00 às 09:30 <br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2023-03-30-18:30-19:00-vagas12">
+                         &nbsp;18:30 às 19:00 <br>
+                         
+                         <br>
+
+                         <span style="font-weight: bold;">31/03/2023 - sexta-feira </span><br>
+                         <input type="radio" name="datahoramarcada" value="Sexta--2023-03-31-09:00-09:30-vagas12">
+                         &nbsp;09:00 às 09:30 <br>
+                         <input type="radio" name="datahoramarcada" value="Sexta--2023-03-31-18:30-19:00-vagas12">
+                         &nbsp;18:30 às 19:00 <br>
+
+                         <br>
+
+                         <span style="font-weight: bold;">27/04/2023 - quinta-feira </span><br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2023-04-27-09:00-09:30-vagas12">
+                         &nbsp;09:00 às 09:30 <br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2023-04-27-18:30-19:00-vagas12">
+                         &nbsp;18:30 às 19:00 <br>
+                         
+                         <br>
+
+                         <span style="font-weight: bold;">28/04/2023 - sexta-feira </span><br>
+                         <input type="radio" name="datahoramarcada" value="Sexta--2023-04-28-09:00-09:30-vagas12">
+                         &nbsp;09:00 às 09:30 <br>
+                         <input type="radio" name="datahoramarcada" value="Sexta--2023-04-28-18:30-19:00-vagas12">
+                         &nbsp;18:30 às 19:00 <br>
+
+                         <br>
+
+                         <span style="font-weight: bold;">01/06/2023 - quinta-feira </span><br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2023-06-01-09:00-09:30-vagas12">
+                         &nbsp;09:00 às 09:30 <br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2023-06-01-18:30-19:00-vagas12">
+                         &nbsp;18:30 às 19:00 <br>
+                         
+                         <br>
+
+                         <span style="font-weight: bold;">02/06/2023 - sexta-feira </span><br>
+                         <input type="radio" name="datahoramarcada" value="Sexta--2023-06-02-09:00-09:30-vagas12">
+                         &nbsp;09:00 às 09:30 <br>
+                         <input type="radio" name="datahoramarcada" value="Sexta--2023-06-02-18:30-19:00-vagas12">
+                         &nbsp;18:30 às 19:00 <br>
+
+                         <br>
+                         
+
+                         <?php } ?>                      
+
                         
 
                         <label style="color: blue;">

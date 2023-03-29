@@ -22,6 +22,89 @@
     <script type="text/javascript">
 
 
+      function dadosAtestado(idpess){
+
+        let url = '/prof/saude/dadosatestado/'+idpess
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if (window.confirm(' '+ result + 'Para atulizar atestado clique em "OK"'))
+          {
+              adicionarArtestado(idpess)
+          };
+
+        });
+      }
+      
+      function adicionarArtestado(idpess){
+        
+        //let confirmaAtestado = confirm('Já existe um atestado válido até:'+"\n"+'Deseja adicionar atestado? ')
+        let confirmaAtestado = confirm('Deseja adicionar atestado? ')
+
+        if(confirmaAtestado == true)
+        {                      
+            var data = prompt("Informe a data da emissão do Atestado. Ex.: dd-mm-aaaa");     
+
+            if (data == null || data == "") {
+
+                alert("As informaçãoes do atestado não foram atualizadas! Informe a data e faça alguma observação")
+            } else {
+
+                 var traco1 = data.substr(2,1)
+                 var traco2 = data.substr(5,1)
+                 var dia = data.substr(0,2);
+                 var mes = data.substr(3,2);
+                 var ano = data.substr(6,4); 
+                 
+
+                 if((traco1 != '-') || (traco2 != '-') || (ano.length < 4)){
+                    alert('Formato da data inválida');
+                 }else{
+
+                    if((dia > 31) || (dia == 0) || (mes > 12) || (mes == 0)){
+
+                    alert('data inválida!')
+                    
+                    }else{
+                        
+                        var observ = prompt("Digite uma observação");
+                        if (observ == null || observ == "") {
+                                lert("As informaçãoes do atestado não foram atualizadas! Informe a data e faça alguma observação");
+                        } else {
+
+                            let url = '/prof/saude/atulizaatestado/'+idpess+'/'+data+'/'+observ+''
+
+                            atualizarAtestado(url) 
+
+                        }     
+                    }                           
+                }
+            }        
+        }  
+    }
+     
+    function atualizarAtestado(url){
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          alert(result)
+
+        });
+      }
+
+
       
       function requisitarPaginaPresente(url){
 
@@ -34,9 +117,7 @@
           method: 'GET'  
         }).done(function(result){
 
-          if(result){  
-
-              alert('presente' + result)          
+          if(result){            
             //document.getElementById('spanpresente'+idurl).hidden = false
             //document.getElementById('spanausente'+idurl).hidden = true
             //document.getElementById('spanjustificar'+idurl).hidden = true
@@ -230,13 +311,19 @@
                           <span hidden id="spanausente<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: red;">( X )</span>    
                           <span hidden id="spanjustificar<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: blue;">( J )</span>                  
                           
-                          <?php } ?>                       
-                        
+                          <?php } ?>  
 
+                          <!--
+                           &nbsp;&nbsp;<?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>&nbsp; 
+                         - &nbsp;
+                         <a style="color: orange; text-align-last: right;" onclick="adicionarArtestado(<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)"><?php echo getAtestadoIcone($value1["idpess"]); ?></a>
+                          <br>    
+                          -->
 
-                           &nbsp;&nbsp;<?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-                          <br>
-                                                      
+                           &nbsp;&nbsp;<?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>&nbsp; 
+                         - &nbsp;
+                         <a style="color: orange; text-align-last: right;" onclick="dadosAtestado(<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)"><?php echo getAtestadoIcone($value1["idpess"]); ?></a>
+                          <br>                                                                                                        
                                   
                         <?php if( $value1["idinscstatus"] == 9 ){ ?>
                           <span style="color: red;">CANCELADA</span>

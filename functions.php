@@ -6,6 +6,379 @@ use \Sbc\DB\Sql;
 use \Sbc\Model\Temporada;
 use \Sbc\Model\Insc;
 use \Sbc\Model\Turma;
+use \Sbc\Model\Agenda;
+
+
+function getAtestadoIcone($idpess){
+    $saude = new Saude();
+    $atestado = $saude->getCountAtestadoByIdPess($idpess);
+     $html = [];
+    if($atestado > 0){ 
+        array_push($html, '<span style="color: black; font-style: italic;" >Atestado</span><i style="font-size: 12px; color: green" class="fa fa-check"></i>'
+            );                          
+    }else{
+        array_push($html, '[Atestado]'
+            );
+    }
+    return $html[0];
+}
+
+function getAtestadoCor($idpess){
+    $saude = new Saude();
+    $atestado = $saude->getCountAtestadoByIdPess($idpess);
+     $html = [];
+    if($atestado > 0){ 
+        array_push($html, 'black'
+            );                          
+    }else{
+        array_push($html, 'orange'
+            );
+    }
+    return $html[0];
+}
+
+function getDefTea($idpess){
+    $saude = new Saude();
+    $doenca = $saude->getDeficienciaByidpess($idpess);
+    if($doenca[0]['deftea'] == 1){
+        return 'Pessoa com TEA';
+    }else{
+        return '';
+    }    
+}
+
+function getDefAutismo($idpess){
+    $saude = new Saude();
+    $doenca = $saude->getDeficienciaByidpess($idpess);
+    if($doenca[0]['defautismo'] == 1){
+        return 'Autista';
+    }else{
+        return '';
+    }    
+}
+
+function getDefFisica($idpess){
+    $saude = new Saude();
+    $doenca = $saude->getDeficienciaByidpess($idpess);
+    if($doenca[0]['deffisica'] == 1){
+        return 'Deficiente Físico';
+    }else{
+        return '';
+    }    
+}
+
+function getDefAuditiva($idpess){
+    $saude = new Saude();
+    $doenca = $saude->getDeficienciaByidpess($idpess);
+    if($doenca[0]['defauditiva'] == 1){
+        return 'Deficiente Auditivo';
+    }else{
+        return '';
+    }    
+}
+
+function getDefIntelectual($idpess){
+    $saude = new Saude();
+    $doenca = $saude->getDeficienciaByidpess($idpess);
+    if($doenca[0]['defintelectual'] == 1){
+        return 'Deficiente Intelectual';
+    }else{
+        return '';
+    }    
+}
+
+function getDefVisual($idpess){
+    $saude = new Saude();
+    $doenca = $saude->getDeficienciaByidpess($idpess);
+    if($doenca[0]['defvisual'] == 1){
+        return 'Deficiente Visual';
+    }else{
+        return '';
+    }    
+}
+
+function getCidDoenca($idpess){
+    $saude = new Saude();
+    $doenca = $saude->getDoencaByidpess($idpess);
+    if($doenca){
+        return $doenca[0]['doenca'];
+    }else{
+        return '';
+    }    
+}
+
+function getCid($idpess){
+    $saude = new Saude();
+    $doenca = $saude->getDoencaByidpess($idpess);
+    if($doenca){
+        return $doenca[0]['codigo'];
+    }else{
+        return '';
+    }    
+}
+
+function vagasPubGeralMenosInscPubGeral($idtemporada, $idturma){
+    $vagasPubGeral = Turma::getVagasByIdTurma($idturma);
+    $numinscPublicoGeral = Insc::getNumInscPublicoGeralValidaTurmaTemporada($idtemporada, $idturma);
+    return ($vagasPubGeral - $numinscPublicoGeral);
+}
+
+function vagasPubLaudoMenosInscPubLaudo($idtemporada, $idturma){
+    $vagasPubLaudo = Turma::getVagasLaudoByIdTurma($idturma);
+    $numinscPublicoLaudo = Insc::getNumInscPublicoLaudoValidaTurmaTemporada($idtemporada, $idturma);
+    return ($vagasPubLaudo - $numinscPublicoLaudo);
+}
+
+function vagasPubPcdMenosInscPubPcd($idtemporada, $idturma){
+    $vagasPubPcd = Turma::getVagasPcdByIdTurma($idturma);
+    $numinscPublicoPcd = Insc::getNumInscPublicoPcdValidaTurmaTemporada($idtemporada, $idturma);
+    return ($vagasPubPcd - $numinscPublicoPcd);
+}
+
+function vagasPubPvsMenosInscPubPvs($idtemporada, $idturma){
+    $vagasPubPvs = Turma::getVagasPvsByIdTurma($idturma);
+    $numinscPublicoPvs = Insc::getNumInscPublicoPvsValidaTurmaTemporada($idtemporada, $idturma);
+    return ($vagasPubPvs - $numinscPublicoPvs);
+}
+
+function naoHaVagasPubGeral($idtemporada, $idturma){
+    $vagasPubGeral = Turma::getVagasByIdTurma($idturma);
+    $numinscPublicoGeral = Insc::getNumInscPublicoGeralValidaTurmaTemporada($idtemporada, $idturma);
+    if($numinscPublicoGeral >= $vagasPubGeral){
+        return true;
+    }else{
+        return false;
+    }   
+}
+
+function naoHaVagasPubLaudo($idtemporada, $idturma){
+    $vagasPubLaudo = Turma::getVagasLaudoByIdTurma($idturma);
+    $numinscPublicoLaudo = Insc::getNumInscPublicoLaudoValidaTurmaTemporada($idtemporada, $idturma);
+    if($numinscPublicoLaudo >= $vagasPubLaudo){
+        return true;
+    }else{
+        return false;
+    }   
+}
+
+function naoHaVagasPubPcd($idtemporada, $idturma){
+    $vagasPubPcd = Turma::getVagasPcdByIdTurma($idturma);
+    $numinscPublicoPcd = Insc::getNumInscPublicoPcdValidaTurmaTemporada($idtemporada, $idturma);
+    if($numinscPublicoPcd >= $vagasPubPcd){
+        return true;
+    }else{
+        return false;
+    }   
+}
+
+function naoHaVagasPubPvs($idtemporada, $idturma){
+    $vagasPubPvs = Turma::getVagasPvsByIdTurma($idturma);
+    $numinscPublicoPvs = Insc::getNumInscPublicoPvsValidaTurmaTemporada($idtemporada, $idturma);
+    if($numinscPublicoPvs >= $vagasPubPvs){
+        return true;
+    }else{
+        return false;
+    }   
+}
+
+function vagasTotaisListaEsperaGeral($vagas){
+    $vagastotais = round($vagas * 0.2);
+    return $vagastotais;
+}
+
+function vagasTotaisListaEsperaLaudo($vagaslaudo){
+    $vagastotais = round($vagaslaudo * 0.2);
+    return $vagastotais;
+}
+
+function vagasTotaisListaEsperaPcd($vagaspcd){
+    $vagastotais = round($vagaspcd * 0.2);
+    return $vagastotais;
+}
+
+function vagasTotaisListaEsperaPvs($vagaspvs){
+    $vagastotais = round($vagaspvs * 0.2);
+    return $vagastotais;
+}
+
+function naoHaVagasListaEsperaPubGeral($idtemporada, $idturma){
+    $vagasListaEsperaPubGeral = Turma::getVagasByIdTurma($idturma);
+     $vagasListaEsperaPubGeral = round($vagasListaEsperaPubGeral * 0.2);
+    $numinscListaEsperaPublicoGeral = Insc::getNumInscListaEsperaPubGeralTurmaTemporada($idtemporada, $idturma);
+    if($numinscListaEsperaPublicoGeral >= $vagasListaEsperaPubGeral){
+        return true;
+    }else{
+        return false;
+    }   
+}
+
+function naoHaVagasListaEsperaPubLaudo($idtemporada, $idturma){
+    $vagasListaEsperaPubLaudo = Turma::getVagasLaudoByIdTurma($idturma);
+    $numinscListaEsperaPublicoLaudo = Insc::getNumInscListaEsperaPubLaudoTurmaTemporada($idtemporada, $idturma);
+    if($numinscListaEsperaPublicoLaudo >= $vagasListaEsperaPubLaudo){
+        return true;
+    }else{
+        return false;
+    }   
+}
+
+function naoHaVagasListaEsperaPubPcd($idtemporada, $idturma){
+    $vagasListaEsperaPubPcd = Turma::getVagasPcdByIdTurma($idturma);
+    $numinscListaEsperaPublicoPcd = Insc::getNumInscListaEsperaPubPcdTurmaTemporada($idtemporada, $idturma);
+    if($numinscListaEsperaPublicoPcd >= $vagasListaEsperaPubPcd){
+        return true;
+    }else{
+        return false;
+    }   
+}
+
+function naoHaVagasListaEsperaPubPvs($idtemporada, $idturma){
+    $vagasListaEsperaPubPvs = Turma::getVagasPvsByIdTurma($idturma);
+    $numinscListaEsperaPublicoPvs = Insc::getNumInscListaEsperaPubPvsTurmaTemporada($idtemporada, $idturma);
+    if($numinscListaEsperaPublicoPvs >= $vagasListaEsperaPubPvs){
+        return true;
+    }else{
+        return false;
+    }   
+}
+
+function vagasListaEsperaPubGeralMenosInscPubGeral($idtemporada, $idturma){
+    $vagasListaEsperaPubGeral = Turma::getVagasByIdTurma($idturma);
+    $vagasListaEsperaPubGeral = round($vagasListaEsperaPubGeral * 0.2);
+    $numinscListaEsperaPublicoGeral = Insc::getNumInscListaEsperaPubGeralTurmaTemporada($idtemporada, $idturma);
+    return ($vagasListaEsperaPubGeral - $numinscListaEsperaPublicoGeral);
+}
+
+function vagasListaEsperaPubLaudoMenosInscPubLaudo($idtemporada, $idturma){
+    $vagasListaEsperaPubLaudo = Turma::getVagasLaudoByIdTurma($idturma);
+    $vagasListaEsperaPubLaudo = round($vagasListaEsperaPubLaudo * 0.2);
+    $numinscListaEsperaPublicoLaudo = Insc::getNumInscListaEsperaPubLaudoTurmaTemporada($idtemporada, $idturma);
+    return ($vagasListaEsperaPubLaudo - $numinscListaEsperaPublicoLaudo);
+}
+
+function vagasListaEsperaPubPcdMenosInscPubPcd($idtemporada, $idturma){
+    $vagasListaEsperaPubPcd = Turma::getVagasPcdByIdTurma($idturma);
+    $vagasListaEsperaPubPcd = round($vagasListaEsperaPubPcd * 0.2);
+    $numinscListaEsperaPublicoPcd = Insc::getNumInscListaEsperaPubPcdTurmaTemporada($idtemporada, $idturma);
+    return ($vagasListaEsperaPubPcd - $numinscListaEsperaPublicoPcd);
+}
+
+function vagasListaEsperaPubPvsMenosInscPubPvs($idtemporada, $idturma){
+    $vagasListaEsperaPubPvs = Turma::getVagasPvsByIdTurma($idturma);
+    $vagasListaEsperaPubPvs = round($vagasListaEsperaPubPvs * 0.2);
+    $numinscListaEsperaPublicoPvs = Insc::getNumInscListaEsperaPubPvsTurmaTemporada($idtemporada, $idturma);
+    return ($vagasListaEsperaPubPvs - $numinscListaEsperaPublicoPvs);
+}
+
+function getNumInscPublicoGeralMatriculadaEAguardandoTurmaTemporada($idtemporada, $idturma){
+
+    $numinscPublicoGeral = new Insc();
+    $numinscPublicoGeral = Insc::getNumInscPublicoGeralValidaTurmaTemporada($idtemporada, $idturma);
+    return $numinscPublicoGeral;
+}
+
+function getNumInscPublicoLaudoMatriculadaEAguardandoTurmaTemporada($idtemporada, $idturma){
+
+    $numinscPublicoLaudo = new Insc();
+    $numinscPublicoLaudo = Insc::getNumInscPublicoLaudoValidaTurmaTemporada($idtemporada, $idturma);
+    return $numinscPublicoLaudo;
+}
+
+function getNumInscPublicoPcdMatriculadaEAguardandoTurmaTemporada($idtemporada, $idturma){
+
+    $numinscPublicoPcd = new Insc();
+    $numinscPublicoPcd = Insc::getNumInscPublicoPcdValidaTurmaTemporada($idtemporada, $idturma);
+    return $numinscPublicoPcd;
+}
+
+function getNumInscPublicoPvsMatriculadaEAguardandoTurmaTemporada($idtemporada, $idturma){
+
+    $numinscPublicoPvs = new Insc();
+    $numinscPublicoPvs = Insc::getNumInscPublicoPvsValidaTurmaTemporada($idtemporada, $idturma);
+    return $numinscPublicoPvs;
+}
+
+
+function getNumInscMatriculadaTurmaTemporada($idtemporada, $idturma){
+
+    $numinscmatriculada = new Insc();
+    $numinscmatriculada = Insc::getNumInscMatriculadaTurmaTemporada($idtemporada, $idturma);
+    return $numinscmatriculada;
+}
+
+function getNumInscAguardandoMatriculaTurmaTemporada($idtemporada, $idturma){
+
+    $numinscaguardando = new Insc();
+    $numinscaguardando = Insc::getNumInscAguardandoMatriculaTurmaTemporada($idtemporada, $idturma);
+    return $numinscaguardando;
+}
+
+function getNumInscListaEsperaTurmaTemporada($idtemporada, $idturma){
+
+    $numinsclistaespera = new Insc();
+    $numinsclistaespera = Insc::getNumInscListaEsperaTurmaTemporada($idtemporada, $idturma);
+    return $numinsclistaespera;
+}
+
+function getNumInscListaEsperaPubGeralTurmaTemporada($idtemporada, $idturma){
+
+    $numinsclistaesperaPubGeral = new Insc();
+    $numinsclistaesperaPubGeral = Insc::getNumInscListaEsperaPubGeralTurmaTemporada($idtemporada, $idturma);
+    return $numinsclistaesperaPubGeral;
+}
+
+function getNumInscListaEsperaPubLaudoTurmaTemporada($idtemporada, $idturma){
+
+    $numinsclistaesperaPubLaudo = new Insc();
+    $numinsclistaesperaPubLaudo = Insc::getNumInscListaEsperaPubLaudoTurmaTemporada($idtemporada, $idturma);
+    return $numinsclistaesperaPubLaudo;
+}
+
+function getNumInscListaEsperaPubPcdTurmaTemporada($idtemporada, $idturma){
+
+    $numinsclistaesperaPubPcd = new Insc();
+    $numinsclistaesperaPubPcd = Insc::getNumInscListaEsperaPubPcdTurmaTemporada($idtemporada, $idturma);
+    return $numinsclistaesperaPubPcd;
+}
+
+function getNumInscListaEsperaPubPvsTurmaTemporada($idtemporada, $idturma){
+
+    $numinsclistaesperaPubPvs = new Insc();
+    $numinsclistaesperaPubPvs = Insc::getNumInscListaEsperaPubPvsTurmaTemporada($idtemporada, $idturma);
+    return $numinsclistaesperaPubPvs;
+}
+
+function getUserNameById($iduser){
+
+    $user = new User();
+
+    $nome = $user->getUserNameById($iduser);
+
+    return $nome[0]['desperson'];
+
+}
+
+function agendaPorDataIdHoraDiaSemana($data, $idlocal, $idhoradiasemana){
+
+    $agenda = new Agenda();
+
+    $qtdAgendamento = $agenda->contaQtdAgendamPorDataEIdHora($data, $idlocal, $idhoradiasemana);
+
+    $numeroDeVagas = $agenda->getNumeroDeVagas($idhoradiasemana);
+
+    return ($numeroDeVagas[0]['vagas'] - $qtdAgendamento[0]['count(*)']);
+
+}
+
+function vagasIdHorasemana($idhoradiasemana){
+
+    $agenda = new Agenda();
+
+    $numeroDeVagas = $agenda->getNumeroDeVagas($idhoradiasemana);
+
+    return $numeroDeVagas[0]['vagas'];
+
+}
 
 function usuariosOnline(){
 
@@ -91,28 +464,13 @@ function NumAlunosJustificadosPorData(){
     return $alunosJustificadosPorData;
 }
 
- function Update_Ausente($idinsc, $data){
-
-        $statuspresenca = 0;
-
-        $sql = new Sql();
-
-        $sql->query("UPDATE tb_presenca SET statuspresenca = :statuspresenca 
-            WHERE idinsc = :idinsc
-            AND dtpresenca = :data", array(
-            ":statuspresenca"=>$statuspresenca,
-            ":idinsc"=>$idinsc,
-            "data"=>$data
-        ));
-
-    }
-
-
 function temTokenPorTurmaCpf($idturma, $numcpf){
 
     $html = [];
 
-    array_push($html, '<input type="text" name="tokencpf" value="" placeholder="Insira aqui o TOKENcpf"/>');
+    array_push($html, '<input type="text" name="tokencpf" value="" placeholder="Insira aqui o TOKEN"/>'
+                        
+    );
 
     if(Turma::temtokenCpf($idturma, $numcpf)){
 
@@ -122,7 +480,6 @@ function temTokenPorTurmaCpf($idturma, $numcpf){
 
 function statusPresenca($dia, $mes, $idinsc, $idturma, $idtemporada)
 {
-
     $statusPresenca = new Insc();
     $statusPresenca = Insc::getStatusPresencaByIdinscIdturmaIdtemporada($dia, $mes, $idinsc, $idturma, $idtemporada);
 
@@ -366,7 +723,14 @@ function formatDateEng($date)
 function formatDate($date)
 {
 
-	return date('d/m/Y', strtotime($date));
+    return date('d/m/Y', strtotime($date));
+
+}
+
+function formatDateHour($dateHour)
+{
+
+    return date('d/m/Y H:i:s', strtotime($dateHour));
 
 }
 
@@ -388,33 +752,19 @@ function formatAnoFinal($fimIdade)
     return $AnoFinal;
 }
 
-function formatDateAno($date)
-{
-
-    return date('Y', strtotime($date));
-
-}
-
-function formatDateHour($dateHour)
-{
-
-    return date('d/m/Y H:i:s', strtotime($dateHour));
-
-}
-
 function checkLogin($inadmin = true)
 {
 
-	return User::checkLogin($inadmin);
+    return User::checkLogin($inadmin);
 
 }
 
 function getUserName()
 {
 
-	$user = User::getFromSession();
+    $user = User::getFromSession();
 
-	return $user->getdesperson();
+    return $user->getdesperson();
 
 }
 
@@ -426,7 +776,7 @@ function getUserIsProf()
 
     array_push($html, '<li class="nav-item">
                             <a href="/prof" class="nav-link">
-                              <span class="text-white" style="font-weight: bold">
+                              <span class="text-white" style="font-weight: bold"> 
                                 Professor
                               </span>
                             </a>
@@ -434,6 +784,26 @@ function getUserIsProf()
                     );
 
     if ($user->getisprof() == 1){
+        return $html[0];
+    }
+}
+
+function getUserIsAudi()
+{
+    $user = User::getFromSession();
+
+    $html = [];
+
+    array_push($html, '<li class="nav-item">
+                            <a href="/admin-audi" class="nav-link">
+                              <span class="text-white" style="font-weight: bold">
+                                Admin/dados
+                              </span>
+                            </a>
+                        </li>'
+                    );
+
+    if ($user->getisaudi() == 1){
         return $html[0];
     }
 }
@@ -446,7 +816,7 @@ function getUserIsAdmin()
 
     array_push($html, '<li class="nav-item">
                             <a href="/admin" class="nav-link">
-                              <span class="text-white" style="font-weight: bold">
+                             <span class="text-white" style="font-weight: bold">
                                 Admin
                               </span>
                             </a>
@@ -476,6 +846,15 @@ function UserIsProf()
     }
 }
 
+function UserIsAudi()
+{
+    $user = User::getFromSession();
+
+    if ($user->getisaudi() == 1){
+        return true;
+    }
+}
+
 function getUserId()
 {
 
@@ -498,7 +877,7 @@ function calcularIdade($date){
     $month_diff = date('m') - $month;
     $day_diff = date('d') - $day;
     if ($day_diff < 0 || $month_diff < 0){
-    	$year_diff;
+        $year_diff;
     } 
  
     return $year_diff;
@@ -516,60 +895,6 @@ function calcularIdade($date){
             return true;
        }
     }
-
-    /*
-if(isset($_POST['cid'])){
-    
-$codigo = $_POST['palavra'];
-
-
-        $sql = new Sql();
-
-        $resultado_cursos = $sql->select("SELECT doenca
-            FROM tb_cid WHERE codigo LIKE :codigo", [
-            ':codigo'=>'%'.$codigo.'%'          
-        ]);
-
-        if(mysql_num_rows($$resultado_cursos) <= 0){
-            echo "Nenhum resultado econtrado...";
-        }else{
-            echo "Resultado econtrado...";
-        }
-}
-
-if(isset($_GET['cid'])){
-    
-
-    $codigo = $_GET['cid'];
-
-   // var_dump($codigo);
-
-       obtemDoencaCid($codigo);
-    
-}
-
-function obtemDoencaCid($codigo){
-
-        $sql = new Sql();
-
-        $sql->select("SELECT doenca
-            FROM tb_cid WHERE codigo = :codigo", [
-            ':codigo'=>$codigo          
-        ]);
-
-        if($sql){
-             
-            $valores = $sql;
-            return $valores;
-            //$valores = implode('', $valores);
-            print_r($valores);
-        }else{
-            $valores = "nãoEncontrado";
-            return $valores;
-            print_r($valores);
-        }
-}
-*/
 
 
  ?>

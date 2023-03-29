@@ -14,6 +14,7 @@ $app->get("/prof/insc-turma-temporada/:idturma/:idtemporada/user/:iduser", funct
 
 	User::verifyLoginProf();
 
+	$inscTodas = new Insc();
 	$insc = new Insc();
 	$inscPcd = new Insc();
 	$inscPlm = new Insc();
@@ -28,6 +29,7 @@ $app->get("/prof/insc-turma-temporada/:idturma/:idtemporada/user/:iduser", funct
 
 	$iduserprof = User::getIdUseInTurmaTemporada($idturma, $idtemporada);	
 	
+	$inscTodas->getInscByTurmaTemporadaTodas($idturma, $idtemporada);
 	$insc->getInscByTurmaTemporada($idturma, $idtemporada);
 	$inscPcd->getInscByTurmaTemporadaPcd($idturma, $idtemporada);
 	$inscPlm->getInscByTurmaTemporadaPlm($idturma, $idtemporada);
@@ -43,6 +45,7 @@ $app->get("/prof/insc-turma-temporada/:idturma/:idtemporada/user/:iduser", funct
 
 	$page->setTpl("insc-turma-temporada", [
 		'iduserprof'=>$iduserprof,
+		'inscTodas'=>$inscTodas->getValues(),
 		'insc'=>$insc->getValues(),
 		'inscPcd'=>$inscPcd->getValues(),
 		'inscPlm'=>$inscPlm->getValues(),
@@ -111,6 +114,28 @@ $app->get("/prof/insc/:idtemporada", function($idtemporada) {
 		"pages"=>$pages,
 		"error"=>User::getError()
 	));
+});
+
+$app->get("/prof/insc/pessoa/:idepess", function($idpess){
+
+	User::verifyLoginProf();
+
+	$pessoa = new Pessoa;
+
+	$pessoa->get((int)$idpess);
+
+	$inscricoes = $pessoa->getInsc();
+
+	//var_dump($inscricoes[0]['idinsc']);
+	//exit();
+
+	$page = new PageProf();
+
+	$page->setTpl("insc-pessoa", [
+		'insc'=>$inscricoes,
+		'pessoa'=>$pessoa->getValues()
+	]);
+
 });
 
 $app->get("/prof/profile/insc/:idinsc/:idpess/:idturma", function($idinsc, $idpess, $idturma){
@@ -498,6 +523,15 @@ $app->get("/prof/calendario-lista-presenca/:idtemporada/:idturma", function($idt
 
 	if($dias_da_semana[1] === 'a'){
 
+		if(($dia1 === "Segunda") AND ($dia2 === "Quinta")){
+			$unicodiasemana = 99;			
+			$primeirodiasemana = 0;
+			$segundodiasemana = 1;		
+			$terceirodiasemana = 2;
+			$quartodiasemana = 3;
+			$quintodiasemana = 99 ;
+		}				
+
 		if(($dia1 === "Segunda") AND ($dia2 === "Sexta")){
 			$unicodiasemana = 99;			
 			$primeirodiasemana = 0;
@@ -592,6 +626,23 @@ $app->get("/prof/calendario-lista-presenca/:idtemporada/:idturma", function($idt
 		}
 		if(($dia1 === "Sexta") AND ($dia2 === "")){
 			$unicodiasemana = 4;
+			$primeirodiasemana = 99;
+			$segundodiasemana = 99;	
+			$terceirodiasemana = 99;
+			$quartodiasemana = 99;
+			$quintodiasemana = 99 ;		
+		}
+
+		if(($dia1 === "Sábado") AND ($dia2 === "")){
+			$unicodiasemana = 5;
+			$primeirodiasemana = 99;
+			$segundodiasemana = 99;	
+			$terceirodiasemana = 99;
+			$quartodiasemana = 99;
+			$quintodiasemana = 99 ;		
+		}
+		if(($dia1 === "Domingo") AND ($dia2 === "")){
+			$unicodiasemana = 6;
 			$primeirodiasemana = 99;
 			$segundodiasemana = 99;	
 			$terceirodiasemana = 99;

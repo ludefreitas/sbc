@@ -241,6 +241,41 @@ $app->get("/admin/profile/insc/:idinsc/:idpess/:idturma", function($idinsc, $idp
 	]);	
 });
 
+$app->get("/admin/profile/insc-audi/:idinsc/:idpess/:idturma", function($idinsc, $idpess, $idturma){
+
+	User::verifyLoginAudi();
+
+	$insc = new Insc();
+
+	$insc->get((int)$idinsc);
+
+	if( !$insc->getidinsc()){
+
+		echo "<script>alert('Inscrição selecionada não existe!');";
+    			echo "javascript:history.go(-1)</script>";	
+	}
+
+	if( $insc->getidpess() != $idpess){
+
+		echo "<script>alert('Aluno selecionado não está relacionado para esta inscrição!');";
+    			echo "javascript:history.go(-1)</script>";	
+	}
+
+	$pessoa = new Pessoa();
+
+	$pessoa->get((int)$idpess);	
+
+	//$insc = Insc::getFromId($idinsc);
+
+	$page = new PageAdmin();
+
+	$page->setTpl("insc-detail-audi", [
+		'insc'=>$insc->getValues(),
+		'idturma'=>$idturma,
+		'pessoa'=>$pessoa->getValues()
+	]);	
+});
+
 /*
 
 $app->get("/admin/insc/pessoa/:idpess", function($idpess){
@@ -289,10 +324,33 @@ $app->get("/admin/insc/pessoa/:idepess", function($idpess){
 
 });
 
+$app->get("/admin/insc/pessoa-audi/:idepess", function($idpess){
+
+	User::verifyLoginAudi();
+
+	$pessoa = new Pessoa;
+
+	$pessoa->get((int)$idpess);
+
+	$inscricoes = $pessoa->getInsc();
+
+	//var_dump($inscricoes[0]['idinsc']);
+	//exit();
+
+	$page = new PageAdmin();
+
+	$page->setTpl("insc-pessoa-audi", [
+		'insc'=>$inscricoes,
+		'pessoa'=>$pessoa->getValues()
+	]);
+
+});
+
 $app->get("/admin/insc-turma-temporada/:idturma/:idtemporada/user/:iduser", function($idturma, $idtemporada, $iduser) {
 
 	User::verifyLogin();
 
+	$inscTodas = new Insc();
 	$insc = new Insc();
 	$inscPcd = new Insc();
 	$inscPlm = new Insc();
@@ -307,6 +365,7 @@ $app->get("/admin/insc-turma-temporada/:idturma/:idtemporada/user/:iduser", func
 
 	$iduserprof = User::getIdUseInTurmaTemporada($idturma, $idtemporada);	
 	
+	$inscTodas->getInscByTurmaTemporadaTodas($idturma, $idtemporada);
 	$insc->getInscByTurmaTemporada($idturma, $idtemporada);
 	$inscPcd->getInscByTurmaTemporadaPcd($idturma, $idtemporada);
 	$inscPlm->getInscByTurmaTemporadaPlm($idturma, $idtemporada);
@@ -323,6 +382,56 @@ $app->get("/admin/insc-turma-temporada/:idturma/:idtemporada/user/:iduser", func
 	$page->setTpl("insc-turma-temporada", [
 		'iduserprof'=>$iduserprof,
 		'insc'=>$insc->getValues(),
+		'inscTodas'=>$inscTodas->getValues(),
+		'inscPcd'=>$inscPcd->getValues(),
+		'inscPlm'=>$inscPlm->getValues(),
+		'inscPvs'=>$inscPvs->getValues(),
+		'turma'=>$turma->getValues(),
+		'temporada'=>$temporada->getValues(),
+		'error'=>User::getError(),
+		'success'=>User::getSuccess(),
+		'vagas'=>$vagas,
+		'numMatriculados'=>$numMatriculados
+	]);	
+});
+
+$app->get("/admin/insc-turma-temporada-audi/:idturma/:idtemporada/user/:iduser", function($idturma, $idtemporada, $iduser) {
+
+	User::verifyLoginAudi();
+
+	$inscTodas = new Insc();
+	$insc = new Insc();
+	$inscPcd = new Insc();
+	$inscPlm = new Insc();
+	$inscPvs = new Insc();
+	$turma = new Turma();
+	$user = new User();
+	$temporada = new Temporada();
+	$temporada->get((int)$idtemporada);
+	$turma->get((int)$idturma);
+
+	$idusersessao = (int)$_SESSION['User']['iduser'];
+
+	$iduserprof = User::getIdUseInTurmaTemporada($idturma, $idtemporada);	
+	
+	$inscTodas->getInscByTurmaTemporadaTodas($idturma, $idtemporada);
+	$insc->getInscByTurmaTemporada($idturma, $idtemporada);
+	$inscPcd->getInscByTurmaTemporadaPcd($idturma, $idtemporada);
+	$inscPlm->getInscByTurmaTemporadaPlm($idturma, $idtemporada);
+	$inscPvs->getInscByTurmaTemporadaPvs($idturma, $idtemporada);
+
+	$vagas = (int)$turma->getvagas();
+
+	$numMatriculados = $temporada->setNummatriculadosTemporada($idtemporada, $idturma);	
+
+	$numMatriculados= $numMatriculados['nummatriculados'];
+	
+	$page = new PageAdmin();	
+
+	$page->setTpl("insc-turma-temporada-audi", [
+		'iduserprof'=>$iduserprof,
+		'insc'=>$insc->getValues(),
+		'inscTodas'=>$inscTodas->getValues(),
 		'inscPcd'=>$inscPcd->getValues(),
 		'inscPlm'=>$inscPlm->getValues(),
 		'inscPvs'=>$inscPvs->getValues(),
@@ -636,6 +745,15 @@ $app->get("/admin/calendario-lista-presenca/:idtemporada/:idturma", function($id
 	}
 
 	if($dias_da_semana[1] === 'a'){
+
+		if(($dia1 === "Segunda") AND ($dia2 === "Quinta")){
+			$unicodiasemana = 99;			
+			$primeirodiasemana = 0;
+			$segundodiasemana = 1;		
+			$terceirodiasemana = 2;
+			$quartodiasemana = 3;
+			$quintodiasemana = 99 ;
+		}				
 
 		if(($dia1 === "Segunda") AND ($dia2 === "Sexta")){
 			$unicodiasemana = 99;			

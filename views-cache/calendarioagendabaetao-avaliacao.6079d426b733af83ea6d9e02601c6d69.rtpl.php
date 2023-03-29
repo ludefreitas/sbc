@@ -95,7 +95,7 @@
         Olá Professor(a) <?php echo htmlspecialchars( $user["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>!
       </h3>
       <h1>
-          Consulta Agenda de Natação Espontânea Crec Baetão
+          Consulta Agenda de Avaliação Crec Baetão
       </h1>
      
       <ol class="breadcrumb">

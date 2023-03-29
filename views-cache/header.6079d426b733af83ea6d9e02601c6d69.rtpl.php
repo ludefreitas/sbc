@@ -235,7 +235,7 @@ desired effect
         <div class="pull-left image">
           <img src="/res/admin/dist/img/boxed-bg.jpg" class="img-circle" alt="User Image">
         </div>
-      -->
+
         <div class="pull-left info">
           <p><?php echo getUserName(); ?></p>
           <!-- Status -->
@@ -258,149 +258,207 @@ desired effect
       <!-- /.search form -->
 
       <!-- Sidebar Menu -->
-      <ul class="sidebar-menu">
-        <!-- <li class="header">LISTAR / CRIAR / EDITAR </li> -->
-        <!-- Optionally, you can add icons to the links -->
-        <li class="treeview">
-          <a href="#"><i class="fa fa-users"></i> <span>Usuários</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="/admin/users"><i class="fa fa-users"></i>Todos Usuários</a></li>
+        <?php if( UserIsAdmin() ){ ?>
 
-            <?php if( getUserId() == 1 OR getUserId() == 7 OR getUserId() == 156 ){ ?>
+            <ul class="sidebar-menu">
+                <!-- <li class="header">LISTAR / CRIAR / EDITAR </li> -->
+                <!-- Optionally, you can add icons to the links -->
+                <li class="treeview">
+                    <a href="#"><i class="fa fa-users"></i> <span>Usuários</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="/admin/users"><i class="fa fa-users"></i>Todos Usuários</a></li>
 
-
-            <li><a href="/admin/admins"><i class="fa fa-users"></i>Administradores</a></li>
-
-            <?php } ?>
+                        <?php if( getUserId() == 1 OR getUserId() == 7 OR getUserId() == 156 ){ ?>
 
 
-            <li><a href="/admin/prof"><i class="fa fa-users"></i>Professores</a></li>
-            <li><a href="/admin/users-cliente"><i class="fa fa-users"></i>Clientes</a></li>
-            <li><a href="/admin/pessoas"><i class="fa fa-users"></i>Alunos</a></li>          
-          </ul>
-        </li> 
-         <li>
-          <a href="/admin/temporada"><i class="fa fa-link"></i><span>Temporadas</span></a>
-        </li>     
-        <li class="treeview">
-          <a href="/admin"><i class="fa fa-link"></i> <span>TURMAS por temporada</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <?php require $this->checkTemplate("turma-temporada-menu");?>
+                             <li><a href="/admin/admins"><i class="fa fa-users"></i>Administradores</a></li>
 
-          </ul>
-        </li>
+                        <?php } ?>
 
-        <li class="treeview">
-          <a href="/admin"><i class="fa fa-link"></i> <span>Controle de Frequência</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <?php require $this->checkTemplate("controle-frequencia-menu");?>
 
-          </ul>
-          <!--
-          <ul class="treeview-menu">
+                        <li><a href="/admin/prof"><i class="fa fa-users"></i>Professores</a></li>
+                        <li><a href="/admin/users-cliente"><i class="fa fa-users"></i>Clientes</a></li>
+                        <li><a href="/admin/pessoas"><i class="fa fa-users"></i>Alunos</a></li>          
+                    </ul>
+                </li> 
             <li>
-              <a href="/admin/controle-frequencia/4"><i class="fa fa-link"></i> <span> Contr. Freq. 2021</span>
-              <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-            </a>
+                <a href="/admin/temporada"><i class="fa fa-link"></i><span>Temporadas</span></a>
+            </li>     
+            <li class="treeview">
+              <a href="/admin"><i class="fa fa-link"></i> <span>TURMAS por temporada</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <?php require $this->checkTemplate("turma-temporada-menu");?>
+
+              </ul>
+            </li>
+
+            <li class="treeview">
+              <a href="/admin"><i class="fa fa-link"></i> <span>Controle de Frequência</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <?php require $this->checkTemplate("controle-frequencia-menu");?>
+
+              </ul>
+            </li>
+
+
+            <li class="treeview">
+              <a href="/admin"><i class="fa fa-link"></i> <span>PROFESSOR</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <?php require $this->checkTemplate("professor-temporada-menu");?>
+
+              </ul>
+            </li> 
+
+            <li class="treeview">
+              <a href="/admin"><i class="fa fa-link"></i> <span>Estagiário</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <?php require $this->checkTemplate("estagiario-temporada-menu");?>
+
+              </ul>
+            </li> 
+
+            <li class="treeview">
+              <a href="/admin"><i class="fa fa-link"></i> <span>SORTEIO</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <?php require $this->checkTemplate("sorteio-temporada-menu");?>
+
+              </ul>
+            </li>                       
+
+            <li class="treeview">
+              <a href="/admin"><i class="fa fa-link"></i> <span>Inscrições</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <?php require $this->checkTemplate("insc-temporada-menu");?>
+
+              </ul>
+            </li>   
+
+            <li class="treeview">
+              <a href="#"><i class="fa fa-link"></i> <span>Avaliação Natação</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li class="treeview">
+                          <a href="/admin/calendarioagenda-avaliacao/3">
+                            <i class="fa fa-link"></i> 
+                            Agenda Baetão
+                          </a>                      
+                      </li> 
+                <li class="treeview">
+                          <a href="/admin/calendarioagenda-avaliacao/21">
+                            <i class="fa fa-link"></i> 
+                            Agenda Pauliceia
+                          </a>                      
+                      </li>                       
+              </ul>
+            </li>  
+
+            <li>
+              <a href="/admin/turma"><i class="fa fa-link"></i> <span>Todas Turmas</span></a>
+            </li>                        
+            
+            <li>
+              <a href="/admin/atividade"><i class="fa fa-link"></i> <span>Atividades</span></a>
+            </li>
+            <li>
+              <a href="/admin/modalidades"><i class="fa fa-link"></i> <span>Modalidades</span></a>
+            </li>
+            
+            <li>
+              <a href="/admin/espaco"><i class="fa fa-link"></i> <span>Espaços</span></a>
+            </li>  
+            <li>
+              <a href="/admin/faixaetaria"><i class="fa fa-link"></i> <span>Faixa Etária</span></a>
+            </li>
+            <li>
+              <a href="/admin/horario"><i class="fa fa-link"></i> <span>Horários</span></a>
+            </li>
+            <li>
+              <a href="/admin/cid"><i class="fa fa-link"></i> <span>Relação de CID's</span></a>
             </li>
           </ul>
-        -->
 
-        </li>
+        <?php }else{ ?>
 
 
-        <li class="treeview">
-          <a href="/admin/insc"><i class="fa fa-link"></i> <span>PROFESSOR</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <?php require $this->checkTemplate("professor-temporada-menu");?>
+        <ul class="sidebar-menu">
 
-          </ul>
-        </li> 
-
-        <li class="treeview">
-          <a href="/admin/insc"><i class="fa fa-link"></i> <span>SORTEIO</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <?php require $this->checkTemplate("sorteio-temporada-menu");?>
-
-          </ul>
-        </li>                       
-
-        <li class="treeview">
-          <a href="/admin/insc"><i class="fa fa-link"></i> <span>Inscrições</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <?php require $this->checkTemplate("insc-temporada-menu");?>
-
-          </ul>
-        </li>   
-
-        <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Avaliação Natação</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
             <li class="treeview">
-                      <a href="/admin/calendarioagendabaetao-avaliacao/3">
-                        <i class="fa fa-link"></i> 
-                        Agenda Baetão
-                      </a>                      
-                  </li>            
-          </ul>
-        </li>  
+                    <a href="#"><i class="fa fa-users"></i> <span>Usuários</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="/admin/users-audi"><i class="fa fa-users"></i>Todos Usuários</a></li>
+                        <li><a href="/admin/pessoas-audi"><i class="fa fa-users"></i>Alunos</a></li>          
+                    </ul>
+                </li> 
 
-        <li>
-          <a href="/admin/turma"><i class="fa fa-link"></i> <span>Todas Turmas</span></a>
-        </li>                        
-        
-        <li>
-          <a href="/admin/atividade"><i class="fa fa-link"></i> <span>Atividades</span></a>
-        </li>
-        <li>
-          <a href="/admin/modalidades"><i class="fa fa-link"></i> <span>Modalidades</span></a>
-        </li>
-        <li>
-          <a href="/admin/local"><i class="fa fa-link"></i> <span>Crecs</span></a>
-        </li>
-        <li>
-          <a href="/admin/espaco"><i class="fa fa-link"></i> <span>Espaços</span></a>
-        </li>  
-        <li>
-          <a href="/admin/faixaetaria"><i class="fa fa-link"></i> <span>Faixa Etária</span></a>
-        </li>
-        <li>
-          <a href="/admin/horario"><i class="fa fa-link"></i> <span>Horários</span></a>
-        </li>
-        <li>
-          <a href="/admin/cid"><i class="fa fa-link"></i> <span>Relação de CID's</span></a>
-        </li>
-      </ul>
+            <li class="treeview">
+              <a href="/admin"><i class="fa fa-link"></i> <span>TURMAS por temporada</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <?php require $this->checkTemplate("turma-temporada-menu-audi");?>
+
+              </ul>
+            </li>
+
+            <li class="treeview">
+              <a href="/admin"><i class="fa fa-link"></i> <span>Controle de Frequência</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <?php require $this->checkTemplate("controle-frequencia-menu-audi");?>
+
+              </ul>
+            </li>
+            <li>
+              <a href="/admin/local-audi"><i class="fa fa-link"></i> <span>Crecs</span></a>
+            </li>
+            <li>
+                <a href="/admin/temporada-audi"><i class="fa fa-link"></i><span>Temporadas</span></a>
+            </li>     
+
+        </ul>
+
+        <?php } ?>
+
       <!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->

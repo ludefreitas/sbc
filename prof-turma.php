@@ -29,19 +29,35 @@ $app->get("/prof/turma/create/token/:idturma", function($idturma) {
 	echo "javascript:history.go(-1)</script>";
 });
 
-$app->get("/prof/turma/create/token/:idturma/:numcpf", function($idturma, $numcpf) {
+$app->get("/prof/turma/create/token/:idturma/:idtemporada/:numcpf", function($idturma, $idtemporada, $numcpf) {
 
 	User::verifyLoginProf();
 
 	$turma = new Turma();
+	$user = new User();
 
 	$token = time();
 	$token = substr($token, 4);
+
+	$iduserSession = (int)$_SESSION[User::SESSION]['iduser'];
+
+	$iduserTurmaTemporada = $user->getIdUseInTurmaTemporada($idturma, $idtemporada);
+	
+	$iduserTurmaTemporada = (int)$iduserTurmaTemporada['iduser'];
+	
+	if($iduserTurmaTemporada !== $iduserSession){
+	    
+	    echo '<script>alert("Você deve solicitar ao professor desta turma para que ele gere o token!");';
+	  	echo 'javascript:history.go(-1)</script>';
+	   	exit;
+	   
+	}
 
 	$_POST['idturma'] = $idturma;
 	$_POST['numcpf'] = $numcpf;
 	$_POST['token'] = $token;
 	$_POST['isused'] = 0;
+	$_POST['creator'] = $iduserSession;
 
 	$turma->setData($_POST);
 
@@ -64,10 +80,8 @@ $app->post("/prof/turma/create/token", function() {
 	User::verifyLoginProf();
 
 	$turma = new Turma();
-
-	$token = time();
-	$token = substr($token, 4);
-
+	$user = new User();
+	
 	$idtemporada = $_POST['idtemporada'];
 	$idturma = $_POST['idturma'];
 	
@@ -77,18 +91,19 @@ $app->post("/prof/turma/create/token", function() {
 	
 	$iduserTurmaTemporada = (int)$iduserTurmaTemporada['iduser'];
 	
-	if($iduserTurmaTemporada === $iduserSession){
+	if($iduserTurmaTemporada !== $iduserSession){
 	    
-	    var_dump("igual -> ".$iduserTurmaTemporada.' = '.$iduserSession);
-	    exit;
-	}else{
-	    
-	    var_dump("diferente -> ".$iduserTurmaTemporada.' != '.$iduserSession);
-	    exit;
+	    echo '<script>alert("Você deve solicitar ao professor desta turma para que ele gere o token!");';
+	  	echo 'javascript:history.go(-1)</script>';
+	   	exit;
+	   
 	}
-	
+
+	$token = time();
+	$token = substr($token, 4);
+
 	if(isset($_POST['numcpf']) && $_POST['numcpf'] == ""){
-		echo "<script>alert('Informe o número d0 CPF!');";
+		echo "<script>alert('Informe o número do CPF!');";
 	  	echo "javascript:history.go(-1)</script>";
 	   	exit;
 	}
@@ -103,13 +118,29 @@ $app->post("/prof/turma/create/token", function() {
 	$_POST['numcpf'] = $_POST['numcpf'];
 	$_POST['token'] = $token;
 	$_POST['isused'] = 0;
+	$_POST['creator'] = $iduserSession;
 
 	$turma->setData($_POST);
+	
+	$idturma = $_POST['idturma'];
+	$numcpf = $_POST['numcpf'];
 
-	$turma->saveToken();
+	if(!Turma::temTokenCpf($idturma, $numcpf)){
 
-    echo "<script>alert('Token ".$turma->gettoken()." criado com sucesso!');";
-	echo "javascript:history.go(-1)</script>";
+		$turma->saveToken();
+	    echo "<script>alert('Token ".$turma->gettoken()." criado com sucesso!');";
+		echo "javascript:history.go(-1)</script>";
+	}else{
+
+		if($numcpf != ""){
+			echo "<script>alert('Já existe um token para este aluno nesta turma!');";
+			echo "javascript:history.go(-1)</script>";
+		}else{
+			$turma->saveToken();
+	   		echo "<script>alert('Token ".$turma->gettoken()." criado com sucesso!');";
+			echo "javascript:history.go(-1)</script>";
+		}		
+	}
 });
 
 $app->get("/prof/token/:idturma/:idtemporada", function($idturma, $idtemporada) {

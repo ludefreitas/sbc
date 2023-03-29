@@ -55,13 +55,13 @@
                   <option value="{$value.idespaco}">{$value.apelidolocal} - {$value.nomeespaco}</option>
                   {/loop}                            
                   </select>
-                </div>      
+                </div>  
                 
               </div>
 
-              <div class="col-md-6">
+              <div class="col-md-6">  
 
-                <div class="box-header">
+                 <div class="box-header">
                   <label for="turma">Atividade</label>
                   <select class="form-control" name="idativ">
                   <option value="{$createTurmaValues.idativ}">Selecione a atividade e faixa etária</option>           
@@ -70,9 +70,9 @@
                   {$value.descrfxetaria}  - {$value.initidade} a {$value.fimidade} anos - {$value.prograativ} - {$value.origativ}</option>
                   {/loop}                            
                   </select>
-                </div> 
+                </div>    
 
-                <div class="box-header">
+                 <div class="box-header">
                   <label for="turma">Dia Semana - Horário</label>
                   <select class="form-control" name="idhorario">
                   <option value="{$createTurmaValues.idhorario}">Selecione o dia e o horários</option>    
@@ -80,12 +80,13 @@
                   <option value="{$value.idhorario}">{$value.diasemana} - {$value.horainicio} às {$value.horatermino} </option>
                   {/loop}                            
                   </select>
-                </div>                
+                </div>                  
 
                 <div class="box-header">
                   <label for="turma">Vagas</label>
-                  <input type="number" class="form-control" id="vagas" name="vagas" placeholder="Informe a quantidade de vagas" value="{$createTurmaValues.vagas}">
+                  <input type="number" class="form-control" id="vagasgeral" name="vagasgeral" placeholder="Informe a quantidade de vagas geral" value="{$createTurmaValues.vagas}">
                 </div>    
+
 
                 <div class="checkbox">
                   <label>

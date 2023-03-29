@@ -483,7 +483,7 @@ class Turma extends Model {
 	public function save()
 	{
 		$sql = new Sql();
-		$results = $sql->select("CALL sp_turma_save(:idturma, :idativ, :idmodal, :idespaco, :idhorario, :descturma, :obs, :vagas, :token)", array(
+		$results = $sql->select("CALL sp_turma_save(:idturma, :idativ, :idmodal, :idespaco, :idhorario, :descturma, :obs, :vagas, :vagaslaudo, :vagaspcd, :vagaspvs, :token)", array(
 			":idturma"=>$this->getidturma(),			
 			":idativ"=>$this->getidativ(),
 			":idmodal"=>$this->getidmodal(),
@@ -493,6 +493,9 @@ class Turma extends Model {
 			":descturma"=>$this->getdescturma(),
 			":obs"=>$this->getobs(),
 			":vagas"=>$this->getvagas(),
+			":vagaslaudo"=>$this->getvagaslaudo(),
+			":vagaspcd"=>$this->getvagaspcd(),
+			":vagaspvs"=>$this->getvagaspvs(),
 			":token"=>$this->gettoken()	
 		));	
 
@@ -802,6 +805,45 @@ class Turma extends Model {
 		return $results[0]['vagas'];
 	}
 
+	public static function getVagasLaudoByIdTurma($idturma)
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT vagaslaudo FROM tb_turma
+ 			WHERE idturma = :idturma", [
+			':idturma'=>$idturma
+		]);
+
+		return $results[0]['vagaslaudo'];
+	}
+
+	public static function getVagasPcdByIdTurma($idturma)
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT vagaspcd FROM tb_turma
+ 			WHERE idturma = :idturma", [
+			':idturma'=>$idturma
+		]);
+
+		return $results[0]['vagaspcd'];
+	}
+
+	public static function getVagasPvsByIdTurma($idturma)
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT vagaspvs FROM tb_turma
+ 			WHERE idturma = :idturma", [
+			':idturma'=>$idturma
+		]);
+
+		return $results[0]['vagaspvs'];
+	}
+
 	public static function getSomaVagasByTurmaIdmodal($desctemporada, $idmodal)
 	{
 		$sql = new Sql();
@@ -1002,36 +1044,37 @@ class Turma extends Model {
 	public function saveToken2($idturma, $numcpf, $token, $isused)
 	{
 		$sql = new Sql();
-		$results = $sql->query("INSERT INTO tb_tokenturma (idturma, numcpf, token, isused) VALUES(:idturma, :numcpf, :token, :isused)", array(
+		$results = $sql->query("INSERT INTO tb_tokenturma (idturma, numcpf, token, isused, creator) VALUES(:idturma, :numcpf, :token, :isused)", array(
 			":idturma"=>$idturma,
 			":numcpf"=>$numcpf,
 			":token"=>$token,
-			":isused"=>$isused			
+			":isused"=>$isused,		
+			":creator"=>$creator			
 		));
 
 		if($results){
-		echo "<script>alert('Token ".$turma->gettoken()." criado com sucesso!');";
-		echo "javascript:history.go(-1)</script>";
-	}else{
+			echo "<script>alert('Token ".$turma->gettoken()." criado com sucesso!');";
+			echo "javascript:history.go(-1)</script>";
+		}else{
 
 			echo "<script>alert('Não foi possível criar o token!');";
 			echo "javascript:history.go(-1)</script>";
-    }
-		
+    	}		
 		
 	}
 
 	public function saveToken()
 	{
 		$sql = new Sql();
-		$results = $sql->select("CALL sp_tokenturma_save(:idtoken, :idturma, :numcpf, :token, :isused, :dtcriacao, :dtuso)", array(
+		$results = $sql->select("CALL sp_tokenturma_save(:idtoken, :idturma, :numcpf, :token, :isused, :creator, :dtcriacao, :dtuso)", array(
 			":idtoken"=>$this->getidtoken(),			
 			":idturma"=>$this->getidturma(),
 			":numcpf"=>$this->getnumcpf(),
 			":token"=>$this->gettoken(),
 			":isused"=>$this->getisused(),
+			":creator"=>$this->getcreator(),
 			":dtcriacao"=>$this->getdtcriacao(),
-			":dtuso"=>$this->getdtuso()	
+			":dtuso"=>$this->getdtuso()
 		));	
 
 		$this->setData($results[0]);

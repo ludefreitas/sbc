@@ -1,4 +1,13 @@
-<?php if(!class_exists('Rain\Tpl')){exit;}?><!-- Content Wrapper. Contains page content -->
+<?php if(!class_exists('Rain\Tpl')){exit;}?>
+
+
+<script type="text/javascript">
+
+alert("Agora você já pode adicionar o atestado do seu aluno, ao fazer a chamada, informando a data de emissão do atestado e fazer uma breve observção. Nesta observação você pode informar uma doença (se houver) , CID (se houver) , uma condição especial (se houver)...")
+
+</script>
+
+<!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">

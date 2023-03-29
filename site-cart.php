@@ -120,6 +120,18 @@ $app->post("/cart", function() {
 			exit();
 		}
 
+		$saude = new Saude();
+
+		$countParq = $saude->getCountParqByIdPess($idpess);
+
+		if($countParq < 0){
+
+			Cart::setMsgError("Você dever responder o Questionário de Prontidão para Atividade Física (PAR-Q) da ".$nomepess."! ");
+			header("Location: /par-q/".$idpess."");
+			exit();
+
+		}
+
 		//$numcpf = $pessoa->getcpf();
 		$numcpf = $pessoa->getnumcpf();
 		//$idade = User::calcularIdade($pessoa->getdtnasc());
@@ -296,10 +308,17 @@ $app->post("/cart", function() {
 			$inscPcd = (int)Insc::pegaInscPcd($idturma, $idtemporada);
 			$inscPvs = (int)Insc::pegaInscPvs($idturma, $idtemporada);
 
+			/*
 			$vagasGeral = round($vagas * 0.7);
 			$vagasPlm = round($vagas * 0.1);
 			$vagasPcd = round($vagas * 0.1);
 			$vagasPvs = round($vagas * 0.1);
+			*/
+
+			$vagasGeral = (int)Turma::getVagasByIdTurma($idturma);
+			$vagasPlm = (int)Turma::getVagasLaudoByIdTurma($idturma);
+			$vagasPcd = (int)Turma::getVagasPcdByIdTurma($idturma);
+			$vagasPvs = (int)Turma::getVagasPvsByIdTurma($idturma);
 
 			$maxListaEsperaGeral = round($vagasGeral * 1.2);
 			$maxListaEsperaPlm = round($vagasPlm * 1.2);

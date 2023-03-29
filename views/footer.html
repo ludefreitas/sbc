@@ -22,6 +22,15 @@
           <div class="container">
             <div class="row">
 
+              <div class="col-md-8" style="text-align: center; margin: 10px 0px 0px 0px;">
+                 <form action="/busca">
+                <input type="text" name="search" placeholder="Pesquisa" style="text-align-last: center;">
+                <button type="submit" class="btn btn-default btn-sm">
+                  <i class="fa fa-search"></i>
+                </button>
+                </form>                                              
+              </div>
+
               <div class="col-md-8" style="text-align-last: center; margin-top: 0px; margin-bottom: 10px;">     
                         <span style="font-weight: bold; font-style: italic; color: blue;">Fale conosco e curta<br> Cursos Esportivos SBC através das redes sociais</span><br>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

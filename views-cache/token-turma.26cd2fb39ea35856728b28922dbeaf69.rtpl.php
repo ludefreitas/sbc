@@ -69,8 +69,16 @@
                             <?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                         <?php }else{ ?>
                             NULL
-                        <?php } ?>               
+                        <?php } ?>                       
+                       
+                       
                     <?php } ?>
+
+                    <br>   
+
+                    Creator: <?php echo getUserNameById($value1["creator"]); ?>
+
+
             </div>               
           <?php } ?>           
             <!-- /.box-body -->

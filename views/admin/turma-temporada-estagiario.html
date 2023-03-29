@@ -1,0 +1,123 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Turmas para o(a) professor(a) {$user.iduser} - {$user.apelidoperson} para a temporada {$temporada.desctemporada}
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="/admin/professor-temporada/{$temporada.idtemporada}">Professores da temporada {$temporada.desctemporada}</a></li>
+    <!-- <li><a href="/admin/turma-temporada/"></a></li>
+    <li class="active"><a href="/admin/temporada/turma"></a></li>-->
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                <h3 class="box-title">Turmas sem professor(a) definido</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <div class="box-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                            <th>Turma</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {loop="$turmaNotRelated"}
+                            <tr>
+                            <td>{$value.idturma} - 
+                                {$value.descturma} - {$value.apelidolocal} - {$value.nomeativ} - {$value.diasemana} - {$value.horainicio} - {$value.horatermino}
+                            </td>
+                            {if="$value.iduser == 1"}
+                            <td>
+                                <a href="/admin/turmatemporada-estagiario/{$value.idtemporada}/turma/{$value.idturma}/user/{$user.iduser}/add" class="btn btn-success btn-xs pull-right"><i class="fa fa-arrow-right"></i> Adicionar</a>
+                            </td>
+                            {else}
+                        <!--
+                            <td>
+                                <a type="btn" disabled="true" href="/admin/turmatemporada/{$value.idtemporada}/turma/{$value.idturma}/user/{$user.iduser}/add" class="btn btn-success btn-xs pull-right"><i class="fa fa-arrow-right"></i> Adicionar</a>
+                            </td>
+                        -->
+                            {/if}
+                            </tr>
+                            {/loop}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                <h3 class="box-title">Turmas atribuida ao(a) professor(a) {$user.apelidoperson}</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <div class="box-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                            <th>Turmas atribuidas ao(a) professor(a) {$user.apelidoperson} na temporada {$temporada.desctemporada}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {loop="$turmaRelated"}
+                            <tr>
+                            <td>{$value.idturma} - 
+                            {$value.descturma} - {$value.apelidolocal} - {$value.nomeativ} - 
+                             {$value.diasemana} - {$value.horainicio} - {$value.horatermino}</td>                      
+                            <td>
+                                <a href="/admin/turmatemporada-estagiario/{$value.idtemporada}/turma/{$value.idturma}/user/{$user.iduser}/remove" class="btn btn-danger btn-xs pull-right"><i class="fa fa-arrow-left"></i> Remover</a>
+                            </td>
+                            </tr>
+                            {/loop}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>    
+        <div class="col-md-4">
+            <div class="box box-primary">
+                <!-- /.box-header -->
+                <!-- form start -->
+                <div class="box-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                             <th>Turmas do(a) professor(a) {$user.apelidoperson} por centro esportivo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                            <td>
+                                <a href="/admin/turmatemporada/{$user.iduser}/turma/{$temporada.idtemporada}"><i class=""></i>Todas turmas - Temporada {$temporada.desctemporada}</a>
+                            </td>
+                            {loop="$locais"}
+                            <tr>
+                            <td>
+                                <a href="/admin/turmatemporada/{$user.iduser}/turma/{$temporada.idtemporada}/{$value.idlocal}"><i class=""></i> {$value.idlocal} - {$value.apelidolocal}</a>
+                            </td>
+                            </tr>
+                            {/loop}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>            
+    </div>
+
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

@@ -997,6 +997,29 @@ class Insc extends Model {
 		];
 
 	}
+
+	public function getInscByTurmaTemporadaTodas($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus		
+			-- INNER JOIN tb_endereco g ON g.idpess = c.idpess				
+			WHERE a.idturma = :idturma AND a.idtemporada = :idtemporada 
+			ORDER BY a.inscpcd DESC, a.laudo DESC, a.inscpvs DESC, a.numordem, a.idinscstatus;
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		$this->setData($results);
+	}
 	
 	public function getInscByTurmaTemporada($idturma, $idtemporada){
 
@@ -2259,6 +2282,7 @@ class Insc extends Model {
 		]);
 		return $results[0]['count(*)'];		
 	}
+
 	public function pegaInscPcd($idturma, $idtemporada)	{
 
 		$sql = new Sql();
@@ -2315,6 +2339,210 @@ class Insc extends Model {
 			':idtemporada'=>$idtemporada
 		]);		
 		return $results;
+	}
+
+	public function getNumInscMatriculadaTurmaTemporada($idtemporada, $idturma)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT count(*) FROM tb_insc 
+			WHERE idtemporada = :idtemporada
+			AND idturma = :idturma
+			AND idinscstatus = 1", [
+				":idtemporada"=>$idtemporada,
+				":idturma"=>$idturma
+		]);
+		return $results[0]['count(*)'];		
+	}
+
+	public function getNumInscAguardandoMatriculaTurmaTemporada($idtemporada, $idturma)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT count(*) FROM tb_insc 
+			WHERE idtemporada = :idtemporada
+			AND idturma = :idturma
+			AND idinscstatus = 2", [
+				":idtemporada"=>$idtemporada,
+				":idturma"=>$idturma
+		]);
+		return $results[0]['count(*)'];		
+	}
+
+	public function getNumInscListaEsperaTurmaTemporada($idtemporada, $idturma)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT count(*) FROM tb_insc 
+			WHERE idtemporada = :idtemporada
+			AND idturma = :idturma
+			AND idinscstatus = 7", [
+				":idtemporada"=>$idtemporada,
+				":idturma"=>$idturma
+		]);
+		return $results[0]['count(*)'];		
+	}	
+
+	public function getNumInscListaEsperaPubGeralTurmaTemporada($idtemporada, $idturma)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT count(*) FROM tb_insc 
+			WHERE idtemporada = :idtemporada
+			AND idturma = :idturma
+			AND idinscstatus = 7 
+			AND laudo = 0 
+			AND inscpcd = 0 
+			AND inscpvs = 0", [
+				":idtemporada"=>$idtemporada,
+				":idturma"=>$idturma
+		]);
+		return $results[0]['count(*)'];		
+	}
+
+	public function getNumInscListaEsperaPubLaudoTurmaTemporada($idtemporada, $idturma)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT count(*) FROM tb_insc 
+			INNER JOIN 	tb_temporada USING(idtemporada)
+			WHERE idtemporada = :idtemporada
+			AND idturma = :idturma
+			AND idinscstatus = 7 
+			AND laudo = 1 
+			AND inscpcd = 0 
+			AND inscpvs = 0", [
+				":idtemporada"=>$idtemporada,
+				":idturma"=>$idturma
+		]);
+		return $results[0]['count(*)'];		
+	}
+
+	public function getNumInscListaEsperaPubPcdTurmaTemporada($idtemporada, $idturma)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT count(*) FROM tb_insc 
+			INNER JOIN 	tb_temporada USING(idtemporada)
+			WHERE idtemporada = :idtemporada
+			AND idturma = :idturma
+			AND idinscstatus = 7 
+			AND laudo = 0 
+			AND inscpcd = 1 
+			AND inscpvs = 0", [
+				":idtemporada"=>$idtemporada,
+				":idturma"=>$idturma
+		]);
+		return $results[0]['count(*)'];		
+	}
+
+	public function getNumInscListaEsperaPubPvsTurmaTemporada($idtemporada, $idturma)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT count(*) FROM tb_insc 
+			WHERE idtemporada = :idtemporada
+			AND idturma = :idturma
+			AND idinscstatus = 7 
+			AND laudo = 0 
+			AND inscpcd = 0 
+			AND inscpvs = 1", [
+				":idtemporada"=>$idtemporada,
+				":idturma"=>$idturma
+		]);
+		return $results[0]['count(*)'];		
+	}
+
+
+
+	public function getNumInscPublicoGeralValidaTurmaTemporada($idtemporada, $idturma)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT count(*) FROM tb_insc 
+			WHERE idtemporada = :idtemporada
+			AND idturma = :idturma
+			AND (idinscstatus = 1 OR idinscstatus = 2)
+			AND laudo = 0 
+			AND inscpcd = 0 
+			AND inscpvs = 0", [
+				":idtemporada"=>$idtemporada,
+				":idturma"=>$idturma
+		]);
+		return $results[0]['count(*)'];		
+	}
+
+	public function getNumInscPublicoLaudoValidaTurmaTemporada($idtemporada, $idturma)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT count(*) FROM tb_insc 
+			WHERE idtemporada = :idtemporada
+			AND idturma = :idturma
+			AND (idinscstatus = 1 OR idinscstatus = 2)
+			AND laudo = 1 
+			AND inscpcd = 0 
+			AND inscpvs = 0", [
+				":idtemporada"=>$idtemporada,
+				":idturma"=>$idturma
+		]);
+		return $results[0]['count(*)'];		
+	}
+
+	public function getNumInscPublicoPcdValidaTurmaTemporada($idtemporada, $idturma)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT count(*) FROM tb_insc 
+			WHERE idtemporada = :idtemporada
+			AND idturma = :idturma
+			AND (idinscstatus = 1 OR idinscstatus = 2)
+			AND laudo = 0 
+			AND inscpcd = 1 
+			AND inscpvs = 0", [
+				":idtemporada"=>$idtemporada,
+				":idturma"=>$idturma
+		]);
+		return $results[0]['count(*)'];		
+	}
+
+	public function getNumInscPublicoPvsValidaTurmaTemporada($idtemporada, $idturma)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT count(*) FROM tb_insc 
+			WHERE idtemporada = :idtemporada
+			AND idturma = :idturma
+			AND (idinscstatus = 1 OR idinscstatus = 2)
+			AND laudo = 0 
+			AND inscpcd = 0 
+			AND inscpvs = 1", [
+				":idtemporada"=>$idtemporada,
+				":idturma"=>$idturma
+		]);
+		return $results[0]['count(*)'];		
 	}
 
 }

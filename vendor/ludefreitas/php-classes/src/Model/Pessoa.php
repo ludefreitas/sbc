@@ -363,7 +363,7 @@ class Pessoa extends Model {
 			INNER JOIN tb_inscstatus k USING(idinscstatus)
 			INNER JOIN tb_horario l USING(idhorario)
 			INNER JOIN tb_local m USING(idlocal)
-			WHERE d.idpess = :idpess
+			WHERE d.idpess = :idpess ORDER BY a.idinsc DESC
 		", [
 			':idpess'=>$this->getidpess()
 		]);

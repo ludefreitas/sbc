@@ -1,12 +1,12 @@
 
     <script type="text/javascript">
 
+    //alert('Estamos no período de rematrícula. ESTA INSCRIÇÃO NÃO GARANTE VAGA')
+    
         function alertTokenCreebaPcd(){
 
             alert("Conforme Resolução SESP Nº 004 de 28/10/2021 Art.7º, Os interessados em participar das turmas de inclusão para Pessoas com Deficiência (PCD) e/ou laudo médico do CREEBA, deverão comparecer pessoalmente (interessado ou representante legal) no CREEBA.")
         }
-
-        //alert('Estamos no período de rematrícula. ESTA INSCRIÇÃO NÃO GARANTE VAGA')
 
         function enormal(){ 
            document.getElementById('geral').hidden = false
@@ -19,24 +19,25 @@
             document.getElementById('temlaudo').hidden = false    
            document.getElementById('geral').hidden = true           
            document.getElementById('deficiente').hidden = true
-           document.getElementById('vulneravel').hidden = true
-        }  
-
-        function comdeficiencia(){     
+           document.getElementById('vulneravel').hidden = true   
+        } 
+        
+        function comdeficiencia(){  
            document.getElementById('deficiente').hidden = false
            document.getElementById('vulneravel').hidden = true            
              document.getElementById('temlaudo').hidden = true
-             document.getElementById('geral').hidden = true
+             document.getElementById('geral').hidden = true 
         }  
 
-        function comvulnerabilidade(){       
+        function comvulnerabilidade(){
            document.getElementById('vulneravel').hidden = false
             document.getElementById('deficiente').hidden = true
              document.getElementById('temlaudo').hidden = true
              document.getElementById('geral').hidden = true 
         }  
-
+        
     </script>
+
 
   <div class="container"> <!-- container 1 -->
             <div class="row"> <!-- row 2 -->
@@ -46,11 +47,11 @@
         <div id="container">
             <div class="row">
                 <div class="col-md-12">
-
+                    
                     <div class="col-md-12" style="color: black; text-align-last: center; font-size: 20px;">
 
                       <div>
-                         ETAPA <span style="font-weight: bold;">5</span> de <span style="font-weight: bold;">5</span> 
+                        ETAPA <span style="font-weight: bold;">5</span> de <span style="font-weight: bold;">5</span> 
                       </div>
 
                     </div>
@@ -59,8 +60,8 @@
                     <div class="alert alert-danger">
                     {$error}
                     </div>
-                    {/if}
-
+                    {/if} 
+                    
                     <div class="col-md-12" style="text-align-last: left; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; border-radius: 15px;"> 
 
                     {if="checkLogin(false)"} 
@@ -84,7 +85,13 @@
                           
                       {/if}
 
-                    </div>                     
+                    </div>
+                    
+                    <!--
+                    <div class="col-md-12" style="margin-top: 0px; margin-bottom: 0px; color: darkblue; text-align: center; font-size: 18px;">       
+                        Confirme abaixo os detalhes da inscrição e clique no botão <strong style="color: red;"> FINALIZAR </strong>
+                    </div>   
+                    -->
                       
                     <div class="row" style="padding-bottom: 5px; margin-bottom: 0px">
                         <div class="col-md-12 alert-primary" style="text-align-last: center; margin-bottom: 0px; padding-top: 5px; padding-bottom: 0px;">
@@ -96,7 +103,9 @@
                     <div class="row" style="margin-top: 0px; margin-bottom: 0px;">
                         <div class="col-md-12 alert alert-success" style="text-align: justify; padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px;">
                             <strong>[{$value.idturma}] - {$value.descativ} -</strong> Temporada <strong>{$value.desctemporada} -</strong>{$value.periodo}  das <strong>{$value.horainicio} às {$value.horatermino} </strong>de {$value.diasemana}, para  {$value.descrfxetaria} de {$value.initidade} a {$value.fimidade} anos,
-                            com o(a) professor(a) {$value.apelidoperson}, no <strong>{$value.apelidolocal}</strong> - {$value.rua} - Nº {$value.numero} - bairro {$value.bairro} - {$value.cidade} <span style="color: red;">({$value.numinscritos} inscritos para {$value.vagas} vagas)</span>
+                            no <strong>{$value.apelidolocal}</strong> - {$value.rua} - Nº {$value.numero} - bairro {$value.bairro} - {$value.cidade} <span style="color: red;"> - {$value.numinscritos} inscritos para {$value.vagas} vagas geral, {$value.vagaslaudo} vagas pessoas com laudo, {$value.vagaspcd} vagas pcd`s e {$value.vagaspvs} vagas vuln. social.
+                            
+                            </span>
                             <input type="hidden" name="idtemporada" value="{$value.idtemporada}">
                             <input type="hidden" name="idturma" value="{$value.idturma}">
                             <input type="hidden" name="idlocal" value="{$value.idlocal}">
@@ -113,105 +122,159 @@
 
                                 <strong style="font-style: italic;"> Selecione uma das opções abaixo:
                             </strong><br><br>
-
-                            {if="$inscGeral >= $maxListaEsperaGeral"}
+                            
+                            
+                            <!-- {if="$inscGeral >= $maxListaEsperaGeral"} 
+                                 {/if}
+                            -->
+                           {if="naoHaVagasPubGeral($value.idtemporada, $value.idturma)"}
+                            
 
                                 {if="$tokencpf != 0"}
-                                    <input type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> <span style="font-size: 12px; color: red">({$inscGeral} insc. para {$vagasGeral} vagas) </span>
+                                    <input type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> <span style="font-size: 12px; color: red">({$inscGeral} insc. para {$value.vagas} vagas) </span>
                                 <br>
                                     
                                 {else}
+                                
+                                {if="naoHaVagasListaEsperaPubGeral($value.idtemporada, $value.idturma)"}
+                                          <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> 
+
+                                          <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)</span>
+                                <br>
+                                    {else}
+                                        <input type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> 
+
+                                        <span style="font-size: 12px; color: red">({$inscGeral} insc. para {$value.vagas} vagas) -</span>
+                                
+                                        <span style="font-size: 12px; color: red">{function="vagasListaEsperaPubGeralMenosInscPubGeral($value.idtemporada, $value.idturma)"} de 
+                                        {function="vagasTotaisListaEsperaGeral($value.vagas)"} vagas p/ lista de espera p/ público geral </span>
+                                     {/if}
+                                
+
+                                <!--
 
                                 <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)</span>
                                 <br>
+                                -->
                                     
                                 {/if}
-
                             {else}
 
-                                <input type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> <span style="font-size: 12px; color: red">({$inscGeral} insc. para {$vagasGeral} vagas) </span>
+                                <input type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> <span style="font-size: 12px; color: red">({$inscGeral} insc. para {$value.vagas} vagas)</span>
                             <br>
 
                             {/if}
-                           
+                            
                             <div id="geral" hidden="true">    
-                             {if="$inscGeral >= $vagasGeral"}                             
+                             {if="$inscGeral >= $value.vagas"}                             
                                 <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
                                     <!--
-                                    <input type="radio" name="espera" required="required" style="height: 20px; width: 20px;">&nbsp; Ao clicar nesta opção de que esta inscrição não garante vaga e que estou numa lista de espera no Grupo do Público em Geral, aguardando ser comunicado de uma eventual vaga. Confirmo ainda que tenho cadastrado e atualizado, neste site, meu número de telefone celular com whatsapp para receber o comunicado.
-                                -->
-                                Ao clicar nesta opção de inscrição você está ciente que esta não garante vaga e que você está numa lista de espera do Grupo do Público em Geral, aguardando ser comunicado de uma eventual vaga. Você confirma ainda que tem cadastrado e atualizado, neste site, seu número de telefone celular com whatsapp para receber o comunicado.
+                                    <input type="radio" name="espera" required="required" style="height: 20px; width: 20px;">&nbsp; Estou ciente que esta inscrição não garante vaga e que estou numa lista de espera no Grupo do Público em Geral, aguardando ser comunicado de uma eventual vaga. Confirmo ainda que tenho cadastrado e atualizado, neste site, meu número de telefone celular com whatsapp para receber o comunicado.
+                                    -->
+                                    Ao clicar nesta opção de inscrição você está ciente que esta não garante vaga e que você está numa lista de espera do Grupo do Público em Geral, aguardando ser comunicado de uma eventual vaga. Você confirma ainda que tem cadastrado e atualizado, neste site, seu número de telefone celular com whatsapp para receber o comunicado.
                                 </div> 
                             {else}
                                 <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
-                                Lembre-se: As aulas já começaram, então você deve comprarecer com os documentos pessoais no {$value.apelidolocal}, sem falta, já na próxima {$value.diasemana} das {$value.horainicio} às {$value.horatermino}.
+                                Lembre-se: As aulas já começaram, seu nome irá para uma lista de espera. Assim que a vaga estiver diponível, entraremos em contato.
                                 </div> 
 
                             {/if}
                             </div>                           
-                            <br>                              
-
-                            {if="$inscPlm >= $maxListaEsperaPlm"}
+                            <br> 
+                            
+                            
+                                <!-- {if="$inscLaudo >= $maxListaEsperaLaudo"} {/if} -->
+                                {if="naoHaVagasPubLaudo($value.idtemporada, $value.idturma)"}
 
                                 {if="$tokencpf != 0"}
 
-                                    <input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) <span style="font-size: 12px; color: red">({$inscPlm} insc. para {$vagasPlm} vagas)</span>                                
+                                    <input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) <span style="font-size: 12px; color: red">({$inscPlm} insc. para {$value.vagaslaudo} vagas)</span>                                
                                     <br>
 
                                 {else}
 
-                                    <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)</span>                       
-                                    <br>
+                                   {if="naoHaVagasListaEsperaPubLaudo($value.idtemporada, $value.idturma)"}
+                                        <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
+
+                                        <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)</span>   
+                                    <br>                                       
+                                     {else}
+                                        <input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
+
+                                        <span style="font-size: 12px; color: red">({$inscPlm} insc. para {$value.vagaslaudo} vagas) -</span>                                
+                                        <span style="font-size: 12px; color: red">{function="vagasListaEsperaPubLaudoMenosInscPubLaudo($value.idtemporada, $value.idturma)"} de 
+                                        {function="vagasTotaisListaEsperaLaudo($value.vagaslaudo)"} vagas para lista de espera p/ pessoas com laudo médico</span> <br>                      
+                                    {/if}
 
                                 {/if}
                             {else}
-                                <input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) <span style="font-size: 12px; color: red">({$inscPlm} insc. para {$vagasPlm} vagas)</span>                                
+                                <input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) <span style="font-size: 12px; color: red">({$inscPlm} insc. para {$value.vagaslaudo} vagas)</span>                                
                             <br>
                             {/if}
-                            
-                            <div id="temlaudo" hidden="true">                                
+
+                            <div id="temlaudo" hidden="true"> 
                                 <input type="text" name="temlaudo" id="temlaudo" placeholder="Informe o CID da doença" style="width: 300px">
                                     <br>
                                 <span style="color: red; font-size: 12px; font-style: italic;">* Ao clicar nesta opção de inscrição com laudo médico, você deverá informar no campo acima o CID da doença e apresentar, <strong>OBRIGATÓRIAMENTE</strong> ao professor, a solicitação médica com o respectivo CID, para efetuar a matrícula.</span><br>
-                                {if="$inscPlm >= $vagasPlm"}
+                                {if="$inscPlm >= $value.vagaslaudo"}
                                     <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
                                         <!--
-                                        <input type="radio" name="espera" required="required" style="height: 20px; width: 20px;">&nbsp; Ao clicar nesta opção de que esta inscrição não garante vaga e que estou numa lista de espera do Grupo de Pessoas Com Laudo Médico, aguardando ser comunicado de uma eventual vaga. Confirmo ainda que tenho cadastrado e atualizado, neste site, meu número de telefone celular com whatsapp para receber o comunicado.
-                                    -->
-                                    Ao clicar nesta opção de inscrição você está ciente que esta não garante vaga e que você está numa lista de espera do Grupo de Pessoas Com Laudo Médico, aguardando ser comunicado de uma eventual vaga. Você confirma ainda que tem cadastrado e atualizado, neste site, seu número de telefone celular com whatsapp para receber o comunicado.
+                                        <input type="radio" name="espera" required="required" style="height: 20px; width: 20px;">&nbsp; Estou ciente que esta inscrição não garante vaga e que estou numa lista de espera do Grupo de Pessoas Com Laudo Médico, aguardando ser comunicado de uma eventual vaga. Confirmo ainda que tenho cadastrado e atualizado, neste site, meu número de telefone celular com whatsapp para receber o comunicado.
+                                        -->
+                                        Ao clicar nesta opção de inscrição você está ciente que esta não garante vaga e que você está numa lista de espera do Grupo de Pessoas Com Laudo Médico, aguardando ser comunicado de uma eventual vaga. Você confirma ainda que tem cadastrado e atualizado, neste site, seu número de telefone celular com whatsapp para receber o comunicado.
                                     </div> 
-                                    {else}
-                                        <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
-                                        Lembre-se: As aulas já começaram, então você deve comprarecer com os documentos pessoais no {$value.apelidolocal}, sem falta, já na próxima {$value.diasemana} das {$value.horainicio} às {$value.horatermino}.
-                                        </div> 
+                                {else}
+                                    <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
+                                   Lembre-se: As aulas já começaram, seu nome irá para uma lista de espera. Assim que a vaga estiver diponível, entraremos em contato.
+                                    </div> 
 
-                                    {/if}
+                                {/if}
                             </div>                            
-                            <br> 
+                            <br>  
+                                
+                            <!-- {if="$inscPcd >= $maxListaEsperaPcd"} {/if} -->
+                            {if="naoHaVagasPubPcd($value.idtemporada, $value.idturma)"}
 
-                            {if="$inscPcd >= $maxListaEsperaPcd"}
                                 {if="$tokencpf != 0"}
 
-                                    <input type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> <span style="font-size: 12px; color: red">({$inscPcd} insc. para {$vagasPcd} vagas)</span>
+                                    <input type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> <span style="font-size: 12px; color: red">({$inscPcd} insc. para {$value.vagaspcd} vagas)</span>
                                     <br>
 
                                 {else}
 
-                                    <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)</span>                                
+                                    {if="naoHaVagasListaEsperaPubPcd($value.idtemporada, $value.idturma)"}
+                                        <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)</span>                                
                                     <br>
+                                    {else}
+                                    
+                                        <input type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> <span style="font-size: 12px; color: red">({$inscPcd} insc. para {$value.vagaspcd} vagas)</span>
+                                           
+                                        <span style="font-size: 12px; color: red">{function="vagasListaEsperaPubPcdMenosInscPubPcd($value.idtemporada, $value.idturma)"} de 
+                                        {function="vagasTotaisListaEsperaPcd($value.vagaspcd)"} vagas para lista de espera para PCD`s
+                                        </span>   
+                                        
+                                        <br>
+                                        
+                                         <span style="color: darkblue;" onmousemove="alertTokenCreebaPcd()" >
+                                        <strong>Necessário token</strong>&nbsp;             
+                                        </span>
+                                        <a href="#" onmousemove="alertTokenCreebaPcd()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></a>
+                                        <br>                                    
+                                        
+                                    {/if}
 
-                                {/if}   
+                                {/if} 
+                                
                             {else}
-
                                 {if="$value.idlocal == 5"}
                                     {if="$tokencpf != 0"}
 
-                                        <input type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> <span style="font-size: 12px; color: red">({$inscPcd} insc. para {$vagasPcd} vagas)</span>
+                                        <input type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> <span style="font-size: 12px; color: red">({$inscPcd} insc. para {$value.vagaspcd} vagas)</span>
                                          <br>
 
                                     {else}
 
-                                        <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> <span style="font-size: 12px; color: red">({$inscPcd} insc. para {$vagasPcd} vagas)</span>&nbsp;
+                                        <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> <span style="font-size: 12px; color: red">({$inscPcd} insc. para {$value.vagaspcd} vagas)</span>&nbsp;
 
                                         <span style="color: darkblue;" onmousemove="alertTokenCreebaPcd()" >
                                         <strong>Necessário token</strong>&nbsp;             
@@ -222,69 +285,78 @@
                                 
                                 {else}
 
-                                    <input type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> <span style="font-size: 12px; color: red">({$inscPcd} insc. para {$vagasPcd} vagas)</span>
+                                    <input type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> <span style="font-size: 12px; color: red">({$inscPcd} insc. para {$value.vagaspcd} vagas)</span>
                                     <br>
                                 {/if}
+                            {/if}
                             
-                            {/if} 
-        
-                            <div id="deficiente" hidden="true">
+                           <div id="deficiente" hidden="true">
                                 <input type="text" name="deficiente" id="deficiente" placeholder="Informe o CID da deficiência" style="width: 300px">
                                     <br>
                                 <span style="color: red; font-size: 12px; font-style: italic;">* Ao clicar nesta opção de inscrição para Pessoa Com Deficiência você deverá informar no campo acima o <strong>CID</strong> da doença, igual ao que você informou nos dados de saúde do(a) {$pessoa.nomepess}!</span><br>
-                                {if="$inscPcd >= $vagasPcd"}
+                                {if="$inscPcd >= $value.vagaspcd"}
                                     <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
                                         <!--
-                                        <input type="radio" name="espera" required="required">&nbsp;&nbsp; Ao clicar nesta opção de que esta inscrição não garante vaga e que estou numa lista de espera do Grupo de Pessoas Com Deficiência, aguardando ser comunicado de uma eventual vaga. Confirmo que tenho cadastrado e atualizado, neste site, meu número de telefone celular com whatsapp para receber o comunicado.
-                                    -->
-                                    Ao clicar nesta opção de inscrição você está ciente que esta não garante vaga e que você está numa lista de espera do Grupo de Pessoas Com Deficiência, aguardando ser comunicado de uma eventual vaga. Você confirma ainda que tem cadastrado e atualizado, neste site, seu número de telefone celular com whatsapp para receber o comunicado.
+                                        <input type="radio" name="espera" required="required">&nbsp;&nbsp; Estou ciente que esta inscrição não garante vaga e que estou numa lista de espera do Grupo de Pessoas Com Deficiência, aguardando ser comunicado de uma eventual vaga. Confirmo que tenho cadastrado e atualizado, neste site, meu número de telefone celular com whatsapp para receber o comunicado.
+                                        -->
+                                        Ao clicar nesta opção de inscrição você está ciente que esta não garante vaga e que você está numa lista de espera do Grupo de Pessoas Com Deficiência, aguardando ser comunicado de uma eventual vaga. Você confirma ainda que tem cadastrado e atualizado, neste site, seu número de telefone celular com whatsapp para receber o comunicado.
                                     </div> 
                                 {else}
                                     <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
-                                    Lembre-se: As aulas já começaram, então você deve comprarecer com os documentos pessoais no {$value.apelidolocal}, sem falta, já na próxima {$value.diasemana} das {$value.horainicio} às {$value.horatermino}.
+                                    Lembre-se: As aulas já começaram, seu nome irá para uma lista de espera. Assim que a vaga estiver diponível, entraremos em contato.
                                     </div> 
 
                                 {/if}
                                 </div>                                
                                 <br>
-
-                            {if="$inscPvs >= $maxListaEsperaPvs"}
+                                
+                            <!-- {if="$inscPvs >= $maxListaEsperaPvs"} {/if} -->
+                            {if="naoHaVagasPubPvs($value.idtemporada, $value.idturma)"}
 
                                 {if="$tokencpf != 0"}
 
-                                    <input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong> <span style="font-size: 12px; color: red">({$inscPcd} insc. para {$vagasPcd} vagas)</span>
+                                    <input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong> <span style="font-size: 12px; color: red">({$inscPvs} insc. para {$value.vagaspvs} vagas)</span>
                                     <br>
 
                                 {else}
                                 
-                                    <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong> <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)</span>
+                                   {if="naoHaVagasListaEsperaPubPvs($value.idtemporada,                $value.idturma)"}
+                                         <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong> 
+
                                     <br>
+                                        <span style="font-size: 12px; color: red">não há vagas para lista de espera para pessoas em Vuln. social</span>
+                                    {else}
+                                        <input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong>                            <br>
+                                         <span style="font-size: 12px; color: red">{function="vagasListaEsperaPubPvsMenosInscPubPvs($value.idtemporada, $value.idturma)"} de 
+                                        {function="vagasTotaisListaEsperaPvs($value.vagaspvs)"} vagas para lista de espera para pessoas em Vuln. social</span>
+
+                                    {/if}
 
                                 {/if}
                             {else}
-                                <input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong> <span style="font-size: 12px; color: red">({$inscPcd} insc. para {$vagasPcd} vagas)</span>
+                                <input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong> <span style="font-size: 12px; color: red">({$inscPvs} insc. para {$value.vagaspvs} vagas)</span>
                             <br>
                             
-                            {/if} 
+                            {/if}
                             
                             <div id="vulneravel" hidden="true"> 
                                 <span style="color: red; font-size: 12px; font-style: italic;">* Ao clicar nesta opção de inscrição para pessoa em vulnerabilidade social (pessoa participante de programas sociais do governo), você deve ter cadastrado o {$pessoa.nomepess} informando o número de inscrição no Cadùnico/NIS e apresentar, <strong>OBRIGATÓRIAMENTE,</strong> ao professor para fazer a matrícula.</span><br>
                                 {if="$inscPvs >= $vagasPvs"}
                                     <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
                                         <!--
-                                        <input type="radio" name="espera" required="required" style="height: 20px; width: 20px;">&nbsp; Ao clicar nesta opção de que esta inscrição não garante vaga e que estou numa lista de espera do Grupo de Pessoas em Vulnerabilidade Social, aguardando ser comunicado de uma eventual vaga. Confirmo que tenho cadastrado e atualizado, neste site, meu número de telefone celular com whatsapp para receber o comunicado.
-                                    -->
-                                    Ao clicar nesta opção de inscrição você está ciente que esta não garante vaga e que você está numa lista de espera do Grupo de Pessoas em Vulnerabilidade Social, aguardando ser comunicado de uma eventual vaga. Você confirma ainda que tem cadastrado e atualizado, neste site, seu número de telefxone celular com whatsapp para receber o comunicado.
+                                        <input type="radio" name="espera" required="required" style="height: 20px; width: 20px;"> Estou ciente que esta inscrição não garante vaga e que estou numa lista de espera do Grupo de Pessoas em Vulnerabilidade Social, aguardando ser comunicado de uma eventual vaga. Confirmo que tenho cadastrado e atualizado, neste site, meu número de telefone celular com whatsapp para receber o comunicado.
+                                        -->
+                                        Ao clicar nesta opção de inscrição você está ciente que esta não garante vaga e que você está numa lista de espera do Grupo de Pessoas em Vulnerabilidade Social, aguardando ser comunicado de uma eventual vaga. Você confirma ainda que tem cadastrado e atualizado, neste site, seu número de telefone celular com whatsapp para receber o comunicado.
                                     </div> 
                                 {else}
                                     <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
-                                    Lembre-se: As aulas já começaram, então você deve comprarecer com os documentos pessoais no {$value.apelidolocal}, sem falta, já na próxima {$value.diasemana} das {$value.horainicio} às {$value.horatermino}.
+                                    Lembre-se: As aulas já começaram, seu nome irá para uma lista de espera. Assim que a vaga estiver diponível, entraremos em contato.
                                     </div> 
 
                                 {/if}
                             </div>                            
-                            <br>  
-
+                            <br>
+                            
                         </div>
                         </div>                                       
                         <!--
@@ -329,8 +401,9 @@
                                 
                             </div>
                         </div> 
+                        -->
 
-    <! ------- ALTERAR COLOCANDO ESTAS LINHAS -------------------------------->
+    
                         <!--
                         <div class="col-md-12 alert alert-success" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px;">
                            
@@ -350,8 +423,9 @@
                                     <span style="color: red; font-size: 12px; font-style: italic;">* Ao clicar na opção <strong>SIM</strong> de inscrição para Pessoa Com Deficiência você deverá informar no campo acima o <strong>CID</strong> da doença, igual ao que você informou nos dados de saúde do(a) {$pessoa.nomepess}!</span><br>
                                 </div>
                             </div>
-                        </div>   
-    <! ------- ATÉ AQUI ---------------------------------------->
+                        </div> 
+                        --> 
+   
                         <!--
                         <div class="col-md-12 alert alert-success" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px;">
                            
@@ -373,7 +447,7 @@
                         --> 
 
                          <div class="col-md-12 alert alert-warning" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align-last: justify;">
-                            <input type="radio" name="edital" required="required" style="height: 20px; width: 20px;">&nbsp; Li e concordo com os termos do processo de inscrições para os cursos esportivos<strong> 2023 </strong>conforme <a href="https://www.saobernardo.sp.gov.br/documents/1136654/1572881/Edital+2023/c44ca253-7614-6823-1231-9d88c36efab4/" target="_blank"><br>Resolução SESP Nº 003/2022</a>
+                            <input type="radio" name="edital" required="required" style="height: 20px; width: 20px;"> Li e concordo com os termos do processo de inscrições para os cursos esportivos<strong> 2023 </strong>conforme <a href="https://www.saobernardo.sp.gov.br/documents/1136654/1572881/Edital+2023/c44ca253-7614-6823-1231-9d88c36efab4" target="_blank"><br>Resolução SESP Nº 003/2022</a>
 
                         </div> 
                        
@@ -414,7 +488,7 @@
                     <div class="row" style="padding-top: 0px;">
                         
                        <div class="col-md-6 alert alert-success" style="text-align-last: center; padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px;">
-                            <input type="radio" name="ciente" required="required" style="height: 20px; width: 20px;"><label style="color: red; padding-top: 10px;">&nbsp;Ciente</label>
+                            <input type="radio" name="ciente" required="required" style="height: 20px; width: 20px;"><label style="color: red; padding-top: 10px;">&nbsp; Estou ciente</label>
                         </div>
                         <div class="col-md-6 alert alert-success" style="text-align-last: center; padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px;">
                              <input type="submit" data-value="Place order" value="Finalizar" id="place_order" name="insc" class="button alt" >                     

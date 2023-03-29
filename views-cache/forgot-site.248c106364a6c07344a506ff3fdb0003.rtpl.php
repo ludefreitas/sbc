@@ -41,6 +41,8 @@
       <div class="input-group">
         <input type="email" class="form-control" placeholder="Digite o e-mail cadastrado" name="email">
 
+         <input type="numcpf" class="form-control" placeholder="Digite o CPF cadastrado - ( 000.000.000-00 )" name="numcpf">
+
         <input type="password" class="form-control" placeholder="Digite a nova senha" name="novasenha">
 
         <input type="password" class="form-control" placeholder="Repita a nova senha" name="repetesenha">

@@ -156,7 +156,7 @@
                 {if="$value.idperson == 7"}
                 SBC
                 {else}
-               {$value.desperson}
+               {$value.apelidoperson}
                {/if}
               </td>              
               <td style="text-align: center; border: solid 1px; color: darkblue; padding: 5px;">
@@ -181,7 +181,7 @@
                {$value.origativ}
               </td>
               <td style="text-align: center; border: solid 1px; padding: 5px;">
-               {$value.vagas}
+               {$value.vagas+$value.vagaslaudo+$value.vagaspcd+$value.vagaspvs}
               </td>
               <td style="text-align: center; border: solid 1px; padding: 5px;">
                {$value.nummatriculados}

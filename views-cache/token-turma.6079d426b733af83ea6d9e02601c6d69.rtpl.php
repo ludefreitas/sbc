@@ -49,7 +49,7 @@
                     <span style="font-weight: bold; color: darkblue;">                  
                         <?php echo htmlspecialchars( $value1["token"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span> <br>
                         <?php if( $value1["numcpf"] ){ ?>
-                            <?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                            <?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?> 
                         <?php }else{ ?>
                             NULL
                         <?php } ?>
@@ -60,12 +60,18 @@
                     </span><br>
 
                         <?php if( $value1["numcpf"] ){ ?>
-                            <?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                            <?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?> 
                         <?php }else{ ?>
                             NULL
                         <?php } ?>               
                     <?php } ?>
-            </div>               
+                <br>   
+
+                    Criado por: <?php echo getUserNameById($value1["creator"]); ?>
+            </div>  
+
+           
+
           <?php } ?>           
             <!-- /.box-body -->
         </div>

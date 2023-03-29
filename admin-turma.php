@@ -88,7 +88,7 @@ $app->get("/admin/turma/create", function() {
 		'modalidade'=>$modalidade,
 		//'turmastatus'=>$turmastatus,
 		'error'=>Turma::getMsgError(),
-		'createTurmaValues'=>(isset($_SESSION['createTurmaValues'])) ? $_SESSION['createTurmaValues'] : ['descturma'=>'', 'idmodal'=>'', 'idhorario'=>'', 'idativ'=>'', 'idespaco'=>'', 'idturmastatus'=>'', 'vagas'=>'', 'obs'=>'']
+		'createTurmaValues'=>(isset($_SESSION['createTurmaValues'])) ? $_SESSION['createTurmaValues'] : ['descturma'=>'', 'idmodal'=>'', 'idhorario'=>'', 'idativ'=>'', 'idespaco'=>'', 'idturmastatus'=>'', 'vagas'=>'', 'vagaslaudo'=>'', 'vagaspcd'=>'', 'vagaspvs'=>'', 'obs'=>'']
 	]);
 });
 
@@ -140,11 +140,27 @@ $app->post("/admin/turma/create", function() {
 	$_POST['obs'] = isset($_POST['obs']) ?  $_POST['obs'] = $_POST['obs'] : $_POST['obs'] = '';
 
 
-	if (!isset($_POST['vagas']) || $_POST['vagas'] == '') {
+	if (!isset($_POST['vagasgeral']) || $_POST['vagasgeral'] == '') {
 		Turma::setMsgError("Informe o número de vagas.");
 		header("Location: /admin/turma/create");
 		exit;		
-	}	
+	}
+
+	if($idturma == 598 || $idturma == 599 || $idturma == 600 || $idturma == 601){
+
+		$_POST['vagaslaudo']  = round($_POST['vagasgeral'] * 0.8);
+		$_POST['vagaspcd']  = round($_POST['vagasgeral'] * 0.1);
+		$_POST['vagaspvs']  = round($_POST['vagasgeral'] * 0.1);
+		$_POST['vagas']  = round($_POST['vagasgeral'] * 0.0);
+	
+	}else{
+
+		$_POST['vagaslaudo']  = round($_POST['vagasgeral'] * 0.1);
+		$_POST['vagaspcd']  = round($_POST['vagasgeral'] * 0.1);
+		$_POST['vagaspvs']  = round($_POST['vagasgeral'] * 0.1);
+		$_POST['vagas']  = round($_POST['vagasgeral'] * 0.7);
+
+	}		
 
 	$_POST['token'] = isset($_POST['token']) ?  1 : 0;
 
@@ -245,12 +261,32 @@ $app->post("/admin/turma/:idturma", function($idturma) {
 	}
 	*/
 
-	if (!isset($_POST['vagas']) || $_POST['vagas'] == '') {
-		Turma::setMsgError("Informe o número de vagas.");
-		header("Location: /admin/turma/".$idturma."");
-		exit;		
+
+	if (!isset($_POST['vagasgeral']) || $_POST['vagasgeral'] == '') {
+
+		echo "<script>alert('Informe o número de vagas geral.');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+		//Turma::setMsgError("Informe o número de vagas.");
+		//header("Location: /admin/turma/".$idturma."");
+		//exit;		
 	}
 
+	if($idturma == 11 || $idturma == 599 || $idturma == 600 || $idturma == 601){
+
+		$_POST['vagaslaudo']  = round($_POST['vagasgeral'] * 0.8);
+		$_POST['vagaspcd']  = round($_POST['vagasgeral'] * 0.1);
+		$_POST['vagaspvs']  = round($_POST['vagasgeral'] * 0.1);
+		$_POST['vagas']  = round($_POST['vagasgeral'] * 0.0);
+	
+	}else{
+
+		$_POST['vagaslaudo']  = round($_POST['vagasgeral'] * 0.1);
+		$_POST['vagaspcd']  = round($_POST['vagasgeral'] * 0.1);
+		$_POST['vagaspvs']  = round($_POST['vagasgeral'] * 0.1);
+		$_POST['vagas']  = round($_POST['vagasgeral'] * 0.7);
+
+	}
 
 	$_POST['token'] = isset($_POST['token']) ?  1 : 0;
 
@@ -306,19 +342,35 @@ $app->get("/admin/turma/create/token/:idturma", function($idturma) {
 	//exit();	
 });
 
-$app->get("/admin/turma/create/token/:idturma/:numcpf", function($idturma, $numcpf) {
+$app->get("/admin/turma/create/token/:idturma/:idtemporada/:numcpf", function($idturma, $idtemporada, $numcpf) {
 
 	User::verifyLogin();
 
 	$turma = new Turma();
+	$user = new User();
 
 	$token = time();
 	$token = substr($token, 4);
+
+	$iduserSession = (int)$_SESSION[User::SESSION]['iduser'];
+
+	$iduserTurmaTemporada = $user->getIdUseInTurmaTemporada($idturma, $idtemporada);
+	
+	$iduserTurmaTemporada = (int)$iduserTurmaTemporada['iduser'];
+	
+	if($iduserTurmaTemporada !== $iduserSession){
+	    
+	    echo '<script>alert("Você deve solicitar ao professor desta turma para que ele gere o token!");';
+	  	echo 'javascript:history.go(-1)</script>';
+	   	exit;
+	   
+	}
 
 	$_POST['idturma'] = $idturma;
 	$_POST['numcpf'] = $numcpf;
 	$_POST['token'] = $token;
 	$_POST['isused'] = 0;
+	$_POST['creator'] = $iduserSession;
 
 	$turma->setData($_POST);
 
@@ -339,6 +391,7 @@ $app->post("/admin/turma/create/token", function() {
 	User::verifyLogin();
 
 	$turma = new Turma();
+	$user = new User();
 
 	$iduserSession = (int)$_SESSION[User::SESSION]['iduser'];
 
@@ -369,6 +422,7 @@ $app->post("/admin/turma/create/token", function() {
 	$_POST['numcpf'] = $_POST['numcpf'];
 	$_POST['token'] = $token;
 	$_POST['isused'] = 0;
+	$_POST['creator'] = $iduserSession;
 
 	$turma->setData($_POST);
 
@@ -413,6 +467,31 @@ $app->get("/admin/token/:idturma", function($idturma) {
 
 	$page->setTpl("token-turma", [
 		'tokens'=>$tokens,
+		'turma'=>$turma->getValues(),
+		"error"=>Turma::getMsgError()	
+	]);
+});
+
+$app->get("/admin/token/:idturma/:idtemporada", function($idturma, $idtemporada) {
+
+	User::verifyLogin();
+
+	$turma = new Turma();
+
+	$turma->get((int)$idturma);	
+
+	$tokens = Turma::listAlltokenTurma($idturma);
+
+	if(!isset($turma) || $turma == NULL){
+
+		Turma::setMsgError("Não existem tokens para esta turma.");
+	}
+	
+	$page = new PageAdmin(); 
+
+	$page->setTpl("token-turma", [
+		'tokens'=>$tokens,
+		'idtemporada'=>$idtemporada,
 		'turma'=>$turma->getValues(),
 		"error"=>Turma::getMsgError()	
 	]);

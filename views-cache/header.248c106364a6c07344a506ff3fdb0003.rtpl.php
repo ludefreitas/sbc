@@ -66,6 +66,7 @@
                             </a>
                         </div>                        
                         <?php echo getUserIsProf(); ?>
+                        <?php echo getUserIsAudi(); ?> 
                         <?php echo getUserIsAdmin(); ?>
                         <div class="nav-item">
                             <a href="/cart" class="nav-link">
@@ -142,14 +143,7 @@
               </div>
                          
 
-               <div class="col-md-6" style="text-align: center; margin: 10px 0px 0px 0px;">
-                 <form action="/busca">
-                <input type="text" name="search" placeholder="Pesquisa" style="text-align-last: center;">
-                <button type="submit" class="btn btn-default btn-sm">
-                  <i class="fa fa-search"></i>
-                </button>
-                </form>                                              
-              </div>
+               
 
             </div>
           </div>    

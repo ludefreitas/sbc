@@ -1,0 +1,166 @@
+
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+<h1>
+ Turmas relacionadas à Temporada {$temporada.desctemporada} - {$temporada.descstatustemporada}   
+
+</h1>
+<ol class="breadcrumb">
+  <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+  
+</ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+<div class="row">
+
+  {if="$error != ''"}
+          <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
+      {$error}
+          </div>
+      {/if}
+  <div class="col-md-12">
+
+      <div class="box box-primary"> 
+
+        
+      <div class="box-body" style="border: solid 1px lightblue; margin: 5px;"> 
+      <div class="box-body col-md-2">
+          {loop="$modalidades"}
+                  <a href="/admin/turma-temporada-audi/{$temporada.idtemporada}/modalidade/{$value.idmodal}"><i class=""></i>{$value.descmodal}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          {/loop}
+              <!--    <table class="table table-striped">
+                      <thead>
+                          <tr>
+                           <th>Turmas da temporada por centro esportivo</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+
+                          <tr>
+                          <td>
+                              <a href="/admin/turma-temporada/{$temporada.idtemporada}"><i class=""></i>Todas turmas - Temporada {$temporada.desctemporada}</a>
+                          </td>
+                          {loop="$locais"}
+                          <tr>
+                          <td>
+                              <a href="/admin/turma-temporada/{$temporada.idtemporada}/local/{$value.idlocal}"><i class=""></i> {$value.idlocal} - {$value.apelidolocal}</a>
+                          </td>
+                          </tr>
+                          {/loop}
+
+                      </tbody>
+                  </table>
+                -->
+              </div> 
+          <div class="box-body no-padding col-md-10">
+       <div class="box-header">   
+
+          {if="$modalidade == null"}
+
+          <h3>Todas Modalidades</h3>
+
+          {else}
+
+          <h3>{$modalidade.descmodal}</h3>
+
+          {/if}       
+       </div>
+            
+                {loop="$turmas"}
+                <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+        
+
+                  <div class="row">
+
+                    <div class="col-md-6" >
+                      <span style="text-align: left;">
+                       
+                          <strong>{$value.descturma}</strong> 
+                          - {$value.diasemana}
+                          {$value.horainicio} ás {$value.horatermino} -  
+                          <strong>{$value.descrfxetaria}  {$value.initidade} a {$value.fimidade} anos</strong>
+                          -  {$value.apelidolocal} - {$value.nomeespaco} - <strong>Professor: {if="$value.idperson == 1"} Admin Master {else} {$value.apelidoperson} {/if}</strong>&nbsp; ({$value.vagas} vagas)
+                      </span>
+                    </div>      
+                   <div class="col-md-6">
+
+                      <h5 style="font-weight: bold; text-align: left; color: green;">
+                         <strong style="color: orange;">[{$value.idturma}]</strong> &nbsp;&nbsp;
+                         <a href="/admin/insc-turma-temporada-audi/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}"> 
+                         | &nbsp; Consultar {$value.numinscritos} inscritos &nbsp;
+                         </a> &nbsp; 
+
+                         <a href="/admin/insc-turma-temporada-chamada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: green;"> 
+                         | &nbsp; Imprimir lista chamada ({$value.nummatriculados}) &nbsp; 
+                         </a> &nbsp; 
+                         <!--
+                         <a href="/admin/calendario-lista-presenca/{$value.idtemporada}/{$value.idturma}" style="color: orangered;">
+                         | &nbsp;Fazer Chamada </a>  &nbsp; 
+                         &nbsp;  
+                     -->
+
+                         <a href="/admin/listapessoasporturma/{$value.idturma}/{$value.idtemporada}" style="color: black;">
+                         | &nbsp; Lista com endereços </a>  &nbsp; 
+                         &nbsp;  
+                         
+                         <!--
+                         <a href="/insc-turma-temporada-classificadas/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: orangered;">
+                         | &nbsp; Classificação </a>  &nbsp; 
+                         &nbsp;  
+                         -->
+                         
+                         <!--
+                         &nbsp; <a href="/admin/insc-turma-temporada-matricular/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: darkblue;">
+                         | Lista/Matricular </a>  &nbsp;   
+                         -->
+                         
+                      <!--  | &nbsp; <a href="/insc-turma-temporada-para-sorteio/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: orangered;">  Sorteio |</a>  &nbsp;  
+                      -->
+
+                            <!--
+
+                          <a href="/admin/token/{$value.idturma}" style="color: darkblue;"><i ></i> | Tokens</a>
+                      -->
+                      </h5>
+                    </div>                    
+                    
+                  </div>
+                </div>
+                
+                {/loop}
+            <!--
+            <button type="button" onclick="window.print()" class="btn btn-primary pull-right" style="margin-right: 5px;">
+                  <i class="fa fa-print"></i> Imprimir
+              </button>
+            -->
+          </div>
+          
+          
+          <!-- /.box-body -->
+
+
+           
+            
+
+          <div class="box-footer clearfix">
+            <ul class="pagination pagination-sm no-margin pull-right">
+              {loop="$pages"}
+              <li><a href="{$value.href}">{$value.text}</a></li>
+              {/loop}
+            </ul>
+          </div>
+
+        </div>
+
+  </div>
+</div>
+</div>
+
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

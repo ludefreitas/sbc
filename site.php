@@ -14,14 +14,12 @@ use \Sbc\Model\Local;
 use \Sbc\Model\Saude;
 
 $app->get('/', function() {
-
-	$_SESSION['User'] = isset($_SESSION['User']) ? $_SESSION['User'] : $_SESSION['User'] = NULL;
-
-	
-	//if(isset($_SESSION['User']) && ($_SESSION['User']['inadmin'] != 1) && ($_SESSION['User']['isprof'] != 1)) {
-
-	
-
+    
+    $_SESSION['User'] = isset($_SESSION['User']) ? $_SESSION['User'] : $_SESSION['User'] = NULL;
+    
+    //if(isset($_SESSION['User']) && (($_SESSION['User']['inadmin'] != 1) || ($_SESSION['User']['isprof'] != 1))) {
+    
+    /*
 	if(isset($_SESSION['User']) && $_SESSION['User']['inadmin'] != 1) {
 	    
 	    $userVisitante = User::pega_totalVisitantesOnline();
@@ -33,12 +31,13 @@ $app->get('/', function() {
 			header('Location: /redirecionando');
 		}
 	}
-	
-	if(isset($_SESSION['User']) && $_SESSION['User']['inadmin'] != 1) {
+	*/
+	if(isset($_SESSION['User']) && (($_SESSION['User']['inadmin'] != 1) || ($_SESSION['User']['isprof'] != 1))) {
+	//if(isset($_SESSION['User']) && $_SESSION['User']['inadmin'] != 1) {
 
 		$userOnline = User::pega_totalUsuariosOnline();
 
-		if($userOnline > 50){
+		if($userOnline > 500){
 		    User::logout();
 			User::forgotUserPass();
 			User::setError('Limite de usuários online excedido! TENTE NOVAMENTE MAIS TARDE.');
@@ -47,8 +46,6 @@ $app->get('/', function() {
 		}
 		
 	}	
-
-	
 
 	if(!$_SESSION['User']){
 		$sessao = NULL;
@@ -148,7 +145,7 @@ $app->get('/', function() {
 			Temporada::alterarStatusTemporadaParaMatriculasEncerradas($dtTermmatricula, $idtemporada);
 		}		
 	}	
-
+	
 	// Aqui verifica se a temporada é igual ao ano atual
 	// Se não for acrescenta (1). Supondo que a inscrição está sendo feita no ano anterior
 	if( (int)date('Y')  == (int)$temporada->getdesctemporada() ){
@@ -158,8 +155,8 @@ $app->get('/', function() {
 	}else{
 
 		$anoAtual = (int)date('Y') + 1;		
-	}
-
+	}	
+	
 	$locais = Local::listAllCrecAtivo();
 
 	if(!isset($locais) || $locais == NULL){
@@ -199,9 +196,11 @@ $app->get('/busca', function() {
 
 	if(isset($search) && $search != NULL){
 
-		Cart::setMsgError("Encontramos ".$pagination['total']." turmas com a palavra '".$search."' para esta temporada! ");			
+		Cart::setMsgError("Encontramos ".$pagination['total']." turmas com a palavra '".$search."' para esta temporada! ");
+		
+		$desctemporada = $pagination['data'][0]['desctemporada']; 
 
-		if( (int)date('Y')  == (int)$temporada->getdesctemporada() ){
+		if( (int)date('Y')  == (int)$desctemporada ){
 			$anoAtual = (int)date('Y');	
 		}else{
 			$anoAtual = (int)date('Y') + 1;		
@@ -224,11 +223,12 @@ $app->get("/checkout", function(){
 	User::verifyLogin(false);
 
 	$cart = Cart::getFromSession();
-	$user = User::getFromSession();	
+	$user = User::getFromSession();
+	$insc = new Insc();
 
 	$idperson = (int)$_SESSION[User::SESSION]['idperson'];
 	Endereco::seEnderecoExiste($idperson);
-
+	
 	$_SESSION['token'] = isset($_SESSION['token']) ? $_SESSION['token'] : '';
 	$_SESSION['tokencpf'] = isset($_SESSION['tokencpf']) ? $_SESSION['tokencpf'] : 0;
 
@@ -239,21 +239,26 @@ $app->get("/checkout", function(){
 		Cart::setMsgError("Selecione uma turma e a pessoa que irá fazer a aula! ");
 		header("Location: /cart");
 		exit();
-	}
-
+	}	
+	
 	$idcart = (int)$cart->getidcart();
 	$idturma = (int)Cart::getIdturmaByCart($idcart);
 	$idtemporada = $cart->getTurma()[0]['idtemporada'];
 	$idmodal = $cart->getTurma()[0]['idmodal'];
 	$vagas = (int)Turma::getVagasByIdTurma($idturma);
+	
+	$vagasGeral = (int)Turma::getVagasByIdTurma($idturma);
+	$vagasPlm = (int)Turma::getVagasLaudoByIdTurma($idturma);
+	$vagasPcd = (int)Turma::getVagasPcdByIdTurma($idturma);
+	$vagasPvs = (int)Turma::getVagasPvsByIdTurma($idturma);
+	$pegainscGeral = (int)$insc->getInscGeral($idturma, $idtemporada);
+	$pegainscPlm = (int)$insc->pegaInscPlm($idturma, $idtemporada);
+	$pegainscPcd = (int)$insc->pegaInscPcd($idturma, $idtemporada);
+	$pegainscPvs = (int)$insc->pegaInscPvs($idturma, $idtemporada);
 
-	//$pegainscGeral = (int)Insc::getInscGeral($idturma, $idtemporada);
-	$pegainscGeral = 50;
-	$pegainscPlm = (int)Insc::pegaInscPlm($idturma, $idtemporada);
-	$pegainscPcd = (int)Insc::pegaInscPcd($idturma, $idtemporada);
-	$pegainscPvs = (int)Insc::pegaInscPvs($idturma, $idtemporada);
-
-	if($idturma == 598 || $idturma == 599 || $idturma == 600 || $idturma == 601){
+		
+	/*
+    if($idturma == 598 || $idturma == 599 || $idturma == 600 || $idturma == 601){
 		$vagasGeral = round($vagas * 0.0);
 		$vagasPlm = round($vagas * 0.8);
 		$vagasPcd = round($vagas * 0.1);
@@ -264,25 +269,22 @@ $app->get("/checkout", function(){
 		$vagasPcd = round($vagas * 0.1);
 		$vagasPvs = round($vagas * 0.1);
 	}
+	*/
 
 	if($idmodal == 25){
 
-		$maxListaEsperaGeral = round($vagasGeral * 2);
-		$maxListaEsperaPlm = round($vagasPlm * 2);
-		$maxListaEsperaPcd = round($vagasPcd * 2);
-		$maxListaEsperaPvs = round($vagasPvs * 2);
+		$maxListaEsperaGeral = (int)round($vagasGeral * 2);
+		$maxListaEsperaPlm = (int)round($vagasPlm * 2);
+		$maxListaEsperaPcd = (int)round($vagasPcd * 2);
+		$maxListaEsperaPvs = (int)round($vagasPvs * 2);
 
 	}else{
 
-		$maxListaEsperaGeral = round($vagasGeral * 1.2);
-		$maxListaEsperaPlm = round($vagasPlm * 1.2);
-		$maxListaEsperaPcd = round($vagasPcd * 1.2);
-		$maxListaEsperaPvs = round($vagasPvs * 1.2);
+		$maxListaEsperaGeral = (int)round($vagasGeral * 1.2);
+		$maxListaEsperaPlm = (int)round($vagasPlm * 1.2);
+		$maxListaEsperaPcd = (int)round($vagasPcd * 1.2);
+		$maxListaEsperaPvs = (int)round($vagasPvs * 1.2);
 	}
-
-	//var_dump($maxListaEsperaGeral);
-	//var_dump($tokencpf);
-
 
 	$page = new Page();
 
@@ -315,7 +317,7 @@ $app->post("/checkout", function(){
 
 	$user = User::getFromSession();
 	$cart = Cart::getFromSession();
-
+	
 	$saude = new Saude();
 
 	$idcart = (int)$cart->getidcart();
@@ -326,7 +328,7 @@ $app->post("/checkout", function(){
 	$temporada = new Temporada();
 
 	$temporada->get((int)$idtemporada);
-
+	
 	if(!isset($_POST['tipoinsc']) || $_POST['tipoinsc'] == NULL){
 
 		Pessoa::setError("A inscrição NÃO foi finalizada!!! Informe se você irá confirmar uma inscrição para PÚBLICO em GERAL ou COM LAUDO ou para PESSOA COM DEFICIÊNCIA ou PARA PESSOA EM VULNERABILIDADE SOCIAL. ");
@@ -336,26 +338,26 @@ $app->post("/checkout", function(){
 	/*
 	if(!isset($_POST['laudo']) || $_POST['laudo'] == NULL){
 
-		Pessoa::setError("Informe se você irá confirmar uma inscrição para pessoa com inscicação médica! ");
+		Pessoa::setError("Informe se você irá confirmar uma inscrição para pessoa com indicação médica! ");
 		header("Location: /checkout");
 		exit();
 	}
 	*/
+	
+    if(isset($_POST['tipoinsc']) && $_POST['tipoinsc'] == 3 && $_POST['temlaudo'] == NULL){
 
-	if(isset($_POST['tipoinsc']) && $_POST['tipoinsc'] == 3 && $_POST['temlaudo'] == NULL){
-
-		Pessoa::setError("Você está confirmando uma inscrição com laudo médico. Então, informe o CID que consta no laudo! ");
+		Pessoa::setError("A inscrição NÃO foi finalizada!!! Você está confirmando uma inscrição com laudo médico. Então, informe o CID que consta no laudo! ");
 		header("Location: /checkout");
 		exit();
 	}
-
+	
 	if(isset($_POST['tipoinsc']) && $_POST['tipoinsc'] == 3 && $_POST['temlaudo'] != NULL){
 
 		$codigolaudo = $_POST['temlaudo'];
 
 		if(!$saude->obtemDoencaCid($codigolaudo)){
 
-    		Pessoa::setError("CID não encontrado! Verifique se o CID foi digitado corretamente. O CID deve ser igual ao que consta no laudo médico. Exemplo: A00.0 ou A00");
+    		Pessoa::setError("A inscrição NÃO foi finalizada!!! CID não encontrado! Verifique se o CID foi digitado corretamente. O CID deve ser igual ao que consta no laudo médico. Exemplo: A00.0 ou A00");
 			header("Location: /checkout");
 			exit;
 
@@ -363,7 +365,7 @@ $app->post("/checkout", function(){
 		
 	}
 	
-    /*
+	/*
 	if(!isset($_POST['inscpcd']) || $_POST['inscpcd'] == NULL){
 
 			Pessoa::setError("Informe se você irá confirmar uma inscrição para pessoa com deficiência! ");
@@ -371,28 +373,28 @@ $app->post("/checkout", function(){
 			exit();
 	}
 	*/
-
+	
 	if(isset($_POST['tipoinsc']) && $_POST['tipoinsc'] == 4 && $_POST['deficiente'] == NULL){
 
-		Pessoa::setError("Você está confirmando uma inscrição para Pessoa Com Deficiência. Então, informe o CID da doença, igual ao que você informou nos dados de saúde da pessoa que você está inscrevendo nesta turma! Exemplo: A00.0 ou A00 ");
+		Pessoa::setError("A inscrição NÃO foi finalizada!!! Você está confirmando uma inscrição para Pessoa Com Deficiência. Então, informe o CID da doença, igual ao que você informou nos dados de saúde da pessoa que você está inscrevendo nesta turma! Exemplo: A00.0 ou A00 ");
 		header("Location: /checkout");
 		exit();
 	}
-
+	
 	if(isset($_POST['tipoinsc']) && $_POST['tipoinsc'] == 4 && $_POST['deficiente'] != NULL){
 
 		$codigodeficiencia = $_POST['deficiente'];
 
 		if(!$saude->obtemDoencaCid($codigodeficiencia)){
 
-    		Pessoa::setError("Dados de doença não encontrado! Verifique se o CID foi digitado corretamente e informe o CID da doença, igual ao que você informou nos dados de saude da pessoa que você está inscrevendo na turma");
+    		Pessoa::setError("A inscrição NÃO foi finalizada!!! Dados de doença não encontrado! Verifique se o CID foi digitado corretamente e informe o CID da doença, igual ao que você informou nos dados de saude da pessoa que você está inscrevendo na turma");
 				header("Location: /checkout");
 			exit;
 
     	}
 	}
-
-    /*
+	
+	/*
 	if(!isset($_POST['inscvuln']) || $_POST['inscvuln'] == NULL){
 
 			Pessoa::setError("Informe se você irá confirmar uma inscrição para pessoa em condições de vulnerabiliade social (Sim ou Não)! ");
@@ -400,21 +402,21 @@ $app->post("/checkout", function(){
 			exit();
 	}
 	*/
-	
+
 	if(!isset($_POST['edital']) || $_POST['edital'] == NULL){
 
-		Pessoa::setError("Assinale que você leu os termos para as inscrições! ");
+		Pessoa::setError("A inscrição NÃO foi finalizada!!! Assinale que você leu os termos para as inscrições! ");
 		header("Location: /checkout");
 		exit();
 	}
 
 	if(!isset($_POST['ciente']) || $_POST['ciente'] == NULL){
 
-		Pessoa::setError("Marque, logo abaixo, que você está ciente das regras para finalizar a inscrição! ");
+		Pessoa::setError("A inscrição NÃO foi finalizada!!! Marque, logo abaixo, que você está ciente das regras para finalizar a inscrição! ");
 		header("Location: /checkout");
 		exit();
 	}
-
+	
 	if($_POST['tipoinsc'] == 3){
 		$laudo = 1;
 	}else{
@@ -426,7 +428,7 @@ $app->post("/checkout", function(){
 	}else{
 		$inscpcd = 0;
 	}
-
+	
 	if($_POST['tipoinsc'] == 5){
 		$inscpvs = 1;
 	}else{
@@ -449,7 +451,7 @@ $app->post("/checkout", function(){
 	$idpess= $cart->getidpess();
 
 	$pessoa->get((int)$idpess);
-
+	
 	$numcpf = $pessoa->getnumcpf();
 	
 	$anoNasc = $pessoa->getdtnasc();
@@ -467,26 +469,26 @@ $app->post("/checkout", function(){
 		$anoAtual = (int)date('Y') + 1;		
 	}
 	
-	$idlocal = $_POST['idlocal'];	
+	$idlocal = $_POST['idlocal'];
 	
 	$initidade = $_POST['initidade'];
 	
 	$idmodal = $_POST['idmodal'];
-
+	
 	// Verifica se pessoa possui número CadÚnico cadastrado
 
 	$checkcadunicoexist = Pessoa::checkCadunicoExist($idpess);
 
-	if(empty($checkcadunicoexist) AND $_POST['tipoinsc'] == 5 ){	
-
-		Pessoa::setError("Você informou que esta inscrição é para pessoa em condições de vulnerabiliade social (que participa de programas sociais do governo). Para prosseguir, você precisa atualizar/alterar o cadastro do(a) ".$pessoa->getnomepess().", informado o número do CadÚnico/NIS.");				
+	if(empty($checkcadunicoexist) AND $_POST['tipoinsc'] == 5 ){
+	    
+		Pessoa::setError("A inscrição NÃO foi finalizada!!! Você informou que esta inscrição é para pessoa em condições de vulnerabiliade social (que participa de programas sociais do governo). Para prosseguir, você precisa atualizar/alterar o cadastro do(a) ".$pessoa->getnomepess().", informado o número do CadÚnico/NIS.");
 				header("Location: /checkout");
 				exit();
-	}
+	}	
 	
 	// idade 40 para idade inicial das hidros da pauliceia
 	// idlocal 21 para comparar com local pauliceia
-	// idmodal para para comparar com modalidade hidroginástica	
+	// idmodal para para comparar com modalidade hidroginástica
 	
     if($laudo == 0){
 
@@ -494,12 +496,12 @@ $app->post("/checkout", function(){
 
 			if(($anoAtual - $anoNasc) < 40){
 
-				Pessoa::setError("Você deve marcar a opçãp 'Sim' em: Esta é uma inscrição para pessoa com laudo médico (Solicitação Médica) ");
+				Pessoa::setError("A inscrição NÃO foi finalizada!!! A inscrição NÃO foi finalizada!!! Você deve marcar a opçãp 'Sim' em: Esta é uma  inscrição para pessoa com laudo médico (Solicitação Médica) ");
 				header("Location: /checkout");
 				exit();
 		   }
 	    }	
-	}	
+	}
 
 	$nomepess = $pessoa->getnomepess();
 
@@ -520,13 +522,18 @@ $app->post("/checkout", function(){
 
 		$InscStatus = InscStatus::FILA_DE_ESPERA;
 		*/
-
+		
 		$vagas = (int)Turma::getVagasByIdTurma($idturma);
+		$vagasPlm = (int)Turma::getVagasLaudoByIdTurma($idturma);
+		$vagasPcd = (int)Turma::getVagasPcdByIdTurma($idturma);
+		$vagasPvs = (int)Turma::getVagasPvsByIdTurma($idturma);
+
 		$pegainscGeral = (int)Insc::getInscGeral($idturma, $idtemporada);
-		$pegaInscPlm = (int)Insc::pegaInscPlm($idturma, $idtemporada);
-		$pegaInscPcd = (int)Insc::pegaInscPcd($idturma, $idtemporada);
-		$pegaInscPvs = (int)Insc::pegaInscPvs($idturma, $idtemporada);
-		if($idturma == 598 || $idturma == 599 || $idturma == 600 || $idturma == 601){
+		$pegainscPlm = (int)Insc::pegaInscPlm($idturma, $idtemporada);
+		$pegainscPcd = (int)Insc::pegaInscPcd($idturma, $idtemporada);
+		$pegainscPvs = (int)Insc::pegaInscPvs($idturma, $idtemporada);
+		/*
+		 if($idturma == 598 || $idturma == 599 || $idturma == 600 || $idturma == 601){
     		$vagasGeral = round($vagas * 0.0);
     		$vagasPlm = round($vagas * 0.8);
     		$vagasPcd = round($vagas * 0.1);
@@ -537,9 +544,9 @@ $app->post("/checkout", function(){
     		$vagasPcd = round($vagas * 0.1);
     		$vagasPvs = round($vagas * 0.1);
     	}
+    	*/
 
-    	
-
+        /*
 		if($laudo === 0 AND $inscpcd === 0 AND $inscpvs === 0 ){
 			if($pegainscGeral >= $vagasGeral){
 				$InscStatus = InscStatus::FILA_DE_ESPERA;
@@ -549,29 +556,29 @@ $app->post("/checkout", function(){
 		}else{
 			if($laudo === 1 AND $inscpcd === 0 AND $inscpvs === 0 ){
 
-				if($pegaInscPlm >= $vagasPlm){
+				if($pegainscPlm >= $vagasPlm){
 					$InscStatus = InscStatus::FILA_DE_ESPERA;
 				}else{
 					$InscStatus = InscStatus::AGUARDANDO_MATRICULA;
 				}
 			}elseif($laudo === 0 AND $inscpcd === 1 AND $inscpvs === 0 ){
 
-				if($pegaInscPcd >= $vagasPcd){
+				if($pegainscPcd >= $vagasPcd){
 					$InscStatus = InscStatus::FILA_DE_ESPERA;
 				}else{
 					$InscStatus = InscStatus::AGUARDANDO_MATRICULA;
 				}
 			}elseif($laudo === 0 AND $inscpcd === 0 AND $inscpvs === 1 ){
 
-				if($pegaInscPvs >= $vagasPvs){
+				if($pegainscPvs >= $vagasPvs){
 					$InscStatus = InscStatus::FILA_DE_ESPERA;
 				}else{
 					$InscStatus = InscStatus::AGUARDANDO_MATRICULA;
 				}
 			}
 		}
+		*/
 		
-
 		/*****/
 
 		$InscStatus = InscStatus::FILA_DE_ESPERA;
@@ -603,10 +610,12 @@ $app->post("/checkout", function(){
 			'idturma'=>$idturma,
 			'idtemporada'=>$idtemporada	
 		]);
-
+		
 		if(!$cart->getInscExist($numcpf, $idpess, $idturma, $idtemporada)){
 			$insc->save();
 		}
+
+		//$insc->save();
 
 		Turma::setUsedToken($idturma, $token);
 		Turma::setUsedTokenCpf($idturma, $tokencpf);
@@ -629,7 +638,7 @@ $app->post("/checkout", function(){
 
 	    if($InscStatus == 2){
 
-	    	Insc::setSuccess("Inscrição EFETUADA COM SUCESSO! Lembre-se: As aulas já começaram. Então você deve comprarecer com os documentos pessoais, sem falta, já na próxima aula, no Centro Esportivo no dia e horário da aula escolhida.");        	
+	    	Insc::setSuccess("Inscrição EFETUADA COM SUCESSO! Lembre-se: As aulas já começaram. Se o status desta inscrição é 'Aguardando matrícula', então você deve comprarecer com os documentos pessoais, sem falta, já na próxima aula, no Centro Esportivo no dia e horário da aula escolhida.");        	
 			header("Location: /profile/insc/".$insc->getidinsc()."/".$idpess."");
         	exit;
 
@@ -637,17 +646,11 @@ $app->post("/checkout", function(){
 
         if($InscStatus == 7){
 
-	    	Insc::setSuccess("Inscrição EFETUADA COM SUCESSO! Lembre-se: Não há vagas para esta turma. Esta inscrição está em uma lista de espera, aguardando o comunicado de uma eventual vaga. Mantenha atualizado, neste site, seu número de telefone celular, com whatsapp, para receber o comunicado.");        	
+	    	Insc::setSuccess("Inscrição EFETUADA COM SUCESSO! Lembre-se: Se o status desta inscrição é 'Lista de Espera', não há vagas para esta turma. Esta inscrição está em uma lista de espera, aguardando o comunicado de uma eventual vaga. Mantenha atualizado, neste site, seu número de telefone celular, com whatsapp, para receber o comunicado.");        	
 			header("Location: /profile/insc/".$insc->getidinsc()."/".$idpess."");
         	exit;
 
         }
-
-	    /*
-	    Insc::setSuccess("Inscrição EFETUADA COM SUCESSO! Clique, logo abaixo, em 'Detalhes' e depois em 'Minhas inscrições', para saber mais.");        	
-		header("Location: /profile/insc/".$insc->getidinsc()."/".$idpess."");
-        exit;	
-        */
 
 	}else{
 
@@ -658,12 +661,18 @@ $app->post("/checkout", function(){
 		$InscStatus = InscStatus::AGUARDANDO_SORTEIO;
 
 		*/
-
+		
 		$vagas = (int)Turma::getVagasByIdTurma($idturma);
+		$vagasPlm = (int)Turma::getVagasLaudoByIdTurma($idturma);
+		$vagasPcd = (int)Turma::getVagasPcdByIdTurma($idturma);
+		$vagasPvs = (int)Turma::getVagasPvsByIdTurma($idturma);
+
 		$inscGeral = (int)Insc::getInscGeral($idturma, $idtemporada);
-		$pegaInscPlm = (int)Insc::pegaInscPlm($idturma, $idtemporada);
-		$pegaInscPcd = (int)Insc::pegaInscPcd($idturma, $idtemporada);
-		$pegaInscPvs = (int)Insc::pegaInscPvs($idturma, $idtemporada);
+		$pegainscPlm = (int)Insc::pegaInscPlm($idturma, $idtemporada);
+		$pegainscPcd = (int)Insc::pegaInscPcd($idturma, $idtemporada);
+		$pegainscPvs = (int)Insc::pegaInscPvs($idturma, $idtemporada);
+		
+		/*
 		if($idturma == 598 || $idturma == 599 || $idturma == 600 || $idturma == 601){
     		$vagasGeral = round($vagas * 0.0);
     		$vagasPlm = round($vagas * 0.8);
@@ -675,6 +684,7 @@ $app->post("/checkout", function(){
     		$vagasPcd = round($vagas * 0.1);
     		$vagasPvs = round($vagas * 0.1);
     	}
+    	*/
 
 		if($laudo === 0 AND $inscpcd === 0 AND $inscpvs === 0 ){
 			if($pegainscGeral >= $vagasGeral){
@@ -685,21 +695,21 @@ $app->post("/checkout", function(){
 		}else{
 			if($laudo === 1 AND $inscpcd === 0 AND $inscpvs === 0 ){
 
-				if($pegaInscPlm >= $vagasPlm){
+				if($pegainscPlm >= $vagasPlm){
 					$InscStatus = InscStatus::FILA_DE_ESPERA;
 				}else{
 					$InscStatus = InscStatus::AGUARDANDO_MATRICULA;
 				}
 			}elseif($laudo === 0 AND $inscpcd === 1 AND $inscpvs === 0 ){
 
-				if($pegaInscPcd >= $vagasPcd){
+				if($pegainscPcd >= $vagasPcd){
 					$InscStatus = InscStatus::FILA_DE_ESPERA;
 				}else{
 					$InscStatus = InscStatus::AGUARDANDO_MATRICULA;
 				}
 			}elseif($laudo === 0 AND $inscpcd === 0 AND $inscpvs === 1 ){
 
-				if($pegaInscPvs >= $vagasPvs){
+				if($pegainscPvs >= $vagasPvs){
 					$InscStatus = InscStatus::FILA_DE_ESPERA;
 				}else{
 					$InscStatus = InscStatus::AGUARDANDO_MATRICULA;
@@ -722,12 +732,14 @@ $app->post("/checkout", function(){
 			'idturma'=>$idturma,
 			'idtemporada'=>$idtemporada	
 		]);
-
+		
 		if(!$cart->getInscExist($numcpf, $idpess, $idturma, $idtemporada)){
 			$insc->save();
 		}
 
-		Turma::setUsedToken($idturma, $token);		
+		//$insc->save();
+
+		Turma::setUsedToken($idturma, $token);
 		Turma::setUsedTokenCpf($idturma, $tokencpf);		
 
 		$idinsc = $insc->getidinsc();	
@@ -742,7 +754,7 @@ $app->post("/checkout", function(){
 		$cart->removeTurma($turma, true);
 		Cart::removeFromSession();
 	    session_regenerate_id();
-
+	    
 	    /*
 	     ### Envio de Email desativado
 
@@ -751,7 +763,7 @@ $app->post("/checkout", function(){
 
 	    if($InscStatus == 2){
 
-	    	Insc::setSuccess("Inscrição EFETUADA COM SUCESSO! Lembre-se: As aulas já começaram. Então você deve comprarecer com os documentos pessoais, sem falta, já na próxima aula, no Centro Esportivo no dia e horário da aula escolhida.");        	
+	    	Insc::setSuccess("Inscrição EFETUADA COM SUCESSO! Lembre-se: As aulas já começaram. Se o status desta inscrição é 'Aguardando matrícula', então você deve comprarecer com os documentos pessoais, sem falta, já na próxima aula, no Centro Esportivo no dia e horário da aula escolhida.");        	
 			header("Location: /profile/insc/".$insc->getidinsc()."/".$idpess."");
         	exit;
 
@@ -759,17 +771,11 @@ $app->post("/checkout", function(){
 
         if($InscStatus == 7){
 
-	    	Insc::setSuccess("Inscrição EFETUADA COM SUCESSO! Lembre-se: Não há vagas para esta turma. Esta inscrição está em uma lista de espera, aguardando o comunicado de uma eventual vaga. Mantenha atualizado, neste site, seu número de telefone celular, com whatsapp, para receber o comunicado.");        	
+	    	Insc::setSuccess("Inscrição EFETUADA COM SUCESSO! Lembre-se: Se o status desta inscrição é 'Lista de Espera', não há vagas para esta turma. Esta inscrição está em uma lista de espera, aguardando o comunicado de uma eventual vaga. Mantenha atualizado, neste site, seu número de telefone celular, com whatsapp, para receber o comunicado.");        	
 			header("Location: /profile/insc/".$insc->getidinsc()."/".$idpess."");
         	exit;
 
         }
-
-        /*
-	    Insc::setSuccess("Inscrição EFETUADA COM SUCESSO! Clique, logo abaixo, em 'Detalhes' e depois em 'Minhas inscrições', para saber mais.");        	
-		header("Location: /profile/insc/".$insc->getidinsc()."/".$idpess."");
-        exit;	
-        */
 	}	
 });
 
@@ -862,7 +868,8 @@ $app->get("/forgot/site", function() {
 
 $app->post("/forgot-site", function(){
 
-	User::getForgotSite($_POST["email"]);
+	//User::getForgotSite($_POST["email"]);
+	User::getForgotSiteEmailCpf($_POST["email"], $_POST["numcpf"] );
 
 	if($_POST['novasenha'] != $_POST['repetesenha']){
 		echo "<script>alert('As senhas digitadas são  diferentes');";
@@ -876,6 +883,10 @@ $app->post("/forgot-site", function(){
 		echo "location.href='/login'</script>";
 		exit();	
 });
+
+
+
+/*
 
 $app->get("/forgot", function() {
 
@@ -896,7 +907,6 @@ $app->post("/forgot", function($email){
 	header("Location: /forgot/sent");
 	exit;
 });
-
 
 $app->get("/forgot/sent", function(){
 
@@ -936,7 +946,7 @@ $app->post("/forgot/reset", function(){
 
 	$page->setTpl("forgot-reset-success");
 });
-
+*/
 
 $app->get("/comprovante", function() {
 
@@ -948,14 +958,12 @@ $app->get("/comprovante", function() {
 	$page->setTpl("comprovante-insc");	
 });
 
-
 $app->get("/tutorial", function() {
 
 	$page = new Page();
 
 	$page->setTpl("tutorial");	
 });
-
 
 $app->get("/enderecolocais", function() {
 
@@ -971,6 +979,22 @@ $app->get("/enderecolocais", function() {
 });
 
 $app->get("/redirecionando", function() {
+    
+    
+    if(isset($_SESSION['User']) && (($_SESSION['User']['inadmin'] != 1) || ($_SESSION['User']['isprof'] != 1))) {
+	//if(isset($_SESSION['User']) && $_SESSION['User']['inadmin'] != 1) {
+
+		$userOnline = User::pega_totalUsuariosOnline();
+
+		if($userOnline < 200){
+		    User::logout();
+			User::forgotUserPass();
+			User::setError('Limite de usuários online excedido! TENTE NOVAMENTE MAIS TARDE.');
+			header('Location: /login');
+			exit();
+		}
+		
+	}	
 
 	$page = new Page([
 		"header"=>false,
@@ -979,6 +1003,7 @@ $app->get("/redirecionando", function() {
 
 	$page->setTpl("redirecionando");
 });
+
 
 $app->get("/transparent", function() {
 
@@ -990,37 +1015,11 @@ $app->get("/transparent", function() {
 	$page->setTpl("transparent");
 });
 
-$app->get("/par-q", function() {
-
-	$page = new Page([
-		"header"=>false,
-		"footer"=>false
-	]);
-
-	$page->setTpl("par-q");
-});
-
-$app->post("/par-q/enviar", function() {
-
-	var_dump($_POST);
-	
-});
-
 $app->get("/craquesdofuturo", function() {
 
 	$page = new Page();
 
 	$page->setTpl("craquesdofuturo");
-});
-
-$app->get("/endereco-craques", function() {
-
-	$page = new Page([
-		"header"=>false,
-		"footer"=>false
-	]);
-
-	$page->setTpl("endereco-craques");
 });
 
 $app->get("/judo", function() {
@@ -1037,16 +1036,6 @@ $app->get("/zumba", function() {
 	$page->setTpl("zumba");
 });
 
-/*
-$app->get("/calendario", function() {
-
-	User::verifyLogin(false);
-
-	$page = new Page();
-
-	$page->setTpl("calendario");	
-});
-*/
 
 
 

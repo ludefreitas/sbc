@@ -1,0 +1,119 @@
+<style>
+@media print {
+    .header-area,
+    .site-branding-area,
+    .sticky-wrapper,
+    .footer-top-area,
+    .footer-bottom-area,
+    .single-product-area .col-md-3,
+    .button.alt,
+    .product-big-title-area {
+        display:none!important;
+    }
+    .single-product-area .col-md-9 {
+        width: 100%!important;
+    }
+}
+</style>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <ol class="breadcrumb">
+    <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+    <!--<li class="active"><a href="/admin/espaco/create">Cadastrar</a></li>-->
+  </ol>
+</section>
+
+<section class="content">
+
+
+<div class="product-big-title-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="single-product-area">
+    <div class="container">
+        <div class="row">                
+            
+            <div class="col-md-12">
+                
+                <h3 id="order_review_heading" style="margin-top:30px;">Detalhes da inscrição N°{$insc.idinsc}</h3>
+                <div id="order_review" style="position: relative;">
+                    <table class="shop_table">
+                        <thead>
+                            <tr>
+                                <th colspan="2" class="product-name"><h3>Nome: {$pessoa.nomepess} -  {function="calcularIdade($pessoa.dtnasc)"} anos - <strong>{if="$pessoa.pcd == 1"}PCD{/if}</strong></h3></th>
+                            </tr>
+                            <tr>
+                                <th colspan="2" class="product-name"><h3>número para concorrer no sorteio: {$insc.numsorte}</h3></th>
+                            </tr>
+                            <tr>
+                                <th class="product-name">Turma / Temporada</th>
+                                <td class="product-name">[{$insc.idturma}] - {$insc.descturma} - {$insc.desctemporada}</td>
+                            </tr>
+                            <tr>
+                                <th class="product-name">Horário / Professor</th>
+                                <td class="product-name">{$insc.diasemana} das {$insc.horainicio} às {$insc.horatermino} </td>
+                            </tr>
+                            <tr>
+                                <th class="product-name">Local da aula (CREC)</th>
+                                <td class="product-name">{$insc.descespaco} - {$insc.apelidolocal}</td>
+                            </tr>
+                            <tr>
+                                <th class="product-name">Data da Inscrição</th>
+                                <td class="product-name">{function="formatDateHour($insc.dtinsc)"}</td>
+                            </tr>
+                            <tr>
+                                <th class="product-name">Laudo ?</th>
+                                <td class="product-name">{if="$insc.laudo == 1"}Sim{else}Não{/if}</td>
+                            </tr> 
+                            <tr>
+                                <th class="product-name">PCD ?</th>
+                                <td class="product-name">{if="$insc.inscpcd == 1"}Sim{else}Não{/if}</td>
+                            </tr>     
+                            <tr>
+                                <th class="product-name">PVS ?</th>
+                                <td class="product-name">{if="$insc.inscpvs == 1"}Sim{else}Não{/if}</td>
+                            </tr>     
+                            <tr>
+                                <th class="product-name">Respons. p/ inscrição</th>
+                                <td class="product-name">&nbsp;&nbsp;{$insc.desperson} - {$insc.deslogin}</td>
+                            </tr>                                                                                                                                                                                 
+                            <tr {function="colorStatus($insc.idinscstatus)"}>
+                                <th class="product-name">Status da Inscrição</th>
+                                <td class="product-name">{$insc.descstatus}</td>
+                            </tr>
+                             <tr>
+                                <th class="product-name"> Início previsto das aulas </th>
+                                <td class="product-name"> {function="formatDate($insc.dttermmatricula)"} </td>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            
+                               
+                        </tbody>
+                        <tfoot>
+                            
+                        </tfoot>
+                    </table>
+                    <div>
+                 
+                    <a type="button" class="btn btn-primary" href="javascript:window.history.go(-1)">Voltar</a>
+                </div>  
+                    
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</section>

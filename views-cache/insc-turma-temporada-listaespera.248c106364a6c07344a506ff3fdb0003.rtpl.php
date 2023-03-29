@@ -50,7 +50,7 @@ table {
     <span style="font-weight: bold">LISTA DE ESPERA</span>
     <br> <span style="font-weight: bold"><?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </span> <?php echo htmlspecialchars( $turma["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  das <span style="font-weight: bold"><?php echo htmlspecialchars( $turma["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $turma["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  </span>
     <span style="font-weight: bold"> <?php echo htmlspecialchars( $turma["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  <br>
-    <?php echo htmlspecialchars( $turma["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas</span>      
+    Vagas Totais: <?php echo htmlspecialchars( $turma["vagas"]+$turma["vagaslaudo"]+$turma["vagaspcd"]+$turma["vagaspvs"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>      
   </h4>
 </div>
 <div id="div1">  
@@ -106,7 +106,8 @@ table {
           </tr>
           <?php }else{ ?>
           <tr style="font-weight: bold; color: red; font-size: 22px; text-align: center; ">
-            <td>           
+            <td>       
+            0    
             </td>
           </tr>
           <?php } ?>        
@@ -204,7 +205,8 @@ table {
           </tr>
           <?php }else{ ?>
           <tr style="font-weight: bold; color: red; font-size: 22px; text-align: center; ">
-            <td>           
+            <td>   
+            0        
             </td>
           </tr>
           <?php } ?>        
@@ -304,6 +306,7 @@ table {
           <?php }else{ ?>
           <tr style="font-weight: bold; color: red; font-size: 22px; text-align: center; ">
             <td>           
+              0
             </td>
           </tr>
           <?php } ?>        

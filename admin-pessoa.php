@@ -58,6 +58,60 @@ $app->get("/admin/pessoas", function() {
 	));
 });
 
+$app->get("/admin/pessoas-audi", function() {
+
+	User::verifyLoginAudi();
+
+	//$insc = new Insc();
+
+	$pessoa = new Pessoa();
+
+	User::verifyLogin();
+	// na linha abaixo retorna um array com todos os dados do usuário
+
+	$search = (isset($_GET['search'])) ? $_GET['search'] : "";
+
+	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
+
+	if ($search != '') {
+
+		$pagination = Pessoa::getPageSearch($search, $page);
+
+	} else {
+
+		$pagination = Pessoa::getPage($page);
+
+	}
+
+	$pages = [];
+
+	for ($x = 0; $x < $pagination['pages']; $x++)
+	{
+
+		array_push($pages, [
+			'href'=>'/admin/pessoas-audi?'.http_build_query([
+				'page'=>$x+1,
+				'search'=>$search
+			]),
+			'text'=>$x+1
+		]);
+
+	}	
+
+	//$pessoa = User::listAll();
+	// carrega uma pagina das páginas do admin
+	$page = new PageAdmin();
+
+	// envia para a página o array retornado pelo listAll
+	$page->setTpl("pessoas-audi", array( // aqui temos um array com muitos arrays
+		"pessoas"=>$pagination['data'],
+		"total"=>$pagination['total'],
+		"search"=>$search,
+		"pages"=>$pages,
+		"error"=>User::getError()
+	));
+});
+
 $app->get("/admin/pessoas/create", function() {
 
 	User::verifyLogin();

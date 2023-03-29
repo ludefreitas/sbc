@@ -266,7 +266,8 @@ class Agenda extends Model {
 			FROM tb_horadiasemana 
 			WHERE idlocal = :idlocal 
 			AND statushora = :statushora
-			AND diasemana = :diasemana", [
+			AND diasemana = :diasemana
+			ORDER BY horamarcadainicial", [
 			':idlocal'=>$idlocal,
 			':statushora'=>$statushora,
 			':diasemana'=>$diasemana
@@ -324,6 +325,27 @@ class Agenda extends Model {
 		]);
 
 		return $results;		
+	}
+
+	public static function getAgendaExist($idpess, $idhoradiasemana, $dia, $idlocal){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_agenda a
+			
+			WHERE idpess = :idpess
+			AND idhoradiasemana = :idhoradiasemana
+			AND dia = :dia
+			AND idlocal = :idlocal
+			ORDER BY a.dia DESC", [
+			':idpess'=>$idpess,
+			':idhoradiasemana'=>$idhoradiasemana,
+			':dia'=>$dia,
+			':idlocal'=>$idlocal
+		]);
+
+		return $results;		
+
 	}
 
 	public static function getHoraInicialDiaSemana($idhoradiasemana){
@@ -458,6 +480,20 @@ class Agenda extends Model {
 			AND titulo = :titulo", [
 				':idpess'=>$idpess,
 				':idlocal'=>$idlocal,
+				':titulo'=>$titulo
+			]);
+
+		return $results;		
+	}
+
+	public static function selecionaAgendaPorPessoaDiaTitulo($idpess, $titulo){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_agenda 
+			WHERE idpess = :idpess 
+			AND titulo = :titulo", [
+				':idpess'=>$idpess,
 				':titulo'=>$titulo
 			]);
 

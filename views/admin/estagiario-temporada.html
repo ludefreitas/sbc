@@ -1,0 +1,80 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Lista dos Estagiários da temporada {$temporada.desctemporada}
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active"><a href="/admin/users">Usuários</a></li>
+    <li><a href="/admin/insc/{$temporada.idtemporada}"> Todas inscrições {$temporada.desctemporada} </a></li>
+    <li><a href="/admin/temporada/{$temporada.idtemporada}/turma"> Inserir turma {$temporada.desctemporada}</a></li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-primary">
+            
+            <div class="box-header">
+              {if="$error != ''"}
+                <div class="alert alert-danger" style="margin: 0px 10px 0px 10px">
+                    {$error}
+                </div>
+                {else}
+              <!--
+              <a href="/admin/users/create" class="btn btn-success">Cadastrar Usuário</a>
+            -->
+            </div>         
+
+           <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              
+            {loop="$prof"}
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              <div class="row">
+
+              <div class="col-md-1" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  {$value.iduser}
+                </h5>
+              </div>
+
+              <div class="col-md-3" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  {$value.desperson}
+                </h5>
+              </div>
+              
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                    <a href="/admin/turma-temporada-estagiario/{$temporada.idtemporada}/user/{$value.iduser}" class="btn btn-info btn-xs"><i class=""></i><span style="color: black;">Turmas do(a) estagiário(a) <br>{$value.apelidoperson}</span></a>
+              </div>
+
+              &nbsp;&nbsp;&nbsp;&nbsp;
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                 <a href="/admin/turmatemporada-estagiario/{$value.iduser}/turma/{$temporada.idtemporada}" class="btn btn-primary btn-xs"><i class=""></i><span style="color: black;"> Inserir ou remover <br> turma do(a) estagiário(a)</span></a>                      
+              </div>
+
+            </div>
+          </div>
+          {/loop}
+
+
+            
+            <!-- /.box-body -->
+            <button type="button" onclick="window.print()" class="btn btn-primary pull-right" style="margin-right: 5px;">
+                <i class="fa fa-print"></i> Imprimir
+            </button>
+          </div>           
+    </div>
+  </div>
+    {/if}
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

@@ -1,41 +1,6 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
     <script type="text/javascript">
-
-        function alertTokenCreebaPcd(){
-
-            alert("Conforme Resolução SESP Nº 004 de 28/10/2021 Art.7º, Os interessados em participar das turmas de inclusão para Pessoas com Deficiência (PCD) e/ou laudo médico do CREEBA, deverão comparecer pessoalmente (interessado ou representante legal) no CREEBA.")
-        }
-
-        //alert('Estamos no período de rematrícula. ESTA INSCRIÇÃO NÃO GARANTE VAGA')
-
-        function enormal(){ 
-           document.getElementById('geral').hidden = false
-           document.getElementById('temlaudo').hidden = true
-           document.getElementById('deficiente').hidden = true
-           document.getElementById('vulneravel').hidden = true 
-        } 
-        
-        function comlaudo(){ 
-            document.getElementById('temlaudo').hidden = false    
-           document.getElementById('geral').hidden = true           
-           document.getElementById('deficiente').hidden = true
-           document.getElementById('vulneravel').hidden = true
-        }  
-
-        function comdeficiencia(){     
-           document.getElementById('deficiente').hidden = false
-           document.getElementById('vulneravel').hidden = true            
-             document.getElementById('temlaudo').hidden = true
-             document.getElementById('geral').hidden = true
-        }  
-
-        function comvulnerabilidade(){       
-           document.getElementById('vulneravel').hidden = false
-            document.getElementById('deficiente').hidden = true
-             document.getElementById('temlaudo').hidden = true
-             document.getElementById('geral').hidden = true 
-        }  
-
+      
     </script>
 
   <div class="container"> <!-- container 1 -->
@@ -71,7 +36,7 @@
                                                             <div align="center">
                                                                 <center>
                                                                     <table border="0" width="472" bgcolor="#C8E1FF" cellspacing="0" cellpadding="5">
-                                                                <tbody>
+                                                                <tbody style="text-align: justify;">
                                                                     <tr>
                                                                         <td>
                                                                            
@@ -84,7 +49,7 @@
                                                                                 <?php if( checkLogin(false) ){ ?> 
 
                                                                                        <span style="color: black; font-weight: bold;">Olá!  <?php echo getUserName(); ?> </span><br><br>
-                                                                                       Por favor, assinale “SIM” ou “NÃO” às seguintes perguntas: 
+                                                                                       Por favor, leia atentamente as questões abaixo e assinale “SIM” ou “NÃO” em relação a saúde do(a) <strong><?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>, assinale também que está ciente e clique no botão "Enviar Questionário".
 
                                                                                 <?php }else{ ?>      
                                                                                         <a href="/user-create">             
@@ -106,9 +71,14 @@
                         
                         
                         <form method="POST" action="par-q/enviar" >
+                          <div>
+                              <input hidden="hidden" type="text" name="nomepess" id="nomepess" value="<?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                              <input hidden="hidden" type="text" name="idpess" id="idpess" value="<?php echo htmlspecialchars( $pessoa["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+
+                          </div>
                          
                           <div align=""><center><table border="0" width="87%" cellspacing="0" cellpadding="0">
-                            <tbody><tr>
+                            <tbody style="text-align: justify;"><tr>
                               <td width="100%"><small><small><font face="Verdana"><strong>1</strong> - Alguma vez um
                               médico lhe disse que você possui um problema do coração e lhe recomendou que só
                               fizesse atividade física sob supervisão médica?</font></small></small></td>
@@ -210,9 +180,13 @@
                         
                         <tr>
                             <td>
-                                <p align="center"><small><small><font face="Verdana">
+                                <p style="text-align: justify;"><small><small><font face="Verdana">
                                     <input type="radio" name="ciente" required="required">
-                                    &nbsp; Estou ciente de que é recomendável conversar com um médico antes de aumentar meu nível atual de atividade física, por ter respondido “SIM” a uma ou mais perguntas do “Questionário de Prontidão para Atividade Física” (PAR-Q). Assumo plena responsabilidade por qualquer atividade física praticada sem o atendimento a essa recomendação. 
+                                    <?php if( calcularIdade($pessoa["dtnasc"]) < 18 ){ ?>                             
+                                     Estou ciente de que é recomendável conversar com um médico sobre a saúde do <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> antes de aumentar seu nível atual de atividade física, por ter respondido “SIM” a uma ou mais perguntas do “Questionário de Prontidão para Atividade Física” (PAR-Q). Assumo plena responsabilidade por qualquer atividade física praticada pelo meu dependente, o menor <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, sem o atendimento a essa recomendação. 
+                                     <?php }else{ ?>
+                                     Estou ciente de que é recomendável conversar com um médico antes de aumentar meu nível atual de atividade física, ou do meu dependente, se for o caso, por ter respondido “SIM” a uma ou mais perguntas do “Questionário de Prontidão para Atividade Física” (PAR-Q). Assumo plena responsabilidade por qualquer atividade física praticada, por mim ou por meu dependente, sem o atendimento a essa recomendação. 
+                                     <?php } ?>
                                     </font></small></small>
                                 </p>
                             </td>
@@ -230,26 +204,6 @@
               </tr>
             </tbody>
 
-                        <!--                        
-
-                        <div class="col-md-12 alert alert-info" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px;">
-
-                            <div class="checkbox">                                
-                                
-                                <input type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" > &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> <span style="font-size: 12px; color: red"> insc. para  vagas</span>
-                                    <br>
-                                        
-
-                                <input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" >&nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) <span style="font-size: 12px; color: red">( insc. para  vagas)</span>                   <br>
-                               
-                                <input type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" >&nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> <span style="font-size: 12px; color: red">( insc. para  vagas)</span>
-                                <br> 
-
-                                <input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" >&nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong> <span style="font-size: 12px; color: red">( insc. para  vagas)</span>
-                                <br>
-                            </div>
-                        -->
-
                         </div>                                 
                         
                          
@@ -261,7 +215,14 @@
                        
                         <div class="col-md-6 alert alert-success" style="text-align-last: center; padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px;">
                              <input type="submit" data-value="Place order" value="Enviar questionário" id="place_order" name="par-q" class="button alt" >                     
-                        </div>                        
+                        </div>   
+
+                         <a href="javascript:window.history.go(-1)">
+                        <div class="col-md-6 btn btn-success" style="text-align-last: center; padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px;">
+                            
+                                 Voltar 
+                        </div>   
+                        </a>                                                               
             
                     </div>    
                 

@@ -49,44 +49,31 @@
                 &nbsp;<strong>Alterado: </strong>{function="formatDateHour($value.dtalteracao)"} 
                 </span>
                 </div>
-                {if="$value.pcd == 1"}
-                <div class="row alert alert-warning">
+                 <div class="row alert alert-warning">
                     <div class="col-md-12">
                             <span style="color: blue; font-weight: bold; "> {if="$value.pcd == 1"}Pessoa Com Deficiência{/if}</span>
                     </div>
+                   {if="$value.pcd == 1"}
                     <div class="col-md-12">
-                            <span style="color: blue;">
-                            {if="isset($value.defauditiva)"}
-                            Deficiente Auditivo -
-                            {/if}
-                            {if="isset($value.defvisual)"}
-                                    {if="$value.defvisual == null"}
-                                           
-                                    {/if}
-                            Deficiente Visual -
-                            {/if}
-                            {if="isset($value.deffisica)"}
-                            Deficiente Físico -
-                            {/if}
-                            {if="isset($value.defintelectual)"}
-                            Deficiente Intelectual -
-                            {/if}
-                            {if="isset($value.defautismo)"}
-                            Autista -
-                            {/if}
-                            {if="isset($value.deftea)"}
-                            Pessoa com TEA - 
-                            {/if}
-                            
 
                             
+                                <span style="font-weight: bold; color: black; ">CID.: {function="getCid($value.idpess)"}</span>
+                                <span style="color: blue;">
+                                {function="getCidDoenca($value.idpess)"}</span>
+                                <span style="font-weight: bold; color: black; ">         {function="getDefAuditiva($value.idpess)"}</span>
+                                <span style="font-weight: bold; color: black; ">         {function="getDefVisual($value.idpess)"}</span>
+                                <span style="font-weight: bold; color: black; ">         {function="getDefFisica($value.idpess)"}</span>
+                                <span style="font-weight: bold; color: black; ">         {function="getDefIntelectual($value.idpess)"}</span>
+                                <span style="font-weight: bold; color: black; ">         {function="getDefAutismo($value.idpess)"}</span>
+                                <span style="font-weight: bold; color: black; ">         {function="getDefTea($value.idpess)"}</span>
+                            
+                            
                         </div>
+                    {/if}
                         <div class="col-md-12">
-                              <h6>  <a href="/saude-atualiza/{$value.idpess}/{$value.nomepess}">Inserir / Atualizar Dados de Saúde <span style="color: #000"> (Clique aqui)</span></a> </h6>
-                    </div>
-                
+                                <h6> <a href="/saude-atualiza/{$value.idpess}/{$value.nomepess}">Inserir / Atualizar Dados de Saúde <span style="color: #000"> (Clique aqui)</span></a> </h6>
+                        </div>
                 </div>
-                {/if}
                 <div class="row alert alert-primary">
                     <div class="col-md-6 btn-primary" style="padding: 5px; text-align-last: center; width: 50%;">
                         <form action="post" name="idpess">

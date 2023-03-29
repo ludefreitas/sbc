@@ -1,41 +1,6 @@
 
     <script type="text/javascript">
-
-        function alertTokenCreebaPcd(){
-
-            alert("Conforme Resolução SESP Nº 004 de 28/10/2021 Art.7º, Os interessados em participar das turmas de inclusão para Pessoas com Deficiência (PCD) e/ou laudo médico do CREEBA, deverão comparecer pessoalmente (interessado ou representante legal) no CREEBA.")
-        }
-
-        //alert('Estamos no período de rematrícula. ESTA INSCRIÇÃO NÃO GARANTE VAGA')
-
-        function enormal(){ 
-           document.getElementById('geral').hidden = false
-           document.getElementById('temlaudo').hidden = true
-           document.getElementById('deficiente').hidden = true
-           document.getElementById('vulneravel').hidden = true 
-        } 
-        
-        function comlaudo(){ 
-            document.getElementById('temlaudo').hidden = false    
-           document.getElementById('geral').hidden = true           
-           document.getElementById('deficiente').hidden = true
-           document.getElementById('vulneravel').hidden = true
-        }  
-
-        function comdeficiencia(){     
-           document.getElementById('deficiente').hidden = false
-           document.getElementById('vulneravel').hidden = true            
-             document.getElementById('temlaudo').hidden = true
-             document.getElementById('geral').hidden = true
-        }  
-
-        function comvulnerabilidade(){       
-           document.getElementById('vulneravel').hidden = false
-            document.getElementById('deficiente').hidden = true
-             document.getElementById('temlaudo').hidden = true
-             document.getElementById('geral').hidden = true 
-        }  
-
+      
     </script>
 
   <div class="container"> <!-- container 1 -->
@@ -43,7 +8,18 @@
               <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 0px 0px 0px 0px;">
   
     <form action="/par-q/enviar" class="enviar" method="post" name="enviar">
+
         <div id="container">
+
+            <div class="row" style="text-align: center; color: red; font-size: 20px; margin-left: 180px; width: 520;">
+                <div class="col-md-12">
+                    {if="$msgError != ''"}
+                        <div>
+                     {$msgError}
+                        </div>
+                    {/if}
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-12">
 
@@ -71,7 +47,7 @@
                                                             <div align="center">
                                                                 <center>
                                                                     <table border="0" width="472" bgcolor="#C8E1FF" cellspacing="0" cellpadding="5">
-                                                                <tbody>
+                                                                <tbody style="text-align: justify;">
                                                                     <tr>
                                                                         <td>
                                                                            
@@ -84,7 +60,7 @@
                                                                                 {if="checkLogin(false)"} 
 
                                                                                        <span style="color: black; font-weight: bold;">Olá!  {function="getUserName()"} </span><br><br>
-                                                                                       Por favor, assinale “SIM” ou “NÃO” às seguintes perguntas: 
+                                                                                       Por favor, leia atentamente as questões abaixo e assinale “SIM” ou “NÃO” em relação a saúde do(a) <strong>{$pessoa.nomepess}</strong>, assinale também que está ciente e clique no botão "Enviar Questionário".
 
                                                                                 {else}      
                                                                                         <a href="/user-create">             
@@ -106,9 +82,14 @@
                         
                         
                         <form method="POST" action="par-q/enviar" >
+                          <div>
+                              <input hidden="hidden" type="text" name="nomepess" id="nomepess" value="{$pessoa.nomepess}">
+                              <input hidden="hidden" type="text" name="idpess" id="idpess" value="{$pessoa.idpess}">
+
+                          </div>
                          
                           <div align=""><center><table border="0" width="87%" cellspacing="0" cellpadding="0">
-                            <tbody><tr>
+                            <tbody style="text-align: justify;"><tr>
                               <td width="100%"><small><small><font face="Verdana"><strong>1</strong> - Alguma vez um
                               médico lhe disse que você possui um problema do coração e lhe recomendou que só
                               fizesse atividade física sob supervisão médica?</font></small></small></td>
@@ -207,12 +188,24 @@
                           </tbody></table>
                           </center>
                       </div>
+
+                      <tr>
+                            <td style="text-align: center; font-weight: bold;">
+                                <span>
+                                <font face="Verdana"> Termo de Responsabilidade</font>
+                                </span>
+                            </td>
+                        </tr>
                         
                         <tr>
                             <td>
-                                <p align="center"><small><small><font face="Verdana">
+                                <p style="text-align: justify;"><small><small><font face="Verdana">
                                     <input type="radio" name="ciente" required="required">
-                                    &nbsp; Estou ciente de que é recomendável conversar com um médico antes de aumentar meu nível atual de atividade física, por ter respondido “SIM” a uma ou mais perguntas do “Questionário de Prontidão para Atividade Física” (PAR-Q). Assumo plena responsabilidade por qualquer atividade física praticada sem o atendimento a essa recomendação. 
+                                    {if="calcularIdade($pessoa.dtnasc) < 18"}                             
+                                     Estou ciente de que é recomendável conversar com um médico sobre a saúde do {$pessoa.nomepess} antes de aumentar seu nível atual de atividade física, por ter respondido “SIM” a uma ou mais perguntas do “Questionário de Prontidão para Atividade Física” (PAR-Q). Assumo plena responsabilidade por qualquer atividade física praticada pelo meu dependente, o menor {$pessoa.nomepess}, sem o atendimento a essa recomendação. 
+                                     {else}
+                                     Estou ciente de que é recomendável conversar com um médico antes de aumentar meu nível atual de atividade física, ou do meu dependente, se for o caso, por ter respondido “SIM” a uma ou mais perguntas do “Questionário de Prontidão para Atividade Física” (PAR-Q). Assumo plena responsabilidade por qualquer atividade física praticada, por mim ou por meu dependente, sem o atendimento a essa recomendação. 
+                                     {/if}
                                     </font></small></small>
                                 </p>
                             </td>
@@ -230,26 +223,6 @@
               </tr>
             </tbody>
 
-                        <!--                        
-
-                        <div class="col-md-12 alert alert-info" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px;">
-
-                            <div class="checkbox">                                
-                                
-                                <input type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" > &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> <span style="font-size: 12px; color: red"> insc. para  vagas</span>
-                                    <br>
-                                        
-
-                                <input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" >&nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) <span style="font-size: 12px; color: red">( insc. para  vagas)</span>                   <br>
-                               
-                                <input type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" >&nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> <span style="font-size: 12px; color: red">( insc. para  vagas)</span>
-                                <br> 
-
-                                <input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" >&nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong> <span style="font-size: 12px; color: red">( insc. para  vagas)</span>
-                                <br>
-                            </div>
-                        -->
-
                         </div>                                 
                         
                          
@@ -261,7 +234,14 @@
                        
                         <div class="col-md-6 alert alert-success" style="text-align-last: center; padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px;">
                              <input type="submit" data-value="Place order" value="Enviar questionário" id="place_order" name="par-q" class="button alt" >                     
-                        </div>                        
+                        </div>   
+
+                         <a href="javascript:window.history.go(-1)">
+                        <div class="col-md-6 btn btn-success" style="text-align-last: center; padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px;">
+                            
+                                 Voltar 
+                        </div>   
+                        </a>                                                               
             
                     </div>    
                 

@@ -1,0 +1,394 @@
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Cursos Esportivos SBC <br>
+      </h1>
+      <h3>
+        Olá! {$user.desperson}, seja bem vindo!
+      </h3>
+      <ol class="breadcrumb">
+        <li><a href="/admin"><i class="fa fa-dashboard"></i> Level</a></li>
+        <li class="active">Here</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                Dados das temporadas: &nbsp;&nbsp;
+                {loop="$temporada"}
+
+                    <a href="/admin/dadostemporada/{$value.desctemporada}"> {$value.desctemporada}</a> &nbsp;&nbsp;
+
+                {/loop}
+            </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Usuários</div>          
+        </div>  
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;">Usuários Visitante: {$visitante}</div>
+          <div class="col-md-3" style="border: solid 1px black;">
+              <span style="color: green;">Usuários &nbsp;&nbsp;&nbsp;&nbsp;Online: </span> {$useronline}
+          </div>         
+          
+        </div> 
+
+        <div class="row">
+           <div class="col-md-3" style="border: solid 1px black;">Todos Usuários: {$totalUsuarios}</div>
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">Todos &nbsp;&nbsp;&nbsp;&nbsp;Alunos</span>: {$totalAlunos}</div>
+          
+        </div> 
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Chamadas de hoje</div>
+          
+        </div>       
+        
+        <div class="row">
+          <div class="col-md-2" style="border: solid 1px black;">
+             Presentes: {function="NumAlunosPresentesPorData()"}
+          </div>
+          <div class="col-md-2" style="border: solid 1px black;">
+             Ausentes: {function="NumAlunosAusentesPorData()"}
+          </div>
+           <div class="col-md-2" style="border: solid 1px black;"> 
+           Justificados {function="NumAlunosJustificadosPorData()"}
+           </div>
+          
+        </div>
+    
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: black;">-
+
+          </div>          
+        </div>   
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">{$desctemporada} - Dados atualizados </div>          
+        </div> 
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: black;">-
+
+          </div>          
+        </div>   
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Vagas / Inscrições / Matriculados</div>
+          
+        </div>       
+        
+        
+        <div class="row">
+          
+          <div class="col-md-2" style="border: solid 1px black;">         
+          &nbsp;V a g a s :&nbsp; {function="pegaSomaVagasByDescTemporada(($desctemporada))"}
+          </div>
+          
+        <div class="col-md-2" style="border: solid 1px black;">
+          <span style="color: green;">Inscrições</span>: {function="todosInscricoesValidas(($desctemporada))"}
+          </div>
+           <div class="col-md-2" style="border: solid 1px black;"> matriculados: {function="MatriculadosDesctemporada(($desctemporada))"}</div>
+          
+        </div>         
+
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Hidroginástica </div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s :&nbsp; {function="pegaSomaVagasByTurmaIdmodal(($desctemporada), 6)"}</div>
+
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">Inscrições</span>: {function="pegaInscTemporadaModalidade(($desctemporada), 6)"}</div>
+          
+        </div>    
+
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Natação </div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; {function="pegaSomaVagasByTurmaIdmodal(($desctemporada), 14)"}</div>
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">Inscrições</span>: {function="pegaInscTemporadaModalidade(($desctemporada), 14)"}</div>
+          
+        </div>  
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Ginástica </div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; {function="pegaSomaVagasByTurmaIdmodal(($desctemporada), 5)"}</div>
+
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">Inscrições</span>: {function="pegaInscTemporadaModalidade(($desctemporada), 5)"}</div>
+          
+        </div>  
+
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Pilates </div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; {function="pegaSomaVagasByTurmaIdmodal(($desctemporada), 24)"}</div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">Inscrições</span>: {function="pegaInscTemporadaModalidade(($desctemporada), 24)"}</div>
+          
+        </div> 
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Alongamento </div>
+          
+        </div>           
+        
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; {function="pegaSomaVagasByTurmaIdmodal(($desctemporada), 23)"}</div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: {function="pegaInscTemporadaModalidade(($desctemporada), 23)"}</div>
+          
+        </div> 
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Futsal </div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; {function="pegaSomaVagasByTurmaIdmodal(($desctemporada), 4)"}</div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: {function="pegaInscTemporadaModalidade(($desctemporada), 4)"}</div>
+          
+        </div>   
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Voleibol </div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; {function="pegaSomaVagasByTurmaIdmodal(($desctemporada), 7)"}</div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: {function="pegaInscTemporadaModalidade(($desctemporada), 7)"}</div>
+          
+        </div>  
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Oficina </div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; {function="pegaSomaVagasByTurmaIdmodal(($desctemporada), 16)"}</div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: {function="pegaInscTemporadaModalidade(($desctemporada), 16)"}</div>
+          
+        </div> 
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Dança </div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; {function="pegaSomaVagasByTurmaIdmodal(($desctemporada), 2)"}</div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: {function="pegaInscTemporadaModalidade(($desctemporada), 2)"}</div>
+          
+        </div> 
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Yoga </div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; {function="pegaSomaVagasByTurmaIdmodal(($desctemporada), 20)"}</div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: {function="pegaInscTemporadaModalidade(($desctemporada), 20)"}</div>
+          
+        </div>  
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Aiki Do </div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; {function="pegaSomaVagasByTurmaIdmodal(($desctemporada), 32)"}</div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: {function="pegaInscTemporadaModalidade(($desctemporada), 32)"}</div>
+          
+        </div> 
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Tai Chi Chuan </div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; {function="pegaSomaVagasByTurmaIdmodal(($desctemporada), 31)"}</div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: {function="pegaInscTemporadaModalidade(($desctemporada), 31)"}</div>
+          
+        </div> 
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Basquete </div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; {function="pegaSomaVagasByTurmaIdmodal(($desctemporada), 51)"}</div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: {function="pegaInscTemporadaModalidade(($desctemporada), 51)"}</div>
+          
+        </div> 
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Canto </div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; {function="pegaSomaVagasByTurmaIdmodal(($desctemporada), 22)"}</div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: {function="pegaInscTemporadaModalidade(($desctemporada), 22)"}</div>
+          
+        </div>  
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Chi Kung </div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; {function="pegaSomaVagasByTurmaIdmodal(($desctemporada), 29)"}</div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: {function="pegaInscTemporadaModalidade(($desctemporada), 29)"}</div>
+          
+        </div> 
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Chi Kung ou Meditação </div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; {function="pegaSomaVagasByTurmaIdmodal(($desctemporada), 34)"}</div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: {function="pegaInscTemporadaModalidade(($desctemporada), 34)"}</div>
+          
+        </div> 
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Musculação / Academia </div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; {function="pegaSomaVagasByTurmaIdmodal(($desctemporada), 26)"}</div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: {function="pegaInscTemporadaModalidade(($desctemporada), 26)"}</div>
+          
+        </div>           
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Pilates ou Yoga </div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; {function="pegaSomaVagasByTurmaIdmodal(($desctemporada), 33)"}</div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: {function="pegaInscTemporadaModalidade(($desctemporada), 33)"}</div>
+          
+        </div>   
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Poliesportivo </div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; {function="pegaSomaVagasByTurmaIdmodal(($desctemporada), 28)"}</div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: {function="pegaInscTemporadaModalidade(($desctemporada), 28)"}</div>
+          
+        </div>        
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Recreação e Lazer </div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; {function="pegaSomaVagasByTurmaIdmodal(($desctemporada), 21)"}</div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: {function="pegaInscTemporadaModalidade(($desctemporada), 21)"}</div>
+          
+        </div>   
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Yoga / Chi Kung / Meditalção </div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; {function="pegaSomaVagasByTurmaIdmodal(($desctemporada), 36)"}</div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: {function="pegaInscTemporadaModalidade(($desctemporada), 36)"}</div>
+          
+        </div>
+    
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Yoga ou Meditação </div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; {function="pegaSomaVagasByTurmaIdmodal(($desctemporada), 35)"}</div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: {function="pegaInscTemporadaModalidade(($desctemporada), 35)"}</div>
+          
+        </div>
+        
+        
+                  
+      </div>
+
+    </section>
+    <!-- /.content -->
+  </div>
+ 

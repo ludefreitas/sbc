@@ -303,6 +303,19 @@ desired effect
                   </li>
           </ul>
         </li> 
+        <li class="treeview">
+          <a href="#"><i class="fa fa-users"></i> <span>Pessoas</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+           <ul class="treeview-menu">
+            <li><a href="/prof/users"><i class="fa fa-users"></i>Usuários</a></li>          
+          </ul>
+          <ul class="treeview-menu">
+            <li><a href="/prof/pessoas"><i class="fa fa-users"></i>Alunos</a></li>          
+          </ul>
+        </li> 
 
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Avaliação Natação</span>

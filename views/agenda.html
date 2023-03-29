@@ -70,13 +70,21 @@
                          <label style="color: blue;"><br>SELECIONE UM HORÁRIO para: </label>
                          <span style="font-weight: bold;">{$nomediadasemana} - {$dataformatada}</span><br>
                         
-                        {loop="$horariosDiaSemana"}
-
-                        
+                        {loop="$horariosDiaSemana"}                        
 
                         <input type="radio" name="idhoradiasemana" value="{$value.idhoradiasemana}">
 
-                        {$value.horamarcadainicial} ás {$value.horamarcadafinal}<br>
+                        {$value.horamarcadainicial} ás {$value.horamarcadafinal} -
+
+                        <span style="font-size: 10px; font-style: italic;">
+
+                        {function="agendaPorDataIdHoraDiaSemana($dataSemSemana, $idlocal, $value.idhoradiasemana)"} 
+
+                        de
+
+                        {function="vagasIdHorasemana($value.idhoradiasemana)"}  
+
+                        vagas </span> <br>
 
                         <input type="text" name="horamarcadainicial" value="{$value.horamarcadainicial}" style="display: none;">
                         <input type="text" name="horamarcadafinal" value="{$value.horamarcadafinal}" style="display: none">

@@ -22,7 +22,7 @@
 				FROM tb_temporada
 				INNER JOIN tb_statustemporada
 				using(idstatustemporada)
-				ORDER BY desctemporada");
+				ORDER BY desctemporada DESC");
 		}
 		
 		public static function listAllTurmaTemporada($idtemporada)
@@ -635,11 +635,14 @@
 			//Temporada::updateFileAdminTemporada();
 			Temporada::updateFileAdminInscricoes();
 			Temporada::updateFileAdminTurmaTemporada();
+			Temporada::updateFileAdminTurmaTemporadaAudi();
 			Temporada::updateFileProfInscricoes();
 			Temporada::updateFileProfTurmaTemporada();
 			Temporada::updateFileProfessorPorTemporada();
+			Temporada::updateFileEstagiarioPorTemporada();
 			Temporada::updateFileSorteioPorTemporada();
 			Temporada::updateFileAdminControleFrequenciaTemporada();
+			Temporada::updateFileAdminControleFrequenciaTemporadaAudi();
 		}
 
 		public function get($idtemporada)
@@ -678,11 +681,14 @@
 			//Temporada::updateFileAdminTemporada();
 			Temporada::updateFileAdminInscricoes();
 			Temporada::updateFileAdminTurmaTemporada();
+			Temporada::updateFileAdminTurmaTemporadaAudi();
 			Temporada::updateFileProfInscricoes();
 			Temporada::updateFileProfTurmaTemporada();
 			Temporada::updateFileProfessorPorTemporada();
+			Temporada::updateFileEstagiarioPorTemporada();
 			Temporada::updateFileSorteioPorTemporada();
 			Temporada::updateFileAdminControleFrequenciaTemporada();
+			Temporada::updateFileAdminControleFrequenciaTemporadaAudi();
 		}
 
 		// atualiza lista de temporada no site (no rodapé) temporada-menu.html
@@ -773,13 +779,13 @@
 
 									   		<ul class="treeview-menu">
 	            								<li class="treeview">
-													<a href="/admin/turma-temporada-local/'.$row['idtemporada'].'">
+													<a href="/admin/turma-temporada/'.$row['idtemporada'].'/local/6">
 									   					<i class="fa fa-link"></i> 
 									   					Por Locais
 									   				</a>								   		
 												</li>
 												<li class="treeview">
-													<a href="/admin/turma-temporada-modalidade/'.$row['idtemporada'].'">
+													<a href="/admin/turma-temporada/'.$row['idtemporada'].'/modalidade/5">
 											   			<i class="fa fa-link"></i> 
 											   			Por modalidades
 											   		</a>										   		
@@ -792,6 +798,43 @@
 
 			}
 			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."turma-temporada-menu.html", implode('', $html));
+		}
+
+		public static function updateFileAdminTurmaTemporadaAudi()	
+		{
+			$temporada = Temporada::listAll();
+
+			$html = [];
+
+			foreach ($temporada as $row) {
+				array_push($html, 
+									'<li class="treeview">
+										<a href="/admin/turma-temporada-audi/'.$row['idtemporada'].'">
+								   			<i class="fa fa-link"></i> 
+								   			Turmas/Temporada '.$row['desctemporada'].'
+								   		</a>
+
+									   		<ul class="treeview-menu">
+	            								<li class="treeview">
+													<a href="/admin/turma-temporada-audi/'.$row['idtemporada'].'/local/6">
+									   					<i class="fa fa-link"></i> 
+									   					Por Locais
+									   				</a>								   		
+												</li>
+												<li class="treeview">
+													<a href="/admin/turma-temporada-audi/'.$row['idtemporada'].'/modalidade/32">
+											   			<i class="fa fa-link"></i> 
+											   			Por modalidades
+											   		</a>										   		
+												</li>
+			          						</ul>								   		
+									</li>'
+
+
+								);
+
+			}
+			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."turma-temporada-menu-audi.html", implode('', $html));
 		}
 
 		public static function updateFileAdminControleFrequenciaTemporada()	
@@ -831,6 +874,43 @@
 			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."controle-frequencia-menu.html", implode('', $html));
 		}
 
+		public static function updateFileAdminControleFrequenciaTemporadaAudi()	
+		{
+			$temporada = Temporada::listAll();
+
+			$html = [];
+
+			foreach ($temporada as $row) {
+				array_push($html, 
+									'<li class="treeview">
+										<a href="/admin/controle-frequencia-audi/'.$row['idtemporada'].'">
+								   			<i class="fa fa-link"></i> 
+								   			Controle de Frequência '.$row['desctemporada'].'
+								   		</a>
+
+									   		<ul class="treeview-menu">
+	            								<li class="treeview">
+													<a href="/admin/controle-frequencia-locais-audi/'.$row['idtemporada'].'">
+									   					<i class="fa fa-link"></i> 
+									   					Por Locais
+									   				</a>								   		
+												</li>
+												<li class="treeview">
+													<a href="/admin/controle-frequencia-modalidades-audi/'.$row['idtemporada'].'">
+											   			<i class="fa fa-link"></i> 
+											   			Por modalidades
+											   		</a>										   		
+												</li>
+			          						</ul>								   		
+									</li>'
+
+
+								);
+
+			}
+			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."controle-frequencia-menu-audi.html", implode('', $html));
+		}
+
 		public static function updateFileProfTurmaTemporada()	
 		{
 			$temporada = Temporada::listAll();
@@ -867,6 +947,25 @@
 
 			}
 			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."professor-temporada-menu.html", implode('', $html));
+		}
+
+		public static function updateFileEstagiarioPorTemporada()	
+		{
+			$temporada = Temporada::listAll();
+
+			$html = [];
+
+			foreach ($temporada as $row) {
+				array_push($html, '<li class="treeview">
+									   			<a href="/admin/estagiario-temporada/'.$row['idtemporada'].'">
+									   				<i class="fa fa-link"></i>
+									   				Estagiário Temporada '.$row['desctemporada'].'
+									   			</a>
+									   		</li>'
+								);
+
+			}
+			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."estagiario-temporada-menu.html", implode('', $html));
 		}
 
 		public static function updateFileSorteioPorTemporada()	

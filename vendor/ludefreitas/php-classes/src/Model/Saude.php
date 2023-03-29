@@ -88,12 +88,12 @@ class Saude extends Model {
 
 		$sql = new Sql();
 
-		return $sql->select("SELECT *
+		$results = $sql->select("SELECT *
 			FROM tb_cid WHERE codigo = :codigo", [
 			':codigo'=>$codigo			
 		]);
 
-		return $sql;
+		return $results;
 	}
 
 	public function TemDadosSaude($idpess){
@@ -155,7 +155,128 @@ class Saude extends Model {
 			":deftea"=>$this->getdeftea(),
 			":idpess"=>$idpess			
 		));		
+	}
+
+	public function saveparq()
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("CALL sp_parq_save(:idparq, :idpess, :questaoum, :questaodois, :questaotres, :questaoquatro, :questaocinco, :questaoseis, :questaosete)", array(
+			":idparq"=>$this->getidparq(),
+			":idpess"=>$this->getidpess(),
+			":questaoum"=>$this->getquestaoum(),						
+			":questaodois"=>$this->getquestaodois(),						
+			":questaotres"=>$this->getquestaotres(),						
+			":questaoquatro"=>$this->getquestaoquatro(),						
+			":questaocinco"=>$this->getquestaocinco(),						
+			":questaoseis"=>$this->getquestaoseis(),
+			":questaosete"=>$this->getquestaosete()						
+		));
+
+		if (count($results) > 0) {
+
+			$this->setData($results[0]);
+
+		}
+	}
+
+	public function getParqUltimoByIdPess(int $idpess)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_parq WHERE dtcreateparq = (SELECT  MAX(dtcreateparq) FROM tb_parq WHERE idpess = :idpess)", array(
+			":idpess"=>$idpess			
+		));
+
+		if (count($results) > 0) {
+
+			$this->setData($results[0]);
+
+		}		
+		
 	}	
+
+	public  function getParqByIdPess($idpess)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_parq WHERE idpess = :idpess", array(
+			":idpess"=>$idpess			
+		));
+
+		return $this->setData($results);
+
+		/*
+
+		if (count($results) > 0) {
+			$this->setData($results[0]);
+		}		
+		*/
+		
+	}	
+
+	public function getCountParqByIdPess($idpess){
+
+		$sql = new Sql();
+		
+		$results = $sql->select("SELECT count(*) FROM tb_parq 
+			WHERE idpess = :idpess
+			", array(
+			":idpess"=>$idpess
+		));
+
+		return $results[0]['count(*)'];
+	}
+
+	public function saveatestado()
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("CALL sp_atestado_save(:idatestado, :idpess, :iduser, :dataemissao, :datavalidade, :observ)", array(
+			":idatestado"=>$this->getidatestado(),
+			":idpess"=>$this->getidpess(),
+			":iduser"=>$this->getiduser(),						
+			":dataemissao"=>$this->getdataemissao(),						
+			":datavalidade"=>$this->getdatavalidade(),						
+			":observ"=>$this->getobserv()
+		));
+
+		if (count($results) > 0) {
+
+			$this->setData($results[0]);
+
+		}
+	}
+
+	public function getAtestadoUltimoByIdPess(int $idpess)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_atestado WHERE dataatualizacao = (SELECT  MAX(dataatualizacao) FROM tb_atestado WHERE idpess = :idpess)", array(
+			":idpess"=>$idpess			
+		));
+		
+		if (count($results) > 0) {
+			$this->setData($results[0]);
+		}				
+		
+	}	
+
+	public function getCountAtestadoByIdPess($idpess){
+
+		$sql = new Sql();
+		
+		$results = $sql->select("SELECT count(*) FROM tb_atestado 
+			WHERE idpess = :idpess
+			", array(
+			":idpess"=>$idpess
+		));
+
+		return $results[0]['count(*)'];
+	}
 
 	public function get(int $idpess)
 	{
@@ -192,6 +313,30 @@ class Saude extends Model {
 		}
 	}	
 
+	public function getDoencaByidpess($idpess)
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_cid a
+			INNER JOIN tb_saude b ON b.idcid = a.idcid
+			WHERE b.idpess = :idpess
+			", array(
+			":idpess"=>$idpess			
+		));
+		return $results;		
+	}
+
+	public function getDeficienciaByidpess($idpess)
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_saude
+			WHERE idpess = :idpess
+			", array(
+			":idpess"=>$idpess			
+		));
+		return $results;		
+	}
 
 	public static function setError($msg)
 	{

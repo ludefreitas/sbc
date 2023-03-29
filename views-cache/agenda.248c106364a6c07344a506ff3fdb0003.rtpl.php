@@ -70,13 +70,21 @@
                          <label style="color: blue;"><br>SELECIONE UM HORÁRIO para: </label>
                          <span style="font-weight: bold;"><?php echo htmlspecialchars( $nomediadasemana, ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $dataformatada, ENT_COMPAT, 'UTF-8', FALSE ); ?></span><br>
                         
-                        <?php $counter1=-1;  if( isset($horariosDiaSemana) && ( is_array($horariosDiaSemana) || $horariosDiaSemana instanceof Traversable ) && sizeof($horariosDiaSemana) ) foreach( $horariosDiaSemana as $key1 => $value1 ){ $counter1++; ?>
-
-                        
+                        <?php $counter1=-1;  if( isset($horariosDiaSemana) && ( is_array($horariosDiaSemana) || $horariosDiaSemana instanceof Traversable ) && sizeof($horariosDiaSemana) ) foreach( $horariosDiaSemana as $key1 => $value1 ){ $counter1++; ?>                        
 
                         <input type="radio" name="idhoradiasemana" value="<?php echo htmlspecialchars( $value1["idhoradiasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
 
-                        <?php echo htmlspecialchars( $value1["horamarcadainicial"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ás <?php echo htmlspecialchars( $value1["horamarcadafinal"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
+                        <?php echo htmlspecialchars( $value1["horamarcadainicial"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ás <?php echo htmlspecialchars( $value1["horamarcadafinal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> -
+
+                        <span style="font-size: 10px; font-style: italic;">
+
+                        <?php echo agendaPorDataIdHoraDiaSemana($dataSemSemana, $idlocal, $value1["idhoradiasemana"]); ?> 
+
+                        de
+
+                        <?php echo vagasIdHorasemana($value1["idhoradiasemana"]); ?>  
+
+                        vagas </span> <br>
 
                         <input type="text" name="horamarcadainicial" value="<?php echo htmlspecialchars( $value1["horamarcadainicial"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;">
                         <input type="text" name="horamarcadafinal" value="<?php echo htmlspecialchars( $value1["horamarcadafinal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none">

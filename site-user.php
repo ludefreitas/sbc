@@ -101,6 +101,7 @@ $app->post("/register", function(){
 
 	$_POST["inadmin"] = (isset($_POST["inadmin"]))?1:0;
 	$_POST["isprof"] = (isset($_POST["isprof"]))?1:0;
+	$_POST["isaudi"] = (isset($_POST["isaudi"]))?1:0;
 	$_POST["statususer"] = 1;
 
 	$user->setData([
@@ -111,6 +112,7 @@ $app->post("/register", function(){
 		'nrphone'=>$_POST['phone'],
 		'inadmin'=>$_POST["inadmin"],
 		'isprof'=>$_POST["isprof"],
+		'isaudi'=>$_POST["isaudi"],
 		'statususer'=>$_POST["statususer"]		
 	]);
 
@@ -735,6 +737,7 @@ $app->post("/register", function(){
 
 	$_POST["inadmin"] = (isset($_POST["inadmin"]))?1:0;
 	$_POST["isprof"] = (isset($_POST["isprof"]))?1:0;
+	$_POST["isaudi"] = (isset($_POST["isaudi"]))?1:0;
 	$_POST["statususer"] = 1;
 
 	$user->setData([
@@ -745,6 +748,7 @@ $app->post("/register", function(){
 		'nrphone'=>$_POST['phone'],
 		'inadmin'=>$_POST["inadmin"],
 		'isprof'=>$_POST["isprof"],
+		'isaudi'=>$_POST["isaudi"],
 		'statususer'=>$_POST["statususer"]		
 	]);
 
@@ -903,6 +907,7 @@ $app->post("/user/profile", function(){
 	$_POST['apelidoperson'] = $user->getapelidoperson();
 	$_POST['inadmin'] = $user->getinadmin();
 	$_POST['isprof'] = $user->getisprof();
+	$_POST['isaudi'] = $user->getisaudi();
 	$_POST['statususer'] = 1;
 	$_POST['despassword'] = $user->getdespassword();
 	$_POST['deslogin'] = $_POST['desemail'];

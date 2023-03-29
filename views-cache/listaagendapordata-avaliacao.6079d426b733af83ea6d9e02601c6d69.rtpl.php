@@ -61,14 +61,14 @@
 
           <?php if( $error != '' ){ ?>
           <tr>
-            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; color: green;" colspan="8">
+            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; color: green;" colspan="9">
             <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
           </th>
           </tr>
           <?php } ?>
 
           <tr>
-            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; " colspan="8"; >
+            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; " colspan="9"; >
               Cursos esportivos SBC
             <h5 style="margin: 0 0 0 0";>LISTA DA AGENDA DE AVALIÇÃO NATAÇÃO (  <?php echo htmlspecialchars( $apelidolocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>  )
             <br>
@@ -81,6 +81,8 @@
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Horário</th>
 
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Nome</th>
+
+              <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Idade</th>
 
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Email</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Whats/Fone</th>
@@ -104,6 +106,9 @@
               </td>              
               <td style="text-align: left; border: solid 1px; color: darkblue; padding: 5px;">
                 <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+              </td>
+              <td style="text-align: center; border: solid 1px; color: darkblue; padding: 5px;">
+                <?php echo calcularIdade($value1["dtnasc"]); ?>
               </td>
               <td style="text-align: left; border: solid 1px; color: darkblue; padding: 5px;">
                 <?php echo htmlspecialchars( $value1["deslogin"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
@@ -131,7 +136,7 @@
                 <?php if( $data > $value1["dia"] OR $value1["ispresente"] == 1 ){ ?>
 
                 <?php }else{ ?>
-                <a href="/agendamarcarpresenca/<?php echo htmlspecialchars( $value1["idagen"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-success">
+                <a href="/admin/agendamarcarpresenca/<?php echo htmlspecialchars( $value1["idagen"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-success">
                 <i class="fa fa-check"></i>
                 </a>
 
@@ -142,7 +147,7 @@
           </tr>
           <?php }else{ ?>
           <tr style="font-weight: bold; color: red; font-size: 22px; text-align: center; padding: 10px;">
-            <td colspan="8" style="padding: 10px">
+            <td colspan="9" style="padding: 10px">
               Não há horário agendado para natação espontânea nesta data !
             </td>
           </tr>

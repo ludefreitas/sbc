@@ -5,6 +5,8 @@ use \Sbc\Model\Agenda;
 use \Sbc\Model\User;
 use \Sbc\Model\Local;
 use \Sbc\Model\Pessoa;
+use \Sbc\Model\Saude;
+use \Sbc\Model\Cart;
 
 $app->get("/calendariobaetao/:idlocal", function($idlocal) {
 
@@ -249,8 +251,7 @@ $app->post("/hora-agenda", function() {
 		Agenda::setMsgError("Não há mais vagas para este horário! Escolha outro ");
 	    header("Location: /agenda/".$_POST['idlocal']."/".$_POST['dataSemSemana']."");
 	    exit();
-	}
-	
+	}	
 
 	$idlocal = (int)$_POST['idlocal'];
 	$dataPost = $_POST['data'];
@@ -273,6 +274,35 @@ $app->post("/hora-agenda", function() {
 		header("Location: /agenda/".$_POST['idlocal']."/".$_POST['dataSemSemana']."");
 		exit;
 	}
+
+	$saude = new Saude();
+
+	$countParq = $saude->getCountParqByIdPess($idpess);
+
+	if($countParq < 1){
+
+		Cart::setMsgError("Você dever responder abaixo o Questionário de Prontidão para Atividade Física da ".$nomepess."! ");
+			//header("Location: /cart");
+		header("Location: /saude-atualiza/".$idpess."/".$nomepess."");
+		exit();
+
+	}
+
+	$selecionaagenda = $agenda->selecionaAgendaPorPessoaDiaTitulo($idpess, $titulo);
+
+	$selecionaagendadia = $selecionaagenda[0]['dia'];
+
+	if($selecionaagendadia > $hoje){
+
+		$qtdAgendamento = Agenda::countAgendaPorPessoaDiaTitulo($idpess, $titulo);
+
+		if((int)$qtdAgendamento[0]['count(*)'] >= 1){
+
+		echo "<script>alert('".$nomepess." já tem agendamento para natação espontânea reservados para esta semana.');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+		}
+	}
 	
 	$qtdAgendamento = Agenda::countAgendaPorPessoaLocalDia($idpess, $idlocal, $dataSemSemana);
 
@@ -283,6 +313,7 @@ $app->post("/hora-agenda", function() {
 		exit();	
 
 	}else{
+
 
 		$horaExistenteinicial = $agenda->getHoraExistenteInicial($idpess, $idlocal, $dataSemSemana);
 		$horaExistentefinal = $agenda->getHoraExistenteFinal($idpess, $idlocal, $dataSemSemana);	
@@ -403,9 +434,9 @@ $app->post("/hora-agenda", function() {
 	if( $horarioinicial[0]['horamarcadainicial'] == '08:30' ||
 		$horarioinicial[0]['horamarcadainicial'] == '09:00' ||
 		$horarioinicial[0]['horamarcadainicial'] == '09:30' ||
-		$horarioinicial[0]['horamarcadainicial'] == '10:00' ||
-		$horarioinicial[0]['horamarcadainicial'] == '10:30' || 		
-		$horarioinicial[0]['horamarcadainicial'] == '11:00' ||
+		//$horarioinicial[0]['horamarcadainicial'] == '10:00' ||
+		//$horarioinicial[0]['horamarcadainicial'] == '10:30' || 		
+		// $horarioinicial[0]['horamarcadainicial'] == '11:00' ||
 		$horarioinicial[0]['horamarcadainicial'] == '13:30' ||
 		$horarioinicial[0]['horamarcadainicial'] == '14:00' ||
 		$horarioinicial[0]['horamarcadainicial'] == '14:30' ||
@@ -477,7 +508,9 @@ $app->post("/horaagendada", function() {
 
 	//Criar Call no banco de dados
 
-	$agenda->save();
+	if(!$agenda->getAgendaExist($idpess, $idhoradiasemana, $dia, $idlocal)){
+			$agenda->save();
+	}
 
 	if($titulo == 'avaliacao'){
 
@@ -644,7 +677,37 @@ $app->post("/hora-agenda-avaliacao", function() {
 		exit();
 	}
 
+	$saude = new Saude();
 
+	$countParq = $saude->getCountParqByIdPess($idpess);
+
+	if($countParq < 1){
+
+		Cart::setMsgError("Você dever responder abaixo o Questionário de Prontidão para Atividade Física da ".$nomepess."! ");
+			//header("Location: /cart");
+		header("Location: /saude-atualiza/".$idpess."/".$nomepess."");
+		exit();
+
+	}
+
+	$selecionaagenda = $agenda->selecionaAgendaPorPessoaDiaTitulo($idpess, $titulo);
+
+	$selecionaagendadia = $selecionaagenda[0]['dia'];
+
+	if($selecionaagendadia > $hoje){
+
+		$qtdAgendamento = Agenda::countAgendaPorPessoaDiaTitulo($idpess, $titulo);
+
+		if((int)$qtdAgendamento[0]['count(*)'] >= 1){
+
+		echo "<script>alert('".$nomepess." já tem agendamento para avaliação reservados para esta temporada');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+
+		}
+	}
+
+	/*
 	//$qtdAgendamento = Agenda::countAgendaPorPessoaLocalDiaTitulo($idpess, $idlocal, $titulo);
 	$qtdAgendamento = Agenda::countAgendaPorPessoaDiaTitulo($idpess, $titulo);
 
@@ -655,6 +718,7 @@ $app->post("/hora-agenda-avaliacao", function() {
 		exit();
 
 	}
+	*/
 
 	$maisumasemana = date('Y-m-d', strtotime('+4 week'));
 

@@ -69,8 +69,16 @@
                             {$value.numcpf}
                         {else}
                             NULL
-                        {/if}               
+                        {/if}                       
+                       
+                       
                     {/if}
+
+                    <br>   
+
+                    Criado por: {function="getUserNameById($value.creator)"}
+
+
             </div>               
           {/loop}           
             <!-- /.box-body -->

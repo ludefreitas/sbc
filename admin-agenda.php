@@ -36,7 +36,7 @@ $app->get("/admin/calendarioagendapauliceia/:idlocal", function($idlocal) {
 	]);	
 });
 
-$app->get("/admin/calendarioagendabaetao-avaliacao/:idlocal", function($idlocal) {
+$app->get("/admin/calendarioagenda-avaliacao/:idlocal", function($idlocal) {
 
 	User::verifyLogin();
 
@@ -45,7 +45,7 @@ $app->get("/admin/calendarioagendabaetao-avaliacao/:idlocal", function($idlocal)
 
 	$page = new PageAdmin();
 
-	$page->setTpl("calendarioagendabaetao-avaliacao", [
+	$page->setTpl("calendarioagenda-avaliacao", [
 		'idlocal'=>$idlocal,
 		'error'=>Agenda::getMsgError(),
 	]);	

@@ -54,6 +54,52 @@ $app->get("/admin/local", function() {
 	));
 });
 
+$app->get("/admin/local-audi", function() {
+
+	User::verifyLoginAudi();
+	// na linha abaixo retorna um array com todos os dados do usuário
+
+	$search = (isset($_GET['search'])) ? $_GET['search'] : "";
+
+	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
+
+	if ($search != '') {
+
+		$pagination = Local::getPageSearch($search, $page);
+
+	} else {
+
+		$pagination = Local::getPage($page);
+
+	}
+
+	$pages = [];
+
+	for ($x = 0; $x < $pagination['pages']; $x++)
+	{
+
+		array_push($pages, [
+			'href'=>'/admin/local-audi?'.http_build_query([
+				'page'=>$x+1,
+				'search'=>$search
+			]),
+			'text'=>$x+1
+		]);
+
+	}
+	//$local = Local::listAll();
+
+	// carrega uma pagina das páginas do admin
+	$page = new PageAdmin();
+
+	// envia para a página o array retornado pelo listAll
+	$page->setTpl("local-audi", array( // aqui temos um array com muitos arrays
+		"local"=>$pagination['data'],
+		"search"=>$search,
+		"pages"=>$pages,
+		"error"=>Local::getMsgError()
+	));
+});
 
 $app->get("/admin/local/create", function() {
 

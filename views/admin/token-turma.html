@@ -49,7 +49,7 @@
                     <span style="font-weight: bold; color: darkblue;">                  
                         {$value.token}</span> <br>
                         {if="$value.numcpf"}
-                            {$value.numcpf}
+                            {$value.numcpf} 
                         {else}
                             NULL
                         {/if}
@@ -60,12 +60,18 @@
                     </span><br>
 
                         {if="$value.numcpf"}
-                            {$value.numcpf}
+                            {$value.numcpf} 
                         {else}
                             NULL
                         {/if}               
                     {/if}
-            </div>               
+                <br>   
+
+                    Criado por: {function="getUserNameById($value.creator)"}
+            </div>  
+
+           
+
           {/loop}           
             <!-- /.box-body -->
         </div>

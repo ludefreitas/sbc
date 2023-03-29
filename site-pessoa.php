@@ -383,6 +383,15 @@ $app->get("/user/pessoas", function(){
 	$pessoa = $user->getPessoa();
 	//$pessoa = $user->getPessoaSaude();
 
+	/*
+
+	echo '<pre>';
+	print_r($pessoa);
+	echo '</pre>';
+	exit;
+
+	*/
+
 	$page = new Page();
 
 	$page->setTpl("user-pessoas", [

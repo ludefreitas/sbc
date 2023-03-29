@@ -26,6 +26,22 @@ $app->get("/admin/temporada", function() {
 	));
 });
 
+$app->get("/admin/temporada-audi", function() {
+
+	User::verifyLoginAudi();
+
+	$temporada = Temporada::listAll();
+
+	$total = count($temporada);
+	$page = new PageAdmin();
+	
+	$page->setTpl("temporada-audi", array(
+		'temporada'=>$temporada,
+		'total'=>$total,
+		'error'=>Temporada::getError()
+	));
+});
+
 $app->get("/admin/temporada/create", function() {
 
 	User::verifyLogin();
@@ -457,6 +473,38 @@ $app->get("/admin/controle-frequencia-locais/:idtemporada", function($idtemporad
 	]);	
 });
 
+$app->get("/admin/controle-frequencia-locais-audi/:idtemporada", function($idtemporada) {
+
+	User::verifyLoginAudi();
+
+	$temporada = new Temporada();
+	$turma = new Turma();
+	$local = new Local();
+
+	$temporada->get((int)$idtemporada);
+
+	$local = $local->setapelidolocal('');
+
+	$idlocaldefault = 6;
+
+	$page = new PageAdmin([
+		'header'=>false,
+		'footer'=>false
+	]);
+
+	$page->setTpl("controle-frequencia-locais-audi", [
+		'local'=>$local,
+		'locais'=>Local::listAll(),
+		'temporada'=>$temporada->getValues(),
+		//'turmaRelated'=>$temporada->getTurma(true)
+		//'turmas'=>Temporada::listAllTurmaTemporadaControleFrequencia($idtemporada),
+		'turmas'=>Temporada::listAllTurmaTemporadaControleFrequenciaLocal($idtemporada, $idlocaldefault),
+		//'turmaNotRelated'=>$temporada->getTurma(false)
+		//'countIncricoesJan'=>$countIncricoesJan,
+		'error'=>User::getError()
+	]);	
+});
+
 $app->get("/admin/controle-frequencia-por-local/:idtemporada/:idlocal", function($idtemporada, $idlocal) {
 
 	User::verifyLogin();
@@ -487,6 +535,35 @@ $app->get("/admin/controle-frequencia-por-local/:idtemporada/:idlocal", function
 	]);	
 });
 
+$app->get("/admin/controle-frequencia-por-local-audi/:idtemporada/:idlocal", function($idtemporada, $idlocal) {
+
+	User::verifyLoginAudi();
+
+	$temporada = new Temporada();
+	$turma = new Turma();
+	$local = new Local();
+
+	$temporada->get((int)$idtemporada);
+	$local->get((int)$idlocal);
+
+	$local = $local->setapelidolocal('');
+
+	$page = new PageAdmin([
+		'header'=>false,
+		'footer'=>false
+	]);
+
+	$page->setTpl("controle-frequencia-locais-audi", [
+		'local'=>$local,
+		'locais'=>Local::listAll(),
+		'temporada'=>$temporada->getValues(),
+		//'turmaRelated'=>$temporada->getTurma(true)
+		'turmas'=>Temporada::listAllTurmaTemporadaControleFrequenciaLocal($idtemporada, $idlocal),
+		//'turmaNotRelated'=>$temporada->getTurma(false)
+		//'countIncricoesJan'=>$countIncricoesJan,
+		'error'=>User::getError()
+	]);	
+});
 
 $app->get("/admin/controle-frequencia-modalidades/:idtemporada", function($idtemporada) {
 
@@ -508,6 +585,38 @@ $app->get("/admin/controle-frequencia-modalidades/:idtemporada", function($idtem
 	]);
 
 	$page->setTpl("controle-frequencia-modalidades", [
+		'modalidade'=>$modalidade,
+		'modalidades'=>Modalidade::listAll(),
+		'temporada'=>$temporada->getValues(),
+		//'turmaRelated'=>$temporada->getTurma(true)
+		//'turmas'=>Temporada::listAllTurmaTemporadaControleFrequencia($idtemporada),
+		'turmas'=>Temporada::listAllTurmaTemporadaControleFrequenciaModalidade($idtemporada, $idmodaldefault),
+		//'turmaNotRelated'=>$temporada->getTurma(false)
+		//'countIncricoesJan'=>$countIncricoesJan,
+		'error'=>User::getError()
+	]);	
+});
+
+$app->get("/admin/controle-frequencia-modalidades-audi/:idtemporada", function($idtemporada) {
+
+	User::verifyLoginAudi();
+
+	$temporada = new Temporada();
+	$turma = new Turma();
+	$modalidade = new Modalidade();
+
+	$temporada->get((int)$idtemporada);
+
+	$modalidade = $modalidade->setdescmodal('');
+
+	$idmodaldefault = 18;
+
+	$page = new PageAdmin([
+		'header'=>false,
+		'footer'=>false
+	]);
+
+	$page->setTpl("controle-frequencia-modalidades-audi", [
 		'modalidade'=>$modalidade,
 		'modalidades'=>Modalidade::listAll(),
 		'temporada'=>$temporada->getValues(),
@@ -549,6 +658,36 @@ $app->get("/admin/controle-frequencia-por-modalidade/:idtemporada/:idmodal", fun
 	]);	
 });
 
+$app->get("/admin/controle-frequencia-por-modalidade-audi/:idtemporada/:idmodal", function($idtemporada, $idmodal) {
+
+	User::verifyLoginAudi();
+
+	$temporada = new Temporada();
+	$turma = new Turma();
+	$modalidade = new Modalidade();
+	$temporada->get((int)$idtemporada);
+	$modalidade->get((int)$idmodal);
+
+	$modalidade = $modalidade->setdescmodal('');
+
+	$page = new PageAdmin([
+		'header'=>false,
+		'footer'=>false
+	]);
+
+	$page->setTpl("controle-frequencia-modalidades-audi", [
+		'modalidade'=>$modalidade,
+		'modalidades'=>Modalidade::listAll(),
+		'temporada'=>$temporada->getValues(),
+		//'turmaRelated'=>$temporada->getTurma(true)
+		'turmas'=>Temporada::listAllTurmaTemporadaControleFrequenciaModalidade($idtemporada, $idmodal),
+		//'turmaNotRelated'=>$temporada->getTurma(false)
+		//'countIncricoesJan'=>$countIncricoesJan,
+		'error'=>User::getError()
+	]);	
+});
+
+
 $app->get("/admin/turma-temporada/:idtemporada/local/:idlocal", function($idtemporada, $idlocal) {
 
 	User::verifyLogin();
@@ -565,6 +704,32 @@ $app->get("/admin/turma-temporada/:idtemporada/local/:idlocal", function($idtemp
 	$page = new PageAdmin();	
 
 	$page->setTpl("turmas-por-temporada-local", [
+		'local'=>$local->getValues(),
+		'locais'=>Local::listAll(),
+		'temporada'=>$temporada->getValues(),
+		//'turmaRelated'=>$temporada->getTurma(true)
+		'turmas'=>Temporada::listAllTurmatemporadaLocal($idtemporada, $idlocal),
+		//'turmaNotRelated'=>$temporada->getTurma(false)
+		'error'=>User::getError()
+	]);	
+});
+
+$app->get("/admin/turma-temporada-audi/:idtemporada/local/:idlocal", function($idtemporada, $idlocal) {
+
+	User::verifyLoginAudi();
+
+	$temporada = new Temporada();
+	$turma = new Turma();
+	$local = new Local();
+	$temporada->get((int)$idtemporada);
+	$local->get((int)$idlocal);
+
+	//var_dump($local);
+	//exit();
+
+	$page = new PageAdmin();	
+
+	$page->setTpl("turmas-por-temporada-local-audi", [
 		'local'=>$local->getValues(),
 		'locais'=>Local::listAll(),
 		'temporada'=>$temporada->getValues(),
@@ -598,7 +763,82 @@ $app->get("/admin/turma-temporada/:idtemporada/modalidade/:idmodal", function($i
 	]);	
 });
 
+$app->get("/admin/turma-temporada-audi/:idtemporada/modalidade/:idmodal", function($idtemporada, $idmodal) {
+
+	User::verifyLoginAudi();
+
+	$temporada = new Temporada();
+	$turma = new Turma();
+	$modalidade = new Modalidade();
+	$temporada->get((int)$idtemporada);
+	$modalidade->get((int)$idmodal);
+
+	$page = new PageAdmin();	
+
+	$page->setTpl("turmas-por-temporada-modalidade-audi", [
+		'modalidade'=>$modalidade->getValues(),
+		'modalidades'=>Modalidade::listAll(),
+		'temporada'=>$temporada->getValues(),
+		//'turmaRelated'=>$temporada->getTurma(true)
+		'turmas'=>Temporada::listAllTurmaTemporadaModalidade($idtemporada, $idmodal),
+		//'turmaNotRelated'=>$temporada->getTurma(false)
+		'error'=>User::getError()
+	]);	
+});
+
+$app->get("/admin/turma-temporada-audi/:idtemporada/modalidade/:idmodal", function($idtemporada, $idmodal) {
+
+	User::verifyLoginAudi();
+
+	$temporada = new Temporada();
+	$turma = new Turma();
+	$modalidade = new Modalidade();
+	$temporada->get((int)$idtemporada);
+	$modalidade->get((int)$idmodal);
+
+	$page = new PageAdmin();	
+
+	$page->setTpl("turmas-por-temporada-modalidade-audi", [
+		'modalidade'=>$modalidade->getValues(),
+		'modalidades'=>Modalidade::listAll(),
+		'temporada'=>$temporada->getValues(),
+		//'turmaRelated'=>$temporada->getTurma(true)
+		'turmas'=>Temporada::listAllTurmaTemporadaModalidade($idtemporada, $idmodal),
+		//'turmaNotRelated'=>$temporada->getTurma(false)
+		'error'=>User::getError()
+	]);	
+});
+
 $app->get("/admin/turma-temporada/:idtemporada/user/:iduser", function($idtemporada, $iduser) {
+
+	User::verifyLogin();
+
+	//$iduser = (int)$_SESSION[User::SESSION]['iduser'];
+
+	$temporada = new Temporada();
+	$turma = new Turma();
+	$local = new Local();
+
+	$locais = Local::listAllCoord($iduser);
+
+	$temporada->get((int)$idtemporada);
+
+	$local = $local->setapelidolocal('');
+
+	$page = new PageProf();	
+
+	$page->setTpl("turmas-por-temporada", [	
+		'local'=>$local,
+		'locais'=>$locais,
+		'temporada'=>$temporada->getValues(),
+		//'turmaRelated'=>$temporada->getTurma(true)
+		//'turmas'=>Temporada::listAllTurmatemporada($idtemporada),
+		'turmas'=>Temporada::listAllTurmatemporadaProfessor($idtemporada, $iduser),
+		//'turmaNotRelated'=>$temporada->getTurma(false)
+		'error'=>User::getError()
+	]);	
+
+	/*
 
 	User::verifyLogin();
 
@@ -626,6 +866,8 @@ $app->get("/admin/turma-temporada/:idtemporada/user/:iduser", function($idtempor
 		//'turmaNotRelated'=>$temporada->getTurma(false)
 		'error'=>User::getError()
 	]);	
+
+	*/
 });
 
 $app->get("/admin/temporada/:idtemporada/turma", function($idtemporada) {
@@ -716,15 +958,7 @@ $app->get("/admin/turmatemporada/:iduser/turma/:idtemporada", function($iduser, 
 
 	$temporada->get((int)$idtemporada);	
 
-	$user->get((int)$iduser);	
-	
-	/*
-	echo '<pre>';
-	print_r($user->getTurmaTemporada(false, $idtemporada, $iduser));
-	echo '</pre>';
-	exit;
-	*/
-	
+	$user->get((int)$iduser);		
 
 	$page = new PageAdmin();	
 
@@ -779,15 +1013,9 @@ $app->get("/admin/turmatemporada/:idtemporada/turma/:idturma/user/:iduser/add", 
 	$user = new User();
 
 	$user->get((int)$iduser);
-	/*
-	var_dump($iduser." - ".$idturma." - ".$idtemporada);
-	exit;
-	*/
 
 	$temporada->addTurmaTemporadaUser($idtemporada, $idturma, $iduser);
 
-	//header("Location: /admin/turmatemporada/".$iduser."/turma/".$idtemporada."");
-	//exit;
 	echo '<script>javascript:history.go(-1)</script>';
 });
 
@@ -806,19 +1034,165 @@ $app->get("/admin/turmatemporada/:idtemporada/turma/:idturma/user/:iduser/remove
 	$user = new User();
 
 	$user->get((int)$iduser);
-	/*
-	var_dump($iduser." - ".$idturma." - ".$idtemporada);
-	exit;
-	*/
-
+	
 	$temporada->removeTurmaTemporadaUser($idtemporada, $idturma, $iduser);
 
-	//header("Location: /admin/turmatemporada/".$iduser."/turma/".$idtemporada."");
-	//exit;
 	echo '<script>javascript:history.go(-1)</script>';
 });
 
-$app->get("/admin/turmatemporada/:idtemporada/turma/:idturma/user/:iduser/:idlocal/addlocal", function($idtemporada, $idturma, $iduser, $idlocal) {
+$app->get("/admin/turma-temporada-estagiario/:idtemporada/user/:iduser", function($idtemporada, $iduser) {
+
+	User::verifyLogin();
+
+	$temporada = new Temporada();
+	$turma = new Turma();
+	$user = new User();
+	$local = new Local();
+
+	$temporada->get((int)$idtemporada);
+	$user->get((int)$iduser);
+	$local = $local->setapelidolocal('');
+
+
+	//var_dump($temporada->getTurma(true)); exit();
+
+	$page = new PageAdmin();	
+
+	$page->setTpl("estagiario-turmas-por-temporada", [
+		'user'=>$user->getValues(),
+		'local'=>$local,
+		'locais'=>Local::listAll(),
+		'temporada'=>$temporada->getValues(),
+		//'turmaRelated'=>$temporada->getTurma(true)
+		'turmas'=>Temporada::listAllTurmatemporadaProfessor($idtemporada, $iduser),
+		//'turmaNotRelated'=>$temporada->getTurma(false)
+		'error'=>User::getError()
+	]);	
+});
+
+$app->get("/admin/estagiario-temporada/:idtemporada", function($idtemporada) {
+
+	User::verifyLogin();
+
+	$temporada = new Temporada();
+
+	$temporada->get((int)$idtemporada);
+
+
+	$setturmatemporadaexiste = Temporada::seTurmaTemporadaExiste($idtemporada);
+
+	if(!$setturmatemporadaexiste){
+		Temporada::setError("Não há professores para esta turma, você precisa relacionar pelo menos uma turma a esta temporada!");
+	}
+
+	$page = new PageAdmin();
+
+	$page->setTpl("estagiario-temporada", array(
+		'prof'=>User::listAllProf(),
+		'temporada'=>$temporada->getValues(),
+		'error'=>Temporada::getError()
+	));
+});
+
+$app->get("/admin/turmatemporada-estagiario/:iduser/turma/:idtemporada", function($iduser, $idtemporada) {
+
+	User::verifyLogin();
+
+	$user = new User();
+
+	$temporada = new Temporada();
+
+	$temporada->get((int)$idtemporada);	
+
+	$user->get((int)$iduser);		
+
+	$page = new PageAdmin();	
+
+	$page->setTpl("turma-temporada-estagiario", [
+		'locais'=>Local::listAll(),
+		'temporada'=>$temporada->getValues(),
+		'user'=>$user->getValues(),
+		'turmaRelated'=>$user->getTurmaTemporada(true, $idtemporada, $iduser),
+		'turmaNotRelated'=>$user->getTurmaTemporada(false, $idtemporada, $iduser),
+		'error'=>User::getError()
+	]);	
+});
+
+$app->get("/admin/turmatemporada-estagiario/:iduser/turma/:idtemporada/:idlocal", function($iduser, $idtemporada, $idlocal) {
+
+	User::verifyLogin();
+
+	$user = new User();
+	$user->get((int)$iduser);	
+
+	$local = new Local();
+	$local->get((int)$idlocal);
+
+	$temporada = new Temporada();
+	$temporada->get((int)$idtemporada);		
+
+	$page = new PageAdmin();	
+
+	$page->setTpl("turma-temporada-local-estagiario", [
+		'locais'=>Local::listAll(),
+		'local'=>$local->getValues(),
+		'temporada'=>$temporada->getValues(),
+		'user'=>$user->getValues(),
+		'turmaRelated'=>$user->getTurmaTemporadaLocal(true, $idtemporada, $iduser, $idlocal),
+		'turmaNotRelated'=>$user->getTurmaTemporadaLocal(false, $idtemporada, $iduser, $idlocal),
+		'error'=>User::getError()
+	]);	
+});
+
+$app->get("/admin/turmatemporada-estagiario/:idtemporada/turma/:idturma/user/:iduser/add", function($idtemporada, $idturma, $iduser) {
+
+	User::verifyLogin();
+
+	$temporada = new Temporada();
+
+	$temporada->get((int)$idtemporada);
+
+	$turma = new Turma();
+
+	$turma->get((int)$idturma);
+
+	$user = new User();
+
+	$user->get((int)$iduser);
+
+	var_dump($idtemporada.' - '.$idturma.' - '.$iduser);
+	exit;
+
+	$temporada->addTurmaTemporadaUser($idtemporada, $idturma, $iduser);
+
+	echo '<script>javascript:history.go(-1)</script>';
+});
+
+$app->get("/admin/turmatemporada-estagiario/:idtemporada/turma/:idturma/user/:iduser/remove", function($idtemporada, $idturma, $iduser) {
+
+	User::verifyLogin();
+
+	$temporada = new Temporada();
+
+	$temporada->get((int)$idtemporada);
+
+	$turma = new Turma();
+
+	$turma->get((int)$idturma);
+
+	$user = new User();
+
+	$user->get((int)$iduser);
+
+	var_dump($idtemporada.' - '.$idturma.' - '.$iduser);
+	exit;
+	
+	$temporada->removeTurmaTemporadaUser($idtemporada, $idturma, $iduser);
+
+	echo '<script>javascript:history.go(-1)</script>';
+});
+
+$app->get("/admin/turmatemporada-estagiario/:idtemporada/turma/:idturma/user/:iduser/:idlocal/addlocal", function($idtemporada, $idturma, $iduser, $idlocal) {
 
 	User::verifyLogin();
 
@@ -840,7 +1214,7 @@ $app->get("/admin/turmatemporada/:idtemporada/turma/:idturma/user/:iduser/:idloc
 	exit;
 });
 
-$app->get("/admin/turmatemporada/:idtemporada/turma/:idturma/user/:iduser/:idlocal/removelocal", function($idtemporada, $idturma, $iduser, $idlocal) {
+$app->get("/admin/turmatemporada-estagiario/:idtemporada/turma/:idturma/user/:iduser/:idlocal/removelocal", function($idtemporada, $idturma, $iduser, $idlocal) {
 
 	User::verifyLogin();
 

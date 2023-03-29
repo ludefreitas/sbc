@@ -49,44 +49,31 @@
                 &nbsp;<strong>Alterado: </strong><?php echo formatDateHour($value1["dtalteracao"]); ?> 
                 </span>
                 </div>
-                <?php if( $value1["pcd"] == 1 ){ ?>
-                <div class="row alert alert-warning">
+                 <div class="row alert alert-warning">
                     <div class="col-md-12">
                             <span style="color: blue; font-weight: bold; "> <?php if( $value1["pcd"] == 1 ){ ?>Pessoa Com Deficiência<?php } ?></span>
                     </div>
+                   <?php if( $value1["pcd"] == 1 ){ ?>
                     <div class="col-md-12">
-                            <span style="color: blue;">
-                            <?php if( isset($value1["defauditiva"]) ){ ?>
-                            Deficiente Auditivo -
-                            <?php } ?>
-                            <?php if( isset($value1["defvisual"]) ){ ?>
-                                    <?php if( $value1["defvisual"] == null ){ ?>
-                                           
-                                    <?php } ?>
-                            Deficiente Visual -
-                            <?php } ?>
-                            <?php if( isset($value1["deffisica"]) ){ ?>
-                            Deficiente Físico -
-                            <?php } ?>
-                            <?php if( isset($value1["defintelectual"]) ){ ?>
-                            Deficiente Intelectual -
-                            <?php } ?>
-                            <?php if( isset($value1["defautismo"]) ){ ?>
-                            Autista -
-                            <?php } ?>
-                            <?php if( isset($value1["deftea"]) ){ ?>
-                            Pessoa com TEA - 
-                            <?php } ?>
-                            
 
                             
+                                <span style="font-weight: bold; color: black; ">CID.: <?php echo getCid($value1["idpess"]); ?></span>
+                                <span style="color: blue;">
+                                <?php echo getCidDoenca($value1["idpess"]); ?></span>
+                                <span style="font-weight: bold; color: black; ">         <?php echo getDefAuditiva($value1["idpess"]); ?></span>
+                                <span style="font-weight: bold; color: black; ">         <?php echo getDefVisual($value1["idpess"]); ?></span>
+                                <span style="font-weight: bold; color: black; ">         <?php echo getDefFisica($value1["idpess"]); ?></span>
+                                <span style="font-weight: bold; color: black; ">         <?php echo getDefIntelectual($value1["idpess"]); ?></span>
+                                <span style="font-weight: bold; color: black; ">         <?php echo getDefAutismo($value1["idpess"]); ?></span>
+                                <span style="font-weight: bold; color: black; ">         <?php echo getDefTea($value1["idpess"]); ?></span>
+                            
+                            
                         </div>
+                    <?php } ?>
                         <div class="col-md-12">
-                              <h6>  <a href="/saude-atualiza/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">Inserir / Atualizar Dados de Saúde <span style="color: #000"> (Clique aqui)</span></a> </h6>
-                    </div>
-                
+                                <h6> <a href="/saude-atualiza/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">Inserir / Atualizar Dados de Saúde <span style="color: #000"> (Clique aqui)</span></a> </h6>
+                        </div>
                 </div>
-                <?php } ?>
                 <div class="row alert alert-primary">
                     <div class="col-md-6 btn-primary" style="padding: 5px; text-align-last: center; width: 50%;">
                         <form action="post" name="idpess">
