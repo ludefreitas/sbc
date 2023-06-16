@@ -20,15 +20,31 @@
     <link rel="icon" type="image/jpg" href="/../res/site/img/corpoacao.png" />
 
     <script type="text/javascript">
-
-      function adicionarArtestado(idpess){
-
+    
+    function dadosAtestado(idpess){
+        
         let url = '/admin/saude/dadosatestado/'+idpess
 
-        dadosAtestado(url)  
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if (window.confirm(' '+ result + 'Para atualizar atestado clique em "OK"'))
+          {
+              adicionarArtestado(idpess)
+          };
+
+        });
+      }
+    
+    function adicionarArtestado(idpess){
 
         //let confirmaAtestado = confirm('Já existe um atestado válido até:'+"\n"+'Deseja adicionar atestado? ')
-        let confirmaAtestado = confirm('Deseja adicionar atestado? ')
+        let confirmaAtestado = confirm('Deseja realmente atualizar atestado? ')
 
         if(confirmaAtestado == true)
         {                      
@@ -52,7 +68,7 @@
 
                     if((dia > 31) || (dia == 0) || (mes > 12) || (mes == 0)){
 
-                    alert('data inválida! ' + dia + ' ' + mes + ' ' + ano)
+                    alert('data inválida!')
                     
                     }else{
 
@@ -64,7 +80,7 @@
                                 lert("As informaçãoes do atestado não foram atualizadas! Informe a data e faça alguma observação");
                         } else {
 
-                            let url = '/prof/saude/atulizaatestado/'+idpess+'/'+data+'/'+observ+''
+                            let url = '/admin/saude/atulizaatestado/'+idpess+'/'+data+'/'+observ+''
 
                             atualizarAtestado(url) 
                         }           
@@ -72,22 +88,10 @@
                 }
             }        
         }  
+        //let url = '/admin/saude/dadosatestado/'+idpess
+
+        //dadosAtestado(url)  
     }
-
-      function dadosAtestado(url){
-
-        let ajax = new XMLHttpRequest();
-        ajax.open('GET', 'url');        
-        
-        $.ajax({
-          url: url,
-          method: 'GET'  
-        }).done(function(result){
-
-          alert(result)
-
-        });
-      }
 
       function atualizarAtestado(url){
 
@@ -199,11 +203,22 @@
 
             <div class="container">
 
+              <div style="text-align-last: left; margin-right: 25px; margin-top: -25px; margin-bottom: 15px;">
+                <div id="div1">  
+                    <a href="javascript:window.history.go(-1)">
+                       <i class="fa fa-arrow-left"></i> 
+                        Voltar
+                    </a> 
+                </div>
+              </div>
+
               <div style="text-align-last: right; margin-right: 25px; margin-top: -25px; margin-bottom: 15px;">
-                <a href="/admin/calendario-lista-presenca/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-                  <i class="fa fa-arrow-left"></i> 
-                    Voltar
-                </a> 
+                <div id="div1">  
+                    <a href="/admin">
+                        <i class="fa fa-home"></i> 
+                            Início
+                    </a>  
+                </div>
               </div>
 
               <div class="row">
@@ -314,11 +329,19 @@
                           <?php } ?>                       
                         
 
-
-                           &nbsp;&nbsp;<?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - &nbsp;
-                           - &nbsp;
+                           <!--
+                           &nbsp;&nbsp;<?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> &nbsp;
+                            - &nbsp;
                          <a style="color: orange; text-align-last: right;" onclick="adicionarArtestado(<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)"><?php echo getAtestadoIcone($value1["idpess"]); ?></a>
-                          <br>
+                          <br><br>
+                          -->
+                          &nbsp;&nbsp;<?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> &nbsp;
+                            - &nbsp;
+                        <!--    
+                         <a style="color: orange; text-align-last: right;" onclick="dadosAtestado(<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)"><?php echo getAtestadoIcone($value1["idpess"]); ?></a>
+                         -->
+                         <a style="color: orange; text-align-last: right;" onclick="dadosAtestado(<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)"><?php echo getAtestadoIconeByNumCpf($value1["numcpf"]); ?></a>                     
+                          <br><br>
                                                       
                                   
                         <?php if( $value1["idinscstatus"] == 9 ){ ?>

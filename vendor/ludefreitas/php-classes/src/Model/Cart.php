@@ -230,7 +230,7 @@ class Cart extends Model {
 		return Turma::checkList($rows);
 
 	}
-
+	
 	public static function getIdturmaByCart($idcart){
 
 		$sql = new Sql();
@@ -245,7 +245,6 @@ class Cart extends Model {
 
 		return $results[0]['idturma'];
 	}
-
 
 	public function getPessoa()
 	{
@@ -379,7 +378,7 @@ class Cart extends Model {
 
 		return $rows;
 	}
-
+	
 	public function getCountInscExistTemporada($numcpf, $idtemporada) {
 
 		$sql = new Sql();
@@ -439,7 +438,7 @@ class Cart extends Model {
 		}
 
 	}
-
+	
 	public function getInscDesistenteExist($numcpf, $idpess, $idturma, $idtemporada) {
 
 		$sql = new Sql();
@@ -475,7 +474,7 @@ class Cart extends Model {
 	}
 
 	public function getInscExistAquaticLocal($numcpf, $idpess, $idturma, $idtemporada, $idlocal, $tipoativ) {
-
+	    
 		$sql = new Sql();
 
 		$results = $sql->select(
@@ -489,20 +488,17 @@ class Cart extends Model {
 			INNER JOIN tb_temporada h USING(idtemporada)  
             WHERE a.idinscstatus != 8 
             AND a.idinscstatus != 9
-			AND c.numcpf = :numcpf 
-            -- AND c.idpess = :idpess
-            -- AND d.idturma = :idturma      
-            AND f.idlocal = :idlocal 
-            AND g.tipoativ = :tipoativ                              
-            AND h.idtemporada = :idtemporada            
+			AND c.numcpf = :numcpf
+			-- AND c.idpess = :idpess
+			AND f.idlocal = :idlocal 
+            AND g.tipoativ = :tipoativ
+            AND h.idtemporada = :idtemporada
             ", [
 			':numcpf'=>$numcpf,
-			//':idpess'=>$idpess,
-			//'idturma'=>$idturma,
-			':idlocal'=>$idlocal,			
+			// ':idpess'=>$idpess,
+			':idlocal'=>$idlocal,
 			':tipoativ'=>$tipoativ,
 			':idtemporada'=>$idtemporada
-			
 		]);
 
 		return $results;

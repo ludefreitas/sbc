@@ -21,6 +21,93 @@
 
     <title>Cursos Esportivos SBC</title>
     <link rel="icon" type="image/jpg" href="/../res/site/img/corpoacao.png" />
+    
+    <script type="text/javascript">
+
+      alert('Você já pode atualizar dados de saúde do aluno, inserindo ou editando atestado. Clique na palavra "Atestado" ')
+
+      function dadosAtestado(idpess){
+
+        let url = '/prof/saude/dadosatestado/'+idpess
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if (window.confirm(' '+ result + 'Para atulizar atestado clique em "OK"'))
+          {
+              adicionarArtestado(idpess)
+          };
+
+        });
+      }
+      
+      function adicionarArtestado(idpess){
+        
+        //let confirmaAtestado = confirm('Já existe um atestado válido até:'+"\n"+'Deseja adicionar atestado? ')
+        let confirmaAtestado = confirm('Deseja adicionar atestado? ')
+
+        if(confirmaAtestado == true)
+        {                      
+            var data = prompt("Informe a data da emissão do Atestado. Ex.: dd-mm-aaaa");     
+
+            if (data == null || data == "") {
+
+                alert("As informaçãoes do atestado não foram atualizadas! Informe a data e faça alguma observação")
+            } else {
+
+                 var traco1 = data.substr(2,1)
+                 var traco2 = data.substr(5,1)
+                 var dia = data.substr(0,2);
+                 var mes = data.substr(3,2);
+                 var ano = data.substr(6,4); 
+                 
+
+                 if((traco1 != '-') || (traco2 != '-') || (ano.length < 4)){
+                    alert('Formato da data inválida');
+                 }else{
+
+                    if((dia > 31) || (dia == 0) || (mes > 12) || (mes == 0)){
+
+                    alert('data inválida!')
+                    
+                    }else{
+                        
+                        var observ = prompt("Digite uma observação");
+                        if (observ == null || observ == "") {
+                                lert("As informaçãoes do atestado não foram atualizadas! Informe a data e faça alguma observação");
+                        } else {
+
+                            let url = '/prof/saude/atulizaatestado/'+idpess+'/'+data+'/'+observ+''
+
+                            atualizarAtestado(url) 
+
+                        }     
+                    }                           
+                }
+            }        
+        }  
+    }
+     
+    function atualizarAtestado(url){
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          alert(result)
+
+        });
+      }
+    </script>
 
     <style type="text/css">
       body {
@@ -54,23 +141,23 @@
     </a> 
 </div>
 
-<!----------------------------------------GERAL-------------------------------------------->
+<!-- _______________________________ GERAL _________________________________-->
 
 <div id="div1">      
       <table>
 
           {if="$error != ''"}
           <tr>
-            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; color: green;" colspan="9">
+            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; color: green;" colspan="10">
             {$error}
           </th>
           </tr>
           {/if}
 
           <tr>
-            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; " colspan="9"; >
+            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; " colspan="10" >
               Cursos esportivos SBC
-            <h5 style="margin: 0 0 0 0";>LISTA DA AGENDA DE AVALIÇÃO NATAÇÃO (  {$apelidolocal}  )
+            <h5 style="margin: 0 0 0 0">LISTA DA AGENDA DE AVALIÇÃO NATAÇÃO (  {$apelidolocal}  )
             <br>
             {function="formatDate($data)"} {$nomediadasemana}</h5>
             </th>
@@ -81,9 +168,10 @@
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Horário</th>
 
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Nome</th>
-
+              
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Idade</th>
-
+              <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Atestado <br>Clínico</th>
+              <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">PAR-q</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Email</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Whats/Fone</th>
 
@@ -97,7 +185,7 @@
 
               </tr>
 
-              </tr>
+              
           {loop="$agenda"}
           
           <tr style="padding: 5px">
@@ -109,6 +197,21 @@
               </td>
               <td style="text-align: center; border: solid 1px; color: darkblue; padding: 5px;">
                 {function="calcularIdade($value.dtnasc)"}
+              </td>
+              <td style="text-align: left; border: solid 1px; color: darkblue; padding: 5px;">
+                <a style="color: orange; text-align-last: right;" onclick="dadosAtestado({$value.idpess})">{function="getAtestadoIcone($value.idpess)"}</a>
+                          <br>                                                                   
+              </td>
+              <td style="text-align: left; border: solid 1px; color: darkblue; padding: 5px;">
+                {if="existeParq($value.idpess)"}
+                  {if="repostaSimParq($value.idpess)"}
+                    <a style="font-weight: bold; color: green;" href="/admin/par-q/pessoa/{$value.idpess}">  PAR-q <i style="color: orange;" class="fa fa-exclamation-triangle"> </i></a> 
+                  {else}
+                    <a style="font-weight: bold; color: green;" href="/admin/par-q/pessoa/{$value.idpess}"> PAR-q </a> 
+                  {/if}
+                {else}
+                  <a style="font-weight: bold; color: red;" onclick="alert('Não existe Par-q para este aluno')"> PAR-q </a> 
+                {/if}
               </td>
               <td style="text-align: left; border: solid 1px; color: darkblue; padding: 5px;">
                 {$value.deslogin}
@@ -136,7 +239,7 @@
                 {if="$data > $value.dia OR $value.ispresente == 1"}
 
                 {else}
-                <a href="/admin/agendamarcarpresenca/{$value.idagen}/{$idlocal}/{$data}" class="btn btn-success">
+                <a href="/admin/agendamarcarpresenca-avaliacao/{$value.idagen}/{$idlocal}/{$data}" class="btn btn-success">
                 <i class="fa fa-check"></i>
                 </a>
 
@@ -147,7 +250,7 @@
           </tr>
           {else}
           <tr style="font-weight: bold; color: red; font-size: 22px; text-align: center; padding: 10px;">
-            <td colspan="9" style="padding: 10px">
+            <td colspan="10" style="padding: 10px">
               Não há horário agendado para natação espontânea nesta data !
             </td>
           </tr>

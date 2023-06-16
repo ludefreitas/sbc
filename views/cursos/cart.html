@@ -106,8 +106,11 @@ $(document).ready(function(){
                  {if="$value.fimidade == 99"} 
                Para nascidos somente até {$anoAtual - $value.initidade} <br>
               {else}
-              Para adultos nascidos somente entre: {$anoAtual - $value.fimidade} à {$anoAtual - $value.initidade}
+              Para adultos nascidos somente entre: {$anoAtual - $value.fimidade} à {$anoAtual - $value.initidade}<br> 
               {/if}
+              {if="$value.obs"}
+			  OBSERVAÇÃO: <strong>{$value.obs}</strong><br>
+			  {/if}
               </span> 
               <span class="amount">
                   PROFESSOR: {$value.apelidoperson}

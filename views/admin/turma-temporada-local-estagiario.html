@@ -3,11 +3,11 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Turmas para o(a) professor(a) {$user.iduser} - {$user.apelidoperson}
+    Turmas para o(a) estagiário(a) {$user.iduser} - {$user.apelidoperson}
   </h1>
   <ol class="breadcrumb">
     <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="/admin/professor-temporada/{$temporada.idtemporada}">Professores da temporada {$temporada.desctemporada}</a></li>
+    <li><a href="/admin/estagiario-temporada/{$temporada.idtemporada}">Estagiários da temporada {$temporada.desctemporada}</a></li>
     <!-- <li><a href="/admin/turma-temporada/"></a></li>
     <li class="active"><a href="/admin/temporada/turma"></a></li>-->
   </ol>
@@ -20,7 +20,7 @@
         <div class="col-md-4">
             <div class="box box-success">
                 <div class="box-header with-border">
-                <h3 class="box-title">Turmas sem professor definido</h3>
+                <h3 class="box-title">Turmas sem estagiário definido</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
@@ -33,26 +33,24 @@
                         </thead>
                         <tbody>  
                             {loop="$turmaNotRelated"}                          
-                            <tr>
-                            <td>{$value.idturma} - 
-                            {$value.descturma} - {$value.apelidolocal} - {$value.nomeativ} - 
-                            {$value.diasemana} - {$value.horainicio} - {$value.horatermino}</td>
-                            {if="$value.iduser == 0"}
-                            <td>
-                                <a href="/admin/turmatemporada/{$value.idtemporada}/turma/{$value.idturma}/user/{$user.iduser}/{$local.idlocal}/addlocal" class="btn btn-success btn-xs pull-right"><i class="fa fa-arrow-right"></i> Adicionar</a>
-                            </td>
-                            {else}
-                            <td>
-                                <a disabled="disabled" href="/admin/turmatemporada/{$value.idtemporada}/turma/{$value.idturma}/user/{$user.iduser}/{$local.idlocal}/addlocal" class="btn btn-success btn-xs pull-right"><i class="fa fa-arrow-right"></i> Adicionar</a>
-                            </td>
-                            {/if}
-                            </tr>
-                            {else}
-                              <tr>
-                                <td colspan="2">
-                                    Não há turmas disponíveis Crec {$local.apelidolocal} para relacionar ao professor
-                                </td>
-                            </tr>
+                                <tr>
+                                <td>{$value.idturma} - 
+                                {$value.descturma} - {$value.apelidolocal} - {$value.nomeativ} - 
+                                {$value.diasemana} - {$value.horainicio} - {$value.horatermino}</td>
+                                {if="$value.idestagiario == 1"}
+                                    <td>
+                                        <a href="/admin/turmatemporada-estagiario/{$value.idtemporada}/turma/{$value.idturma}/user/{$user.iduser}/{$local.idlocal}/addlocal" class="btn btn-success btn-xs pull-right"><i class="fa fa-arrow-right"></i> Adicionar</a>
+                                    </td>
+                                {else}
+                                    
+                                {/if}
+                                    </tr>
+                                {else}
+                                    <tr>
+                                    <td colspan="2">
+                                        Não há turmas disponíveis Crec {$local.apelidolocal} para relacionar ao estagiário
+                                    </td>
+                                </tr>
                             {/loop}
                         </tbody>
                     </table>
@@ -62,7 +60,7 @@
         <div class="col-md-4">
             <div class="box box-danger">
                 <div class="box-header with-border">
-                <h3 class="box-title">Turmas atribuida ao(a) professor(a) {$user.apelidoperson}</h3>
+                <h3 class="box-title">Turmas atribuida ao(a) estagiário(a) {$user.apelidoperson}</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
@@ -70,7 +68,7 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                            <th>Turmas atribuidas ao(a) professor(a) {$user.apelidoperson} na temporada {$temporada.desctemporada}</th>
+                            <th>Turmas atribuidas ao(a) estagiário(a) {$user.apelidoperson} na temporada {$temporada.desctemporada}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -80,7 +78,7 @@
                             {$value.descturma} - {$value.apelidolocal} - {$value.nomeativ} - 
                              {$value.diasemana} - {$value.horainicio} - {$value.horatermino} </td>                      
                             <td>
-                                <a href="/admin/turmatemporada/{$value.idtemporada}/turma/{$value.idturma}/user/{$user.iduser}/{$local.idlocal}/removelocal" class="btn btn-danger btn-xs pull-right"><i class="fa fa-arrow-left"></i> Remover</a>
+                                <a href="/admin/turmatemporada-estagiario/{$value.idtemporada}/turma/{$value.idturma}/user/{$user.iduser}/{$local.idlocal}/removelocal" class="btn btn-danger btn-xs pull-right"><i class="fa fa-arrow-left"></i> Remover</a>
                             </td>
                             </tr>
                             {/loop}
@@ -100,7 +98,7 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                            <th>Turmas do(a) professor(a) {$user.apelidoperson} por centro esportivo</th>
+                            <th>Turmas do(a) estagiário(a) {$user.apelidoperson} por centro esportivo</th>
                             </tr>
                         </thead>
                         <tbody>                            

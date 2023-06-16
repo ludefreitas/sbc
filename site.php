@@ -255,6 +255,24 @@ $app->get("/checkout", function(){
 	$pegainscPlm = (int)$insc->pegaInscPlm($idturma, $idtemporada);
 	$pegainscPcd = (int)$insc->pegaInscPcd($idturma, $idtemporada);
 	$pegainscPvs = (int)$insc->pegaInscPvs($idturma, $idtemporada);
+	
+	/*
+	$vagasListaEsperaPubGeral = Turma::getVagasByIdTurma($idturma);
+    $vagasListaEsperaPubGeral = round($vagasListaEsperaPubGeral * 0.2);
+    $numinscListaEsperaPublicoGeral = Insc::getNumInscListaEsperaPubGeralTurmaTemporada($idtemporada, $idturma);
+
+    $vagasPubGeral = Turma::getVagasByIdTurma($idturma);
+    $numinscPublicoGeral = Insc::getNumInscPublicoGeralValidaTurmaTemporada($idtemporada, $idturma);
+    if($numinscPublicoGeral >= $vagasPubGeral){
+            var_dump($numinscPublicoGeral.' - TRUE - '.$vagasPubGeral);
+    exit();
+    return true;
+    }else{
+        var_dump($numinscPublicoGeral.' - FALSE - '.$vagasPubGeral);
+    exit();
+        return false;
+    } 
+    */
 
 		
 	/*
@@ -284,6 +302,19 @@ $app->get("/checkout", function(){
 		$maxListaEsperaPlm = (int)round($vagasPlm * 1.2);
 		$maxListaEsperaPcd = (int)round($vagasPcd * 1.2);
 		$maxListaEsperaPvs = (int)round($vagasPvs * 1.2);
+	}
+	
+	
+	// Verifica se token é usado ou não. se for usado retorna 1, se não retorna 0.
+	// se não existir retorna 1
+	$tokencpf = Turma::tokemValido($tokencpf, $idturma);
+	
+	if($tokencpf == true){
+	    
+	    $tokencpf = 0;
+	    
+	}else{
+	    $tokencpf = 1;
 	}
 
 	$page = new Page();
@@ -667,7 +698,7 @@ $app->post("/checkout", function(){
 		$vagasPcd = (int)Turma::getVagasPcdByIdTurma($idturma);
 		$vagasPvs = (int)Turma::getVagasPvsByIdTurma($idturma);
 
-		$inscGeral = (int)Insc::getInscGeral($idturma, $idtemporada);
+		$pegainscGeral = (int)Insc::getInscGeral($idturma, $idtemporada);
 		$pegainscPlm = (int)Insc::pegaInscPlm($idturma, $idtemporada);
 		$pegainscPcd = (int)Insc::pegaInscPcd($idturma, $idtemporada);
 		$pegainscPvs = (int)Insc::pegaInscPvs($idturma, $idtemporada);

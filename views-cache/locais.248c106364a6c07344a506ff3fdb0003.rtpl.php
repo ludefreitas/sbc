@@ -1,4 +1,7 @@
-<?php if(!class_exists('Rain\Tpl')){exit;}?>
+<?php if(!class_exists('Rain\Tpl')){exit;}?><script type="text/javascript">
+
+
+</script>
  <div class="container"> <!-- container 1 -->
             <div class="row"> <!-- row 2 -->
               <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 0px 0px 0px 0px;">
@@ -13,24 +16,23 @@
     </div>
   
     <?php }else{ ?>
+    
+    <div class="col-md-12" style="color: black; text-align-last: center; font-size: 20px;">
+
+        <div>
+             ETAPA <span style="font-weight: bold;">1</span> de <span style="font-weight: bold;">5</span> 
+         </div>
+
+    </div>
   
   <div class="col-md-12" style="text-align-last: left; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; border-radius: 15px;"> 
 
-    <div class="col-md-12" style="color: black; text-align-last: center; font-size: 20px;">
-
-      <div>
-         ETAPA <span style="font-weight: bold;">1</span> de <span style="font-weight: bold;">5</span> 
-      </div>
-
-
-    </div>
-
     <div class="col-md-12">
-        <?php if( checkLogin(false) ){ ?>
-
-            Olá <span style="color: black; font-weight: bold;">  <?php echo getUserName(); ?>, </span>seja bem vindo! <br><br>                   
+        <?php if( checkLogin(false) ){ ?>        
                                                            
-                  Nesta etapa selecione abaixo um CREC / LOCAL, escolha a atividade e faça sua inscrição ou a inscrição de seu dependente.
+                  <span style="color: black; font-weight: bold;">  <?php echo getUserName(); ?></span>! <br>                   
+                                                           
+                  Nesta etapa selecione abaixo o CREC/LOCAL, escolha a atividade e faça sua inscrição ou a inscrição de seu dependente.
 
         <?php }else{ ?>
       
@@ -67,6 +69,7 @@
       
             
     </div> <!-- row 4 -->
+  
 
 <hr style="background-color: orange;">
 

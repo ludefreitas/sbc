@@ -20,7 +20,7 @@ class Local extends Model {
 			INNER JOIN tb_persons c ON c.idperson = b.idperson
 			ORDER BY apelidolocal");
 	}
-
+	
 	public static function listAllCoord($iduser)
 	{
 		$sql = new Sql();

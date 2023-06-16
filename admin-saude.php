@@ -5,6 +5,28 @@ use \Sbc\Model\Saude;
 use \Sbc\Model\User;
 use \Sbc\Model\Pessoa;
 
+$app->get("/admin/par-q/pessoa/:idpess", function($idpess) {
+
+	User::verifyLogin();
+
+	$saude = new Saude();
+	$pessoa = new Pessoa();
+
+	$pessoa->get((int)$idpess);
+
+	$saude->getParqUltimoByIdPess($idpess);
+	
+	$page = new PageAdmin([
+		"header"=>false,
+		"footer"=>false
+	]);
+
+	$page->setTpl("par-q-pessoa", array(
+		"pessoa"=>$pessoa->getValues(),
+		"saude"=>$saude->getValues()
+	));
+});
+
 $app->get("/admin/cid", function() {
 
 	User::verifyLogin();
@@ -47,6 +69,8 @@ $app->get("/admin/cid", function() {
 $app->get("/admin/saude/atulizaatestado/:idpess/:data/:observ", function($idpess, $data, $observ) {
 
 	User::verifyLogin();
+	
+	$pessoa = new Pessoa();
 
 	$saude = new Saude();
 
@@ -61,11 +85,13 @@ $app->get("/admin/saude/atulizaatestado/:idpess/:data/:observ", function($idpess
 	$data = date('Y-m-d', $data);
 
 	$validade = date('Y-m-d', $validade);
-
+	
+	$cpf = $pessoa->getNumcpfByIdpess($idpess);
 
 	$saude->setData([
 		'idpess'=>$idpess,
 		'iduser'=>$iduser,
+		'cpf'=>$cpf,
 		'dataemissao'=>$data,
 		'datavalidade'=>$validade,
 		'observ'=>$observ
@@ -91,21 +117,20 @@ $app->get("/admin/saude/dadosatestado/:idpess", function($idpess) {
 	$saude->getAtestadoUltimoByIdPess($idpess);
 
 	$validade = $saude->getdatavalidade();
-	$observ = $saude->getobserv();
-
-	$validade = new Date();
-
+	$validade = new DateTime($validade);
 	$validade = $validade->format('d/m/Y');
+	
+	$observ = $saude->getobserv();
 	
 	$dataatualizacao = $saude->getdataatualizacao();
 
 	if($dataatualizacao == ''){
 		
-		$texto = 'Atestado de '.$nomepess.' não encontrado!!';
+		$texto = 'Atestado de '.$nomepess.' não encontrado!!'."\r\n".'';
 
 	}else{
 
-		$texto = ''.$nomepess."\r\n".'Observação: '.$observ."\r\n".'Validade Atestado: '.$validade.'';		
+		$texto = ''.$nomepess."\r\n".'Observação: '.$observ."\r\n".'Validade Atestado: '.$validade.''."\r\n".'';		
 	}
 	echo  $texto;
 	

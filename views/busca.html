@@ -1,9 +1,12 @@
+<script type="text/javascript">
 
- <div class="container"> <!-- container 1 -->
+
+</script>
+ <div class="container" style="margin-top: 0px;"> <!-- container 1 -->
             <div class="row"> <!-- row 2 -->
-              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
+              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 0px 0px 50px 0px;">                 
 
-<div class="container" style="margin: 0px px 0px 0px; ">
+<div class="container" style="margin: 0px 0px 0px 0px; ">
 {if="$profileMsg != ''"}
     <div class="alert alert-success">
       {$profileMsg}
@@ -37,7 +40,11 @@
       <div class="row"> 
 
         <!-- row 4 -->        
-        
+        <!--
+        <div class="col-md-4 col-sm-12" style="text-align-last: left; background-color: white; margin: 5px 0px 5px 0px; padding-right: 0px"><a href="/turma/{$value.idturma}/{$value.idtemporada}">           
+            <img class="img-responsive" style="width: 282px; height: 179px" id="image-preview" src="{$value.desphoto}" alt="Photo"></a>            
+        </div>
+        --> 
 
         <div class="col-md-12"style="text-align-last: left; line-height: 20px;  font-size: 14px; font-style: normal; margin: 0px 0px 0px 0px">
           <!--
@@ -54,7 +61,7 @@
             </span><br>
              
               {$value.diasemana} das {$value.horainicio} às {$value.horatermino} <br>  
-               Local da aula: <strong> *{$value.apelidolocal}*</strong><br>             
+               Local da aula: <strong>{$value.apelidolocal}</strong><br>             
               Temporada: {$value.desctemporada} <br>
 
                {if="$value.fimidade == 99"} 
@@ -62,11 +69,11 @@
               {else}
               Para nascidos entre:<strong> {$anoAtual - $value.fimidade} à {$anoAtual - $value.initidade}</strong><br>
               {/if}
-
+              
               {if="$value.idstatustemporada == 2"} 
                <span style="font-weight: bold;">
-              {$value.vagas} vagas<br>                          
-              {/if}
+              {$value.vagas} vagas<br>
+              {/if}          
 
               {if="$value.idstatustemporada == 4"} 
                <span style="color: red;">
@@ -145,7 +152,7 @@
   <div class="col-md-4" style="text-align-last: left; background-color: #0f71b3; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
     <a href="/locais">                          
       <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 14px; font-style: normal; margin: 10px 5px 10px 0px; ">                                               
-           Cursos por <br> Centro Esportivo
+          Cursos por <br> Centro Esportivo
       </div>
     </a>
   </div>

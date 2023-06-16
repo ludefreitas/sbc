@@ -94,15 +94,13 @@ class Agenda extends Model {
 	{
 		$sql = new Sql();
 
-		$results = $sql->select("DELETE FROM tb_agenda 
-			WHERE idagen = :idagen", [
+		$results = $sql->select("DELETE FROM tb_agenda WHERE idagen = :idagen", [
 			':idagen'=>$idagen
 		]);		
 
 		//Agenda::updateFile();
 	}
-
-
+	
 	public function marcarPresença($idagen)
 	{
 		$sql = new Sql();
@@ -112,7 +110,6 @@ class Agenda extends Model {
 		]);		
 
 	}
-
 
 	// atualiza lista de Agenda no site (no rodapé) Agenda-menu.html
 	public static function updateFile()	
@@ -307,7 +304,7 @@ class Agenda extends Model {
 
 		return $results;		
 	}
-
+	
 	public static function contaQtdAgendamPorDataHorarioTitulo($data, $idlocal, $titulo, $horainicial){
 
 		$sql = new Sql();
@@ -326,7 +323,7 @@ class Agenda extends Model {
 
 		return $results;		
 	}
-
+	
 	public static function getAgendaExist($idpess, $idhoradiasemana, $dia, $idlocal){
 
 		$sql = new Sql();
@@ -373,8 +370,9 @@ class Agenda extends Model {
 		]);
 
 		return $results;		
-	}
 
+	}
+	
 	public static function getAgendaByIduser($iduser, $titulo){
 
 		$sql = new Sql();
@@ -393,7 +391,7 @@ class Agenda extends Model {
 		return $results;		
 
 	}
-
+	
 	public static function getAgendaAvaliacaoByIduser($iduser, $titulo){
 
 		$sql = new Sql();
@@ -412,7 +410,7 @@ class Agenda extends Model {
 		return $results;		
 
 	}
-
+	
 	public static function getAgendaByLocalData($idlocal, $data, $titulo){
 
 		$sql = new Sql();
@@ -433,7 +431,7 @@ class Agenda extends Model {
 		return $results;		
 
 	}
-
+	
 	public static function getAgendaPorPessoaLocalDia($idpess, $idlocal, $data){
 
 		$sql = new Sql();
@@ -453,7 +451,7 @@ class Agenda extends Model {
 			return false;
 		}
 	}
-
+	
 	public static function countAgendaPorPessoaLocalDia($idpess, $idlocal, $data){
 
 		$sql = new Sql();
@@ -469,7 +467,7 @@ class Agenda extends Model {
 
 		return $results;		
 	}
-
+	
 	public static function countAgendaPorPessoaLocalDiaTitulo($idpess, $idlocal, $titulo){
 
 		$sql = new Sql();
@@ -485,7 +483,7 @@ class Agenda extends Model {
 
 		return $results;		
 	}
-
+	
 	public static function selecionaAgendaPorPessoaDiaTitulo($idpess, $titulo){
 
 		$sql = new Sql();
@@ -499,7 +497,7 @@ class Agenda extends Model {
 
 		return $results;		
 	}
-
+	
 	public static function countAgendaPorPessoaDiaTitulo($idpess, $titulo){
 
 		$sql = new Sql();
@@ -526,7 +524,7 @@ class Agenda extends Model {
 				':idlocal'=>$idlocal,
 				':data'=>$data
 			]);
-
+		
 			return $results;		
 	}
 

@@ -82,14 +82,13 @@
 
           {if="$success != ''"}
           <tr>
-            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; color: green;" colspan="7">{$success}</th>
+            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; color: green;" colspan="6">{$success}</th>
           </tr>
           {/if}
 
 
           <tr>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Data</th>
-              <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Dia</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Horário</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Nome</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Local (Crec)</th>
@@ -102,9 +101,7 @@
               <td style="text-align: center; border: solid 1px; padding: 5px;">
                 {function="formatDate($value.dia)"}
               </td>              
-              <td style="text-align: center; border: solid 1px; color: darkblue; padding: 5px;">
-                {$value.diasemana}
-              </td>
+              
               <td style="text-align: center; border: solid 1px; padding: 5px;">
                 {$value.horainicial} às {$value.horafinal}
               </td>              

@@ -20,8 +20,8 @@ $app->get("/local/:idlocal", function($idlocal) {
 	
 	$desctemporada  = isset($turma[0]['desctemporada']) ? $turma[0]['desctemporada'] : '';
 
-	// Aqui verifica se a temporada Ã© igual ao ano atual
-	// Se nÃ£o for acrescenta (1). Supondo que a inscriÃ§Ã£o estÃ¡ sendo feita no ano anterior
+	// Aqui verifica se a temporada «± igual ao ano atual
+	// Se n«ªo for acrescenta (1). Supondo que a inscri«®«ªo est«¡ sendo feita no ano anterior
 	if( (int)date('Y')  == (int)$desctemporada ){
 
 		$anoAtual = (int)date('Y');	
@@ -48,7 +48,7 @@ $app->get("/locais", function() {
 
 	if(!isset($locais) || $locais == NULL){
 
-		Cart::setMsgError("NÃ£o existe Crecs Cadastrados para esta temporada. A temporada pode né”o estar iniciada, estar em processo de sorteio ou foi encerrada. Aguarde, ou entre em contato com o Centro Esportivo mais prå¦ximo a sua casa. ");
+		Cart::setMsgError("NÃ£o existe Crecs Cadastrados para esta temporada. A temporada pode nÃ£o estar iniciada, estar em processo de sorteio ou foi encerrada. Aguarde, ou entre em contato com o Centro Esportivo mais prÃ³ximo a sua casa. ");
 	}	
 
 	$page = new Page();

@@ -1,0 +1,182 @@
+
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+<h1>
+ Turmas relacionadas à Temporada {$temporada.desctemporada} - {$temporada.descstatustemporada}   
+
+</h1>
+
+  <ol class="breadcrumb">
+  <li><a href="/prof-estagiario"><i class="fa fa-dashboard"></i> Home</a></li>
+
+</ol>
+
+
+
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+<div class="row">
+
+  {if="$error != ''"}
+          <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
+      {$error}
+          </div>
+      {/if}
+  <div class="col-md-12">
+
+      <div class="box box-primary"> 
+
+        <div class="box-header"> 
+
+          {if="$local == null"}
+
+          <h3>Todos locais</h3>
+
+          {else}
+
+          <h3>{$local.apelidolocal}</h3>
+
+          {/if}       
+
+       </div>
+      <div class="box-body" style="border: solid 1px lightblue; margin: 5px;"> 
+          <div class="box-body no-padding col-md-10">
+            
+                {loop="$turmas"}
+                <div class="box-body" style="border: solid 1px lightblue; margin: 2px;">
+
+                  <div class="row">
+
+                    <div class="col-md-6" >
+                      <h5 style="font-weight: bold; text-align: left;">
+                       {$value.descturma} 
+
+                       {if="$value.idturmastatus == 2"}
+                          <span style="color: orange; font-weight: bold;">- Inscrições não iniciadas</span>                  
+                        {/if}
+                       
+                        {if="$value.idturmastatus == 3"}
+                          <span style="color: darkgreen; font-weight: bold;">- Inscrições abertas</span>
+                         
+                        {/if}
+
+                        {if="$value.idturmastatus == 4"}
+                          <span style="color: red; font-weight: bold;"> - Inscrições suspensas</span>
+                          
+                        {/if}
+
+                        {if="$value.idturmastatus == 6"}
+                          <span style="color: blue; font-weight: bold;"> - Turma não iniciada</span>
+                          
+                        {/if}
+
+                       - {$value.diasemana}
+                        {$value.horainicio} ás {$value.horatermino} -  {$value.descrfxetaria}  {$value.initidade} a {$value.fimidade} anos -  {$value.apelidolocal} - {$value.nomeespaco} &nbsp; Vagas: ({$value.vagas} Geral)&nbsp; - &nbsp;({$value.vagaslaudo} Laudo)&nbsp; - &nbsp;({$value.vagaspcd} PCD)&nbsp; - &nbsp;({$value.vagaspvs} PVS)</strong> 
+                      </h5>
+                    </div>                      
+
+                    <div class="col-md-6">
+                      <h5 style="font-weight: bold; text-align: left; color: green;">
+                        <strong style="color: orange;">[{$value.idturma}]</strong> &nbsp;&nbsp;
+
+                        <a href="/estagiario/insc-turma-temporada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}"> 
+                         | &nbsp; Consultar {$value.numinscritos} inscritos &nbsp;
+                         </a> &nbsp; 
+
+                         <a href="/estagiario/insc-turma-temporada-chamada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: green;"> 
+                         | &nbsp;  imprimir lista chamada ({$value.nummatriculados}) &nbsp; 
+                         </a> &nbsp; 
+                         
+                         
+                         <a href="/estagiario/calendario-lista-presenca/{$value.idtemporada}/{$value.idturma}" style="color: orangered;">
+                         | &nbsp; Fazer Chamada </a>  &nbsp; 
+                         &nbsp;  
+
+                         <a href="/estagiario/listapessoasporturma/{$value.idturma}/{$value.idtemporada}" style="color: black;">
+                         | &nbsp; Lista com endereços </a>  &nbsp; 
+                         &nbsp;  
+                        
+
+                        <!--
+                         &nbsp; <a href="/estagiario/insc-turma-temporada-matricular/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: darkblue;">
+                         | Lista/Matricular </a>  &nbsp;   
+                        -->
+
+                      <!--  | &nbsp; <a href="/insc-turma-temporada-para-sorteio/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: orangered;">  Sorteio |</a>  &nbsp;  
+                      -->
+
+
+                        
+                          <a href="/estagiario/token/{$value.idturma}/{$temporada.idtemporada}" style="color: darkblue;"><i ></i> | Tokens</a>
+                        
+                      </h5>
+                    </div>                    
+                    <!--
+                    <div class="col-md-2">
+                      <h5 style="font-weight: bold; text-align: left; color: darkgreen;">
+                        {$value.nummatriculados} matriculados                        
+                      </h5>
+                    </div>
+                    -->
+                  </div>
+                    
+                </div>
+                
+                {/loop}
+            <!--
+            <button type="button" onclick="window.print()" class="btn btn-primary pull-right" style="margin-right: 5px;">
+                  <i class="fa fa-print"></i> Imprimir
+              </button>
+            -->
+          </div>
+          
+          
+          <!-- /.box-body -->   
+
+          <div class="box-body col-md-2">
+                  <table class="table table-striped">
+                      <thead>
+                          <tr>
+                           <th>Turmas da temporada por centro esportivo</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+
+                          <tr>
+                          <td>
+                              <a href="/estagiario/turma-temporada/{$temporada.idtemporada}"><i class=""></i>Minhas turmas - Temporada {$temporada.desctemporada}</a>
+                          </td>
+                          {loop="$locais"}
+                          <tr>
+                          <td>
+                              <a href="/estagiario/turma-temporada/{$temporada.idtemporada}/local/{$value.idlocal}"><i class=""></i> {$value.idlocal} - {$value.apelidolocal}</a>
+                          </td>
+                          </tr>
+                          {/loop}
+
+                      </tbody>
+                  </table>
+              </div>         
+
+          <div class="box-footer clearfix">
+            <ul class="pagination pagination-sm no-margin pull-right">
+              {loop="$pages"}
+              <li><a href="{$value.href}">{$value.text}</a></li>
+              {/loop}
+            </ul>
+          </div>
+
+        </div>
+
+  </div>
+</div>
+</div>
+
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

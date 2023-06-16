@@ -1,17 +1,6 @@
 
 <script>
 
-    function getDadosCodigoDoenca(cid){
-
-         
-        let dadosdoenca = obtemDoencaCid(cid)
-
-        document.getElementById('dadosDoenca').value = dadosdoenca
-
-        console.log(dadosdoenca)    
-       
-    }  
-
     function quantosAnos(nascimento, hoje) {
 
         var diferencaAnos = hoje.getFullYear() - nascimento.getFullYear();
@@ -67,12 +56,9 @@
         
     }
 
-    /*
     function getDadosCodigoDoenca(cid){
 
          //let url = 'https://cid.api.mokasoft.org/cid10/'+cid+''
-         let url = 'https://cid10.com.br/%5Ebuscacode$?query='+cid+''
-         https://cid10.com.br/%5Ebuscacode$?query=A000
 
         let xmlHttp = new XMLHttpRequest()
         xmlHttp.open('GET', url)
@@ -91,7 +77,6 @@
 
         xmlHttp.send()        
     }  
-    */
     
 </script>
 
@@ -110,7 +95,13 @@
 
                 <div class="alert alert-success" style="text-align-last: center;">
                     <span style="font-weight: bold;">Atualizar dados de saúde</span style="font-weight: bold;">
-                </div>       
+                </div>  
+                
+                {if="$errorSaude != ''"}
+                <div class="alert alert-danger">
+                 <h4>{$errorSaude}</h4>
+                </div>
+                {/if}
                 
 
                 {if="$error != ''"}

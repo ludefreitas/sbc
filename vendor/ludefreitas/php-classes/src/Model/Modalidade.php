@@ -18,8 +18,8 @@ class Modalidade extends Model {
 		return $sql->select("SELECT * 
 			FROM tb_modalidade			
 			ORDER BY descmodal");
-	}
-
+	}	
+	
 	public static function listAllToLocal($idlocal)
 	{
 		$idStatusTemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
@@ -40,7 +40,6 @@ class Modalidade extends Model {
         INNER JOIN tb_espaco d ON d.idespaco = c.idespaco
         INNER JOIN tb_local e ON e.idlocal = d.idlocal
 		WHERE e.idlocal = :idlocal 
-		-- AND b.idtemporada = 5
 		AND (g.idstatustemporada = :idStatusTemporadaMatriculasEncerradas
       		 OR g.idstatustemporada = :idStatusTemporadaInscricaoIniciada
       		 OR g.idstatustemporada = :idStatusTemporadaMatriculaIniciada
@@ -58,7 +57,7 @@ class Modalidade extends Model {
 
 		return $results;		
 	}	
-	
+
 
 	public static function checkList($list)
 	{

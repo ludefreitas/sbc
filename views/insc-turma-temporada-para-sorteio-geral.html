@@ -24,10 +24,10 @@
 <hr>
 <div style="text-align-last: center; margin: 5px 10px 5px 10px; width: 100%">
   <h4>
-    Cursos Esportivos SBC
+    <strong>Cursos </strong>Esportivos <strong>SBC</strong>
     <br>
    <!--  <span style="font-weight: bold">LISTA DE INSCRIÇÕES COM NÚMEROS PARA SORTEIO</span> -->
-     <span style="font-weight: bold">{$turma.descturma} </span> {$turma.diasemana}  das <span style="font-weight: bold">{$turma.horainicio} às {$turma.horatermino}  </span>
+   <span style="font-weight: bold">{$turma.descturma} </span> {$turma.diasemana}  das <span style="font-weight: bold">{$turma.horainicio} às {$turma.horatermino}  </span>
     <span style="font-weight: bold"> {$turma.apelidolocal}  <br>
     {$turma.vagas} vagas</span>      
   </h4>
@@ -108,7 +108,6 @@
                     <td style="width: 40%; text-align: left;">
                       {$value.nomepess}
                     </td>
-                    
                     <td style="width: 10%; color: green; text-align: center; font-weight: bold;">
                       {if="$value.inscpcd == 0 AND $value.laudo == 0 AND $value.vulnsocial == 0"}
                           Geral
@@ -130,6 +129,7 @@
                     <td style="width: 30%; text-align: center; font-weight: bold;">
                       {function="formatCpf($value.numcpf)"}
                     </td>
+                    
                   </tr>
                   {else}
 

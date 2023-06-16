@@ -115,11 +115,11 @@ class Saude extends Model {
 		return $results;
 
 	}
-	// esta função é usada para salvar saude da pessoa
+	// esta função é usada para salvar e editar pessoa
 	public function save()
 	{
 		$sql = new Sql();
-
+		
 		//procedure sp_saude_save() foi descontinuada por conter erro
 		$results = $sql->select("CALL sp_saude_save1(:idsaude, :idpess, :idcid, :defauditiva, :defvisual, :deffisica, :defintelectual, :defautismo, :deftea)", array(
 			":idsaude"=>$this->getidsaude(),
@@ -130,7 +130,7 @@ class Saude extends Model {
 			":deffisica"=>$this->getdeffisica(),						
 			":defintelectual"=>$this->getdefintelectual(),						
 			":defautismo"=>$this->getdefautismo(),						
-			":deftea"=>$this->getdeftea()						
+			":deftea"=>$this->getdeftea(),						
 		));
 
 		if (count($results) > 0) {
@@ -140,7 +140,7 @@ class Saude extends Model {
 		}
 	}
 
-	// esta função é usada para salvar saude da pessoa
+
 	public function update($idpess)
 	{
 		$sql = new Sql();
@@ -155,8 +155,8 @@ class Saude extends Model {
 			":deftea"=>$this->getdeftea(),
 			":idpess"=>$idpess			
 		));		
-	}
-
+	}	
+	
 	public function saveparq()
 	{
 		$sql = new Sql();
@@ -179,7 +179,7 @@ class Saude extends Model {
 
 		}
 	}
-
+	
 	public function getParqUltimoByIdPess(int $idpess)
 	{
 
@@ -195,28 +195,8 @@ class Saude extends Model {
 
 		}		
 		
-	}	
-
-	public  function getParqByIdPess($idpess)
-	{
-
-		$sql = new Sql();
-
-		$results = $sql->select("SELECT * FROM tb_parq WHERE idpess = :idpess", array(
-			":idpess"=>$idpess			
-		));
-
-		return $this->setData($results);
-
-		/*
-
-		if (count($results) > 0) {
-			$this->setData($results[0]);
-		}		
-		*/
-		
-	}	
-
+	}
+	
 	public function getCountParqByIdPess($idpess){
 
 		$sql = new Sql();
@@ -229,15 +209,16 @@ class Saude extends Model {
 
 		return $results[0]['count(*)'];
 	}
-
+	
 	public function saveatestado()
 	{
 		$sql = new Sql();
 
-		$results = $sql->select("CALL sp_atestado_save(:idatestado, :idpess, :iduser, :dataemissao, :datavalidade, :observ)", array(
+		$results = $sql->select("CALL sp_atestado_save(:idatestado, :idpess, :iduser, :cpf, :dataemissao, :datavalidade, :observ)", array(
 			":idatestado"=>$this->getidatestado(),
 			":idpess"=>$this->getidpess(),
-			":iduser"=>$this->getiduser(),						
+			":iduser"=>$this->getiduser(),
+			":cpf"=>$this->getcpf(),						
 			":dataemissao"=>$this->getdataemissao(),						
 			":datavalidade"=>$this->getdatavalidade(),						
 			":observ"=>$this->getobserv()
@@ -249,7 +230,7 @@ class Saude extends Model {
 
 		}
 	}
-
+	
 	public function getAtestadoUltimoByIdPess(int $idpess)
 	{
 
@@ -261,10 +242,9 @@ class Saude extends Model {
 		
 		if (count($results) > 0) {
 			$this->setData($results[0]);
-		}				
-		
+		}
 	}	
-
+	
 	public function getCountAtestadoByIdPess($idpess){
 
 		$sql = new Sql();
@@ -276,6 +256,39 @@ class Saude extends Model {
 		));
 
 		return $results[0]['count(*)'];
+	}
+	
+	public function getCountAtestadoByNumcpf($numcpf){
+
+		$sql = new Sql();
+		
+		$results = $sql->select("SELECT count(*) FROM tb_atestado 
+			WHERE cpf = :numcpf
+			", array(
+			":numcpf"=>$numcpf
+		));
+
+		return $results[0]['count(*)'];
+	}
+	
+	public function updateAtestadoCpf($cpf, $idpess)
+	{
+		$sql = new Sql();
+		
+		$results = $sql->select("UPDATE tb_atestado SET cpf = :cpf WHERE idpess = :idpess", array(
+			":cpf"=>$cpf,
+			":idpess"=>$idpess			
+		));		
+	}
+
+
+	public function selectAllAtestado(){
+
+		$sql = new Sql();	
+
+		$results = $sql->select("SELECT idpess, cpf FROM tb_atestado");
+
+		return $results;
 	}
 
 	public function get(int $idpess)
@@ -312,8 +325,8 @@ class Saude extends Model {
 			$this->setData($rows[0]);
 		}
 	}	
-
-	public function getDoencaByidpess($idpess)
+	
+    public function getDoencaByidpess($idpess)
 	{
 		$sql = new Sql();
 
@@ -325,7 +338,7 @@ class Saude extends Model {
 		));
 		return $results;		
 	}
-
+	
 	public function getDeficienciaByidpess($idpess)
 	{
 		$sql = new Sql();

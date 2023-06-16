@@ -15,13 +15,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" type="text/css" href="/../res/site/css/style.css">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
 
-
     <title>Cursos Esportivos SBC</title>
-    <link rel="icon" type="image/jpg" href="/../res/site/img/corpoacao.png" />
+    <link rel="icon" 
+      type="image/jpg" 
+      href="/../res/site/img/corpoacao.png" />
 </head>
   
   <body>
@@ -32,7 +33,7 @@
             <div class="container">
                 <!-- Logo -->
                 <a href="/" class="navbar-brand">
-                    <img src="/../res/site/icon/ico-home.png" title="CursosEsportivosSBC" width="30"> "Teste"
+                    <img src="/../res/site/icon/ico-home.png" title="CursosEsportivosSBC" width="30">
                 </a>
                 <!-- botão para expandir itens em navegação em tela pequena -->
                 <button class="navbar-toggler" data-toggle="collapse" data-target="#nav-principal" aria-expanded="false">
@@ -40,8 +41,7 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="nav-principal">
-                    <div class="navbar-nav ml-auto" style="text-align: center;">                        
-                                                    
+                    <div class="navbar-nav ml-auto" style="text-align: center;">
                         <div class="nav-item">
                             <a class="nav-link" href="/">
                               <span class="text-white"  style="font-weight: bold;">
@@ -60,13 +60,19 @@
                         <div class="nav-item">
                             <a href="/user/profile" class="nav-link">
                               <span class="text-white" style="font-weight: bold">
-                               Minhas inscrições <br>
+                               Minhas inscrições<br>
                                Meus dados
                               </span>
                             </a>
-                        </div>                        
-                        <?php echo getUserIsProf(); ?>
-                        <?php echo getUserIsAudi(); ?> 
+                        </div>
+                        <?php if( UserIsProf() ){ ?>
+                            <?php echo getUserIsProf(); ?>
+                        <?php }else{ ?> 
+                            <?php if( UserIsEstagiario() ){ ?> 
+                                <?php echo getUserIsEstagiario(); ?>                  
+                            <?php } ?>
+                        <?php } ?>
+                         <?php echo getUserIsAudi(); ?>
                         <?php echo getUserIsAdmin(); ?>
                         <div class="nav-item">
                             <a href="/cart" class="nav-link">
@@ -74,7 +80,7 @@
                                 Inscrições a confirmar  
                               </span>
                             </a> 
-                        </div>
+                        </div> 
                         <div class="nav-item">
                             <a href="/pessoa-create" class="nav-link">
                               <span class="text-white" style="font-weight: bold">
@@ -141,15 +147,23 @@
                 -->            
                                               
               </div>
-                         
+                
+              <!--             
 
-               
+               <div class="col-md-6" style="text-align: center; margin: 5px 0px 5px 0px;">
+                 <form action="/busca">
+                <input type="text" name="search" placeholder="Pesquisa" style="text-align-last: center;">
+                <button type="submit" class="btn btn-default btn-sm">
+                  <i class="fa fa-search"></i>
+                </button>
+                </form>                                              
+              </div>
+              
+              -->
 
             </div>
           </div>    
-
-         
-
+       
          
           <hr>
 

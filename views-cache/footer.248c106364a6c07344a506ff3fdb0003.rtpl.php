@@ -21,7 +21,7 @@
        
           <div class="container">
             <div class="row">
-
+                
               <div class="col-md-8" style="text-align: center; margin: 10px 0px 0px 0px;">
                  <form action="/busca">
                 <input type="text" name="search" placeholder="Pesquisa" style="text-align-last: center;">
@@ -58,8 +58,8 @@
                               <span style="color: black; text-align-last: center; font-weight: bold;font-style: italic; font-style: italic; font-size: 16px;">youtube.com/cursosesportivossbc</span>
                         </i>
                         
-                        </a>   
-
+                        </a>    
+                        
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                         <a href="https://wa.me/551126307421?text=Olá,%20Cursos%20Esportivos%20SBC! " target="_blank">
@@ -67,7 +67,7 @@
                               <span style="color: black; text-align-last: center; font-weight: bold;font-style: italic; font-style: italic; font-size: 16px;">Chame Cursos Esportivos SBC no whatsapp</span>
                         </i>
                         
-                        </a>                                       
+                        </a>                           
               </div>
 
               <div class="col-md-8" col-sm-1 style="text-align-last: center; background-color: #0f71b3;">

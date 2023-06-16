@@ -1,11 +1,27 @@
 
+<script type="text/javascript">
+
+
+    function avaliacao(){
+        
+        confirm('As turmas de natação intermediário, avançado e aperfeiçoamento são dedicadas aos alunos egressoas das turmas de iniciante do ano passado, ou aquelas pessoas que já sabem nadar o básico e pretendem aperfeiçoar o nado. Para ingressar em uma dessas turmas, você deve realizar o agendamento de uma avaliação junto a nossa equipe de professores para verificar em qual turma você pode ingressar.')
+    }
+    /*
+    alert('As aulas de Ginástica Artística (GA) e Ginástica Rítimica (GR) começam a partir de 13/02/2023.')
+    */
+
+    function GrGa(){
+
+        alert('As aulas de Ginástica Artística (GA) e Ginástica Rítimica (GR) começam a partir de 13/02/2023.')
+    }
+
+</script>
  <div class="container"> <!-- container 1 -->
             <div class="row"> <!-- row 2 -->
               <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 0px 0px 0px 0px;">
 
 <div class="container" style="margin: 0px 0px 0px 0px; ">
   <div class="row">  
-
   
   <div class="col-md-12" style="color: black; text-align-last: center; font-size: 20px;">
 
@@ -15,7 +31,6 @@
 
 
     </div>
- 
 
     {if="$error != ''"}
     <div class="alert alert-danger">
@@ -23,14 +38,15 @@
     </div>
   
  {else}
- 
+
   <div class="col-md-12" style="text-align-last: left; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; border-radius: 15px;"> 
 
     {if="checkLogin(false)"} 
-
-           Olá <span style="color: black; font-weight: bold;">  {function="getUserName()"}, </span>seja bem vindo! <br><br>           
+    
+         <span style="color: black; font-weight: bold;">  {function="getUserName()"} </span>!<br>
+            
                                                        
-          Nesta etapa, selecione abaixo uma MODALIDADE para praticar no <span style="font-weight: bold; font-size: 20px; color: orange;">{$apelidolocal} </span>, escolha a turma e faça a sua inscrição ou a inscrição de seu dependente.
+          Nesta etapa, selecione abaixo uma MODALIDADE para praticar a aula no <span style="font-weight: bold; font-size: 20px; color: orange;">{$apelidolocal} </span>, escolha a turma e faça a sua inscrição ou a inscrição de seu dependente.
 
     {else}      
            
@@ -42,49 +58,16 @@
             <a href="/login" >                
                  LOGIN 
             </a>
-            e nesta etapa selecione abaixo uma MODALIDADE para praticar no <span style="font-weight: bold; font-size: 20px; color: orange;">{$apelidolocal} </span>, escolha a turma e faça a sua inscrição ou a inscrição de seu dependente.
+            e nesta etapa selecione abaixo uma MODALIDADE para praticar a aula no <span style="font-weight: bold; font-size: 20px; color: orange;">{$apelidolocal} </span>, escolha a turma e faça a sua inscrição ou a inscrição de seu dependente.
           
       {/if}
 
   </div>
-
  {/if}
 
   </div>
 </div>
 <hr style="background-color: orange;">
-
-
-{if="$idlocal == 1 OR $idlocal == 21 OR $idlocal == 3"}
-<a href="/modalidade/14/{$idlocal}">
-  <div class="container"> <!-- container 3 -->
-    <div class="row"> <!-- row 4 -->
-      
-      <!-- <div class="col-md-4" col-sm-1 style="text-align-last: left; background-color: white; margin: 5px 0px 5px 0px; padding-right: 0px">                            
-
-                    <img class="img-responsive" style="width: 282px; height: 179px" id="image-preview" src="" alt="Foto">                                   
-      </div> -->                             
-      
-      <div class="col-md-12" style="text-align-last: left; line-height: 20px;  font-size: 20px; font-style: normal; margin: 5px 0px 5px 0px; padding: 0px 0px 0px 0px">
-
-        <div class="container">
-          <div class="row alert-warning">
-            <div class="col-md-6" style="margin: 10px 0px 5px 0px; ">
-              <a style="color: #0f71b3; text-decoration: none; font-weight: bold;" href="/modalidade/14/{$idlocal}">
-                {$idlocal}<br>
-              </a>
-            </div>
-            <div class="col-md-6" style="text-align-last: center; margin: 5px 0px 5px 0px; color: white; padding: 0px 0px 0px 0px">
-              <a class="card card-just-text" style="background-color: #cc5d1e; color: white; padding: 5px 0px 5px 0px;  text-decoration: none" href="/modalidade/14/{$idlocal}" text-decoration="none">Cursos dísponíveis
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>                        
-    </div> <!-- row 4 -->
-  </div> <!-- container 3 -->
-</a>
-{/if}
 
 {loop="$modalidades"}
 <a href="/modalidade/{$value.idmodal}/{$idlocal}">
@@ -101,13 +84,37 @@
         <div class="container">
           <div class="row alert-warning">
             <div class="col-md-6" style="margin: 10px 0px 5px 0px; ">
-              <a style="color: #0f71b3; text-decoration: none; font-weight: bold;" href="/modalidade/{$value.idmodal}/{$idlocal}">
+              
+              {if="$value.idmodal == 44 OR $value.idmodal == 25"}
+                
+              <a style="color: #0f71b3; text-decoration: none; font-weight: bold;" href="/modalidade/{$value.idmodal}/{$idlocal}" onclick="GrGa()">
                 {$value.descmodal}<br>
               </a>
+              
+              {else}
+              
+                
+                    <a style="color: #0f71b3; text-decoration: none; font-weight: bold;" href="/modalidade/{$value.idmodal}/{$idlocal}">
+                  {$value.descmodal}<br>
+                    </a>
+
+              
+              {/if}
+              
             </div>
             <div class="col-md-6" style="text-align-last: center; margin: 5px 0px 5px 0px; color: white; padding: 0px 0px 0px 0px">
-              <a class="card card-just-text" style="background-color: #cc5d1e; color: white; padding: 5px 0px 5px 0px;  text-decoration: none" href="/modalidade/{$value.idmodal}/{$idlocal}" text-decoration="none">Cursos dísponíveis
+                
+              
+              {if="$value.idmodal == 44 OR $value.idmodal == 25"}
+               <a class="card card-just-text" style="background-color: #cc5d1e; color: white; padding: 5px 0px 5px 0px;  text-decoration: none" href="/modalidade/{$value.idmodal}/{$idlocal}" onclick="GrGa()" text-decoration="none">Cursos dísponíveis
               </a>
+             
+              {else}
+             <a class="card card-just-text" style="background-color: #cc5d1e; color: white; padding: 5px 0px 5px 0px;  text-decoration: none" href="/modalidade/{$value.idmodal}/{$idlocal}" text-decoration="none">Cursos dísponíveis
+              </a>
+              {/if}
+              
+              
             </div>
           </div>
         </div>
@@ -128,5 +135,4 @@
  </div>
  <hr style="background-color: orange;">
 </div> <!-- final da index -->
-
 

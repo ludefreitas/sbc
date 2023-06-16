@@ -1,4 +1,8 @@
-<head>
+<script type="text/javascript">
+
+
+</script>
+
     <!-- Required meta tags -->   
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -15,119 +19,182 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
-
-
     
     <title>Cursos Esportivos SBC</title>
     <link rel="icon" type="image/jpg" href="/../res/site/img/corpoacao.png" />
 
     <script type="text/javascript">
+    
+      function dadosAtestado(idpess){
 
-
-      function requisitarPagina(url){
-
-        if(!document.getElementById('loading')){
-
-          let imgLoading = document.createElement('img')
-          imgLoading.width = 50
-          imgLoading.height = 50
-          imgLoading.id = 'loading'
-          imgLoading.src = '/../res/site/img/loading.gif'
-          imgLoading.className = 'rounded mx-auto d-block'
-
-          document.getElementById('conteudo').appendChild(imgLoading)
-        }
+        let url = '/prof/saude/dadosatestado/'+idpess
 
         let ajax = new XMLHttpRequest();
-
-        // requisição não iniciada state = 0 
-        console.log(ajax.readyState)
+        ajax.open('GET', 'url');        
         
-        ajax.open('GET', 'url')
-        //conexão estabelecida com o servidor state = 1 
-        console.log(ajax.readyState)         
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
 
-        // alguma lógica que fique olhando para o progresso da req
+          if (window.confirm(' '+ result + 'Para atualizar atestado clique em "OK"'))
+          {
+              adicionarArtestado(idpess)
+          };
 
-        ajax.onreadystatechange = () => {
-          if(ajax.readyState == 4){
-
-            console.log('O status da requisição é: ', ajax.status)
-
-            console.log('requisição finalizada com sucesso')
-
-             document.getElementById('loading').remove()
-
-          }         
-        }
-
-        ajax.send()
-
-        //console.log(ajax)
-
+        });
       }
 
+      function adicionarArtestado(idpess){
+        
+        let confirmaAtestado = confirm('Deseja realmente atualizar atestado?')
 
+        if(confirmaAtestado == true)
+        {                      
+            var data = prompt("Informe a data da emissão do Atestado. Ex.: dd-mm-aaaa");     
+
+
+            if (data == null || data == "") {
+
+                alert("As informaçãoes do atestado não foram atualizadas! Informe a data e faça alguma observação")
+            } else {
+
+                 var traco1 = data.substr(2,1)
+                 var traco2 = data.substr(5,1)
+                 var dia = data.substr(0,2);
+                 var mes = data.substr(3,2);
+                 var ano = data.substr(6,4); 
+                 
+                 if((traco1 != '-') || (traco2 != '-') || (ano.length < 4)){
+                    alert('Formato da data inválida');
+                 }else{
+
+                    if((dia > 31) || (dia == 0) || (mes > 12) || (mes == 0)){
+
+                    alert('data inválida!')
+                    
+                    }else{
+
+                        //alert('Data validada!!! ' + dia + ' ' + mes + ' ' + ano)
+
+                        
+                        var observ = prompt("Digite uma observação");
+                        if (observ == null || observ == "") {
+                                lert("As informaçãoes do atestado não foram atualizadas! Informe a data e faça alguma observação.");
+                        } else {
+
+                            let url = '/prof/saude/atulizaatestado/'+idpess+'/'+data+'/'+observ+''
+
+                            atualizarAtestado(url) 
+                        }           
+                    }                           
+                }
+            }        
+        } 
+         //let url = '/prof/saude/dadosatestado/'+idpess
+
+        //dadosAtestado(url)  
+    }
       /*
-      
-      $(document).ready(function(){
+      function dadosAtestado(url){
 
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
         
-        $('#presente').on("click", function(){
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
 
-          let idtemporada = $("#idtemporada").val();
-          let idturma = $("#idturma").val();
-          let data = $("#data").val();
-          let idinsc = $("#idinsc").val();
-
-          // '/prof/insc-turma-temporada-presente/'+idtemporada+'/'+idturma+'/'+data+'/'+idinsc
-
-          //$.post('/prof/insc-turma-temporada-presente/'+idtemporada+'/'+idturma+'/'+data+'/'+idinsc);
-
-          alert('/prof/insc-sturma-temporada-presente/'+idtemporada+'/'+idturma+'/'+data+'/'+idinsc);
-
+          alert(result)
 
         });
+      }
+      */
 
+      function atualizarAtestado(url){
 
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
         
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
 
-
-        $('#ausente').on("click", function(){
-
-          let idtemporada = $("#idtemporada").val();
-          let idturma = $("#idturma").val();
-          let data = $("#data").val();
-          let idinsc = $("#idinsc").val();
-
-          // '/prof/insc-turma-temporada-ausente/'+idtemporada+'/'+idturma+'/'+data+'/'+idinsc
-
-          $.post('/prof/insc-turma-temporada-ausente/'+idtemporada+'/'+idturma+'/'+data+'/'+idinsc);
-
-          alert('/prof/insc-turma-temporada-ausente/'+idtemporada+'/'+idturma+'/'+data+'/'+idinsc);
+          alert(result)
 
         });
-
-        $('#justificar').on("click", function(){
-
-           let idtemporada = $("#idtemporada").val();
-          let idturma = $("#idturma").val();
-          let data = $("#data").val();
-          let idinsc = $("#idinsc").val();
-
-          // '/prof/insc-turma-temporada-justificar/'+idtemporada+'/'+idturma+'/'+data+'/'+idinsc
-
-          $.post('/prof/insc-turma-temporada-justificar/'+idtemporada+'/'+idturma+'/'+data+'/'+idinsc);
-
-          alert('/prof/insc-turma-temporada-justificar/'+idtemporada+'/'+idturma+'/'+data+'/'+idinsc);
-
-        });
-     
-
-      });
-       */
+      }
       
-  
+      function requisitarPaginaPresente(url){
+
+        let ajax = new XMLHttpRequest();
+        idurl = url.substr(51);                
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if(result){            
+            //document.getElementById('spanpresente'+idurl).hidden = false
+            //document.getElementById('spanausente'+idurl).hidden = true
+            //document.getElementById('spanjustificar'+idurl).hidden = true
+            //document.getElementById('spantraco'+idurl).hidden = true
+          }else{
+            alert('Não foi possível marcar presença')
+          }
+
+        });
+      }
+
+      function requisitarPaginaAusente(url){
+
+        let ajax = new XMLHttpRequest();
+        let idurl = url.substr(50);          
+        ajax.open('GET', 'url');
+
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if(result){            
+            //document.getElementById('spanausente'+idurl ).hidden = false  
+            //document.getElementById('spanpresente'+idurl ).hidden = true
+            //document.getElementById('spanjustificar'+idurl ).hidden = true
+            //document.getElementById('spantraco'+idurl ).hidden = true
+          }else{
+            alert('Não foi possível marcar presença')
+          }
+        });
+      }
+
+      function requisitarPaginaJustificar(url){
+
+        let ajax = new XMLHttpRequest();
+        let idurl = url.substr(53);              
+        ajax.open('GET', 'url');
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if(result){              
+            
+            //document.getElementById('spanjustificar'+idurl ).hidden = false       
+            //document.getElementById('spanausente'+idurl ).hidden = true  
+            //document.getElementById('spanpresente'+idurl ).hidden = true
+            //document.getElementById('spantraco'+idurl ).hidden = true
+          }else{
+            alert('Não foi possível marcar presença')
+          }
+        });
+      }   
+
     </script>
 
     <style type="text/css">
@@ -145,14 +212,12 @@
 
     </style>
 </head>
-
-<tbody>
             <hr>
 
             <div class="container">
 
               <div style="text-align-last: right; margin-right: 25px; margin-top: -25px; margin-bottom: 15px;">
-                <a href="/prof/calendario-lista-presenca/{$idtemporada}/{$turma.idturma}">
+                <a href="/estagiario/calendario-lista-presenca/{$idtemporada}/{$turma.idturma}">
                   <i class="fa fa-arrow-left"></i> 
                     Voltar
                 </a> 
@@ -205,9 +270,7 @@
                     <div class="col-md-12" style="border: 1px solid black; margin: 0; padding: 0; text-align: center; font-weight: bold; background-color: #ccc;" >
                           <div class="col-md-12">
 
-
                              {function="FormatDate($data)"} - Dia Semana
-
 
                           </div>   
                     </div>
@@ -228,85 +291,92 @@
               </div>
 
               <div class="row" style="margin-right: 0px; font-size: 14px">
-
-                
                 {loop="$insc"}
                 <div class="col-md-12">
                   <div class="row">                     
-                    <div class="col-md-12" style="border: 1px solid black;">      
-                         
+                    <div class="col-md-12" style="border: 1px solid black;">                        
                       <div class="row">  
-                        <div class="col-md-2">
-                          <div id="conteudo"></div>
-                        </div>
-                        <div class="col-md-8" style="margin: 5 0 5 0; text-align: center; font-weight: bold;">
-
-                          {$value.idinsc} - {$value.nomepess}  - 
+                        <div class="col-md-12" style="margin: 5 0 5 0; text-align: left; font-weight: bold;">
 
                           {if="$value.statuspresenca == 1"}
-                          <span style="color: green;">( <i class="fa fa-check"></i> )</span> 
+                          <span hidden id="spantraco{$value.idinsc}" style="">( - )</span>
+                          <span id="spanpresente{$value.idinsc}">( <i class="fa fa-check" style="color: green;"></i> )</span>
+                          <span hidden id="spanausente{$value.idinsc}" style="color: red;">( X )</span>    
+                          <span hidden id="spanjustificar{$value.idinsc}" style="color: blue;">( J )</span>    
+
                           {/if}
+
                           {if="$value.statuspresenca == 0"}
-                           <span style="color: red;">( X )</span>
-                          {/if}
-                          {if="$value.statuspresenca == 2"}
-                          <span style="color: blue;">( J )</span>
-                          {/if}
-                          {if="$value.statuspresenca == 4"}
-                          ( - )
-                          {/if}
-                          <br>
+                          <span hidden id="spantraco{$value.idinsc}" style="">( - )</span>
+                          <span hidden id="spanpresente{$value.idinsc}" style="color: green;">( <i class="fa fa-check"></i> )</span>
+                          <span id="spanausente{$value.idinsc}">(<span style="color: red;"> X </span>)</span>    
+                          <span hidden id="spanjustificar{$value.idinsc}">(<span style="color: blue;"> J </span>)</span>                     
                           
-                          {if="$value.idinscstatus == 9"}
+                          {/if}
+
+                          {if="$value.statuspresenca == 2"}
+                          <span hidden id="spantraco{$value.idinsc}" style="">( - )</span>
+                          <span hidden id="spanpresente{$value.idinsc}" style="color: green;">( <i class="fa fa-check"></i> )</span>
+                          <span hidden id="spanausente{$value.idinsc}" style="color: red;">( X )</span>    
+                          <span id="spanjustificar{$value.idinsc}">(<span style="color: blue;"> J </span>)</span>                     
+
+                          {/if}
+
+                          {if="$value.statuspresenca == 4"}
+                          <span id="spantraco{$value.idinsc}" style="">( - )</span>
+                          <span hidden id="spanpresente{$value.idinsc}" style="color: green;">( <i class="fa fa-check"></i> )</span>
+                          <span hidden id="spanausente{$value.idinsc}" style="color: red;">( X )</span>    
+                          <span hidden id="spanjustificar{$value.idinsc}" style="color: blue;">( J )</span>                  
+                          
+                          {/if}                       
+                        
+
+                          <!--
+                           &nbsp;&nbsp;{$value.nomepess} &nbsp;&nbsp; 
+                           - &nbsp;
+                         <a style="color: orange; text-align-last: right;" onclick="adicionarArtestado({$value.idpess})">{function="getAtestadoIcone($value.idpess)"}</a>
+                          <br><br>
+                          -->
+                          &nbsp;&nbsp;{$value.nomepess} &nbsp;&nbsp; 
+                           - &nbsp;
+                         <!--
+                         <a style="color: orange; text-align-last: right;" onclick="dadosAtestado({$value.idpess})">{function="getAtestadoIcone($value.idpess)"}</a>
+                         -->
+                         <a style="color: orange; text-align-last: right;" onclick="dadosAtestado({$value.idpess})">{function="getAtestadoIconeByNumCpf($value.numcpf)"}</a>                     
+                          <br><br>
+                                                      
+                                  
+                        {if="$value.idinscstatus == 9"}
                           <span style="color: red;">CANCELADA</span>
                           {else}
                             {if="$value.idinscstatus == 8"}
                                 <span style="color: red;">DESISTENTE</span>
                             {else}
-                              {if="$value.statuspresenca != 1"}
-                              <input hidden class="idtemporada" id="idtemporada" type="text" name="idtemporada" value="{$idtemporada}">
-                              <input hidden class="idturma" id="idturma" type="text" name="idturma" value="{$value.idturma}">
-                              <input hidden class="data" id="data" type="text" name="data" value="{$data}">
-                              <input hidden class="idinsc" id="idinsc" type="text" name="idinsc" value="{$value.idinsc}">
+                             
+                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="{$value.idinsc}" onchange="requisitarPaginaPresente('/prof/insc-turma-temporada-presente/{$idtemporada}/{$turma.idturma}/{$data}/{$value.idinsc}')" name=""><label style="color: green;">Presente</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <!--
+                                   <a class="presente" id="{$value.idinsc}" href="#" onclick="requisitarPaginaPresente('/prof/insc-turma-temporada-presente/{$idtemporada}/{$turma.idturma}/{$data}/{$value.idinsc}')" style="color: green;">Presente?</i></a>&nbsp;&nbsp;&nbsp;&nbsp;                                 
+
+                                  
+                                  <a href="/prof/insc-turma-temporada-presente/{$idtemporada}/{$turma.idturma}/{$data}/{$value.idinsc}" style="color: green;">Presente?</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                -->
+                                    <input type="checkbox" id="{$value.idinsc}" onchange="requisitarPaginaAusente('/prof/insc-turma-temporada-ausente/{$idtemporada}/{$turma.idturma}/{$data}/{$value.idinsc}')" name=""> <label style="color: red;">Ausente</label>&nbsp;&nbsp;&nbsp;&nbsp;
                                   <!--
-                                  <a class="presente" id="presente" href="/prof/insc-turma-temporada-presente/{$idtemporada}/{$turma.idturma}/{$data}/{$value.idinsc}" style="color: green;">Presente?</i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                                --> 
-
-                                <a class="presente" id="presente" href="#" onclick="requisitarPagina('/prof/insc-turma-temporada-presente/{$idtemporada}/{$turma.idturma}/{$data}/{$value.idinsc}')" style="color: green;">Presente?</i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                               
-                              {/if}                         
-                          
-                              {if="$value.statuspresenca != 0"}
-                              <input hidden class="idtemporada" id="idtemporada" type="text" name="idtemporada" value="{$idtemporada}">
-                              <input hidden class="idturma" id="idturma" type="text" name="idturma" value="{$value.idturma}">
-                              <input hidden class="data" id="data" type="text" name="data" value="{$data}">
-                              <input hidden class="idinsc" id="idinsc" type="text" name="idinsc" value="{$value.idinsc}">
+                                  <a class="ausente" id="{$value.idinsc}" href="#" onclick="requisitarPaginaAusente('/prof/insc-turma-temporada-ausente/{$idtemporada}/{$turma.idturma}/{$data}/{$value.idinsc}')" style="color: red;">Ausente?</i></a>&nbsp;&nbsp;&nbsp;&nbsp;
                                 
-                                <!--
-                                  <a class="ausente" id="ausente" href="/prof/insc-turma-temporada-ausente/{$idtemporada}/{$turma.idturma}/{$data}/{$value.idinsc}"><span style="font-weight: bold; margin: 0 3 0 3; color: red;">Ausente?</span></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                  <a href="/prof/insc-turma-temporada-ausente/{$idtemporada}/{$turma.idturma}/{$data}/{$value.idinsc}"><span style="font-weight: bold; margin: 0 3 0 3; color: red;">Ausente?</span></a>&nbsp;&nbsp;&nbsp;&nbsp;
                                 -->
-                                 <a class="ausente" id="ausente" href="#" onclick="requisitarPagina('/prof/insc-turma-temporada-presente/{$idtemporada}/{$turma.idturma}/{$data}/{$value.idinsc}')" style="color: red;">Ausente?</i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                                
 
-                                  
-                                  
-
-                              {/if}
-
-                              {if="$value.statuspresenca != 2"}
-
-                              <input hidden class="idtemporada" id="idtemporada" type="text" name="idtemporada" value="{$idtemporada}">
-                              <input hidden class="idturma" id="idturma" type="text" name="idturma" value="{$value.idturma}">
-                              <input hidden class="data" id="data" type="text" name="data" value="{$data}">
-                              <input hidden class="idinsc" id="idinsc" type="text" name="idinsc" value="{$value.idinsc}">
+                                <input type="checkbox" id="{$value.idinsc}" onchange="requisitarPaginaJustificar('/prof/insc-turma-temporada-justificar/{$idtemporada}/{$turma.idturma}/{$data}/{$value.idinsc}')" name=""><label style="color: blue;">Justificar</label>
+                              
                                 <!--
-                                  <a class="justificar" id="justificar" href="/prof/insc-turma-temporada-justificar/{$idtemporada}/{$turma.idturma}/{$data}/{$value.idinsc}"><span style="font-weight: bold; margin: 5 3 5 3; color: blue;"> Justificar? </span></a>&nbsp;&nbsp;&nbsp;&nbsp; 
-                                -->
-                                <a class="justificar" id="justificar" href="#" onclick="requisitarPagina('/prof/insc-turma-temporada-presente/{$idtemporada}/{$turma.idturma}/{$data}/{$value.idinsc}')" style="color: blue;"> Justificar?</i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                  <a class="justificar" id="{$value.idinsc}" href="#" onclick="requisitarPaginaJustificar('/prof/insc-turma-temporada-justificar/{$idtemporada}/{$turma.idturma}/{$data}/{$value.idinsc}')" style="color: blue;">Justificar?</i></a>&nbsp;&nbsp;&nbsp;&nbsp;
                                 
-                              {/if}
+                                  <a href="/prof/insc-turma-temporada-justificar/{$idtemporada}/{$turma.idturma}/{$data}/{$value.idinsc}"><span style="font-weight: bold; margin: 5 3 5 3; color: blue;"> Justificar? </span></a>&nbsp;&nbsp;&nbsp;&nbsp; 
+                                -->
+                              
                             {/if}
-                         {/if} 
+                         {/if}  
 
                         </div>
                       </div>      
@@ -319,20 +389,21 @@
                 <div class="col-md-12" style="font-weight: bold; color: red; font-size: 22px; text-align: center; ">
                   Não há pessoas matriculadas 
                 </div>
-                {/loop}  
-
-
-              </div>             
+                {/loop}
+                <div class="col-md-12 btn btn-primary" style="font-weight: bold; color: red; font-size: 26px; text-align: center; ">
+                  <a style="color: white;" href="/estagiario/insc-turma-temporada-fazer-chamada/{$idtemporada}/{$turma.idturma}/{$data}">Atualizar Lista</a>
+                </div>  
+                
+                </div>              
              
                   
                 </div>
                 
               </div>
-            </tbody>
+            
 
 <hr>
 
-<thead>
 <div class="container">
 
   <div class="row">
@@ -365,10 +436,6 @@
   </div>
   
 </div>       
-</thead>    
-<tbody>
-
-
            
             <div class="container">
 
@@ -427,8 +494,7 @@
                   <div class="row">
                     <div class="col-md-12" style="border: 1px solid black; margin: 0; padding: 0; text-align: center; font-weight: bold;" >
                    <table class="col-md-12">
-
-                      <thead>   
+   
 
                         <tr>
                           
@@ -440,8 +506,7 @@
                             <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">{$value.dias}</th>
                           {/loop}
                         </tr>
-                      </thead>
-                      <tbody>
+                      
                         {loop="$insc"}
 
                         {$INSC = $value.idinsc}
@@ -457,7 +522,7 @@
 
                         </tr>
                         {/loop}
-                      </tbody>                                   
+                                                         
                       
                     </table>  
                     </div>
@@ -475,7 +540,7 @@
 
                 <div class="col-md-6" style="text-align: right;">       
                   <div style="margin-right: 0px; margin-top: 0 px; margin-bottom: 0px;">
-                    <a href="/prof/calendario-lista-presenca/{$idtemporada}/{$turma.idturma}">
+                    <a href="/estagiario/calendario-lista-presenca/{$idtemporada}/{$turma.idturma}">
                   <i class="fa fa-arrow-left"></i> 
                     Voltar
                 </a> 
@@ -485,7 +550,7 @@
               </div>
                 
               </div>
-            </tbody>
+            
          
         
     

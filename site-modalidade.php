@@ -20,11 +20,12 @@ $app->get("/modalidade/:idmodal", function($idmodal) {
 
 		Cart::setMsgError("Não existem turmas para a modalidade ".$modalidade->getdescmodal()." nesta temporada. Aguarde! ");
 	}	
-
+	
+	
 	$desctemporada  = isset($turma[0]['desctemporada']) ? $turma[0]['desctemporada'] : '';
 
-	// Aqui verifica se a temporada é igual ao ano atual
-	// Se não for acrescenta (1). Supondo que a inscrição está sendo feita no ano anterior
+	// Aqui verifica se a temporada ��� igual ao ano atual
+	// Se n���o for acrescenta (1). Supondo que a inscri������o est��� sendo feita no ano anterior
 	if( (int)date('Y')  == (int)$desctemporada ){
 
 		$anoAtual = (int)date('Y');	
@@ -32,10 +33,7 @@ $app->get("/modalidade/:idmodal", function($idmodal) {
 	}else{
 
 		$anoAtual = (int)date('Y') + 1;		
-	}	
-
-	var_dump($turma);
-	exit;	
+	}		
 	
 	$page = new Page();    
 
@@ -50,7 +48,6 @@ $app->get("/modalidade/:idmodal", function($idmodal) {
 $app->get("/modalidades", function() {
 
 	$modalidades = Modalidade::listAll();
-	//$modalidades = Modalidade::listAllToLocal();
 
 	if(!isset($modalidades) || $modalidades == NULL){
 
@@ -65,26 +62,23 @@ $app->get("/modalidades", function() {
 	));
 });
 
-$app->get("/modalidade/:idmodal/:idlocal", function($idmodal, $idlocal) {
+$app->get("/modalidade/:idmodal/:local", function($idmodal, $local) {
 
 	$modalidade = new Modalidade();
 
 	$modalidade->get((int)$idmodal);
 
-	$turma = Turma::listAllTurmaTemporadaModalidadeLocal($idmodal, $idlocal);
-
-	$local = new Local();
-
+	$turma = Turma::listAllTurmaTemporadaModalidadeLocal($idmodal, $local);
 
 	if(!isset($turma) || $turma == NULL){
 
 		Cart::setMsgError("Não existem turmas para a modalidade ".$modalidade->getdescmodal()." nesta temporada. Aguarde! ");
 	}	
-	
+
 	$desctemporada  = isset($turma[0]['desctemporada']) ? $turma[0]['desctemporada'] : '';
 
 	// Aqui verifica se a temporada é igual ao ano atual
-	// Se não for acrescenta (1). Supondo que a inscrição está sendo feita no ano anterior
+	// Se não for acrescenta (1). Supondo que a inscrião está sendo feita no ano anterior
 	if( (int)date('Y')  == (int)$desctemporada ){
 
 		$anoAtual = (int)date('Y');	
@@ -93,8 +87,6 @@ $app->get("/modalidade/:idmodal/:idlocal", function($idmodal, $idlocal) {
 
 		$anoAtual = (int)date('Y') + 1;		
 	}		
-
-	
 	
 	$page = new Page();    
 
@@ -118,7 +110,7 @@ $app->get("/modalidades/local/:idlocal", function($idlocal) {
 
 	if(!isset($modalidades) || $modalidades == NULL){
 
-		Cart::setMsgError("Não existe modalidades para esta temporada. A temporada pode não estar iniciada, estar em processo de sorteio ou foi encerrada. Aguarde, ou entre em contato com o Centro Esportivo mais próximo a sua casa. ");
+		Cart::setMsgError("Nãoo existe modalidades para esta temporada. A temporada pode não estar iniciada, estar em processo de sorteio ou foi encerrada. Aguarde, ou entre em contato com o Centro Esportivo mais próximo a sua casa. ");
 	}	
 
 	$page = new Page();
@@ -132,13 +124,19 @@ $app->get("/modalidades/local/:idlocal", function($idlocal) {
 });
 
 
-$app->get("/vagas-turma/:idturma/:idtemporada", function($idturma, $idtemporada) {
+$app->get("/vagas-turma/:idturma/:idtemporada/:idmodal/:idturmastatus", function($idturma, $idtemporada, $idmodal, $idturmastatus) {
 
 	$vagasPubGeral = Turma::getVagasByIdTurma($idturma);
+
     $numinscPublicoGeral = Insc::getNumInscPublicoGeralValidaTurmaTemporada($idtemporada, $idturma);
+
     $vagasMenosInscritosPubGeral = ($vagasPubGeral - $numinscPublicoGeral);
 
-    $vagasListaEsperaPubGeral = round($vagasPubGeral * 0.2);
+    if($idmodal == 25){
+    	$vagasListaEsperaPubGeral = round($vagasPubGeral * 0.5);
+    }else{
+    	$vagasListaEsperaPubGeral = round($vagasPubGeral * 0.2);
+    }
     $numinscListaEsperaPublicoGeral = Insc::getNumInscListaEsperaPubGeralTurmaTemporada($idtemporada, $idturma);
     $vagasMenosInscritosListaEsperaPubGeral =  ($vagasListaEsperaPubGeral - $numinscListaEsperaPublicoGeral);
 
@@ -149,6 +147,9 @@ $app->get("/vagas-turma/:idturma/:idtemporada", function($idturma, $idtemporada)
     		$textVagasPubGeral = ''.$vagasMenosInscritosListaEsperaPubGeral.' de '.$vagasListaEsperaPubGeral.' vagas p/ LISTA DE ESPERA para público geral.';        	
     	}    	
     }else{
+    	if($idturmastatus == 6){
+    		$vagasMenosInscritosPubGeral = ($vagasPubGeral - $numinscListaEsperaPublicoGeral);
+    	}
     	$textVagasPubGeral = ''.$vagasMenosInscritosPubGeral.' de '.$vagasPubGeral.' vagas p/ público geral.';    	
     }
 
@@ -156,7 +157,11 @@ $app->get("/vagas-turma/:idturma/:idtemporada", function($idturma, $idtemporada)
     $numinscPublicoLaudo = Insc::getNumInscPublicoLaudoValidaTurmaTemporada($idtemporada, $idturma);
     $vagasMenosInscritosPubLaudo = ($vagasPubLaudo - $numinscPublicoLaudo);
 
-    $vagasListaEsperaPubLaudo = round($vagasPubLaudo * 0.2);
+    if($idmodal == 25){
+    	$vagasListaEsperaPubLaudo = round($vagasPubLaudo * 0.5);
+    }else{
+    	$vagasListaEsperaPubLaudo = round($vagasPubLaudo * 0.2);
+    }
     $numinscListaEsperaPublicoLaudo = Insc::getNumInscListaEsperaPubLaudoTurmaTemporada($idtemporada, $idturma);
     $vagasMenosInscritosListaEsperaPubLaudo =  ($vagasListaEsperaPubLaudo - $numinscListaEsperaPublicoLaudo);
 
@@ -167,6 +172,9 @@ $app->get("/vagas-turma/:idturma/:idtemporada", function($idturma, $idtemporada)
     		$textVagasPubLaudo = ''.$vagasMenosInscritosListaEsperaPubLaudo.' de '.$vagasListaEsperaPubLaudo.' vagas p/ LISTA DE ESPERA para pessoas com laudo médico.';        	
     	}       	    	
     }else{
+    	if($idturmastatus == 6){
+    		$vagasMenosInscritosPubLaudo = ($vagasPubLaudo - $numinscListaEsperaPublicoLaudo);
+    	}
     	$textVagasPubLaudo = ''.$vagasMenosInscritosPubLaudo.' de '.$vagasPubLaudo.' vagas p/ pessoas com laudo médico.';
     }
 
@@ -174,7 +182,11 @@ $app->get("/vagas-turma/:idturma/:idtemporada", function($idturma, $idtemporada)
     $numinscPublicoPcd = Insc::getNumInscPublicoPcdValidaTurmaTemporada($idtemporada, $idturma);
     $vagasMenosInscritosPubPcd = ($vagasPubPcd - $numinscPublicoPcd);
 
-    $vagasListaEsperaPubPcd = round($vagasPubPcd * 0.2);
+    if($idmodal == 25){
+    	$vagasListaEsperaPubPcd = round($vagasPubPcd * 0.5);
+    }else{
+    	$vagasListaEsperaPubPcd = round($vagasPubPcd * 0.2);
+    }
     $numinscListaEsperaPublicoPcd = Insc::getNumInscListaEsperaPubPcdTurmaTemporada($idtemporada, $idturma);
     $vagasMenosInscritosListaEsperaPubPcd =  ($vagasListaEsperaPubPcd - $numinscListaEsperaPublicoPcd);
 
@@ -185,6 +197,9 @@ $app->get("/vagas-turma/:idturma/:idtemporada", function($idturma, $idtemporada)
     		$textVagasPubPcd = ''.$vagasMenosInscritosListaEsperaPubPcd.' de '.$vagasListaEsperaPubPcd.' vagas p/ LISTA DE ESPERA para PCD`s';        	
     	}       	
     }else{
+    	if($idturmastatus == 6){
+    		$vagasMenosInscritosPubPcd = ($vagasPubPcd - $numinscListaEsperaPublicoPcd);
+    	}
     	$textVagasPubPcd = ''.$vagasMenosInscritosPubPcd.' de '.$vagasPubPcd.' vagas para PCD`s.';
     }
 
@@ -192,7 +207,11 @@ $app->get("/vagas-turma/:idturma/:idtemporada", function($idturma, $idtemporada)
     $numinscPublicoPvs = Insc::getNumInscPublicoPvsValidaTurmaTemporada($idtemporada, $idturma);
     $vagasMenosInscritosPubPvs = ($vagasPubPvs - $numinscPublicoPvs);
 
-    $vagasListaEsperaPubPvs = round($vagasPubPvs * 0.2);
+    if($idmodal == 25){
+    	$vagasListaEsperaPubPvs = round($vagasPubPvs * 0.5);
+    }else{
+    	$vagasListaEsperaPubPvs = round($vagasPubPvs * 0.2);
+    }
     $numinscListaEsperaPublicoPvs = Insc::getNumInscListaEsperaPubPvsTurmaTemporada($idtemporada, $idturma);
     $vagasMenosInscritosListaEsperaPubPvs =  ($vagasListaEsperaPubPvs - $numinscListaEsperaPublicoPvs);
 
@@ -201,29 +220,24 @@ $app->get("/vagas-turma/:idturma/:idtemporada", function($idturma, $idtemporada)
 		if($numinscListaEsperaPublicoPvs >= $vagasListaEsperaPubPvs){
 			$textVagasPubPvs = 'NÃO HÁ VAGAS p/ pessoas em situação de vulnerabiliade social.';        	
     	}else{
+    		if($idturmastatus == 6){
+    			$vagasMenosInscritosPubPvs = ($vagasPubPvs - $numinscListaEsperaPublicoPvs);
+    		}
     		$textVagasPubPvs = ''.$vagasMenosInscritosListaEsperaPubPvs.' de '.$vagasListaEsperaPubPvs.' vagas p/ LISTA DE ESPERA p/ pessoas em situação de vulnerabiliade social.';        	
     	}           	
     }else{
     	$textVagasPubPvs = ''.$vagasMenosInscritosPubPvs.' de '.$vagasPubPvs.' vagas p/ pessoas em situação de vulnerabiliade social.';    	
-    }
+    } 
 
-    echo ''.$textVagasPubGeral."\r\n".$textVagasPubLaudo."\r\n".$textVagasPubPcd."\r\n".$textVagasPubPvs;  	
-	
-});
-
-$app->get("/vagaslistaespera-turma/:idturma/:idtemporada", function($idturma, $idtemporada) {
-
-    $vagasListaEsperaPubGeral = Turma::getVagasByIdTurma($idturma);
-    $vagasListaEsperaPubGeral = round($vagasListaEsperaPubGeral * 0.2);
-    $numinscListaEsperaPublicoGeral = Insc::getNumInscListaEsperaPubGeralTurmaTemporada($idtemporada, $idturma);
+    if($idturmastatus == 6){
+    	$textStatusTurmaNaoiniciada = 'Para consultar a quantidade de inscritos e se seu nome está na lista desta turma, clique em "Consulte lista de espera".';
+    	echo ''.$textVagasPubGeral."\r\n".$textVagasPubLaudo."\r\n".$textVagasPubPcd."\r\n".$textVagasPubPvs."\r\n".$textStatusTurmaNaoiniciada;  	
+    }else{
+    	echo ''.$textVagasPubGeral."\r\n".$textVagasPubLaudo."\r\n".$textVagasPubPcd."\r\n".$textVagasPubPvs;  	
+    }    	
     
-    $vagasMenosInscritosListaEsperaPubGeral =  ($vagasListaEsperaPubGeral - $numinscListaEsperaPublicoGeral);
-
-    echo ''.$vagasMenosInscritosListaEsperaPubGeral.' de '.$vagasListaEsperaPubGeral.' vagas para a LISTA DE ESPERA espera p/ público geral';    
 	
 });
-
-
 
 
 /*

@@ -16,7 +16,7 @@ $app->get("/user-create", function(){
 		'success'=>Pessoa::getSuccess(),
 		'errorRegister'=>User::getErrorRegister(),
 		'errorRegisterSendmail'=>User::getErrorRegisterSendmail(),
-		'registerValues'=>(isset($_SESSION['registerValues'])) ? $_SESSION['registerValues'] : ['name'=>'', 'email'=>'','emailconfirme'=>'', 'phone'=>''],	
+		'registerValues'=>(isset($_SESSION['registerValues'])) ? $_SESSION['registerValues'] : ['name'=>'', 'email'=>'','emailconfirme'=>'', 'phone'=>''],		
 		'registerpessoaValues'=>(
 				isset($_SESSION['registerpessoaValues'])) 
 				    ? $_SESSION['registerpessoaValues'] 
@@ -506,11 +506,11 @@ $app->post("/register", function(){
 		exit;
 
 	}
-
-	/*	
+	
+	/*
 	if (Pessoa::checkCpfExist($_POST['numcpf']) === true) {
 
-		User::setErrorRegister("Este CPF já está cadastrado.");
+		User::setErrorRegister("Este CPF pertence a outro usuário.");
 		header("Location: /user-create");
 		exit;
 	}
@@ -551,38 +551,17 @@ $app->post("/register", function(){
 		User::setErrorRegister("Informe se a pessoa é portador de  deficiência (PCD).");
 		header("Location: /user-create");
 		exit;
-	}
-
-	/*
-
-	if(isset($_POST['pcd']) && ($_POST['pcd']) === '1'){	
-
-		if (!isset($_POST['cid']) || $_POST['cid'] == '') {
-
-			User::setErrorRegister("Informe o CID.");
-			header("Location: /user-create");
-			exit;
-		}
-
-		if (!isset($_POST['dadosDoenca']) || $_POST['dadosDoenca'] == '' || $_POST['dadosDoenca'] == 'undefined'){
-
-			User::setErrorRegister("Informe a descrição do CID.");
-			header("Location: /user-create");
-			exit;
-		}		
-
-	}
-	*/
-
+	}	
+	
 	if(calcularIdade($_POST['dtnasc']) < 18){
 
-		User::setErrorRegister("Para realizar inscrições no nosso site, você deverá ser maior de 18 anos (o responsável pela inscrição). Para inscrever pessoas menores de idade ou não em nossos cursos esportivos, depois de cadastrado no nosso sistema com login e senha, você poderá 'inserir novas pessoas', e assim fazer inscrições para estas.");
+		User::setErrorRegister("Para realizar inscrições no nosso site, você deverá ser maior de 18 anos (o responsável pela inscrição). Para inscrever pessoas menores de idade ou não em nossos cursos esportivos, depois de cadastrado no nosso sistema com login e senha, você poderá 'inserir uma pessoa', e assim fazer inscrições para estas.");
 			header("Location: /user-create");
 			exit;
 	}
-
-
+	
 	/*
+
 	if(calcularIdade($_POST['dtnasc']) < 18){
 
 	
@@ -651,8 +630,7 @@ $app->post("/register", function(){
 
 		}	
 	}	
-
-	*/	 
+	*/
 
 	$cepMenor = '09600000';
 	$cepMaior = '09899999';	
@@ -737,6 +715,7 @@ $app->post("/register", function(){
 
 	$_POST["inadmin"] = (isset($_POST["inadmin"]))?1:0;
 	$_POST["isprof"] = (isset($_POST["isprof"]))?1:0;
+	$_POST["isestagiario"] = (isset($_POST["isestagiario"]))?1:0;
 	$_POST["isaudi"] = (isset($_POST["isaudi"]))?1:0;
 	$_POST["statususer"] = 1;
 
@@ -748,6 +727,7 @@ $app->post("/register", function(){
 		'nrphone'=>$_POST['phone'],
 		'inadmin'=>$_POST["inadmin"],
 		'isprof'=>$_POST["isprof"],
+		'isestagiario'=>$_POST["isestagiario"],
 		'isaudi'=>$_POST["isaudi"],
 		'statususer'=>$_POST["statususer"]		
 	]);
@@ -787,8 +767,6 @@ $app->post("/register", function(){
 	]);
 
 	$pessoa->save();
-	
-	$pessoa = new Pessoa();
 
 	$endereco = new Endereco();	
 
@@ -907,6 +885,7 @@ $app->post("/user/profile", function(){
 	$_POST['apelidoperson'] = $user->getapelidoperson();
 	$_POST['inadmin'] = $user->getinadmin();
 	$_POST['isprof'] = $user->getisprof();
+	$_POST['isestagiario'] = $user->getisestagiario();
 	$_POST['isaudi'] = $user->getisaudi();
 	$_POST['statususer'] = 1;
 	$_POST['despassword'] = $user->getdespassword();
@@ -924,7 +903,7 @@ $app->post("/user/profile", function(){
 
 	User::setSuccess("Seus dados foram alterados com sucesso!");
 
-	header('Location: /');
+	header('Location: /user/profile');
 	exit;
 
 });

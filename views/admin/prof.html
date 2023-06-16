@@ -36,10 +36,9 @@
 
               </div>
               <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
-              <div class="row">
-              </div>
+              
 
-            {loop="$prof"}
+              {loop="$prof"}
             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
               <div class="row">
               <div class="col-md-10" >
@@ -48,6 +47,9 @@
                   &nbsp; {$value.deslogin}
                   <strong>Tel.: {$value.nrphone}</strong>
                   &nbsp;status: {if="$value.statususer == 1"}Ativo{else}Inativo{/if}
+                  {if="$value.isestagiario == 1"}
+                  <strong>&nbsp;Estagiário</strong>
+                  {/if}
                   {if="$value.isprof == 1"}
                   <strong>Professor</strong>
                   {/if}
@@ -59,7 +61,7 @@
               
               
               <div class="col-md-2" >
-                  <a href="/admin/users/{$value.iduser}" class="btn btn-success"></i>Admin / Prof</a>
+                  <a href="/admin/users/{$value.iduser}" class="btn btn-success">Admin / Prof</a>
               </div>
             </div>           
             </div>

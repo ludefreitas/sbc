@@ -125,14 +125,13 @@ $app->post("/registerpessoa", function(){
 			header("Location: /pessoa-create");
 			exit;
 		}
-		/*
+
 		if($_POST['nomemae'] !== '' && $_POST['cpfmae'] === ''){
 
-			User::setErrorRegister("Informe um número do CPF da mãe!");
+				User::setErrorRegister("Você informou o nome da mãe. Informe então o número do CPF da mãe!");
 			header("Location: /pessoa-create");
 			exit;
 		}
-		*/
 
 		if($_POST['cpfmae'] === $_POST['numcpf']){
 
@@ -163,14 +162,12 @@ $app->post("/registerpessoa", function(){
 			exit;
 		}
 
-		/*
 		if($_POST['nomepai'] !== '' && $_POST['cpfpai'] === ''){
 
-			User::setErrorRegister("Informe o número do CPF do pai!");
+			User::setErrorRegister("Você informou o nome do pai. Informe então o número do CPF do pai!");
 			header("Location: /pessoa-create");
 			exit;
 		}	
-		*/
 
 		if($_POST['cpfpai'] !== '' && !Pessoa::validaCPF($_POST['cpfpai'])){
 
@@ -381,16 +378,6 @@ $app->get("/user/pessoas", function(){
 	$user = User::getFromSession();
 
 	$pessoa = $user->getPessoa();
-	//$pessoa = $user->getPessoaSaude();
-
-	/*
-
-	echo '<pre>';
-	print_r($pessoa);
-	echo '</pre>';
-	exit;
-
-	*/
 
 	$page = new Page();
 

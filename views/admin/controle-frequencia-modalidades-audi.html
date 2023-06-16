@@ -85,6 +85,11 @@
         <i class="fa fa-arrow-left"></i> 
             Voltar
     </a> 
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="/admin-audi">
+        <i class="fa fa-home"></i> 
+            Início
+    </a>  
 </div>
 <hr>
 
@@ -126,6 +131,7 @@
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">ORIGEM</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">VAGAS</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">MATR.</th>
+              <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">ESPERA</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">INSCR.</th> 
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">JAN</th>  
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">FEV</th>
@@ -186,6 +192,9 @@
               <td style="text-align: center; border: solid 1px; padding: 5px;">
                {$value.nummatriculados}
               </td>  
+              <td style="text-align: center; border: solid 1px; padding: 5px;">
+               {function="getNumInscListaEsperaTurmaTemporada($value.idtemporada, $value.idturma)"}
+              </td> 
               <td style="text-align: center; border: solid 1px; color: darkblue; padding: 5px;">
                {function="ControleFrequenciaAnoAnt($value.idturma, $value.idtemporada, $value.desctemporada)"}
               </td> 

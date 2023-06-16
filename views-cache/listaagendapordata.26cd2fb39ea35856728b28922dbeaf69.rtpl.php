@@ -22,6 +22,93 @@
     <title>Cursos Esportivos SBC</title>
     <link rel="icon" type="image/jpg" href="/../res/site/img/corpoacao.png" />
 
+    <script type="text/javascript">
+
+      alert('Você já pode atualizar dados de saúde do aluno, inserindo ou editando atestado. Clique na palavra "Atestado" ')
+      
+      function dadosAtestado(idpess){
+
+        let url = '/prof/saude/dadosatestado/'+idpess
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if (window.confirm(' '+ result + 'Para atulizar atestado clique em "OK"'))
+          {
+              adicionarArtestado(idpess)
+          };
+
+        });
+      }
+      
+      function adicionarArtestado(idpess){
+        
+        //let confirmaAtestado = confirm('Já existe um atestado válido até:'+"\n"+'Deseja adicionar atestado? ')
+        let confirmaAtestado = confirm('Deseja adicionar atestado? ')
+
+        if(confirmaAtestado == true)
+        {                      
+            var data = prompt("Informe a data da emissão do Atestado. Ex.: dd-mm-aaaa");     
+
+            if (data == null || data == "") {
+
+                alert("As informaçãoes do atestado não foram atualizadas! Informe a data e faça alguma observação")
+            } else {
+
+                 var traco1 = data.substr(2,1)
+                 var traco2 = data.substr(5,1)
+                 var dia = data.substr(0,2);
+                 var mes = data.substr(3,2);
+                 var ano = data.substr(6,4); 
+                 
+
+                 if((traco1 != '-') || (traco2 != '-') || (ano.length < 4)){
+                    alert('Formato da data inválida');
+                 }else{
+
+                    if((dia > 31) || (dia == 0) || (mes > 12) || (mes == 0)){
+
+                    alert('data inválida!')
+                    
+                    }else{
+                        
+                        var observ = prompt("Digite uma observação");
+                        if (observ == null || observ == "") {
+                                lert("As informaçãoes do atestado não foram atualizadas! Informe a data e faça alguma observação");
+                        } else {
+
+                            let url = '/prof/saude/atulizaatestado/'+idpess+'/'+data+'/'+observ+''
+
+                            atualizarAtestado(url) 
+
+                        }     
+                    }                           
+                }
+            }        
+        }  
+    }
+     
+    function atualizarAtestado(url){
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          alert(result)
+
+        });
+      }
+    </script>
+
     <style type="text/css">
       body {
           margin: 10px;
@@ -42,9 +129,7 @@
           background: lightgray;
       }
     </style>
-   
-
-</head>
+  </head>
 
 
 <div id="div1">  
@@ -68,7 +153,7 @@
           <?php } ?>
 
           <tr>
-            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; " colspan="8"; >
+            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; " colspan="9"; >
               Cursos esportivos SBC
             <h5 style="margin: 0 0 0 0";>LISTA DA AGENDA DE NATAÇÃO ESPONTÂNEA (  <?php echo htmlspecialchars( $apelidolocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>  )
             <br>
@@ -81,6 +166,8 @@
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Horário</th>
 
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Nome</th>
+
+              <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Atestado <br>Clínico</th>
 
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Email</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Whats/Fone</th>
@@ -106,8 +193,13 @@
                 <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
               </td>
               <td style="text-align: left; border: solid 1px; color: darkblue; padding: 5px;">
+                <a style="color: orange; text-align-last: right;" onclick="dadosAtestado(<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)"><?php echo getAtestadoIcone($value1["idpess"]); ?></a>
+                          <br>                                                                   
+              </td>
+              <td style="text-align: left; border: solid 1px; color: darkblue; padding: 5px;">
                 <?php echo htmlspecialchars( $value1["deslogin"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
               </td>
+              
               <td style="text-align: left; border: solid 1px; color: darkblue; padding: 5px;">
                 
                 <a href="https://wa.me/+55<?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?text=Olá%20<?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>,%20tudo%20bem?!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp com a msg de saudação')"><i></i><?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a>
@@ -131,7 +223,7 @@
                 <?php if( $data > $value1["dia"] OR $value1["ispresente"] == 1 ){ ?>
 
                 <?php }else{ ?>
-                <a href="/agendamarcarpresenca/<?php echo htmlspecialchars( $value1["idagen"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-success">
+                <a href="/prof/agendamarcarpresenca/<?php echo htmlspecialchars( $value1["idagen"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-success">
                 <i class="fa fa-check"></i>
                 </a>
 

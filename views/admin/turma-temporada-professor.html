@@ -34,20 +34,14 @@
                         <tbody>
                             {loop="$turmaNotRelated"}
                             <tr>
-                            <td>{$value.idturma} - 
-                                {$value.descturma} - {$value.apelidolocal} - {$value.nomeativ} - {$value.diasemana} - {$value.horainicio} - {$value.horatermino}
-                            </td>
-                            {if="$value.iduser == 1"}
+                            <td>[{$value.idturma}]</td>
+                            <td>{$value.descturma} - {$value.apelidolocal} - {$value.nomeativ} - 
+                             {$value.diasemana} - {$value.horainicio} - {$value.horatermino} - {$value.initidade} - {$value.fimidade} - {$value.descrfxetaria}<br> {$value.vagas} vagas </td>
+                            
                             <td>
                                 <a href="/admin/turmatemporada/{$value.idtemporada}/turma/{$value.idturma}/user/{$user.iduser}/add" class="btn btn-success btn-xs pull-right"><i class="fa fa-arrow-right"></i> Adicionar</a>
                             </td>
-                            {else}
-                        <!--
-                            <td>
-                                <a type="btn" disabled="true" href="/admin/turmatemporada/{$value.idtemporada}/turma/{$value.idturma}/user/{$user.iduser}/add" class="btn btn-success btn-xs pull-right"><i class="fa fa-arrow-right"></i> Adicionar</a>
-                            </td>
-                        -->
-                            {/if}
+                            
                             </tr>
                             {/loop}
                         </tbody>
@@ -72,9 +66,9 @@
                         <tbody>
                             {loop="$turmaRelated"}
                             <tr>
-                            <td>{$value.idturma} - 
-                            {$value.descturma} - {$value.apelidolocal} - {$value.nomeativ} - 
-                             {$value.diasemana} - {$value.horainicio} - {$value.horatermino}</td>                      
+                            <td>[{$value.idturma}]</td>
+                            <td>{$value.descturma} - {$value.apelidolocal} - {$value.nomeativ} - 
+                             {$value.diasemana} - {$value.horainicio} - {$value.horatermino} - {$value.initidade} - {$value.fimidade} - {$value.descrfxetaria}<br> {$value.vagas} vagas </td>
                             <td>
                                 <a href="/admin/turmatemporada/{$value.idtemporada}/turma/{$value.idturma}/user/{$user.iduser}/remove" class="btn btn-danger btn-xs pull-right"><i class="fa fa-arrow-left"></i> Remover</a>
                             </td>

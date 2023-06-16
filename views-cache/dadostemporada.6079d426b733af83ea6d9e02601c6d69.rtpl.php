@@ -29,6 +29,8 @@
             </div>
         </div>
 
+
+
         <div class="row">
           <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Usuários</div>          
         </div>  
@@ -65,10 +67,9 @@
            </div>
           
         </div>
-    
-        
+
         <div class="row">
-          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: black;">-
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: black;">
 
           </div>          
         </div>   
@@ -76,7 +77,7 @@
           <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;"><?php echo htmlspecialchars( $desctemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?> - Dados atualizados </div>          
         </div> 
         <div class="row">
-          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: black;">-
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: black;">
 
           </div>          
         </div>   

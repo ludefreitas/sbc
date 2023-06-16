@@ -8,7 +8,7 @@ use \Sbc\Model\Cart;
 
 $app->get("/cursos/pessoa-create", function() {
 
-	User::verifyLogin(false);
+	User::verifyLoginCursos(false);
 
 	//$endereco = new Endereco;
 	$idperson = (int)$_SESSION[User::SESSION]["idperson"];
@@ -30,7 +30,7 @@ $app->get("/cursos/pessoa-create", function() {
 
 $app->post("/cursos/registerpessoa", function(){
 
-	User::verifyLogin(false);
+	User::verifyLoginCursos(false);
 
 	$_SESSION['registerpessoaValues'] = $_POST;
 
@@ -128,7 +128,7 @@ $app->post("/cursos/registerpessoa", function(){
 
 		if($_POST['nomemae'] !== '' && $_POST['cpfmae'] === ''){
 
-			User::setErrorRegister("Informe um número do CPF da mãe!");
+				User::setErrorRegister("Você informou o nome da mãe. Informe então o número do CPF da mãe!");
 			header("Location: /cursos/pessoa-create");
 			exit;
 		}
@@ -164,7 +164,7 @@ $app->post("/cursos/registerpessoa", function(){
 
 		if($_POST['nomepai'] !== '' && $_POST['cpfpai'] === ''){
 
-			User::setErrorRegister("Informe um número do CPF do pai!");
+				User::setErrorRegister("Você informou o nome do pai. Informe então o número do CPF do pai!");
 			header("Location: /cursos/pessoa-create");
 			exit;
 		}	
@@ -330,7 +330,7 @@ $app->post("/cursos/registerpessoa", function(){
 
 $app->get("/cursos/user/:idpess/status", function($idpess){
 
-	User::verifyLogin(false);	
+	User::verifyLoginCursos(false);	
 
 	$pessoa = new Pessoa();
 
@@ -352,7 +352,7 @@ $app->get("/cursos/user/:idpess/status", function($idpess){
 
 $app->get("/cursos/pessoa/:idpess", function($idpess){
 
-	User::verifyLogin(false);
+	User::verifyLoginCursos(false);
 
 	$pessoa = new Pessoa();
 
@@ -373,7 +373,7 @@ $app->get("/cursos/pessoa/:idpess", function($idpess){
 
 $app->get("/cursos/user/pessoas", function(){
 
-	User::verifyLogin(false);
+	User::verifyLoginCursos(false);
 
 	$user = User::getFromSession();
 
@@ -392,7 +392,7 @@ $app->get("/cursos/user/pessoas", function(){
 
 $app->get("/cursos/user/pessoa/:idpess", function($idpess) {
 
-	User::verifyLogin(false);
+	User::verifyLoginCursos(false);
 
 	$pessoa = new Pessoa();
 
@@ -420,7 +420,7 @@ $app->get("/cursos/user/pessoa/:idpess", function($idpess) {
 
 $app->post("/cursos/updatepessoa/:idpess", function($idpess){
 
-	User::verifyLogin(false);
+	User::verifyLoginCursos(false);
 
 	//$_SESSION['registerpessoaValues'] = $_POST;
 

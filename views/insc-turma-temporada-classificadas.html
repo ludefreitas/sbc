@@ -94,12 +94,7 @@ table {
           </tr>
           {loop="$inscCountPlm"}
           
-          
-
-                  <tr style="background: linear-gradient(to bottom, rgba(96, 96, 192, 0.4), transparent);">
-                      
-                  <tr>
-                  
+          <tr>
               <td class="class1" style="text-align: center; border: solid 1px;">
               {$value.numordem}
             </td>
@@ -254,7 +249,7 @@ table {
                         {/if}
               </td>
               <td style="text-align: center; border: solid 1px;">{function="formatCpf($value.numcpf)"}</td>
-              <td style="text-align: center; border: solid 1px; color: blue; font-weight: bold;">
+             <td style="text-align: center; border: solid 1px; color: blue; font-weight: bold;">
                 {if="$value.idinscstatus == 3"}
                   Matricular
                 {/if}

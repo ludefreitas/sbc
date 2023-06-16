@@ -22,6 +22,7 @@
 <section class="content-header">
   <ol class="breadcrumb">
     <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="/admin/insc">Inscrições</a></li>
     <!--<li class="active"><a href="/admin/espaco/create">Cadastrar</a></li>-->
   </ol>
 </section>
@@ -60,8 +61,8 @@
                                 <td class="product-name">[{$value.idturma}] - {$value.descturma} ({$value.periodo}) - {$value.desctemporada} </td>
                             </tr>
                             <tr>
-                                <th class="product-name">Horário / Professor</th>
-                                <td class="product-name">{$value.diasemana} das {$value.horainicio} às {$value.horatermino} - Prof. {$value.desperson}</td>
+                                <th class="product-name">Horário</th>
+                                <td class="product-name">{$value.diasemana} das {$value.horainicio} às {$value.horatermino} </td>
                             </tr>
                             <tr>
                                 <th class="product-name">Local da aula (CREC)</th>
@@ -72,24 +73,24 @@
                                 <td class="product-name">{function="formatDateHour($value.dtinsc)"}</td>
                             </tr> 
                              <tr>
-                                <th class="product-name">Laudo ?</th>
+                                <th class="product-name">Com laudo ?</th>
                                 <td class="product-name">{if="$value.laudo == 1"}Sim{else}Não{/if}</td>
-                            </tr>      
-                            <tr>
+                            </tr>   
+                             <tr>
                                 <th class="product-name">PCD ?</th>
                                 <td class="product-name">{if="$value.inscpcd == 1"}Sim{else}Não{/if}</td>
-                            </tr>
+                            </tr> 
                             <tr>
                                 <th class="product-name">PVS ?</th>
                                 <td class="product-name">{if="$value.inscpvs == 1"}Sim{else}Não{/if}</td>
-                            </tr>                                                                                                                                                                        
+                            </tr>                                                                
                             <tr {function="colorStatus($value.idinscstatus)"}>
                                 <th class="product-name">Status da Inscrição</th>
                                 <td class="product-name">{$value.descstatus}</td>
                             </tr>
                             <tr>
                                 <th class="product-name">Respons. p/ inscrição</th>
-                                <td class="product-name">&nbsp;&nbsp;{$value.desperson} {$value.deslogin}</td>
+                                <td class="product-name">&nbsp;&nbsp;{$value.desperson}  {$value.deslogin}</td>
                             </tr>                                        
 
                         </thead>
@@ -101,7 +102,7 @@
                             
                         </tfoot>
                     </table>
-
+                    <hr>
                     {else}
 
                     <div class="product-big-title-area">

@@ -64,6 +64,11 @@
                   <strong>&nbsp;Admin</strong>
                   <?php } ?>
 
+                  <?php if( $value1["isestagiario"] == 1 ){ ?>
+
+                  <strong>&nbsp;Estagiário</strong>
+                  <?php } ?>
+
                 </h5>
               </div>                
               <div class="col-md-2" >

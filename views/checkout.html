@@ -5,7 +5,7 @@
     
         function alertTokenCreebaPcd(){
 
-            alert("Conforme Resolução SESP Nº 004 de 28/10/2021 Art.7º, Os interessados em participar das turmas de inclusão para Pessoas com Deficiência (PCD) e/ou laudo médico do CREEBA, deverão comparecer pessoalmente (interessado ou representante legal) no CREEBA.")
+            alert("Conforme Resolução SESP Nº 004 de 28/10/2021 Art.7º, Os interessados em participar das turmas de inclusão para Pessoas com Deficiência (PCD) e/ou laudo médico, deverão comparecer pessoalmente (interessado ou representante legal) no Centro Esportivo do curso de interesse.")
         }
 
         function enormal(){ 
@@ -103,7 +103,9 @@
                     <div class="row" style="margin-top: 0px; margin-bottom: 0px;">
                         <div class="col-md-12 alert alert-success" style="text-align: justify; padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px;">
                             <strong>[{$value.idturma}] - {$value.descativ} -</strong> Temporada <strong>{$value.desctemporada} -</strong>{$value.periodo}  das <strong>{$value.horainicio} às {$value.horatermino} </strong>de {$value.diasemana}, para  {$value.descrfxetaria} de {$value.initidade} a {$value.fimidade} anos,
-                            no <strong>{$value.apelidolocal}</strong> - {$value.rua} - Nº {$value.numero} - bairro {$value.bairro} - {$value.cidade} <span style="color: red;"> - {$value.numinscritos} inscritos para {$value.vagas} vagas geral, {$value.vagaslaudo} vagas pessoas com laudo, {$value.vagaspcd} vagas pcd`s e {$value.vagaspvs} vagas vuln. social.
+                            no <strong>{$value.apelidolocal}</strong> - {$value.rua} - Nº {$value.numero} - bairro {$value.bairro} - {$value.cidade} <span style="color: red;"> - {$value.numinscritos} inscritos 
+                            
+                            para {$value.vagas} vagas geral, {$value.vagaslaudo} vagas pessoas com laudo, {$value.vagaspcd} vagas pcd`s e {$value.vagaspvs} vagas vuln. social.
                             
                             </span>
                             <input type="hidden" name="idtemporada" value="{$value.idtemporada}">
@@ -127,43 +129,35 @@
                             <!-- {if="$inscGeral >= $maxListaEsperaGeral"} 
                                  {/if}
                             -->
+                        {if="$tokencpf == 0"}   
+                            <input type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> 
+                            &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> 
+                            <span style="font-size: 12px; color: red">({$inscGeral} insc. para {$value.vagas} vagas)</span>   <br>
+                        {else}                       
                            {if="naoHaVagasPubGeral($value.idtemporada, $value.idturma)"}
-                            
-
-                                {if="$tokencpf != 0"}
-                                    <input type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> <span style="font-size: 12px; color: red">({$inscGeral} insc. para {$value.vagas} vagas) </span>
-                                <br>
-                                    
+                                 {if="naoHaVagasListaEsperaPubGeral($value.idtemporada, $value.idturma, $value.idmodal, $value.idturmastatus)"}
+                                      <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> 
+                                      &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> 
+                                      <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)*</span>  <br>
                                 {else}
-                                
-                                {if="naoHaVagasListaEsperaPubGeral($value.idtemporada, $value.idturma)"}
-                                          <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> 
-
-                                          <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)</span>
-                                <br>
-                                    {else}
-                                        <input type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> 
-
-                                        <span style="font-size: 12px; color: red">({$inscGeral} insc. para {$value.vagas} vagas) -</span>
-                                
-                                        <span style="font-size: 12px; color: red">{function="vagasListaEsperaPubGeralMenosInscPubGeral($value.idtemporada, $value.idturma)"} de 
-                                        {function="vagasTotaisListaEsperaGeral($value.vagas)"} vagas p/ lista de espera p/ público geral </span>
-                                     {/if}
-                                
-
-                                <!--
-
-                                <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)</span>
-                                <br>
-                                -->
-                                    
-                                {/if}
-                            {else}
-
-                                <input type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> <span style="font-size: 12px; color: red">({$inscGeral} insc. para {$value.vagas} vagas)</span>
-                            <br>
-
-                            {/if}
+                                    <input type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> 
+                                    &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> 
+                                    <span style="font-size: 12px; color: red">{function="vagasListaEsperaPubGeralMenosInscPubGeral($value.idtemporada, $value.idturma, $value.idmodal)"} de 
+                                    {function="vagasTotaisListaEsperaGeral($value.vagas, $value.idmodal)"} vagas p/ lista de espera p/ público geral *</span><br>
+                                {/if}                                
+                              {else}  
+                                 {if="naoHaVagasListaEsperaPubGeral($value.idtemporada, $value.idturma, $value.idmodal, $value.idturmastatus)"}
+                                      <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> 
+                                      &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> 
+                                      <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)#</span>  <br>
+                                {else}
+                                    <input type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> 
+                                    &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> 
+                                    <span style="font-size: 12px; color: red">({$inscGeral} insc. para {$value.vagas} vagas)#</span>     
+                                    <br>
+                                {/if}                                
+                            {/if}        
+                        {/if}
                             
                             <div id="geral" hidden="true">    
                              {if="$inscGeral >= $value.vagas"}                             
@@ -176,41 +170,42 @@
                             {else}
                                 <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
                                 Lembre-se: As aulas já começaram, seu nome irá para uma lista de espera. Assim que a vaga estiver diponível, entraremos em contato.
+
                                 </div> 
 
                             {/if}
                             </div>                           
                             <br> 
                             
-                            
-                                <!-- {if="$inscLaudo >= $maxListaEsperaLaudo"} {/if} -->
-                                {if="naoHaVagasPubLaudo($value.idtemporada, $value.idturma)"}
-
-                                {if="$tokencpf != 0"}
-
-                                    <input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) <span style="font-size: 12px; color: red">({$inscPlm} insc. para {$value.vagaslaudo} vagas)</span>                                
-                                    <br>
-
+                        {if="$tokencpf == 0"}   
+                            <input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">
+                            &nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
+                            <span style="font-size: 12px; color: red">({$inscPlm} insc. para {$value.vagaslaudo} vagas)</span>  <br>
+                        {else}
+                            {if="naoHaVagasPubLaudo($value.idtemporada, $value.idturma)"}
+                                {if="naoHaVagasListaEsperaPubLaudo($value.idtemporada, $value.idturma, $value.idmodal, $value.idturmastatus)"}
+                                    <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">
+                                    &nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
+                                    <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público) *</span>   <br>                                       
                                 {else}
-
-                                   {if="naoHaVagasListaEsperaPubLaudo($value.idtemporada, $value.idturma)"}
-                                        <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
-
-                                        <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)</span>   
-                                    <br>                                       
-                                     {else}
-                                        <input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
-
-                                        <span style="font-size: 12px; color: red">({$inscPlm} insc. para {$value.vagaslaudo} vagas) -</span>                                
-                                        <span style="font-size: 12px; color: red">{function="vagasListaEsperaPubLaudoMenosInscPubLaudo($value.idtemporada, $value.idturma)"} de 
-                                        {function="vagasTotaisListaEsperaLaudo($value.vagaslaudo)"} vagas para lista de espera p/ pessoas com laudo médico</span> <br>                      
-                                    {/if}
-
+                                    <input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">
+                                    &nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
+                                    <span style="font-size: 12px; color: red"> {function="vagasListaEsperaPubLaudoMenosInscPubLaudo($value.idtemporada, $value.idturma, $value.idmodal)"} de 
+                                        {function="vagasTotaisListaEsperaLaudo($value.vagaslaudo, $value.idmodal)"} vagas para lista de espera p/ pessoas com laudo médico</span> <br>                      
                                 {/if}
                             {else}
-                                <input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) <span style="font-size: 12px; color: red">({$inscPlm} insc. para {$value.vagaslaudo} vagas)</span>                                
-                            <br>
-                            {/if}
+                                {if="naoHaVagasListaEsperaPubLaudo($value.idtemporada, $value.idturma, $idmodal, $value.idturmastatus)"}
+                                    <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">
+                                    &nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
+                                    <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público) #</span>   <br>                                       
+                                {else}
+                                    <input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">
+                                    &nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
+                                    <span style="font-size: 12px; color: red">({$inscPlm} insc. para {$value.vagaslaudo} vagas) </span>    <br>                                                 
+                                    
+                                {/if}
+                            {/if}                            
+                        {/if}
 
                             <div id="temlaudo" hidden="true"> 
                                 <input type="text" name="temlaudo" id="temlaudo" placeholder="Informe o CID da doença" style="width: 300px">
@@ -225,68 +220,59 @@
                                     </div> 
                                 {else}
                                     <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
-                                   Lembre-se: As aulas já começaram, seu nome irá para uma lista de espera. Assim que a vaga estiver diponível, entraremos em contato.
+                                    Lembre-se: As aulas já começaram, seu nome irá para uma lista de espera. Assim que a vaga estiver diponível, entraremos em contato.
+
                                     </div> 
 
                                 {/if}
                             </div>                            
                             <br>  
-                                
-                            <!-- {if="$inscPcd >= $maxListaEsperaPcd"} {/if} -->
-                            {if="naoHaVagasPubPcd($value.idtemporada, $value.idturma)"}
-
-                                {if="$tokencpf != 0"}
-
-                                    <input type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> <span style="font-size: 12px; color: red">({$inscPcd} insc. para {$value.vagaspcd} vagas)</span>
+                            
+                            {if="$tokencpf == 0"}   
+                                <input type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">
+                                &nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> 
+                                <span style="font-size: 12px; color: red">({$inscPcd} insc. para {$value.vagaspcd} vagas)</span>
                                     <br>
-
-                                {else}
-
-                                    {if="naoHaVagasListaEsperaPubPcd($value.idtemporada, $value.idturma)"}
-                                        <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)</span>                                
-                                    <br>
-                                    {else}
-                                    
-                                        <input type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> <span style="font-size: 12px; color: red">({$inscPcd} insc. para {$value.vagaspcd} vagas)</span>
-                                           
-                                        <span style="font-size: 12px; color: red">{function="vagasListaEsperaPubPcdMenosInscPubPcd($value.idtemporada, $value.idturma)"} de 
-                                        {function="vagasTotaisListaEsperaPcd($value.vagaspcd)"} vagas para lista de espera para PCD`s
-                                        </span>   
-                                        
-                                        <br>
-                                        
-                                         <span style="color: darkblue;" onmousemove="alertTokenCreebaPcd()" >
-                                        <strong>Necessário token</strong>&nbsp;             
-                                        </span>
-                                        <a href="#" onmousemove="alertTokenCreebaPcd()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></a>
-                                        <br>                                    
-                                        
-                                    {/if}
-
-                                {/if} 
-                                
                             {else}
-                                {if="$value.idlocal == 5"}
-                                    {if="$tokencpf != 0"}
-
-                                        <input type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> <span style="font-size: 12px; color: red">({$inscPcd} insc. para {$value.vagaspcd} vagas)</span>
-                                         <br>
-
+                                {if="naoHaVagasPubPcd($value.idtemporada, $value.idturma)"}
+                                    {if="naoHaVagasListaEsperaPubPcd($value.idtemporada, $value.idturma, $value.idmodal, $value.idturmastatus)"}
+                                        <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">
+                                        &nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> 
+                                        <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)*</span>                                
+                                        <br>
                                     {else}
-
-                                        <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> <span style="font-size: 12px; color: red">({$inscPcd} insc. para {$value.vagaspcd} vagas)</span>&nbsp;
-
+                                        <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">
+                                        &nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> 
+                                        <br>           
+                                        <span style="font-size: 12px; color: red">{function="vagasListaEsperaPubPcdMenosInscPubPcd($value.idtemporada, $value.idturma, $value.idmodal)"} de 
+                                        {function="vagasTotaisListaEsperaPcd($value.vagaspcd, $value.idmodal)"} vagas para lista de espera para PCD`s
+                                        </span>  
+                                        <br>
                                         <span style="color: darkblue;" onmousemove="alertTokenCreebaPcd()" >
                                         <strong>Necessário token</strong>&nbsp;             
                                         </span>
-                                        <a href="#" onmousemove="alertTokenCreebaPcd()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></a>
+                                            <a href="#" onmousemove="alertTokenCreebaPcd()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></a>
                                         <br>                                    
+                                            
                                     {/if}
-                                
                                 {else}
-
-                                    <input type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> <span style="font-size: 12px; color: red">({$inscPcd} insc. para {$value.vagaspcd} vagas)</span>
-                                    <br>
+                                    {if="naoHaVagasListaEsperaPubPcd($value.idtemporada, $value.idturma, $value.idmodal, $value.idturmastatus)"}
+                                        <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">
+                                        &nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> 
+                                        <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)#</span>                                
+                                        <br>
+                                    {else}
+                                        <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">
+                                        &nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> 
+                                        <span style="font-size: 12px; color: red">({$inscPcd} insc. para {$value.vagaspcd} vagas)#</span>
+                                        <br>
+                                        <span style="color: darkblue;" onmousemove="alertTokenCreebaPcd()" >
+                                        <strong>Necessário token</strong>&nbsp;             
+                                        </span>
+                                            <a href="#" onmousemove="alertTokenCreebaPcd()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></a>
+                                        <br>                                    
+                                            
+                                    {/if}
                                 {/if}
                             {/if}
                             
@@ -304,39 +290,46 @@
                                 {else}
                                     <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
                                     Lembre-se: As aulas já começaram, seu nome irá para uma lista de espera. Assim que a vaga estiver diponível, entraremos em contato.
+
                                     </div> 
 
                                 {/if}
                                 </div>                                
                                 <br>
                                 
-                            <!-- {if="$inscPvs >= $maxListaEsperaPvs"} {/if} -->
-                            {if="naoHaVagasPubPvs($value.idtemporada, $value.idturma)"}
-
-                                {if="$tokencpf != 0"}
-
-                                    <input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong> <span style="font-size: 12px; color: red">({$inscPvs} insc. para {$value.vagaspvs} vagas)</span>
+                            {if="$tokencpf == 0"}   
+                                <input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
+                                &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong> 
+                                <span style="font-size: 12px; color: red">({$inscPvs} insc. para {$value.vagaspvs} vagas)</span>
                                     <br>
-
-                                {else}
-                                
-                                   {if="naoHaVagasListaEsperaPubPvs($value.idtemporada,                $value.idturma)"}
-                                         <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong> 
-
-                                    <br>
-                                        <span style="font-size: 12px; color: red">não há vagas para lista de espera para pessoas em Vuln. social</span>
-                                    {else}
-                                        <input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong>                            <br>
-                                         <span style="font-size: 12px; color: red">{function="vagasListaEsperaPubPvsMenosInscPubPvs($value.idtemporada, $value.idturma)"} de 
-                                        {function="vagasTotaisListaEsperaPvs($value.vagaspvs)"} vagas para lista de espera para pessoas em Vuln. social</span>
-
-                                    {/if}
-
-                                {/if}
                             {else}
-                                <input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong> <span style="font-size: 12px; color: red">({$inscPvs} insc. para {$value.vagaspvs} vagas)</span>
-                            <br>
-                            
+                                {if="naoHaVagasPubPvs($value.idtemporada, $value.idturma)"}
+                                    {if="naoHaVagasListaEsperaPubPvs($value.idtemporada,$value.idturma, $value.idmodal, $value.idturmastatus)"}
+                                        <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
+                                        &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong>
+                                        <br>
+                                        <span style="font-size: 12px; color: red">(Não há vagas disponíveis para este público)*</span>
+                                        <br>
+                                    {else}
+                                        <input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
+                                        &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong> 
+                                        <br>
+                                         <span style="font-size: 12px; color: red">{function="vagasListaEsperaPubPvsMenosInscPubPvs($value.idtemporada, $value.idturma, $value.idmodal)"} de 
+                                            {function="vagasTotaisListaEsperaPvs($value.vagaspvs, $value.idmodal)"} vagas para lista de espera para pessoas em Vuln. social</span>
+                                            <br>
+                                    {/if}
+                                {else}
+                                    {if="naoHaVagasListaEsperaPubPvs($value.idtemporada,$value.idturma, $value.idmodal, $value.idturmastatus)"}
+                                        <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
+                                        &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong>
+                                        <span style="font-size: 12px; color: red">(Não há vagas disponíveis para este público)#</span>
+                                        <br>
+                                    {else}
+                                        <input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
+                                        &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong><span style="font-size: 12px; color: red">({$inscPvs} insc. para {$value.vagaspvs} vagas)</span> 
+                                        <br>
+                                    {/if}
+                                {/if}
                             {/if}
                             
                             <div id="vulneravel" hidden="true"> 
@@ -351,6 +344,7 @@
                                 {else}
                                     <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
                                     Lembre-se: As aulas já começaram, seu nome irá para uma lista de espera. Assim que a vaga estiver diponível, entraremos em contato.
+
                                     </div> 
 
                                 {/if}

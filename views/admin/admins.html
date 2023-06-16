@@ -3,7 +3,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Lista com {$total} professores
+    Lista com {$total} Administradores
   </h1>
   <ol class="breadcrumb">
     <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -48,6 +48,9 @@
                   &nbsp; {$value.deslogin}
                   <strong>Tel.: {$value.nrphone}</strong>
                   &nbsp;status: {if="$value.statususer == 1"}Ativo{else}Inativo{/if}
+                  {if="$value.isestagiario == 1"}
+                  <strong>&nbsp;Estagiário</strong>
+                  {/if}
                   {if="$value.isprof == 1"}
                   <strong>Professor</strong>
                   {/if}
@@ -59,7 +62,7 @@
               
               
               <div class="col-md-2" >
-                  <a href="/admin/users/{$value.iduser}" class="btn btn-success"></i>Admin / Prof</a>
+                  <a href="/admin/users/{$value.iduser}" class="btn btn-success">Admin / Prof</a>
               </div>
             </div>           
             </div>

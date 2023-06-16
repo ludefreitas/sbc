@@ -31,7 +31,7 @@
               <input disabled="true" type="text" class="form-control" id="desperson" name="desperson" placeholder="Digite o nome" value="{$user.desperson}">
             </div>
             <div class="form-group">
-              <label>-Apelido</label>
+              <label for="desperson">-Apelido</label>
               <input type="text" class="form-control" id="apelidoperson" name="apelidoperson" placeholder="Digite o apelido" value="{$user.apelidoperson}">
             </div>
             <!--
@@ -48,26 +48,49 @@
               <input type="email" class="form-control" id="desemail" name="desemail" placeholder="Digite o e-mail" value="{$user.desemail}">
             </div>
           -->
-            {if="getUserId() == 2 OR getUserId() == 7 OR getUserId() == 156"}
+            <div class="checkbox">
+                
+            {if="getUserId() == 1 OR getUserId() == 7 OR getUserId() == 156"}
 
                 <div class="checkbox">
-                    <label>
-                        <input type="checkbox" name="inadmin" value="1" {if="$user.inadmin == 1"}checked{/if}> Acesso de Administrador
+                <label>
+                  {if="$user.inadmin == 1"}
+                <input type="checkbox" name="inadmin" value="1" checked> Acesso de Administrador
+                {else}
+                  <input type="checkbox" name="inadmin" value="1" > Acesso de Administrador
+                {/if}
                     </label>
                </div>
 
                 <div class="checkbox">
-                    <label>
-                        <input type="checkbox" name="isaudi" value="1" {if="$user.isaudi == 1"}checked{/if}> Acesso de Auditor
-                    </label>
+                <label>
+                {if="$user.isaudi == 1"}
+                <input type="checkbox" name="isaudi" value="1" checked> Acesso de Auditor
+                {else}
+                  <input type="checkbox" name="isaudi" value="1" > Acesso de Auditor
+                {/if}
+                </label>
                </div>
 
             {/if}
             
-
+            
             <div class="checkbox">
               <label>
-                <input type="checkbox" name="isprof" value="1" {if="$user.isprof == 1"}checked{/if}> Acesso de Professor
+                {if="$user.isprof == 1"}
+                <input type="checkbox" name="isprof" value="1" checked> Acesso de Professor
+                {else}
+                  <input type="checkbox" name="isprof" value="1" > Acesso de Professor
+                {/if}
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                {if="$user.isestagiario == 1"}
+                <input type="checkbox" name="isestagiario" value="1" checked> Acesso de Estagiário
+                {else}
+                  <input type="checkbox" name="isestagiario" value="1" > Acesso de Estagiário
+                {/if}
               </label>
             </div>
             <!--
@@ -82,7 +105,7 @@
           <!-- /.box-body -->
           <div class="box-footer">
             <button type="submit" class="btn btn-primary">Salvar</button>
-            &nbsp&nbsp&nbsp&nbsp
+            &nbsp;&nbsp;&nbsp;&nbsp;
             <a type="button" class="btn btn-danger" href="javascript:window.history.go(-1)">Cancelar</a>
           </div>
         </form>

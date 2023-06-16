@@ -15,8 +15,6 @@ class User extends Model {
 	const ERROR_REGISTER = "UserErrorRegister";
 	const ERROR_REGISTER_SENDMAIL = "UserErrorRegisterSendmail";
 	const SUCCESS = "UserSucesss";	
-	const MAX_USERS = 10;
-	
 
 	public static function getFromSession()
 	{
@@ -94,7 +92,38 @@ class User extends Model {
 			}
 		}
 	}
+	
+	public static function checkLoginEstagiario($isestagiario = true)
+	{
 
+		if (
+			!isset($_SESSION[User::SESSION])
+			||
+			!$_SESSION[User::SESSION]
+			||
+			!(int)$_SESSION[User::SESSION]["iduser"] > 0
+		) {
+			//Não está logado
+			return false;
+
+		} else {
+
+			if ($isestagiario === true && (bool)$_SESSION[User::SESSION]['isestagiario'] === true) {
+
+				return true;
+
+			} else if ($isestagiario === false) {
+
+				return true;
+
+			} else {
+
+				return false;
+
+			}
+		}
+	}
+	
 	public static function checkLoginAudi($isaudi = true)
 	{
 
@@ -137,7 +166,7 @@ class User extends Model {
 
 		if(count($results) === 0)
 		{
-			throw new \Exception("Usuário inexistente ou senha inválida!!!", 1);			
+			throw new \Exception("Usuário inexistente ou senha inválida!!!", 1);
 		}
 
 		$data = $results[0];
@@ -152,7 +181,7 @@ class User extends Model {
 			$user->setData($data);
 
 			$_SESSION[User::SESSION] = $user->getValues();
-
+			
 			if(isset($_POST['lembrar']) && $_POST['lembrar'] == 'sempre' ){
 
 				User::rememberUser($login);
@@ -172,8 +201,8 @@ class User extends Model {
 	{
 
 		if (!User::checkLogin($inadmin)) {
-			
-			/*
+
+		    /*
 			if ($inadmin) {
 				header("Location: /login");
 			} else {
@@ -183,10 +212,11 @@ class User extends Model {
 			*/
 			header("Location: /login");
 			exit;
+
 		}
 
 	}
-
+	
 	public static function verifyLoginCursos($inadmin = true)
 	{
 
@@ -210,6 +240,7 @@ class User extends Model {
 	{
 
 		if (!User::checkLoginProf($isprof)) {
+
 			/*
 			if ($isprof) {
 				header("Location: /login");
@@ -223,7 +254,26 @@ class User extends Model {
 		}
 
 	}
+	
+	public static function verifyLoginEstagiario($isestagiario = true)
+	{
 
+		if (!User::checkLoginEstagiario($isestagiario)) {
+
+			/*
+			if ($isprof) {
+				header("Location: /login");
+			} else {
+				header("Location: /login");
+			}
+			exit;
+			*/
+			header("Location: /login");
+			exit;
+		}
+
+	}
+	
 	public static function verifyLoginAudi($isaudi = true)
 	{
 
@@ -248,7 +298,7 @@ class User extends Model {
 		$_SESSION[User::SESSION] = NULL;
 
 	}
-
+	
 	private function rememberUser($user){
 
 		$validade = strtotime("+1 month");
@@ -299,7 +349,20 @@ class User extends Model {
 			WHERE isprof = 1
 			ORDER BY b.desperson");
 	}
+	
+	public static function listAllEstagiario()
+	{
 
+		$sql = new Sql();
+
+		return $sql->select("
+			SELECT * FROM tb_users a 
+			INNER JOIN tb_persons b 
+			using(idperson) 
+			WHERE isestagiario = 1
+			ORDER BY b.desperson");
+	}
+	
 		public static function listAllAudi()
 	{
 
@@ -318,7 +381,7 @@ class User extends Model {
 	{
 		$sql = new Sql();
 
-		$results = $sql->select("CALL sp_users_save(:desperson, :apelidoperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin, :isprof, :isaudi, :statususer)", array(
+		$results = $sql->select("CALL sp_users_save(:desperson, :apelidoperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin, :isprof, :isestagiario, :isaudi, :statususer)", array(
 			":desperson"=>$this->getdesperson(),
 			":apelidoperson"=>$this->getapelidoperson(),
 			":deslogin"=>$this->getdeslogin(),
@@ -327,6 +390,7 @@ class User extends Model {
 			":nrphone"=>$this->getnrphone(),
 			":inadmin"=>$this->getinadmin(),
 			":isprof"=>$this->getisprof(),
+			":isestagiario"=>$this->getisestagiario(),
 			":isaudi"=>$this->getisaudi(),
 			":statususer"=>$this->getstatususer()
 		));
@@ -364,7 +428,7 @@ class User extends Model {
 	{
 		$sql = new Sql();
 
-		$results = $sql->select("CALL sp_usersupdate_save(:iduser, :desperson, :apelidoperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin, :isprof, :isaudi, :statususer)", array(
+		$results = $sql->select("CALL sp_usersupdate_save(:iduser, :desperson, :apelidoperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin, :isprof, :isestagiario, :isaudi, :statususer)", array(
 			":iduser"=>$this->getiduser(),
 			":desperson"=>$this->getdesperson(),
 			":apelidoperson"=>$this->getapelidoperson(),
@@ -375,6 +439,7 @@ class User extends Model {
 			":nrphone"=>$this->getnrphone(),
 			":inadmin"=>$this->getinadmin(),
 			":isprof"=>$this->getisprof(),
+			":isestagiario"=>$this->getisestagiario(),
 			":isaudi"=>$this->getisaudi(),
 			":statususer"=>$this->getstatususer()
 		));
@@ -386,7 +451,7 @@ class User extends Model {
 	{
 		$sql = new Sql();
 
-		$results = $sql->select("CALL sp_usersupdate_save(:iduser, :desperson, :apelidoperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin, :isprof, :isaudi, :statususer)", array(
+		$results = $sql->select("CALL sp_usersupdate_save(:iduser, :desperson, :apelidoperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin, :isprof, :isestagiario, :isaudi, :statususer)", array(
 			":iduser"=>$this->getiduser(),
 			":desperson"=>$this->getdesperson(),
 			":apelidoperson"=>$this->getapelidoperson(),
@@ -397,6 +462,7 @@ class User extends Model {
 			":nrphone"=>$this->getnrphone(),
 			":inadmin"=>$this->getinadmin(),
 			":isprof"=>$this->getisprof(),
+			":isestagiario"=>$this->getisestagiario(),
 			":isaudi"=>$this->getisaudi(),
 			":statususer"=>$this->getstatususer()
 		));
@@ -421,52 +487,50 @@ class User extends Model {
 		]);
 
 	}
-
+	
 	public static function getForgotSite($email, $inadmin = true)
 	{
-     $sql = new Sql();
-     $results = $sql->select("
-         SELECT *
-         FROM tb_persons a
-         INNER JOIN tb_users b USING(idperson)
-         WHERE a.desemail = :email;
-     ", array(
-         ":email"=>$email
-     ));
-
-     if (count($results) === 0)
-     {         
-		echo "<script>alert('Não foi possível recuperar a senha!! Usuário ou email não cadastrado!');";
-		echo "javascript:history.go(-1)</script>";
-		exit();
-
-     }
-     
+         $sql = new Sql();
+         $results = $sql->select("
+             SELECT *
+             FROM tb_persons a
+             INNER JOIN tb_users b USING(idperson)
+             WHERE a.desemail = :email;
+         ", array(
+             ":email"=>$email
+         ));
+    
+         if (count($results) === 0)
+         {         
+    		echo "<script>alert('Não foi possível recuperar a senha!! Usuário ou email não cadastrado!');";
+    		echo "javascript:history.go(-1)</script>";
+    		exit();
+    
+         }
  	}
-
+ 	
  	public static function getForgotSiteEmailCpf($email, $numcpf, $inadmin = true)
 	{
-     $sql = new Sql();
-     $results = $sql->select("
-         SELECT *
-         FROM tb_persons a
-         INNER JOIN tb_users b ON b.idperson = a.idperson
-         INNER JOIN tb_pessoa c ON c.iduser = b.iduser
-         WHERE a.desemail = :email
-         AND c.numcpf = :numcpf;
-     ", array(
-         ":email"=>$email,
-         ":numcpf"=>$numcpf
-     ));
-
-     if (count($results) === 0)
-     {         
-		echo "<script>alert('Não foi possível recuperar a senha!! Usuário ou email não cadastrado!');";
-		echo "javascript:history.go(-1)</script>";
-		exit();
-
-     }
-     
+         $sql = new Sql();
+         $results = $sql->select("
+             SELECT *
+             FROM tb_persons a
+             INNER JOIN tb_users b ON b.idperson = a.idperson
+             INNER JOIN tb_pessoa c ON c.iduser = b.iduser
+             WHERE a.desemail = :email
+             AND c.numcpf = :numcpf;
+         ", array(
+             ":email"=>$email,
+             ":numcpf"=>$numcpf
+         ));
+    
+         if (count($results) === 0)
+         {         
+    		echo "<script>alert('Não foi possível recuperar a senha!! Usuário ou email não cadastrado!');";
+    		echo "javascript:history.go(-1)</script>";
+    		exit();
+    
+         }
  	}
 
  	public function setPasswordSite($password, $desemail)
@@ -497,7 +561,7 @@ class User extends Model {
      {
 
          //throw new \Exception("Não foi possível recuperar a senha.");
-
+         
          User::setError("Não foi possível recuperar a senha!! Usuário ou email não cadastrado!");
 		 header("Location: /login");
 			exit();			
@@ -511,7 +575,6 @@ class User extends Model {
              ":iduser"=>$data['iduser'],
              ":desip"=>$_SERVER['REMOTE_ADDR']
          ));
-
          if (count($results2) === 0)
          {
              //throw new \Exception("Não foi possível recuperar a senha.");
@@ -527,31 +590,28 @@ class User extends Model {
              $code = openssl_encrypt($dataRecovery['idrecovery'], 'aes-256-cbc', User::SECRET, 0, $iv);
              $result = base64_encode($iv.$code);
              if ($inadmin === true) {
-                 $link = "https://www.cursosesportivos.com/admin/forgot/reset?code=$result";
+                 $link = "https://www.cursosesportivossbc.com/admin/forgot/reset?code=$result";
              } else {
-                 $link = "https://www.cursosesportivos.com/forgot/reset?code=$result";
+                 $link = "https://www.cursosesportivossbc.com/forgot/reset?code=$result";
              } 
              $mailer = new Mailer($data['desemail'], $data['desperson'], "Redefinir senha do Cursos Esportivos SBC", "forgot", array(
                  "name"=>$data['desperson'],
                  "link"=>$link
              )); 
-
              $mailer->send();
-
-            $emailEnviado = $mailer->send();        
-
-            if (!$emailEnviado)
+             
+             if (!$emailEnviado)
      		{
 
-        		User::setError("Não foi possivel enviar email. Verifique se o email foi digitado corretamente ou entre em contato conosco.");        	
+        		User::setError("Não foi possivel enviar o email para recuperar senha. Verifique se o email foi digitado corretamente ou entre em contato conosco.");        	
         		header("Location: /login");
 				exit();			
      		}
-
-            return $link;
-         	}
-     	}
- 	}
+     		
+             return $link;
+         }
+     }
+ }
  public static function validForgotDecrypt($result)
  {
      $result = base64_decode($result);
@@ -575,7 +635,7 @@ class User extends Model {
      ));
      if (count($results) === 0)
      {
-           User::setError("Não foi possível recuperar a senha!! Código expirado!");
+         User::setError("Não foi possível recuperar a senha!! Código expirado!");
 		 	header("Location: /login");
 			exit();			
      }
@@ -608,7 +668,7 @@ class User extends Model {
 		));
 
 	}
-
+	
 	public function validaEmail($email){
 
 		//$email = test_input($_POST["email"]);
@@ -671,7 +731,33 @@ class User extends Model {
 		];
 
 	}
+	
+	public static function getPageEstagiarios($page = 1, $itemsPerPage = 10)
+	{
 
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_users a 
+			INNER JOIN tb_persons b USING(idperson) 
+			WHERE isestagiario = 1
+			ORDER BY b.desperson
+			LIMIT $start, $itemsPerPage;
+		");
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+	
 	public static function getPageAudi($page = 1, $itemsPerPage = 10)
 	{
 
@@ -697,7 +783,7 @@ class User extends Model {
 		];
 
 	}
-
+	
 	public static function getPageAdmins($page = 1, $itemsPerPage = 10)
 	{
 
@@ -781,7 +867,36 @@ class User extends Model {
 		];
 
 	}
+	
+	public static function getPageSearchEstagiarios($search, $page = 1, $itemsPerPage = 10)
+	{
 
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_users a 
+			INNER JOIN tb_persons b USING(idperson)
+
+			WHERE isestagiarios = 1 AND b.desperson LIKE :search OR b.desemail = :search OR a.deslogin LIKE :search
+			ORDER BY b.desperson
+			LIMIT $start, $itemsPerPage;
+		", [
+			':search'=>'%'.$search.'%'
+		]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+	
 	public static function getPageSearchAudi($search, $page = 1, $itemsPerPage = 10)
 	{
 
@@ -810,7 +925,7 @@ class User extends Model {
 		];
 
 	}
-
+	
 	public static function getPageSearchAdmins($search, $page = 1, $itemsPerPage = 10)
 	{
 
@@ -1014,17 +1129,18 @@ class User extends Model {
 
 		$results = $sql->select(
 			"SELECT * FROM tb_pessoa a
-			INNER JOIN tb_saude b 
-            ON b.idpess = a.idpess
-            -- INNER JOIN tb_cid c
+			-- INNER JOIN tb_saude b 
+            -- ON b.idpess = a.idpess
+            -- LEFT JOIN tb_cid c
 			-- ON c.idcid = b.idcid
 			WHERE statuspessoa = 1 AND
 			a.iduser = :iduser", [
 			':iduser'=>$this->getiduser()
 		]);
+
 		return $results;
 	}
-
+	
 	public function getPessoaSaude()	{
 
 		$sql = new Sql();
@@ -1035,13 +1151,14 @@ class User extends Model {
             ON b.idpess = a.idpess
             LEFT JOIN tb_cid c
 			ON c.idcid = b.idcid
-			WHERE a.iduser = :iduser  
-			AND a.statuspessoa = 1", [
+			WHERE statuspessoa = 1 AND
+			a.iduser = :iduser", [
 			':iduser'=>$this->getiduser()
 		]);
 
 		return $results;
 	}
+	
 	/*
 	public function getPessoaByIdUser($iduser)	{
 
@@ -1049,7 +1166,7 @@ class User extends Model {
 
 		$results = $sql->select(
 			"SELECT * FROM tb_pessoa a
-			INNER JOIN 	tb_saude b
+			INNER JOIN 	tb_saude
 			WHERE statuspessoa = 1 AND
 			iduser = :iduser", [
 			':iduser'=>$iduser
@@ -1074,7 +1191,7 @@ class User extends Model {
 
 		$this->setData($rows[0]);
 	}
-
+	
 	public static function getUserIdPess($idpess)
 	{
 
@@ -1090,7 +1207,7 @@ class User extends Model {
 
 		return $result;
 	}
-
+	
 	public static function getUserNameById($iduser)
 	{
 
@@ -1103,8 +1220,7 @@ class User extends Model {
 			':iduser'=>$iduser
 		]);
 		
-		return $result;		
-
+		return $result;	
 	}
 
 	public function getInsc()
@@ -1190,6 +1306,105 @@ class User extends Model {
 				]);
 
 			} else {
+			    
+                /*
+				return $sql->select("
+					SELECT * FROM tb_turmatemporada a
+					INNER JOIN tb_turma 
+					using(idturma)
+					INNER JOIN tb_users 
+					using(iduser)
+					-- INNER JOIN tb_persons 
+					-- using(idperson)
+					INNER JOIN tb_atividade 
+					using(idativ)
+					INNER JOIN tb_modalidade
+					using(idmodal)   
+					INNER JOIN tb_fxetaria
+					using(idfxetaria)             
+	                INNER JOIN tb_espaco 
+					using(idespaco)
+					INNER JOIN tb_local 
+					using(idlocal)
+					INNER JOIN tb_horario 
+					using(idhorario)
+					-- INNER JOIN tb_turmastatus 
+					-- using(idturmastatus) 	
+					-- WHERE a.iduser = 0 OR a.iduser is null 			
+					WHERE a.iduser != :iduser  AND a.iduser = 1
+					AND a.idtemporada = :idtemporada
+				", [
+					':iduser'=>$iduser,
+					':idtemporada'=>$idtemporada
+				]);
+				*/
+				
+				return $sql->select("
+					SELECT * FROM tb_turmatemporada a
+					INNER JOIN tb_turma 
+					using(idturma)
+					INNER JOIN tb_users 
+					using(iduser)
+					-- INNER JOIN tb_persons 
+					-- using(idperson)
+					INNER JOIN tb_atividade 
+					using(idativ)
+					INNER JOIN tb_modalidade
+					using(idmodal)   
+					INNER JOIN tb_fxetaria
+					using(idfxetaria)             
+	                INNER JOIN tb_espaco 
+					using(idespaco)
+					INNER JOIN tb_local 
+					using(idlocal)
+					INNER JOIN tb_horario 
+					using(idhorario)
+					WHERE a.iduser != :iduser  
+					AND a.iduser = 1
+					AND a.idtemporada = :idtemporada
+				", [
+				    ':iduser'=>$iduser,
+					':idtemporada'=>$idtemporada
+				]);
+			}		
+		}
+		
+		public function getTurmaTemporadaEstagiario($related = true, $idtemporada, $idestagiario)
+		{
+			$sql = new Sql();
+
+			if ($related === true) {
+
+				return $sql->select("
+					SELECT * FROM tb_turmatemporada a
+					INNER JOIN tb_turma 
+					using(idturma)
+					INNER JOIN tb_users 
+					using(iduser)
+					INNER JOIN tb_persons 
+					using(idperson)
+					INNER JOIN tb_atividade 
+					using(idativ)
+					INNER JOIN tb_modalidade
+					using(idmodal)   
+					INNER JOIN tb_fxetaria
+					using(idfxetaria)             
+	                INNER JOIN tb_espaco 
+					using(idespaco)
+					INNER JOIN tb_local 
+					using(idlocal)
+					INNER JOIN tb_horario 
+					using(idhorario)
+					-- INNER JOIN tb_turmastatus 
+					-- using(idturmastatus) 				
+					WHERE a.idestagiario = :idestagiario 
+					AND a.idtemporada = :idtemporada
+				", [
+					':idestagiario'=>$idestagiario,
+					':idtemporada'=>$idtemporada
+				]);
+
+			} else {
 
 				return $sql->select("
 					SELECT * FROM tb_turmatemporada a
@@ -1214,10 +1429,10 @@ class User extends Model {
 					-- INNER JOIN tb_turmastatus 
 					-- using(idturmastatus) 	
 					-- WHERE a.iduser = 0 OR a.iduser is null 			
-					WHERE a.iduser != :iduser AND a.iduser = 1
+					WHERE a.idestagiario != :idestagiario AND a.idestagiario = 1
 					AND a.idtemporada = :idtemporada
 				", [
-					':iduser'=>$iduser,
+					':idestagiario'=>$idestagiario,
 					':idtemporada'=>$idtemporada
 				]);
 			}		
@@ -1295,6 +1510,79 @@ class User extends Model {
 				]);
 			}		
 		}
+		
+		public function getTurmaTemporadaLocalEstagiario($related = true, $idtemporada, $iduser, $idlocal)
+		{
+			$sql = new Sql();
+
+			if ($related === true) {
+
+				return $sql->select("
+					SELECT * FROM tb_turmatemporada a
+					INNER JOIN tb_turma 
+					using(idturma)
+					INNER JOIN tb_users 
+					using(iduser)
+					INNER JOIN tb_persons 
+					using(idperson)
+					INNER JOIN tb_atividade 
+					using(idativ)
+					INNER JOIN tb_modalidade
+					using(idmodal)   
+					INNER JOIN tb_fxetaria
+					using(idfxetaria)             
+	                INNER JOIN tb_espaco d
+					using(idespaco)
+					INNER JOIN tb_local e
+					ON e.idlocal = d.idlocal
+					INNER JOIN tb_horario 
+					using(idhorario)
+					-- INNER JOIN tb_turmastatus 
+					-- using(idturmastatus) 				
+					WHERE a.idestagiario = :iduser 
+					AND a.idtemporada = :idtemporada
+					AND e.idlocal = :idlocal
+				", [
+					':iduser'=>$iduser,
+					':idtemporada'=>$idtemporada,
+					':idlocal'=>$idlocal
+				]);
+
+			} else {
+
+				return $sql->select("
+					SELECT * FROM tb_turmatemporada a
+					INNER JOIN tb_turma 
+					using(idturma)
+					INNER JOIN tb_users 
+					using(iduser)
+					-- INNER JOIN tb_persons 
+					-- using(idperson)
+					INNER JOIN tb_atividade 
+					using(idativ)
+					INNER JOIN tb_modalidade
+					using(idmodal)   
+					INNER JOIN tb_fxetaria
+					using(idfxetaria)             
+	                INNER JOIN tb_espaco d
+					using(idespaco)
+					INNER JOIN tb_local e
+					ON e.idlocal = d.idlocal
+					INNER JOIN tb_horario 
+					using(idhorario)
+					-- INNER JOIN tb_turmastatus 
+					-- using(idturmastatus) 	
+					-- WHERE a.iduser = 0 OR a.iduser is null 			
+					WHERE a.idestagiario != :iduser  
+					AND a.idtemporada = :idtemporada
+					AND e.idlocal = :idlocal
+				", [
+					':iduser'=>$iduser,
+					':idtemporada'=>$idtemporada,
+					':idlocal'=>$idlocal
+				]);
+			}		
+		}
 
 		/*
 		public function getUserInTurmaTemporada($idturma, $idtemporada){
@@ -1331,8 +1619,17 @@ class User extends Model {
 
 			return $rows[0];
 			
-		}		
+		}
+		
+		/*
+		public static function getTime(){
+			date_default_timezone_set('America/Sao_Paulo');
 
+			return time() + (60 * 10);
+		}
+		*/
+		
+		
 		public static function verifica_ip_online($ip){	
 
 		$sql = new Sql();
@@ -1411,6 +1708,8 @@ class User extends Model {
 			return $results[0]['uservis'];
 		}
 
+
 }
+
 
 ?>

@@ -1,0 +1,90 @@
+
+<script type="text/javascript">
+
+        alert('O PAR-q declarado pelo aluno já está disponível. Acesse suas turmas, consulte os inscritos e clique na palavra "PAR-q" para verificar as respostas do aluno e atente-se ao ícone de alerta que aparece logo ao lado da palavra, se existir." ')
+        
+        /*
+       alert('Agora você já pode adicionar o atestado clínico (NÃO dermatológico) do seu aluno, ao fazer a chamada, informando a data de emissão do atestado e fazer uma breve observação. Nesta observação você pode informar uma doença (se houver) , CID (se houver) , uma condição especial (se houver)...')
+        */
+
+
+</script>
+
+
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Área do Porfessor Cursos Esportivos SBC <br>
+      </h1>
+      <h3>
+        Olá Estagiário(a) {$user.desperson}, seja bem vindo!
+      </h3>
+      <ol class="breadcrumb">
+        <li><a href="/prof-estagiario"><i class="fa fa-dashboard"></i> Level</a></li>
+        <li class="active">Here</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <div class="container">
+
+        <div class="row">
+            Dados das temporadas: &nbsp;&nbsp;
+            {loop="$temporada"}
+                <a href="/prof/dadostemporada-estagiario/{$value.desctemporada}"> {$value.desctemporada}</a> &nbsp;&nbsp;
+            {/loop}
+            <br><br>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Usuários</div>          
+        </div>  
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;">Usuários Visitante: {$visitante}</div>
+          <div class="col-md-3" style="border: solid 1px black;">
+              <span style="color: green;">Usuários &nbsp;&nbsp;&nbsp;&nbsp;Online: </span> {$useronline}
+          </div>         
+          
+        </div> 
+
+        <div class="row">
+           <div class="col-md-3" style="border: solid 1px black;">Todos Usuários: {$totalUsuarios}</div>
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">Todos &nbsp;&nbsp;&nbsp;&nbsp;Alunos</span>: {$totalAlunos}</div>
+          
+        </div> 
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Chamadas de hoje</div>
+          
+        </div>       
+        
+        <div class="row">
+          <div class="col-md-2" style="border: solid 1px black;">
+             Presentes: {function="NumAlunosPresentesPorData()"}
+          </div>
+          <div class="col-md-2" style="border: solid 1px black;">
+             Ausentes: {function="NumAlunosAusentesPorData()"}
+          </div>
+           <div class="col-md-2" style="border: solid 1px black;"> 
+           Justificados {function="NumAlunosJustificadosPorData()"}
+           </div>
+          
+        </div>
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: black;">
+
+          </div>          
+        </div>   
+        
+      </div>
+
+    </section>
+    <!-- /.content -->
+  </div>
+ 

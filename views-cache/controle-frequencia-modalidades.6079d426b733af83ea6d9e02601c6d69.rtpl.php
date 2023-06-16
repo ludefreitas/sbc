@@ -7,6 +7,13 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
@@ -23,21 +30,25 @@
     <style type="text/css">
      
     @media print{
-
-    @page{
-        size: landscape;
+      @page{
+          size: landscape;
+      }
+        #image-example{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+      }
     }
 
-    #image-example{
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        margin: auto;
+    .div-center {
+      padding: 20px;
+      margin: 10px;
+      border: solid 1px rgb(219, 219, 219);
     }
 
-}
       /*
       @page land {
         size: landscape;
@@ -56,9 +67,11 @@
           display: flex;
       }
 
+    
+
       table {          
           
-          font-size: 8px; /* diminua um pouco a fonte na hora da impressão */
+          font-size: 8px; 
           border: 1px solid #000;
           flex-shrink:0;
           page-break-inside: avoid; 
@@ -66,20 +79,12 @@
       tr:nth-child(even){
           background: lightgray;
       }
+      
+
     </style>
 
 </head>
 
-<hr>
-<div id="div1" style="text-align-last: center;">
-  <h4>
-    Cursos Esportivos SBC
-    <br>
-    <span style="font-weight: bold">CONTROLE DE FREQUÊNCIA TEMPORADA <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </span>
-    <br> 
-    <span style="font-weight: bold">   </span>
-  </h4>
-</div>
 <div id="div1">  
     <a href="javascript:window.history.go(-1)">
         <i class="fa fa-arrow-left"></i> 
@@ -89,27 +94,27 @@
 <hr>
 
 <div class="col-md-12">
-  TODAS MODALIDADES <br>
+  TODOS AS MODALIDADES <br>
   <?php $counter1=-1;  if( isset($modalidades) && ( is_array($modalidades) || $modalidades instanceof Traversable ) && sizeof($modalidades) ) foreach( $modalidades as $key1 => $value1 ){ $counter1++; ?>
-      <a href="/admin/controle-frequencia-por-modalidade/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><i class=""></i><?php echo htmlspecialchars( $value1["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a>&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="/admin/controle-frequencia-por-modalidade/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><i class=""></i><?php echo htmlspecialchars( $value1["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </a>&nbsp;&nbsp;&nbsp;&nbsp;
   <?php } ?>
 
 </div>
 
+<hr>
+
 <div id="div1">
-      
-      <table>        
 
-          <?php if( $error != '' ){ ?>
-          <tr>
-            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; color: green;" colspan="8"><?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?></th>
-          </tr>
-          <?php } ?>
+  <div class="div-center rounded">
+    <h5>CONTROLE DE FREQUÊNCIA <?php echo htmlspecialchars( $modalidade, ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </h5>
+    <h5 id="title" hidden><?php echo htmlspecialchars( $modalidade, ENT_COMPAT, 'UTF-8', FALSE ); ?>_<?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </h5>
 
-          <thead>   
 
-          <tr>
-              <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">ID</th>
+        
+      <table class="table table-bordered" id="table">
+        
+        <thead>
+          <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">ID</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">LOCAL</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">ESPAÇO</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">PROFESSOR</th>
@@ -139,9 +144,9 @@
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">OUT</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">NOV</th>
               </tr>
-          </thead>
-          <tbody>
-          <?php $counter1=-1;  if( isset($turmas) && ( is_array($turmas) || $turmas instanceof Traversable ) && sizeof($turmas) ) foreach( $turmas as $key1 => $value1 ){ $counter1++; ?>
+        </thead>
+        <?php $counter1=-1;  if( isset($turmas) && ( is_array($turmas) || $turmas instanceof Traversable ) && sizeof($turmas) ) foreach( $turmas as $key1 => $value1 ){ $counter1++; ?>
+        <tbody>
           <tr style="padding: 5px"> 
               <td style="text-align: center; border: solid 1px; padding: 5px;">
                <?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
@@ -156,7 +161,7 @@
                 <?php if( $value1["idperson"] == 7 ){ ?>
                 SBC
                 <?php }else{ ?>
-               <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+               <?php echo htmlspecialchars( $value1["apelidoperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                <?php } ?>
               </td>              
               <td style="text-align: center; border: solid 1px; color: darkblue; padding: 5px;">
@@ -181,7 +186,7 @@
                <?php echo htmlspecialchars( $value1["origativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
               </td>
               <td style="text-align: center; border: solid 1px; padding: 5px;">
-               <?php echo htmlspecialchars( $value1["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+               <?php echo htmlspecialchars( $value1["vagas"]+$value1["vagaslaudo"]+$value1["vagaspcd"]+$value1["vagaspvs"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
               </td>
               <td style="text-align: center; border: solid 1px; padding: 5px;">
                <?php echo htmlspecialchars( $value1["nummatriculados"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
@@ -227,32 +232,55 @@
           <?php }else{ ?>
           <tr style="font-weight: bold; color: red; font-size: 22px; text-align: center; padding: 10px;">
             <td colspan="26" style="padding: 10px">
-              Não há turmas relacionadas a esta modalidade!
+              Não há turmas relacionadas a este local!
             </td>
           </tr>
           </tbody>
           <?php } ?>
-          <tfoot>
-            
-          </tfoot>
-          
-      </table> 
-
-</div>
-
-
-<div style="text-align-last: right;">
-      <table style="border: none; text-align:">
-        <tr>
-          <td>
-             <button type="button" onclick="window.print()" class="btn btn-primary pull-right" style="margin-right: 5px; margin-top: 5px">
-                    <i class="fa fa-print"></i> Imprimir
-              </button>
-          </td>
-        </tr>
+        </tbody>
       </table>
 
+      <button
+        class="btn btn-primary"
+        id="export-button"
+        onclick="exportTableToXLS()"
+      >
+        Exportar para XLS
+      </button>
+
+      <button onclick="window.print()" class="btn btn-primary" style="">
+                    <i class="fa fa-print"></i> Imprimir
+              </button>
+    </div>
+
 </div>
+
+<script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    <script type="text/javascript">
+      
+      function exportTableToXLS() {
+
+        const table = document.getElementById("table");
+        const tableRows = table.getElementsByTagName("tr");
+        const columnCount = tableRows[0].children.length;
+
+        const worksheet = XLSX.utils.table_to_sheet(table);
+
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(
+          workbook,
+          worksheet,
+          document.getElementById("title").textContent
+        );
+
+        const fileName = document.getElementById("title").textContent+".xlsx";
+
+        XLSX.writeFile(workbook, fileName);
+      }
+
+
+    </script>
+
 
 
 

@@ -47,18 +47,18 @@ $app->get("/admin/calendarioagenda-avaliacao/:idlocal", function($idlocal) {
 
 	$page->setTpl("calendarioagenda-avaliacao", [
 		'idlocal'=>$idlocal,
-		'error'=>Agenda::getMsgError(),
+		'error'=>Agenda::getMsgError()
 	]);	
 });
 
 $app->get("/admin/listaagendapordata-avaliacao/:idlocal/:data", function($idlocal, $data) {
 
-	User::verifyLogin();
+	//User::verifyLogin();
 
 	$agenda = new Agenda();
 	$local = new Local();
 
-	$titulo = 'avaliacao';
+	$titulo = "avaliacao";
 
 	$agenda = $agenda->getAgendaByLocalData($idlocal, $data, $titulo);
 
@@ -114,7 +114,7 @@ $app->get("/admin/listaagendapordata-avaliacao/:idlocal/:data", function($idloca
 		'agenda'=>$agenda,
 		'data'=>$data,
 		'nomediadasemana'=>$nomediadasemana,
-		'error'=>Agenda::getMsgError(),
+		'error'=>Agenda::getMsgError()
 	]);	
 });
 
@@ -128,7 +128,7 @@ $app->get("/admin/agendamarcarpresenca-avaliacao/:idagen/:idlocal/:data", functi
 
 	if($hoje != $data){
 	    
-	    echo "<script>alert('Você não pode confirmar presença para dia posterior!');";
+	    echo "<script>alert('Você não pode confirmar presença para data que não seja a data de hoje!');";
 		echo "javascript:history.go(-1)</script>";
 		exit;
 	}
@@ -138,6 +138,9 @@ $app->get("/admin/agendamarcarpresenca-avaliacao/:idagen/:idlocal/:data", functi
 	 echo "<script>alert('Presença confirmada com sucesso');";
 		echo "javascript:history.go(-1)</script>";
 		exit;
+	
+	
+	
 });
 
 

@@ -61,8 +61,8 @@
 
             let hoje = dataAtualFormatada();
 
-            let strDiaSemana = datasemanas.getDay(); 
-
+            let strDiaSemana = datasemanas.getDay();  
+            
             if(hoje < data){
 
                 alert('Data escolhida não pode ser posterior ao dia de hoje!');                  
@@ -120,11 +120,11 @@
         Olá Professor(a) <?php echo htmlspecialchars( $user["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>!
       </h3>
       <h1>
-          Selecione a data e o dia da semana para atualizar a lista de presença da turma: <br> [<?php echo htmlspecialchars( $idturma, ENT_COMPAT, 'UTF-8', FALSE ); ?>] - <?php echo htmlspecialchars( $descturma, ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php if( $dia2 == '' ){ ?> <?php echo htmlspecialchars( $dia1, ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php }else{ ?> <?php echo htmlspecialchars( $dia1, ENT_COMPAT, 'UTF-8', FALSE ); ?> e <?php echo htmlspecialchars( $dia2, ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php } ?>
+         Selecione a data e o dia da semana para atualizar a lista de presença da turma: <br> [<?php echo htmlspecialchars( $idturma, ENT_COMPAT, 'UTF-8', FALSE ); ?>] - <?php echo htmlspecialchars( $descturma, ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php if( $dia2 == '' ){ ?> <?php echo htmlspecialchars( $dia1, ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php }else{ ?> <?php echo htmlspecialchars( $dia1, ENT_COMPAT, 'UTF-8', FALSE ); ?> e <?php echo htmlspecialchars( $dia2, ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php } ?>
       </h1>
      
       <ol class="breadcrumb">
-        <li><a href="/admin"><i class="fa fa-dashboard"></i> Level</a></li>
+        <li><a href="/prof"><i class="fa fa-dashboard"></i> Level</a></li>
         <li class="active">Here</li>
       </ol>
     </section>

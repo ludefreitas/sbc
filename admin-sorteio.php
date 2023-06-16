@@ -10,7 +10,7 @@ use \Sbc\Model\Turma;
 $app->get("/admin/sorteio/:idtemporada", function($idtemporada) {
 
 	User::verifyLogin();
-
+	
 	$iduser = $_SESSION['User']['iduser'];
 
 	$temporada = new Temporada();
@@ -50,7 +50,7 @@ $app->post("/admin/sortear", function() {
 			Sorteio::sortear($maxIncritos, $maxIncritos, $idtemporada);
 
 			$sorteio = Sorteio::listAll($idtemporada);
-
+			
 			$turma = new Turma();
 
 			for ($x = 0; $x<count($sorteio); $x++) {
@@ -62,8 +62,7 @@ $app->post("/admin/sortear", function() {
 				Sorteio::setNumeroDeOrdem($numeroordenado, $numerosorteado);
 
 				/*
-				$inscricao = Sorteio::selecionaInscByNumordemNumsorte($idtemporada, $numeroordenado, $numerosorteado);
-
+				$inscricao = Sorteio::selecionaInscByNumordemNumsorte($idtemporada, $numeroordenado, $numerosorteado);				
 				for ($y = 0; $y<count($inscricao); $y++) {	
 
 					$email = $inscricao[$y]['desemail'];

@@ -66,7 +66,6 @@ $app->get("/admin/pessoas-audi", function() {
 
 	$pessoa = new Pessoa();
 
-	User::verifyLogin();
 	// na linha abaixo retorna um array com todos os dados do usuário
 
 	$search = (isset($_GET['search'])) ? $_GET['search'] : "";

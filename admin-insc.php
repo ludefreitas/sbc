@@ -10,6 +10,7 @@ use \Sbc\Model\InscStatus;
 use \Sbc\Model\Sorteio;
 use \Sbc\Model\Agenda;
 
+
 $app->get("/admin/insc", function() {
 
 	User::verifyLogin();
@@ -312,6 +313,15 @@ $app->get("/admin/insc/pessoa/:idepess", function($idpess){
 
 	$inscricoes = $pessoa->getInsc();
 
+    /*
+	if(!$inscricoes){
+
+		User::setError("Inscrição(ões) não encontrada(s)!!!");
+		header("Location: /admin/pessoas");
+		exit();			
+	}
+	*/
+
 	//var_dump($inscricoes[0]['idinsc']);
 	//exit();
 
@@ -349,7 +359,7 @@ $app->get("/admin/insc/pessoa-audi/:idepess", function($idpess){
 $app->get("/admin/insc-turma-temporada/:idturma/:idtemporada/user/:iduser", function($idturma, $idtemporada, $iduser) {
 
 	User::verifyLogin();
-
+	
 	$inscTodas = new Insc();
 	$insc = new Insc();
 	$inscPcd = new Insc();
@@ -363,14 +373,14 @@ $app->get("/admin/insc-turma-temporada/:idturma/:idtemporada/user/:iduser", func
 
 	$idusersessao = (int)$_SESSION['User']['iduser'];
 
-	$iduserprof = User::getIdUseInTurmaTemporada($idturma, $idtemporada);	
+	$iduserprof = User::getIdUseInTurmaTemporada($idturma, $idtemporada);
 	
 	$inscTodas->getInscByTurmaTemporadaTodas($idturma, $idtemporada);
 	$insc->getInscByTurmaTemporada($idturma, $idtemporada);
 	$inscPcd->getInscByTurmaTemporadaPcd($idturma, $idtemporada);
 	$inscPlm->getInscByTurmaTemporadaPlm($idturma, $idtemporada);
 	$inscPvs->getInscByTurmaTemporadaPvs($idturma, $idtemporada);
-
+	
 	$vagas = (int)$turma->getvagas();
 
 	$numMatriculados = $temporada->setNummatriculadosTemporada($idtemporada, $idturma);	
@@ -445,6 +455,8 @@ $app->get("/admin/insc-turma-temporada-audi/:idturma/:idtemporada/user/:iduser",
 });
 
 $app->get("/admin/insc/:idinsc/:iduserprof/:idturma/statusMatriculada", function($idinsc, $iduserprof, $idturma){
+    
+    User::verifyLoginProf();
 
 	$insc = new Insc();
 	$turma = new Turma();
@@ -457,6 +469,8 @@ $app->get("/admin/insc/:idinsc/:iduserprof/:idturma/statusMatriculada", function
 	$idtemporada = $insc->getidtemporada();
 	$iduser = (int)$iduserprof;
 
+	$turma->get((int)$idturma);
+	
 	$dtInicmatricula = $insc->getdtinicmatricula();
 	$hoje = date('Y-m-d H:i:s');
 
@@ -542,10 +556,21 @@ $app->get("/admin/insc/:idinsc/:iduserprof/:idturma/statusAguardandoMatricula", 
 	$desctemporada = $insc->getdesctemporada();
 	$iduser = (int)$iduserprof;
 	$turma->get((int)$idturma);
+	
+	$idturmastatus = $temporada->getStatusTurmaTemporada($idturma, $idtemporada);
+	
+	if($idturmastatus == 3){
+		echo "<script>alert('Você precisa alterar o status da turma, nesta temporada, para ( 3 ) e assim alterar o status da inscrição.');";
+        			echo "javascript:history.go(-1)</script>";	
+        			exit;	
+	}
 
 	$insc->alteraStatusInscricaoAguardandoMatricula($idinsc);
 
 	$insc->emailIformarVagaDisponivel($idinsc, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma, $idtemporada, $iduser);
+	
+	// Alterar essa linha quando email for enviado.
+	//$insc->alteraStatusInscricaoAguardandoMatricula($idinsc);
 
 	//header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
 	//exit();
@@ -566,9 +591,8 @@ $app->get("/admin/insc/:idinsc/:iduserprof/:idturma/statusSorteada", function($i
 	$iduser = (int)$iduserprof;
 
 	$insc->alteraStatusInscricaoSorteada($idinsc);
-
+	
 	echo '<script>javascript:history.go(-1)</script>';
-
 	//header("Location: /admin/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
 	//exit();
 
@@ -581,7 +605,7 @@ $app->get("/admin/insc/:idinsc/:iduserprof/:idturma/enviarEmailASorteado", funct
 	$temporada = new Temporada();
 	$user = new User();
 	$pessoa = new Pessoa();
-	//$sorteio = new Sorteio();	
+	$sorteio = new Sorteio();	
 	$insc->get((int)$idinsc);
 	$idturma = (int)$idturma;
 	$idtemporada = $insc->getidtemporada();
@@ -603,8 +627,6 @@ $app->get("/admin/insc/:idinsc/:iduserprof/:idturma/enviarEmailASorteado", funct
 	$numerosorteado = $insc->getnumsorte();
 	$numeroordenado = $insc->getnumordem();
 	$turma->get((int)$idturma);
-
-	//$insc->inscricaoEmail($idinsc, $numerosorteado, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma);
 
 	$insc->sorteioEmail($idinsc, $numerosorteado, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma, $idade, $numeroordenado, $idtemporada, $iduserprof);
 
@@ -628,8 +650,7 @@ $app->get("/admin/insc/:idinsc/:idturma/:idpess/statusDesistente", function($idi
 	$idpess = (int)$idpess;
 
 	$insc->alteraStatusInscricaoDesistente($idinsc, $idturma, $idtemporada);
-
-	echo '<script>javascript:history.go(-1)</script>';
+    echo '<script>javascript:history.go(-1)</script>';
 	//header("Location: /admin/profile/insc/".$idinsc."/".$idpess."/".$idturma."");
 	//exit();
 
@@ -645,11 +666,6 @@ $app->get("/admin/insc-turma-temporada-matricular/:idturma/:idtemporada/user/:id
 	$temporada = new Temporada();
 	$temporada->get((int)$idtemporada);
 	$turma->get((int)$idturma);
-
-	$dtInicmatricula = $temporada->getdtinicmatricula();
-
-	var_dump($dtInicmatricula);
-	exit();
 
 	$idusersessao = (int)$_SESSION['User']['iduser'];
 
@@ -699,7 +715,7 @@ $app->get("/admin/insc-turma-temporada-chamada/:idturma/:idtemporada/user/:iduse
 		$insc->getInscByTurmaTemporadaChamada($idturma, $idtemporada);
 	}
 	*/
-
+	
 	$insc->getInscByTurmaTemporadaChamada($idturma, $idtemporada);
 
 	$page = new PageAdmin([
@@ -745,8 +761,8 @@ $app->get("/admin/calendario-lista-presenca/:idtemporada/:idturma", function($id
 	}
 
 	if($dias_da_semana[1] === 'a'){
-
-		if(($dia1 === "Segunda") AND ($dia2 === "Quinta")){
+	    
+	    if(($dia1 === "Segunda") AND ($dia2 === "Quinta")){
 			$unicodiasemana = 99;			
 			$primeirodiasemana = 0;
 			$segundodiasemana = 1;		
@@ -855,6 +871,22 @@ $app->get("/admin/calendario-lista-presenca/:idtemporada/:idturma", function($id
 			$quartodiasemana = 99;
 			$quintodiasemana = 99 ;		
 		}
+		if(($dia1 === "Sábado") AND ($dia2 === "")){
+			$unicodiasemana = 5;
+			$primeirodiasemana = 99;
+			$segundodiasemana = 99;	
+			$terceirodiasemana = 99;
+			$quartodiasemana = 99;
+			$quintodiasemana = 99 ;		
+		}
+		if(($dia1 === "Domingo") AND ($dia2 === "")){
+			$unicodiasemana = 6;
+			$primeirodiasemana = 99;
+			$segundodiasemana = 99;	
+			$terceirodiasemana = 99;
+			$quartodiasemana = 99;
+			$quintodiasemana = 99 ;		
+		}
 	}	
 
 	$page = new PageAdmin();
@@ -874,7 +906,6 @@ $app->get("/admin/calendario-lista-presenca/:idtemporada/:idturma", function($id
 		'error'=>Agenda::getMsgError()
 	]);	
 });
-
 
 $app->get("/admin/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/:data", function($idtemporada, $idturma, $data) {
 
@@ -1018,6 +1049,154 @@ $app->get("/admin/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/:data
 	}
 });
 
+$app->get("/admin/insc-turma-temporada-chamada-mensal/:idtemporada/:idturma/:data", function($idtemporada, $idturma, $data) {
+
+	User::checkLoginProf();
+	$turma = new Turma();
+	$turma->get((int)$idturma);
+	$insc = new Insc();
+	$temporada = new Temporada;
+	$temporada->get((int)$idtemporada);
+	$desctemporada = $temporada->getdesctemporada();	
+
+	if( Insc::getInscByTurmaTemporadaMatriculadosDataListaChamada($idturma, $idtemporada, $data) != NULL ){
+
+		$insc = Insc::getInscByTurmaTemporadaMatriculadosDataListaChamada($idturma, $idtemporada, $data);
+			
+	}else{
+
+		$insc = Insc::getInscByTurmaTemporadaMatriculados($idturma, $idtemporada);	
+	}	
+
+	$statuspresenca = 4;
+
+	$page = new PageAdmin([
+		'header'=>false,
+		'footer'=>false
+	]);
+	
+	/*
+
+	if(!Insc::temChamadaData($data, $idturma)){	    
+
+		for($x = 0; $x<count($insc); $x++){				
+			$idinsc = (int)$insc[$x]['idinsc'];
+			Insc::save_presenca($idinsc, $statuspresenca, $data);
+		}	
+
+		$insc = Insc::getInscByTurmaTemporadaMatriculadosDataListaChamada($idturma, $idtemporada, $data);
+
+		$mes = date('m', strtotime($data));
+		$dias_do_mes = new Insc();
+		$dias_do_mes = Insc::GetDiasDoMesPresenca((int)$idtemporada,(int)$idturma,(int)$mes);	
+
+		$nomemes = 'JANEIRO';
+		if($mes == '02'){
+			$nomemes = 'FEVEREIRO';
+		}
+		if($mes == '03'){
+			$nomemes = 'MARÇO';
+		}
+		if($mes == '04'){
+			$nomemes = 'ABRIL';
+		}
+		if($mes == '05'){
+			$nomemes = 'MAIO';
+		}
+		if($mes == '06'){
+			$nomemes = 'JUNHO';
+		}
+		if($mes == '07'){
+			$nomemes = 'JULHO';
+		}
+		if($mes == '08'){
+			$nomemes = 'AGOSTO';
+		}
+		if($mes == '09'){
+			$nomemes = 'SETEMBRO';
+		}
+		if($mes == '10'){
+			$nomemes = 'OUTUBRO';
+		}
+		if($mes == '11'){
+			$nomemes = 'NOVEMBRO';
+		}
+		if($mes == '12'){
+			$nomemes = 'DEZEMBRO';
+		}	
+
+		$page->setTpl("insc-turma-temporada-chamada-mensal", [
+			'turma'=>$turma->getValues(),
+			'data'=>$data,
+			'idtemporada'=>$idtemporada,
+			'desctemporada'=>$desctemporada,
+			'insc'=>$insc,
+			'dias_do_mes'=>$dias_do_mes,
+			'mes'=>$mes,
+			'nomemes'=>$nomemes,
+			'error'=>Agenda::getMsgError()
+		]);		
+
+	}else{
+	
+	*/
+
+        
+		$mes = date('m', strtotime($data));
+		$dias_do_mes = new Insc();
+		$dias_do_mes = Insc::GetDiasDoMesPresenca((int)$idtemporada,(int)$idturma,(int)$mes);	
+
+		$nomemes = 'JANEIRO';
+	
+		if($mes == '02'){
+			$nomemes = 'FEVEREIRO';
+		}
+		if($mes == '03'){
+			$nomemes = 'MARÇO';
+		}
+		if($mes == '04'){
+			$nomemes = 'ABRIL';
+		}
+		if($mes == '05'){
+			$nomemes = 'MAIO';
+		}
+		if($mes == '06'){
+			$nomemes = 'JUNHO';
+		}
+		if($mes == '07'){
+			$nomemes = 'JULHO';
+		}
+		if($mes == '08'){
+			$nomemes = 'AGOSTO';
+		}
+		if($mes == '09'){
+			$nomemes = 'SETEMBRO';
+		}
+		if($mes == '10'){
+			$nomemes = 'OUTUBRO';
+		}
+		if($mes == '11'){
+			$nomemes = 'NOVEMBRO';
+		}
+		if($mes == '12'){
+			$nomemes = 'DEZEMBRO';
+		}
+	
+		$page->setTpl("insc-turma-temporada-chamada-mensal", [
+			'turma'=>$turma->getValues(),
+			'data'=>$data,
+			'idtemporada'=>$idtemporada,
+			'desctemporada'=>$desctemporada,
+			'insc'=>$insc,
+			'dias_do_mes'=>$dias_do_mes,
+			'mes'=>$mes,
+			'nomemes'=>$nomemes,
+			'error'=>Agenda::getMsgError()
+		]);	
+	//}
+});
+
+
 $app->get("/admin/insc-turma-temporada-presente/:idtemporada/:idturma/:data/:idinsc", function($idtemporada, $idturma, $data, $idinsc) {
 
 	//User::checkLoginProf();
@@ -1057,5 +1236,7 @@ $app->get("/admin/insc-turma-temporada-justificar/:idtemporada/:idturma/:data/:i
 	//header("Location: /prof/insc-turma-temporada-fazer-chamada/".$idtemporada."/".$idturma."/".$data."");
 		//exit();				
 });
+
+
 
 ?>

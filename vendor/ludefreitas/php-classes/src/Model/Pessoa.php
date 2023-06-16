@@ -207,7 +207,7 @@ class Pessoa extends Model {
 
 	}
 
-	public static function checkCpfExist($numcpf, $iduser)
+	public static function checkCpfExist($numcpf)
 	{
 
 		$sql = new Sql();
@@ -240,26 +240,6 @@ class Pessoa extends Model {
 		if (count($rows) > 0) {
 			$this->setData($rows[0]);
 		}
-	}
-
-	public function getFromIdUser($iduser)
-	{
-
-		$sql = new Sql();
-
-		$rows = $sql->select(
-			"SELECT * FROM tb_pessoa 
-			INNER JOIN 	tb_users USING(iduser)
-			
-			WHERE iduser = :iduser", [
-			':iduser'=>$iduser
-		]);
-
-		return $rows;
-
-		//if (count($rows) > 0) {
-			//$this->setData($rows[0]);
-		//}
 	}
 
 	public function getPessoaExist()	{
@@ -323,7 +303,9 @@ class Pessoa extends Model {
 			INNER JOIN tb_users b USING(iduser) 
 			INNER JOIN tb_persons c USING(idperson)
 			WHERE a.nomepess LIKE :search 
+			OR a.idpess LIKE :search
 			OR a.dtnasc LIKE :search
+			OR a.numcpf LIKE :search
 			OR c.desperson = :search 
 			OR c.desemail LIKE :search 
 			OR c.apelidoperson LIKE :search
@@ -374,33 +356,33 @@ class Pessoa extends Model {
 
 	function validaCPF($cpf) {
  
-	    // Extrai somente os números
-	    $cpf = preg_replace( '/[^0-9]/is', '', $cpf );
-	     
-	    // Verifica se foi informado todos os digitos corretamente
-	    if (strlen($cpf) != 11) {
-	        return false;
-	    }
+    // Extrai somente os números
+    $cpf = preg_replace( '/[^0-9]/is', '', $cpf );
+     
+    // Verifica se foi informado todos os digitos corretamente
+    if (strlen($cpf) != 11) {
+        return false;
+    }
 
-	    // Verifica se foi informada uma sequência de digitos repetidos. Ex: 111.111.111-11
-	    if (preg_match('/(\d)\1{10}/', $cpf)) {
-	        return false;
-	    }
+    // Verifica se foi informada uma sequência de digitos repetidos. Ex: 111.111.111-11
+    if (preg_match('/(\d)\1{10}/', $cpf)) {
+        return false;
+    }
 
-	    // Faz o calculo para validar o CPF
-	    for ($t = 9; $t < 11; $t++) {
-	        for ($d = 0, $c = 0; $c < $t; $c++) {
-	            $d += $cpf[$c] * (($t + 1) - $c);
-	        }
-	        $d = ((10 * $d) % 11) % 10;
-	        if ($cpf[$c] != $d) {
-	            return false;
-	        }
-	    }
-	    return true;
-	}
+    // Faz o calculo para validar o CPF
+    for ($t = 9; $t < 11; $t++) {
+        for ($d = 0, $c = 0; $c < $t; $c++) {
+            $d += $cpf[$c] * (($t + 1) - $c);
+        }
+        $d = ((10 * $d) % 11) % 10;
+        if ($cpf[$c] != $d) {
+            return false;
+        }
+    }
+    return true;
+}
 
-	public static function checkCadunicoExist($idpess)
+     public static function checkCadunicoExist($idpess)
 	{
 		$sql = new Sql();
 
@@ -411,6 +393,19 @@ class Pessoa extends Model {
 		]);
 
 		return $results;
+	}
+	
+	public static function getNumCpfByIdpess($idpess)
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT numcpf FROM tb_pessoa 
+			WHERE idpess = :idpess", [
+			':idpess'=>$idpess
+		]);
+
+		return $results[0]['numcpf'];
 	}
 	
 	/*

@@ -178,7 +178,7 @@ class Atividade extends Model {
 			OR a.origativ LIKE :search
 			OR a.prograativ LIKE :search
 			OR a.tipoativ LIKE :search
-			OR b.descrfxetaria LIKE :search 
+			OR b.descrfxetaria LIKE :search
 			OR b.initidade LIKE :search 
 			OR b.fimidade LIKE :search 
 			ORDER BY a.nomeativ

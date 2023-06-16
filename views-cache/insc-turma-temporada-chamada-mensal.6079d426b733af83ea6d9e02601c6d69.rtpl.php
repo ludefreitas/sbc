@@ -1,0 +1,376 @@
+<?php if(!class_exists('Rain\Tpl')){exit;}?><head>
+    <!-- Required meta tags -->   
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" type="text/css" href="/../res/site/css/style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+    
+    <title>Cursos Esportivos SBC</title>
+    <link rel="icon" type="image/jpg" href="/../res/site/img/corpoacao.png" />
+
+    <script type="text/javascript">
+
+      function dadosAtestado(idpess){
+        
+        let url = '/admin/saude/dadosatestado/'+idpess
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if (window.confirm(' '+ result + 'Para atualizar atestado clique em "OK"'))
+          {
+              adicionarArtestado(idpess)
+          };
+
+        });
+      }
+    
+    function adicionarArtestado(idpess){
+
+        //let confirmaAtestado = confirm('Já existe um atestado válido até:'+"\n"+'Deseja adicionar atestado? ')
+        let confirmaAtestado = confirm('Deseja realmente atualizar atestado? ')
+
+        if(confirmaAtestado == true)
+        {                      
+            var data = prompt("Informe a data da emissão do Atestado. Ex.: dd-mm-aaaa");     
+
+            if (data == null || data == "") {
+
+                alert("As informaçãoes do atestado não foram atualizadas! Informe a data e faça alguma observação")
+            } else {
+
+                 var traco1 = data.substr(2,1)
+                 var traco2 = data.substr(5,1)
+                 var dia = data.substr(0,2);
+                 var mes = data.substr(3,2);
+                 var ano = data.substr(6,4); 
+                 
+
+                 if((traco1 != '-') || (traco2 != '-') || (ano.length < 4)){
+                    alert('Formato da data inválida');
+                 }else{
+
+                    if((dia > 31) || (dia == 0) || (mes > 12) || (mes == 0)){
+
+                    alert('data inválida!')
+                    
+                    }else{
+
+                        //alert('Data validada!!! ' + dia + ' ' + mes + ' ' + ano)
+
+                        
+                        var observ = prompt("Digite uma observação");
+                        if (observ == null || observ == "") {
+                                lert("As informaçãoes do atestado não foram atualizadas! Informe a data e faça alguma observação");
+                        } else {
+
+                            let url = '/admin/saude/atulizaatestado/'+idpess+'/'+data+'/'+observ+''
+
+                            atualizarAtestado(url) 
+                        }           
+                    }                           
+                }
+            }        
+        }  
+        //let url = '/admin/saude/dadosatestado/'+idpess
+
+        //dadosAtestado(url)  
+    }
+
+      function atualizarAtestado(url){
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          alert(result)
+
+        });
+      }
+
+
+      
+      function requisitarPaginaPresente(url){
+
+        let ajax = new XMLHttpRequest();
+        idurl = url.substr(51);                
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if(result){            
+            //document.getElementById('spanpresente'+idurl).hidden = false
+            //document.getElementById('spanausente'+idurl).hidden = true
+            //document.getElementById('spanjustificar'+idurl).hidden = true
+            //document.getElementById('spantraco'+idurl).hidden = true
+          }else{
+            alert('Não foi possível marcar presença')
+          }
+
+        });
+      }
+
+      function requisitarPaginaAusente(url){
+
+        let ajax = new XMLHttpRequest();
+        let idurl = url.substr(50);          
+        ajax.open('GET', 'url');
+
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if(result){            
+            //document.getElementById('spanausente'+idurl ).hidden = false  
+            //document.getElementById('spanpresente'+idurl ).hidden = true
+            //document.getElementById('spanjustificar'+idurl ).hidden = true
+            //document.getElementById('spantraco'+idurl ).hidden = true
+          }else{
+            alert('Não foi possível marcar presença')
+          }
+        });
+      }
+
+      function requisitarPaginaJustificar(url){
+
+        let ajax = new XMLHttpRequest();
+        let idurl = url.substr(53);              
+        ajax.open('GET', 'url');
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if(result){              
+            
+            //document.getElementById('spanjustificar'+idurl ).hidden = false       
+            //document.getElementById('spanausente'+idurl ).hidden = true  
+            //document.getElementById('spanpresente'+idurl ).hidden = true
+            //document.getElementById('spantraco'+idurl ).hidden = true
+          }else{
+            alert('Não foi possível marcar presença')
+          }
+        });
+      }   
+
+    </script>
+
+    <style type="text/css">
+
+      table {          
+          
+          font-size: 8px; /* diminua um pouco a fonte na hora da impressão */
+          border: 1px solid #000;
+          flex-shrink:0;
+          page-break-inside: avoid; 
+      }
+      tr:nth-child(even){
+          background: lightgray;
+      }      
+
+    </style>
+</head>
+
+
+
+
+            <hr>
+
+            
+
+<div class="container">
+
+  <div id="div1">  
+    <a href="javascript:window.history.go(-1)">
+        <i class="fa fa-arrow-left"></i> 
+            Voltar
+    </a> 
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="/admin">
+        <i class="fa fa-home"></i> 
+            Início
+    </a>  
+</div>
+<hr>
+
+  <div class="row">
+
+    <div class="col-md-3" style="text-align-last: center;">
+      <div style="margin: 5px 10px 5px 10px; width: 100%">
+        <img src="/../res/site/img/sbc.png" title="SecretariaDeEsportes" width="80">
+         
+      </div>
+      
+    </div>
+
+    <div class="col-md-9">
+
+      <div style="margin: 5px 10px 5px 10px; width: 100%">
+        <br><br>
+        <div style="text-align-last: center; font-weight: bold;">
+        <h4>
+          SECRETARIA DE ESPORTES    
+        </h4>
+       </div>
+       <div style="text-align-last: left;">
+        <span style="text-align: left;">
+        Centro Esportivo: <span style="font-weight: bold;"><?php echo htmlspecialchars( $turma["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> &nbsp;  - </span> &nbsp;&nbsp;&nbsp;<?php echo htmlspecialchars( $turma["nomelocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+        </span>
+       </div>
+      </div>
+
+    </div>    
+  </div>
+  
+</div>       
+           
+            <div class="container">
+
+             <div class="row" style="margin-right: 0px; font-size: 14px">
+                <div class="col-md-12">
+                  <div class="row">
+
+                     <div class="col-md-3" style="border: 1px solid black; text-align: center; " >
+                      <div class="row">
+                          <div class="col-md-12" style="background-color: #ccc; font-weight: bold; ">
+                            Curso
+                          </div>                          
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                          </div>                          
+                        </div>
+                       
+                      </div>
+                      
+                      <div class="col-md-7" style="border: 1px solid black; text-align: center; " >
+                      <div class="row">
+                          <div class="col-md-12" style="background-color: #ccc; font-weight: bold; ">
+                            Dia da Semana / horário
+                          </div>                          
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <?php echo htmlspecialchars( $turma["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  das <?php echo htmlspecialchars( $turma["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $turma["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  
+                          </div>                          
+                        </div>
+                       
+                      </div>
+                      <div class="col-md-2" style="border: 1px solid black; text-align: center; " >
+                      <div class="row">
+                          <div class="col-md-12" style="background-color: #ccc; font-weight: bold;">
+                            Turma
+                          </div>                          
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                          </div>                          
+                        </div>
+                       
+                      </div>
+
+                    </div>
+                </div>
+              </div>
+
+
+              <div class="row" style="margin-right: 0px; font-size: 14px">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-12" style="border: 1px solid black; margin: 0; padding: 0; text-align: center; font-weight: bold;" >
+                   <table class="col-md-12">
+   
+
+                        <tr>
+                          
+                          <th colspan="12" style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;"><?php echo htmlspecialchars( $nomemes, ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $desctemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?> </th>
+                        </tr>
+                        <tr>
+                          <th style="border: solid 1px; text-align: left; font-weight: bold; padding: 5px;">Nome do aluno </th>
+                          <?php $counter1=-1;  if( isset($dias_do_mes) && ( is_array($dias_do_mes) || $dias_do_mes instanceof Traversable ) && sizeof($dias_do_mes) ) foreach( $dias_do_mes as $key1 => $value1 ){ $counter1++; ?>
+                            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;"><?php echo htmlspecialchars( $value1["dias"], ENT_COMPAT, 'UTF-8', FALSE ); ?></th>
+                          <?php } ?>
+                        </tr>
+                      
+                        <?php $counter1=-1;  if( isset($insc) && ( is_array($insc) || $insc instanceof Traversable ) && sizeof($insc) ) foreach( $insc as $key1 => $value1 ){ $counter1++; ?>
+
+                        <?php $INSC = $value1["idinsc"]; ?>
+                        <tr>
+                            <td style="border: solid 1px; text-align: left; font-weight: bold; padding: 2px;"><?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </td>
+
+                            <?php $counter2=-1;  if( isset($dias_do_mes) && ( is_array($dias_do_mes) || $dias_do_mes instanceof Traversable ) && sizeof($dias_do_mes) ) foreach( $dias_do_mes as $key2 => $value2 ){ $counter2++; ?>       
+                            <td style="border: solid 1px; text-align: center; font-weight: bold; padding: 2px;">
+                              <?php echo statusPresenca($value2["dias"], $mes, $INSC, $turma["idturma"], $idtemporada); ?>
+
+                                </td>
+                            <?php } ?>
+
+                        </tr>
+                        <?php } ?>
+                                                         
+                      
+                    </table>  
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row" style="margin-right: 0px; font-size: 14px;">
+
+                <div class="col-md-6" style="text-align: left;">       
+                  <button type="button" onclick="window.print()" class="btn btn-primary pull-right" style="margin-right: 0px; margin-top: 5px">
+                    <i class="fa fa-print"></i> Imprimir
+                  </button> 
+                </div> 
+
+                <div class="col-md-6" style="text-align: right;">       
+                  <div style="margin-right: 0px; margin-top: 0 px; margin-bottom: 0px;">
+                    <a href="/admin/calendario-lista-presenca/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                  <i class="fa fa-arrow-left"></i> 
+                    Voltar
+                </a> 
+                  </div>
+                </div>                      
+                  
+              </div>
+                
+              </div>
+            
+         
+        
+    
+
+
+
+         
+        
+    
+
+

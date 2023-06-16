@@ -46,8 +46,6 @@ $app->get('/cursos', function() {
 		$pagination = Turma::getPageTurmaTemporada();
 	}
 
-	
-
 	$temporada = new Temporada();
 
 	if(!isset($pagination['data']) || $pagination['data'] == NULL){
@@ -185,26 +183,24 @@ $app->get("/cursos/verifica", function(){
 	Endereco::seEnderecoExiste($idperson);
 
 	$_SESSION['token'] = isset($_SESSION['token']) ? $_SESSION['token'] : '';
-	$_SESSION['tokencpf'] = isset($_SESSION['tokencpf']) ? $_SESSION['tokencpf'] : '';
 
 	$token = $_SESSION['token'];
-	$tokencpf = $_SESSION['tokencpf'];
 	
 	if(Cart::cartIsEmpty((int)$_SESSION[Cart::SESSION]['idcart']) === false){
 		Cart::setMsgError("Selecione uma turma e a pessoa que irá fazer a aula! ");
 		header("Location: /cursos/cart");
 		exit();
-	}	
-
+	}
+	
 	$idcart = (int)$cart->getidcart();
 	$idturma = (int)Cart::getIdturmaByCart($idcart);
 	$idtemporada = $cart->getTurma()[0]['idtemporada'];
 	$vagas = (int)Turma::getVagasByIdTurma($idturma);
 
-	$inscGeral = Insc::getInscGeral($idturma, $idtemporada);
-	$inscPlm = Insc::pegaInscPlm($idturma, $idtemporada);
-	$inscPcd = Insc::pegaInscPcd($idturma, $idtemporada);
-	$inscPvs = Insc::pegaInscPvs($idturma, $idtemporada);
+	$inscGeral = (int)Insc::getInscGeral($idturma, $idtemporada);
+	$inscPlm = (int)Insc::pegaInscPlm($idturma, $idtemporada);
+	$inscPcd = (int)Insc::pegaInscPcd($idturma, $idtemporada);
+	$inscPvs = (int)Insc::pegaInscPvs($idturma, $idtemporada);
 
 	$vagasGeral = round($vagas * 0.7);
 	$vagasPlm = round($vagas * 0.1);
@@ -224,18 +220,6 @@ $app->get("/cursos/verifica", function(){
 		'pessoa'=>$cart->getPessoa(),
 		'turma'=>$cart->getTurma(),
 		'cid'=>$cid = Saude::listAllCid(),
-		'vagasGeral'=>$vagasGeral,
-		'inscGeral'=>$inscGeral,
-		'vagasPlm'=>$vagasPlm,
-		'inscPlm'=>$inscPlm,
-		'vagasPcd'=>$vagasPcd,
-		'inscPcd'=>$inscPcd,
-		'vagasPvs'=>$vagasPvs,
-		'inscPvs'=>$inscPvs,
-		'maxListaEsperaGeral'=>$maxListaEsperaGeral,
-		'maxListaEsperaPlm'=>$maxListaEsperaPlm,
-		'maxListaEsperaPcd'=>$maxListaEsperaPcd,
-		'maxListaEsperaPvs'=>$maxListaEsperaPvs,
 		'error'=>Pessoa::getError()
 	]);
 });
@@ -444,8 +428,6 @@ $app->post("/cursos/verifica", function(){
 			'idtemporada'=>$idtemporada	
 		]);
 
-		
-
 		$insc->save();
 
 		Turma::setUsedToken($idturma, $token);
@@ -652,7 +634,7 @@ $app->get("/cursos/comprovante", function() {
 		"footer"=>false
 	]);
 
-	$page->setTpl("comprovante-insc-cursos");	
+	$page->setTpl("comprovante-insc");	
 });
 
 ?>

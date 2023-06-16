@@ -6,7 +6,7 @@ use \Sbc\Model\User;
 use \Sbc\Model\Insc;
 use \Sbc\Model\Turma;
 use \Sbc\Model\Temporada;
-	
+use \Sbc\Model\Local;
 
 $app->get("/profile/insc", function(){
 
@@ -46,8 +46,6 @@ $app->get("/profile/insc/:idinsc/:idepess", function($idinsc, $idpess){
 
 $app->get("/insc/:idinsc/statusCancelada", function($idinsc){
 
-	User::verifyLogin(false);
-
 	$insc = new Insc();
 
 	$insc->get((int)$idinsc);
@@ -83,7 +81,6 @@ $app->get("/insc-turma-temporada-valida/:idturma/:idtemporada/user/:iduser", fun
 	
 	$page->setTpl("insc-turma-temporada-valida", [
 		'iduserprof'=>$iduserprof,
-		//'total'=>$total,
 		'insc'=>$insc->getValues(),
 		'turma'=>$turma->getValues(),
 		'temporada'=>$temporada->getValues(),
@@ -111,7 +108,7 @@ $app->get("/insc-turma-temporada-para-sorteio/:idturma/:idtemporada/user/:iduser
 
 	$iduserprof = User::getIdUseInTurmaTemporada($idturma, $idtemporada);	
 	
-	$insc->getInscByTurmaTemporadaParaSorteioGeral($idturma, $idtemporada);
+	$insc->getInscByTurmaTemporadaParaSorteio($idturma, $idtemporada);
 	$inscAmp->getInscByTurmaTemporadaParaSorteioAmpla($idturma, $idtemporada);
 	$inscPcd->getInscByTurmaTemporadaParaSorteioPcd($idturma, $idtemporada);
 	$inscPlm->getInscByTurmaTemporadaParaSorteioPlm($idturma, $idtemporada);
@@ -218,14 +215,11 @@ $app->get("/insc-turma-temporada-classificadas/:idturma/:idtemporada/user/:iduse
 	$inscPcd->getInscByTurmaTemporadaClassificadasPcd($idturma, $idtemporada);
 	$inscPlm->getInscByTurmaTemporadaClassificadasPlm($idturma, $idtemporada);
 	$inscPvs->getInscByTurmaTemporadaClassificadasPvs($idturma, $idtemporada);
-
+	
 	$inscCountAmp->getInscByTurmaTemporadaCountClassificadasAmpla($idturma, $idtemporada);
 	$inscCountPlm->getInscByTurmaTemporadaCountClassificadasPlm($idturma, $idtemporada);
 	$inscCountPcd->getInscByTurmaTemporadaCountClassificadasPcd($idturma, $idtemporada);
 	$inscCountPvs->getInscByTurmaTemporadaCountClassificadasPvs($idturma, $idtemporada);
-
-	//var_dump($inscCountAmp->getValues());
-	//exit;
 
 	//$totalinsc = $insc->countInscByTurmaTemporadaValida($idturma, $idtemporada);
 
@@ -278,7 +272,6 @@ $app->get("/insc-turma-temporada-listaespera/:idturma/:idtemporada/user/:iduser"
 
 	$iduserprof = User::getIdUseInTurmaTemporada($idturma, $idtemporada);	
 	
-	//$insc->getInscByTurmaTemporadaListaEsperaGeral($idturma, $idtemporada);
 	$inscAmp->getInscByTurmaTemporadaListaEsperaAmpla($idturma, $idtemporada);
 	$inscPcd->getInscByTurmaTemporadaListaEsperaPcd($idturma, $idtemporada);
 	$inscPlm->getInscByTurmaTemporadaListaEsperaPlm($idturma, $idtemporada);
@@ -321,12 +314,9 @@ $app->get("/insc-turma-temporada-listaespera/:idturma/:idtemporada/user/:iduser"
 });
 
 
-
-
-
 $app->get("/insc-turma-temporada-crec-valida/:idlocal/:idtemporada", function($idlocal, $idtemporada) {
 
-	User::verifyLogin(true);
+    User::verifyLogin(true);
 
 	$insc = new Insc();
 	$local = new Local();
@@ -363,7 +353,6 @@ $app->get("/insc-turma-temporada-crec-valida/:idlocal/:idtemporada", function($i
 		'success'=>User::getSuccess()
 	]);	
 });
-
 
 /*
 $app->get("/insc", function(){
@@ -402,5 +391,8 @@ $app->get("/insc/:idinsc", function($idinsc){
 
 });
 */	
+
+
+
 
 ?>

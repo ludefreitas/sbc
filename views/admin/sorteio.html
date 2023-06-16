@@ -37,17 +37,16 @@
                       <input type="hidden" name="desctemporada" value="{$temporada.desctemporada}" >
                       <input type="hidden" name="idtemporada" value="{$temporada.idtemporada}">
                       <input type="hidden" name="maxIncritosTemporada" value="{$maxIncritosTemporada.maximoInscritos}">
-
-                       {if="$sorteio == NULL"}
-                       <!--
-                    <input type="submit" name="sortear" value="Realizar Sorteio" class="btn btn-success btn-lg">
-                  -->
+                      
+                      {if="$sorteio == NULL"}
+                    
+                      <input type="submit" name="sortear" value="Realizar Sorteio" class="btn btn-success btn-lg">
+                    
                       {else}
                       <span style="font-weight: bold; color: darkgreen; font-size: 24px"> Sorteio realizado com sucesso!!</span>
                       {/if}
                     
-                      
-                          
+                    
                     </div> 
                     {else}
                     <div style="text-align: center;">
@@ -55,14 +54,16 @@
                       <input type="hidden" name="desctemporada" value="{$temporada.desctemporada}" >
                       <input type="hidden" name="idtemporada" value="{$temporada.idtemporada}">
                       <input type="hidden" name="maxIncritosTemporada" value="{$maxIncritosTemporada.maximoInscritos}">
-
+                      
                       {if="$sorteio == NULL"}
-                    <!--
-                      <input type="submit" disabled="true" name="sortear" value="Realizar Sorteio" class="btn btn-success btn-lg">
+                      <!--
+                    <input type="submit" name="sortear" value="Realizar Sorteio" class="btn btn-success btn-lg">
                     -->
                       {else}
                       <span style="font-weight: bold; color: darkgreen; font-size: 24px"> Sorteio realizado com sucesso!!</span>
                       {/if}
+                      
+                      
                      
                     </div>     
                     {/if}
@@ -88,7 +89,7 @@
                   <div  style="text-align: left; margin-left: 0px; margin-bottom: 5px; ">
                 
                       <h6>                  
-                       <span style="font-size: 21px; font-style: italic; font-weight: bold; color: red;">{$value.numerodeordem}° </span>
+                       <span style="font-size: 21px; font-style: italic; font-weight: bold; color: red;">{$value.numerodeordem}° colocado </span>
                       </h6>
                   </div>
 

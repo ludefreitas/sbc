@@ -1,8 +1,10 @@
 <script type="text/javascript">  
-  
-  alert('Você já pode consultar, por CPF ou pelo nome, se o aluno está cadastrado no sistema, se o aluno estiver cadastrado, quais são as inscrições que ele tem e qual o local.')
+  /*
+  alert('Você já pode consultar, por CPF ou pelo nome, se o aluno está cadastrado no sistema, se o aluno estiver cadastrado, quais são as inscrições que ele tem e qual o local. Digite os dados no Campo "Search" ou "Pesquisar" e clique no ícone da "Lupa"')
+  */
 
 </script>
+
 
 <style>
 @media print {
@@ -69,12 +71,13 @@
               <div class="row">
               <div class="col-md-10" >
                 <h5 style="text-align: left;">
-                         <strong> {$value.nomepess} </strong>   
+                         <strong> {$value.nomepess} </strong> -  
                   &nbsp; <strong>CPF: {function="formatCpf($value.numcpf)"}</strong>   
                   &nbsp; D.Nasc.:{function="formatDate($value.dtnasc)"}                
                   &nbsp; <strong> {function="calcularIdade($value.dtnasc)"} anos</strong>   
-                  &nbsp; Resp..: {$value.desperson} 
-                  &nbsp; <strong>Status: {if="$value.statuspessoa == 1"}Ativo{else}Inativo{/if}</strong>   
+                  &nbsp; Resp..: {$value.desperson} - 
+                  &nbsp; <strong>Email.: {$value.deslogin}</strong>
+                  &nbsp; Status: {if="$value.statuspessoa == 1"}Ativo{else}Inativo{/if}   
                   &nbsp; <span style="color: red">{if="$value.pcd == 1"}(PCD){/if}</span>
                     
                 </h5>

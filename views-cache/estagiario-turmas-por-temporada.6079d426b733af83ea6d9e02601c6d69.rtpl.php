@@ -28,7 +28,7 @@
 
             <?php if( $local == null ){ ?>
 
-            <h3>Turmas atribuidas ao professor <?php echo htmlspecialchars( $user["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </h3>
+            <h3>Turmas atribuidas ao estagiário <?php echo htmlspecialchars( $user["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </h3>
 
             <?php }else{ ?>
 
@@ -59,7 +59,7 @@
 
                       <div class="col-md-3" >
                         <h5 style="font-weight: bold; text-align: left;">
-                         Prof. <?php echo htmlspecialchars( $value1["apelidoperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> 
+                         Estagiário <?php echo htmlspecialchars( $value1["apelidoperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> 
                         <?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["nomeespaco"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                         </h5>
                       </div>

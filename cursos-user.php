@@ -426,7 +426,7 @@ $app->post("/cursos/register", function(){
 
 $app->get("/cursos/user/profile", function(){
 
-	User::verifyLogin(false);
+	User::verifyLoginCursos(false);
 
 	$user = new User();
 
@@ -453,7 +453,7 @@ $app->get("/cursos/user/profile", function(){
 
 $app->post("/cursos/user/profile", function(){
 
-	User::verifyLogin(false);
+	User::verifyLoginCursos(false);
 
 	if (!isset($_POST['desperson']) || $_POST['desperson'] === '') {
 		User::setError("Preencha o seu nome.");
@@ -515,6 +515,11 @@ $app->post("/cursos/user/profile", function(){
 
 	$user->setData($_POST);
 
+	//echo '<pre>';
+	//print_r($_POST);
+	//echo '<pre>';
+	//exit;
+
 	$user->update();
 
 	User::setSuccess("Seus dados foram alterados com sucesso!");
@@ -524,9 +529,10 @@ $app->post("/cursos/user/profile", function(){
 
 });
 
+
 $app->get("/cursos/user-change-password", function(){
 
-	User::verifyLogin(false);
+	User::verifyLoginCursos(false);
 
 	$page = new PageCursos();
 
@@ -537,9 +543,9 @@ $app->get("/cursos/user-change-password", function(){
 
 });
 
-$app->post("/user-change-password", function(){
+$app->post("/cursos/user-change-password", function(){
 
-	User::verifyLogin(false);
+	User::verifyLoginCursos(false);
 
 	if (!isset($_POST['current_pass']) || $_POST['current_pass'] === '') {
 

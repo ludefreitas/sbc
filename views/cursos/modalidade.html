@@ -71,6 +71,10 @@
               {else}
               Para nascidos entre:<strong> {$anoAtual - $value.fimidade} à {$anoAtual - $value.initidade}</strong><br>
               {/if}
+             
+             {if="$value.obs"}
+			  OBSERVAÇÃO: <strong>{$value.obs}</strong><br>
+			  {/if}
 
               {if="$value.idstatustemporada == 2"} 
                <span style="font-weight: bold;">

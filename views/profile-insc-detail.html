@@ -12,9 +12,19 @@
         </div>
             {/if}
             {if="$success != ''"}
-            <script type="text/javascript">  
-                alert('Inscrição EFETUADA COM SUCESSO! As aulas já começaram, então você deve comprarecer com os documentos pessoais, sem falta, já na próxima aula, no Centro Esportivo no dia e horário da aula escolhida');
-            </script>
+            
+                {if="$insc.idinscstatus == 2"}
+                    <script type="text/javascript">  
+                        alert('Inscrição efetuada com sucesso!!! As aulas já começaram. Se o status desta inscrição é "Aguardando matrícula", então você deve comprarecer com os documentos pessoais, sem falta, já na próxima aula, no Centro Esportivo no dia e horário da aula escolhida.');
+                    </script>
+                {/if}
+                
+                {if="$insc.idinscstatus == 7"}
+                    <script type="text/javascript">  
+                        alert('Inscrição efetuada com sucesso!!! Se o status desta inscrição é "Lista de Espera", não há vagas para esta turma. Esta inscrição está em uma lista de espera, aguardando o comunicado de uma eventual vaga. Mantenha atualizado, neste site, seu número de telefone celular, com whatsapp, para receber o comunicado.');
+                    </script>
+                {/if}
+            
         <div class="alert alert-info">
             {$success}
         </div>
@@ -30,20 +40,20 @@
                 {if="$insc.idinscstatus == 9"}
                     <div class="col-md-5 alert alert-success" style="text-align-last: center;">
                         <p><h5 style="text-align: center"><strong style="color: red; font-size: 20px;"> {$insc.descstatus} </strong></h5>
-                        </p>
+                        <p>
                     </div> 
 
                 {else}
                     {if="$insc.idstatustemporada == 5"}
 
                     {else}
-                    <!--
+                      <!--
                         <div class="col-md-5 alert alert-success" style="text-align-last: center;">
                                 <p><h5 style="text-align: center"> Nº para concorrer no sorteio: </h5>
-                                <p><h3 style="color: red; text-align-last: center">{$insc.numsorte}</h3> </p>
-                                <h6 style="text-align: center; font-size: 12px;"> * Caso esta inscrição vá para sorteio</h6></p>
+                                <p><h3 style="color: red; text-align-last: center">{$insc.numsorte}</h3> <p>
+                                <h6 style="text-align: center; font-size: 12px;"> * Caso esta inscrição vá para sorteio</h6><p>
                         </div> 
-                    -->
+                      -->
                     {/if}
                 
                 {/if}
@@ -127,11 +137,10 @@
     </div>
     <div class="row">
         <div class="col-md-3" style="padding-top: 10px">
-            <strong>Início previsto das aulas e matrícula: </strong>
+            <strong>Início previsto das aulas, matrículas e mais: </strong>
         </div>
         <div class="col-md-9 alert alert-success">
-
-             {if="$insc.idinscstatus == 1"}
+            {if="$insc.idinscstatus == 1"}
              As aulas já começaram. Se o status desta inscrição é "Matriculada", então você está matriculado(a) nesta turma. Frequente as aulas e evite faltar sem justificativa para que você não perca sua vaga.
              {/if}
 
@@ -150,8 +159,7 @@
              {if="$insc.idinscstatus == 9"}
              Se o status desta inscrição é "Cancelada", você cancelou esta inscrição.
              {/if}
-
-             <strong>Leia a observção abaixo, se existir.</strong>
+                <strong>Leia a observção abaixo, se existir.</strong>
             {if="$insc.obs"}
             <br> <span style="color: red; font-weight: bold;"> Atenção! </span> <span style="color: red;">{$insc.obs}</span>
             {/if}

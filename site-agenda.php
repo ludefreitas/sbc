@@ -82,12 +82,11 @@ $app->get("/locaisnatacao-avaliacao", function() {
 
 $app->get("/agenda/:idlocal/:data", function($idlocal, $data) {
 
-	//User::verifyLogin(false);
+	User::verifyLogin(false);
 
 	$local = new Local();
 	$user = User::getFromSession();
 	$agenda = new Agenda();
-	$local = new Local();
 
 	$datalimite = date('Y-m-d l', strtotime('+4 week'));
 	$dataatual = date('Y-m-d');
@@ -136,7 +135,7 @@ $app->get("/agenda/:idlocal/:data", function($idlocal, $data) {
 
 	$horariosDiaSemana = $agenda->listAllHoraDiaSemanaLocal($idlocal, $nomediadasemana);
 
-	/*
+    /*
 	if($idlocal == 21){
 		if($dataatual > $data){
 
@@ -223,7 +222,7 @@ $app->post("/hora-agenda", function() {
 		header("Location: /agenda/".$_POST['idlocal']."/".$_POST['dataSemSemana']."");
 		exit();
 	}
-
+	
 	$titulo = $_POST['titulo'];
 
 	$idlocal = $_POST['idlocal'];
@@ -251,7 +250,8 @@ $app->post("/hora-agenda", function() {
 		Agenda::setMsgError("Não há mais vagas para este horário! Escolha outro ");
 	    header("Location: /agenda/".$_POST['idlocal']."/".$_POST['dataSemSemana']."");
 	    exit();
-	}	
+	}
+	
 
 	$idlocal = (int)$_POST['idlocal'];
 	$dataPost = $_POST['data'];
@@ -261,6 +261,19 @@ $app->post("/hora-agenda", function() {
 	$pessoa->get($idpess);
 	
 	$nomepess = $pessoa->getnomepess();
+	
+	$saude = new Saude();
+
+	$countParq = $saude->getCountParqByIdPess($idpess);
+
+	if($countParq < 1){
+
+		Cart::setMsgError("Para prosseguir, você dever responder abaixo o Questionário de Prontidão para Atividade Física (PAR-Q) do(a) ".$nomepess."! ");
+			//header("Location: /cart");
+		header("Location: /par-q/".$idpess."");
+		exit();
+
+	}
 
 	$dtnasc = $pessoa->getdtnasc();
 
@@ -269,25 +282,12 @@ $app->post("/hora-agenda", function() {
 
 	$anoDiferença = (int)$anoAtual - (int)$anoNasc;
 
-	if($anoDiferença < 16 ){
-		Agenda::setMsgError("O agendamento para a natação espontânea só e permitido para maiores de 16 anos");
+	if($anoDiferença < 18){
+		Agenda::setMsgError("O agendamento para a natação espontânea só e permitido para maiores de 18 anos");
 		header("Location: /agenda/".$_POST['idlocal']."/".$_POST['dataSemSemana']."");
 		exit;
 	}
-
-	$saude = new Saude();
-
-	$countParq = $saude->getCountParqByIdPess($idpess);
-
-	if($countParq < 1){
-
-		Cart::setMsgError("Você dever responder abaixo o Questionário de Prontidão para Atividade Física da ".$nomepess."! ");
-			//header("Location: /cart");
-		header("Location: /saude-atualiza/".$idpess."/".$nomepess."");
-		exit();
-
-	}
-
+	
 	$selecionaagenda = $agenda->selecionaAgendaPorPessoaDiaTitulo($idpess, $titulo);
 
 	$selecionaagendadia = $selecionaagenda[0]['dia'];
@@ -296,9 +296,9 @@ $app->post("/hora-agenda", function() {
 
 		$qtdAgendamento = Agenda::countAgendaPorPessoaDiaTitulo($idpess, $titulo);
 
-		if((int)$qtdAgendamento[0]['count(*)'] >= 1){
+		if((int)$qtdAgendamento[0]['count(*)'] >= 2){
 
-		echo "<script>alert('".$nomepess." já tem agendamento para natação espontânea reservados para esta semana.');";
+		echo "<script>alert('".$nomepess." já tem, no mínimo, 02 agendamentos para natação espontânea reservados para esta semana!!!.');";
 		echo "javascript:history.go(-1)</script>";
 		exit();
 		}
@@ -308,12 +308,11 @@ $app->post("/hora-agenda", function() {
 
 	if((int)$qtdAgendamento[0]['count(*)'] >= 2){
 
-		Agenda::setMsgError($nomepess." já tem agendamento completo com 02 horários reservados para esta data");
+		Agenda::setMsgError($nomepess." já tem agendamento completo com 02 horários reservados para esta data!");
 		header("Location: /agenda/".$_POST['idlocal']."/".$_POST['dataSemSemana']."");
 		exit();	
 
 	}else{
-
 
 		$horaExistenteinicial = $agenda->getHoraExistenteInicial($idpess, $idlocal, $dataSemSemana);
 		$horaExistentefinal = $agenda->getHoraExistenteFinal($idpess, $idlocal, $dataSemSemana);	
@@ -418,6 +417,7 @@ $app->post("/hora-agenda", function() {
 	
 	$dataPostSemSemana = Date('Y-m-d', strtotime($dataPost));	
 	
+	
 	if(($dataPostSemSemana == $hoje) && (($hojeDiaHoraMaisDuas >= $horarioinicialdate) || ($hojeDiaHoraAtual > $horarioinicialdate))){
 	
 	//if( ($hojeDiaHoraMaisDuas >= $horarioinicial) || ($hojeDiaHoraAtual > $horarioinicial) ){
@@ -428,32 +428,54 @@ $app->post("/hora-agenda", function() {
 
 	}
 	
-	//var_dump($horarioinicial);
-	//exit;
+	if($idlocal == 3){	
+		if(($dataSemSemana > '2023-07-03') && ($dataSemSemana < '2023-07-15')){
+			if( 
+				$horarioinicial[0]['horamarcadainicial'] == '08:00' ||
+				$horarioinicial[0]['horamarcadainicial'] == '08:30' ||
+				$horarioinicial[0]['horamarcadainicial'] == '09:00' ||
+				$horarioinicial[0]['horamarcadainicial'] == '09:30' ||
+				$horarioinicial[0]['horamarcadainicial'] == '10:00' ||
+				$horarioinicial[0]['horamarcadainicial'] == '10:30' || 		
+				$horarioinicial[0]['horamarcadainicial'] == '11:00' ||
+				$horarioinicial[0]['horamarcadainicial'] == '13:30' ||
+				$horarioinicial[0]['horamarcadainicial'] == '14:00' ||
+				$horarioinicial[0]['horamarcadainicial'] == '14:30' ||
+				$horarioinicial[0]['horamarcadainicial'] == '15:00' ||
+				$horarioinicial[0]['horamarcadainicial'] == '15:30' ||
+			    $horarioinicial[0]['horamarcadainicial'] == '16:00' ||
+			    $horarioinicial[0]['horamarcadainicial'] == '16:30'
+		    ){
+		        
+		   	echo "<script>alert('A agenda para o horário a partir das ".$horarioinicial[0]['horamarcadainicial']." não está disponível');";
+		   	echo "javascript:history.go(-1)</script>";
+		   	exit();			
+			}
+		}
+	}
+	
+	
+	/*
 	
 	if( $horarioinicial[0]['horamarcadainicial'] == '08:30' ||
-		$horarioinicial[0]['horamarcadainicial'] == '09:00' ||
-		$horarioinicial[0]['horamarcadainicial'] == '09:30' ||
+		//$horarioinicial[0]['horamarcadainicial'] == '09:00' ||
+		//$horarioinicial[0]['horamarcadainicial'] == '09:30' ||
 		//$horarioinicial[0]['horamarcadainicial'] == '10:00' ||
 		//$horarioinicial[0]['horamarcadainicial'] == '10:30' || 		
-		// $horarioinicial[0]['horamarcadainicial'] == '11:00' ||
+		$horarioinicial[0]['horamarcadainicial'] == '11:00' ||
 		$horarioinicial[0]['horamarcadainicial'] == '13:30' ||
-		$horarioinicial[0]['horamarcadainicial'] == '14:00' ||
-		$horarioinicial[0]['horamarcadainicial'] == '14:30' ||
-		$horarioinicial[0]['horamarcadainicial'] == '15:00' ||
-		$horarioinicial[0]['horamarcadainicial'] == '15:30' ||
+		//$horarioinicial[0]['horamarcadainicial'] == '14:00' ||
+		//$horarioinicial[0]['horamarcadainicial'] == '14:30' ||
+		//$horarioinicial[0]['horamarcadainicial'] == '15:00' ||
+		//$horarioinicial[0]['horamarcadainicial'] == '15:30' ||
 	    $horarioinicial[0]['horamarcadainicial'] == '16:00'){
-
-
-		echo "<script>alert('A agenda para o horário a partir das ".$horarioinicial[0]['horamarcadainicial']." não está disponível');";
+	        
+	   echo "<script>alert('A agenda para o horário a partir das ".$horarioinicial[0]['horamarcadainicial']." não está disponível');";
 	   echo "javascript:history.go(-1)</script>";
 	   exit();
-
-		//Agenda::setMsgError("A agenda para o horário não está disponível");
-		//header("Location: /agenda/".$_POST['idlocal']."/".$_POST['dataSemSemana']."");
-		//exit;
-
+		
 	}
+	*/
 
     //var_dump($dataPost." - Dia Semana ".$nomediasemana." - DT limite ".$maisumasemana." - Diferença ".$anoDiferença." - nome ".$nomepess." - DT ".$dtnasc." - Local ".$idlocal." - Presente ".$ispresente." - Horainicial ".$horarioinicial." - Horafinal ".$horariofinal);
 
@@ -470,6 +492,7 @@ $app->post("/hora-agenda", function() {
 		'idpess'=>$idpess,
 		'titulo'=>$titulo,
 		'nomepess'=>$nomepess,
+		'dtnasc'=>$dtnasc,
 		'ispresente'=>$ispresente,
 		'idlocal'=>$idlocal,
 		'horarioinicial'=>$horarioinicialdate,
@@ -484,6 +507,9 @@ $app->post("/horaagendada", function() {
 	User::verifyLogin(false);
 
 	$agenda = new Agenda();
+	
+	$pessoa = new Pessoa();
+
 	$idlocal = $_POST['idlocal'];
 	$idpess = $_POST['idpess'];
 	$idhoradiasemana = $_POST['idhoradiasemana'];
@@ -493,6 +519,37 @@ $app->post("/horaagendada", function() {
 	$horafinal = $_POST['horariofinal'];
 	$observacao = 'natação';
 	$ispresente = $_POST['ispresente'];
+	
+	$pessoa->get($idpess);	
+	$nomepess = $pessoa->getnomepess();
+	
+	$hoje = Date('Y-m-d');
+
+	$selecionaagenda = $agenda->selecionaAgendaPorPessoaDiaTitulo($idpess, $titulo);
+
+	$selecionaagendadia = $selecionaagenda[0]['dia'];
+
+	if($selecionaagendadia > $hoje){
+
+		$qtdAgendamento = Agenda::countAgendaPorPessoaDiaTitulo($idpess, $titulo);
+
+		if((int)$qtdAgendamento[0]['count(*)'] >= 2){
+
+		echo "<script>alert('".$nomepess." já tem agendamento para natação espontânea reservados para esta semana!!');";
+		echo "javascript:history.go(-2)</script>";
+		exit();
+		}
+	}
+
+	$qtdAgendamento = Agenda::countAgendaPorPessoaLocalDia($idpess, $idlocal, $dia);
+
+	if((int)$qtdAgendamento[0]['count(*)'] >= 2){
+
+		echo "<script>alert('".$nomepess." já tem agendamento completo com 02 horários reservados para esta data!');";
+		echo "javascript:history.go(-2)</script>";
+	   exit();
+	
+	}
 
 	$agenda->setData([
 			'idlocal'=>$idlocal,
@@ -507,11 +564,13 @@ $app->post("/horaagendada", function() {
 		]);
 
 	//Criar Call no banco de dados
-
+	
 	if(!$agenda->getAgendaExist($idpess, $idhoradiasemana, $dia, $idlocal)){
 			$agenda->save();
 	}
 
+	//$agenda->save();
+	
 	if($titulo == 'avaliacao'){
 
 		Agenda::setMsgSuccess("Agendamento para avaliação da natação realizada com sucesso");
@@ -535,18 +594,13 @@ $app->get("/minhaagenda", function() {
 	$user = User::getFromSession();	
 
 	$iduser = $user->getiduser();
-
+	
 	$titulo = 'raia';
-
-	$data = new DateTime();
-
-	$data = date('Y-m-d');
-
 	
 	$agenda = $agenda->getAgendaByIduser($iduser, $titulo);
 	//$agenda = $agenda->getAgendaAll();
 
-	//var_dump($data);
+	//var_dump($agenda);
 	//exit;
 
 	$page = new Page([
@@ -556,19 +610,21 @@ $app->get("/minhaagenda", function() {
 
 	$page->setTpl("minhaagenda", [
 		'agenda'=>$agenda,
-		'data'=>$data,
 		'error'=>Agenda::getMsgError(),
 		'success'=>Agenda::getMsgSuccess()
-	]);	
+	]);
+		
 });
 
 $app->get("/agendadelete/:idagen", function($idagen) {
+    
+    User::verifyLogin(false);
 
 	$agenda = new Agenda();
 
 
 	$agenda->delete($idagen);
-		
+
 	echo "<script>alert('Exclusão efetuada com sucesso');";
 	echo "javascript:history.go(-1)</script>";
 	exit();
@@ -629,7 +685,7 @@ $app->post("/hora-agenda-avaliacao", function() {
 	$vagas = substr($dados, 35, 2);
 	$idlocal = $_POST['idlocal'];
 	$titulo = $_POST['titulo'];
-	$idhoradiasemana = '69';
+	$idhoradiasemana = '71';
 
 	$hoje = Date('Y-m-d');
 
@@ -676,7 +732,7 @@ $app->post("/hora-agenda-avaliacao", function() {
 		echo "javascript:history.go(-1)</script>";
 		exit();
 	}
-
+	
 	$saude = new Saude();
 
 	$countParq = $saude->getCountParqByIdPess($idpess);
@@ -719,8 +775,38 @@ $app->post("/hora-agenda-avaliacao", function() {
 
 	}
 	*/
+	
+	$selecionaagenda = $agenda->selecionaAgendaPorPessoaDiaTitulo($idpess, $titulo);
 
-	$maisumasemana = date('Y-m-d', strtotime('+4 week'));
+	$selecionaagendadia = $selecionaagenda[0]['dia'];
+
+	if($selecionaagendadia > $hoje){
+
+		$qtdAgendamento = Agenda::countAgendaPorPessoaDiaTitulo($idpess, $titulo);
+
+		if((int)$qtdAgendamento[0]['count(*)'] >= 1){
+
+		echo "<script>alert('".$nomepess." já tem agendamento para avaliação reservados para esta temporada');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+
+		}
+	}
+
+	/*
+	//$qtdAgendamento = Agenda::countAgendaPorPessoaLocalDiaTitulo($idpess, $idlocal, $titulo);
+	$qtdAgendamento = Agenda::countAgendaPorPessoaDiaTitulo($idpess, $titulo);
+
+	if((int)$qtdAgendamento[0]['count(*)'] >= 1){
+
+		echo "<script>alert('".$nomepess." já tem agendamento para avaliação reservados para esta temporada');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+
+	}
+	*/
+
+	$maisumasemana = date('Y-m-d', strtotime('+8 week'));
 
 	
 	if($diasemana == "Quinta"){
@@ -812,6 +898,7 @@ $app->get("/minhaagenda-avaliacao", function() {
 		'success'=>Agenda::getMsgSuccess()
 	]);	
 });
+
 
 
 ?>

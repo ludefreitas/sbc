@@ -33,20 +33,22 @@
                         </thead>
                         <tbody>  
                             {loop="$turmaNotRelated"}                          
-                            <tr>
-                            <td>{$value.idturma} - 
-                            {$value.descturma} - {$value.apelidolocal} - {$value.nomeativ} - 
-                            {$value.diasemana} - {$value.horainicio} - {$value.horatermino}</td>
-                            {if="$value.iduser == 0"}
-                            <td>
-                                <a href="/admin/turmatemporada/{$value.idtemporada}/turma/{$value.idturma}/user/{$user.iduser}/{$local.idlocal}/addlocal" class="btn btn-success btn-xs pull-right"><i class="fa fa-arrow-right"></i> Adicionar</a>
-                            </td>
-                            {else}
-                            <td>
-                                <a disabled="disabled" href="/admin/turmatemporada/{$value.idtemporada}/turma/{$value.idturma}/user/{$user.iduser}/{$local.idlocal}/addlocal" class="btn btn-success btn-xs pull-right"><i class="fa fa-arrow-right"></i> Adicionar</a>
-                            </td>
-                            {/if}
-                            </tr>
+                                <tr>
+                                <td>[{$value.idturma}] - 
+                                {$value.descturma} - {$value.apelidolocal} - {$value.nomeativ} - 
+                                {$value.diasemana} - {$value.horainicio} - {$value.horatermino} </td>
+                                {if="$value.iduser == 1"}
+                                    <td>
+                                        <a href="/admin/turmatemporada/{$value.idtemporada}/turma/{$value.idturma}/user/{$user.iduser}/{$local.idlocal}/addlocal" class="btn btn-success btn-xs pull-right"><i class="fa fa-arrow-right"></i> Adicionar</a>
+                                    </td>
+                                {else}
+                                <!--
+                                    <td>
+                                        <a disabled="disabled" href="/admin/turmatemporada/{$value.idtemporada}/turma/{$value.idturma}/user/{$user.iduser}/{$local.idlocal}/addlocal" class="btn btn-success btn-xs pull-right"><i class="fa fa-arrow-right"></i> Adicionar</a>
+                                    </td>
+                                -->
+                                {/if}
+                                </tr>
                             {else}
                               <tr>
                                 <td colspan="2">
@@ -76,7 +78,7 @@
                         <tbody>
                             {loop="$turmaRelated"}
                             <tr>
-                            <td>{$value.idturma} - 
+                            <td>[{$value.idturma}] - 
                             {$value.descturma} - {$value.apelidolocal} - {$value.nomeativ} - 
                              {$value.diasemana} - {$value.horainicio} - {$value.horatermino} </td>                      
                             <td>

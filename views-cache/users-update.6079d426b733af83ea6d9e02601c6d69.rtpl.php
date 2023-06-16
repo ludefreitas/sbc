@@ -51,13 +51,33 @@
               <input type="email" class="form-control" id="desemail" name="desemail" placeholder="Digite o e-mail" value="<?php echo htmlspecialchars( $user["desemail"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
           -->
-            <?php if( getUserId() == 2 OR getUserId() == 7 OR getUserId() == 156 ){ ?>
+            <?php if( getUserId() == 2 OR getUserId() == 1 OR getUserId() == 156 ){ ?>
 
 
                 <div class="checkbox">
-                    <label>
-                        <input type="checkbox" name="inadmin" value="1" <?php if( $user["inadmin"] == 1 ){ ?>checked<?php } ?>> Acesso de Administrador
+                <label>
+                  <?php if( $user["inadmin"] == 1 ){ ?>
+
+                <input type="checkbox" name="inadmin" value="1" checked> Acesso de Administrador
+                <?php }else{ ?>
+
+                  <input type="checkbox" name="inadmin" value="1" > Acesso de Administrador
+                <?php } ?>
+
                     </label>
+               </div>
+
+                <div class="checkbox">
+                  <label>
+                <?php if( $user["isaudi"] == 1 ){ ?>
+
+                <input type="checkbox" name="isaudi" value="1" checked> Acesso de Auditor
+                <?php }else{ ?>
+
+                  <input type="checkbox" name="isaudi" value="1" > Acesso de Auditor
+                <?php } ?>
+
+              </label>
                </div>
 
             <?php } ?>
@@ -66,7 +86,27 @@
 
             <div class="checkbox">
               <label>
-                <input type="checkbox" name="isprof" value="1" <?php if( $user["isprof"] == 1 ){ ?>checked<?php } ?>> Acesso de Professor
+                <?php if( $user["isprof"] == 1 ){ ?>
+
+                <input type="checkbox" name="isprof" value="1" checked> Acesso de Professor
+                <?php }else{ ?>
+
+                  <input type="checkbox" name="isprof" value="1" > Acesso de Professor
+                <?php } ?>
+
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <?php if( $user["isestagiario"] == 1 ){ ?>
+
+                <input type="checkbox" name="isestagiario" value="1"checked> Acesso de Estagiário
+                <?php }else{ ?>
+
+                  <input type="checkbox" name="isestagiario" value="1" > Acesso de Estagiário
+                <?php } ?>
+
+                
               </label>
             </div>
             <!--

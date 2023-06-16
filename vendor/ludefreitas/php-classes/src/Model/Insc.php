@@ -90,7 +90,7 @@ class Insc extends Model {
 			"data"=>$data
 		));
 	}
-
+	
 	public function getAlunosPresentesPorData($data){
 
 		$statuspresenca = 1;
@@ -200,7 +200,7 @@ class Insc extends Model {
 			-- AND g.dtpresenca = :data
 			AND f.idinscstatus = 1
 			ORDER BY c.nomepess;
-			-- ORDER BY a.inscpcd DESC, a.laudo DESC, c.vulnsocial DESC, a.numordem, a.idinscstatus;
+			-- ORDER BY a.inscpcd DESC, a.laudo DESC, a.inscpvs DESC, a.numordem, a.idinscstatus;
 		", [
 			':idturma'=>$idturma,
 			':idtemporada'=>$idtemporada
@@ -227,7 +227,7 @@ class Insc extends Model {
 			AND a.idtemporada = :idtemporada 
 			AND f.idinscstatus = 1
 			ORDER BY c.nomepess;
-			-- ORDER BY a.inscpcd DESC, a.laudo DESC, c.vulnsocial DESC, a.numordem, a.idinscstatus;
+			-- ORDER BY a.inscpcd DESC, a.laudo DESC, a.inscpvs DESC, a.numordem, a.idinscstatus;
 		", [
 			':idturma'=>$idturma,
 			':idtemporada'=>$idtemporada
@@ -291,7 +291,7 @@ class Insc extends Model {
 			AND a.idtemporada = :idtemporada 
 			-- AND f.idinscstatus = 1
 			ORDER BY c.nomepess;
-			-- ORDER BY a.inscpcd DESC, a.laudo DESC, c.vulnsocial DESC, a.numordem, a.idinscstatus;
+			-- ORDER BY a.inscpcd DESC, a.laudo DESC, a.inscpvs DESC, a.numordem, a.idinscstatus;
 		", [
 			':idturma'=>$idturma,
 			':idtemporada'=>$idtemporada
@@ -936,7 +936,7 @@ class Insc extends Model {
 			INNER JOIN tb_espaco i ON i.idespaco = h.idespaco
 			INNER JOIN tb_local j ON j.idlocal = i.idlocal
 			WHERE idtemporada = :idtemporada
-			-- ORDER BY a.dtinsc DESC
+			ORDER BY a.dtinsc DESC
 			LIMIT $start, $itemsPerPage;
 		", [
 			":idtemporada"=>$idtemporada
@@ -997,7 +997,7 @@ class Insc extends Model {
 		];
 
 	}
-
+	
 	public function getInscByTurmaTemporadaTodas($idturma, $idtemporada){
 
 		$sql = new Sql();
@@ -1033,7 +1033,7 @@ class Insc extends Model {
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus		
-			-- INNER JOIN tb_endereco g ON g.idpess = c.idpess				
+			-- INNER JOIN tb_endereco g ON g.idpess = c.idpess
 			WHERE a.idturma = :idturma AND a.idtemporada = :idtemporada AND a.laudo = 0 AND a.inscpcd = 0 AND a.inscpvs = 0
 			ORDER BY a.inscpcd DESC, a.laudo DESC, a.inscpvs DESC, a.numordem, a.idinscstatus;
 		", [
@@ -1057,8 +1057,8 @@ class Insc extends Model {
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus		
 			-- INNER JOIN tb_endereco g ON g.idpess = c.idpess					
-			WHERE a.idturma = :idturma AND a.idtemporada = :idtemporada AND a.inscpcd = 1  
-			ORDER BY a.inscpcd DESC, a.laudo DESC, c.vulnsocial DESC, a.numordem, a.idinscstatus;
+			WHERE a.idturma = :idturma AND a.idtemporada = :idtemporada AND a.inscpcd = 1
+			ORDER BY a.inscpcd DESC, a.laudo DESC, a.inscpvs DESC, a.numordem, a.idinscstatus;
 		", [
 			':idturma'=>$idturma,
 			':idtemporada'=>$idtemporada
@@ -1080,7 +1080,7 @@ class Insc extends Model {
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus	
 			-- INNER JOIN tb_endereco g ON g.idpess = c.idpess						
-			WHERE a.idturma = :idturma AND a.idtemporada = :idtemporada AND a.laudo = 1 
+			WHERE a.idturma = :idturma AND a.idtemporada = :idtemporada AND a.laudo = 1
 			ORDER BY a.inscpcd DESC, a.laudo DESC, a.inscpvs DESC, a.numordem, a.idinscstatus;
 		", [
 			':idturma'=>$idturma,
@@ -1103,7 +1103,7 @@ class Insc extends Model {
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus	
 			-- INNER JOIN tb_endereco g ON g.idpess = c.idpess						
-			WHERE a.idturma = :idturma AND a.idtemporada = :idtemporada AND a.inscpvs = 1 
+			WHERE a.idturma = :idturma AND a.idtemporada = :idtemporada AND a.inscpvs = 1
 			ORDER BY a.inscpcd DESC, a.laudo DESC, a.inscpvs DESC, a.numordem, a.idinscstatus;
 		", [
 			':idturma'=>$idturma,
@@ -1246,7 +1246,7 @@ class Insc extends Model {
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
-			WHERE idturma = :idturma AND idtemporada = :idtemporada AND a.idinscstatus = 6 AND a.laudo = 0 AND a.inscpcd = 0 AND c.vulnsocial = 0
+			WHERE idturma = :idturma AND idtemporada = :idtemporada AND a.idinscstatus = 6 AND a.laudo = 0 AND a.inscpcd = 0 AND a.inscpvs = 0
 			ORDER BY a.idinsc
 		", [
 			':idturma'=>$idturma,
@@ -1273,7 +1273,7 @@ class Insc extends Model {
 			AND a.idinscstatus != 9 
 			AND a.laudo = 0 
 			AND a.inscpcd = 0 
-			AND c.vulnsocial = 0
+			AND a.inscpvs = 0
 			ORDER BY a.numordem
 		", [
 			':idturma'=>$idturma,
@@ -1313,7 +1313,7 @@ class Insc extends Model {
 			AND idtemporada = :idtemporada 
 			AND a.idinscstatus != 9 
 			AND a.inscpcd = 1 
-			AND (a.laudo = 1 OR a.laudo = 0 OR c.vulnsocial = 1 OR c.vulnsocial = 0)
+			AND (a.laudo = 1 OR a.laudo = 0 OR a.inscpvs = 1 OR a.inscpvs = 0)
 			ORDER BY a.numordem
 		", [
 			':idturma'=>$idturma,
@@ -1354,7 +1354,7 @@ class Insc extends Model {
 			AND a.idinscstatus != 9 
 			AND a.laudo = 1 
 			AND a.inscpcd = 0 
-			AND c.vulnsocial = 0
+			AND a.inscpvs = 0
 			ORDER BY a.numordem
 		", [
 			':idturma'=>$idturma,
@@ -1393,7 +1393,7 @@ class Insc extends Model {
 			WHERE idturma = :idturma 
 			AND idtemporada = :idtemporada 
 			AND a.idinscstatus != 9 
-			AND c.vulnsocial = 1 
+			AND a.inscpvs = 1 
             AND a.inscpcd = 0
             AND a.laudo = 0 
 			ORDER BY a.numordem
@@ -1437,7 +1437,7 @@ class Insc extends Model {
 			AND a.idinscstatus = 7
 			AND a.laudo = 0 
 			AND a.inscpcd = 0 
-			AND c.vulnsocial = 0
+			AND a.inscpvs = 0
 			ORDER BY a.numordem
 		", [
 			':idturma'=>$idturma,
@@ -1478,7 +1478,7 @@ class Insc extends Model {
 			-- AND a.idinscstatus != 9 
 			AND a.idinscstatus = 7 
 			AND a.inscpcd = 1 
-			AND (a.laudo = 1 OR a.laudo = 0 OR c.vulnsocial = 1 OR c.vulnsocial = 0)
+			AND (a.laudo = 1 OR a.laudo = 0 OR a.inscpvs = 1 OR a.inscpvs = 0)
 			ORDER BY a.numordem
 		", [
 			':idturma'=>$idturma,
@@ -1520,7 +1520,7 @@ class Insc extends Model {
 			AND a.idinscstatus = 7 
 			AND a.laudo = 1 
 			AND a.inscpcd = 0 
-			AND c.vulnsocial = 0
+			AND a.inscpvs = 0
 			ORDER BY a.numordem
 		", [
 			':idturma'=>$idturma,
@@ -1988,7 +1988,7 @@ class Insc extends Model {
 
 		return $results;			
 	}
-
+	
 	public function numMatriculadosTemporada($idtemporada){
 
 		$sql = new Sql();
@@ -1999,7 +1999,7 @@ class Insc extends Model {
 
 		return $results;			
 	}
-
+	
 	public function numMatriculadosDescTemporada($desctemporada){
 
 		$sql = new Sql();
@@ -2177,7 +2177,7 @@ class Insc extends Model {
 
 		return $results[0]['count(*)'];
 	}
-
+	
 	public function countInscTurma($idtemporada, $idturma){
 
 		$sql = new Sql();
@@ -2193,8 +2193,8 @@ class Insc extends Model {
 		]);
 
 		return $results[0]['count(*)'];
-	}	
-
+	}
+	
 	public function getInscGeral($idturma, $idtemporada)
 	{
 
@@ -2206,7 +2206,7 @@ class Insc extends Model {
             AND idturma = :idturma
 			AND (idinscstatus != 8 
 			AND idinscstatus != 9)
-			AND (laudo =  0
+			AND (laudo = 0 
 			AND inscpcd = 0
 			AND inscpvs = 0)", [
 				":idtemporada"=>$idtemporada,
@@ -2214,7 +2214,7 @@ class Insc extends Model {
 		]);
 		return $results[0]['count(*)'];		
 	}
-
+	
 	public function getInscGeralDesctemporada($desctemporada)
 	{
 
@@ -2246,7 +2246,7 @@ class Insc extends Model {
 		]);
 		return $results[0]['count(*)'];		
 	}
-
+	
 	public function getInscTemporadaModalidade($desctemporada, $idmodal)
 	{
 		$sql = new Sql();
@@ -2265,11 +2265,13 @@ class Insc extends Model {
 		return $results[0]['count(*)'];		
 	}
 
+	public function pegaInscPlm($idturma, $idtemporada)
+	{
 
-	public function pegaInscPlm($idturma, $idtemporada){
 		$sql = new Sql();
+
 		$results = $sql->select("
-			SELECT count(*) FROM tb_insc		
+			SELECT count(*) FROM tb_insc a			
 			WHERE idtemporada = :idtemporada
             AND idturma = :idturma
 			AND (idinscstatus != 8 
@@ -2280,29 +2282,18 @@ class Insc extends Model {
 				":idtemporada"=>$idtemporada,
 				":idturma"=>$idturma
 		]);
-		return $results[0]['count(*)'];		
+		
+		if($results[0]['count(*)'] <= 0){
+		   return 0; 
+		}else{
+		   return (int)$results[0]['count(*)'];
+		}
+		//return $results[0]['count(*)'];		
 	}
 
-	public function pegaInscPcd($idturma, $idtemporada)	{
-
-		$sql = new Sql();
-		$results = $sql->select("
-			SELECT count(*) FROM tb_insc			
-			WHERE idtemporada = :idtemporada
-            AND idturma = :idturma
-			AND (idinscstatus != 8 
-			AND idinscstatus != 9)
-			AND (laudo = 0
-			AND inscpcd = 1
-			AND inscpvs = 0)", [
-				":idtemporada"=>$idtemporada,
-				":idturma"=>$idturma
-		]);
-		return $results[0]['count(*)'];		
-	}
-
-	public function pegaInscPvs($idturma, $idtemporada)
+	public function pegaInscPcd($idturma, $idtemporada)
 	{
+
 		$sql = new Sql();
 
 		$results = $sql->select("
@@ -2311,15 +2302,47 @@ class Insc extends Model {
             AND idturma = :idturma
 			AND (idinscstatus != 8 
 			AND idinscstatus != 9)
-			AND (laudo = 0
-			AND inscpcd = 0
-			AND inscpvs = 1)", [
+			AND (inscpcd = 1
+			AND laudo = 0
+			AND inscpvs = 0)", [
 				":idtemporada"=>$idtemporada,
 				":idturma"=>$idturma
 		]);
-		return $results[0]['count(*)'];		
+		
+		if($results[0]['count(*)'] <= 0){
+		   return 0; 
+		}else{
+		   return (int)$results[0]['count(*)'];
+		}
+		//return $results[0]['count(*)'];		
 	}
 
+	public function pegaInscPvs($idturma, $idtemporada)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT count(*) FROM tb_insc a			
+			WHERE idtemporada = :idtemporada
+            AND idturma = :idturma
+			AND (idinscstatus != 8 
+			AND idinscstatus != 9)
+			AND (inscpvs = 1
+			AND laudo = 0
+			AND inscpcd = 0)", [
+				":idtemporada"=>$idtemporada,
+				":idturma"=>$idturma
+		]);
+		
+		if($results[0]['count(*)'] <= 0){
+		   return 0; 
+		}else{
+		   return (int)$results[0]['count(*)'];
+		}
+		//return $results[0]['count(*)'];		
+	}
+	
 	public function listaPessoasPorTurmaTemporada($idturma, $idtemporada){
 
 		$sql = new Sql();
@@ -2333,14 +2356,15 @@ class Insc extends Model {
 			INNER JOIN tb_users e ON e.iduser = c.iduser
 			INNER JOIN tb_persons f ON f.idperson = e.idperson
 			WHERE a.idturma = :idturma AND a.idtemporada = :idtemporada
-			ORDER BY c.nomepess;
+			-- AND (idinscstatus != 8 AND idinscstatus != 9)
+			ORDER BY a.idinscstatus, c.nomepess;
 		", [
 			':idturma'=>$idturma,
 			':idtemporada'=>$idtemporada
 		]);		
 		return $results;
 	}
-
+	
 	public function getNumInscMatriculadaTurmaTemporada($idtemporada, $idturma)
 	{
 
@@ -2387,8 +2411,8 @@ class Insc extends Model {
 				":idturma"=>$idturma
 		]);
 		return $results[0]['count(*)'];		
-	}	
-
+	}
+	
 	public function getNumInscListaEsperaPubGeralTurmaTemporada($idtemporada, $idturma)
 	{
 
@@ -2467,8 +2491,6 @@ class Insc extends Model {
 		return $results[0]['count(*)'];		
 	}
 
-
-
 	public function getNumInscPublicoGeralValidaTurmaTemporada($idtemporada, $idturma)
 	{
 
@@ -2544,7 +2566,7 @@ class Insc extends Model {
 		]);
 		return $results[0]['count(*)'];		
 	}
-
 }
+
 
 ?>

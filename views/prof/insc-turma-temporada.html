@@ -1,10 +1,9 @@
 <script type="text/javascript">
 
-
       function requisitarPaginaEndereco(url){
 
         let ajax = new XMLHttpRequest();
-        //let idurl = url.substr(53);              
+        let idurl = url.substr(53);              
         ajax.open('GET', 'url');
         
         $.ajax({
@@ -26,11 +25,13 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-     [{$turma.idturma}]  {$turma.descturma} {$turma.diasemana}  {$turma.periodo} {$turma.apelidolocal} -   {$temporada.desctemporada} 
+     [{$turma.idturma}]  {$turma.descturma} {$turma.diasemana}  {$turma.periodo} {$turma.apelidolocal} -   {$temporada.desctemporada}
   </h1>
   <ol class="breadcrumb">
     <li><a href="/prof"><i class="fa fa-dashboard"></i> Home</a></li>
     <li class="active"><a href="/prof/turma-temporada/{$temporada.idtemporada}">Turmas por temporada</a></li>
+    <li class="active"><a style="color: red" href="javascript: history.go(-1)">Voltar</a>
+    </li>
   </ol>
 </section>
 
@@ -63,7 +64,6 @@
               
             {loop="$inscPvs"}
             {if="($value.idinscstatus != 8) && ($value.idinscstatus != 9)"}
-
             <div class="box-body" style=" margin: 5px;">
               <div {function="colorStatus($value.idinscstatus)"} style="margin: 5px" class="row">
               
@@ -71,6 +71,7 @@
                 <div class="col-md-12">
                   <div class="col-md-6" style="margin: 1; padding: 1">
                     <h5 style="text-align: left;">
+
                       {$value.numordem}º -
                       <strong>[{$value.idinsc}] - {$value.nomepess}</strong>
                       {if="UserIsAdmin()"}
@@ -80,25 +81,48 @@
                       {/if}                      
                       <strong>{function="calcularIdade($value.dtnasc)"} anos</strong>
                       &nbsp;Nascim.: {function="formatDate($value.dtnasc)"}&nbsp;
+
+
+
+                      {if="existeParq($value.idpess)"}
+
+                        {if="repostaSimParq($value.idpess)"}
+
+                        <strong><a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/{$value.idpess}"> <i style="color: orange;" class="fa fa-exclamation-triangle"> </i> PAR-Q <i style="color: orange;" class="fa fa-exclamation-triangle"> </i></a> </strong>
+
+                        {else}
+
+                        <strong><a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/{$value.idpess}"> PAR-Q </a> </strong>
+
+                        {/if}
+
+
+                      {else}
+
+                      <strong><a style="font-weight: bold; color: red;" onclick="alert('Não existe Par-q para este aluno')"> PAR-Q </a> </strong>
+
+                      {/if}   
+
+                      
+
                     </h5>
                   </div>
 
                   <div class="col-md-6" style="margin: 1; padding: 1">
                     <h5 style="text-align: left;">               
-                       <strong>Resp: {$value.desperson}</strong>&nbsp;
-                       &nbsp;
-                       <a href="https://wa.me/+55{$value.nrphone}?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: green;"></i><span style="color: black;"> {$value.nrphone}&nbsp;</span></a>
+                        <strong>Resp: </strong>{$value.desperson}
+                      &nbsp;
+                       <a href="https://wa.me/+55{$value.nrphone}?text=Olá {$value.desperson}!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: darkgreen; font-weight: bold;"></i><span style="color: black;"> {$value.nrphone}&nbsp;</span></a>
+                       
+                        &nbsp;&nbsp;&nbsp;&nbsp;
 
-                       &nbsp;&nbsp;&nbsp;&nbsp;
-
-                       <a style="font-weight: bold;" onclick="requisitarPaginaEndereco('/prof/insc-turma-temporada-endereco/{$value.idpess}')"><i class="fas fa-map-marker-alt"></i> Endereço </a>         
+                       <a style="font-weight: bold;" onclick="requisitarPaginaEndereco('/prof/insc-turma-temporada-endereco/{$value.idpess}')"><i class="fas fa-map-marker-alt"></i> Endereço </a> 
 
                         &nbsp;&nbsp;&nbsp;&nbsp;
+                       
+                      <strong>Dt Insc.: </strong>{function="formatDate($value.dtinsc)"}
+                      &nbsp;<strong>Dt Matric.: </strong>{function="formatDate($value.dtmatric)"}&nbsp;
                       
-                       
-                       
-                      <strong>Dt Insc.: {function="formatDate($value.dtinsc)"}</strong>
-                      &nbsp;Dt Matric.: {function="formatDate($value.dtmatric)"}&nbsp;
                     </h5>
                   </div>                   
                 </div>
@@ -235,9 +259,10 @@
                 <h5 style="font-weight: bold; text-align: left;">                  
                   <a href="https://wa.me/+55{$value.nrphone}?text=Olá,%20informamos%20que%20temos%20uma%20vaga%20disponível%20para%20o(a)%20{$value.nomepess}%20na%20turma%20de%20{$turma.descturma}%20-%20{$turma.diasemana}%20das%20{$turma.horainicio}%20às%20{$turma.horatermino}%20no%20{$turma.apelidolocal}%20-%20{$turma.rua}%20-%20Nº%20{$turma.numero}%20-%20{$turma.bairro},%20da%20qual%20você%20fez%20inscrição.%20Se%20você%20ainda%20tem%20interesse%20na%20vaga,%20responda%20SIM%20nas%20próximas%2024%20horas,%20que%20vamos%20passar%20mais%20informações.%20Se%20você%20não%20tiver%20interesse%20ou%20não%20responder,%20vamos%20chamar%20o%20próximo%20inscrito%20da%20lista%20de%20espera%20e%20você%20terá%20que%20fazer%20uma%20nova%20inscrição%20para%20esta%20turma." target="_blank" onclick="return confirm('Você será direcionado para o whatsapp com a mensagem referente a vaga disponível já preenchida. No app clique em enviar msg.')" class="btn btn-success btn-xs"><i></i>Informar vaga pelo WhatsApp</a>
               
-              
-              &nbsp;&nbsp;&nbsp;&nbsp;  
-              
+              </h5>
+              </div>
+                <div class="col-md-2" style="margin: 1; padding: 1">
+              <h5>
                
                   <a href="/prof/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusAguardandoMatricula" onclick="return confirm('Você já informou, por telefone ou whatsapp, o(a) {$value.nomepess} sobre a vaga disponível para a turma de {$turma.descturma}? Se sim, clique em OK, se não imformou, clique em cancelar e informe o aluno sobre a vaga.')" class="btn btn-warning btn-xs"><i></i> Marcar aguardandado matrícula</a>
                 </h5>
@@ -251,7 +276,6 @@
               
             </div>
           </div>
-
           {/if}
            
           {/loop}
@@ -273,35 +297,52 @@
                   <div class="col-md-6" style="margin: 1; padding: 1">
                     <h5 style="text-align: left;">
                       {$value.numordem}º -
-                     
                       <strong>[{$value.idinsc}] - {$value.nomepess}</strong>
                       {if="UserIsAdmin()"}
                       &nbsp;{$value.numcpf}&nbsp;
                       {else}
                       &nbsp;{function="formatCpf($value.numcpf)"}&nbsp;
-                      {/if}
+                      {/if}                      
                       <strong>{function="calcularIdade($value.dtnasc)"} anos</strong>
                       &nbsp;Nascim.: {function="formatDate($value.dtnasc)"}&nbsp;
+
+                      {if="existeParq($value.idpess)"}
+
+                        {if="repostaSimParq($value.idpess)"}
+
+                        <strong><a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/{$value.idpess}"> <i style="color: orange;" class="fa fa-exclamation-triangle"> </i> PAR-Q <i style="color: orange;" class="fa fa-exclamation-triangle"> </i></a> </strong>
+
+                        {else}
+
+                        <strong><a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/{$value.idpess}"> PAR-Q </a> </strong>
+
+                        {/if}
+
+
+                      {else}
+
+                      <strong><a style="font-weight: bold; color: red;" onclick="alert('Não existe Par-q para este aluno')"> PAR-Q </a> </strong>
+
+                      {/if}   
+
+                      
                     </h5>
                   </div>
 
                   <div class="col-md-6" style="margin: 1; padding: 1">
                     <h5 style="text-align: left;">               
-                       <strong>Resp: {$value.desperson}</strong>
-
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                       <a href="https://wa.me/+55{$value.nrphone}?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: green;"></i><span style="color: black;"> {$value.nrphone}&nbsp;</span></a>
-
-              &nbsp;&nbsp;&nbsp;&nbsp;
-
-                       <a style="font-weight: bold;" onclick="requisitarPaginaEndereco('/prof/insc-turma-temporada-endereco/{$value.idpess}')"> Endereço </a>         
-
-              &nbsp;&nbsp;&nbsp;&nbsp;
+                        <strong>Resp: </strong>{$value.desperson}
+                      &nbsp;
+                       <a href="https://wa.me/+55{$value.nrphone}?text=Olá {$value.desperson}!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: darkgreen; font-weight: bold;"></i><span style="color: black;"> {$value.nrphone}&nbsp;</span></a>
                        
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+
+                       <a style="font-weight: bold;" onclick="requisitarPaginaEndereco('/prof/insc-turma-temporada-endereco/{$value.idpess}')"><i class="fas fa-map-marker-alt"></i> Endereço </a>         
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;
                        
-                      <strong>Dt Insc.: {function="formatDate($value.dtinsc)"}</strong>
-                      &nbsp;Dt Matric.: {function="formatDate($value.dtmatric)"}&nbsp;
+                      <strong>Dt Insc.: </strong>{function="formatDate($value.dtinsc)"}
+                      &nbsp;<strong>Dt Matric.: </strong>{function="formatDate($value.dtmatric)"}&nbsp;
                     </h5>
                   </div>                   
                 </div>
@@ -440,7 +481,10 @@
                   <a href="https://wa.me/+55{$value.nrphone}?text=Olá,%20informamos%20que%20temos%20uma%20vaga%20disponível%20para%20o(a)%20{$value.nomepess}%20na%20turma%20de%20{$turma.descturma}%20-%20{$turma.diasemana}%20das%20{$turma.horainicio}%20às%20{$turma.horatermino}%20no%20{$turma.apelidolocal}%20-%20{$turma.rua}%20-%20Nº%20{$turma.numero}%20-%20{$turma.bairro},%20da%20qual%20você%20fez%20inscrição.%20Se%20você%20ainda%20tem%20interesse%20na%20vaga,%20responda%20SIM%20nas%20próximas%2024%20horas,%20que%20vamos%20passar%20mais%20informações.%20Se%20você%20não%20tiver%20interesse%20ou%20não%20responder,%20vamos%20chamar%20o%20próximo%20inscrito%20da%20lista%20de%20espera%20e%20você%20terá%20que%20fazer%20uma%20nova%20inscrição%20para%20esta%20turma." target="_blank" onclick="return confirm('Você será direcionado para o whatsapp com a mensagem referente a vaga disponível já preenchida. No app clique em enviar msg.')" class="btn btn-success btn-xs"><i></i>Informar vaga pelo WhatsApp</a>
               
               
-              &nbsp;&nbsp;&nbsp;&nbsp;
+              </h5>
+              </div>
+                <div class="col-md-2" style="margin: 1; padding: 1">
+              <h5>
               
                
                   <a href="/prof/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusAguardandoMatricula" onclick="return confirm('Você já informou, por telefone ou whatsapp, o(a) {$value.nomepess} sobre a vaga disponível para a turma de {$turma.descturma}? Se sim, clique em OK, se não imformou, clique em cancelar e informe o aluno sobre a vaga.')" class="btn btn-warning btn-xs"><i></i> Marcar aguardandado matrícula</a>
@@ -455,7 +499,7 @@
               
             </div>
           </div>
-
+          
           {/if}
            
           {/loop}
@@ -479,33 +523,52 @@
                   <div class="col-md-6" style="margin: 1; padding: 1">
                     <h5 style="text-align: left;">
                       {$value.numordem}º -
-                      
                       <strong>[{$value.idinsc}] - {$value.nomepess}</strong>
                       {if="UserIsAdmin()"}
                       &nbsp;{$value.numcpf}&nbsp;
                       {else}
                       &nbsp;{function="formatCpf($value.numcpf)"}&nbsp;
-                      {/if}
+                      {/if}                      
                       <strong>{function="calcularIdade($value.dtnasc)"} anos</strong>
                       &nbsp;Nascim.: {function="formatDate($value.dtnasc)"}&nbsp;
+
+                      {if="existeParq($value.idpess)"}
+
+                        {if="repostaSimParq($value.idpess)"}
+
+                        <strong><a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/{$value.idpess}"> <i style="color: orange;" class="fa fa-exclamation-triangle"> </i> PAR-Q <i style="color: orange;" class="fa fa-exclamation-triangle"> </i></a> </strong>
+
+                        {else}
+
+                        <strong><a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/{$value.idpess}"> PAR-Q </a> </strong>
+
+                        {/if}
+
+
+                      {else}
+
+                      <strong><a style="font-weight: bold; color: red;" onclick="alert('Não existe Par-q para este aluno')"> PAR-Q </a> </strong>
+
+                      {/if}   
+
+                      
                     </h5>
                   </div>
 
                   <div class="col-md-6" style="margin: 1; padding: 1">
                     <h5 style="text-align: left;">               
-                       <strong>Resp: {$value.desperson}</strong>
+                        <strong>Resp: </strong>{$value.desperson}
                       &nbsp;
-                       <a href="https://wa.me/+55{$value.nrphone}?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: green;"></i><span style="color: black;"> {$value.nrphone}&nbsp;</span></a>
-
-                       &nbsp;&nbsp;&nbsp;&nbsp;
-
-                       <a style="font-weight: bold;" onclick="requisitarPaginaEndereco('/prof/insc-turma-temporada-endereco/{$value.idpess}')"> Endereço </a>         
-
-                       &nbsp;&nbsp;&nbsp;&nbsp;
+                       <a href="https://wa.me/+55{$value.nrphone}?text=Olá {$value.desperson}!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: darkgreen; font-weight: bold;"></i><span style="color: black;"> {$value.nrphone}&nbsp;</span></a>
                        
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+
+                       <a style="font-weight: bold;" onclick="requisitarPaginaEndereco('/prof/insc-turma-temporada-endereco/{$value.idpess}')"><i class="fas fa-map-marker-alt"></i> Endereço </a>         
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;
                        
-                      <strong>Dt Insc.: {function="formatDate($value.dtinsc)"}</strong>
-                      &nbsp;Dt Matric.: {function="formatDate($value.dtmatric)"}&nbsp;
+                      <strong>Dt Insc.: </strong>{function="formatDate($value.dtinsc)"}
+                      &nbsp;<strong>Dt Matric.: </strong>{function="formatDate($value.dtmatric)"}&nbsp;
                     </h5>
                   </div>                   
                 </div>
@@ -643,7 +706,11 @@
                 <h5 style="font-weight: bold; text-align: left;">                  
                   <a href="https://wa.me/+55{$value.nrphone}?text=Olá,%20informamos%20que%20temos%20uma%20vaga%20disponível%20para%20o(a)%20{$value.nomepess}%20na%20turma%20de%20{$turma.descturma}%20-%20{$turma.diasemana}%20das%20{$turma.horainicio}%20às%20{$turma.horatermino}%20no%20{$turma.apelidolocal}%20-%20{$turma.rua}%20-%20Nº%20{$turma.numero}%20-%20{$turma.bairro},%20da%20qual%20você%20fez%20inscrição.%20Se%20você%20ainda%20tem%20interesse%20na%20vaga,%20responda%20SIM%20nas%20próximas%2024%20horas,%20que%20vamos%20passar%20mais%20informações.%20Se%20você%20não%20tiver%20interesse%20ou%20não%20responder,%20vamos%20chamar%20o%20próximo%20inscrito%20da%20lista%20de%20espera%20e%20você%20terá%20que%20fazer%20uma%20nova%20inscrição%20para%20esta%20turma." target="_blank" onclick="return confirm('Você será direcionado para o whatsapp com a mensagem referente a vaga disponível já preenchida. No app clique em enviar msg.')" class="btn btn-success btn-xs"><i></i>Informar vaga pelo WhatsApp</a>
               
-              &nbsp;&nbsp;&nbsp;&nbsp;
+              
+              </h5>
+              </div>
+                <div class="col-md-2" style="margin: 1; padding: 1">
+              <h5>
               
                
                   <a href="/prof/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusAguardandoMatricula" onclick="return confirm('Você já informou, por telefone ou whatsapp, o(a) {$value.nomepess} sobre a vaga disponível para a turma de {$turma.descturma}? Se sim, clique em OK, se não imformou, clique em cancelar e informe o aluno sobre a vaga.')" class="btn btn-warning btn-xs"><i></i> Marcar aguardandado matrícula</a>
@@ -652,14 +719,13 @@
 
               
                {/if}
-
-
+                  
                 </div>
               </div>
               
             </div>
           </div>
-
+          
           {/if}
            
           {/loop}
@@ -681,32 +747,54 @@
                   <div class="col-md-6" style="margin: 1; padding: 1">
                     <h5 style="text-align: left;">
                       {$value.numordem}º -
-                      
                       <strong>[{$value.idinsc}] - {$value.nomepess}</strong>
                       {if="UserIsAdmin()"}
                       &nbsp;{$value.numcpf}&nbsp;
                       {else}
                       &nbsp;{function="formatCpf($value.numcpf)"}&nbsp;
-                      {/if}
+                      {/if}                      
                       <strong>{function="calcularIdade($value.dtnasc)"} anos</strong>
                       &nbsp;Nascim.: {function="formatDate($value.dtnasc)"}&nbsp;
+
+                      {if="existeParq($value.idpess)"}
+
+                        {if="repostaSimParq($value.idpess)"}
+
+                        <strong><a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/{$value.idpess}"> <i style="color: orange;" class="fa fa-exclamation-triangle"> </i> PAR-Q <i style="color: orange;" class="fa fa-exclamation-triangle"> </i></a> </strong>
+
+                        {else}
+
+                        <strong><a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/{$value.idpess}"> PAR-Q </a> </strong>
+
+                        {/if}
+
+
+                      {else}
+
+                      <strong><a style="font-weight: bold; color: red;" onclick="alert('Não existe Par-q para este aluno')"> PAR-Q </a> </strong>
+
+                      {/if}   
+
+                      
+
                     </h5>
                   </div>
 
                   <div class="col-md-6" style="margin: 1; padding: 1">
                     <h5 style="text-align: left;">               
-                       <strong>Resp: {$value.desperson}</strong>
+                       <strong>Resp: </strong>{$value.desperson}
                       &nbsp;
-                       <a href="https://wa.me/+55{$value.nrphone}?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: green;"></i><span style="color: black;"> {$value.nrphone}&nbsp;</span></a>
+                       <a href="https://wa.me/+55{$value.nrphone}?text=Olá {$value.desperson}!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: darkgreen; font-weight: bold;"></i><span style="color: black;"> {$value.nrphone}&nbsp;</span></a>
                        
-                       &nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;
 
-                       <a style="font-weight: bold;" onclick="requisitarPaginaEndereco('/prof/insc-turma-temporada-endereco/{$value.idpess}')"> Endereço </a>         
+                       <a style="font-weight: bold;" onclick="requisitarPaginaEndereco('/prof/insc-turma-temporada-endereco/{$value.idpess}')"><i class="fas fa-map-marker-alt"></i> Endereço </a>         
 
                         &nbsp;&nbsp;&nbsp;&nbsp;
+                      
                        
-                      <strong>Dt Insc.: {function="formatDate($value.dtinsc)"}</strong>
-                      &nbsp;Dt Matric.: {function="formatDate($value.dtmatric)"}&nbsp;
+                      <strong>Dt Insc.: </strong>{function="formatDate($value.dtinsc)"}
+                      &nbsp;<strong>Dt Matric.: </strong>{function="formatDate($value.dtmatric)"}&nbsp;
                     </h5>
                   </div>                   
                 </div>
@@ -840,9 +928,13 @@
              
               <div class="col-md-2" style="margin: 1; padding: 1">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                  <a href="https://wa.me/+55{$value.nrphone}?text=Olá,%20informamos%20que%20temos%20uma%20vaga%20disponível%20para%20o(a)%20{$value.nomepess}%20na%20turma%20de%20{$turma.descturma}%20-%20{$turma.diasemana}%20das%20{$turma.horainicio}%20às%20{$turma.horatermino}%20no%20{$turma.apelidolocal}%20-%20{$turma.rua}%20-%20Nº%20{$turma.numero}%20-%20{$turma.bairro},%20da%20qual%20você%20fez%20inscrição.%20Se%20você%20ainda%20tem%20interesse%20na%20vaga,%20responda%20SIM%20nas%20próximas%2024%20horas,%20que%20vamos%20passar%20mais%20informações.%20Se%20você%20não%20tiver%20interesse%20ou%20não%20responder,%20vamos%20chamar%20o%20próximo%20inscrito%20da%20lista%20de%20espera%20e%20você%20terá%20que%20fazer%20uma%20nova%20inscrição%20para%20esta%20turma." target="_blank" onclick="return confirm('Você será direcionado para o whatsapp com a mensagem referente a vaga disponível já preenchida. No app clique em enviar msg.')" class="btn btn-success btn-xs"><i></i>Informar vaga pelo WhatsApp</a>              
+                  <a href="https://wa.me/+55{$value.nrphone}?text=Olá,%20informamos%20que%20temos%20uma%20vaga%20disponível%20para%20o(a)%20{$value.nomepess}%20na%20turma%20de%20{$turma.descturma}%20-%20{$turma.diasemana}%20das%20{$turma.horainicio}%20às%20{$turma.horatermino}%20no%20{$turma.apelidolocal}%20-%20{$turma.rua}%20-%20Nº%20{$turma.numero}%20-%20{$turma.bairro},%20da%20qual%20você%20fez%20inscrição.%20Se%20você%20ainda%20tem%20interesse%20na%20vaga,%20responda%20SIM%20nas%20próximas%2024%20horas,%20que%20vamos%20passar%20mais%20informações.%20Se%20você%20não%20tiver%20interesse%20ou%20não%20responder,%20vamos%20chamar%20o%20próximo%20inscrito%20da%20lista%20de%20espera%20e%20você%20terá%20que%20fazer%20uma%20nova%20inscrição%20para%20esta%20turma." target="_blank" onclick="return confirm('Você será direcionado para o whatsapp com a mensagem referente a vaga disponível já preenchida. No app clique em enviar msg.')" class="btn btn-success btn-xs"><i></i>Informar vaga pelo WhatsApp</a>
               
-              &nbsp;&nbsp;&nbsp;&nbsp;
+              
+              </h5>
+              </div>
+                <div class="col-md-2" style="margin: 1; padding: 1">
+              <h5>
               
                
                   <a href="/prof/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusAguardandoMatricula" onclick="return confirm('Você já informou, por telefone ou whatsapp, o(a) {$value.nomepess} sobre a vaga disponível para a turma de {$turma.descturma}? Se sim, clique em OK, se não imformou, clique em cancelar e informe o aluno sobre a vaga.')" class="btn btn-warning btn-xs"><i></i> Marcar aguardandado matrícula</a>
@@ -857,19 +949,18 @@
               
             </div>
           </div>
-
           {/if}
            
-          {/loop}     
-        </div>   
-
-        <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+          {/loop}
+          </div> 
+          
+          <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
             <div class="box-body" style="text-align: center; background-color: orangered;">
               <span style="color: black; font-weight: bold">Canceladas
               </span>
             </div>
-
-        {loop="$insctodas"}
+          
+           {loop="$inscTodas"}
             {if="($value.idinscstatus == 9)"}
             <div class="box-body" style=" margin: 5px;">
               <div {function="colorStatus($value.idinscstatus)"} style="margin: 5px" class="row">
@@ -883,7 +974,27 @@
                       &nbsp;{function="formatCpf($value.numcpf)"}&nbsp;
                       <strong>{function="calcularIdade($value.dtnasc)"} anos</strong>
                       &nbsp;Nascim.: {function="formatDate($value.dtnasc)"}&nbsp;
-                    </h5>
+
+                      {if="existeParq($value.idpess)"}
+
+                        {if="repostaSimParq($value.idpess)"}
+
+                        <strong><a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/{$value.idpess}"> <i style="color: orange;" class="fa fa-exclamation-triangle"> </i> PAR-Q <i style="color: orange;" class="fa fa-exclamation-triangle"> </i></a> </strong>
+
+                        {else}
+
+                        <strong><a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/{$value.idpess}"> PAR-Q </a> </strong>
+
+                        {/if}
+
+
+                      {else}
+
+                      <strong><a style="font-weight: bold; color: red;" onclick="alert('Não existe Par-q para este aluno')"> PAR-Q </a> </strong>
+
+                      {/if}   
+
+                                          </h5>
                   </div>
 
                   <div class="col-md-6" style="margin: 2; padding: 2">
@@ -1089,6 +1200,29 @@
                       &nbsp;{function="formatCpf($value.numcpf)"}&nbsp;
                       <strong>{function="calcularIdade($value.dtnasc)"} anos</strong>
                       &nbsp;Nascim.: {function="formatDate($value.dtnasc)"}&nbsp;
+
+                      {if="existeParq($value.idpess)"}
+
+                        {if="repostaSimParq($value.idpess)"}
+
+                        <strong><a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/{$value.idpess}"> <i style="color: orange;" class="fa fa-exclamation-triangle"> </i> PAR-Q <i style="color: orange;" class="fa fa-exclamation-triangle"> </i></a> </strong>
+
+                        {else}
+
+                        <strong><a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/{$value.idpess}"> PAR-Q </a> </strong>
+
+                        {/if}
+
+
+                      {else}
+
+                      <strong><a style="font-weight: bold; color: red;" onclick="alert('Não existe Par-q para este aluno')"> PAR-Q </a> </strong>
+
+                      {/if}   
+
+                      
+                      
+
                     </h5>
                   </div>
 
@@ -1274,6 +1408,9 @@
            
           {/loop}
           </div>     
+         
+       
+
          
        
 

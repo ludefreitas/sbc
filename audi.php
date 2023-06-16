@@ -84,6 +84,4 @@ $app->get("/audi/dadostemporada/:desctemporada", function($desctemporada) {
 });
 
 
-
-
 ?>

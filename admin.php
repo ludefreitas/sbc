@@ -5,19 +5,35 @@ use \Sbc\Model\User;
 use \Sbc\Model\Pessoa;
 use \Sbc\Model\Insc;
 use \Sbc\Model\Temporada;
+use \Sbc\Model\Saude;
 
 
 $app->get("/admin", function() {
 
 	User::verifyLogin();
 	//User::verifyLoginAudi();
+	
+	// linhas (comentadas) abaixo atualiza atestado que não tinha cfp associado.
+    /*
+	$atestado = Saude::selectAllAtestado();
 
+	for ($x = 0; $x<count($atestado); $x++) {
+
+		$idpess = $atestado[$x]['idpess'];
+
+	    $cpf = Pessoa::getNumCpfByIdpess($idpess);
+
+	    Saude:: updateAtestadoCpf($cpf, $idpess);	   
+
+	}
+	*/
+	
 	$userOnline = User::pega_totalUsuariosOnline();
 
 	$visitOnline = User::pega_totalVisitantesOnline();
-
+	
 	$temporada = Temporada::listAll();
-
+	
 	$idtemporada = Temporada::selecionaTemporadaMatriEncerrada();
 
 	$idtemporada = $idtemporada[0]['idtemporada'];
@@ -27,24 +43,26 @@ $app->get("/admin", function() {
 	$todosAlunos = Pessoa::getPage($pagina);
 	$todosProfessores = User::getPageProf($pagina);
 	$todasInscrições = Insc::getPageInsc($pagina);
+	
 	$matriculadosTemporada = Insc::numMatriculadosTemporada($idtemporada);
 
 	$matriculadosTemporada = $matriculadosTemporada[0]['matriculados'];
 
-	//var_dump($matriculadosTemporada);
-	//	exit();
+	//var_dump($pagination['total']);
+	//exit();
 
 	$page = new PageAdmin();
 
 	$page->setTpl("index", [
 		'useronline'=>$userOnline,
 		'visitante'=>$visitOnline,
-		'temporada'=>$temporada,	
+		'temporada'=>$temporada,
 		'totalUsuarios'=>$todosUsuarios['total'],
 		'totalAlunos'=>$todosAlunos['total'],
 		'totalProfessores'=>$todosProfessores['total'],
 		'totalInscricoes'=>$todasInscrições['total'],
-		//'matriculadosTemporada'=>$matriculadosTemporada,
+		'matriculadosTemporada'=>$matriculadosTemporada,
+		
 	
 	]);
 });

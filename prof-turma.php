@@ -38,7 +38,7 @@ $app->get("/prof/turma/create/token/:idturma/:idtemporada/:numcpf", function($id
 
 	$token = time();
 	$token = substr($token, 4);
-
+	
 	$iduserSession = (int)$_SESSION[User::SESSION]['iduser'];
 
 	$iduserTurmaTemporada = $user->getIdUseInTurmaTemporada($idturma, $idtemporada);
@@ -47,7 +47,7 @@ $app->get("/prof/turma/create/token/:idturma/:idtemporada/:numcpf", function($id
 	
 	if($iduserTurmaTemporada !== $iduserSession){
 	    
-	    echo '<script>alert("VocÃª deve solicitar ao professor desta turma para que ele gere o token!");';
+	    echo '<script>alert("Voc«´ deve solicitar ao professor desta turma para que ele gere o token!");';
 	  	echo 'javascript:history.go(-1)</script>';
 	   	exit;
 	   
@@ -68,10 +68,54 @@ $app->get("/prof/turma/create/token/:idturma/:idtemporada/:numcpf", function($id
 		echo "javascript:history.go(-1)</script>";
 	}else{
 
-		echo "<script>alert('JÃ¡ existe um token para este aluno nesta turma!');";
+		echo "<script>alert('J«¡ existe um token para este aluno nesta turma!');";
 		echo "javascript:history.go(-1)</script>";
 	}
+	
+});
 
+$app->get("/estagiario/turma/create/token/:idturma/:idtemporada/:numcpf", function($idturma, $idtemporada, $numcpf) {
+
+	User::verifyLoginEstagiario();
+
+	$turma = new Turma();
+	$user = new User();
+
+	$token = time();
+	$token = substr($token, 4);
+	
+	$iduserSession = (int)$_SESSION[User::SESSION]['iduser'];
+
+	$iduserTurmaTemporada = $user->getIdUseInTurmaTemporada($idturma, $idtemporada);
+	
+	$iduserTurmaTemporada = (int)$iduserTurmaTemporada['iduser'];
+	
+	if($iduserTurmaTemporada !== $iduserSession){
+	    
+	    echo '<script>alert("Voc«´ deve solicitar ao professor desta turma para que ele gere o token!");';
+	  	echo 'javascript:history.go(-1)</script>';
+	   	exit;
+	   
+	}
+
+	$_POST['idturma'] = $idturma;
+	$_POST['numcpf'] = $numcpf;
+	$_POST['token'] = $token;
+	$_POST['isused'] = 0;
+	$_POST['creator'] = $iduserSession;
+
+	$turma->setData($_POST);
+
+	if(!Turma::temTokenCpf($idturma, $numcpf)){
+
+		$turma->saveToken();
+	    echo "<script>alert('Token ".$turma->gettoken()." criado com sucesso!');";
+		echo "javascript:history.go(-1)</script>";
+	}else{
+
+		echo "<script>alert('J«¡ existe um token para este aluno nesta turma!');";
+		echo "javascript:history.go(-1)</script>";
+	}
 	
 });
 
@@ -93,7 +137,7 @@ $app->post("/prof/turma/create/token", function() {
 	
 	if($iduserTurmaTemporada !== $iduserSession){
 	    
-	    echo '<script>alert("VocÃª deve solicitar ao professor desta turma para que ele gere o token!");';
+	    echo '<script>alert("Voc«´ deve solicitar ao professor desta turma para que ele gere o token!");';
 	  	echo 'javascript:history.go(-1)</script>';
 	   	exit;
 	   
@@ -103,13 +147,13 @@ $app->post("/prof/turma/create/token", function() {
 	$token = substr($token, 4);
 
 	if(isset($_POST['numcpf']) && $_POST['numcpf'] == ""){
-		echo "<script>alert('Informe o nÃºmero do CPF!');";
+		echo "<script>alert('Informe o n«âmero do CPF!');";
 	  	echo "javascript:history.go(-1)</script>";
 	   	exit;
 	}
 
 	if(!Pessoa::validaCPF($_POST['numcpf'])){
-		echo "<script>alert('Informe um nÃºmero de cpf vÃ¡lido!');";
+		echo "<script>alert('Informe um n«âmero de cpf v«¡lido!');";
 	    echo "javascript:history.go(-1)</script>";
 		exit;
 	}
@@ -133,7 +177,7 @@ $app->post("/prof/turma/create/token", function() {
 	}else{
 
 		if($numcpf != ""){
-			echo "<script>alert('JÃ¡ existe um token para este aluno nesta turma!');";
+			echo "<script>alert('J«¡ existe um token para este aluno nesta turma!');";
 			echo "javascript:history.go(-1)</script>";
 		}else{
 			$turma->saveToken();
@@ -158,7 +202,7 @@ $app->get("/prof/token/:idturma/:idtemporada", function($idturma, $idtemporada) 
 		Turma::setMsgError("NÃ£o existem tokens para esta turma.");
 	}
 	
-	$page = new PageProf(); 
+	$page = new PageProf();    
 
 	$page->setTpl("token-turma", [
 		'tokens'=>$tokens,
@@ -184,7 +228,7 @@ $app->get("/prof/listapessoasporturma/:idturma/:idtemporada", function($idturma,
 	$listapessoas = Insc::listaPessoasPorTurmaTemporada($idturma, $idtemporada);
 
 	if(!isset($listapessoas) || $listapessoas == NULL){
-		echo "<script>alert('NÃ£o hÃ¡ inscritos para esta turma');";
+		echo "<script>alert('N«ªo h«¡ inscritos para esta turma');";
 		echo "javascript:history.go(-1)</script>";
 	}else{
 
@@ -201,5 +245,40 @@ $app->get("/prof/listapessoasporturma/:idturma/:idtemporada", function($idturma,
 	}
 	
 });
+
+$app->get("/estagiario/listapessoasporturma/:idturma/:idtemporada", function($idturma, $idtemporada) {
+
+	User::verifyLoginEstagiario();
+
+	$insc = new Insc();
+	$turma = new Turma();
+	$temporada = new Temporada();
+
+	$turma->get((int)$idturma);	
+	$temporada->get((int)$idtemporada);	
+
+	$descturma = $turma->getdescturma();
+
+	$listapessoas = Insc::listaPessoasPorTurmaTemporada($idturma, $idtemporada);
+
+	if(!isset($listapessoas) || $listapessoas == NULL){
+		echo "<script>alert('N«ªo h«¡ inscritos para esta turma');";
+		echo "javascript:history.go(-1)</script>";
+	}else{
+
+		$page = new PageProf([
+		"header"=>false,
+		"footer"=>false
+		]);
+
+		$page->setTpl("listapessoasporturma-estagiario", [
+		'listapessoas'=>$listapessoas,
+		'descturma'=>$descturma	,
+		'idturma'=>$idturma	
+		]);
+	}
+	
+});
+
 
 ?>

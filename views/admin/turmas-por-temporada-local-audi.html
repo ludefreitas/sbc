@@ -7,7 +7,7 @@
 
 </h1>
 <ol class="breadcrumb">
-  <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+  <li><a href="/admin-audi"><i class="fa fa-dashboard"></i> Home</a></li>
   
 </ol>
 </section>
@@ -63,7 +63,7 @@
                           - {$value.diasemana}
                           {$value.horainicio} ás {$value.horatermino} -  
                           <strong>{$value.descrfxetaria}  {$value.initidade} a {$value.fimidade} anos</strong>
-                          -  {$value.apelidolocal} - {$value.nomeespaco} - <strong>Professor: {if="$value.idperson == 1"} Admin Master {else} {$value.apelidoperson} {/if}</strong>&nbsp; ({$value.vagas} vagas)
+                          -  {$value.apelidolocal} - {$value.nomeespaco} - <strong>Professor: {if="$value.idperson == 1"} Admin Master {else} {$value.apelidoperson} {/if}</strong>&nbsp; Vagas: ({$value.vagas} Geral)&nbsp; - &nbsp;({$value.vagaslaudo} Laudo)&nbsp; - &nbsp;({$value.vagaspcd} PCD)&nbsp; - &nbsp;({$value.vagaspvs} PVS)
                       </span>
                     </div>      
                    <div class="col-md-6">
@@ -77,12 +77,11 @@
                          <a href="/admin/insc-turma-temporada-chamada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: green;"> 
                          | &nbsp; Imprimir lista chamada ({$value.nummatriculados}) &nbsp; 
                          </a> &nbsp; 
-
                          <!--
                          <a href="/admin/calendario-lista-presenca/{$value.idtemporada}/{$value.idturma}" style="color: orangered;">
                          | &nbsp;Fazer Chamada </a>  &nbsp; 
                          &nbsp; 
-                       -->
+                         -->
 
                          <a href="/admin/listapessoasporturma/{$value.idturma}/{$value.idtemporada}" style="color: black;">
                          | &nbsp; Lista com endereços </a>  &nbsp; 
@@ -102,8 +101,8 @@
                       <!--  | &nbsp; <a href="/insc-turma-temporada-para-sorteio/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: orangered;">  Sorteio |</a>  &nbsp;  
                       -->
 
+                        <!--
 
-                          <!--
                           <a href="/admin/token/{$value.idturma}" style="color: darkblue;"><i ></i> | Tokens</a>
                         -->
                       </h5>
@@ -123,8 +122,6 @@
           
           <!-- /.box-body -->
 
-
-           
             
 
           <div class="box-footer clearfix">

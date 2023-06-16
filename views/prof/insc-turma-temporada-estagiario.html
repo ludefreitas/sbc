@@ -1,0 +1,1329 @@
+<script type="text/javascript">
+
+      function requisitarPaginaEndereco(url){
+
+        let ajax = new XMLHttpRequest();
+        let idurl = url.substr(53);              
+        ajax.open('GET', 'url');
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if(result){              
+                alert(result)
+          }else{
+            alert('Endereço não encontrado!')
+          }
+        });
+      }   
+
+</script>
+
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+     [{$turma.idturma}]  {$turma.descturma} {$turma.diasemana}  {$turma.periodo} {$turma.apelidolocal} -   {$temporada.desctemporada}
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="/prof-estagiario"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active"><a href="/estagiario/turma-temporada/{$temporada.idtemporada}">Turmas por temporada</a></li>
+    <li class="active"><a style="color: red" href="javascript: history.go(-1)">Voltar</a>
+    </li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary">
+
+          {if="$error != ''"}
+                <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
+            {$error}
+                </div>
+          {/if}
+          {if="$success != ''"}
+                <div class="alert alert-success" style="margin: 10px 10px 0px 10px">
+            {$success}
+                </div>
+          {/if}
+            
+            <div class="box-header">
+           
+            </div>
+          <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+            <div class="box-body" style="text-align: center;">
+                <span style="color: orangered; font-weight: bold">PVS - Lista de pessoas em vulnerabilidade social - {$turma.vagaspvs} vagas
+                </span>
+          </div>
+              
+            {loop="$inscPvs"}
+            {if="($value.idinscstatus != 8) && ($value.idinscstatus != 9)"}
+            <div class="box-body" style=" margin: 5px;">
+              <div {function="colorStatus($value.idinscstatus)"} style="margin: 5px" class="row">
+              
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="col-md-6" style="margin: 1; padding: 1">
+                    <h5 style="text-align: left;">
+                      {$value.numordem}º -
+                      <strong>[{$value.idinsc}] - {$value.nomepess}</strong>
+                      {if="UserIsAdmin()"}
+                      &nbsp;{$value.numcpf}&nbsp;
+                      {else}
+                      &nbsp;{function="formatCpf($value.numcpf)"}&nbsp;
+                      {/if}                      
+                      <strong>{function="calcularIdade($value.dtnasc)"} anos</strong>
+                      &nbsp;Nascim.: {function="formatDate($value.dtnasc)"}&nbsp;
+                    </h5>
+                  </div>
+
+                  <div class="col-md-6" style="margin: 1; padding: 1">
+                    <h5 style="text-align: left;">               
+                        <strong>Resp: </strong>{$value.desperson}
+                      &nbsp;
+                       <a href="https://wa.me/+55{$value.nrphone}?text=Olá {$value.desperson}!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: darkgreen; font-weight: bold;"></i><span style="color: black;"> {$value.nrphone}&nbsp;</span></a>
+                       
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+
+                       <a style="font-weight: bold;" onclick="requisitarPaginaEndereco('/estagiario/insc-turma-temporada-endereco/{$value.idpess}')"><i class="fas fa-map-marker-alt"></i> Endereço </a>         
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                       
+                      <strong>Dt Insc.: </strong>{function="formatDate($value.dtinsc)"}
+                      &nbsp;<strong>Dt Matric.: </strong>{function="formatDate($value.dtmatric)"}&nbsp;
+                      
+                    </h5>
+                  </div>                   
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">                  
+
+                  <div class="col-md-6" style="margin: 1; padding: 1">
+                    <h5 style="text-align: left;">  
+
+                      <span style="font-weight: bold; text-align: left; color: brown;">                  
+                        {if="$value.vulnsocial == 1"} (Vuln. Social) &nbsp;&nbsp;{/if}
+                      </span> 
+                      
+                      <span style="font-weight: bold; text-align: left; color: darkblue;">  
+                        {if="$value.inscpcd == 1"} PCD &nbsp;&nbsp;{/if}  
+                      </span> 
+
+                      <span style="font-weight: bold; text-align: left; color: darkgreen; font-weight: bold;">                  
+                        {if="$value.laudo == 1"}LAUDO  &nbsp;&nbsp;{/if}
+                       </span>
+                   
+                  
+
+                    {if="$value.idinscstatus == 1"}              
+                    <span style="font-weight: bold; text-align: left; color: blue;">                  
+                      <span>{$value.descstatus}</span>
+                    </span>             
+                    {/if}
+
+                  
+              
+                    {if="$value.idinscstatus == 2"}
+              
+                    <span style="font-weight: bold; text-align: left; color: darkgreen;">                  
+                      <span>{$value.descstatus}</span>
+                    </span>
+             
+                    {/if}
+               
+
+                      {if="$value.idinscstatus == 3"}
+                      
+                        <span style="font-weight: bold; text-align: left; color: green;">                  
+                          <span>*{$value.descstatus}*</span>
+                        </span>
+                      
+                      {/if}
+
+                      {if="$value.idinscstatus == 6"}
+                        <span style="font-weight: bold; text-align: left; color: darkorange;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+
+
+                      {if="$value.idinscstatus == 7"}
+                        <span style="font-weight: bold; text-align: left; color: darkblue;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+
+                      
+                      {if="$value.idinscstatus == 8"}
+                        <span style="font-weight: bold; text-align: left; color: orange;">                  
+                          Status: <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+                      
+                      {if="$value.idinscstatus == 9"}
+                      
+                        <span style="font-weight: bold; text-align: left; color: red;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      
+                      {/if} 
+                       </h5>               
+                    </div>
+
+
+              <div class="col-md-2" style="margin: 1; padding: 1">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/estagiario/profile/insc/{$value.idinsc}/{$value.idpess}/{$turma.idturma}" role="button">Detalhes</a>
+                </h5>
+              </div>   
+
+              {if="$value.idinscstatus == 1"}
+                <div class="col-md-2" style="margin: 1; padding: 1">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a class="btn btn-danger btn-xs" href="/estagiario/insc/{$value.idinsc}/{$value.idturma}/{$value.idpess}/statusDesistente" role="button" onclick="return confirm('Deseja realmente informar como desistente o(a) {$value.nomepess} da inscrição {$value.idinsc}?')">Marcar como desistente</a>
+                </h5>
+                </div>
+              {/if}                    
+
+              {if="$value.idinscstatus == 2"}
+                <div class="col-md-2" style="margin: 1; padding: 1">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA do(a) {$value.nomepess} na turma {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                </h5>
+                </div>
+                {if="$numMatriculados >= $vagas"}
+                  <div class="col-md-2" style="margin: 2; padding: 2">
+                  <h5 style="font-weight: bold; text-align: left;">  
+      
+                    <a href="/estagiario/turma/create/token/{$turma.idturma}/{$temporada.idtemporada}/{$value.numcpf}" class="btn btn-info btn-xs"><i></i> Gerar token</a>
+                   
+                  </h5>
+                  </div>
+                {/if}
+              {/if}
+
+              {if="$value.idinscstatus == 3"}
+
+              <!--
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">            
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/enviarEmailASorteado" onclick="return confirm('Deseja realmente enviar email para que o(a) {$value.nomepess} fique sabendo que foi sorteado na turma de {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-info btn-xs"><i></i> Avisar Sorteado </a>
+                </h5>
+              </div>
+            -->
+              <div class="col-md-2" style="margin: 1; padding: 1">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA do(a) {$value.nomepess} na turma {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                </h5>
+                </div>
+                
+
+              {/if}
+              
+              {if="$value.idinscstatus == 7"}
+             
+              <div class="col-md-2" style="margin: 1; padding: 1">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="https://wa.me/+55{$value.nrphone}?text=Olá,%20informamos%20que%20temos%20uma%20vaga%20disponível%20para%20o(a)%20{$value.nomepess}%20na%20turma%20de%20{$turma.descturma}%20-%20{$turma.diasemana}%20das%20{$turma.horainicio}%20às%20{$turma.horatermino}%20no%20{$turma.apelidolocal}%20-%20{$turma.rua}%20-%20Nº%20{$turma.numero}%20-%20{$turma.bairro},%20da%20qual%20você%20fez%20inscrição.%20Se%20você%20ainda%20tem%20interesse%20na%20vaga,%20responda%20SIM%20nas%20próximas%2024%20horas,%20que%20vamos%20passar%20mais%20informações.%20Se%20você%20não%20tiver%20interesse%20ou%20não%20responder,%20vamos%20chamar%20o%20próximo%20inscrito%20da%20lista%20de%20espera%20e%20você%20terá%20que%20fazer%20uma%20nova%20inscrição%20para%20esta%20turma." target="_blank" onclick="return confirm('Você será direcionado para o whatsapp com a mensagem referente a vaga disponível já preenchida. No app clique em enviar msg.')" class="btn btn-success btn-xs"><i></i>Informar vaga pelo WhatsApp</a>
+              
+              </h5>
+              </div>
+                <div class="col-md-2" style="margin: 1; padding: 1">
+              <h5>
+               
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusAguardandoMatricula" onclick="return confirm('Você já informou, por telefone ou whatsapp, o(a) {$value.nomepess} sobre a vaga disponível para a turma de {$turma.descturma}? Se sim, clique em OK, se não imformou, clique em cancelar e informe o aluno sobre a vaga.')" class="btn btn-warning btn-xs"><i></i> Marcar aguardandado matrícula</a>
+                </h5>
+              </div>
+
+              
+               {/if}
+                  
+                </div>
+              </div>
+              
+            </div>
+          </div>
+          {/if}
+           
+          {/loop}
+          </div>  
+
+          <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+            <div class="box-body" style="text-align: center;">
+                <span style="color: orangered; font-weight: bold">PCD - Lista de pessoas com deficiência - {$turma.vagaspcd} vagas
+                </span>
+          </div>
+              
+            {loop="$inscPcd"}
+            {if="($value.idinscstatus != 8) && ($value.idinscstatus != 9)"}
+            <div class="box-body" style=" margin: 5px;">
+              <div {function="colorStatus($value.idinscstatus)"} style="margin: 5px" class="row">
+              
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="col-md-6" style="margin: 1; padding: 1">
+                    <h5 style="text-align: left;">
+                      {$value.numordem}º -
+                      <strong>[{$value.idinsc}] - {$value.nomepess}</strong>
+                      {if="UserIsAdmin()"}
+                      &nbsp;{$value.numcpf}&nbsp;
+                      {else}
+                      &nbsp;{function="formatCpf($value.numcpf)"}&nbsp;
+                      {/if}                      
+                      <strong>{function="calcularIdade($value.dtnasc)"} anos</strong>
+                      &nbsp;Nascim.: {function="formatDate($value.dtnasc)"}&nbsp;
+
+                      {if="existeParq($value.idpess)"}
+
+                        {if="repostaSimParq($value.idpess)"}
+
+                        <strong><a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/{$value.idpess}"> <i style="color: orange;" class="fa fa-exclamation-triangle"> </i> PAR-Q <i style="color: orange;" class="fa fa-exclamation-triangle"> </i></a> </strong>
+
+                        {else}
+
+                        <strong><a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/{$value.idpess}"> PAR-Q </a> </strong>
+
+                        {/if}
+
+
+                      {else}
+
+                      <strong><a style="font-weight: bold; color: red;" onclick="alert('Não existe Par-q para este aluno')"> PAR-Q </a> </strong>
+
+                      {/if}   
+
+                    </h5>
+                  </div>
+
+                  <div class="col-md-6" style="margin: 1; padding: 1">
+                    <h5 style="text-align: left;">               
+                        <strong>Resp: </strong>{$value.desperson}
+                      &nbsp;
+                       <a href="https://wa.me/+55{$value.nrphone}?text=Olá {$value.desperson}!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: darkgreen; font-weight: bold;"></i><span style="color: black;"> {$value.nrphone}&nbsp;</span></a>
+                       
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+
+                       <a style="font-weight: bold;" onclick="requisitarPaginaEndereco('/estagiario/insc-turma-temporada-endereco/{$value.idpess}')"><i class="fas fa-map-marker-alt"></i> Endereço </a>         
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                       
+                      <strong>Dt Insc.: </strong>{function="formatDate($value.dtinsc)"}
+                      &nbsp;<strong>Dt Matric.: </strong>{function="formatDate($value.dtmatric)"}&nbsp;
+                    </h5>
+                  </div>                   
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">                  
+
+                  <div class="col-md-6" style="margin: 1; padding: 1">
+                    <h5 style="text-align: left;">  
+
+                      <span style="font-weight: bold; text-align: left; color: brown;">                  
+                        {if="$value.vulnsocial == 1"} (Vuln. Social) &nbsp;&nbsp;{/if}
+                      </span>               
+                      
+                      <span style="font-weight: bold; text-align: left; color: darkblue;">  
+                        {if="$value.inscpcd == 1"} PCD &nbsp;&nbsp;{/if}  
+                      </span>                            
+                    
+                      
+                      <span style="font-weight: bold; text-align: left; color: darkgreen; font-weight: bold;">                  
+                        {if="$value.laudo == 1"}LAUDO  &nbsp;&nbsp;{/if}
+                       </span>
+                   
+                  
+
+                    {if="$value.idinscstatus == 1"}              
+                    <span style="font-weight: bold; text-align: left; color: blue;">                  
+                      <span>{$value.descstatus}</span>
+                    </span>             
+                    {/if}
+
+                  
+              
+                    {if="$value.idinscstatus == 2"}
+              
+                    <span style="font-weight: bold; text-align: left; color: darkgreen;">                  
+                      <span>{$value.descstatus}</span>
+                    </span>
+             
+                    {/if}
+               
+
+                      {if="$value.idinscstatus == 3"}
+                      
+                        <span style="font-weight: bold; text-align: left; color: green;">                  
+                          <span>*{$value.descstatus}*</span>
+                        </span>
+                      
+                      {/if}
+
+                      {if="$value.idinscstatus == 6"}
+                        <span style="font-weight: bold; text-align: left; color: darkorange;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+
+
+                      {if="$value.idinscstatus == 7"}
+                        <span style="font-weight: bold; text-align: left; color: darkblue;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+
+                      
+                      {if="$value.idinscstatus == 8"}
+                        <span style="font-weight: bold; text-align: left; color: orange;">                  
+                          Status: <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+                      
+                      {if="$value.idinscstatus == 9"}
+                      
+                        <span style="font-weight: bold; text-align: left; color: red;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      
+                      {/if} 
+                       </h5>               
+                    </div>
+
+
+              <div class="col-md-2" style="margin: 1; padding: 1">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/estagiario/profile/insc/{$value.idinsc}/{$value.idpess}/{$turma.idturma}" role="button">Detalhes</a>
+                </h5>
+              </div>    
+
+              {if="$value.idinscstatus == 1"}
+                <div class="col-md-2" style="margin: 1; padding: 1">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a class="btn btn-danger btn-xs" href="/estagiario/insc/{$value.idinsc}/{$value.idturma}/{$value.idpess}/statusDesistente" role="button" onclick="return confirm('Deseja realmente informar como desistente o(a) {$value.nomepess} da inscrição {$value.idinsc}?')">Marcar como desistente</a>
+                </h5>
+                </div>
+              {/if}                   
+
+              {if="$value.idinscstatus == 2"}
+                <div class="col-md-2" style="margin: 1; padding: 1">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA do(a) {$value.nomepess} na turma {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                </h5>
+                </div>
+                {if="$numMatriculados >= $vagas"}
+                  <div class="col-md-2" style="margin: 2; padding: 2">
+                  <h5 style="font-weight: bold; text-align: left;">  
+      
+                    <a href="/estagiario/turma/create/token/{$turma.idturma}/{$temporada.idtemporada}/{$value.numcpf}" class="btn btn-info btn-xs"><i></i> Gerar token</a>
+                   
+                  </h5>
+                  </div>
+                {/if}
+              {/if}
+
+              {if="$value.idinscstatus == 3"}
+
+              <!--
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">            
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/enviarEmailASorteado" onclick="return confirm('Deseja realmente enviar email para que o(a) {$value.nomepess} fique sabendo que foi sorteado na turma de {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-info btn-xs"><i></i> Avisar Sorteado </a>
+                </h5>
+              </div>
+            -->
+              <div class="col-md-2" style="margin: 1; padding: 1">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA do(a) {$value.nomepess} na turma {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                </h5>
+                </div>
+                
+
+              {/if}
+              
+              {if="$value.idinscstatus == 7"}
+             
+              <div class="col-md-2" style="margin: 1; padding: 1">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="https://wa.me/+55{$value.nrphone}?text=Olá,%20informamos%20que%20temos%20uma%20vaga%20disponível%20para%20o(a)%20{$value.nomepess}%20na%20turma%20de%20{$turma.descturma}%20-%20{$turma.diasemana}%20das%20{$turma.horainicio}%20às%20{$turma.horatermino}%20no%20{$turma.apelidolocal}%20-%20{$turma.rua}%20-%20Nº%20{$turma.numero}%20-%20{$turma.bairro},%20da%20qual%20você%20fez%20inscrição.%20Se%20você%20ainda%20tem%20interesse%20na%20vaga,%20responda%20SIM%20nas%20próximas%2024%20horas,%20que%20vamos%20passar%20mais%20informações.%20Se%20você%20não%20tiver%20interesse%20ou%20não%20responder,%20vamos%20chamar%20o%20próximo%20inscrito%20da%20lista%20de%20espera%20e%20você%20terá%20que%20fazer%20uma%20nova%20inscrição%20para%20esta%20turma." target="_blank" onclick="return confirm('Você será direcionado para o whatsapp com a mensagem referente a vaga disponível já preenchida. No app clique em enviar msg.')" class="btn btn-success btn-xs"><i></i>Informar vaga pelo WhatsApp</a>
+              
+              
+              </h5>
+              </div>
+                <div class="col-md-2" style="margin: 1; padding: 1">
+              <h5>
+              
+               
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusAguardandoMatricula" onclick="return confirm('Você já informou, por telefone ou whatsapp, o(a) {$value.nomepess} sobre a vaga disponível para a turma de {$turma.descturma}? Se sim, clique em OK, se não imformou, clique em cancelar e informe o aluno sobre a vaga.')" class="btn btn-warning btn-xs"><i></i> Marcar aguardandado matrícula</a>
+                </h5>
+              </div>
+
+              
+               {/if}
+                  
+                </div>
+              </div>
+              
+            </div>
+          </div>
+          
+          {/if}
+           
+          {/loop}
+          </div>    
+  
+
+
+          <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+            <div class="box-body" style="text-align: center;">
+              <span style="color: orangered; font-weight: bold">PLM - Lista de pessoas com laudo - {$turma.vagaslaudo} vagas
+              </span>
+            </div>
+              
+            {loop="$inscPlm"}
+            {if="($value.idinscstatus != 8) && ($value.idinscstatus != 9)"}
+            <div class="box-body" style=" margin: 5px;">
+              <div {function="colorStatus($value.idinscstatus)"} style="margin: 5px" class="row">
+              
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="col-md-6" style="margin: 1; padding: 1">
+                    <h5 style="text-align: left;">
+                      {$value.numordem}º -
+                      <strong>[{$value.idinsc}] - {$value.nomepess}</strong>
+                      {if="UserIsAdmin()"}
+                      &nbsp;{$value.numcpf}&nbsp;
+                      {else}
+                      &nbsp;{function="formatCpf($value.numcpf)"}&nbsp;
+                      {/if}                      
+                      <strong>{function="calcularIdade($value.dtnasc)"} anos</strong>
+                      &nbsp;Nascim.: {function="formatDate($value.dtnasc)"}&nbsp;
+                    </h5>
+                  </div>
+
+                  <div class="col-md-6" style="margin: 1; padding: 1">
+                    <h5 style="text-align: left;">               
+                        <strong>Resp: </strong>{$value.desperson}
+                      &nbsp;
+                       <a href="https://wa.me/+55{$value.nrphone}?text=Olá {$value.desperson}!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: darkgreen; font-weight: bold;"></i><span style="color: black;"> {$value.nrphone}&nbsp;</span></a>
+                       
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+
+                       <a style="font-weight: bold;" onclick="requisitarPaginaEndereco('/estagiario/insc-turma-temporada-endereco/{$value.idpess}')"><i class="fas fa-map-marker-alt"></i> Endereço </a>         
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                       
+                      <strong>Dt Insc.: </strong>{function="formatDate($value.dtinsc)"}
+                      &nbsp;<strong>Dt Matric.: </strong>{function="formatDate($value.dtmatric)"}&nbsp;
+                    </h5>
+                  </div>                   
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">                  
+
+                  <div class="col-md-6" style="margin: 1; padding: 1">
+                    <h5 style="text-align: left;">  
+
+                      <span style="font-weight: bold; text-align: left; color: brown;">                  
+                        {if="$value.vulnsocial == 1"} (Vuln. Social) &nbsp;&nbsp;{/if}
+                      </span>               
+                      
+                      <span style="font-weight: bold; text-align: left; color: darkblue;">  
+                        {if="$value.inscpcd == 1"} PCD &nbsp;&nbsp;{/if}  
+                      </span>                            
+                    
+                      
+                      <span style="font-weight: bold; text-align: left; color: darkgreen;">                  
+                        {if="$value.laudo == 1"}LAUDO  &nbsp;&nbsp;{/if}
+                       </span>
+                   
+                  
+
+                    {if="$value.idinscstatus == 1"}              
+                    <span style="font-weight: bold; text-align: left; color: blue;">                  
+                      <span>{$value.descstatus}</span>
+                    </span>             
+                    {/if}
+
+                  
+              
+                    {if="$value.idinscstatus == 2"}
+              
+                    <span style="font-weight: bold; text-align: left; color: darkgreen;">                  
+                      <span>{$value.descstatus}</span>
+                    </span>
+             
+                    {/if}
+               
+
+                      {if="$value.idinscstatus == 3"}
+                      
+                        <span style="font-weight: bold; text-align: left; color: green;">                  
+                          <span>*{$value.descstatus}*</span>
+                        </span>
+                      
+                      {/if}
+
+                      {if="$value.idinscstatus == 6"}
+                        <span style="font-weight: bold; text-align: left; color: darkorange;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+
+
+                      {if="$value.idinscstatus == 7"}
+                        <span style="font-weight: bold; text-align: left; color: darkblue;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+
+                      
+                      {if="$value.idinscstatus == 8"}
+                        <span style="font-weight: bold; text-align: left; color: orange;">                  
+                          Status: <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+                      
+                      {if="$value.idinscstatus == 9"}
+                      
+                        <span style="font-weight: bold; text-align: left; color: red;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      
+                      {/if} 
+                       </h5>               
+                    </div>
+
+
+              <div class="col-md-2" style="margin: 1; padding: 1">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/estagiario/profile/insc/{$value.idinsc}/{$value.idpess}/{$turma.idturma}" role="button">Detalhes</a>
+                </h5>
+              </div>     
+
+              {if="$value.idinscstatus == 1"}
+                <div class="col-md-2" style="margin: 1; padding: 1">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a class="btn btn-danger btn-xs" href="/estagiario/insc/{$value.idinsc}/{$value.idturma}/{$value.idpess}/statusDesistente" role="button" onclick="return confirm('Deseja realmente informar como desistente o(a) {$value.nomepess} da inscrição {$value.idinsc}?')">Marcar como desistente</a>
+                </h5>
+                </div>
+              {/if}                  
+
+              {if="$value.idinscstatus == 2"}
+                <div class="col-md-2" style="margin: 1; padding: 1">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA do(a) {$value.nomepess} na turma {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                </h5>
+                </div>
+                {if="$numMatriculados >= $vagas"}
+                  <div class="col-md-2" style="margin: 2; padding: 2">
+                  <h5 style="font-weight: bold; text-align: left;">  
+      
+                    <a href="/estagiario/turma/create/token/{$turma.idturma}/{$temporada.idtemporada}/{$value.numcpf}" class="btn btn-info btn-xs"><i></i> Gerar token</a>
+                   
+                  </h5>
+                  </div>
+                {/if}
+              {/if}
+
+              {if="$value.idinscstatus == 3"}
+
+              <!--
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">            
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/enviarEmailASorteado" onclick="return confirm('Deseja realmente enviar email para que o(a) {$value.nomepess} fique sabendo que foi sorteado na turma de {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-info btn-xs"><i></i> Avisar Sorteado </a>
+                </h5>
+              </div>
+            -->
+              <div class="col-md-2" style="margin: 1; padding: 1">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA do(a) {$value.nomepess} na turma {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                </h5>
+                </div>
+                
+
+              {/if}
+              
+              {if="$value.idinscstatus == 7"}
+             
+              <div class="col-md-2" style="margin: 1; padding: 1">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="https://wa.me/+55{$value.nrphone}?text=Olá,%20informamos%20que%20temos%20uma%20vaga%20disponível%20para%20o(a)%20{$value.nomepess}%20na%20turma%20de%20{$turma.descturma}%20-%20{$turma.diasemana}%20das%20{$turma.horainicio}%20às%20{$turma.horatermino}%20no%20{$turma.apelidolocal}%20-%20{$turma.rua}%20-%20Nº%20{$turma.numero}%20-%20{$turma.bairro},%20da%20qual%20você%20fez%20inscrição.%20Se%20você%20ainda%20tem%20interesse%20na%20vaga,%20responda%20SIM%20nas%20próximas%2024%20horas,%20que%20vamos%20passar%20mais%20informações.%20Se%20você%20não%20tiver%20interesse%20ou%20não%20responder,%20vamos%20chamar%20o%20próximo%20inscrito%20da%20lista%20de%20espera%20e%20você%20terá%20que%20fazer%20uma%20nova%20inscrição%20para%20esta%20turma." target="_blank" onclick="return confirm('Você será direcionado para o whatsapp com a mensagem referente a vaga disponível já preenchida. No app clique em enviar msg.')" class="btn btn-success btn-xs"><i></i>Informar vaga pelo WhatsApp</a>
+              
+              
+              </h5>
+              </div>
+                <div class="col-md-2" style="margin: 1; padding: 1">
+              <h5>
+              
+               
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusAguardandoMatricula" onclick="return confirm('Você já informou, por telefone ou whatsapp, o(a) {$value.nomepess} sobre a vaga disponível para a turma de {$turma.descturma}? Se sim, clique em OK, se não imformou, clique em cancelar e informe o aluno sobre a vaga.')" class="btn btn-warning btn-xs"><i></i> Marcar aguardandado matrícula</a>
+                </h5>
+              </div>
+
+              
+               {/if}
+                  
+                </div>
+              </div>
+              
+            </div>
+          </div>
+          
+          {/if}
+           
+          {/loop}
+          </div>  
+
+          <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+            <div class="box-body" style="text-align: center;">
+              <span style="color: orangered; font-weight: bold">Lista GERAL de pessoas - {$turma.vagas} vagas
+              </span>
+            </div>
+              
+            {loop="$insc"}
+            {if="($value.idinscstatus != 8) && ($value.idinscstatus != 9)"}
+            <div class="box-body" style=" margin: 5px;">
+              <div {function="colorStatus($value.idinscstatus)"} style="margin: 5px" class="row">
+              
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="col-md-6" style="margin: 1; padding: 1">
+                    <h5 style="text-align: left;">
+                      {$value.numordem}º -
+                      <strong>[{$value.idinsc}] - {$value.nomepess}</strong>
+                      {if="UserIsAdmin()"}
+                      &nbsp;{$value.numcpf}&nbsp;
+                      {else}
+                      &nbsp;{function="formatCpf($value.numcpf)"}&nbsp;
+                      {/if}                      
+                      <strong>{function="calcularIdade($value.dtnasc)"} anos</strong>
+                      &nbsp;Nascim.: {function="formatDate($value.dtnasc)"}&nbsp;
+                    </h5>
+                  </div>
+
+                  <div class="col-md-6" style="margin: 1; padding: 1">
+                    <h5 style="text-align: left;">               
+                       <strong>Resp: </strong>{$value.desperson}
+                      &nbsp;
+                       <a href="https://wa.me/+55{$value.nrphone}?text=Olá {$value.desperson}!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: darkgreen; font-weight: bold;"></i><span style="color: black;"> {$value.nrphone}&nbsp;</span></a>
+                       
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+
+                       <a style="font-weight: bold;" onclick="requisitarPaginaEndereco('/estagiario/insc-turma-temporada-endereco/{$value.idpess}')"><i class="fas fa-map-marker-alt"></i> Endereço </a>         
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                      
+                       
+                      <strong>Dt Insc.: </strong>{function="formatDate($value.dtinsc)"}
+                      &nbsp;<strong>Dt Matric.: </strong>{function="formatDate($value.dtmatric)"}&nbsp;
+                    </h5>
+                  </div>                   
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">                  
+
+                  <div class="col-md-6" style="margin: 1; padding: 1">
+                    <h5 style="text-align: left;"> 
+
+                      <span style="font-weight: bold; text-align: left; color: brown;">                  
+                        {if="$value.vulnsocial == 1"} (Vuln. Social) &nbsp;&nbsp;{/if}
+                      </span>                
+                      
+                      <span style="font-weight: bold; text-align: left; color: darkblue;">  
+                        {if="$value.inscpcd == 1"} PCD &nbsp;&nbsp;{/if}  
+                      </span>        
+                      
+                      <span style="font-weight: bold; text-align: left; color: darkgreen;">                  
+                        {if="$value.laudo == 1"}LAUDO  &nbsp;&nbsp;{/if}
+                       </span>
+                   
+                  
+
+                    {if="$value.idinscstatus == 1"}              
+                    <span style="font-weight: bold; text-align: left; color: blue;">                  
+                      <span>{$value.descstatus}</span>
+                    </span>             
+                    {/if}
+
+                  
+              
+                    {if="$value.idinscstatus == 2"}
+              
+                    <span style="font-weight: bold; text-align: left; color: darkgreen;">                  
+                      <span>{$value.descstatus}</span>
+                    </span>
+             
+                    {/if}
+               
+
+                      {if="$value.idinscstatus == 3"}
+                      
+                        <span style="font-weight: bold; text-align: left; color: green;">                  
+                          <span>*{$value.descstatus}*</span>
+                        </span>
+                      
+                      {/if}
+
+                      {if="$value.idinscstatus == 6"}
+                        <span style="font-weight: bold; text-align: left; color: darkorange;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+
+
+                      {if="$value.idinscstatus == 7"}
+                        <span style="font-weight: bold; text-align: left; color: darkblue;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+
+                      
+                      {if="$value.idinscstatus == 8"}
+                        <span style="font-weight: bold; text-align: left; color: orange;">                  
+                          Status: <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+                      
+                      {if="$value.idinscstatus == 9"}
+                      
+                        <span style="font-weight: bold; text-align: left; color: red;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      
+                      {/if} 
+                       </h5>               
+                    </div>
+
+
+              <div class="col-md-2" style="margin: 1; padding: 1">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/estagiario/profile/insc/{$value.idinsc}/{$value.idpess}/{$turma.idturma}" role="button">Detalhes</a>
+                </h5>
+              </div>  
+
+              {if="$value.idinscstatus == 1"}
+                <div class="col-md-2" style="margin: 1; padding: 1">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a class="btn btn-danger btn-xs" href="/estagiario/insc/{$value.idinsc}/{$value.idturma}/{$value.idpess}/statusDesistente" role="button" onclick="return confirm('Deseja realmente informar como desistente o(a) {$value.nomepess} da inscrição {$value.idinsc}?')">Marcar como  desistente</a>
+                </h5>
+                </div>
+              {/if}                     
+
+              {if="$value.idinscstatus == 2"}
+                <div class="col-md-2" style="margin: 1; padding: 1">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA do(a) {$value.nomepess} na turma {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                </h5>
+                </div>
+                {if="$numMatriculados >= $vagas"}
+                  <div class="col-md-2" style="margin: 2; padding: 2">
+                  <h5 style="font-weight: bold; text-align: left;">  
+      
+                    <a href="/estagiario/turma/create/token/{$turma.idturma}/{$temporada.idtemporada}/{$value.numcpf}" class="btn btn-info btn-xs"><i></i> Gerar token</a>
+                   
+                  </h5>
+                  </div>
+                {/if}
+              {/if}
+
+              {if="$value.idinscstatus == 3"}
+
+              <!--
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">            
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/enviarEmailASorteado" onclick="return confirm('Deseja realmente enviar email para que o(a) {$value.nomepess} fique sabendo que foi sorteado na turma de {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-info btn-xs"><i></i> Avisar Sorteado </a>
+                </h5>
+              </div>
+            --> <div class="col-md-2" style="margin: 1; padding: 1">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA do(a) {$value.nomepess} na turma {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                </h5>
+                </div>
+                
+
+              {/if}
+              
+              {if="$value.idinscstatus == 7"}
+             
+              <div class="col-md-2" style="margin: 1; padding: 1">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="https://wa.me/+55{$value.nrphone}?text=Olá,%20informamos%20que%20temos%20uma%20vaga%20disponível%20para%20o(a)%20{$value.nomepess}%20na%20turma%20de%20{$turma.descturma}%20-%20{$turma.diasemana}%20das%20{$turma.horainicio}%20às%20{$turma.horatermino}%20no%20{$turma.apelidolocal}%20-%20{$turma.rua}%20-%20Nº%20{$turma.numero}%20-%20{$turma.bairro},%20da%20qual%20você%20fez%20inscrição.%20Se%20você%20ainda%20tem%20interesse%20na%20vaga,%20responda%20SIM%20nas%20próximas%2024%20horas,%20que%20vamos%20passar%20mais%20informações.%20Se%20você%20não%20tiver%20interesse%20ou%20não%20responder,%20vamos%20chamar%20o%20próximo%20inscrito%20da%20lista%20de%20espera%20e%20você%20terá%20que%20fazer%20uma%20nova%20inscrição%20para%20esta%20turma." target="_blank" onclick="return confirm('Você será direcionado para o whatsapp com a mensagem referente a vaga disponível já preenchida. No app clique em enviar msg.')" class="btn btn-success btn-xs"><i></i>Informar vaga pelo WhatsApp</a>
+              
+              
+              </h5>
+              </div>
+                <div class="col-md-2" style="margin: 1; padding: 1">
+              <h5>
+              
+               
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusAguardandoMatricula" onclick="return confirm('Você já informou, por telefone ou whatsapp, o(a) {$value.nomepess} sobre a vaga disponível para a turma de {$turma.descturma}? Se sim, clique em OK, se não imformou, clique em cancelar e informe o aluno sobre a vaga.')" class="btn btn-warning btn-xs"><i></i> Marcar aguardandado matrícula</a>
+                </h5>
+              </div>
+
+              
+               {/if}
+                  
+                </div>
+              </div>
+              
+            </div>
+          </div>
+          {/if}
+           
+          {/loop}
+          </div> 
+          
+          <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+            <div class="box-body" style="text-align: center; background-color: orangered;">
+              <span style="color: black; font-weight: bold">Canceladas
+              </span>
+            </div>
+          
+           {loop="$inscTodas"}
+            {if="($value.idinscstatus == 9)"}
+            <div class="box-body" style=" margin: 5px;">
+              <div {function="colorStatus($value.idinscstatus)"} style="margin: 5px" class="row">
+              
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="col-md-6" style="margin: 2; padding: 2">
+                    <h5 style="text-align: left;">
+                      {$value.numordem}º -
+                      <strong>[{$value.idinsc}] - {$value.nomepess}</strong>
+                      &nbsp;{function="formatCpf($value.numcpf)"}&nbsp;
+                      <strong>{function="calcularIdade($value.dtnasc)"} anos</strong>
+                      &nbsp;Nascim.: {function="formatDate($value.dtnasc)"}&nbsp;
+                    </h5>
+                  </div>
+
+                  <div class="col-md-6" style="margin: 2; padding: 2">
+                    <h5 style="text-align: left;">               
+                       <strong>Resp: {$value.desperson}</strong>
+                      &nbsp;
+                       <a href="https://wa.me/+55{$value.nrphone}?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: green;"></i><span style="color: black;"> {$value.nrphone}&nbsp;</span></a>                       
+
+                       &nbsp;&nbsp;&nbsp;&nbsp;
+
+                       <a style="font-weight: bold;" onclick="requisitarPaginaEndereco('/estagiario/insc-turma-temporada-endereco/{$value.idpess}')"><i class="fas fa-map-marker-alt"></i> Endereço </a>         
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+
+                      <strong>Dt Insc.: {function="formatDate($value.dtinsc)"}</strong>
+                      &nbsp;Dt Matric.: {function="formatDate($value.dtmatric)"}&nbsp;
+                    </h5>
+                  </div>                   
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">                  
+
+                  <div class="col-md-6" style="margin: 2; padding: 2">
+                    <h5 style="text-align: left;"> 
+
+                      <span style="font-weight: bold; text-align: left; color: brown;">                  
+                        {if="$value.vulnsocial == 1"} (Vuln. Social) &nbsp;&nbsp;{/if}
+                      </span>                
+                      
+                      <span style="font-weight: bold; text-align: left; color: darkblue;">  
+                        {if="$value.inscpcd == 1"} PCD &nbsp;&nbsp;{/if}  
+                      </span>        
+                      
+                      <span style="font-weight: bold; text-align: left; color: darkgreen;">                  
+                        {if="$value.laudo == 1"}LAUDO  &nbsp;&nbsp;{/if}
+                       </span>
+                   
+                  
+
+                    {if="$value.idinscstatus == 1"}              
+                    <span style="font-weight: bold; text-align: left; color: blue;">                  
+                      <span>{$value.descstatus}</span>
+                    </span>             
+                    {/if}
+
+                  
+              
+                    {if="$value.idinscstatus == 2"}
+              
+                    <span style="font-weight: bold; text-align: left; color: darkgreen;">                  
+                      <span>{$value.descstatus}</span>
+                    </span>
+             
+                    {/if}
+               
+
+                      {if="$value.idinscstatus == 3"}
+                      
+                        <span style="font-weight: bold; text-align: left; color: green;">                  
+                          <span>*{$value.descstatus}*</span>
+                        </span>
+                      
+                      {/if}
+
+                      {if="$value.idinscstatus == 6"}
+                        <span style="font-weight: bold; text-align: left; color: darkorange;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+
+
+                      {if="$value.idinscstatus == 7"}
+                        <span style="font-weight: bold; text-align: left; color: darkblue;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+
+                      
+                      {if="$value.idinscstatus == 8"}
+                        <span style="font-weight: bold; text-align: left; color: orange;">                  
+                          Status: <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+                      
+                      {if="$value.idinscstatus == 9"}
+                      
+                        <span style="font-weight: bold; text-align: left; color: red;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      
+                      {/if} 
+                       </h5>               
+                    </div>
+
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/estagiario/profile/insc/{$value.idinsc}/{$value.idpess}/{$turma.idturma}" role="button">Detalhes</a>
+                </h5>
+              </div> 
+
+              {if="$value.idinscstatus == 1"}
+                <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a class="btn btn-danger btn-xs" href="/estagiario/insc/{$value.idinsc}/{$value.idturma}/{$value.idpess}/statusDesistente" role="button" onclick="return confirm('Deseja realmente informar como desistente o {$value.nomepess} da inscrição {$value.idinsc}?')">Marcar como desistente</a>
+                </h5>
+                </div>
+              {/if}                      
+
+              {if="$value.idinscstatus == 2"}
+                <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA do(a) {$value.nomepess} na turma {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                </h5>
+                </div>
+                <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">   
+
+                  <a href="/estagiario/turma/create/token/{$turma.idturma}/{$value.numcpf}" class="btn btn-info btn-xs"><i></i> Gerar token</a>
+
+                </h5>
+                </div>
+              {/if}
+
+              {if="$value.idinscstatus == 3"}
+            <!--
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">            
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/enviarEmailASorteado" onclick="return confirm('Deseja realmente enviar email para que o(a) {$value.nomepess} fique sabendo que foi sorteado na turma de {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-info btn-xs"><i></i> Avisar Sorteado </a>
+                </h5>
+              </div>
+            -->
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA do(a) {$value.nomepess} na turma {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                </h5>
+                </div>
+                
+
+              {/if}
+              
+              {if="$value.idinscstatus == 7"}
+
+              <div class="col-md-2" style="margin: 1; padding: 1">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                 <a href="https://wa.me/+55{$value.nrphone}?text=Olá,%20informamos%20que%20temos%20uma%20vaga%20disponível%20para%20o(a)%20{$value.nomepess}%20na%20turma%20de%20{$turma.descturma}%20-%20{$turma.diasemana}%20das%20{$turma.horainicio}%20às%20{$turma.horatermino}%20no%20{$turma.apelidolocal}%20-%20{$turma.rua}%20-%20Nº%20{$turma.numero}%20-%20{$turma.bairro},%20da%20qual%20você%20fez%20inscrição.%20Se%20você%20ainda%20tem%20interesse%20na%20vaga,%20responda%20SIM%20nas%20próximas%2024%20horas,%20que%20vamos%20passar%20mais%20informações.%20Se%20você%20não%20tiver%20interesse%20ou%20não%20responder,%20vamos%20chamar%20o%20próximo%20inscrito%20da%20lista%20de%20espera%20e%20você%20terá%20que%20fazer%20uma%20nova%20inscrição%20para%20esta%20turma." target="_blank" onclick="return confirm('Você será direcionado para o whatsapp com a mensagem referente a vaga disponível já preenchida. No app clique em enviar msg.')" class="btn btn-success btn-xs"><i></i>Informar vaga pelo WhatsApp</a>
+              
+              
+              </div>
+                <div class="col-md-2" style="margin: 1; padding: 1">
+              
+               
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusAguardandoMatricula" onclick="return confirm('Você já informou, por telefone ou whatsapp, o(a) {$value.nomepess} sobre a vaga disponível para a turma de {$turma.descturma}? Se sim, clique em OK, se não imformou, clique em cancelar e informe o aluno sobre a vaga.')" class="btn btn-warning btn-xs"><i></i> Marcar aguardandado matrícula</a>
+                </h5>
+              </div>
+
+            <!--
+               <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusSorteada" class="btn btn-danger btn-xs"><i></i> Sorteada ?</a>
+                </h5>
+              </div>
+            -->
+              <!--
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusSorteada" onclick="return confirm('Deseja realmente que a inscrição {$value.idinsc}  do(da) {$value.nomepess} seja confirmada como Sorteada na turma de {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-danger btn-xs"><i></i> Sorteada ?</a>
+                </h5>
+              </div>
+            -->
+               {/if}
+                  
+                </div>
+              </div>
+              
+            </div>
+          </div>
+
+          {/if}
+           
+          {/loop}
+          </div>      
+
+          <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+            <div class="box-body" style="text-align: center; background-color: darkorange;">
+              <span style="color: black; font-weight: bold">Desistentes
+              </span>
+            </div>
+
+          {loop="$inscTodas"}
+            {if="($value.idinscstatus == 8)"}
+            <div class="box-body" style=" margin: 5px;">
+              <div {function="colorStatus($value.idinscstatus)"} style="margin: 5px" class="row">
+              
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="col-md-6" style="margin: 2; padding: 2">
+                    <h5 style="text-align: left;">
+                      {$value.numordem}º -
+                      <strong>[{$value.idinsc}] - {$value.nomepess}</strong>
+                      &nbsp;{function="formatCpf($value.numcpf)"}&nbsp;
+                      <strong>{function="calcularIdade($value.dtnasc)"} anos</strong>
+                      &nbsp;Nascim.: {function="formatDate($value.dtnasc)"}&nbsp;
+                    </h5>
+                  </div>
+
+                  <div class="col-md-6" style="margin: 2; padding: 2">
+                    <h5 style="text-align: left;">               
+                       <strong>Resp: {$value.desperson}</strong>
+                      &nbsp;
+                       <a href="https://wa.me/+55{$value.nrphone}?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: green;"></i><span style="color: black;"> {$value.nrphone}&nbsp;</span></a>                       
+
+                       &nbsp;&nbsp;&nbsp;&nbsp;
+
+                       <a style="font-weight: bold;" onclick="requisitarPaginaEndereco('/estagiario/insc-turma-temporada-endereco/{$value.idpess}')"><i class="fas fa-map-marker-alt"></i> Endereço </a>         
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+
+                      <strong>Dt Insc.: {function="formatDate($value.dtinsc)"}</strong>
+                      &nbsp;Dt Matric.: {function="formatDate($value.dtmatric)"}&nbsp;
+                    </h5>
+                  </div>                   
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">                  
+
+                  <div class="col-md-6" style="margin: 2; padding: 2">
+                    <h5 style="text-align: left;"> 
+
+                      <span style="font-weight: bold; text-align: left; color: brown;">                  
+                        {if="$value.vulnsocial == 1"} (Vuln. Social) &nbsp;&nbsp;{/if}
+                      </span>                
+                      
+                      <span style="font-weight: bold; text-align: left; color: darkblue;">  
+                        {if="$value.inscpcd == 1"} PCD &nbsp;&nbsp;{/if}  
+                      </span>        
+                      
+                      <span style="font-weight: bold; text-align: left; color: darkgreen;">                  
+                        {if="$value.laudo == 1"}LAUDO  &nbsp;&nbsp;{/if}
+                       </span>
+                   
+                  
+
+                    {if="$value.idinscstatus == 1"}              
+                    <span style="font-weight: bold; text-align: left; color: blue;">                  
+                      <span>{$value.descstatus}</span>
+                    </span>             
+                    {/if}
+
+                  
+              
+                    {if="$value.idinscstatus == 2"}
+              
+                    <span style="font-weight: bold; text-align: left; color: darkgreen;">                  
+                      <span>{$value.descstatus}</span>
+                    </span>
+             
+                    {/if}
+               
+
+                      {if="$value.idinscstatus == 3"}
+                      
+                        <span style="font-weight: bold; text-align: left; color: green;">                  
+                          <span>*{$value.descstatus}*</span>
+                        </span>
+                      
+                      {/if}
+
+                      {if="$value.idinscstatus == 6"}
+                        <span style="font-weight: bold; text-align: left; color: darkorange;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+
+
+                      {if="$value.idinscstatus == 7"}
+                        <span style="font-weight: bold; text-align: left; color: darkblue;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+
+                      
+                      {if="$value.idinscstatus == 8"}
+                        <span style="font-weight: bold; text-align: left; color: orange;">                  
+                          Status: <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+                      
+                      {if="$value.idinscstatus == 9"}
+                      
+                        <span style="font-weight: bold; text-align: left; color: red;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      
+                      {/if} 
+                       </h5>               
+                    </div>
+
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/estagiario/profile/insc/{$value.idinsc}/{$value.idpess}/{$turma.idturma}" role="button">Detalhes</a>
+                </h5>
+              </div> 
+
+              {if="$value.idinscstatus == 1"}
+                <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a class="btn btn-danger btn-xs" href="/estagiario/insc/{$value.idinsc}/{$value.idturma}/{$value.idpess}/statusDesistente" role="button" onclick="return confirm('Deseja realmente informar como desistente o {$value.nomepess} da inscrição {$value.idinsc}?')">Marcar como desistente</a>
+                </h5>
+                </div>
+              {/if}                      
+
+              {if="$value.idinscstatus == 2"}
+                <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA do(a) {$value.nomepess} na turma {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                </h5>
+                </div>
+                <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">   
+
+                  <a href="/estagiario/turma/create/token/{$turma.idturma}/{$value.numcpf}" class="btn btn-info btn-xs"><i></i> Gerar token</a>
+
+                </h5>
+                </div>
+              {/if}
+
+              {if="$value.idinscstatus == 3"}
+            <!--
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">            
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/enviarEmailASorteado" onclick="return confirm('Deseja realmente enviar email para que o(a) {$value.nomepess} fique sabendo que foi sorteado na turma de {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-info btn-xs"><i></i> Avisar Sorteado </a>
+                </h5>
+              </div>
+            -->
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA do(a) {$value.nomepess} na turma {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                </h5>
+                </div>
+                
+
+              {/if}
+              
+              {if="$value.idinscstatus == 7"}
+
+              <div class="col-md-2" style="margin: 1; padding: 1">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                 <a href="https://wa.me/+55{$value.nrphone}?text=Olá,%20informamos%20que%20temos%20uma%20vaga%20disponível%20para%20o(a)%20{$value.nomepess}%20na%20turma%20de%20{$turma.descturma}%20-%20{$turma.diasemana}%20das%20{$turma.horainicio}%20às%20{$turma.horatermino}%20no%20{$turma.apelidolocal}%20-%20{$turma.rua}%20-%20Nº%20{$turma.numero}%20-%20{$turma.bairro},%20da%20qual%20você%20fez%20inscrição.%20Se%20você%20ainda%20tem%20interesse%20na%20vaga,%20responda%20SIM%20nas%20próximas%2024%20horas,%20que%20vamos%20passar%20mais%20informações.%20Se%20você%20não%20tiver%20interesse%20ou%20não%20responder,%20vamos%20chamar%20o%20próximo%20inscrito%20da%20lista%20de%20espera%20e%20você%20terá%20que%20fazer%20uma%20nova%20inscrição%20para%20esta%20turma." target="_blank" onclick="return confirm('Você será direcionado para o whatsapp com a mensagem referente a vaga disponível já preenchida. No app clique em enviar msg.')" class="btn btn-success btn-xs"><i></i>Informar vaga pelo WhatsApp</a>
+              
+              
+              </div>
+                <div class="col-md-2" style="margin: 1; padding: 1">
+              
+               
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusAguardandoMatricula" onclick="return confirm('Você já informou, por telefone ou whatsapp, o(a) {$value.nomepess} sobre a vaga disponível para a turma de {$turma.descturma}? Se sim, clique em OK, se não imformou, clique em cancelar e informe o aluno sobre a vaga.')" class="btn btn-warning btn-xs"><i></i> Marcar aguardandado matrícula</a>
+                </h5>
+              </div>
+
+            <!--
+               <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusSorteada" class="btn btn-danger btn-xs"><i></i> Sorteada ?</a>
+                </h5>
+              </div>
+            -->
+              <!--
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/estagiario/insc/{$value.idinsc}/{$iduserprof.iduser}/{$turma.idturma}/statusSorteada" onclick="return confirm('Deseja realmente que a inscrição {$value.idinsc}  do(da) {$value.nomepess} seja confirmada como Sorteada na turma de {$turma.descturma} da temporada {$temporada.desctemporada} ?')" class="btn btn-danger btn-xs"><i></i> Sorteada ?</a>
+                </h5>
+              </div>
+            -->
+               {/if}
+                  
+                </div>
+              </div>
+              
+            </div>
+          </div>
+
+          {/if}
+           
+          {/loop}
+          </div>     
+         
+       
+
+         
+       
+
+         
+            <button type="button" onclick="window.print()" class="btn btn-primary pull-right" style="margin-right: 5px;">
+                    <i class="fa fa-print"></i> Imprimir
+                </button>
+            <!-- /.box-body -->
+
+            <div class="box-footer clearfix">
+              <ul class="pagination pagination-sm no-margin pull-right">
+                {loop="$pages"}
+                <li><a href="{$value.href}">{$value.text}</a></li>
+                {/loop}
+              </ul>
+            </div>
+
+          </div>
+    </div>
+  </div>
+
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+
+

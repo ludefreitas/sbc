@@ -22,7 +22,7 @@
 </head>
 
 <hr>
-<div style="text-align-last: center; margin: 5px 10px 5px 10px; width: 100%">
+<div style="text-align-last: center; margin: 5px 10px 5px 10px; width: 100%;">
   <h4>
     Cursos Esportivos SBC
     <br>
@@ -49,16 +49,17 @@
                 <div class="alert alert-success" style="margin: 10px 10px 0px 10px">
             {$success}
                 </div>
-          {/if}        
+          {/if}
+          
+          
            
-            
-           
-            <div class="container">
-              <div class="row" style="margin-right: 5px;">
+            <div class="container" style="width: 100%>
+              <div class="row">
                 <div class="col-md-12">
-                   <table style="width: 100%;">
+                   <table style="width: 100%">
                 <thead style="font-weight: bold; font-style: italic; text-align: left;">
                   <tr>
+                   
                     <td style="border: 1px solid;">
                       Data da inscrição
                     </td>
@@ -78,6 +79,7 @@
                       {else}
                   <tr>
                       {/if}
+                      
                     <td style="font-weight: bold;">
                       {function="formatDateHour($value.dtinsc)"}
                     </td>
@@ -110,7 +112,7 @@
                 
               </div>
           </div>
-        
-    
+       
+
 
 

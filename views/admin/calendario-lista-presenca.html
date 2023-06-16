@@ -61,8 +61,8 @@
 
             let hoje = dataAtualFormatada();
 
-            let strDiaSemana = datasemanas.getDay(); 
-
+            let strDiaSemana = datasemanas.getDay();  
+            
             if(hoje < data){
 
                 alert('Data escolhida não pode ser posterior ao dia de hoje!');                  
@@ -120,12 +120,14 @@
         Olá Professor(a) {$user.desperson}!
       </h3>
       <h1>
-          Selecione a data e o dia da semana para atualizar a lista de presença da turma: <br> [{$idturma}] - {$descturma} - {if="$dia2 == ''"} {$dia1} {else} {$dia1} e {$dia2} {/if}
+         Selecione a data e o dia da semana para atualizar a lista de presença da turma: <br> [{$idturma}] - {$descturma} - {if="$dia2 == ''"} {$dia1} {else} {$dia1} e {$dia2} {/if}
       </h1>
      
       <ol class="breadcrumb">
         <li><a href="/admin"><i class="fa fa-dashboard"></i> Level</a></li>
         <li class="active">Here</li>
+        <li class="active"><a style="color: red" href="javascript: history.go(-1)">Voltar</a>
+    </li>
       </ol>
     </section>
 

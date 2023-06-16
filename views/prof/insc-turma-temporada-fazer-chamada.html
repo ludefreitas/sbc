@@ -1,4 +1,8 @@
-<head>
+<script type="text/javascript">
+
+
+</script>
+
     <!-- Required meta tags -->   
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -20,8 +24,7 @@
     <link rel="icon" type="image/jpg" href="/../res/site/img/corpoacao.png" />
 
     <script type="text/javascript">
-
-
+    
       function dadosAtestado(idpess){
 
         let url = '/prof/saude/dadosatestado/'+idpess
@@ -34,22 +37,22 @@
           method: 'GET'  
         }).done(function(result){
 
-          if (window.confirm(' '+ result + 'Para atulizar atestado clique em "OK"'))
+          if (window.confirm(' '+ result + 'Para atualizar atestado clique em "OK"'))
           {
               adicionarArtestado(idpess)
           };
 
         });
       }
-      
+
       function adicionarArtestado(idpess){
         
-        //let confirmaAtestado = confirm('Já existe um atestado válido até:'+"\n"+'Deseja adicionar atestado? ')
-        let confirmaAtestado = confirm('Deseja adicionar atestado? ')
+        let confirmaAtestado = confirm('Deseja realmente atualizar atestado?')
 
         if(confirmaAtestado == true)
         {                      
             var data = prompt("Informe a data da emissão do Atestado. Ex.: dd-mm-aaaa");     
+
 
             if (data == null || data == "") {
 
@@ -62,7 +65,6 @@
                  var mes = data.substr(3,2);
                  var ano = data.substr(6,4); 
                  
-
                  if((traco1 != '-') || (traco2 != '-') || (ano.length < 4)){
                     alert('Formato da data inválida');
                  }else{
@@ -72,24 +74,29 @@
                     alert('data inválida!')
                     
                     }else{
+
+                        //alert('Data validada!!! ' + dia + ' ' + mes + ' ' + ano)
+
                         
                         var observ = prompt("Digite uma observação");
                         if (observ == null || observ == "") {
-                                lert("As informaçãoes do atestado não foram atualizadas! Informe a data e faça alguma observação");
+                                lert("As informaçãoes do atestado não foram atualizadas! Informe a data e faça alguma observação.");
                         } else {
 
                             let url = '/prof/saude/atulizaatestado/'+idpess+'/'+data+'/'+observ+''
 
                             atualizarAtestado(url) 
-
-                        }     
+                        }           
                     }                           
                 }
             }        
-        }  
+        } 
+         //let url = '/prof/saude/dadosatestado/'+idpess
+
+        //dadosAtestado(url)  
     }
-     
-    function atualizarAtestado(url){
+      /*
+      function dadosAtestado(url){
 
         let ajax = new XMLHttpRequest();
         ajax.open('GET', 'url');        
@@ -103,8 +110,22 @@
 
         });
       }
+      */
 
+      function atualizarAtestado(url){
 
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          alert(result)
+
+        });
+      }
       
       function requisitarPaginaPresente(url){
 
@@ -191,19 +212,25 @@
 
     </style>
 </head>
-
-
-
-
             <hr>
 
             <div class="container">
 
+              <div style="text-align-last: left; margin-right: 25px; margin-top: -25px; margin-bottom: 15px;">
+                <div id="div1">  
+                    <a href="javascript:window.history.go(-1)">
+                       <i class="fa fa-arrow-left"></i> 
+                        Voltar
+                    </a> 
+                </div>
+              </div>
               <div style="text-align-last: right; margin-right: 25px; margin-top: -25px; margin-bottom: 15px;">
-                <a href="/prof/calendario-lista-presenca/{$idtemporada}/{$turma.idturma}">
-                  <i class="fa fa-arrow-left"></i> 
-                    Voltar
-                </a> 
+                <div id="div2">  
+                    <a href="/prof">
+                        <i class="fa fa-home"></i> 
+                            Início
+                    </a>  
+                </div>
               </div>
 
               <div class="row">
@@ -311,19 +338,23 @@
                           <span hidden id="spanausente{$value.idinsc}" style="color: red;">( X )</span>    
                           <span hidden id="spanjustificar{$value.idinsc}" style="color: blue;">( J )</span>                  
                           
-                          {/if}  
+                          {/if}                       
+                        
 
                           <!--
-                           &nbsp;&nbsp;{$value.nomepess}&nbsp; 
-                         - &nbsp;
+                           &nbsp;&nbsp;{$value.nomepess} &nbsp;&nbsp; 
+                           - &nbsp;
                          <a style="color: orange; text-align-last: right;" onclick="adicionarArtestado({$value.idpess})">{function="getAtestadoIcone($value.idpess)"}</a>
-                          <br>    
+                          <br><br>
                           -->
-
-                           &nbsp;&nbsp;{$value.nomepess}&nbsp; 
-                         - &nbsp;
+                          &nbsp;&nbsp;{$value.nomepess} &nbsp;&nbsp; 
+                           - &nbsp;
+                         <!--
                          <a style="color: orange; text-align-last: right;" onclick="dadosAtestado({$value.idpess})">{function="getAtestadoIcone($value.idpess)"}</a>
-                          <br>                                                                                                        
+                         -->
+                         <a style="color: orange; text-align-last: right;" onclick="dadosAtestado({$value.idpess})">{function="getAtestadoIconeByNumCpf($value.numcpf)"}</a>                     
+                          <br><br>
+                                                      
                                   
                         {if="$value.idinscstatus == 9"}
                           <span style="color: red;">CANCELADA</span>
@@ -332,7 +363,7 @@
                                 <span style="color: red;">DESISTENTE</span>
                             {else}
                              
-                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="{$value.idinsc}" onchange="requisitarPaginaPresente('/prof/insc-turma-temporada-presente/{$idtemporada}/{$turma.idturma}/{$data}/{$value.idinsc}')" name=""><label style="color: green;">Presente</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="{$value.idinsc}" onchange="requisitarPaginaPresente('/prof/insc-turma-temporada-presente/{$idtemporada}/{$turma.idturma}/{$data}/{$value.idinsc}')" name=""><label style="color: green;">Presente</label>&nbsp;&nbsp;&nbsp;&nbsp;
                                 <!--
                                    <a class="presente" id="{$value.idinsc}" href="#" onclick="requisitarPaginaPresente('/prof/insc-turma-temporada-presente/{$idtemporada}/{$turma.idturma}/{$data}/{$value.idinsc}')" style="color: green;">Presente?</i></a>&nbsp;&nbsp;&nbsp;&nbsp;                                 
 

@@ -22,7 +22,6 @@
 <section class="content-header">
   <ol class="breadcrumb">
     <li><a href="/prof"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="/prof/insc">Inscrições</a></li>
     <!--<li class="active"><a href="/prof/espaco/create">Cadastrar</a></li>-->
   </ol>
 </section>
@@ -62,7 +61,7 @@
                             </tr>
                             <tr>
                                 <th class="product-name">Horário</th>
-                                <td class="product-name">{$insc.diasemana} das {$insc.horainicio} às {$insc.horatermino} - </td>
+                                <td class="product-name">{$insc.diasemana} das {$insc.horainicio} às {$insc.horatermino} </td>
                             </tr>
                             <tr>
                                 <th class="product-name">Local da aula (CREC)</th>
@@ -73,28 +72,26 @@
                                 <td class="product-name">{function="formatDateHour($insc.dtinsc)"}</td>
                             </tr>
                             <tr>
-                                <th class="product-name">Laudo ?</th>
+                                <th class="product-name">Com laudo ?</th>
                                 <td class="product-name">{if="$insc.laudo == 1"}Sim{else}Não{/if}</td>
                             </tr> 
                             <tr>
-                                <th class="product-name">PCD ?</th>
+                                <th class="product-name">Para PCD ?</th>
                                 <td class="product-name">{if="$insc.inscpcd == 1"}Sim{else}Não{/if}</td>
-                            </tr> 
+                            </tr>  
                             <tr>
                                 <th class="product-name">Respons. p/ inscrição</th>
                                 <td class="product-name">&nbsp;&nbsp;{$insc.desperson} - {$insc.deslogin}</td>
-                            </tr>                                                                                                                                                
+                            </tr>                                                                             
                             <tr {function="colorStatus($insc.idinscstatus)"}>
                                 <th class="product-name">Status da Inscrição</th>
                                 <td class="product-name">{$insc.descstatus}</td>
                             </tr>
                             {if="$insc.idinscstatus == 1"}
-                            
                             <tr>
                                 <th class="product-name"> Aluno desistente? </th>
                                 <td class="product-name"> <a class="btn btn-danger" href="/prof/insc/{$insc.idinsc}/{$idturma}/{$pessoa.idpess}/statusDesistente" role="button" onclick="return confirm('Deseja realmente informar como desistente o {$pessoa.nomepess} da inscrição {$insc.idinsc}?')">Desistente</a> </td>
                             </tr>
-                        -
                             {/if}
                              <tr>
                                 <th class="product-name"> Início previsto das aulas </th>
@@ -110,10 +107,6 @@
                             
                         </tfoot>
                     </table>
-                    <div>
-                 
-                    <a type="button" class="btn btn-primary" href="javascript:window.history.go(-1)">Voltar</a>
-                </div>  
                     
                 </div>
 

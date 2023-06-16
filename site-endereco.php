@@ -109,7 +109,7 @@ $app->post("/endereco", function() {
 		Endereco::setMsgError("Número de telefone inválido! Digite o número de um tefefone celular ou residencial com DDD.");
 		header("Location: /endereco");
 		exit;
-	}	
+	}
 
 	$_POST['idperson'] = $idperson;
 
@@ -147,7 +147,7 @@ $app->get("/user/endereco/update", function(){
 	$endereco = new Endereco();
 
 	if(!Endereco::seEnderecoExiste($idperson)){
-		Endereco::setMsgError('Você ainda não tem um endereço cadastrado, Cadastre um endereço abaixo!');
+		Endereco::setMsgError('Você ainda não tem um endereço cadastrad0, Cadastre um endereço abaixo!');
 			header("Location: /endereco");
 			exit();			
 	}
@@ -267,7 +267,7 @@ $app->post("/endereco/update", function() {
 		Endereco::setMsgError("Número de telefone inválido! Digite o número de um tefefone celular ou residencial com DDD.");
 		header("Location: /user/endereco/update");
 		exit;
-	}	
+	}
 
 	$_POST['idperson'] = $idperson;
 

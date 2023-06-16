@@ -14,7 +14,7 @@ $app->get("/prof/par-q/pessoa/:idpess", function($idpess) {
 
 	$pessoa->get((int)$idpess);
 
-	$saude->getParqByIdPess($idpess);
+	$saude->getParqUltimoByIdPess($idpess);
 	
 	$page = new PageProf([
 		"header"=>false,
@@ -29,7 +29,9 @@ $app->get("/prof/par-q/pessoa/:idpess", function($idpess) {
 
 $app->get("/prof/saude/atulizaatestado/:idpess/:data/:observ", function($idpess, $data, $observ) {
 
-	User::verifyLoginProf();
+	//User::verifyLoginProf();
+	
+	$pessoa = new Pessoa();
 
 	$saude = new Saude();
 
@@ -44,12 +46,13 @@ $app->get("/prof/saude/atulizaatestado/:idpess/:data/:observ", function($idpess,
 	$data = date('Y-m-d', $data);
 
 	$validade = date('Y-m-d', $validade);
-
 	
+	$cpf = $pessoa->getNumcpfByIdpess($idpess);
 
 	$saude->setData([
 		'idpess'=>$idpess,
 		'iduser'=>$iduser,
+		'cpf'=>$cpf,
 		'dataemissao'=>$data,
 		'datavalidade'=>$validade,
 		'observ'=>$observ
@@ -61,10 +64,9 @@ $app->get("/prof/saude/atulizaatestado/:idpess/:data/:observ", function($idpess,
 	
 });
 
-
 $app->get("/prof/saude/dadosatestado/:idpess", function($idpess) {
 
-	User::verifyLoginProf();
+	//User::verifyLoginProf();
 
 	$saude = new Saude();
 
@@ -77,10 +79,11 @@ $app->get("/prof/saude/dadosatestado/:idpess", function($idpess) {
 	$saude->getAtestadoUltimoByIdPess($idpess);
 
 	$validade = $saude->getdatavalidade();
-	$validade = new DateTime();
+	$validade = new DateTime($validade);
 	$validade = $validade->format('d/m/Y');
 
 	$observ = $saude->getobserv();
+	
 	$dataatualizacao = $saude->getdataatualizacao();
 
 	if($dataatualizacao == ''){
@@ -89,7 +92,7 @@ $app->get("/prof/saude/dadosatestado/:idpess", function($idpess) {
 
 	}else{
 
-		$texto = ''.$nomepess."\r\n".'Observação: '.$observ."\r\n".'Validade Atestado: '.$validade."\r\n".'';		
+		$texto = ''.$nomepess."\r\n".'Observação: '.$observ."\r\n".'Validade Atestado: '.$validade.''."\r\n".'';
 	}
 	echo  $texto;
 	

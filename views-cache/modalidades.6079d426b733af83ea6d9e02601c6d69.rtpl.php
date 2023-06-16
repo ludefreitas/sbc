@@ -53,7 +53,7 @@
 
               <div class="col-md-6" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">
-                 <?php echo htmlspecialchars( $value1["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                 <?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
 
                 </h5>
               </div>                

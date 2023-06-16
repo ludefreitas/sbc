@@ -37,6 +37,7 @@ $app->get("/admin/turma", function() {
 
 	for ($x = 0; $x < $pagination['pages']; $x++)
 	{
+
 		array_push($pages, [
 			'href'=>'/admin/turma?'.http_build_query([
 				'page'=>$x+1,
@@ -44,8 +45,9 @@ $app->get("/admin/turma", function() {
 			]),
 			'text'=>$x+1
 		]);
-	}
 
+	}
+	
 	//$idturma = $pagination['data'][0]['idturma'];
 
 	//$tokens = Turma::listTokenTurma($idturma);
@@ -104,7 +106,9 @@ $app->post("/admin/turma/create", function() {
 		Turma::setMsgError("Informe uam descrição para a turma.");
 		header("Location: /admin/turma/create");
 		exit;		
-	}	
+	}
+	
+	$_POST['obs'] = isset($_POST['obs']) ?  $_POST['obs'] = $_POST['obs'] : $_POST['obs'] = '';
 
 	if (!isset($_POST['idmodal']) || $_POST['idmodal'] == '') {
 		Turma::setMsgError("Selecione uma modalidade.");
@@ -116,34 +120,31 @@ $app->post("/admin/turma/create", function() {
 		Turma::setMsgError("Selecione um horário.");
 		header("Location: /admin/turma/create");
 		exit;		
-	}					
+	}																																					
 
 	if (!isset($_POST['idativ']) || $_POST['idativ'] == '') {
 		Turma::setMsgError("Selecione uma atividade.");
 		header("Location: /admin/turma/create");
 		exit;		
-	}		
+	}																							
 
 	if (!isset($_POST['idespaco']) || $_POST['idespaco'] == '') {
 		Turma::setMsgError("Selecione um espaço");
 		header("Location: /admin/turma/create");
 		exit;		
 	}
-	/*
+    /*
 	if (!isset($_POST['idturmastatus']) || $_POST['idturmastatus'] == '') {
 		Turma::setMsgError("Selecione o status.");
 		header("Location: /admin/turma/create");
 		exit;		
 	}
 	*/
-
-	$_POST['obs'] = isset($_POST['obs']) ?  $_POST['obs'] = $_POST['obs'] : $_POST['obs'] = '';
-
-
+	
 	if (!isset($_POST['vagasgeral']) || $_POST['vagasgeral'] == '') {
-		Turma::setMsgError("Informe o número de vagas.");
-		header("Location: /admin/turma/create");
-		exit;		
+		echo "<script>alert('Informe o número de vagas geral.');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
 	}
 
 	if($idturma == 598 || $idturma == 599 || $idturma == 600 || $idturma == 601){
@@ -160,8 +161,8 @@ $app->post("/admin/turma/create", function() {
 		$_POST['vagaspvs']  = round($_POST['vagasgeral'] * 0.1);
 		$_POST['vagas']  = round($_POST['vagasgeral'] * 0.7);
 
-	}		
-
+	}
+	
 	$_POST['token'] = isset($_POST['token']) ?  1 : 0;
 
 	$turma->setData($_POST);
@@ -222,38 +223,37 @@ $app->post("/admin/turma/:idturma", function($idturma) {
 	$turma->get((int)$idturma);
 
 	if (!isset($_POST['descturma']) || $_POST['descturma'] == '') {
-		Turma::setMsgError("Informe uma descrição para a turma.");
-		header("Location: /admin/turma/".$idturma."");
-		exit;		
-	}
-
-	$_POST['obs'] = isset($_POST['obs']) ?  $_POST['obs'] = $_POST['obs'] : $_POST['obs'] = '';
+	     echo "<script>alert('Informe uma descrição para a turma.');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}	
 	
+	$_POST['obs'] = isset($_POST['obs']) ?  $_POST['obs'] = $_POST['obs'] : $_POST['obs'] = '';
 
 	if (!isset($_POST['idmodal']) || $_POST['idmodal'] == '') {
-		Turma::setMsgError("Selecione uma modalidade.");
-		header("Location: /admin/turma/".$idturma."");
-		exit;		
+	    echo "<script>alert('Selecione uma modalidade.');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
 	}
 
 	if (!isset($_POST['idhorario']) || $_POST['idhorario'] == '') {
-		Turma::setMsgError("Selecione um horário.");
-		header("Location: /admin/turma/".$idturma."");
-		exit;		
-	}						
+		echo "<script>alert('Selecione um horário.');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}																			
 
 	if (!isset($_POST['idativ']) || $_POST['idativ'] == '') {
-		Turma::setMsgError("Selecione uma atividade.");
-		header("Location: /admin/turma/".$idturma."");
-		exit;		
-	}					
+	    echo "<script>alert('Selecione uma atividade.');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}																							
 
 	if (!isset($_POST['idespaco']) || $_POST['idespaco'] == '') {
-		Turma::setMsgError("Selecione um espaço");
-		header("Location: /admin/turma/".$idturma."");
-		exit;		
+	    echo "<script>alert('Selecione um espaço.');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
 	}
-	/*
+    /*
 	if (!isset($_POST['idturmastatus']) || $_POST['idturmastatus'] == '') {
 		Turma::setMsgError("Selecione o status.");
 		header("Location: /admin/turma/".$idturma."");
@@ -261,18 +261,13 @@ $app->post("/admin/turma/:idturma", function($idturma) {
 	}
 	*/
 
-
 	if (!isset($_POST['vagasgeral']) || $_POST['vagasgeral'] == '') {
-
-		echo "<script>alert('Informe o número de vagas geral.');";
+    	echo "<script>alert('Informe o número de vagas geral.');";
 		echo "javascript:history.go(-1)</script>";
 		exit();
-		//Turma::setMsgError("Informe o número de vagas.");
-		//header("Location: /admin/turma/".$idturma."");
-		//exit;		
 	}
 
-	if($idturma == 11 || $idturma == 599 || $idturma == 600 || $idturma == 601){
+	if($idturma == 598 || $idturma == 599 || $idturma == 600 || $idturma == 601){
 
 		$_POST['vagaslaudo']  = round($_POST['vagasgeral'] * 0.8);
 		$_POST['vagaspcd']  = round($_POST['vagasgeral'] * 0.1);
@@ -287,7 +282,7 @@ $app->post("/admin/turma/:idturma", function($idturma) {
 		$_POST['vagas']  = round($_POST['vagasgeral'] * 0.7);
 
 	}
-
+	
 	$_POST['token'] = isset($_POST['token']) ?  1 : 0;
 
 	$turma->setData($_POST);
@@ -295,7 +290,7 @@ $app->post("/admin/turma/:idturma", function($idturma) {
 	$turma->save();
 
 	//$turma->setPhoto($_FILES["file"]);
-
+	
 	echo "<script>alert('Turma atualizada com sucesso');";
 	echo "javascript:history.go(-2)</script>";
 
@@ -316,7 +311,6 @@ $app->get("/turma/:idturma", function($idturma) {
 	]);	
 
 });
-
 
 $app->get("/admin/turma/create/token/:idturma", function($idturma) {
 
@@ -351,8 +345,18 @@ $app->get("/admin/turma/create/token/:idturma/:idtemporada/:numcpf", function($i
 
 	$token = time();
 	$token = substr($token, 4);
-
+	
 	$iduserSession = (int)$_SESSION[User::SESSION]['iduser'];
+	
+	//if($iduserSession != 156){
+	if($iduserSession != 156 && $iduserSession != 1){
+
+		echo "<script>alert('Você deve solicitar ao professor desta turma para que ele gere o token!');";
+	  	echo "javascript:history.go(-1)</script>";
+	   	exit;
+	}
+	
+	/*
 
 	$iduserTurmaTemporada = $user->getIdUseInTurmaTemporada($idturma, $idtemporada);
 	
@@ -365,6 +369,7 @@ $app->get("/admin/turma/create/token/:idturma/:idtemporada/:numcpf", function($i
 	   	exit;
 	   
 	}
+	*/
 
 	$_POST['idturma'] = $idturma;
 	$_POST['numcpf'] = $numcpf;
@@ -392,10 +397,11 @@ $app->post("/admin/turma/create/token", function() {
 
 	$turma = new Turma();
 	$user = new User();
-
+	
 	$iduserSession = (int)$_SESSION[User::SESSION]['iduser'];
-
-	if($iduserSession != 5){
+	
+	//if($iduserSession != 156){
+	if($iduserSession != 156 && $iduserSession != 1){
 
 		echo "<script>alert('Você deve solicitar ao professor desta turma para que ele gere o token!');";
 	  	echo "javascript:history.go(-1)</script>";
@@ -416,7 +422,6 @@ $app->post("/admin/turma/create/token", function() {
 	    echo "javascript:history.go(-1)</script>";
 		exit;
 	}
-	
 
 	$_POST['idturma'] = $_POST['idturma'];
 	$_POST['numcpf'] = $_POST['numcpf'];
@@ -425,7 +430,7 @@ $app->post("/admin/turma/create/token", function() {
 	$_POST['creator'] = $iduserSession;
 
 	$turma->setData($_POST);
-
+	
 	$idturma = $_POST['idturma'];
 	$numcpf = $_POST['numcpf'];
 
@@ -434,7 +439,6 @@ $app->post("/admin/turma/create/token", function() {
 		$turma->saveToken();
 	    echo "<script>alert('Token ".$turma->gettoken()." criado com sucesso!');";
 		echo "javascript:history.go(-1)</script>";
-
 	}else{
 
 		if($numcpf != ""){
@@ -448,9 +452,10 @@ $app->post("/admin/turma/create/token", function() {
 	}
 });
 
-$app->get("/admin/token/:idturma", function($idturma) {
 
-	User::verifyLogin();
+$app->get("/admin/token/:idturma", function($idturma) {
+    
+    User::verifyLogin();
 
 	$turma = new Turma();
 
@@ -530,8 +535,6 @@ $app->get("/admin/listapessoasporturma/:idturma/:idtemporada", function($idturma
 	}
 	
 });
-
-
 
 
 

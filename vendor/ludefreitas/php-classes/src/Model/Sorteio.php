@@ -40,7 +40,9 @@ class Sorteio extends Model {
 		}
 
 		// Depois de sortear altera status da temporada para matrículas iniciadas
+		
 		//Temporada::updateStatusTemporadaParaMatriculasIniciadas($idtemporada);
+		
 		//var_dump($sql);
 		//	exit();
 		return $response;		
@@ -72,38 +74,11 @@ class Sorteio extends Model {
 		));
 	}
 
-	/*
-	public function setNumeroDeOrdemGeral($numordem, $numsorte){
+	//public function sorteioExiste(){
 
-		$sql = new Sql();
 
-		$sql->query("CALL sp_insc_update_numordem_geral(:numordem, :numsorte)", array(
-			":numordem"=>$numordem,
-			":numsorte"=>$numsorte
-		));
-	}
-
-	public function setNumeroDeOrdemPlm($numordem, $numsorte){
-
-		$sql = new Sql();
-
-		$sql->query("CALL sp_insc_update_numordem_plm(:numordem, :numsorte)", array(
-			":numordem"=>$numordem,
-			":numsorte"=>$numsorte
-		));
-	}
-
-	public function setNumeroDeOrdemPcd($numordem, $numsorte){
-
-		$sql = new Sql();
-
-		$sql->query("CALL sp_insc_update_numordem_pcd(:numordem, :numsorte)", array(
-			":numordem"=>$numordem,
-			":numsorte"=>$numsorte
-		));
-	}
-	*/
-
+	//}
+	
 	public function selecionaInscByNumordemNumsorte($idtemporada, $numordem, $numsorte){
 
 		$sql = new Sql();
@@ -136,12 +111,12 @@ class Sorteio extends Model {
 
 		return $results;
 	}
-
 	/*
-	public static function sorteioEmail($email, $desperson, $nomepess, $numerosorteado, $status, $numeroordenado, $desctemporada, $idinsc, $turma, $dtnasc){
+	public function sorteioEmail($email, $nomepess, $desperson, $numerosorteado, $status, $numeroordenado, $desctemporada, $idinsc, $turma, $dtnasc){
 	
 		$assunto = "Sorteio Cursos Esportivos ".$desctemporada."";
-		$tplName = "sorteio-insc";		
+		$tplName = "sorteio-insc";
+		
 		
         $mailer = new Mailer($email, $desperson, $assunto, $tplName, array(
         		 "email"=>$email,
@@ -154,22 +129,10 @@ class Sorteio extends Model {
                  "idinsc"=>$idinsc, 
                  "dtnasc"=>$dtnasc,
                  "turma"=>$turma->getValues()
-        ));
-
-        $mailer->send();
-        
-        $emailEnviado = $mailer->send();        
-
-        if (!$emailEnviado)
-     	{
-        	User::setError("Não foi possivel enviar email, no entanto, a incrição abaixo foi efetuada!");    header("Location: /profile/insc/".$idinsc."/".$idpess."");
-        		exit();			
-
-     	}else{
-     		User::setSuccess("Um email com os dados desta inscrição foi enviado a você, verifique sua caixa de email cadastrado. Guarde-o com você, se necessário apresente-o quando solicitado");
-     	}
-     	
-	}	
+        )); 
+             
+        $mailer->send();  
+	}
 	*/
 
 	public function listAll($idtemporada){

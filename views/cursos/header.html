@@ -32,7 +32,7 @@
             <div class="container">
                 <!-- Logo -->
                 <a href="/cursos" class="navbar-brand">
-                    <img src="/../res/site/icon/ico-home.png" title="CursosEsportivosSBC" width="30"> "Teste"
+                    <img src="/../res/site/icon/ico-home.png" title="CursosEsportivosSBC" width="30">
                 </a>
                 <!-- botão para expandir itens em navegação em tela pequena -->
                 <button class="navbar-toggler" data-toggle="collapse" data-target="#nav-principal" aria-expanded="false">
@@ -99,7 +99,7 @@
                             </a>
                         </div> 
                         <div class="nav-item" >
-                            <a style="" class="nav-link" href="/cursos/user-create" >
+                            <a style="" class="nav-link" href="cursos/user-create" >
                               <span class="text-white" style="font-weight: bold">
                                  Cadastre-se 
                               </span>

@@ -23,12 +23,20 @@ $app->get("/cursos/cart", function(){
    
 	$cart = Cart::getFromSession();
 	$user = User::getFromSession();
-	$page = new PageCursos();
-	//$page = new Page();
-
 	$turma = $cart->getTurma();
+	
+	if(!$turma){
+		echo "<script>alert('Não há inscrições a confirmar! Selecione um local; uma modalidade; em seguida selecione uma turma!');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}
+	
+
+	
 	$idturma  = isset($turma[0]['idturma']) ? $turma[0]['idturma'] : '';
 	$desctemporada  = isset($turma[0]['desctemporada']) ? $turma[0]['desctemporada'] : '';
+	
+	
 
 	// Aqui verifica se a temporada é igual ao ano atual
 	// Se não for acrescenta (1). Supondo que a inscrição está sendo feita no ano anterior
@@ -41,12 +49,15 @@ $app->get("/cursos/cart", function(){
 		$anoAtual = (int)date('Y') + 1;		
 	}	
 
+   
 
 	if(Turma::turmatemToken($idturma)){
 		$temtoken = 1;
 	}else{
 		$temtoken = 0;
 	}	
+	
+	 $page = new PageCursos();
 
 	$page->setTpl("cart", [
 		'cart'=>$cart->getValues(),
@@ -70,14 +81,12 @@ $app->get("/cursos/cart", function(){
 $app->post("/cursos/cart", function() {
 
 	User::verifyLoginCursos(false);
-
+	
 	/*
-
 	Cart::setMsgError("Sistema em manutenção! Tente novamente mais tarde!!!");
-	header("Location: /cursos/cart");
-	exit();
+			header("Location: /cursos/cart");
+			exit();
 	*/
-
 	/*
 	$diainicioinscrição = date('2022-07-09');
 	$diaterminoinscrição = date('2022-07-14');
@@ -87,28 +96,50 @@ $app->post("/cursos/cart", function() {
 
 	}else{
 
-		if($_POST['idturma'] == 264 || $_POST['idturma'] == 265 || $_POST['idturma'] == 266 || $_POST['idturma'] == 267 || $_POST['idturma'] == 447 || $_POST['idturma'] == 448 || $_POST['idturma'] == 449){
+	if($_POST['idturma'] == 264 || $_POST['idturma'] == 265 || $_POST['idturma'] == 266 || $_POST['idturma'] == 267 || $_POST['idturma'] == 447 || $_POST['idturma'] == 448 || $_POST['idturma'] == 449){
+	    
 			Cart::setMsgError("As inscrições para esta turma acontecem somente entre os dias 09 e 14/07/2022 !!!");
 			header("Location: /cursos/cart");
 			exit();
 		}
 	}
+	
 	*/
-
-	$diainicioinscrição = date('2023-08-29');
-	$diaterminoinscrição = date('2023-08-30');
+	
+	/*
+	
+	$diainicioinscrição = date('2022-08-16');
+	$diaterminoinscrição = date('2022-08-19');
 	$diahoje = date('Y-m-d');
 
 	if(($diahoje >= $diainicioinscrição) && ($diahoje <= $diaterminoinscrição)){
 
 	}else{
 
-		if($_POST['idturma'] == 455){
-			Cart::setMsgError("As inscrições para esta turma acontecem somente entre os dias 18 e 19/08/2022 !!!");
+		if($_POST['idturma'] == 452){
+		Cart::setMsgError("As inscrições para esta turma turma acontecem somente entre os dias 16 e 19 de agosto de 2022 !!!");
 			header("Location: /cursos/cart");
 			exit();
 		}
-	}		
+	}
+	
+	*/
+	
+	$diainicioinscrição = date('2022-09-23');
+	$diaterminoinscrição = date('2022-09-27');
+	$diahoje = date('Y-m-d');
+
+	if(($diahoje >= $diainicioinscrição) && ($diahoje <= $diaterminoinscrição) ){
+
+	}else{
+
+		if($_POST['idturma'] == 455){
+		Cart::setMsgError("As inscrições para esta turma turma acontecem somente entre os dias 23 e 27 de setembro de 2022 !!!");
+			header("Location: /cursos/cart");
+			exit();
+		}
+	}
+	
 
 	if(Cart::cartIsEmpty((int)$_SESSION[Cart::SESSION]['idcart']) === false){
 		Cart::setMsgError("Não há inscrições a confirmar! selecione uma turma! ");
@@ -199,7 +230,7 @@ $app->post("/cursos/cart", function() {
 			exit();
 		}
 
-		if(Turma::temToken($idturma)){	
+		if(Turma::turmatemToken($idturma)){	
 			
 			if(!isset($_POST['token']) || $_POST['token'] == ''){
 
@@ -237,18 +268,22 @@ $app->post("/cursos/cart", function() {
 			exit();
 		}	
 
+		//var_dump($numcpf.' - '.$idpess.' - '.$idturma.' - '.$idtemporada.' - '.$idlocal.' - '.$tipoativ');
+		//exit();
+		
 		$insc = new Insc();	
-
+		
+		
 		$idcart = $_POST['idcart'];
 			$cart->get((int)$idcart);
 			$idturma = $_POST['idturma'];
 			$idtemporada = $cart->getTurma()[0]['idtemporada'];
 			$vagas = $_POST['vagas'];
 
-			$inscGeral = Insc::getInscGeral($idturma, $idtemporada);
-			$inscPlm = Insc::pegaInscPlm($idturma, $idtemporada);
-			$inscPcd = Insc::pegaInscPcd($idturma, $idtemporada);
-			$inscPvs = Insc::pegaInscPvs($idturma, $idtemporada);
+			$inscGeral = (int)Insc::getInscGeral($idturma, $idtemporada);
+			$inscPlm = (int)Insc::pegaInscPlm($idturma, $idtemporada);
+			$inscPcd = (int)Insc::pegaInscPcd($idturma, $idtemporada);
+			$inscPvs = (int)Insc::pegaInscPvs($idturma, $idtemporada);
 
 			$vagasGeral = round($vagas * 0.7);
 			$vagasPlm = round($vagas * 0.1);
@@ -271,34 +306,36 @@ $app->post("/cursos/cart", function() {
 		    	exit();
 
 			}
-
-
+		
 		/*
+
 		if($insc->countInscCursos($idtemporada, $idturma) >= 50){
 
-			Cart::setMsgError('Não há mais vagas para esta turma. Clique em "REMOVER" e selecione outra turma, que pode ter ou não vagas, ou aguarde a abertura de um novo curso.');
+			Cart::setMsgError('Não há mais vagas para esta turma. Clique em "REMOVER" e selecione outra turma, que pode ter ou não vagas, ou aguarde a abertura de uma nova turma ou novo curso.');
 					header("Location: /cursos/cart");
 					exit();
 		}
-		*/	
-
+		
+		*/
+		
 		/*
-		if($insc->countInscCursos($idtemporada, $idturma) <= 80){
+		
+		if($insc->countInscCursos($idtemporada, $idturma) >= 80){
+		    
+		    
+		    echo "<script>alert('Não há mais vagas para para a lista de espera desta turma! Aguarde a abertura de uma nova turma.');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
 
-			 echo "<script>alert('Não há mais vagas para para a lista de espera desta turma! Aguarde a abertura de uma nova turma.');";
-	    	echo "javascript:history.go(-1)</script>";
-	    	exit();
-
-
-			//Cart::setMsgError('Não há mais vagas para a lista de espera.  Aguarde a abertura de um novo curso');
-				//header("Location: /cursos/cart");
-				//exit();
+			//Cart::setMsgError('Não há mais vagas para para a lista de espera desta turma.');
+					//header("Location: /cursos/cart");
+					//exit();
 		}
 		*/
-
+		
 		/*
-
-		if(($idturma == 264) || ($idturma == 265) || ($idturma == 266) || ($idturma == 267) || ($idturma == 447) || ($idturma == 448) || ($idturma == 449)){
+		
+			if(($idturma == 264) || ($idturma == 265) || ($idturma == 266) || ($idturma == 267) || ($idturma == 447) || ($idturma == 448) || ($idturma == 449)){
 				
 				$idturma264 = 264;
 
@@ -363,10 +400,11 @@ $app->post("/cursos/cart", function() {
 					Cart::setMsgError($nomepess.' já está inscrito(a) para uma turma do Projeto Perdendo o Medo de Nadar, na turma '.$idturma449.'. !');
 					header("Location: /cursos/cart");
 					exit();
-				}																							
+				}												
 		}
+		
 		*/
-
+		
 		if(($idturma != 264) && ($idturma != 265) && ($idturma != 266) && ($idturma != 267) && ($idturma != 447) && ($idturma != 448) && ($idturma != 449) && ($idturma != 452) && ($idturma != 455)){
 
 			if(($idmodal === 6) || ($idmodal === 14)){
@@ -380,6 +418,19 @@ $app->post("/cursos/cart", function() {
 				}
 			}
 		}
+		
+        /*
+		if($idmodal === 6 || $idmodal === 14){
+
+			if ($cart->getInscExistAquaticLocal($numcpf, $idpess, $idturma, $idtemporada, $idlocal, $tipoativ)){
+
+				Cart::setMsgError($nomepess.' já está inscrito(a) para uma turma do tipo '.$tipoativ.' no '.$local.'!');
+				header("Location: /cursos/cart");
+				exit();
+
+			}
+		}
+		*/
 
 		if ($cart->getInscExist($numcpf, $idpess, $idturma, $idtemporada)){
 

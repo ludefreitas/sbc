@@ -1,6 +1,5 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?><script type="text/javascript">
 
-
     function getVagas(url){
 
         let ajax = new XMLHttpRequest();
@@ -18,24 +17,6 @@
           }
         });
       } 
-
-      function getVagasListaEspera(url){
-
-        let ajax = new XMLHttpRequest();
-        ajax.open('GET', 'url');
-        
-        $.ajax({
-          url: url,
-          method: 'GET'  
-        }).done(function(result){
-
-          if(result){              
-                alert(result)
-          }else{
-            alert('Dados não disponíveis!')
-          }
-        });
-      }     
 
     /*
     alert('As aulas de Ginástica Artística (GA) e Ginástica Rítimica (GR) começam a partir de 13/02/2023.')
@@ -79,41 +60,46 @@
    
    <div class="col-md-12" style="text-align-last: left; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; border-radius: 15px;"> 
    
-    <?php if( $modalidade["idmodal"] == 38 ){ ?>
-        Para fazer a inscrição e matrícula na modalidade Karatê, você deve entrar em contato com o Sensei Guto através Whatsapp abaixo.
-    <?php }else{ ?>
-    
-        <?php if( $modalidade["idmodal"] == 39 ){ ?>
-            Para fazer a inscrição na modalidade Judô, Clique no link abaixo.
-        
+   <?php if( $modalidade["idmodal"] == 55 ){ ?>
+            Para fazer a inscrição e matrícula na modalidade Xadrez, você deve entrar em contato com o profº Rodrigo Scimini através Whatsapp abaixo.
+        <?php }else{ ?>
+   
+        <?php if( $modalidade["idmodal"] == 38 ){ ?>
+            Para fazer a inscrição e matrícula na modalidade Karatê, você deve entrar em contato com o Sensei Guto através Whatsapp abaixo.
         <?php }else{ ?>
         
-        <?php if( $modalidade["idmodal"] == 46 ){ ?>
-            Para fazer a inscrição na modalidade Zumba, Clique no link abaixo.
+            <?php if( $modalidade["idmodal"] == 39 ){ ?>
+                Para fazer a inscrição na modalidade Judô, Clique no link abaixo.
+            
+            <?php }else{ ?>
+            
+                <?php if( $modalidade["idmodal"] == 46 ){ ?>
+                    Para fazer a inscrição na modalidade Zumba, Clique no link abaixo.
+                
+                <?php }else{ ?>
         
-        <?php }else{ ?>
-
-        <?php if( checkLogin(false) ){ ?> 
-    
-               <span style="color: black; font-weight: bold;">  <?php echo getUserName(); ?></span>!<br>           
-                                                           
-              Nesta etapa, selecione abaixo uma turma para praticar a aula de <span style="font-weight: bold; font-size: 20px; color: orange;"><?php echo htmlspecialchars( $modalidade["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span> e faça a sua inscrição ou a inscrição de seu dependente.
-    
-        <?php }else{ ?>      
-               
-          
-                <a href="/user-create">             
-                         CADASTRE-SE               
-                </a> 
-                 <span> ou faça o  </span>           
-                <a href="/login" >                
-                     LOGIN 
-                </a>
-                e nesta etapa selecione abaixo uma turma para praticar a aula de <span style="font-weight: bold; font-size: 20px; color: orange;"><?php echo htmlspecialchars( $modalidade["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>, faça a sua inscrição ou a inscrição de seu dependente.
-              
-          <?php } ?>
-         <?php } ?>
-         <?php } ?>
+                    <?php if( checkLogin(false) ){ ?> 
+                
+                           <span style="color: black; font-weight: bold;">  <?php echo getUserName(); ?></span>!<br>           
+                                                                       
+                          Nesta etapa, selecione abaixo uma turma para praticar a aula de <span style="font-weight: bold; font-size: 20px; color: orange;"><?php echo htmlspecialchars( $modalidade["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span> e faça a sua inscrição ou a inscrição de seu dependente.
+                
+                    <?php }else{ ?>      
+                           
+                      
+                            <a href="/user-create">             
+                                     CADASTRE-SE               
+                            </a> 
+                             <span> ou faça o  </span>           
+                            <a href="/login" >                
+                                 LOGIN 
+                            </a>
+                            e nesta etapa selecione abaixo uma turma para praticar a aula de <span style="font-weight: bold; font-size: 20px; color: orange;"><?php echo htmlspecialchars( $modalidade["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>, faça a sua inscrição ou a inscrição de seu dependente.
+                          
+                      <?php } ?>
+                 <?php } ?>
+             <?php } ?>
+        <?php } ?>
     <?php } ?>
 
     </div>
@@ -188,16 +174,14 @@
 
   <div class="container"> <!-- container 3 -->
     <div class="row"> <!-- row 4 --> 
-
-
     
       <div class="col-md-12" style="text-align-last: left; line-height: 20px;  font-size: 14px; font-style: normal; margin: 5px 0px 20px 0px">
 
          <!--
           <a href="/turma/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="text-decoration: none">  
           -->
-            
-          <a href="/cart/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/add" style="text-decoration: none"> 
+          <!-- <a href="/cart/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/add" style="text-decoration: none"> 
+          -->
              
         <h5 style="color: #000000"> 
             <span style="font-weight: bold;">
@@ -222,11 +206,14 @@
               <?php } ?>
               
              <?php if( $value1["obs"] ){ ?>
-              OBSERVAÇÃO: <strong><?php echo htmlspecialchars( $value1["obs"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong><br>
-              <?php } ?>
-              
+			  OBSERVAÇÃO: <strong><?php echo htmlspecialchars( $value1["obs"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong><br>
+			  <?php } ?>
+			  
 
-                               <?php if( $value1["idstatustemporada"] == 2 ){ ?> 
+                   
+                        
+              
+              <?php if( $value1["idstatustemporada"] == 2 ){ ?> 
                <span style="font-weight: bold;">
               <?php echo htmlspecialchars( $value1["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas<br>
               <?php } ?>          
@@ -235,7 +222,8 @@
                <span style="color: red;">
                 <?php echo htmlspecialchars( $value1["descstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
               </span> <br> 
-               
+               <span style="font-weight: bold;">
+              <?php echo htmlspecialchars( $value1["numinscritos"], ENT_COMPAT, 'UTF-8', FALSE ); ?> inscritos para <?php echo htmlspecialchars( $value1["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas                          
               <?php } ?>
 
               <?php if( $value1["idstatustemporada"] == 6 ){ ?> 
@@ -265,39 +253,39 @@
                       </span>
                       
                       <?php }else{ ?>
-                      
+                      <!--
                         <span style="color: green; font-size: 14px;">
                         <?php echo htmlspecialchars( $value1["numinscritos"], ENT_COMPAT, 'UTF-8', FALSE ); ?> inscritos para <?php echo htmlspecialchars( $value1["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas   
                         
                       </span><br>
+                      -->
                        
                       <?php } ?>
                       
                    <?php } ?>
 
                 <?php }else{ ?>
+                
                 <!--
                    <span style="color: darkred;">
                            
-                    <strong>Não há vagas disponíveis.</strong><br>
+                   <strong>Não há vagas disponíveis.</strong><br>
                   </span>
                     <span>
                     Faça sua inscrição para a lista de espera<br>
                   </span>
-
-                   <h6 style="color: blue; font-weight: bold">   
-                   
-                     <a href="/insc-turma-temporada-listaespera/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/user/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: orangered;">Consulte a lista de espera</a>
+                 
+                   <h6 style="color: blue; font-weight: bold">  
+                     <a href="/insc-turma-temporada-listaespera/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/user/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: orangered;">Consulte a lista de espera, clicando aqui.  </a>
                     </h6>
-                <hr style="background-color: blue;">
-            -->
-                    
+                    -->
                 <?php } ?>
               <?php } ?>
             
           </h5>
           
-        </a>
+          
+        <!-- </a> -->
         <?php if( $value1["token"] == 1 ){ ?> 
            
           <?php if( $value1["idlocal"] == 5 ){ ?>
@@ -305,7 +293,7 @@
               <h5><span style="color: darkblue;" >
                 <strong>Necessário token</strong>&nbsp;             
               </span>
-              <a href="#" onmousemove="alertTokenCreeba()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></h5></a>
+              <a href="#" onmousemove="alertTokenCreeba()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></a></h5>
             <?php } ?>
 
             <?php if( $value1["idlocal"] == 3 ){ ?>
@@ -313,7 +301,7 @@
               <h5><span style="color: darkblue;" >
                 <strong>Necessário token</strong>&nbsp;             
               </span>
-              <a href="#" onmousemove="alertTokenBaetao()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></h5></a>
+              <a href="#" onmousemove="alertTokenBaetao()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></a></h5>
             <?php } ?>
             
             <?php if( $value1["idlocal"] == 21 ){ ?>
@@ -321,7 +309,7 @@
               <h5><span style="color: darkblue;" >
                 <strong>Necessário token</strong>&nbsp;             
               </span>
-              <a href="#" onmousemove="alertTokenBaetao()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></h5></a>
+              <a href="#" onmousemove="alertTokenBaetao()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></a></h5>
             <?php } ?>
             
         <?php } ?> 
@@ -345,18 +333,14 @@
             </h6>
 
           <?php }else{ ?>
-
-
-            <br>
-
+                
               <a class="btn btn-info" style="background-color: #cc5d1e"  href="/cart/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/add">Inscrever-se</a>  
-
-              <a class="btn btn-success" style="font-weight: bold; color: white;" onclick="getVagas('/vagas-turma/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>')"> Vagas </a> 
-              <br> <br>
+              <a class="btn btn-success" style="font-weight: bold; color: white;" onclick="getVagas('/vagas-turma/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturmastatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>')"> Vagas </a> 
+            <br> 
             <h6 style="color: blue; font-weight: bold">  
                      <a href="/insc-turma-temporada-listaespera/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/user/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: orangered;">Consulte a lista de espera, clicando aqui.  </a>
                     </h6>
-                <hr style="background-color: blue;">
+               <hr style="background-color: blue;">
 
           <?php } ?>
         <?php } ?>           
@@ -374,34 +358,41 @@
     <div class="col-md-12 alert alert-info" style="font-size: 20px; text-align-last: center ">
        <span style="font-size: 20px; font-weight: bold;">
            
-    <?php if( $modalidade["idmodal"] == 38 ){ ?>
-
-       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;FAÇA SUA INSCRIÇÃO E MATRICULA PELO WHATSAPP<br> (<a href="https://wa.me/+5511991000907?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do Sensei Guto. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: darkgreen; font-weight: bold;"></i><span style="color: black;"> 99100 0907&nbsp;</span></a>)
-
-    <?php }else{ ?>
-
-      <?php if( $modalidade["idmodal"] == 39 ){ ?>
-
-          Faça a sua inscrição para o <br> JUDÔ <br> <a href="/judo"><span style="color: red;"> &nbsp;clique aqui</span></a>
-
-      <?php }else{ ?>
-      
-      <?php if( $modalidade["idmodal"] == 46 ){ ?>
-
-          Ainda não começaram as inscrições para a ZUMBA. O link para a inscrição irá aparecer aqui a partir da segunda quinzena de fevereiro de 2023. Aguardem!!!
-
-      <?php }else{ ?>
-      
-            
-
-        <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+    <?php if( $modalidade["idmodal"] == 55 ){ ?>
+    
+           &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;FAÇA SUA INSCRIÇÃO E MATRICULA PELO WHATSAPP<br> (<a href="https://wa.me/+5511944583463?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do profº Rodrigo Scimini. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: darkgreen; font-weight: bold;"></i><span style="color: black;"> 94458 3463&nbsp;</span></a>)
+    
+        <?php }else{ ?>
+           
+        <?php if( $modalidade["idmodal"] == 38 ){ ?>
+    
+           &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;FAÇA SUA INSCRIÇÃO E MATRICULA PELO WHATSAPP<br> (<a href="https://wa.me/+5511991000907?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do Sensei Guto. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: darkgreen; font-weight: bold;"></i><span style="color: black;"> 99100 0907&nbsp;</span></a>)
+    
+        <?php }else{ ?>
+    
+          <?php if( $modalidade["idmodal"] == 39 ){ ?>
+    
+              Faça a sua inscrição para o <br> JUDÔ <br> <a href="/judo"><span style="color: red;"> &nbsp;clique aqui</span></a>
+    
+          <?php }else{ ?>
           
-            
-
-    <?php } ?>  
-      
-     <?php } ?>
-
+          <?php if( $modalidade["idmodal"] == 46 ){ ?>
+    
+              Ainda não começaram as inscrições para a ZUMBA. O link para a inscrição irá aparecer aqui a partir da segunda quinzena de fevereiro de 2023. Aguardem!!!
+    
+          <?php }else{ ?>
+          
+                
+    
+            <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+              
+                
+    
+        <?php } ?>  
+          
+         <?php } ?>
+    
+        <?php } ?>
     <?php } ?>
                    
      </span>

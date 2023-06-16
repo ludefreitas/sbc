@@ -58,7 +58,7 @@ class Endereco extends Model {
 			$this->setData($results[0]);
 		}else{
 			User::setError('Não foi possivel cadastrar endereço!');
-			header("Location: /user/pessoas");
+			header("Location: /user/profile");
 			exit();			
 		}
 
@@ -87,13 +87,13 @@ class Endereco extends Model {
 		if (count($results) > 0) {
 			$this->setData($results[0]);
 		}else{
-			Pessoa::setErrorRegister('Não foi possivel atualizar endereço!');
-			header("Location: /pessoa-update");
+			User::setError('Não foi possivel atualizar endereço!');
+			header("Location: /user/profile");
 			exit();			
 		}
 
 	}
-
+	
 	public function updateEndrecoPessoa($idpess)
 	{
 
@@ -123,6 +123,7 @@ class Endereco extends Model {
 		}
 
 	}
+
 
 	public function seEnderecoExiste($idperson)	{
 
@@ -159,7 +160,7 @@ class Endereco extends Model {
 
 			return $results[0];		
 	}
-
+	
 	public function getEnderecoPessoa($idpess)	{
 
 		$sql = new Sql();
@@ -179,7 +180,7 @@ class Endereco extends Model {
 		}
 			return $results[0];		
 	}
-
+	
 	public function getEnderecoPessoaInsc($idpess)	{
 
 		$sql = new Sql();

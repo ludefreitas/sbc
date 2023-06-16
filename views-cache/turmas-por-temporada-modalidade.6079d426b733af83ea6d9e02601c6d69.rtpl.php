@@ -1,4 +1,29 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
+<script type="text/javascript">
+  
+  function atualizaStatus(idturma, desctemporada, idtemporada){
+
+        let status = prompt('Para atualizar o status da turma '+ idturma +' para a temporada '+ desctemporada +'  selecionada, digite:\n 3 - para inscrições abertas\n 4 - para inscrições suspensas\n 6 - para turma não iniciada');  
+
+        if(status == ''){
+          alert("Você clicou em cancelar!")
+        }
+        
+        let url = "/admin/atualiza/turmatemporada/"+idturma+"/"+idtemporada+"/"+desctemporada+"/"+status        
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url'); 
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){         
+            alert(result)        
+
+        });
+      }
+
+</script>
+
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -81,6 +106,26 @@
                       <span style="text-align: left;">
                        
                           <strong><?php echo htmlspecialchars( $value1["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong> 
+
+                          <?php if( $value1["idturmastatus"] == 3 ){ ?>
+                          <span>
+                            <a style="color: green; font-weight: bold; text-align-last: right;" onclick="atualizaStatus(<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, <?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)">- Inscrições abertas</a>
+                          </span>
+
+                          <?php } ?>
+
+                          <?php if( $value1["idturmastatus"] == 4 ){ ?>
+                          <span>
+                            <a style="color: red; font-weight: bold; text-align-last: right;" onclick="atualizaStatus(<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, <?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)"> - Inscrições suspensas</a>
+                          </span>
+                          <?php } ?>
+
+                          <?php if( $value1["idturmastatus"] == 6 ){ ?>
+                          <span>
+                            <a style="color: blue; font-weight: bold; text-align-last: right;" onclick="atualizaStatus(<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, <?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)"> - Inscrições não iniciadas</a>
+                          </span>
+                          <?php } ?>
+
                           - <?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                           <?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ás <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> -  
                           <strong><?php echo htmlspecialchars( $value1["descrfxetaria"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  <?php echo htmlspecialchars( $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> a <?php echo htmlspecialchars( $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> anos</strong>

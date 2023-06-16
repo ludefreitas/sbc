@@ -1,4 +1,25 @@
 
+<script type="text/javascript">
+  
+  function atualizaStatus(idturma, desctemporada, idtemporada){
+
+        let status = prompt('Para atualizar o status da turma '+ idturma +' para a temporada '+ desctemporada +'  selecionada, digite:\n 3 - para inscrições abertas\n 4 - para inscrições suspensas\n 6 - para turma não iniciada');   
+        
+        let url = "/admin/atualiza/turmatemporada/"+idturma+"/"+idtemporada+"/"+desctemporada+"/"+status        
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url'); 
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){         
+            alert(result)        
+
+        });
+      }
+
+</script>
+
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -83,12 +104,39 @@
 
                     <div class="col-md-6" >
                       <span style="text-align: left;">
+                          
+                           <strong>{$value.descturma}</strong> 
+                          
+                          {if="$value.idturmastatus == 2"}
+                          <span>
+                            <a style="color: orange; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.idturma}, {$value.desctemporada}, {$value.idtemporada})">- Inscrições não iniciadas</a>
+                          </span>
+
+                          {/if}
                        
-                          <strong>{$value.descturma}</strong> 
+                          {if="$value.idturmastatus == 3"}
+                          <span>
+                            <a style="color: darkgreen; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.idturma}, {$value.desctemporada}, {$value.idtemporada})">- Inscrições abertas</a>
+                          </span>
+
+                          {/if}
+
+                          {if="$value.idturmastatus == 4"}
+                          <span>
+                            <a style="color: red; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.idturma}, {$value.desctemporada}, {$value.idtemporada})"> - Inscrições suspensas</a>
+                          </span>
+                          {/if}
+
+                          {if="$value.idturmastatus == 6"}
+                          <span>
+                            <a style="color: blue; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.idturma}, {$value.desctemporada}, {$value.idtemporada})"> - Turma não iniciada</a>
+                          </span>
+                          {/if}    
+                          
                           - {$value.diasemana}
                           {$value.horainicio} ás {$value.horatermino} -  
                           <strong>{$value.descrfxetaria}  {$value.initidade} a {$value.fimidade} anos</strong>
-                          -  {$value.apelidolocal} - {$value.nomeespaco} - <strong>Professor: {if="$value.idperson == 1"} Admin Master {else} {$value.apelidoperson} {/if}</strong>&nbsp; ({$value.vagas} vagas)
+                          -  {$value.apelidolocal} - {$value.nomeespaco} - <strong>Professor: {if="$value.idperson == 1"} Admin Master {else} {$value.apelidoperson} {/if}</strong>&nbsp; Vagas: ({$value.vagas} Geral)&nbsp; - &nbsp;({$value.vagaslaudo} Laudo)&nbsp; - &nbsp;({$value.vagaspcd} PCD)&nbsp; - &nbsp;({$value.vagaspvs} PVS)
                       </span>
                     </div>      
                    <div class="col-md-6">
@@ -106,7 +154,7 @@
                          <a href="/admin/calendario-lista-presenca/{$value.idtemporada}/{$value.idturma}" style="color: orangered;">
                          | &nbsp;Fazer Chamada </a>  &nbsp; 
                          &nbsp;  
-
+                         
                          <a href="/admin/listapessoasporturma/{$value.idturma}/{$value.idtemporada}" style="color: black;">
                          | &nbsp; Lista com endereços </a>  &nbsp; 
                          &nbsp;  

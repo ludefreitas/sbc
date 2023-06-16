@@ -1,24 +1,32 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?><script type="text/javascript">
 
+
+     function avaliacao(){
+        
+        confirm('As turmas de natação intermediário, avançado e aperfeiçoamento são dedicadas aos alunos egressoas das turmas de iniciante do ano passado, ou aquelas pessoas que já sabem nadar o básico e pretendem aperfeiçoar o nado. Para ingressar em uma dessas turmas, você deve realizar o agendamento de uma valiação junto a nossa equipe de professores para verificar em qual turma você pode ingressar.')
+        }
+    
+
     function GrGa(){
 
         alert('As aulas de Ginástica Artística (GA) e Ginástica Rítimica (GR) começam a partir de 13/02/2023.')
     }
 
-    function avaliacao() {
-
-        alert('As turmas de natação intermediário, avançado e aperfeiçoamento são dedicadas aos alunos egressoas das turmas de iniciante do ano passado, ou aquelas pessoas que já sabem nadar o básico,e pretendem aperfeiçoar o nado. Para ingressar em uma dessas turmas, você deve realizar o agendamento de uma avaliação junto a nossa equipe de professores para verificar em qual turma você pode ingressar.')
-    }  
-
-
 </script>
-
  <div class="container"> <!-- container 1 -->
             <div class="row"> <!-- row 2 -->
-              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 5px 0px 0px 0px;">
+              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 0px 0px 0px 0px;">
 
 <div class="container" style="margin: 0px 0px 0px 0px; ">
   <div class="row">   
+  
+    <div class="col-md-12" style="color: black; text-align-last: center; font-size: 20px;">
+
+      <div>
+         ETAPA <span style="font-weight: bold;">2</span> de <span style="font-weight: bold;">5</span> 
+      </div>
+
+    </div>
 
     <?php if( $error != '' ){ ?>
     <div class="alert alert-danger">
@@ -26,22 +34,13 @@
     </div>
   
  <?php }else{ ?>
-
-  <div class="col-md-12" style="color: black; text-align-last: center; font-size: 20px;">
-
-      <div>
-         ETAPA <span style="font-weight: bold;">2</span> de <span style="font-weight: bold;">5</span> 
-      </div>
-
-
-    </div>
-
+ 
 
   <div class="col-md-12" style="text-align-last: left; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; border-radius: 15px;"> 
 
-    <?php if( checkLogin(false) ){ ?>        
-            
-          <span style="color: black; font-weight: bold;">  <?php echo getUserName(); ?> </span>!<br>
+    <?php if( checkLogin(false) ){ ?>   
+    
+         <span style="color: black; font-weight: bold;">  <?php echo getUserName(); ?> </span>!<br>
           Selecione abaixo uma MODALIDADE para praticar, escolha a turma e faça a sua inscrição ou a inscrição de seu dependente.
 
     <?php }else{ ?>      
@@ -66,6 +65,8 @@
 <hr style="background-color: orange;">
 
 <?php $counter1=-1;  if( isset($modalidades) && ( is_array($modalidades) || $modalidades instanceof Traversable ) && sizeof($modalidades) ) foreach( $modalidades as $key1 => $value1 ){ $counter1++; ?>
+
+    
   <div class="container"> <!-- container 3 -->
     <div class="row"> <!-- row 4 -->
       
@@ -79,48 +80,40 @@
         <div class="container">
           <div class="row alert-warning">
             <div class="col-md-6" style="margin: 10px 0px 5px 0px; ">
-              <?php if( $value1["idmodal"] != 17 ){ ?>
-              <a style="color: #0f71b3; text-decoration: none; font-weight: bold;" href="/modalidade/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-                <?php echo htmlspecialchars( $value1["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
-              </a>
-              <?php }else{ ?>
-              <a style="color: #0f71b3; text-decoration: none; font-weight: bold;" href="/judo">
-                Judô<br>
-              </a>
-              <?php } ?>
-
-               <?php if( $value1["idmodal"] == 44 OR $value1["idmodal"] == 25 ){ ?>
+            
+                 <?php if( $value1["idmodal"] == 44 OR $value1["idmodal"] == 25 ){ ?>
                 
-              <a style="color: #0f71b3; text-decoration: none; font-weight: bold;" href="/modalidade/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onclick="GrGa()">
-                <?php echo htmlspecialchars( $value1["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
-              </a>
+                    <a style="color: #0f71b3; text-decoration: none; font-weight: bold;" href="/modalidade/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onclick="GrGa()">
+                        <?php echo htmlspecialchars( $value1["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
+                    </a>
               
-              <?php }else{ ?>
+                <?php }else{ ?>
               
+                        <a style="color: #0f71b3; text-decoration: none; font-weight: bold;" href="/modalidade/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                        <?php echo htmlspecialchars( $value1["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
+                         </a>
               
-               <a style="color: #0f71b3; text-decoration: none; font-weight: bold;" href="/modalidade/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-                <?php echo htmlspecialchars( $value1["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
-              </a>
+                  
+              
               
               <?php } ?>
-
+              
+              
             </div>
-
             <div class="col-md-6" style="text-align-last: center; margin: 5px 0px 5px 0px; color: white; padding: 0px 0px 0px 0px">
-              <?php if( $value1["idmodal"] != 17 ){ ?>
-              <a class="card card-just-text" style="background-color: #cc5d1e; color: white; padding: 5px 0px 5px 0px;  text-decoration: none" href="/modalidade/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" text-decoration="none">Cursos dísponíveis
-              </a>
-              <?php }else{ ?>
-              <a class="card card-just-text" style="background-color: #cc5d1e; color: white; padding: 5px 0px 5px 0px;  text-decoration: none" href="/judo" text-decoration="none">Cursos dísponíveis
-              </a>
-              <?php } ?>
-
-              <?php if( $value1["idmodal"] == 44 ){ ?>
+                
+             <?php if( $value1["idmodal"] == 44 OR $value1["idmodal"] == 25 ){ ?>
               <a class="card card-just-text" style="background-color: #cc5d1e; color: white; padding: 5px 0px 5px 0px;  text-decoration: none" href="/modalidade/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onclick="GrGa()" text-decoration="none">Cursos dísponíveis
               </a>
               <?php }else{ ?>
-              <a class="card card-just-text" style="background-color: #cc5d1e; color: white; padding: 5px 0px 5px 0px;  text-decoration: none" href="/modalidade/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" text-decoration="none">Cursos dísponíveis
-              </a>
+              
+                
+              
+                <a class="card card-just-text" style="background-color: #cc5d1e; color: white; padding: 5px 0px 5px 0px;  text-decoration: none" href="/modalidade/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" text-decoration="none">Cursos dísponíveis
+                </a>
+                
+               
+              
               <?php } ?>
               
             </div>
@@ -129,6 +122,7 @@
       </div>                        
     </div> <!-- row 4 -->
   </div> <!-- container 3 -->
+
 <?php } ?>
 <hr style="background-color: orange;">
 <div class="row" style="margin: -5px -5px -5px -5px; padding-top: 20px; ">    

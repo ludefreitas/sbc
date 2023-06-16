@@ -58,5 +58,55 @@ $app->get("/prof/pessoas", function() {
 	));
 });
 
+$app->get("/estagiario/pessoas", function() {
+
+	$pessoa = new Pessoa();
+
+	User::verifyLoginEstagiario();
+	// na linha abaixo retorna um array com todos os dados do usuário
+
+	$search = (isset($_GET['search'])) ? $_GET['search'] : "";
+
+	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
+
+	if ($search != '') {
+
+		$pagination = Pessoa::getPageSearch($search, $page);
+
+	} else {
+
+		$pagination = Pessoa::getPage($page);
+
+	}
+
+	$pages = [];
+
+	for ($x = 0; $x < $pagination['pages']; $x++)
+	{
+
+		array_push($pages, [
+			'href'=>'/estagiario/pessoas?'.http_build_query([
+				'page'=>$x+1,
+				'search'=>$search
+			]),
+			'text'=>$x+1
+		]);
+
+	}	
+
+	// $pessoa = User::listAll();
+	// carrega uma pagina das páginas do admin
+	$page = new PageProf();
+
+	// envia para a página o array retornado pelo listAll
+	$page->setTpl("pessoas-estagiario", array( // aqui temos um array com muitos arrays
+		"pessoas"=>$pagination['data'],
+		"total"=>$pagination['total'],
+		"search"=>$search,
+		"pages"=>1,
+		"error"=>User::getError()
+	));
+});
+
 
 ?>

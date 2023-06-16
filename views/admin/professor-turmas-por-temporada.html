@@ -77,12 +77,13 @@
                         
 
                         <!--
-                         &nbsp; <a href="/admin/insc-turma-temporada-matricular/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: darkblue;">
+                         &nbsp; <a href="/prof/insc-turma-temporada-matricular/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: darkblue;">
                          | Lista/Matricular </a>  &nbsp;   
                         -->
 
                       <!--  | &nbsp; <a href="/insc-turma-temporada-para-sorteio/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: orangered;">  Sorteio |</a>  &nbsp;  
                       -->
+
 
                         
                           <a href="/admin/token/{$value.idturma}/{$temporada.idtemporada}" style="color: darkblue;"><i ></i> | Tokens</a>
@@ -122,12 +123,12 @@
 
                           <tr>
                           <td>
-                              <a href="/admin/turma-temporada/{$temporada.idtemporada}"><i class=""></i>Minhas turmas - Temporada {$temporada.desctemporada}</a>
+                              <a href="/prof/turma-temporada/{$temporada.idtemporada}"><i class=""></i>Minhas turmas - Temporada {$temporada.desctemporada}</a>
                           </td>
                           {loop="$locais"}
                           <tr>
                           <td>
-                              <a href="/admin/turma-temporada/{$temporada.idtemporada}/local/{$value.idlocal}"><i class=""></i> {$value.idlocal} - {$value.apelidolocal}</a>
+                              <a href="/prof/turma-temporada/{$temporada.idtemporada}/local/{$value.idlocal}"><i class=""></i> {$value.idlocal} - {$value.apelidolocal}</a>
                           </td>
                           </tr>
                           {/loop}

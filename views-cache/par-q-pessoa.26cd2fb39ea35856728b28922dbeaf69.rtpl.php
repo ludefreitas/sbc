@@ -16,12 +16,12 @@
 
                       <div>
                          <font face="Verdana" size="5">Cursos Esportivos SBC</font><br>
-                         Questionário de Prontidão para Atividade Física <span style="font-weight: bold;">(PAR-q)</span> 
+                         Questionário de Prontidão para Atividade Física <span style="font-weight: bold;">(PAR-Q)</span> 
 
                       </div>
 
                     </div>                      
-                    <?php $counter1=-1;  if( isset($saude) && ( is_array($saude) || $saude instanceof Traversable ) && sizeof($saude) ) foreach( $saude as $key1 => $value1 ){ $counter1++; ?>
+                    
                     <div class="row" style="margin-top: 0px; margin-bottom: 0px;">
 
                                     <div align="center">
@@ -43,13 +43,21 @@
                                                                         <td>
                                                                             <div class="col-md-12" style="text-align-last: left; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; border-radius: 15px;"> 
 
-                                                                                
+                                                                                <?php if( checkLogin(false) ){ ?> 
 
-                                                                                       
+                                                                                       <span style="color: black; font-weight: bold;">Olá!  <?php echo getUserName(); ?> </span><br><br>
                                                                                        Respostas do Questionário de Prontidão para Atividade Física do(a) <strong><?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>.
 
-                                                                                
-                                                        
+                                                                                <?php }else{ ?>      
+                                                                                        <a href="/user-create">             
+                                                                                                 CADASTRE-SE               
+                                                                                        </a> 
+                                                                                         <span> ou faça o  </span>           
+                                                                                        <a href="/login" >                
+                                                                                             LOGIN 
+                                                                                        </a>
+                                                                                        e nesta confirme abaixo os detalhes da inscrição e clique no botão <strong style="color: red;"> FINALIZAR </strong>                                                                               
+                                                                                  <?php } ?>
 
                                                                                 </div>                     
                                                                         </td>
@@ -73,7 +81,7 @@
                             </tr>
                             <tr>
                               <td width="100%"><div style="margin-bottom: 5px"><center><p><strong><font face="Verdana" color="#0000FF"><small><small>
-                            <?php if( $value1["questaoum"] == 1 ){ ?>
+                            <?php if( $saude["questaoum"] == 1 ){ ?>
                                  <span style="font-style: italic; font-weight: bold; font-size: 14px; color: red;">- Sim </span> <br>
                             <?php }else{ ?>
                                  <span style="font-style: italic; font-weight: bold; font-size: 14px">- Não </span> <br>
@@ -88,7 +96,7 @@
                             </tr>
                             <tr align="center">
                               <td width="100%"><div style="margin-bottom: 5px"><center><p><strong><font face="Verdana" color="#0000FF"><small><small>
-                            <?php if( $value1["questaodois"] == 1 ){ ?>
+                            <?php if( $saude["questaodois"] == 1 ){ ?>
                                  <span style="font-style: italic; font-weight: bold; font-size: 14px; color: red;">- Sim </span> <br>
                             <?php }else{ ?>
                                  <span style="font-style: italic; font-weight: bold; font-size: 14px">- Não </span> <br>
@@ -102,7 +110,7 @@
                             </tr>
                             <tr align="center">
                               <td width="100%"><div style="margin-bottom: 5px"><center><p><strong><font face="Verdana" color="#0000FF"><small><small>
-                            <?php if( $value1["questaotres"] == 1 ){ ?>
+                            <?php if( $saude["questaotres"] == 1 ){ ?>
                                  <span style="font-style: italic; font-weight: bold; font-size: 14px; color: red;">- Sim </span> <br>
                             <?php }else{ ?>
                                  <span style="font-style: italic; font-weight: bold; font-size: 14px">- Não </span> <br>
@@ -117,7 +125,7 @@
                             </tr>
                             <tr align="center">
                               <td width="100%"><div style="margin-bottom: 5px"><center><p><strong><font face="Verdana" color="#0000FF"><small><small>
-                            <?php if( $value1["questaoquatro"] == 1 ){ ?>
+                            <?php if( $saude["questaoquatro"] == 1 ){ ?>
                                  <span style="font-style: italic; font-weight: bold; font-size: 14px; color: red;">- Sim </span> <br>
                             <?php }else{ ?>
                                  <span style="font-style: italic; font-weight: bold; font-size: 14px">- Não </span> <br>
@@ -131,7 +139,7 @@
                             </tr>
                             <tr align="center">
                               <td width="100%"><div style="margin-bottom: 5px"><center><p><strong><font face="Verdana" color="#0000FF"><small><small>
-                            <?php if( $value1["questaocinco"] == 1 ){ ?>
+                            <?php if( $saude["questaocinco"] == 1 ){ ?>
                                  <span style="font-style: italic; font-weight: bold; font-size: 14px; color: red;">- Sim </span> <br>
                             <?php }else{ ?>
                                  <span style="font-style: italic; font-weight: bold; font-size: 14px">- Não </span> <br>
@@ -146,7 +154,7 @@
                             </tr>
                             <tr align="center">
                               <td width="100%"><div style="margin-bottom: 5px"><center><p><strong><font face="Verdana" color="#0000FF"><small><small>
-                            <?php if( $value1["questaoseis"] == 1 ){ ?>
+                            <?php if( $saude["questaoseis"] == 1 ){ ?>
                                  <span style="font-style: italic; font-weight: bold; font-size: 14px; color: red;">- Sim </span> <br>
                             <?php }else{ ?>
                                  <span style="font-style: italic; font-weight: bold; font-size: 14px;">- Não </span> <br>
@@ -162,7 +170,7 @@
                             </tr>
                             <tr align="center">
                               <td width="100%"><div style="margin-bottom: 5px"><center><p><strong><font face="Verdana" color="#0000FF"><small><small>
-                            <?php if( $value1["questaosete"] == 1 ){ ?>
+                            <?php if( $saude["questaosete"] == 1 ){ ?>
                                  <span style="font-style: italic; font-weight: bold; font-size: 14px; color: red;">- Sim </span> <br>
                             <?php }else{ ?>
                                  <span style="font-style: italic; font-weight: bold; font-size: 14px">- Não </span> <br>
@@ -172,16 +180,16 @@
                             </tr>
                           </tbody></table>
                           </center>
-                      </div>                        
+                      </div>
                         
                         <tr>
-                            <td style="text-align: center; font-weight: bold;">
+                            <td>
                                 <p style="text-align: justify;"><small><small><font face="Verdana">
                                     
                                     <?php if( calcularIdade($pessoa["dtnasc"]) < 18 ){ ?>                             
-                                     O responsável pelo menor está ciente de que é recomendável conversar com um médico sobre a saúde do <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> antes de aumentar seu nível atual de atividade física, por ter respondido “SIM” a uma ou mais perguntas do “Questionário de Prontidão para Atividade Física” (PAR-Q). O ressponsável assumiu plena responsabilidade por qualquer atividade física praticada pelo seu dependente, o menor <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, sem o atendimento a essa recomendação. 
+                                     Estou ciente de que é recomendável conversar com um médico sobre a saúde do <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> antes de aumentar seu nível atual de atividade física, por ter respondido “SIM” a uma ou mais perguntas do “Questionário de Prontidão para Atividade Física” (PAR-Q). Assumo plena responsabilidade por qualquer atividade física praticada pelo meu dependente, o menor <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, sem o atendimento a essa recomendação. 
                                      <?php }else{ ?>
-                                     A pessoa acima citada está ciente de que é recomendável conversar com um médico antes de aumentar seu nível atual de atividade física, ou do seu dependente, se for o caso, por ter respondido “SIM” a uma ou mais perguntas do “Questionário de Prontidão para Atividade Física” (PAR-Q). Assumiu plena responsabilidade por qualquer atividade física praticada, por ele ou por seu dependente, sem o atendimento a essa recomendação. 
+                                     Estou ciente de que é recomendável conversar com um médico antes de aumentar meu nível atual de atividade física, ou do meu dependente, se for o caso, por ter respondido “SIM” a uma ou mais perguntas do “Questionário de Prontidão para Atividade Física” (PAR-Q). Assumo plena responsabilidade por qualquer atividade física praticada, por mim ou por meu dependente, sem o atendimento a essa recomendação. 
                                      <?php } ?>
                                     </font></small></small>
                                 </p>
@@ -198,43 +206,7 @@
                 </tbody></table>
                 </center></div>
 
-                        </div>  
-
-                <?php }else{ ?> 
-
-                 <div align="center">
-                                        <center>
-                                            <table border="0" width="472" cellspacing="0" bgcolor="#4B6491">
-                                                <tbody>
-                                                    <tr>
-                                                        <td width="873">
-                                                            <div align="center">
-                                                                <center>
-                                                                    <table border="0" width="472" bgcolor="#C8E1FF" cellspacing="0" cellpadding="5">
-                                                                <tbody style="text-align: justify;">
-                                                                    <tr>
-                                                                        <td>
-                                                                            <br>
-                                                                           Questionário não preenchido!!!
-
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </center>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </center>
-                            </div>
-
-
-                 <?php } ?>
-
-
-
+                        </div>                                 
                         
                          
             

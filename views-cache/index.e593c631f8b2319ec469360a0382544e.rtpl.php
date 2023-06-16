@@ -25,9 +25,9 @@
 
       <?php $counter1=-1;  if( isset($locais) && ( is_array($locais) || $locais instanceof Traversable ) && sizeof($locais) ) foreach( $locais as $key1 => $value1 ){ $counter1++; ?>
             
-          <?php if( $value1["idlocal"] == 3 ){ ?>          
+          <?php if( $value1["idlocal"] == 3 ){ ?>
 
-            <div class="row">              
+              <div class="row">              
               <div class="col-md-12" style="text-align: center; margin: 10px 0px 10px 0px;">
                 <a href="/cursos/modalidades/local/<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="">
                   <img src="/../res/site/img/projeto_perdendo_medo5.jpg" title="Perdendo Medo" height="724" width="1024">
@@ -54,16 +54,13 @@
 
           <?php } ?>
 
-
-      <?php } ?>   
-
-     
+      <?php } ?>     
             
     </div> <!-- row 4 -->
   </div> <!-- container 3 -->
 
 <hr style="background-color: #0f71b3;">
-
+  
   <span style="font-size 12px;"> Dúvidas, sugestões e reclamações: </span>
            <strong style="font-size 16px; color: darkorange">contato@cursosesportivossbc.com</strong> 
 

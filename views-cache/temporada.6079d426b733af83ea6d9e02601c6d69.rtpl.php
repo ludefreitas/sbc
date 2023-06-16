@@ -50,7 +50,7 @@
                 </h5>
               </div>
 
-              <div class="col-md-2" style="margin: 2; padding: 2;">
+              <div class="col-md-2" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
                     <?php echo formatDateHour($value1["dtterminscricao"]); ?> -  Fim das inscrições
                 </h5>
@@ -67,6 +67,7 @@
                      <?php echo formatDateHour($value1["dttermmatricula"]); ?> - Fim das matrículas
                 </h5>
               </div>
+
 
               <div class="col-md-1" style="margin: 2; padding: 2">
                  <a href="/admin/temporada/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>

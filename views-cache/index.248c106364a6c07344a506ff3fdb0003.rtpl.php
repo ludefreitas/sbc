@@ -1,13 +1,21 @@
-<?php if(!class_exists('Rain\Tpl')){exit;}?><script type="text/javascript">  
+<?php if(!class_exists('Rain\Tpl')){exit;}?><script type="text/javascript">
+
+    /*
+    alert('As turmas do PELC, como por exemplo, Ballet; Ritmos; Yoga; Capoeira; e Artesanato, terão seu início a partir da primeira quinzena de MARÇO/2023! ');
+    */
+
+    /*
+    alert('Já está aberta a agenda para a natação espontânea no Baetão para o mês de janeiro/2023. A natação espontânea é somente para munícipes maiores de 18 anos e neste mês de janeiro acontece de Terça a Sexta-feira das 09:00 às 11:00 e das 14:00 às 16:00. Aproveitem!!!'); 
+    */
   
   function msgPelc(){
 
   confirm('As Turmas do PELC e da ZUMBA serão disponibilizadas a partir de 1º de fevereiro de 2023. A inscrição será aqui mesmo neste site! ')
   
-}
+  }
 
 function msgProjetoSinais(){
-  if (window.confirm('A Secretaria de Esporte e Lazer em parceria com o Ministério da Cidadania, vai realizar em 2023 o Projeto SINAIS, promovendo atividades físicas, esportivas, culturais e de lazer para crianças, jovens, adultos e idosos com deficiência auditiva. Se você tem interesse em participar, clique em "OK" e você será direcionado para preencher o formulário de participação.'))
+  if (window.confirm('A Secretaria de Esporte e Lazer em parceria com o Ministério da Cidadania, vai realizar em 2023 o Projeto SINAIS, promovendo atividades físicas, esportivas, culturais e de lazer para crianças, jovens, adultos e idosos com deficiência auditiva. Se você tem interesse em participar, clique em "OK" e você será direcionado para prenecher o formulário de participação.'))
    {
    window.open('https://forms.gle/TYLx4pi91nWyw9ej7', '_blank');
    };
@@ -25,7 +33,7 @@ function leiamais(){
   }else{
     pontos.style.display="none";
     maisTexto.style.display="inline";
-    btnLeiaMais.innerHTML="Leia Menos";
+    btnLeiaMais.innerHTML="Leia menos";
   }
 }
 
@@ -86,21 +94,20 @@ function leiamais(){
        <div style="text-align: justify; line-height: 20px; color: blue; font-size: 14px; font-style: italic; margin: 0px 5px 0px 5px; ">     
        <?php if( checkLogin(false) ){ ?>  
 
+       Olá <span style="color: blue; font-weight: bold;">  <?php echo getUserName(); ?>, </span>seja bem vindo! <br><br>
+        <?php }else{ ?>
+
        <span style="color: blue; font-weight: bold;">Olá </span>
        <span style="color: black; font-weight: bold;">  <?php echo getUserName(); ?>, </span>
        <span style="color: blue; font-weight: bold;">seja bem vindo!</span> <br><br>
-        <?php }else{ ?>
-
-        Olá! seja bem vindo! <br><br>
 
         <?php } ?>
-
-        <span>(Atualizado 20/01/2023)
-        <br><br>
         
+       <span>(Atualizado 20/01/2023)
+        <br><br>
+
         A Secretaria de Esportes e Lazer do Município de São Bernardo do Campo, por intermédio da Seção de Educação e Formação Esportiva, oferece gratuitamente, Cursos Esportivos para todas as idades, através dos Programas: “Corpo em Ação”, “PELC” e “Hora do Treino”, nos diferentes Centros Esportivos da Cidade.
         </span><span id="pontos">...</span>
-        
  
         <span id="mais">
         <br><br>
@@ -113,7 +120,7 @@ function leiamais(){
         Com a perspectiva de promover a autonomia frente ao lazer e o esporte recreativo, desde 2019 o município, realiza a continuidade do Programa Esporte e Lazer da Cidade, o PELC, que busca ampliar a oferta de modalidades esportivas, dentre elas, oficinas de ritmos, artesanato, dança, capoeira, dança cigana, dentre outros.
         <br><br>   
 
-        A participação em todas as atividades é totalmente gratuita, porém, as vagas são limitadas e destinadas exclusivamente aos munícipes devidamente cadastrados aqui, neste mesmo site: www.cursosesportivossbc.com.
+        A participação em todas as atividades é totalmente gratuita, porém, as vagas são limitadas e destinadas exclusivamente aos munícipes devidamente cadastrados, aqui mesmo, neste site: www.cursosesportivossbc.com.
         <br><br>   
 
         Para o ano de 2023, conforme resultado de consultas públicas realizadas junto à população e, em conformidade com o previsto na
@@ -131,17 +138,15 @@ function leiamais(){
         <br><br>           
 
         Maiores informações pelos whatsapp (11) 2630-7415, ou (11) 2630-7421, ou pelos telefones: 2630-7419, 2630-7420 ou 2630-7433 na Secretaria de Esportes e Lazer, Seção de Educação e Formação Esportiva.
-
+        
         </span>
 
-        <a onclick="leiamais()" id="btnLeiaMais" class="btn btn-default" style="font-size: 14px; color: red;">Leia Mais</a>
+        <a onclick="leiamais()" id="btnLeiaMais" class="btn btn-default" style="font-size: 14px; color: red;">Leia mais</a>
 
        <!--
         Estamos no período de rematricula. As vagas disponíveis são para pessoas já matriculadas e que já fazem aulas em alguma turma de nossos cursos esportivos. Então, quem se inscrever em alguma turma e que NÃO está matriculado e NÃO faz parte de nenhuma turma, irá se inscrever para uma lista de espera, respeitando uma lista de espera já existente com os professores e também a ordem de inscrições feitas a partir de agora.
         -->
-
         <!--
-        
         O processo de inscrições para o ano de <span style="color: black; font-weight: bold;">2023</span> terá início em <span style="color: black; font-weight: bold;">01 de novembro de 2022.</span> 
         <br><br>
 
@@ -163,8 +168,8 @@ function leiamais(){
         As inscrições, matrícula e participação nas aulas são totalmente gratuitas!
         <br><br>
         Precisa de ajuda? Clique abaixo no botão "Ajuda" e veja os vídeos explicativos para realizar sua inscrição:<br>
-      -->
-
+        
+        -->
       </div>
   </div> 
 
@@ -234,7 +239,7 @@ function leiamais(){
          <div class="col-md-5 btn" style="text-align-last: left; background-color: #0f71b3; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
             <a href="/locais">                          
                 <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 24px; font-style: normal; margin: 10px 5px 10px 0px; ">                                               
-                          Cursos <br>por local
+                          Cursos por <br> Centro Esportivo
                   </div>
             </a>
         </div>
@@ -242,7 +247,7 @@ function leiamais(){
         <div class="col-md-5 btn" style="text-align-last: left; background-color: #cc5d1e; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;"> 
             <a href="/modalidades">           
                   <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 24px; font-style: normal; margin: 10px 5px 10px 5px; ">                                               
-                          Cursos <br>por modalidade
+                          Cursos por<br> modalidade
                   </div>
             </a>
         </div>   
@@ -263,15 +268,8 @@ function leiamais(){
               </div>
             </a>
         </div> 
-        <div class="col-md-5 btn" style="text-align-last: left; background-color: darkorange; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
-            <a href="/locaisnatacao-avaliacao">                          
-              <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 20px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
-                          Avaliação<br>Natação 
-
-              </div>
-            </a>
-        </div> 
-        <!--
+        
+         <!--
         <div class="col-md-5 btn" style="text-align-last: left; background-color: #ce2c3e ; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
             <a href="#" onclick="msgPelc()">                          
               <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 28px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
@@ -281,15 +279,19 @@ function leiamais(){
             </a>
         </div>
         -->
-        <div class="col-md-5 btn" style="text-align-last: left; background-color: darkorange ; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
-            <a href="/agenda-avaliacao/3">                          
+        
+        
+        <div class="col-md-5 btn" style="text-align-last: left; background-color: orange ; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
+            <a href="/locaisnatacao-avaliacao">                          
               <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 28px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
-                          Avaliação <br>Nat 
+                          Avaliação <br> Natação
                          
               </div>
             </a>
         </div> 
-
+        
+        
+        
         <div class="col-md-5 btn" style="text-align-last: left; background-color: royalblue ; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
             <a href="#" onclick="msgProjetoSinais()">                          
               <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 24px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
@@ -298,8 +300,8 @@ function leiamais(){
               </div>
             </a>
         </div>
-
-        <div class="col-md-5 btn" style="text-align-last: left; background-color: #0f71b3; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
+        
+        <div class="col-md-5 btn" style="text-align-last: left; background-color: #cc5d1e; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
             <a href="/craquesdofuturo">                          
               <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 18px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
                           Projeto Craques do Futuro<br> (Futebol de Campo)
@@ -308,15 +310,6 @@ function leiamais(){
             </a>
         </div>
         
-        <div class="col-md-5 btn" style="text-align-last: left; background-color: orange ; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
-            <a href="/tutorial">                          
-              <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 28px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
-                        Ajuda  <br>  <i  class="fa fa-info-circle" style="font-size: 32px;"></i>   
-                         
-              </div>
-            </a>
-        </div> 
-
         <div class="col-md-5 btn" style="text-align-last: left; background-color: olivedrab ; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
             <a href="/enderecolocais">                          
               <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 24px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
@@ -324,8 +317,8 @@ function leiamais(){
                          
               </div>
             </a>
-        </div> 
-
+        </div>
+        
         <div class="col-md-5 btn" style="text-align-last: left; background-color: green ; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
             <a href="/transparent">                          
               <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 24px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
@@ -334,15 +327,33 @@ function leiamais(){
               </div>
             </a>
         </div> 
-
-        <div class="col-md-5 btn" style="text-align-last: left; background-color: royalblue ; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
-            <a href="#">                          
-              <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 18px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
-                        Seja voluntário do Esporte  <br>  <i class="fas fa-handshake" style="font-size: 32px;"></i>   
+        
+        <div class="col-md-5 btn" style="text-align-last: left; background-color: #ff5d95 ; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
+            <a href="/zumba">                          
+              <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 24px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
+                        Inscreva-se <br> para Zumba 
+              </div>
+            </a>
+        </div> 
+        
+        <div class="col-md-5 btn" style="text-align-last: left; background-color: orange ; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
+            <a href="/tutorial">                          
+              <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 28px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
+                        Ajuda  <br>  <i  class="fa fa-info-circle" style="font-size: 32px;"></i>   
                          
               </div>
             </a>
-        </div>                                                                                                                                                                                                                                                                                                                                                                                                                                     
+        </div>      
+        
+        <div class="col-md-5 btn" style="text-align-last: left; background-color: royalblue ; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
+            <a href="#">                          
+              <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 22px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
+                        Seja voluntário <br> do Esporte  <br>  <i class="fas fa-handshake" style="font-size: 32px;"></i>   
+                         
+              </div>
+            </a>
+        </div> 
+        
         
     </div> 
   </div> 

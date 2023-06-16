@@ -219,7 +219,7 @@ $app->post("/admin/atividade/:idativ", function($idativ) {
 	$atividade->setData($_POST);
 
 	$atividade->save();
-
+	
 	echo "<script>alert('Atividade atualizada com sucesso');";
 	echo "javascript:history.go(-2)</script>";
 

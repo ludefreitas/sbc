@@ -149,6 +149,53 @@ $app->get("/admin/prof", function() {
 	));
 });
 
+$app->get("/admin/estagiarios", function() {
+
+	User::verifyLogin();
+	// na linha abaixo retorna um array com todos os dados do usuário
+
+	$search = (isset($_GET['search'])) ? $_GET['search'] : "";
+
+	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
+
+	if ($search != '') {
+
+		$pagination = User::getPageSearchEstagiarios($search, $page);
+
+	} else {
+
+		$pagination = User::getPageEstagiarios($page);
+
+	}
+
+	$pages = [];
+
+	for ($x = 0; $x < $pagination['pages']; $x++)
+	{
+
+		array_push($pages, [
+			'href'=>'/admin/estagiarios?'.http_build_query([
+				'page'=>$x+1,
+				'search'=>$search
+			]),
+			'text'=>$x+1
+		]);
+
+	}
+
+	//$users = User::listAll();
+	// carrega uma pagina das páginas do admin
+	$page = new PageAdmin();
+
+	// envia para a página o array retornado pelo listAll
+	$page->setTpl("estagiarios", array( // aqui temos um array com muitos arrays
+		"estagiarios"=>$pagination['data'],
+		"total"=>$pagination['total'],
+		"search"=>$search,
+		"pages"=>$pages
+	));
+});
+
 $app->get("/admin/admins", function() {
 
 	User::verifyLogin();
@@ -300,6 +347,8 @@ $app->post("/admin/users/create", function() {
 
 	$_POST["inadmin"] = (isset($_POST["inadmin"]))?1:0;
 	$_POST["isprof"] = (isset($_POST["isprof"]))?1:0;
+	$_POST["isestagiario"] = (isset($_POST["isestagiario"]))?1:0;
+	$_POST["isaudi"] = (isset($_POST["isaudi"]))?1:0;
 	$_POST["statususer"] = 1;
 
 	//$_POST['despassword'] = User::getPasswordHash($_POST['despassword']);
@@ -318,22 +367,22 @@ $app->post("/admin/users/:iduser", function($iduser) {
 
 	$user = new User();
 
-	
-
 	$_POST["inadmin"] = (isset($_POST["inadmin"]))?1:0;
 	$_POST["isprof"] = (isset($_POST["isprof"]))?1:0;
-	$_POST["statususer"] = 1;
+	$_POST["isestagiario"] = (isset($_POST["isestagiario"]))?1:0;
+	$_POST["isaudi"] = (isset($_POST["isaudi"]))?1:0;
+    $_POST["statususer"] = 1;
 	// admin não alera status do usuário
 	//$_POST["statususer"] = (isset($_POST["statususer"]))?1:0;
 
-	if(!$_POST['isprof'] == 0){
+	if((!$_POST['isprof'] == 0) || (!$_POST['isestagiario'] == 0)){
 
 		if (!isset($_POST['apelidoperson']) || $_POST['apelidoperson'] == '') {
 			User::setError("Preencha o campo apelido.");
 			header("Location: /admin/users/".$iduser."");
 			exit;		
 		}
-	}	
+	}
 
 	$user->get((int)$iduser);
 

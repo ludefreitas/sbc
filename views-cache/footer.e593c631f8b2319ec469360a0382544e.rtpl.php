@@ -49,10 +49,9 @@
                               <span style="color: black; text-align-last: center; font-weight: bold;font-style: italic; font-style: italic; font-size: 16px;">youtube.com/cursosesportivossbc</span>
                         </i>
                         
-                        </a>   
-                        <br>
-
-                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </a>  
+                        
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                         <a href="https://wa.me/551126307421?text=Olá,%20Cursos%20Esportivos%20SBC! " target="_blank">
                           <i class="fa fa-whatsapp" aria-hidden="true" style="background-color: white; color: green; font-size: 32px;">

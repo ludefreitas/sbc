@@ -3,12 +3,12 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
 <h1>
- Turmas relacionadas à Temporada {$temporada.desctemporada} - {$temporada.descstatustemporada}   
+ Turmas relacionadas à Temporada {$temporada.desctemporada} - {$temporada.descstatustemporada}  
 
 </h1>
 <ol class="breadcrumb">
   <li><a href="/prof"><i class="fa fa-dashboard"></i> Home</a></li>
-  <li><a href="/prof/insc/{$temporada.idtemporada}"> Todas inscrições {$temporada.desctemporada} </a></li>
+    <li><a href="/prof/insc/{$temporada.idtemporada}"> Todas inscrições {$temporada.desctemporada} </a></li>
 </ol>
 </section>
 
@@ -40,47 +40,71 @@
 
        </div>
       <div class="box-body" style="border: solid 1px lightblue; margin: 5px;"> 
-          <div class="box-body no-padding col-md-10">
+          <div class="box-body no-padding col-md-12">
             
                 {loop="$turmas"}
                 <div class="box-body" style="border: solid 1px lightblue; margin: 2px;">
 
                   <div class="row">
 
-                    <div class="col-md-6" >
-                      <h5 style="font-weight: bold; text-align: left;">
-                       {$value.descturma} - {$value.diasemana}
-                        {$value.horainicio} ás {$value.horatermino} -  {$value.descrfxetaria}  {$value.initidade} a {$value.fimidade} anos -  {$value.apelidolocal} - {$value.nomeespaco} &nbsp; Vagas: ({$value.vagas} Geral)&nbsp; - &nbsp;({$value.vagaslaudo} Laudo)&nbsp; - &nbsp;({$value.vagaspcd} PCD)&nbsp; - &nbsp;({$value.vagaspvs} PVS)</strong> 
-                      </h5>
+                    <div class="col-md-8" >
+                      <span style="text-align: left;">
+                       
+                      <strong>{$value.descturma} - </strong> 
+
+                        {if="$value.idturmastatus == 2"}
+                          <span style="color: orange; font-weight: bold;">- Inscrições não iniciadas</span>                  
+                        {/if}
+                       
+                        {if="$value.idturmastatus == 3"}
+                          <span style="color: darkgreen; font-weight: bold;">- Inscrições abertas</span>
+                         
+                        {/if}
+
+                        {if="$value.idturmastatus == 4"}
+                          <span style="color: red; font-weight: bold;"> - Inscrições suspensas</span>
+                          
+                        {/if}
+
+                        {if="$value.idturmastatus == 6"}
+                          <span style="color: blue; font-weight: bold;"> - Turma não iniciada</span>
+                          
+                        {/if}
+
+                       {$value.diasemana} {$value.horainicio} ás {$value.horatermino} - 
+                       <strong>{$value.descrfxetaria}  {$value.initidade} a {$value.fimidade} anos -</strong>   {$value.apelidolocal} - {$value.nomeespaco}&nbsp; <strong> Vagas: ({$value.vagas} Geral)&nbsp; - &nbsp;({$value.vagaslaudo} Laudo)&nbsp; - &nbsp;({$value.vagaspcd} PCD)&nbsp; - &nbsp;({$value.vagaspvs} PVS)</strong> 
+                      </span>
                     </div>                      
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                       <h5 style="font-weight: bold; text-align: left; color: green;">
-                        <strong style="color: orange;">[{$value.idturma}]</strong> &nbsp;&nbsp;
-
+                           <strong style="color: orange;">[{$value.idturma}]</strong> &nbsp;&nbsp; 
+                        
                         <a href="/prof/insc-turma-temporada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}"> 
                          | &nbsp; Consultar {$value.numinscritos} inscritos &nbsp;
                          </a> &nbsp; 
 
                          <a href="/prof/insc-turma-temporada-chamada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: green;"> 
-                         | &nbsp;  imprimir lista chamada ({$value.nummatriculados}) &nbsp; 
+                         | &nbsp; Imprimir lista chamada ({$value.nummatriculados}) &nbsp; 
                          </a> &nbsp; 
                          
-                         
                          <a href="/prof/calendario-lista-presenca/{$value.idtemporada}/{$value.idturma}" style="color: orangered;">
-                         | &nbsp; Fazer Chamada </a>  &nbsp; 
+                         | &nbsp;Fazer Chamada </a>  &nbsp; 
                          &nbsp;  
-
+                         
                          <a href="/prof/listapessoasporturma/{$value.idturma}/{$value.idtemporada}" style="color: black;">
                          | &nbsp; Lista com endereços </a>  &nbsp; 
                          &nbsp;  
-                        
-
-                        <!--
+                         
+                         <!--
+                         <a href="/insc-turma-temporada-classificadas/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: orangered;">
+                         | &nbsp; Classificação </a>  &nbsp; 
+                         -->
+                         <!--
+                         &nbsp;  
                          &nbsp; <a href="/prof/insc-turma-temporada-matricular/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: darkblue;">
-                         | Lista/Matricular </a>  &nbsp;   
-                        -->
-
+                         | Lista/Matricular </a>  &nbsp;     
+                         -->
                       <!--  | &nbsp; <a href="/insc-turma-temporada-para-sorteio/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: orangered;">  Sorteio |</a>  &nbsp;  
                       -->
 
@@ -110,8 +134,7 @@
           </div>
           
           
-          <!-- /.box-body -->   
-
+          <!-- /.box-body --> 
           <div class="box-body col-md-2">
                   <table class="table table-striped">
                       <thead>
