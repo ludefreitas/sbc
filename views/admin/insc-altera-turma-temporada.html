@@ -1,0 +1,201 @@
+<script type="text/javascript">
+
+      function requisitarPaginaEndereco(url){
+
+        let ajax = new XMLHttpRequest();
+        let idurl = url.substr(53);              
+        ajax.open('GET', 'url');
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if(result){              
+                alert(result)
+          }else{
+            alert('Endereço não encontrado!')
+          }
+        });
+      }   
+
+</script>
+
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h5>
+     Seleciona as inscrições, a turma e a temporada de destino.<br>
+     [{$turma.idturma}]  - {$turma.descturma} - {$turma.diasemana} - {$turma.periodo} - {$turma.apelidolocal} - {$temporada.desctemporada}
+  </h5>
+  <ol class="breadcrumb">
+    <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active"><a href="/admin/turma-temporada/{$temporada.idtemporada}">Turmas por temporada</a></li>
+    <li class="active"><a style="color: red" href="javascript: history.go(-1)">Voltar</a>
+    </li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary">
+
+          {if="$error != ''"}
+                <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
+            {$error}
+                </div>
+          {/if}
+          {if="$success != ''"}
+                <div class="alert alert-success" style="margin: 10px 10px 0px 10px">
+            {$success}
+                </div>
+          {/if}
+            
+            <div class="box-header">
+           
+            </div> 
+           
+      <form action="/admin/insc/altera/turma" method="post">
+          
+           <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+
+          {loop="$inscTodas"}
+            {if="($value.idinscstatus != 8) AND ($value.idinscstatus != 9)"}
+            <div class="box-body" style=" margin: 5px;">
+              <div {function="colorStatus($value.idinscstatus)"} style="margin: 5px" class="row">
+              
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="col-md-12" style="margin: 2; padding: 2">
+                    <h5 style="text-align: left;">
+
+
+                      <input type="checkbox" name="listaInsc[]" value="{$value.idinsc}">  &nbsp;&nbsp;&nbsp;
+
+                      {$value.numordem}º -
+                      <strong>[{$value.idinsc}] - {$value.nomepess}</strong>
+                      &nbsp;{function="formatCpf($value.numcpf)"}&nbsp;
+                      <strong>{function="calcularIdade($value.dtnasc)"} anos</strong>
+                      &nbsp;Nascim.: {function="formatDate($value.dtnasc)"}&nbsp;
+                       <strong>Dt Insc.: {function="formatDate($value.dtinsc)"}</strong>
+                      &nbsp;Dt Matric.: {function="formatDate($value.dtmatric)"}&nbsp;
+                    
+                        &nbsp;&nbsp;&nbsp;
+
+                      <span style="font-weight: bold; text-align: left; color: brown;">                  
+                        {if="$value.vulnsocial == 1"} (Vuln. Social) &nbsp;&nbsp;{/if}
+                      </span>                
+                      
+                      <span style="font-weight: bold; text-align: left; color: darkblue;">  
+                        {if="$value.inscpcd == 1"} PCD &nbsp;&nbsp;{/if}  
+                      </span>        
+                      
+                      <span style="font-weight: bold; text-align: left; color: darkgreen;">                  
+                        {if="$value.laudo == 1"}LAUDO  &nbsp;&nbsp;{/if}
+                       </span>
+                   
+                  
+
+                    {if="$value.idinscstatus == 1"}              
+                    <span style="font-weight: bold; text-align: left; color: blue;">                  
+                      <span>{$value.descstatus}</span>
+                    </span>             
+                    {/if}
+
+                  
+              
+                    {if="$value.idinscstatus == 2"}
+              
+                    <span style="font-weight: bold; text-align: left; color: darkgreen;">                  
+                      <span>{$value.descstatus}</span>
+                    </span>
+             
+                    {/if}
+               
+
+                      {if="$value.idinscstatus == 3"}
+                      
+                        <span style="font-weight: bold; text-align: left; color: green;">                  
+                          <span>*{$value.descstatus}*</span>
+                        </span>
+                      
+                      {/if}
+
+                      {if="$value.idinscstatus == 6"}
+                        <span style="font-weight: bold; text-align: left; color: darkorange;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+
+
+                      {if="$value.idinscstatus == 7"}
+                        <span style="font-weight: bold; text-align: left; color: darkblue;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+
+                      
+                      {if="$value.idinscstatus == 8"}
+                        <span style="font-weight: bold; text-align: left; color: orange;">                  
+                          Status: <span>{$value.descstatus}</span>
+                        </span>
+                      {/if}
+                      
+                      {if="$value.idinscstatus == 9"}
+                      
+                        <span style="font-weight: bold; text-align: left; color: red;">                  
+                          <span>{$value.descstatus}</span>
+                        </span>
+                      
+                      {/if} 
+                      
+                       </h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/if}
+           
+          {/loop}
+          <label>
+          Turma de destino: &nbsp;&nbsp;
+          <input type="text" name="idturmadestino" style="width: 40px">
+          Temporada/Ano: &nbsp;&nbsp;
+          <input type="text" name="desctemporadadestino" style="width: 40px" placeholder=""><br>
+          <input type="radio" name="tipomove" value="copiar" style="width: 20px">Copiar &nbsp;&nbsp;
+          <input type="radio" name="tipomove" value="substituir" style="width: 20px">Substituir<br>
+          Motivo da troca: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <input type="text" name="observacao" style="width:320px"><br><br>           
+          <input hidden type="text" name="idtemporada" value="{$temporada.idtemporada}" style="width:320px">        
+          
+          <input class="btn btn-success" type="submit" name="altera">
+          </label>
+             </form>
+          </div>     
+         
+            <!-- /.box-body -->
+
+            <div class="box-footer clearfix">
+              <ul class="pagination pagination-sm no-margin pull-right">
+                {loop="$pages"}
+                <li><a href="{$value.href}">{$value.text}</a></li>
+                {/loop}
+              </ul>
+            </div>
+
+          </div>
+    </div>
+  </div>
+
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+
+

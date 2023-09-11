@@ -1,0 +1,418 @@
+
+<script type="text/javascript">
+
+
+</script>
+
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+
+<script type="text/javascript">
+
+    function desabilitar(valor) { 
+
+        let id = valor;
+
+        desabilitarHorarioPhp(id)
+
+       document.getElementById(id).style.color = '#ccc';
+      
+    }
+
+    function habilitar(valor) { 
+
+        let id = valor;
+
+        habilitarHorarioPhp(id)
+
+       document.getElementById(id).style.color = 'black';
+      
+    }
+
+    function atualizarVagas(idhoradiasemana, horarioinicial, horariofinal, diasemana){
+        
+        let confirmaNumeroDeVagas = confirm('Deseja realmente atualizar a quantidade de vgas para o horário das ' + horarioinicial + ' às ' + horariofinal + ' de ' + diasemana + '?')
+
+        if(confirmaNumeroDeVagas == true)
+        {                      
+            var data = prompt("Informe a quantidade de vagas a ser atualizada.");   
+
+            data = parseInt(data);
+
+            if (data == null || data == "") {
+
+                alert("As quantidade de vagas não foi atualizada! Informe a quantidade de vagas para o horário selelcionado");
+            } else {
+
+                if(!Number.isInteger(data)){
+                    
+                    alert('Formato de dado inválido!');
+                }else{
+                    
+                    atualizarVagasPhp(idhoradiasemana, data);
+                }                      
+            }        
+        }
+    }
+
+    function habilitarHorarioPhp(idhoradiasemana){
+
+        let url = '/admin/agenda/atulizastatushorariodisponivel/'+idhoradiasemana;
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          //alert(result)
+
+        });
+    }
+
+    function desabilitarHorarioPhp(idhoradiasemana){
+
+        let url = '/admin/agenda/atulizastatushorarioindisponivel/'+idhoradiasemana;
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          //alert(result)
+
+        });
+    }
+
+    function atualizarVagasPhp(idhoradiasemana, data){
+
+        let url = '/admin/agenda/atulizavagas/'+idhoradiasemana+'/'+data;
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          let vagas = result.substr(32,3)
+          //alert(result)
+
+          let texto = vagas + ' vagas'
+
+          let idlink = 'idlinkvagas'+idhoradiasemana
+
+          document.getElementById(idlink).innerHTML = texto
+
+        });
+    }
+
+   
+</script>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h4>
+   Lista de dias da semana e horários do 
+   {if="$idlocal == 3"} BAETÃO {/if}
+   {if="$idlocal == 21"} PAULICÉIA {/if}
+  </h4>
+  <ol class="breadcrumb">
+    <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+  </ol>
+</section>
+
+<!-- Main content -->
+
+  <div class="row">
+    <div class="col-md-12">
+
+      <div class="box box-success">
+        {if="$error != ''"}
+          <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
+        {$error}
+          </div>
+        {/if}
+        <!-- /.box-header -->
+          <div class="box-body">
+        
+              <label for="descmsg">
+              Crie, edite ou altere os horários da agenda da natação espontânea do 
+                {if="$idlocal == 3"} BAETÃO {/if}
+                {if="$idlocal == 21"} PAULICÉIA {/if}
+                <br>
+                <span style="font-size: 10px" >- Para atualizar a quantidade de vagas, clique em "vagas". <br>
+                - Para deixar o horário disponível para agendamento clique em habilitar ou clique em desabilitar para deixá-lo indisponível.</span>
+              </label>
+              
+            </div>
+             <div class="container">
+                
+                <div class="row" style="margin: 5px;" >                    
+                
+                <div class="col-md-6" style="font-size: 12px;"> 
+                <label style="color: red; font-weight: bold;">Domingo</label><br><br>
+                {loop="$horariosDiaSemanaDomingo"}  
+
+                        <!-- if abaixo somente para excluir um horário específico -->
+                        {if="$value.idhoradiasemana != 71"}
+                
+                                <span {if="$value.statushora == 1"} style='color: black;' {else} style='color: #ccc;'{/if} id='{$value.idhoradiasemana}' name='1'>
+                                {$value.horamarcadainicial} ás {$value.horamarcadafinal} - 
+                                <a style="color: darkblue;" id="idlinkvagas{$value.idhoradiasemana}" onclick="atualizarVagas({$value.idhoradiasemana}, '{$value.horamarcadainicial}', '{$value.horamarcadafinal}', '{$value.diasemana}')">
+                                {if="$value.vagas < 10"}
+                                0{$value.vagas} vagas
+                                {else}
+                                {$value.vagas} vagas
+                                {/if}
+                                </a>
+
+                                </span>&nbsp;&nbsp;&nbsp;&nbsp;                          
+                               
+                            {if="$value.statushora == 1"}
+                            <input onclick="habilitar({$value.idhoradiasemana})" checked type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Habilitar&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input onclick="desabilitar({$value.idhoradiasemana})" type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Desabilitar   
+                            {/if} 
+
+                            {if="$value.statushora == 0"}
+                            <input onclick="habilitar({$value.idhoradiasemana})" type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Habilitar&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input onclick="desabilitar({$value.idhoradiasemana})"  checked type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Desabilitar                            
+                            {/if} 
+                            <br>
+                        {/if}
+
+               
+                {/loop} 
+                    </div>                  
+
+                <div class="col-md-6" style="font-size: 12px;"> 
+                <label style="color: blue; font-weight: bold; margin-top: 10px;">Segunda</label><br>
+                {loop="$horariosDiaSemanaSegunda"}          
+                
+                                <span {if="$value.statushora == 1"} style='color: black;' {else} style='color: #ccc;'{/if} id='{$value.idhoradiasemana}' name='1'>
+                                {$value.horamarcadainicial} ás {$value.horamarcadafinal} - 
+                                <a id="idlinkvagas{$value.idhoradiasemana}" onclick="atualizarVagas({$value.idhoradiasemana}, '{$value.horamarcadainicial}', '{$value.horamarcadafinal}', '{$value.diasemana}')">
+                                {if="$value.vagas < 10"}
+                                0{$value.vagas} vagas
+                                {else}
+                                {$value.vagas} vagas
+                                {/if}
+                                </a>
+                                </span>&nbsp;&nbsp;&nbsp;&nbsp;                          
+                               
+
+                            {if="$value.statushora == 1"}
+                            <input onclick="habilitar({$value.idhoradiasemana})" checked type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Habilitar&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input onclick="desabilitar({$value.idhoradiasemana})" type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Desabilitar   
+                            {/if} 
+
+                            {if="$value.statushora == 0"}
+                            <input onclick="habilitar({$value.idhoradiasemana})" type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Habilitar&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input onclick="desabilitar({$value.idhoradiasemana})" checked type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Desabilitar                            
+                            {/if} 
+                            <br>
+
+               
+                {/loop} 
+                 </div> 
+             </div>
+                 <hr>
+
+                <div class="row" style="margin: 5px;" >   
+                <div class="col-md-6" style="font-size: 12px; ">                  
+                <label style="color: blue; font-weight: bold;">Terça-feira</label><br>
+                    {loop="$horariosDiaSemanaTerca"}          
+                        
+                                <span {if="$value.statushora == 1"} style='color: black;' {else} style='color: #ccc;'{/if} id='{$value.idhoradiasemana}' name='1'>
+                                {$value.horamarcadainicial} ás {$value.horamarcadafinal} - 
+                                <a id="idlinkvagas{$value.idhoradiasemana}" onclick="atualizarVagas({$value.idhoradiasemana}, '{$value.horamarcadainicial}', '{$value.horamarcadafinal}', '{$value.diasemana}')">
+                                {if="$value.vagas < 10"}
+                                0{$value.vagas} vagas
+                                {else}
+                                {$value.vagas} vagas
+                                {/if}
+                                </a>
+                                </span>&nbsp;&nbsp;&nbsp;&nbsp;                          
+                               
+
+                            {if="$value.statushora == 1"}
+                            <input onclick="habilitar({$value.idhoradiasemana})" checked type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Habilitar&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input onclick="desabilitar({$value.idhoradiasemana})" type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Desabilitar   
+                            {/if} 
+
+                            {if="$value.statushora == 0"}
+                            <input onclick="habilitar({$value.idhoradiasemana})" type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Habilitar&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input onclick="desabilitar({$value.idhoradiasemana})"  checked type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Desabilitar                            
+                            {/if} 
+                            <br>
+
+                    {/loop}               
+                </div>
+
+                <div class="col-md-6" style="font-size: 12px; "> 
+                <label style="color: blue; font-weight: bold; margin-top: 10px;">Quarta-feira</label><br>
+                {loop="$horariosDiaSemanaQuarta"}          
+                
+                                <span {if="$value.statushora == 1"} style='color: black;' {else} style='color: #ccc;'{/if} id='{$value.idhoradiasemana}' name='1'>
+                                {$value.horamarcadainicial} ás {$value.horamarcadafinal} - 
+                                <a id="idlinkvagas{$value.idhoradiasemana}" onclick="atualizarVagas({$value.idhoradiasemana}, '{$value.horamarcadainicial}', '{$value.horamarcadafinal}', '{$value.diasemana}')">
+                                {if="$value.vagas < 10"}
+                                0{$value.vagas} vagas
+                                {else}
+                                {$value.vagas} vagas
+                                {/if}
+                                </a>
+                                </span>&nbsp;&nbsp;&nbsp;&nbsp;                          
+                               
+
+                            {if="$value.statushora == 1"}
+                            <input onclick="habilitar({$value.idhoradiasemana})" checked type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Habilitar&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input onclick="desabilitar({$value.idhoradiasemana})" type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Desabilitar   
+                            {/if} 
+
+                            {if="$value.statushora == 0"}
+                            <input onclick="habilitar({$value.idhoradiasemana})" type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Habilitar&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input onclick="desabilitar({$value.idhoradiasemana})" checked type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Desabilitar                            
+                            {/if} 
+                            <br>
+               
+                {/loop} 
+                 </div>
+               </div>
+               <hr>
+                 <div class="row" style="margin: 5px;" > 
+                 <div class="col-md-6" style="font-size: 12px; ">           
+                <label style="color: blue; font-weight: bold;">Quinta-feira</label><br>
+                {loop="$horariosDiaSemanaQuinta"}          
+                
+                        
+                                <span {if="$value.statushora == 1"} style='color: black;' {else} style='color: #ccc;'{/if} id='{$value.idhoradiasemana}' name='1'>
+                                {$value.horamarcadainicial} ás {$value.horamarcadafinal} - 
+                                <a id="idlinkvagas{$value.idhoradiasemana}" onclick="atualizarVagas({$value.idhoradiasemana}, '{$value.horamarcadainicial}', '{$value.horamarcadafinal}', '{$value.diasemana}')">
+                                {if="$value.vagas < 10"}
+                                0{$value.vagas} vagas
+                                {else}
+                                {$value.vagas} vagas
+                                {/if}
+                                </a>
+                                </span>&nbsp;&nbsp;&nbsp;&nbsp;                          
+                               
+
+                            {if="$value.statushora == 1"}
+                            <input onclick="habilitar({$value.idhoradiasemana})" checked type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Habilitar&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input onclick="desabilitar({$value.idhoradiasemana})" type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Desabilitar   
+                            {/if} 
+
+                            {if="$value.statushora == 0"}
+                            <input onclick="habilitar({$value.idhoradiasemana})" type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Habilitar&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input onclick="desabilitar({$value.idhoradiasemana})" checked type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Desabilitar                            
+                            {/if} 
+                            <br>
+
+               
+                {/loop} 
+                 </div>
+
+                <div class="col-md-6" style="font-size: 12px; "> 
+                <label style="color: blue; font-weight: bold; margin-top: 10px;">Sexta-feira</label><br>
+                    {loop="$horariosDiaSemanaSexta"} 
+
+                                <span {if="$value.statushora == 1"} style='color: black;' {else} style='color: #ccc;'{/if} id='{$value.idhoradiasemana}' name='1'>
+                                {$value.horamarcadainicial} ás {$value.horamarcadafinal} - 
+                                <a id="idlinkvagas{$value.idhoradiasemana}" onclick="atualizarVagas({$value.idhoradiasemana}, '{$value.horamarcadainicial}', '{$value.horamarcadafinal}', '{$value.diasemana}')">
+                                {if="$value.vagas < 10"}
+                                0{$value.vagas} vagas
+                                {else}
+                                {$value.vagas} vagas
+                                {/if}
+                                </a>
+                                </span>&nbsp;&nbsp;&nbsp;&nbsp;                          
+                               
+
+                            {if="$value.statushora == 1"}
+                            <input onclick="habilitar({$value.idhoradiasemana})" checked type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Habilitar&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input onclick="desabilitar({$value.idhoradiasemana})" type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Desabilitar   
+                            {/if} 
+
+                            {if="$value.statushora == 0"}
+                            <input onclick="habilitar({$value.idhoradiasemana})" type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Habilitar&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input onclick="desabilitar({$value.idhoradiasemana})"  checked type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Desabilitar                            
+                            {/if} 
+                            <br>
+                    {/loop} 
+                </div>
+            </div>
+            <hr>
+                <div class="row" style="margin: 5px;" > 
+                <div class="col-md-6" style="font-size: 12px; ">                     
+                <label style="color: red; font-weight: bold;">Sábado</label><br>
+                {loop="$horariosDiaSemanaSabado"}          
+                
+                                <span {if="$value.statushora == 1"} style='color: black;' {else} style='color: #ccc;'{/if} id='{$value.idhoradiasemana}' name='1'>
+                                {$value.horamarcadainicial} ás {$value.horamarcadafinal} - 
+                                <a id="idlinkvagas{$value.idhoradiasemana}" onclick="atualizarVagas({$value.idhoradiasemana}, '{$value.horamarcadainicial}', '{$value.horamarcadafinal}', '{$value.diasemana}')">
+                                {if="$value.vagas < 10"}
+                                0{$value.vagas} vagas
+                                {else}
+                                {$value.vagas} vagas
+                                {/if}
+                                </a>
+                                </span>&nbsp;&nbsp;&nbsp;&nbsp;                          
+                               
+
+                            {if="$value.statushora == 1"}
+                            <input onclick="habilitar({$value.idhoradiasemana})" checked type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Habilitar&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input onclick="desabilitar({$value.idhoradiasemana})" type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Desabilitar   
+                            {/if} 
+
+                            {if="$value.statushora == 0"}
+                            <input onclick="habilitar({$value.idhoradiasemana})" type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Habilitar&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input onclick="desabilitar({$value.idhoradiasemana})" checked type="radio" name="{$value.diasemana}{$value.idhoradiasemana}">&nbsp;&nbsp;Desabilitar                            
+                            {/if} 
+                            <br>
+               
+                {/loop} 
+                 </div>               
+
+                </div>
+              
+          </div>
+          <!-- /.box-body -->
+           
+
+            <div class="col-md-6" style="margin-top: 10px; text-align-last: center">
+
+            <a class="btn" style="width: 100%; float: right; background-color: darkorange;  text-decoration: none; color: white;" href="/admin/agenda/horario-dia-semana/create/{$idlocal}" text-decoration="none">Criar horário
+                        </a>
+            </div>
+
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+ 
+
+  
+
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

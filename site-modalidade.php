@@ -143,14 +143,25 @@ $app->get("/vagas-turma/:idturma/:idtemporada/:idmodal/:idturmastatus", function
     if($numinscPublicoGeral >= $vagasPubGeral){
     	if($numinscListaEsperaPublicoGeral >= $vagasListaEsperaPubGeral){
         	$textVagasPubGeral = 'NÃO HÁ VAGAS para público geral';
-    	}else{
+    	}else{    		
     		$textVagasPubGeral = ''.$vagasMenosInscritosListaEsperaPubGeral.' de '.$vagasListaEsperaPubGeral.' vagas p/ LISTA DE ESPERA para público geral.';        	
     	}    	
     }else{
-    	if($idturmastatus == 6){
+    	if($numinscListaEsperaPublicoGeral >= $vagasListaEsperaPubGeral){
+        	$textVagasPubGeral = 'NÃO HÁ VAGAS para público geral';
+    	}else{    	
+	    	if($idturmastatus == 6){
+	    		$vagasMenosInscritosPubGeral = ($vagasPubGeral - $numinscListaEsperaPublicoGeral);
+	    	}	    	
+	    	$textVagasPubGeral = ''.$vagasMenosInscritosPubGeral.' de '.$vagasPubGeral.' vagas p/ público geral.';
+    	}    	
+        /*
+        if($idturmastatus == 6){
     		$vagasMenosInscritosPubGeral = ($vagasPubGeral - $numinscListaEsperaPublicoGeral);
     	}
-    	$textVagasPubGeral = ''.$vagasMenosInscritosPubGeral.' de '.$vagasPubGeral.' vagas p/ público geral.';    	
+        
+    	$textVagasPubGeral = ''.$vagasMenosInscritosPubGeral.' de '.$vagasPubGeral.' vagas p/ público geral.';   
+    	*/
     }
 
     $vagasPubLaudo = Turma::getVagasLaudoByIdTurma($idturma);
@@ -172,10 +183,20 @@ $app->get("/vagas-turma/:idturma/:idtemporada/:idmodal/:idturmastatus", function
     		$textVagasPubLaudo = ''.$vagasMenosInscritosListaEsperaPubLaudo.' de '.$vagasListaEsperaPubLaudo.' vagas p/ LISTA DE ESPERA para pessoas com laudo médico.';        	
     	}       	    	
     }else{
+    	if($numinscListaEsperaPublicoLaudo >= $vagasListaEsperaPubLaudo){
+        	$textVagasPubLaudo = 'NÃO HÁ VAGAS para pessoas com laudo médico.';
+    	}else{
+    		if($idturmastatus == 6){
+    			$vagasMenosInscritosPubLaudo = ($vagasPubLaudo - $numinscListaEsperaPublicoLaudo);
+    		}
+    		$textVagasPubLaudo = ''.$vagasMenosInscritosPubLaudo.' de '.$vagasPubLaudo.' vagas p/ pessoas com laudo médico.';        	
+    	}       	    	
+    	/*
     	if($idturmastatus == 6){
     		$vagasMenosInscritosPubLaudo = ($vagasPubLaudo - $numinscListaEsperaPublicoLaudo);
     	}
     	$textVagasPubLaudo = ''.$vagasMenosInscritosPubLaudo.' de '.$vagasPubLaudo.' vagas p/ pessoas com laudo médico.';
+    	*/
     }
 
     $vagasPubPcd = Turma::getVagasPcdByIdTurma($idturma);
@@ -197,10 +218,20 @@ $app->get("/vagas-turma/:idturma/:idtemporada/:idmodal/:idturmastatus", function
     		$textVagasPubPcd = ''.$vagasMenosInscritosListaEsperaPubPcd.' de '.$vagasListaEsperaPubPcd.' vagas p/ LISTA DE ESPERA para PCD`s';        	
     	}       	
     }else{
+    	if($numinscListaEsperaPublicoPcd >= $vagasListaEsperaPubPcd){
+        	$textVagasPubPcd = 'NÃO HÁ VAGAS para PCD`s.';
+    	}else{
+    		if($idturmastatus == 6){
+    			$vagasMenosInscritosPubPcd = ($vagasPubPcd - $numinscListaEsperaPublicoPcd);
+    		}
+    		$textVagasPubPcd = ''.$vagasMenosInscritosPubPcd.' de '.$vagasPubPcd.' vagas para PCD`s.';
+    	} 
+    	/*      	
     	if($idturmastatus == 6){
     		$vagasMenosInscritosPubPcd = ($vagasPubPcd - $numinscListaEsperaPublicoPcd);
     	}
     	$textVagasPubPcd = ''.$vagasMenosInscritosPubPcd.' de '.$vagasPubPcd.' vagas para PCD`s.';
+    	*/
     }
 
     $vagasPubPvs = Turma::getVagasPvsByIdTurma($idturma);
@@ -216,26 +247,34 @@ $app->get("/vagas-turma/:idturma/:idtemporada/:idmodal/:idturmastatus", function
     $vagasMenosInscritosListaEsperaPubPvs =  ($vagasListaEsperaPubPvs - $numinscListaEsperaPublicoPvs);
 
 	if($numinscPublicoPvs >= $vagasPubPvs){
-
 		if($numinscListaEsperaPublicoPvs >= $vagasListaEsperaPubPvs){
 			$textVagasPubPvs = 'NÃO HÁ VAGAS p/ pessoas em situação de vulnerabiliade social.';        	
-    	}else{
-    		if($idturmastatus == 6){
-    			$vagasMenosInscritosPubPvs = ($vagasPubPvs - $numinscListaEsperaPublicoPvs);
-    		}
+    	}else{    		
     		$textVagasPubPvs = ''.$vagasMenosInscritosListaEsperaPubPvs.' de '.$vagasListaEsperaPubPvs.' vagas p/ LISTA DE ESPERA p/ pessoas em situação de vulnerabiliade social.';        	
     	}           	
     }else{
-    	$textVagasPubPvs = ''.$vagasMenosInscritosPubPvs.' de '.$vagasPubPvs.' vagas p/ pessoas em situação de vulnerabiliade social.';    	
+    	if($numinscListaEsperaPublicoPvs >= $vagasListaEsperaPubPvs){
+			$textVagasPubPvs = 'NÃO HÁ VAGAS p/ pessoas em situação de vulnerabiliade social.';        	
+    	}else{    		
+    		if($idturmastatus == 6){
+    			$vagasMenosInscritosPubPvs = ($vagasPubPvs - $numinscListaEsperaPublicoPvs);
+    		}
+    		$textVagasPubPvs = ''.$vagasMenosInscritosPubPvs.' de '.$vagasPubPvs.' vagas p/ pessoas em situação de vulnerabiliade social.';  
+    	}           	
+    	/*
+    	if($idturmastatus == 6){
+    		$vagasMenosInscritosPubPvs = ($vagasPubPvs - $numinscListaEsperaPublicoPvs);
+    	}
+    	$textVagasPubPvs = ''.$vagasMenosInscritosPubPvs.' de '.$vagasPubPvs.' vagas p/ pessoas em situação de vulnerabiliade social.';  
+    	*/  	
     } 
 
     if($idturmastatus == 6){
     	$textStatusTurmaNaoiniciada = 'Para consultar a quantidade de inscritos e se seu nome está na lista desta turma, clique em "Consulte lista de espera".';
-    	echo ''.$textVagasPubGeral."\r\n".$textVagasPubLaudo."\r\n".$textVagasPubPcd."\r\n".$textVagasPubPvs."\r\n".$textStatusTurmaNaoiniciada;  	
+    	echo ''.$textVagasPubGeral."\r\n".$textVagasPubLaudo."\r\n".$textVagasPubPcd."\r\n".$textVagasPubPvs."\r\n".$textStatusTurmaNaoiniciada."\r\n".'[T-'.$idturma.']';
     }else{
-    	echo ''.$textVagasPubGeral."\r\n".$textVagasPubLaudo."\r\n".$textVagasPubPcd."\r\n".$textVagasPubPvs;  	
-    }    	
-    
+    	echo ''.$textVagasPubGeral."\r\n".$textVagasPubLaudo."\r\n".$textVagasPubPcd."\r\n".$textVagasPubPvs."\r\n".'[T-'.$idturma.']';  	
+    }       
 	
 });
 

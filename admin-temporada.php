@@ -704,17 +704,21 @@ $app->get("/admin/turma-temporada/:idtemporada/local/:idlocal", function($idtemp
 	$temporada = new Temporada();
 	$turma = new Turma();
 	$local = new Local();
+	$modalidade = new Modalidade();
 	$temporada->get((int)$idtemporada);
 	$local->get((int)$idlocal);
 
 	//var_dump($local);
 	//exit();
 
+	$modalidades = $modalidade->getModalidadesTemporadaByLocal($idtemporada, $idlocal);
+
 	$page = new PageAdmin();	
 
 	$page->setTpl("turmas-por-temporada", [
 		'local'=>$local->getValues(),
 		'locais'=>Local::listAll(),
+		'modalidades'=>$modalidades,
 		'temporada'=>$temporada->getValues(),
 		//'turmaRelated'=>$temporada->getTurma(true)
 		'turmas'=>Temporada::listAllTurmatemporadaLocal($idtemporada, $idlocal),
@@ -756,14 +760,18 @@ $app->get("/admin/turma-temporada/:idtemporada/modalidade/:idmodal", function($i
 	$temporada = new Temporada();
 	$turma = new Turma();
 	$modalidade = new Modalidade();
+	$local = new Local();
 	$temporada->get((int)$idtemporada);
 	$modalidade->get((int)$idmodal);
+
+	$locais = $local->getLocalTemporadaByModalidades($idtemporada, $idmodal);
 
 	$page = new PageAdmin();	
 
 	$page->setTpl("turmas-por-temporada-modalidade", [
 		'modalidade'=>$modalidade->getValues(),
 		'modalidades'=>Modalidade::listAll(),
+		'locais'=>$locais,
 		'temporada'=>$temporada->getValues(),
 		//'turmaRelated'=>$temporada->getTurma(true)
 		'turmas'=>Temporada::listAllTurmaTemporadaModalidade($idtemporada, $idmodal),
@@ -1288,7 +1296,7 @@ $app->get("/admin/atualiza/turmatemporada/:idturma/:idtemporada/:desctemporada/:
 
 	User::verifyLogin();
 	
-	if($status != 3 && $status != 4 && $status != 6){
+	if($status != 2 && $status != 3 && $status != 4 && $status != 5 && $status != 6){
 		echo 'Valor inválido!';
 		exit();
 	}
@@ -1298,8 +1306,14 @@ $app->get("/admin/atualiza/turmatemporada/:idturma/:idtemporada/:desctemporada/:
 	$temporada = new Temporada();
 
 	//$novoStatus = $temporada->getIdturmastatusTurmaTemporada($idturma, $idtemporada);
+
+	if($status == 2){ $texto = "Inscrições não iniciadas"; }
+	if($status == 3){ $texto = "Inscrições abertas"; }
+	if($status == 4){ $texto = "Inscrições suspensas"; }
+	if($status == 5){ $texto = "Inscrições encerradas"; }
+	if($status == 6){ $texto = "Turma não iniciada"; }
 	
-	$texto = 'Status da turma '.$idturma.' da '.$desctemporada.' alterado com sucesso! Atualize a página para conferir. ';
+	//$texto = 'Status da turma '.$idturma.' da '.$desctemporada.' alterado com sucesso! Atualize a página para conferir. ';
 		
 	echo $texto;
 

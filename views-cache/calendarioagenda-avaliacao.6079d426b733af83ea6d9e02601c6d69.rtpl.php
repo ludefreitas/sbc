@@ -57,13 +57,13 @@
 
             let strDiaSemana = datasemanas.getDay();
 
-            window.location.href=`http://www.cursosesportivos.com.br/admin/listaagendapordata-avaliacao/` + local + '/' + info.dateStr;          
+            window.location.href=`https://www.cursosesportivossbc.com/admin/listaagendapordata-avaliacao/` + local + '/' + info.dateStr;          
           
           },
 
           eventClick: function(info) {
 
-            window.location.href=`http://www.cursosesportivos.com.br/admin/turma/${info.event.id}`
+            window.location.href=`https://www.cursosesportivossbc.com/admin/turma/${info.event.id}`
             /*
             alert('Event: ' + info.event.title);
             alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
@@ -95,12 +95,13 @@
         Olá Professor(a) <?php echo htmlspecialchars( $user["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>!
       </h3>
       <h1>
-        <?php if( $idlocal == 3 ){ ?>
+          <?php if( $idlocal == 3 ){ ?>
           Consulta Agenda de Avaliação Crec Baetão
-        <?php } ?>
-        <?php if( $idlocal == 21 ){ ?>
+          <?php } ?>
+          
+          <?php if( $idlocal == 21 ){ ?>
           Consulta Agenda de Avaliação Crec Paulicéia
-        <?php } ?>
+          <?php } ?>
       </h1>
      
       <ol class="breadcrumb">

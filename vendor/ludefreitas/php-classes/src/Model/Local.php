@@ -281,6 +281,74 @@ class Local extends Model {
 			':idlocal'=>$this->getidlocal(),
 			':idespaco'=>$espaco->getidespaco()
 		]);
+	}
+
+	public static function getApelidoLocalById($idlocal)
+	{
+
+		$sql = new Sql();
+
+		$result = $sql->select(
+			"SELECT * FROM tb_local			
+			WHERE idlocal = :idlocal", [
+			':idlocal'=>$idlocal
+		]);
+		
+		return $result;	
+	}	
+
+	public static function listLocalturmasPorTemporadaByIdUser($idtemporada, $iduser)
+	{
+
+		$sql = new Sql();
+
+		$result = $sql->select(
+			"SELECT distinct e.* FROM tb_turmatemporada a
+			INNER JOIN tb_turma b ON b.idturma = a.idturma
+			-- INNER JOIN tb_atividade c ON c.idativ = b.idativ
+			INNER JOIN tb_espaco d ON d.idespaco = b.idespaco
+			INNER JOIN tb_local e ON e.idlocal = d.idlocal
+			WHERE a.idtemporada = :idtemporada
+			AND (a.iduser = :iduser OR a.idestagiario = :iduser)", [
+			':idtemporada'=>$idtemporada,
+			':iduser'=>$iduser
+		]);		
+		return $result;	
+	}
+
+	public static function getLocalTemporadaByModalidades($idtemporada, $idmodal)
+	{
+		$sql = new Sql();
+
+		return $sql->select("SELECT DISTINCT e.* FROM tb_turmatemporada a
+            INNER JOIN tb_turma b ON b.idturma = a.idturma
+            INNER JOIN tb_modalidade c ON c.idmodal = b.idmodal
+            INNER JOIN tb_espaco d ON d.idespaco = b.idespaco
+            INNER JOIN tb_local e ON e.idlocal = d.idlocal
+            WHERE a.idtemporada = :idtemporada
+            AND b.idmodal = :idmodal
+            ORDER BY e.apelidolocal", [
+            'idtemporada'=>$idtemporada,
+			'idmodal'=>$idmodal
+		]);
+	}	
+
+	public static function getIdUserByLocal($iduser, $idlocal)
+	{
+		$sql = new Sql();
+
+		 $results = $sql->select("SELECT iduser FROM tb_local            
+            WHERE iduser = :iduser
+            AND idlocal = :idlocal", [
+            'iduser'=>$iduser,		
+            'idlocal'=>$idlocal			
+		]);
+
+		 if($results){
+		 	return (int)$results[0]['iduser'];
+		 }else{
+		 	return 0;
+		 }
 	}	
 
 	public static function setMsgError($msg)

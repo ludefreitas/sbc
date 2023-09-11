@@ -33,6 +33,8 @@
             let local = document.getElementById('local').value;          
             let datasemanas = new Date(info.dateStr);
             let data = info.dateStr;
+
+            /*
             
             if(data == '2023-05-27'){
                   alert('Na data escolhida não haverá natação espontânea.');                  
@@ -93,6 +95,8 @@
                   alert('A agenda para o período de 01/07 a 31/07/2023 ainda não foi programada. Aguardem!.');             
                   return;
             }
+
+            */
             
             Date.prototype.addDias = function(dias){
               this.setDate(this.getDate() + dias)
@@ -113,12 +117,14 @@
 
             let hojeMaisUmaSemanaFormatada = maisUmaSemanaFormatada(); 
             
+            /*
             if(hojeMaisUmaSemanaFormatada <= data){    
 
               alert('A agenda para esta data ainda não está aberta!');                  
               return;
 
             }            
+            */
             
             function dataAtualFormatada(){
               let data = new Date(),
@@ -159,10 +165,10 @@
                   return;
 
             }   
-            
+            /*
             if(diaSemanaDaEscolha == 6 && (strDiaSemana == 0 || strDiaSemana == 1 || strDiaSemana == 2 || strDiaSemana == 3 || strDiaSemana == 4) ){
 
-             alert('A agenda para a natação espontânea no baetão para a semana abrirá sempre aos domingo! ');
+             alert('A agenda para a natação espontânea no baetão para a semana abrirá sempre aos domingos! ');
               return;
 
             }
@@ -170,31 +176,32 @@
 
             if(diaSemanaDaEscolha == 5 && (strDiaSemana == 0 || strDiaSemana == 1 || strDiaSemana == 2 || strDiaSemana == 3) ){
 
-              alert('A agenda para a natação espontânea no baetão para a semana abrirá sempre aos domingo! ');
+              alert('A agenda para a natação espontânea no baetão para a semana abrirá sempre aos domingos! ');
               return;
 
             }
 
             if(diaSemanaDaEscolha == 4 && (strDiaSemana == 0 || strDiaSemana == 1 || strDiaSemana == 2) ){
 
-              alert('A agenda para a natação espontânea no baetão para a semana abrirá sempre aos domingo! ');
+              alert('A agenda para a natação espontânea no baetão para a semana abrirá sempre aos domingos! ');
               return;
 
             }
 
             if(diaSemanaDaEscolha == 3 && (strDiaSemana == 0 || strDiaSemana == 1) ){
 
-              alert('A agenda para a natação espontânea no baetão para a semana abrirá sempre aos domingo! ');
+              alert('A agenda para a natação espontânea no baetão para a semana abrirá sempre aos domingos! ');
               return;
 
             }
 
             if(diaSemanaDaEscolha == 2 && (strDiaSemana == 0) ){
 
-              alert('A agenda para a natação espontânea no baetão para a semana abrirá sempre aos domingo! ');
+              alert('A agenda para a natação espontânea no baetão para a semana abrirá sempre aos domingos! ');
               return;
 
             }
+            */
             
             /*
 
@@ -216,15 +223,18 @@
            //hora = 10
            
            //alert(hora)
+
+            var dataAtual = new Date();
+           var horas = dataAtual.getHours();
            
             
-            if( local == 3 && diaSemanaDaEscolha == 5 && strDiaSemana == 5  && hora >= 12) {
+            if( local == 3 && diaSemanaDaEscolha == 5 && strDiaSemana == 5  && horas > 12) {
 
               alert('A agenda para este sábado está fechada!!!');
               return;
             } 
             
-            if( local == 3 && diaSemanaDaEscolha == 5 && strDiaSemana == 6  && hora >= 12) {
+            if( local == 3 && diaSemanaDaEscolha == 5 && strDiaSemana == 6  && horas > 12) {
 
               alert('A agenda para este domingo está fechada!!!');
               return;
@@ -252,12 +262,14 @@
 
             if(local == 3 && (strDiaSemana == 0 || strDiaSemana == 1 || strDiaSemana == 2 || strDiaSemana == 3 || strDiaSemana == 4 || strDiaSemana == 5 || strDiaSemana == 6)){
                 
+                /*
                 if(hojeMaisUmaSemanaFormatada <= data){
 
                 alert('A agenda para esta data ainda não está aberta!');                  
                 return;
 
                 }
+                */
 
                 if(hoje > data){
 
@@ -325,7 +337,7 @@
                 </div>
                 <?php } ?>
     
-    <div id='calendar' class="calendar" style="padding: 30px; font-family: Arial, sans-serif;"></div>
+    <div id='calendar' class="calendar" style="padding: 20px; font-family: Arial, sans-serif;"></div>
 
      <input type="text" name="local" id="local" value="<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>" hidden="true">
      

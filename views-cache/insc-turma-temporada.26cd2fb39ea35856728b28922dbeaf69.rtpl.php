@@ -30,6 +30,8 @@
   <ol class="breadcrumb">
     <li><a href="/prof"><i class="fa fa-dashboard"></i> Home</a></li>
     <li class="active"><a href="/prof/turma-temporada/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">Turmas por temporada</a></li>
+    <li class="active"><a style="color: red" href="javascript: history.go(-1)">Voltar</a>
+    </li>
   </ol>
 </section>
 

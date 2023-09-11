@@ -116,16 +116,30 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-       <h3>
+       <h5>
         Olá Professor(a) <?php echo htmlspecialchars( $user["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>!
-      </h3>
-      <h1>
-         Selecione a data e o dia da semana para atualizar a lista de presença da turma: <br> [<?php echo htmlspecialchars( $idturma, ENT_COMPAT, 'UTF-8', FALSE ); ?>] - <?php echo htmlspecialchars( $descturma, ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php if( $dia2 == '' ){ ?> <?php echo htmlspecialchars( $dia1, ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php }else{ ?> <?php echo htmlspecialchars( $dia1, ENT_COMPAT, 'UTF-8', FALSE ); ?> e <?php echo htmlspecialchars( $dia2, ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php } ?>
-      </h1>
+      <br> 
+         Selecione a data e o dia da semana para atualizar a lista de presença da turma: <br> [<?php echo htmlspecialchars( $idturma, ENT_COMPAT, 'UTF-8', FALSE ); ?>] - <?php echo htmlspecialchars( $descturma, ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php if( $dia2 == '' ){ ?> <?php echo htmlspecialchars( $dia1, ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php }else{ ?> <?php echo htmlspecialchars( $dia1, ENT_COMPAT, 'UTF-8', FALSE ); ?> e <?php echo htmlspecialchars( $dia2, ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php } ?><br>
+         Lista chamada mês: &nbsp;&nbsp;&nbsp;
+         <a href="/prof/insc-turma-temporada-mes-chamada-atualizada/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idturma, ENT_COMPAT, 'UTF-8', FALSE ); ?>/01">01</a>&nbsp;&nbsp;&nbsp;
+         <a href="/prof/insc-turma-temporada-mes-chamada-atualizada/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idturma, ENT_COMPAT, 'UTF-8', FALSE ); ?>/02">02</a>&nbsp;&nbsp;&nbsp;
+         <a href="/prof/insc-turma-temporada-mes-chamada-atualizada/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idturma, ENT_COMPAT, 'UTF-8', FALSE ); ?>/03">03</a>&nbsp;&nbsp;&nbsp;
+         <a href="/prof/insc-turma-temporada-mes-chamada-atualizada/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idturma, ENT_COMPAT, 'UTF-8', FALSE ); ?>/04">04</a>&nbsp;&nbsp;&nbsp;
+         <a href="/prof/insc-turma-temporada-mes-chamada-atualizada/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idturma, ENT_COMPAT, 'UTF-8', FALSE ); ?>/05">05</a>&nbsp;&nbsp;&nbsp;
+         <a href="/prof/insc-turma-temporada-mes-chamada-atualizada/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idturma, ENT_COMPAT, 'UTF-8', FALSE ); ?>/06">06</a>&nbsp;&nbsp;&nbsp;
+         <a href="/prof/insc-turma-temporada-mes-chamada-atualizada/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idturma, ENT_COMPAT, 'UTF-8', FALSE ); ?>/07">07</a>&nbsp;&nbsp;&nbsp;
+         <a href="/prof/insc-turma-temporada-mes-chamada-atualizada/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idturma, ENT_COMPAT, 'UTF-8', FALSE ); ?>/08">08</a>&nbsp;&nbsp;&nbsp;
+         <a href="/prof/insc-turma-temporada-mes-chamada-atualizada/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idturma, ENT_COMPAT, 'UTF-8', FALSE ); ?>/09">09</a>&nbsp;&nbsp;&nbsp;
+         <a href="/prof/insc-turma-temporada-mes-chamada-atualizada/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idturma, ENT_COMPAT, 'UTF-8', FALSE ); ?>/10">10</a>&nbsp;&nbsp;&nbsp;
+         <a href="/prof/insc-turma-temporada-mes-chamada-atualizada/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idturma, ENT_COMPAT, 'UTF-8', FALSE ); ?>/11">11</a>&nbsp;&nbsp;&nbsp;
+         <a href="/prof/insc-turma-temporada-mes-chamada-atualizada/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idturma, ENT_COMPAT, 'UTF-8', FALSE ); ?>/12">12</a>&nbsp;&nbsp;&nbsp;
+      </h5>
      
       <ol class="breadcrumb">
         <li><a href="/prof"><i class="fa fa-dashboard"></i> Level</a></li>
         <li class="active">Here</li>
+        <li class="active"><a style="color: red" href="javascript: history.go(-1)">Voltar</a>
+    </li>
       </ol>
     </section>
 

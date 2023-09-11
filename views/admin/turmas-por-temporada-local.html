@@ -3,7 +3,7 @@
   
   function atualizaStatus(idturma, desctemporada, idtemporada){
 
-        let status = prompt('Para atualizar o status da turma '+ idturma +' para a temporada '+ desctemporada +'  selecionada, digite:\n 3 - para inscrições abertas\n 4 - para inscrições suspensas\n 6 - para turma não iniciada');   
+        let status = prompt('Para atualizar o status da turma '+ idturma +' para a temporada '+ desctemporada +' selecionada, digite:\n 2 - para inscrições não iniciadas\n 3 - para inscrições abertas\n 4 - para inscrições suspensas\n 5 - para inscrições encerradas\n 6 - para turma não iniciada');   
         
         let url = "/admin/atualiza/turmatemporada/"+idturma+"/"+idtemporada+"/"+desctemporada+"/"+status        
 
@@ -12,7 +12,8 @@
         $.ajax({
           url: url,
           method: 'GET'  
-        }).done(function(result){         
+        }).done(function(result){ 
+                
             alert(result)        
 
         });
@@ -176,6 +177,9 @@
 
 
                           <a href="/admin/token/{$value.idturma}" style="color: darkblue;"><i ></i> | Tokens</a>
+                           <a href="/admin/insc-altera-turma-temporada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}"> 
+                         | &nbsp; Mover inscritos &nbsp;
+                         </a> &nbsp; 
                       </h5>
                     </div>                    
                     

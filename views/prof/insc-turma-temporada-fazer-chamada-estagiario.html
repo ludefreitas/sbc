@@ -390,9 +390,15 @@
                   Não há pessoas matriculadas 
                 </div>
                 {/loop}
-                <div class="col-md-12 btn btn-primary" style="font-weight: bold; color: red; font-size: 26px; text-align: center; ">
+
+                <div class="col-md-12 btn btn-success" style="font-weight: bold; font-size: 16x; text-align: center; margin-top: 10px;">
                   <a style="color: white;" href="/estagiario/insc-turma-temporada-fazer-chamada/{$idtemporada}/{$turma.idturma}/{$data}">Atualizar Lista</a>
-                </div>  
+                </div>
+
+
+                <div class="col-md-12 btn btn-info" style="font-weight: bold; font-size: 16px; text-align: center; ">
+                  <a style="color: white;" href="/estagiario/insc-turma-temporada-mes-chamada-atualizada/{$idtemporada}/{$turma.idturma}/{$mes}">Lista de chamada do mês de {$nomemes}</a>
+                </div>
                 
                 </div>              
              
@@ -403,162 +409,4 @@
             
 
 <hr>
-
-<div class="container">
-
-  <div class="row">
-
-    <div class="col-md-3" style="text-align-last: center;">
-      <div style="margin: 5px 10px 5px 10px; width: 100%">
-        <img src="/../res/site/img/sbc.png" title="SecretariaDeEsportes" width="80">
-         
-      </div>
-      
-    </div>
-
-    <div class="col-md-9">
-
-      <div style="margin: 5px 10px 5px 10px; width: 100%">
-        <br><br>
-        <div style="text-align-last: center; font-weight: bold;">
-        <h4>
-          SECRETARIA DE ESPORTES    
-        </h4>
-       </div>
-       <div style="text-align-last: left;">
-        <span style="text-align: left;">
-        Centro Esportivo: <span style="font-weight: bold;">{$turma.apelidolocal} &nbsp;  - </span> &nbsp;&nbsp;&nbsp;{$turma.nomelocal}
-        </span>
-       </div>
-      </div>
-
-    </div>    
-  </div>
-  
-</div>       
-           
-            <div class="container">
-
-             <div class="row" style="margin-right: 0px; font-size: 14px">
-                <div class="col-md-12">
-                  <div class="row">
-
-                     <div class="col-md-3" style="border: 1px solid black; text-align: center; " >
-                      <div class="row">
-                          <div class="col-md-12" style="background-color: #ccc; font-weight: bold; ">
-                            Curso
-                          </div>                          
-                        </div>
-                        <div class="row">
-                          <div class="col-md-12">
-                            {$turma.descturma}
-                          </div>                          
-                        </div>
-                       
-                      </div>
-                      
-                      <div class="col-md-7" style="border: 1px solid black; text-align: center; " >
-                      <div class="row">
-                          <div class="col-md-12" style="background-color: #ccc; font-weight: bold; ">
-                            Dia da Semana / horário
-                          </div>                          
-                        </div>
-                        <div class="row">
-                          <div class="col-md-12">
-                            {$turma.diasemana}  das {$turma.horainicio} às {$turma.horatermino}  
-                          </div>                          
-                        </div>
-                       
-                      </div>
-                      <div class="col-md-2" style="border: 1px solid black; text-align: center; " >
-                      <div class="row">
-                          <div class="col-md-12" style="background-color: #ccc; font-weight: bold;">
-                            Turma
-                          </div>                          
-                        </div>
-                        <div class="row">
-                          <div class="col-md-12">
-                            {$turma.idturma}
-                          </div>                          
-                        </div>
-                       
-                      </div>
-
-                    </div>
-                </div>
-              </div>
-
-
-              <div class="row" style="margin-right: 0px; font-size: 14px">
-                <div class="col-md-12">
-                  <div class="row">
-                    <div class="col-md-12" style="border: 1px solid black; margin: 0; padding: 0; text-align: center; font-weight: bold;" >
-                   <table class="col-md-12">
-   
-
-                        <tr>
-                          
-                          <th colspan="12" style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">{$nomemes} - {$desctemporada} </th>
-                        </tr>
-                        <tr>
-                          <th style="border: solid 1px; text-align: left; font-weight: bold; padding: 5px;">Nome do aluno </th>
-                          {loop="$dias_do_mes"}
-                            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">{$value.dias}</th>
-                          {/loop}
-                        </tr>
-                      
-                        {loop="$insc"}
-
-                        {$INSC = $value.idinsc}
-                        <tr>
-                            <td style="border: solid 1px; text-align: left; font-weight: bold; padding: 2px;">{$value.idinsc} - {$value.nomepess} </td>
-
-                            {loop="$dias_do_mes"}       
-                            <td style="border: solid 1px; text-align: center; font-weight: bold; padding: 2px;">
-                              {function="statusPresenca($value.dias, $mes, $INSC, $turma.idturma, $idtemporada)"}
-
-                                </td>
-                            {/loop}
-
-                        </tr>
-                        {/loop}
-                                                         
-                      
-                    </table>  
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row" style="margin-right: 0px; font-size: 14px;">
-
-                <div class="col-md-6" style="text-align: left;">       
-                  <button type="button" onclick="window.print()" class="btn btn-primary pull-right" style="margin-right: 0px; margin-top: 5px">
-                    <i class="fa fa-print"></i> Imprimir
-                  </button> 
-                </div> 
-
-                <div class="col-md-6" style="text-align: right;">       
-                  <div style="margin-right: 0px; margin-top: 0 px; margin-bottom: 0px;">
-                    <a href="/estagiario/calendario-lista-presenca/{$idtemporada}/{$turma.idturma}">
-                  <i class="fa fa-arrow-left"></i> 
-                    Voltar
-                </a> 
-                  </div>
-                </div>                      
-                  
-              </div>
-                
-              </div>
-            
-         
-        
-    
-
-
-
-         
-        
-    
-
 

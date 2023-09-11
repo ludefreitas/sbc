@@ -79,6 +79,26 @@
                       <span style="text-align: left;">
                        
                           <strong>{$value.descturma}</strong> 
+
+                          {if="$value.idturmastatus == 2"}
+                          <span style="color: orange; font-weight: bold;">- Inscrições não iniciadas</span>                  
+                        {/if}
+                       
+                        {if="$value.idturmastatus == 3"}
+                          <span style="color: darkgreen; font-weight: bold;">- Inscrições abertas</span>
+                         
+                        {/if}
+
+                        {if="$value.idturmastatus == 4"}
+                          <span style="color: red; font-weight: bold;"> - Inscrições suspensas</span>
+                          
+                        {/if}
+
+                        {if="$value.idturmastatus == 6"}
+                          <span style="color: blue; font-weight: bold;"> - Turma não iniciada</span>
+                          
+                        {/if}
+
                           - {$value.diasemana}
                           {$value.horainicio} ás {$value.horatermino} -  
                           <strong>{$value.descrfxetaria}  {$value.initidade} a {$value.fimidade} anos</strong>

@@ -1708,6 +1708,20 @@ class User extends Model {
 			return $results[0]['uservis'];
 		}
 
+		public static function getApelidopersonTelefoneByIduser($iduser){
+
+			$sql = new Sql();
+
+			$results = $sql->select("SELECT *
+			 	FROM tb_users a 
+			 	INNER JOIN tb_persons b ON a.idperson = b.idperson
+			 	WHERE iduser = :iduser", [
+			':iduser'=>$iduser
+			]);
+
+			return $results[0];			
+		}
+
 
 }
 

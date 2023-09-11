@@ -141,12 +141,29 @@ $app->post("/admin/turma/create", function() {
 	}
 	*/
 	
-	if (!isset($_POST['vagasgeral']) || $_POST['vagasgeral'] == '') {
-		echo "<script>alert('Informe o número de vagas geral.');";
+	if (!isset($_POST['vagas']) || $_POST['vagas'] == '') {
+		echo "<script>alert('Informe o número de vagas do público geral.');";
 		echo "javascript:history.go(-1)</script>";
 		exit();
 	}
 
+	if (!isset($_POST['vagaslaudo']) || $_POST['vagaslaudo'] == '') {
+		echo "<script>alert('Informe o número de vagas para pessoas com laudo.');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}
+	if (!isset($_POST['vagaspcd']) || $_POST['vagaspcd'] == '') {
+		echo "<script>alert('Informe o número de vagas para PCDs.');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}
+	if (!isset($_POST['vagaspvs']) || $_POST['vagaspvs'] == '') {
+		echo "<script>alert('Informe o número de vagas pessoas em situação de vulnerabiliade.');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}
+
+	/*
 	if($idturma == 598 || $idturma == 599 || $idturma == 600 || $idturma == 601){
 
 		$_POST['vagaslaudo']  = round($_POST['vagasgeral'] * 0.8);
@@ -162,6 +179,7 @@ $app->post("/admin/turma/create", function() {
 		$_POST['vagas']  = round($_POST['vagasgeral'] * 0.7);
 
 	}
+	*/
 	
 	$_POST['token'] = isset($_POST['token']) ?  1 : 0;
 
@@ -261,12 +279,29 @@ $app->post("/admin/turma/:idturma", function($idturma) {
 	}
 	*/
 
-	if (!isset($_POST['vagasgeral']) || $_POST['vagasgeral'] == '') {
-    	echo "<script>alert('Informe o número de vagas geral.');";
+	if (!isset($_POST['vagas']) || $_POST['vagas'] == '') {
+		echo "<script>alert('Informe o número de vagas do público geral.');";
 		echo "javascript:history.go(-1)</script>";
 		exit();
 	}
 
+	if (!isset($_POST['vagaslaudo']) || $_POST['vagaslaudo'] == '') {
+		echo "<script>alert('Informe o número de vagas para pessoas com laudo.');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}
+	if (!isset($_POST['vagaspcd']) || $_POST['vagaspcd'] == '') {
+		echo "<script>alert('Informe o número de vagas para PCDs.');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}
+	if (!isset($_POST['vagaspvs']) || $_POST['vagaspvs'] == '') {
+		echo "<script>alert('Informe o número de vagas pessoas em situação de vulnerabiliade.');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}
+
+	/*
 	if($idturma == 598 || $idturma == 599 || $idturma == 600 || $idturma == 601){
 
 		$_POST['vagaslaudo']  = round($_POST['vagasgeral'] * 0.8);
@@ -282,6 +317,7 @@ $app->post("/admin/turma/:idturma", function($idturma) {
 		$_POST['vagas']  = round($_POST['vagasgeral'] * 0.7);
 
 	}
+	*/
 	
 	$_POST['token'] = isset($_POST['token']) ?  1 : 0;
 

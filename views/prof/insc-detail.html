@@ -97,6 +97,12 @@
                                 <th class="product-name"> Início previsto das aulas </th>
                                 <td class="product-name"> {function="formatDate($insc.dttermmatricula)"} </td>
                             </tr>
+                            {if="$insc.idinscstatus == 1"}
+                            <tr>
+                                <th></th>
+                                <td class="product-name"> <a href="/declaracao-de-matricula/{$insc.idpess}/{$insc.idinsc}"> Declaração Aluno  </a></td>
+                            </tr>
+                            {/if}
 
                         </thead>
                         <tbody>

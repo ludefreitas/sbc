@@ -22,7 +22,6 @@
 <section class="content-header">
   <ol class="breadcrumb">
     <li><a href="/prof"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="/prof/insc">Inscrições</a></li>
     <!--<li class="active"><a href="/prof/espaco/create">Cadastrar</a></li>-->
   </ol>
 </section>
@@ -58,11 +57,11 @@
                             </tr>
                             <tr>
                                 <th class="product-name">Turma / Temporada</th>
-                                <td class="product-name"><?php echo htmlspecialchars( $insc["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $insc["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                                <td class="product-name">[<?php echo htmlspecialchars( $insc["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>] - <?php echo htmlspecialchars( $insc["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $insc["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                             </tr>
                             <tr>
-                                <th class="product-name">Horário / Professor</th>
-                                <td class="product-name"><?php echo htmlspecialchars( $insc["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?> das <?php echo htmlspecialchars( $insc["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $insc["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - Prof. <?php echo htmlspecialchars( $insc["apelidoperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                                <th class="product-name">Horário</th>
+                                <td class="product-name"><?php echo htmlspecialchars( $insc["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?> das <?php echo htmlspecialchars( $insc["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $insc["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </td>
                             </tr>
                             <tr>
                                 <th class="product-name">Local da aula (CREC)</th>
@@ -73,33 +72,40 @@
                                 <td class="product-name"><?php echo formatDateHour($insc["dtinsc"]); ?></td>
                             </tr>
                             <tr>
-                                <th class="product-name">Laudo ?</th>
+                                <th class="product-name">Com laudo ?</th>
                                 <td class="product-name"><?php if( $insc["laudo"] == 1 ){ ?>Sim<?php }else{ ?>Não<?php } ?></td>
                             </tr> 
                             <tr>
-                                <th class="product-name">PCD ?</th>
+                                <th class="product-name">Para PCD ?</th>
                                 <td class="product-name"><?php if( $insc["inscpcd"] == 1 ){ ?>Sim<?php }else{ ?>Não<?php } ?></td>
-                            </tr> 
+                            </tr>  
                             <tr>
                                 <th class="product-name">Respons. p/ inscrição</th>
                                 <td class="product-name">&nbsp;&nbsp;<?php echo htmlspecialchars( $insc["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $insc["deslogin"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                            </tr>                                                                                                                                                
+                            </tr>                                                                             
                             <tr <?php echo colorStatus($insc["idinscstatus"]); ?>>
                                 <th class="product-name">Status da Inscrição</th>
                                 <td class="product-name"><?php echo htmlspecialchars( $insc["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                             </tr>
                             <?php if( $insc["idinscstatus"] == 1 ){ ?>
-                            
+
                             <tr>
                                 <th class="product-name"> Aluno desistente? </th>
                                 <td class="product-name"> <a class="btn btn-danger" href="/prof/insc/<?php echo htmlspecialchars( $insc["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idturma, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $pessoa["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusDesistente" role="button" onclick="return confirm('Deseja realmente informar como desistente o <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da inscrição <?php echo htmlspecialchars( $insc["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')">Desistente</a> </td>
                             </tr>
-                        -
                             <?php } ?>
+
                              <tr>
                                 <th class="product-name"> Início previsto das aulas </th>
                                 <td class="product-name"> <?php echo formatDate($insc["dttermmatricula"]); ?> </td>
                             </tr>
+                            <?php if( $insc["idinscstatus"] == 1 ){ ?>
+
+                            <tr>
+                                <td class="product-name"> <a href="/declaracao-de-matricula/<?php echo htmlspecialchars( $insc["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $insc["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> Declaração Aluno  </a></td>
+                            </tr>
+                            <?php } ?>
+
 
                         </thead>
                         <tbody>
@@ -110,10 +116,6 @@
                             
                         </tfoot>
                     </table>
-                    <div>
-                 
-                    <a type="button" class="btn btn-primary" href="javascript:window.history.go(-1)">Voltar</a>
-                </div>  
                     
                 </div>
 

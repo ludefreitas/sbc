@@ -222,11 +222,8 @@
                        <i class="fa fa-arrow-left"></i> 
                         Voltar
                     </a> 
-                </div>
-              </div>
-              <div style="text-align-last: right; margin-right: 25px; margin-top: -25px; margin-bottom: 15px;">
-                <div id="div1">  
-                    <a href="/admin">
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="/prof">
                         <i class="fa fa-home"></i> 
                             Início
                     </a>  
@@ -400,9 +397,17 @@
                   Não há pessoas matriculadas 
                 </div>
                 <?php } ?>
-                <div class="col-md-12 btn btn-primary" style="font-weight: bold; color: red; font-size: 26px; text-align: center; ">
-                  <a style="color: white;" href="/prof/insc-turma-temporada-fazer-chamada/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>">Atualizar Lista</a>
-                </div>  
+               <br>
+
+               <div class="col-md-12 btn btn-success" style="font-weight: bold; font-size: 16x; text-align: center; margin-top: 10px;">
+                  <a style="color: white;" href="/prof/insc-turma-temporada-fazer-chamada/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>">Atualizar</a>
+                </div>
+
+                &nbsp;&nbsp;&nbsp;
+
+                <div class="col-md-12 btn btn-info" style="font-weight: bold; font-size: 16x; text-align: center; ">
+                  <a style="color: white;" href="/prof/insc-turma-temporada-mes-chamada-atualizada/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $mes, ENT_COMPAT, 'UTF-8', FALSE ); ?>">Lista de chamada do mês de <?php echo htmlspecialchars( $nomemes, ENT_COMPAT, 'UTF-8', FALSE ); ?></a>
+                </div>
                 
                 </div>              
              
@@ -413,162 +418,4 @@
             
 
 <hr>
-
-<div class="container">
-
-  <div class="row">
-
-    <div class="col-md-3" style="text-align-last: center;">
-      <div style="margin: 5px 10px 5px 10px; width: 100%">
-        <img src="/../res/site/img/sbc.png" title="SecretariaDeEsportes" width="80">
-         
-      </div>
-      
-    </div>
-
-    <div class="col-md-9">
-
-      <div style="margin: 5px 10px 5px 10px; width: 100%">
-        <br><br>
-        <div style="text-align-last: center; font-weight: bold;">
-        <h4>
-          SECRETARIA DE ESPORTES    
-        </h4>
-       </div>
-       <div style="text-align-last: left;">
-        <span style="text-align: left;">
-        Centro Esportivo: <span style="font-weight: bold;"><?php echo htmlspecialchars( $turma["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> &nbsp;  - </span> &nbsp;&nbsp;&nbsp;<?php echo htmlspecialchars( $turma["nomelocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-        </span>
-       </div>
-      </div>
-
-    </div>    
-  </div>
-  
-</div>       
-           
-            <div class="container">
-
-             <div class="row" style="margin-right: 0px; font-size: 14px">
-                <div class="col-md-12">
-                  <div class="row">
-
-                     <div class="col-md-3" style="border: 1px solid black; text-align: center; " >
-                      <div class="row">
-                          <div class="col-md-12" style="background-color: #ccc; font-weight: bold; ">
-                            Curso
-                          </div>                          
-                        </div>
-                        <div class="row">
-                          <div class="col-md-12">
-                            <?php echo htmlspecialchars( $turma["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-                          </div>                          
-                        </div>
-                       
-                      </div>
-                      
-                      <div class="col-md-7" style="border: 1px solid black; text-align: center; " >
-                      <div class="row">
-                          <div class="col-md-12" style="background-color: #ccc; font-weight: bold; ">
-                            Dia da Semana / horário
-                          </div>                          
-                        </div>
-                        <div class="row">
-                          <div class="col-md-12">
-                            <?php echo htmlspecialchars( $turma["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  das <?php echo htmlspecialchars( $turma["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $turma["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  
-                          </div>                          
-                        </div>
-                       
-                      </div>
-                      <div class="col-md-2" style="border: 1px solid black; text-align: center; " >
-                      <div class="row">
-                          <div class="col-md-12" style="background-color: #ccc; font-weight: bold;">
-                            Turma
-                          </div>                          
-                        </div>
-                        <div class="row">
-                          <div class="col-md-12">
-                            <?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-                          </div>                          
-                        </div>
-                       
-                      </div>
-
-                    </div>
-                </div>
-              </div>
-
-
-              <div class="row" style="margin-right: 0px; font-size: 14px">
-                <div class="col-md-12">
-                  <div class="row">
-                    <div class="col-md-12" style="border: 1px solid black; margin: 0; padding: 0; text-align: center; font-weight: bold;" >
-                   <table class="col-md-12">
-   
-
-                        <tr>
-                          
-                          <th colspan="12" style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;"><?php echo htmlspecialchars( $nomemes, ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $desctemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?> </th>
-                        </tr>
-                        <tr>
-                          <th style="border: solid 1px; text-align: left; font-weight: bold; padding: 5px;">Nome do aluno </th>
-                          <?php $counter1=-1;  if( isset($dias_do_mes) && ( is_array($dias_do_mes) || $dias_do_mes instanceof Traversable ) && sizeof($dias_do_mes) ) foreach( $dias_do_mes as $key1 => $value1 ){ $counter1++; ?>
-                            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;"><?php echo htmlspecialchars( $value1["dias"], ENT_COMPAT, 'UTF-8', FALSE ); ?></th>
-                          <?php } ?>
-                        </tr>
-                      
-                        <?php $counter1=-1;  if( isset($insc) && ( is_array($insc) || $insc instanceof Traversable ) && sizeof($insc) ) foreach( $insc as $key1 => $value1 ){ $counter1++; ?>
-
-                        <?php $INSC = $value1["idinsc"]; ?>
-                        <tr>
-                            <td style="border: solid 1px; text-align: left; font-weight: bold; padding: 2px;"><?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </td>
-
-                            <?php $counter2=-1;  if( isset($dias_do_mes) && ( is_array($dias_do_mes) || $dias_do_mes instanceof Traversable ) && sizeof($dias_do_mes) ) foreach( $dias_do_mes as $key2 => $value2 ){ $counter2++; ?>       
-                            <td style="border: solid 1px; text-align: center; font-weight: bold; padding: 2px;">
-                              <?php echo statusPresenca($value2["dias"], $mes, $INSC, $turma["idturma"], $idtemporada); ?>
-
-                                </td>
-                            <?php } ?>
-
-                        </tr>
-                        <?php } ?>
-                                                         
-                      
-                    </table>  
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row" style="margin-right: 0px; font-size: 14px;">
-
-                <div class="col-md-6" style="text-align: left;">       
-                  <button type="button" onclick="window.print()" class="btn btn-primary pull-right" style="margin-right: 0px; margin-top: 5px">
-                    <i class="fa fa-print"></i> Imprimir
-                  </button> 
-                </div> 
-
-                <div class="col-md-6" style="text-align: right;">       
-                  <div style="margin-right: 0px; margin-top: 0 px; margin-bottom: 0px;">
-                    <a href="/prof/calendario-lista-presenca/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-                  <i class="fa fa-arrow-left"></i> 
-                    Voltar
-                </a> 
-                  </div>
-                </div>                      
-                  
-              </div>
-                
-              </div>
-            
-         
-        
-    
-
-
-
-         
-        
-    
-
 

@@ -1,11 +1,11 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
 <div>
-    <div class="container">
-        <div class="row">                
-            <div class="col-md-3" style="margin: 10px -5px 0px 0px">
+    <div class="container" style="margin-top: 0px;"> <!-- container 1 -->
+            <div class="row"> <!-- row 2 -->
+              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 0px 0px 10px 0px;">
                 <?php require $this->checkTemplate("user-profile-menu");?>
             </div>
-            <div class="col-md-8 alert alert-info"  style="margin: 10px 15px 10px 15px;">
+            <div class="col-md-8 alert alert-info" style="margin: 10px 15px 10px 15px;">
                 <div class="cart-collaterals">
                     <h5>Alterar Email / Telefone</h5>
                 </div>
@@ -36,7 +36,6 @@
                     <button type="submit" class="btn btn-primary">Salvar</button>
                 </form>
             </div>
-            
         </div>
     </div>
 </div>

@@ -69,7 +69,7 @@ $app->get("/prof/saude/dadosatestado/:idpess", function($idpess) {
 	//User::verifyLoginProf();
 
 	$saude = new Saude();
-
+	$user = new User();
 	$pessoa = new Pessoa();
 
 	$pessoa->get((int)$idpess);
@@ -80,7 +80,14 @@ $app->get("/prof/saude/dadosatestado/:idpess", function($idpess) {
 
 	$validade = $saude->getdatavalidade();
 	$validade = new DateTime($validade);
-	$validade = $validade->format('d/m/Y');
+	$validade = $validade->format('Y-m-d');
+	$hoje = date('Y-m-d');
+
+	$iduser = $saude->getiduser();
+
+	$nome = $user->getUserNameById($iduser);
+
+	$nome = $nome[0]['desperson'];
 
 	$observ = $saude->getobserv();
 	
@@ -91,8 +98,15 @@ $app->get("/prof/saude/dadosatestado/:idpess", function($idpess) {
 		$texto = 'Atestado de '.$nomepess.' não encontrado!!'."\r\n".'';
 
 	}else{
-
-		$texto = ''.$nomepess."\r\n".'Observação: '.$observ."\r\n".'Validade Atestado: '.$validade.''."\r\n".'';
+		 if($hoje > $validade){
+		 	$validade = new DateTime($validade);
+		 	$validade = $validade->format('d/m/Y');
+            $texto = ''.$nomepess."\r\n".'Observação: '.$observ."\r\n".'Validade Atestado: '.$validade.''."\r\n".' >>>  VENCIDO  <<< '."\r\n".'Atualizado por: '.$nome."\r\n".'';
+        }else{
+        	$validade = new DateTime($validade);
+        	$validade = $validade->format('d/m/Y');
+            $texto = ''.$nomepess."\r\n".'Observação: '.$observ."\r\n".'Validade Atestado: '.$validade.''."\r\n".'Atualizado por: '.$nome."\r\n".'';
+        } 		
 	}
 	echo  $texto;
 	

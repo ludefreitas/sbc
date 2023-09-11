@@ -74,10 +74,10 @@
         <div class="row" style="padding-bottom: 5px">
         
             <div class="col-md-12">
-        
+                
                 <?php if( $errorRegister != '' ){ ?>
                 <div class="alert alert-danger" style="text-align-last: center;">
-                    <span style="font-weight: bold;"><?php echo htmlspecialchars( $errorRegister, ENT_COMPAT, 'UTF-8', FALSE ); ?></span style="font-weight: bold;">
+                    <span style="font-weight: bold;"><?php echo htmlspecialchars( $errorRegister, ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
                 </div>               
                 <?php } ?>
 
@@ -87,7 +87,7 @@
                 </div>
                 <?php }else{ ?>
                 <div class="alert alert-success" style="text-align-last: center;">
-                    <span style="font-weight: bold;">Inserir uma nova pessoa</span style="font-weight: bold;">
+                    <span style="font-weight: bold;">Inserir uma nova pessoa</span>
                 </div>                
                 <?php } ?>
 
@@ -147,9 +147,8 @@
                     <script type="text/javascript">$("#numsus").mask("000.000.000.000.000");</script>
 
                     <label for="vulnsocial">
-                        <br><br>Vulnerabilidade Social?   
+                        <br><br>Vulnerabilidade Social?
                     </label>
-
                     <select onchange="vulnerabilidade()" id="vulnsocial" style="width: 100%; float: right;" class="form-control" name="vulnsocial" required="required">
                         <?php if( $registerpessoaValues["vulnsocial"] === '' ){ ?>
                         <option selected="" value="">Seclecione</option>                            
@@ -163,8 +162,8 @@
                         <?php if( $registerpessoaValues["vulnsocial"] === '0' ){ ?>
                         <option sected="" value="0">Não</option>
                         <option value="1">Sim</option>  
-                        <?php } ?>                                                                                                                    
-                    </select> 
+                        <?php } ?>                                                                                                      
+                    </select>  
 
                      <div id="divCadunico" hidden="true">
                     <label for="cadunico">
@@ -173,8 +172,7 @@
                     <input style="width: 100%; float: right;" type="text" id="cadunico" name="cadunico" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["cadunico"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" pattern="[0-9]{3}.[0-9]{5}.[0-9]{2}-[0-9]{1}">
                     <script type="text/javascript">$("#cadunico").mask("000.00000.00-0");</script>
                     </div>  
-                    <span style="color: red; font-size: 10px; font-style: italic;"> * Atenção! Para efetuar uma inscrição, nos nossos cursos esportivos, para pessoa em vulnerabilidade social (pessoa participante de programas sociais do governo), você deve selecionar acima a opção 'SIM' e informar, <strong>OBRIGATÓRIAMENTE,</strong> o número de inscrição no Cadùnico/NIS.</span><br>                     
-            
+                    <span style="color: red; font-size: 10px; font-style: italic;"> * Atenção! Para efetuar uma inscrição, nos nossos cursos esportivos, para pessoa em vulnerabilidade social (pessoa participante de programas sociais do governo), você deve selecionar acima a opção 'SIM' e informar, <strong>OBRIGATÓRIAMENTE,</strong> o número de inscrição no Cadùnico/NIS.</span>                     
 
                     <label for="pcd">
                         <br><br>PCD?
@@ -230,7 +228,7 @@
                     <label for="endereco">
                         <span style="font-weight: bold;">
                         <br><br><br>Endereço / Telefones
-                        <span>                        
+                        </span>                        
                     </label>                            
 
                     <label for="cep">

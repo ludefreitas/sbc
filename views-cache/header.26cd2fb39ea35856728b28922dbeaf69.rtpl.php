@@ -260,7 +260,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </a>
           <ul class="treeview-menu">
             
-                <?php if( UserIsProf() ){ ?>
+            <?php if( UserIsProf() ){ ?>
 
 
               <?php require $this->checkTemplate("turma-temporada-menu");?>

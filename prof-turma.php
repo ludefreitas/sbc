@@ -47,7 +47,7 @@ $app->get("/prof/turma/create/token/:idturma/:idtemporada/:numcpf", function($id
 	
 	if($iduserTurmaTemporada !== $iduserSession){
 	    
-	    echo '<script>alert("Voc«´ deve solicitar ao professor desta turma para que ele gere o token!");';
+	    echo '<script>alert("Você deve solicitar ao professor desta turma para que ele gere o token!");';
 	  	echo 'javascript:history.go(-1)</script>';
 	   	exit;
 	   
@@ -68,7 +68,7 @@ $app->get("/prof/turma/create/token/:idturma/:idtemporada/:numcpf", function($id
 		echo "javascript:history.go(-1)</script>";
 	}else{
 
-		echo "<script>alert('J«¡ existe um token para este aluno nesta turma!');";
+		echo "<script>alert('Já existe um token para este aluno nesta turma!');";
 		echo "javascript:history.go(-1)</script>";
 	}
 	
@@ -92,7 +92,7 @@ $app->get("/estagiario/turma/create/token/:idturma/:idtemporada/:numcpf", functi
 	
 	if($iduserTurmaTemporada !== $iduserSession){
 	    
-	    echo '<script>alert("Voc«´ deve solicitar ao professor desta turma para que ele gere o token!");';
+	    echo '<script>alert("Você deve solicitar ao professor desta turma para que ele gere o token!");';
 	  	echo 'javascript:history.go(-1)</script>';
 	   	exit;
 	   
@@ -113,7 +113,7 @@ $app->get("/estagiario/turma/create/token/:idturma/:idtemporada/:numcpf", functi
 		echo "javascript:history.go(-1)</script>";
 	}else{
 
-		echo "<script>alert('J«¡ existe um token para este aluno nesta turma!');";
+		echo "<script>alert('Já existe um token para este aluno nesta turma!');";
 		echo "javascript:history.go(-1)</script>";
 	}
 	
@@ -136,10 +136,14 @@ $app->post("/prof/turma/create/token", function() {
 	$iduserTurmaTemporada = (int)$iduserTurmaTemporada['iduser'];
 	
 	if($iduserTurmaTemporada !== $iduserSession){
-	    
-	    echo '<script>alert("Voc«´ deve solicitar ao professor desta turma para que ele gere o token!");';
-	  	echo 'javascript:history.go(-1)</script>';
-	   	exit;
+
+		$isprof = User::getFromSession();
+
+    	if ($isprof->getisprof() != 1){
+        	echo '<script>alert("Você deve solicitar ao professor desta turma para que ele gere o token!");';
+	  		echo 'javascript:history.go(-1)</script>';
+	   		exit;
+    	}  
 	   
 	}
 
@@ -177,7 +181,7 @@ $app->post("/prof/turma/create/token", function() {
 	}else{
 
 		if($numcpf != ""){
-			echo "<script>alert('J«¡ existe um token para este aluno nesta turma!');";
+			echo "<script>alert('Já existe um token para este aluno nesta turma!');";
 			echo "javascript:history.go(-1)</script>";
 		}else{
 			$turma->saveToken();

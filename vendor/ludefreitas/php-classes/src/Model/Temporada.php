@@ -366,6 +366,46 @@
 				':idlocal'=>$idlocal
 			]);
 		}
+
+		public static function listAllTurmaTemporadaLocalByIdUser($idtemporada, $idlocal, $iduser)
+		{
+			$sql = new Sql();
+
+			return $sql->select("SELECT * 
+				FROM tb_turmatemporada a 
+				INNER JOIN tb_turma i            
+				using(idturma)
+				INNER JOIN tb_users b
+				using(iduser)
+				INNER JOIN tb_atividade c
+				using(idativ)
+				INNER JOIN tb_espaco d
+				using(idespaco)
+				INNER JOIN tb_local e
+				using(idlocal)
+				-- INNER JOIN tb_turmastatus f
+				-- using(idturmastatus)
+				INNER JOIN tb_horario g
+				using(idhorario)
+				INNER JOIN tb_fxetaria h
+				using(idfxetaria)	            
+	            INNER JOIN tb_temporada j           
+				using(idtemporada)   
+	            INNER JOIN tb_statustemporada k          
+				using(idstatustemporada)
+				INNER JOIN tb_modalidade l
+				using(idmodal)
+	            INNER JOIN tb_persons m
+				using(idperson)            
+				WHERE a.idtemporada = :idtemporada
+				AND e.idlocal = :idlocal
+				AND e.iduser = :iduser
+				ORDER BY a.numinscritos DESC", [
+				':idtemporada'=>$idtemporada,
+				':idlocal'=>$idlocal,
+				':iduser'=>$iduser
+			]);
+		}
 		
 		public static function listAllTurmaTemporadaModalidade($idtemporada, $idmodal)
 		{
@@ -441,6 +481,46 @@
 				AND (a.iduser = :iduser OR a.idestagiario = :iduser)
 				ORDER BY i.descturma", [
 				':idtemporada'=>$idtemporada ,
+				':iduser'=>$iduser 
+			]);
+		}
+
+		public static function listAllTurmaTemporadaProfessorLocal($idtemporada, $iduser, $idlocal)
+		{
+			$sql = new Sql();
+
+			return $sql->select("SELECT * 
+				FROM tb_turmatemporada a 
+				INNER JOIN tb_turma i            
+				using(idturma)
+				INNER JOIN tb_users b
+				using(iduser)
+				INNER JOIN tb_atividade c
+				using(idativ)
+				INNER JOIN tb_espaco d
+				using(idespaco)
+				INNER JOIN tb_local e
+				using(idlocal)
+				-- INNER JOIN tb_turmastatus f
+				-- using(idturmastatus)
+				INNER JOIN tb_horario g
+				using(idhorario)
+				INNER JOIN tb_fxetaria h
+				using(idfxetaria)	            
+	            INNER JOIN tb_temporada j           
+				using(idtemporada)   
+	            INNER JOIN tb_statustemporada k          
+				using(idstatustemporada)
+				INNER JOIN tb_modalidade l
+				using(idmodal)
+	            INNER JOIN tb_persons m
+				using(idperson)            
+				WHERE a.idtemporada = :idtemporada
+				AND e.idlocal = :idlocal
+				AND (a.iduser = :iduser OR a.idestagiario = :iduser)
+				ORDER BY i.descturma", [
+				':idtemporada'=>$idtemporada,
+				':idlocal'=>$idlocal,
 				':iduser'=>$iduser 
 			]);
 		}
@@ -800,7 +880,7 @@
 												</li>
 												<li class="treeview">
 												
-													<a href="/admin/turma-temporada/'.$row['idtemporada'].'/modalidade/32">
+													<a href="/admin/turma-temporada/'.$row['idtemporada'].'/modalidade/1">
 													
 											   			<i class="fa fa-link"></i> 
 											   			Por modalidades
@@ -836,7 +916,7 @@
 									   				</a>								   		
 												</li>
 												<li class="treeview">
-													<a href="/admin/turma-temporada-audi/'.$row['idtemporada'].'/modalidade/5">
+													<a href="/admin/turma-temporada-audi/'.$row['idtemporada'].'/modalidade/1">
 											   			<i class="fa fa-link"></i> 
 											   			Por modalidades
 											   		</a>										   		
@@ -933,7 +1013,7 @@
 
 			foreach ($temporada as $row) {
 				array_push($html, '<li class="treeview">
-										<a href="/prof/turma-temporada/'.$row['idtemporada'].'">
+										<a href="/prof/local-por-turma-temporada/'.$row['idtemporada'].'">
 								   			<i class="fa fa-link"></i> 
 								   			Turmas '.$row['desctemporada'].'
 								   		</a>								   		
@@ -1249,6 +1329,26 @@
 				":idtemporada"=>$idtemporada
 			));
 		}
+
+		public function updateNumInscritosMais($idturma, $idtemporada){
+
+			$sql = new Sql();
+			
+			$sql->select("CALL sp_turmatemporada_update_numinscritos_mais(:idturma, :idtemporada)", array(
+				":idturma"=>$idturma,
+				":idtemporada"=>$idtemporada
+			));
+		}
+		
+		public function updateNumInscritosMenos($idturma, $idtemporada){
+
+			$sql = new Sql();
+			
+			$sql->select("CALL sp_turmatemporada_update_numinscritos_menos(:idturma, :idtemporada)", array(
+				":idturma"=>$idturma,
+				":idtemporada"=>$idtemporada
+			));
+		}
 		
 		/*
 		public function addTurma(Turma $turma)
@@ -1444,6 +1544,56 @@
 
 			return (int)$results[0]['idturmastatus'];
 
+		}
+
+		public static function getTurmaByIdturmaTemporada($idturma, $idtemporada){
+
+			$sql = new Sql();
+
+			$results = $sql->select("SELECT idturma FROM tb_turmatemporada WHERE idturma = :idturma AND idtemporada = :idtemporada", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+			]);
+
+			if($results){
+				return (int)$results[0]['idturma'];
+			}else{
+				return 0;
+			}
+		}
+
+		public static function getIduserByTurmaTemporada($idturma, $idtemporada){
+
+			$sql = new Sql();
+
+			$results = $sql->select("SELECT iduser 
+				FROM tb_turmatemporada 
+				WHERE idturma = :idturma 
+				AND idtemporada = :idtemporada", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+			]);
+
+			if($results){
+				return (int)$results[0]['iduser'];
+			}else{
+				return 0;
+			}
+		}
+
+		public static function getIdTemporadaByDesctemporada($desctemporada){
+
+			$sql = new Sql();
+
+			$results = $sql->select("SELECT idtemporada FROM tb_temporada WHERE desctemporada = :desctemporada", [
+			':desctemporada'=>$desctemporada
+			]);
+
+			if($results){
+				return (int)$results[0]['idtemporada'];
+			}else{
+				return 0;
+			}
 		}
 
 		public static function setError($msg)

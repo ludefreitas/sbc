@@ -542,6 +542,121 @@ class Agenda extends Model {
 			]);
 
 			return $results;		
+	}	
+
+	public function saveMesagemAgenda()
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("CALL sp_agendamsg_save(:idagendamsg, :idlocal, :iduser, :msgtexto, :dtinitmsg, :dtfimmsg, :dtcriacaomsg)", array(
+			":idagendamsg"=>$this->getidagendamsg(),
+			":idlocal"=>$this->getidlocal(),
+			":iduser"=>$this->getiduser(),			
+			":msgtexto"=>$this->getmsgtexto(),			
+			":dtinitmsg"=>$this->getdtinitmsg(),
+			":dtfimmsg"=>$this->getdtfimmsg(),
+			":dtcriacaomsg"=>$this->getdtcriacaomsg()		
+		));
+
+		$this->setData($results[0]);
+
+	}
+
+	public static function selectAllAgendaMsgLocal($idlocal){
+
+		$sql = new Sql();
+		$results = $sql->select("SELECT * FROM tb_agendamsg 
+			WHERE idlocal = :idlocal ", [
+				':idlocal'=>$idlocal
+			]);
+		return $results;			
+	}
+
+	
+	public static function selectAllAgendaMsg(){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_agendamsg ORDER BY dtinitmsg DESC");
+
+		return $results;		
+		
+	}
+
+	public function deleteAgendaMsg($idagendamsg)
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("DELETE FROM tb_agendamsg WHERE idagendamsg = :idagendamsg", [
+			':idagendamsg'=>$idagendamsg
+		]);		
+
+	}
+
+	public function saveHorarioSemana()
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("CALL sp_horadiasemana_save(:idhoradiasemana, :idlocal, :diasemana, :horamarcadainicial, :horamarcadafinal, :vagas, :statushora)", array(
+			":idhoradiasemana"=>$this->getidhoradiasemana(),
+			":idlocal"=>$this->getidlocal(),
+			":diasemana"=>$this->getdiasemana(),			
+			":horamarcadainicial"=>$this->gethoramarcadainicial(),			
+			":horamarcadafinal"=>$this->gethoramarcadafinal(),
+			":vagas"=>$this->getvagas(),
+			":statushora"=>$this->getstatushora()		
+		));
+
+		$this->setData($results[0]);
+
+	}
+
+	public static function selectAllHoradiaSemanaByLocal($idlocal){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_horadiasemana 
+			WHERE idlocal = :idlocal
+			ORDER BY horamarcadainicial", [
+				':idlocal'=>$idlocal
+			]);
+
+		return $results;		
+	}	
+
+	public static function selectAllHoradiaSemanaByLocalDiaSemana($idlocal, $diasemana){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_horadiasemana 
+			WHERE idlocal = :idlocal
+			AND diasemana = :diasemana
+			ORDER BY horamarcadainicial", [
+				':idlocal'=>$idlocal,
+				':diasemana'=>$diasemana
+			]);
+
+		return $results;			
+	}
+
+	public function atualizaQtdVagasHorarioById($idhoradiasemana, $vagas)
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("UPDATE tb_horadiasemana SET vagas = :vagas WHERE idhoradiasemana = :idhoradiasemana", [
+			':vagas'=>$vagas,
+			':idhoradiasemana'=>$idhoradiasemana
+		]);	
+	}
+
+	public function atulizaStatusHorarioAgenga($idhoradiasemana, $statushora)
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("UPDATE tb_horadiasemana SET statushora = :statushora WHERE idhoradiasemana = :idhoradiasemana", [
+			':statushora'=>$statushora,
+			':idhoradiasemana'=>$idhoradiasemana
+		]);	
 	}
 
 	public static function setMsgError($msg)

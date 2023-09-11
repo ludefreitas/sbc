@@ -60,13 +60,9 @@
                   <option <?php if( $value1["idespaco"] === $turma["idespaco"] ){ ?>selected="selected"<?php } ?> value="<?php echo htmlspecialchars( $value1["idespaco"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["nomeespaco"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
                   <?php } ?>                            
                 </select>
-            </div> 
-   
-            </div>
-
-            <div class="col-md-6">
-
-             <div class="form-group">
+            </div>    
+                        
+            <div class="form-group">
               <label for="turma">Atividade</label>
                 <select class="form-control" name="idativ">     
                   <?php $counter1=-1;  if( isset($atividade) && ( is_array($atividade) || $atividade instanceof Traversable ) && sizeof($atividade) ) foreach( $atividade as $key1 => $value1 ){ $counter1++; ?>
@@ -74,8 +70,8 @@
                   <option <?php if( $value1["idativ"] === $turma["idativ"] ){ ?>selected="selected"<?php } ?> value="<?php echo htmlspecialchars( $value1["idativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["nomeativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["descrfxetaria"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> a <?php echo htmlspecialchars( $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> anos <?php echo htmlspecialchars( $value1["prograativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["origativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
                   <?php } ?>                            
                 </select>
-            </div>               
-
+            </div>            
+            
             <div class="form-group">
               <label for="turma">Dia Semana - Horário</label>
                 <select class="form-control" name="idhorario">     
@@ -84,26 +80,46 @@
                   <option <?php if( $value1["idhorario"] === $turma["idhorario"] ){ ?>selected="selected"<?php } ?> value="<?php echo htmlspecialchars( $value1["idhorario"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
                   <?php } ?>                            
                 </select>
-            </div>         
-           
-            
-           <div class="form-group">
-              <label for="turma">Vagas</label>
-              
-              <input type="number" class="form-control" id="vagasgeral" name="vagasgeral" placeholder="Informe a quantidade de vagas totais" value="">
             </div>
+             
+             </div>
 
+            <div class="col-md-6">
+
+                <div class="box-header">
+                  <label for="turma">Vagas público geral</label>
+                  <input type="number" class="form-control" id="vagas" name="vagas" placeholder="Informe a quantidade de vagas público geral" value="<?php echo htmlspecialchars( $turma["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                </div>   
+
+                <div class="box-header">
+                  <label for="turma">Vagas público laudo</label>
+                  <input type="number" class="form-control" id="vagaslaudo" name="vagaslaudo" placeholder="Informe a quantidade de vagas público com laudo" value="<?php echo htmlspecialchars( $turma["vagaslaudo"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                </div>   
+
+                <div class="box-header">
+                  <label for="turma">Vagas PCD</label>
+                  <input type="number" class="form-control" id="vagaspcd" name="vagaspcd" placeholder="Informe a quantidade de vagas público PCD " value="<?php echo htmlspecialchars( $turma["vagaspcd"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                </div>   
+
+                <div class="box-header">
+                  <label for="turma">Vagas vulnerabilidade social</label>
+                  <input type="number" class="form-control" id="vagaspvs" name="vagaspvs" placeholder="Informe a quantidade de vagas público vulnerabilidade social" value="<?php echo htmlspecialchars( $turma["vagaspvs"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                </div>   
+            
+            
             <div class="checkbox">
               <label>
-                <input type="checkbox" name="token" value="1" <?php if( $turma["token"] == 1 ){ ?>checked<?php } ?>> Tem token ?
+                &nbsp;&nbsp;<input type="checkbox" name="token" value="1" <?php if( $turma["token"] == 1 ){ ?>checked<?php } ?>> Tem token ? 
               </label>
             </div>
               
             </div>
              
            </div>
-
-           <div class="col-md-12">
+            
+        </div>  
+        
+        <div class="col-md-12">
 
              <div class="form-group">
               <label for="obs">Observação</label>
@@ -113,12 +129,10 @@
 
            </div>
             
-        </div>                  
-            
           <!-- /.box-body -->
           <div class="box-footer">
-            <button type="submit" class="btn btn-primary">Atualizar</button>
-            &nbsp&nbsp&nbsp&nbsp
+            &nbsp;&nbsp;<button type="submit" class="btn btn-primary">Atualizar</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
             <a type="button" class="btn btn-danger" href="javascript:window.history.go(-1)">Cancelar</a>
           </div>
         </form>

@@ -53,8 +53,30 @@
 
                     <div class="col-md-6" >
                       <h5 style="font-weight: bold; text-align: left;">
-                       <?php echo htmlspecialchars( $value1["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                       <?php echo htmlspecialchars( $value1["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> 
+
+                       <?php if( $value1["idturmastatus"] == 2 ){ ?>
+                          <span style="color: orange; font-weight: bold;">- Inscrições não iniciadas</span>                  
+                        <?php } ?>
+                       
+                        <?php if( $value1["idturmastatus"] == 3 ){ ?>
+                          <span style="color: darkgreen; font-weight: bold;">- Inscrições abertas</span>
+                         
+                        <?php } ?>
+
+                        <?php if( $value1["idturmastatus"] == 4 ){ ?>
+                          <span style="color: red; font-weight: bold;"> - Inscrições suspensas</span>
+                          
+                        <?php } ?>
+
+                        <?php if( $value1["idturmastatus"] == 6 ){ ?>
+                          <span style="color: blue; font-weight: bold;"> - Turma não iniciada</span>
+                          
+                        <?php } ?>
+
+                       - <?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                         <?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ás <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> -  <?php echo htmlspecialchars( $value1["descrfxetaria"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  <?php echo htmlspecialchars( $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> a <?php echo htmlspecialchars( $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> anos -  <?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["nomeespaco"], ENT_COMPAT, 'UTF-8', FALSE ); ?> &nbsp; Vagas: (<?php echo htmlspecialchars( $value1["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?> Geral)&nbsp; - &nbsp;(<?php echo htmlspecialchars( $value1["vagaslaudo"], ENT_COMPAT, 'UTF-8', FALSE ); ?> Laudo)&nbsp; - &nbsp;(<?php echo htmlspecialchars( $value1["vagaspcd"], ENT_COMPAT, 'UTF-8', FALSE ); ?> PCD)&nbsp; - &nbsp;(<?php echo htmlspecialchars( $value1["vagaspvs"], ENT_COMPAT, 'UTF-8', FALSE ); ?> PVS)</strong> 
+                        - <strong> Obsevação: </strong><?php echo htmlspecialchars( $value1["obs"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  
                       </h5>
                     </div>                      
 
@@ -90,7 +112,9 @@
 
 
                         
-                          <a href="/estagiario/token/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: darkblue;"><i ></i> | Tokens</a>
+                        <!--  
+                        <a href="/estagiario/token/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: darkblue;"><i ></i> | Tokens</a> 
+                        -->
                         
                       </h5>
                     </div>                    

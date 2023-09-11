@@ -5,6 +5,7 @@ use \Sbc\Model\User;
 use \Sbc\Model\Temporada;
 use \Sbc\Model\Turma;
 use \Sbc\Model\Local;
+use \Sbc\Model\Modalidade;
 
 $app->get("/prof/turma-temporada/:idtemporada", function($idtemporada) {
 
@@ -14,6 +15,7 @@ $app->get("/prof/turma-temporada/:idtemporada", function($idtemporada) {
 
 	$temporada = new Temporada();
 	$turma = new Turma();
+	$modalidade = new Modalidade();
 	
 	$local = new Local();
 
@@ -33,6 +35,71 @@ $app->get("/prof/turma-temporada/:idtemporada", function($idtemporada) {
 		//'turmas'=>Temporada::listAllTurmatemporada($idtemporada),
 		'turmas'=>Temporada::listAllTurmatemporadaProfessor($idtemporada, $iduser),
 		//'turmaNotRelated'=>$temporada->getTurma(false)
+		'error'=>User::getError()
+	]);	
+});
+
+$app->get("/prof/turma-temporada/:idtemporada/:local", function($idtemporada, $idlocal) {
+
+	User::verifyLoginProf();
+
+	$iduser = (int)$_SESSION[User::SESSION]['iduser'];
+
+	$temporada = new Temporada();
+	$turma = new Turma();
+	$modalidade = new Modalidade();
+
+	$temporada->get((int)$idtemporada);
+
+	// script dos locais relacionado ao coordenador
+	$local = new Local();
+	$locais = Local::listAllCoord($iduser);	
+	$local = $local->setapelidolocal('');
+
+	// script dos locais relacionado ao professor
+	$localaula = new Local();
+	$localaula->get((int)$idlocal);
+	$localdaaula = $localaula->getapelidolocal();
+
+	$modalidades = $modalidade->getModalidadesTemporadaLocalByIdUser($idtemporada, $idlocal, $iduser);
+
+	//var_dump($modalidades);
+	//exit();
+
+	$page = new PageProf();	
+
+	$page->setTpl("turmas-por-temporada", [	
+	    'local'=>$local,
+		'locais'=>$locais, 
+		'idlocal'=>$idlocal, 
+		'localdaaula'=>$localdaaula,  
+		'modalidades'=>$modalidades,
+		'temporada'=>$temporada->getValues(),
+		'turmas'=>Temporada::listAllTurmatemporadaProfessorLocal($idtemporada, $iduser, $idlocal),
+		'error'=>User::getError()
+	]);	
+});
+
+$app->get("/prof/local-por-turma-temporada/:idtemporada", function($idtemporada) {
+
+	User::verifyLoginProf();
+
+	$iduser = (int)$_SESSION[User::SESSION]['iduser'];
+
+	$temporada = new Temporada();
+
+	$locaiscoord = Local::listAllCoord($iduser);
+
+	$locais = Local::listLocalturmasPorTemporadaByIdUser($idtemporada, $iduser);
+
+	$temporada->get((int)$idtemporada);
+
+	$page = new PageProf();	
+
+	$page->setTpl("local-por-turma-temporada", [	
+		'locais'=>$locais,  
+		'locaiscoord'=>$locaiscoord,  
+		'temporada'=>$temporada->getValues(),
 		'error'=>User::getError()
 	]);	
 });
@@ -75,10 +142,15 @@ $app->get("/prof/turma-temporada/:idtemporada/local/:idlocal", function($idtempo
 	$temporada = new Temporada();
 	$turma = new Turma();
 	$local = new Local();
+	$modalidade = new Modalidade();
 	$temporada->get((int)$idtemporada);
 	$local->get((int)$idlocal);
 	
 	$iduser = (int)$_SESSION[User::SESSION]['iduser'];
+
+	$modalidades = $modalidade->getModalidadesTemporadaLocalByIdUser($idtemporada, $idlocal, $iduser);
+
+	$locaiscoord = Local::listAllCoord($iduser);
 
 	//var_dump($local);
 	//exit();
@@ -88,11 +160,48 @@ $app->get("/prof/turma-temporada/:idtemporada/local/:idlocal", function($idtempo
 	$page->setTpl("turmas-por-temporada", [
 		'local'=>$local->getValues(),
 		//'locais'=>Local::listAll(),
-		'locais'=>Local::listAllCoord($iduser),
+		'locaiscoord'=>$locaiscoord,
+		'modalidades'=>$modalidades,
 		'temporada'=>$temporada->getValues(),
 		//'turmaRelated'=>$temporada->getTurma(true)
-		'turmas'=>Temporada::listAllTurmatemporadaLocal($idtemporada, $idlocal),
+		'turmas'=>Temporada::listAllTurmaTemporadaLocalByIdUser($idtemporada, $idlocal, $iduser),
 		//'turmaNotRelated'=>$temporada->getTurma(false)
+		'error'=>User::getError()
+	]);	
+});
+
+$app->get("/prof/turma-temporada-coordenador/:idtemporada/local/:idlocal", function($idtemporada, $idlocal) {
+
+	User::verifyLoginProf();
+
+	$temporada = new Temporada();
+	$local = new Local();
+	$modalidade = new Modalidade();
+	$temporada->get((int)$idtemporada);
+	$local->get((int)$idlocal);
+	
+	$iduser = (int)$_SESSION[User::SESSION]['iduser'];
+
+	$locaiscoord = Local::listAllCoord($iduser);
+
+	$iduserlocal = $local->getIdUserByLocal($iduser, $idlocal);
+
+	if($iduserlocal !== $iduser){
+		echo "<script>alert('Não há turmas para listar');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}
+
+	$modalidades = $modalidade->getModalidadesTemporadaByLocal($idtemporada, $idlocal);
+
+	$page = new PageProf();	
+
+	$page->setTpl("turmas-por-temporada-coordenador", [
+		'local'=>$local->getValues(),
+		'locaiscoord'=>$locaiscoord,
+		'modalidades'=>$modalidades,
+		'temporada'=>$temporada->getValues(),
+		'turmas'=>Temporada::listAllTurmaTemporadaLocal($idtemporada, $idlocal),
 		'error'=>User::getError()
 	]);	
 });
@@ -124,6 +233,27 @@ $app->get("/estagiario/turma-temporada/:idtemporada/local/:idlocal", function($i
 		//'turmaNotRelated'=>$temporada->getTurma(false)
 		'error'=>User::getError()
 	]);	
+});
+
+$app->get("/prof/atualiza/turmatemporada/:idturma/:idtemporada/:desctemporada/:status", function($idturma, $idtemporada, $desctemporada, $status) {
+
+	User::verifyLogin();
+	
+	if($status != 3 && $status != 4 && $status != 6){
+		echo 'Valor inválido!';
+		exit();
+	}
+
+	Temporada::atualizaStatusTurmaTemporada($idturma, $idtemporada, $status);
+
+	$temporada = new Temporada();
+
+	//$novoStatus = $temporada->getIdturmastatusTurmaTemporada($idturma, $idtemporada);
+	
+	$texto = 'Status da turma '.$idturma.' da '.$desctemporada.' alterado com sucesso! Atualize a página para conferir. ';
+		
+	echo $texto;
+
 });
 
 

@@ -233,7 +233,6 @@ class Saude extends Model {
 	
 	public function getAtestadoUltimoByIdPess(int $idpess)
 	{
-
 		$sql = new Sql();
 
 		$results = $sql->select("SELECT * FROM tb_atestado WHERE dataatualizacao = (SELECT  MAX(dataatualizacao) FROM tb_atestado WHERE idpess = :idpess)", array(
@@ -243,6 +242,16 @@ class Saude extends Model {
 		if (count($results) > 0) {
 			$this->setData($results[0]);
 		}
+	}	
+
+	public function getAtestadoUltimoByNumcpf($numcpf)
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_atestado WHERE dataatualizacao = (SELECT  MAX(dataatualizacao) FROM tb_atestado WHERE cpf = :numcpf)", array(
+			":numcpf"=>$numcpf			
+		));
+		return $results;
 	}	
 	
 	public function getCountAtestadoByIdPess($idpess){

@@ -42,14 +42,14 @@
                         <strong>Temporada: </strong>{$value.desctemporada}<br>
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div {function="colorStatus($value.idinscstatus)"}>
                                 <strong >STATUS: {$value.descstatus}</strong>
                                 </div>
                             </div>
 
                             
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <a class="btn btn-primary" href="/profile/insc/{$value.idinsc}/{$value.idpess}" role="button">Detalhes</a>
 
                             {if="($value.idinscstatus) === '2'"}
@@ -58,10 +58,18 @@
                             -->
                             {/if}
 
-                            {if="($value.idinscstatus) !== '8' && ($value.idinscstatus) !== '9'"}    
+                            {if="($value.idinscstatus) !== '8' && ($value.idinscstatus) !== '9'"} 
+
+
 
                             <a href="/insc/{$value.idinsc}/statusCancelada" onclick="return confirm('Deseja realmente excluir PERMANENTEMENTE a inscrição {$value.idinsc} do(a) {$value.nomepess} da turma {$value.descativ} - {$value.desctemporada}? Lembramos que se você clicar em OK a inscrição e a matricula se existir, serão definitivamente canceladas.')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
-                            {/if}                      
+
+                                {if="$value.idinscstatus === '1'"}
+                                        
+                                    <a href="/declaracao-de-matricula/{$value.idpess}/{$value.idinsc}"  class="btn btn-success btn-xs"><i class="fa fa-check"></i> Declaração</a>
+                                {/if}                    
+
+                            {/if}  
                             
                             </div>
                         </div>        

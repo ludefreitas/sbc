@@ -3,19 +3,59 @@
   
   function atualizaStatus(idturma, desctemporada, idtemporada){
 
-        let status = prompt('Para atualizar o status da turma '+ idturma +' para a temporada '+ desctemporada +'  selecionada, digite:\n 3 - para inscrições abertas\n 4 - para inscrições suspensas\n 6 - para turma não iniciada');   
+        let status = prompt('Para atualizar o status da turma '+ idturma +' para a temporada '+ desctemporada +' selecionada, digite:\n 2 - para inscrições não iniciadas\n 3 - para inscrições abertas\n 4 - para inscrições suspensas\n 5 - para inscrições encerradas\n 6 - para turma não iniciada');  
+
+        if(status != 2 && status != 3 && status != 4 && status != 5 && status != 6){
+          alert("Valor inválido!!!")
+          return
+        }   
         
-        let url = "/admin/atualiza/turmatemporada/"+idturma+"/"+idtemporada+"/"+desctemporada+"/"+status        
+        let url = "/admin/atualiza/turmatemporada/"+idturma+"/"+idtemporada+"/"+desctemporada+"/"+status           
 
         let ajax = new XMLHttpRequest();
         ajax.open('GET', 'url'); 
         $.ajax({
           url: url,
           method: 'GET'  
-        }).done(function(result){         
-            alert(result)        
+        }).done(function(result){     
+
+          if(result){   
+            
+            let texto = '- '+result
+            let idlink = 'idlinkstatus'+idturma
+
+            if(status != null){
+              document.getElementById(idlink).innerHTML = texto   
+            }         
+                        
+            if(status == 2){ document.getElementById(idlink).style.color = 'orange'; }
+            if(status == 3){ document.getElementById(idlink).style.color = 'darkgreen'; }
+            if(status == 4){ document.getElementById(idlink).style.color = "red"; }
+            if(status == 5){ document.getElementById(idlink).style.color = 'darkred'; }
+            if(status == 6){ document.getElementById(idlink).style.color = 'blue'; }  
+
+          }        
 
         });
+      }
+
+      function openDiv(idlocalidade){
+
+        let idlocal = idlocalidade;
+              
+            document.getElementById('idlocal'+idlocal ).hidden = false  
+            document.getElementById('btnLocalClose'+idlocal ).hidden = false
+            document.getElementById('btnLocalOpen'+idlocal ).hidden = true      
+      }
+
+      function closeDiv(idlocalidade){
+
+        let idlocal = idlocalidade;
+
+            document.getElementById('idlocal'+idlocal ).hidden = true  
+            document.getElementById('btnLocalOpen'+idlocal ).hidden = false  
+            document.getElementById('btnLocalClose'+idlocal ).hidden = true 
+          
       }
 
 </script>
@@ -24,7 +64,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
 <h1>
- Turmas relacionadas à Temporada {$temporada.desctemporada} - {$temporada.descstatustemporada}   
+ 00 Turmas relacionadas à Temporada {$temporada.desctemporada} - {$temporada.descstatustemporada}   
 
 </h1>
 <ol class="breadcrumb">
@@ -91,8 +131,22 @@
 
           {/if}       
        </div>
-            
+
+                {loop="$locais"}            
+
+                {$idlocal = $value.idlocal}
+
+                <div  id="btnLocalOpen{$idlocal}">
+                <div style="text-align: center; border-radius: 5px; margin: 5px; height: 30px" class="btn-primary col-md-12" onclick="openDiv({$idlocal})" >{$value.apelidolocal} <i class="fa fa-caret-down"></i></div> 
+                </div>
+
+                <div  id="btnLocalClose{$idlocal}" hidden>
+                <div style="text-align: center; border-radius: 5px; margin: 5px; height: 30px" class="btn-primary col-md-12" onclick="closeDiv({$idlocal})" >{$value.apelidolocal} <i class="fa fa-caret-up"> </i></div> 
+                </div>
+
+                <div id="idlocal{$idlocal}" hidden >
                 {loop="$turmas"}
+                {if="$idlocal == $value.idlocal"}
                 <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
         
 
@@ -105,27 +159,33 @@
                           
                           {if="$value.idturmastatus == 2"}
                           <span>
-                            <a style="color: orange; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.idturma}, {$value.desctemporada}, {$value.idtemporada})">- Inscrições não iniciadas</a>
+                            <a id="idlinkstatus{$value.idturma}" style="color: orange; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.idturma}, {$value.desctemporada}, {$value.idtemporada})">- Inscrições não iniciadas</a>
                           </span>
 
                           {/if}
                           
                           {if="$value.idturmastatus == 3"}
                           <span>
-                            <a style="color: darkgreen; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.idturma}, {$value.desctemporada}, {$value.idtemporada})">- Inscrições abertas</a>
+                            <a id="idlinkstatus{$value.idturma}" style="color: darkgreen; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.idturma}, {$value.desctemporada}, {$value.idtemporada})">- Inscrições abertas</a>
                           </span>
 
                           {/if}
 
                           {if="$value.idturmastatus == 4"}
                           <span>
-                            <a style="color: red; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.idturma}, {$value.desctemporada}, {$value.idtemporada})"> - Inscrições suspensas</a>
+                            <a id="idlinkstatus{$value.idturma}" style="color: red; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.idturma}, {$value.desctemporada}, {$value.idtemporada})"> - Inscrições suspensas</a>
+                          </span>
+                          {/if}
+
+                          {if="$value.idturmastatus == 5"}
+                          <span>
+                            <a id="idlinkstatus{$value.idturma}" style="color: darkred; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.idturma}, {$value.desctemporada}, {$value.idtemporada})"> - Inscrições encerradas</a>
                           </span>
                           {/if}
 
                           {if="$value.idturmastatus == 6"}
                           <span>
-                            <a style="color: blue; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.idturma}, {$value.desctemporada}, {$value.idtemporada})"> - Turma não iniciada</a>
+                            <a id="idlinkstatus{$value.idturma}" style="color: blue; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.idturma}, {$value.desctemporada}, {$value.idtemporada})"> - Turma não iniciada</a>
                           </span>
                           {/if}
                           
@@ -169,16 +229,23 @@
                       <!--  | &nbsp; <a href="/insc-turma-temporada-para-sorteio/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: orangered;">  Sorteio |</a>  &nbsp;  
                       -->
 
-
-
                           <a href="/admin/token/{$value.idturma}" style="color: darkblue;"><i ></i> | Tokens</a>
+                           <a href="/admin/insc-altera-turma-temporada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}"> 
+                         | &nbsp; Mover inscritos &nbsp;
+                         </a> &nbsp; 
                       </h5>
                     </div>                    
                     
                   </div>
                 </div>
                 
+                {else}
+
+                {/if}
+                
                 {/loop}
+              </div>
+              {/loop}
             <!--
             <button type="button" onclick="window.print()" class="btn btn-primary pull-right" style="margin-right: 5px;">
                   <i class="fa fa-print"></i> Imprimir

@@ -1,10 +1,10 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
- <div class="container"> <!-- container 1 -->
+ <div class="container" style="margin-top: 0px;"> <!-- container 1 -->
             <div class="row"> <!-- row 2 -->
-                <div class="col-md-3" style="margin: 15px 0px 0px 0px">
+              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 0px 0px 10px 0px;">
                 <?php require $this->checkTemplate("user-profile-menu");?>
             </div>
-              <div class="col-md-9" style="text-align-last: left; background-color: white; margin: 15px 0px 5px 0px;">
+              <div class="col-md-9" style="text-align-last: left; background-color: white; margin: 5px 0px 50px 0px;">
 
             <div class="container">
                 <div class="row alert-primary">
@@ -16,10 +16,10 @@
                 <div class="row alert-info">
                     <div class="col-md-12">
                         <hr>
-                         <?php if( $value1["idinscstatus"] == 9 ){ ?>
+                        <?php if( $value1["idinscstatus"] == 9 ){ ?>
+                        
                         <strong>INSCRIÇÃO Nº: </strong><span><?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>&nbsp;&nbsp;[
                         <strong style="color: red; font-size: 18px;"> <?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </strong>]
-                        
                         <?php }else{ ?>
                         
                             <?php if( $value1["idstatustemporada"] == 5 ){ ?>
@@ -30,10 +30,10 @@
                                 <strong>INSCRIÇÃO Nº: </strong><span><?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
                             -->
                             <?php } ?>
-                       
 
                         <?php } ?>
-                        <br> 
+                        <br>
+                        
                         <strong>NOME DO ALUNO: </strong> <span><?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span><br>
                         <strong>COM LAUDO? </strong> <span><?php if( $value1["laudo"] == 0 ){ ?>Não<?php }else{ ?>Sim<?php } ?></span><br>
                         <strong>PARA PESSOA COM DEFICIÊNCIA? </strong> <span><?php if( $value1["inscpcd"] == 0 ){ ?>Não<?php }else{ ?>Sim<?php } ?></span><br>
@@ -42,27 +42,34 @@
                         <strong>Temporada: </strong><?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
 
                         <div class="row">
-                            <div class="col-md-6" > 
+                            <div class="col-md-4">
                                 <div <?php echo colorStatus($value1["idinscstatus"]); ?>>
                                 <strong >STATUS: <?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
                                 </div>
                             </div>
 
                             
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <a class="btn btn-primary" href="/profile/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" role="button">Detalhes</a>
 
                             <?php if( ($value1["idinscstatus"]) === '2' ){ ?>
-                            
-                            <!-- 
-                            <a href="/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusCancelada" onclick="return confirm('Deseja realmente excluir PERMANENTEMENTE a inscrição <?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?> do(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da turma <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>? Lembramos que se você clicar em OK a inscrição e a matricula se existir, serão definitivamente canceladas.')" class="btn btn-success btn-xs"><i></i> Matricular</a> 
+                            <!--
+                            <a href="/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusCancelada" onclick="return confirm('Deseja realmente excluir PERMANENTEMENTE a inscrição <?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?> do(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da turma <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>? Lembramos que se você clicar em OK a inscrição e a matricula se existir, serão definitivamente canceladas.')" class="btn btn-success btn-xs"><i></i> Matricular</a>
                             -->
                             <?php } ?>
 
-                            <?php if( ($value1["idinscstatus"]) !== '8' && ($value1["idinscstatus"]) !== '9' ){ ?>
+                            <?php if( ($value1["idinscstatus"]) !== '8' && ($value1["idinscstatus"]) !== '9' ){ ?> 
+
+
 
                             <a href="/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusCancelada" onclick="return confirm('Deseja realmente excluir PERMANENTEMENTE a inscrição <?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?> do(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da turma <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>? Lembramos que se você clicar em OK a inscrição e a matricula se existir, serão definitivamente canceladas.')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
-                            <?php } ?>                      
+
+                                <?php if( $value1["idinscstatus"] === '1' ){ ?>
+                                        
+                                    <a href="/declaracao-de-matricula/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"  class="btn btn-success btn-xs"><i class="fa fa-check"></i> Declaração</a>
+                                <?php } ?>                    
+
+                            <?php } ?>  
                             
                             </div>
                         </div>        

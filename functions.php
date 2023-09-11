@@ -8,7 +8,7 @@ use \Sbc\Model\Insc;
 use \Sbc\Model\Turma;
 use \Sbc\Model\Agenda;
 use \Sbc\Model\Pessoa;
-
+use \Sbc\Model\Local;
 
 function repostaSimParq($idpess){
 
@@ -64,10 +64,21 @@ function getAtestadoIcone($idpess){
 function getAtestadoIconeByNumCpf($numcpf){
     $saude = new Saude();
     $atestado = $saude->getCountAtestadoByNumcpf($numcpf);
-     $html = [];
-    if($atestado > 0){ 
-        array_push($html, '<span style="color: darkgreen;">Atestado</span><i style="font-size: 12px; color: darkorange" class="fa fa-check"></i>'
+    $validade = $saude->getAtestadoUltimoByNumcpf($numcpf);
+
+    $hoje = date('Y-m-d');
+    $validade = $validade[0]['datavalidade'];
+    
+    $html = [];
+    if($atestado > 0){
+        if($hoje > $validade){
+            array_push($html, '<span style="color: darkgreen;">Atestado</span>&nbsp;<i style="font-size: 12px; color: red" class="fa fa-question-circle"></i>'
             );                          
+        }else{
+            array_push($html, '<span style="color: darkgreen;">Atestado</span><i style="font-size: 12px; color: darkorange" class="fa fa-check"></i>'
+            );                          
+        } 
+        
     }else{
         array_push($html, '[Atestado]'
             );
@@ -1048,6 +1059,16 @@ function calcularIdade($date){
 
             return true;
        }
+    }
+
+    function getApelidoLocalById($idlocal){
+
+        $local = new Local();
+
+        $apelido = $local->getApelidoLocalById($idlocal);
+
+        return $apelido[0]['apelidolocal'];
+
     }
 
 

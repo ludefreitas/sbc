@@ -7,6 +7,8 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="/prof"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active"><a style="color: red" href="javascript: history.go(-1)">Voltar</a>
+    </li>
   </ol>
 </section>
 
@@ -21,20 +23,20 @@
         <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
           </div>
         <?php } ?>
-
-
-         <form method="post" action="/prof/turma/create/token">
-
+        
+         <!-- <a href="/prof/turma/create/token/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-success">Gerar token</a> -->
+            
+             <form method="post" action="/prof/turma/create/token">
             <div class="box-header">
-             <!-- <a href="/prof/turma/create/token/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-success">Gerar token</a> -->
+            
 
              
 
-            <input hidden type="text" name="idturma" value="<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"/>
-            <input hidden type="text" name="iduser" value="<?php echo htmlspecialchars( $turma["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"/>
-            <input hidden type="text" name="idtemporada" value="<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>"/>
-            <!--<input type="text" name="numcpf" placeholder="Digite o CPF, se necessário">-->
-            <input style="width: 170px; float: left;" type="text" maxlength="14" id="numcpf" name="numcpf" class="input-text" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}"  placeholder="000.000.000-00"/>
+            <input hidden type="text" name="idturma" value="<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+             <input hidden type="text" name="iduser" value="<?php echo htmlspecialchars( $turma["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+             <input hidden type="text" name="idtemporada" value="<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>"/>
+           
+            <input style="width: 170px; float: left;" type="text" maxlength="14" id="numcpf" name="numcpf" class="input-text" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}"  placeholder="000.000.000-00">
                     <script type="text/javascript">$("#numcpf").mask("000.000.000-00");</script>
             </div>
             <div class="box-header">
@@ -46,9 +48,9 @@
 
         </form>
 
-             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+        <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
             <div class="row" style="margin: 5px;">
-              <?php $counter1=-1;  if( isset($tokens) && ( is_array($tokens) || $tokens instanceof Traversable ) && sizeof($tokens) ) foreach( $tokens as $key1 => $value1 ){ $counter1++; ?>
+            <?php $counter1=-1;  if( isset($tokens) && ( is_array($tokens) || $tokens instanceof Traversable ) && sizeof($tokens) ) foreach( $tokens as $key1 => $value1 ){ $counter1++; ?>
                 <div class="col-md-2" style="border: solid 1px; text-align: center;">
 
                     <?php if( $value1["isused"] == 0 ){ ?>
@@ -62,27 +64,22 @@
                
                     <?php }else{ ?>
                     <span style="font-weight: bold; color: red;">                  
-                        <s><?php echo htmlspecialchars( $value1["token"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </s><i class="fa fa-check" style="color: green;"></i>
-                    </span><br>
+                        <s><?php echo htmlspecialchars( $value1["token"], ENT_COMPAT, 'UTF-8', FALSE ); ?></s>
+                    </span><i class="fa fa-check" style="color: green;"></i><br>
 
                         <?php if( $value1["numcpf"] ){ ?>
                             <?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                         <?php }else{ ?>
                             NULL
-                        <?php } ?>                       
-                       
-                       
+                        <?php } ?>               
                     <?php } ?>
-
                     <br>   
 
-                    Creator: <?php echo getUserNameById($value1["creator"]); ?>
-
-
-            </div>               
-          <?php } ?>           
+                    Criado por: <?php echo getUserNameById($value1["creator"]); ?>
+                </div>               
+            <?php } ?>           
             <!-- /.box-body -->
-        </div>
+            </div>
     </div>
   	</div>
   </div>

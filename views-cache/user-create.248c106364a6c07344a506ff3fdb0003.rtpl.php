@@ -70,9 +70,9 @@
 </script>
 
 
-        <div class="container"> <!-- container 1 -->
-                    <div class="row"> <!-- row 2 -->
-                      <div class="col-md-12" style="text-align-last: left; background-color: white; margin: 15px 0px 50px 0px;">
+        <div class="container" style="margin-top: 0px;"> <!-- container 1 -->
+            <div class="row"> <!-- row 2 -->
+              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 0px 0px 50px 0px;">
                   
 
         <div class="container">
@@ -149,7 +149,7 @@
 
                     <p>
                         <label style="font-size: 12px; margin: 0px">Data do Nascimento *</label>
-                        <input onblur="menorDeIdade()" type="date" id="dtnasc" name="dtnasc" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["dtnasc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required="required"/>
+                        <input onblur="menorDeIdade()" type="date" id="dtnasc" name="dtnasc" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["dtnasc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required="required">
                     </p> 
 
                     <p>
@@ -218,7 +218,7 @@
                          <input style="width: 100%; float: right;" type="text" id="cadunico" name="cadunico" class="form-control" value="<?php echo htmlspecialchars( $registerpessoaValues["cadunico"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" pattern="[0-9]{3}.[0-9]{5}.[0-9]{2}-[0-9]{1}">
                     <script type="text/javascript">$("#cadunico").mask("000.00000.00-0");</script>
                     </p> 
-
+                    
                     <span style="color: red; font-size: 10px; font-style: italic;"> * Atenção! Para efetuar uma inscrição, nos nossos cursos esportivos, para pessoa em vulnerabilidade social (pessoa participante de programas sociais do governo), você deve selecionar acima a opção 'SIM' e informar, <strong>OBRIGATÓRIAMENTE,</strong> o número de inscrição no Cadùnico/NIS.</span>                     
 
                     <p>
@@ -273,8 +273,8 @@
                             <input style="width: 100%; float: right;" type="text" maxlength="14" id="cpfpai" name="cpfpai" class="form-control" value="" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}">
                         <script type="text/javascript">$("#cpfpai").mask("000.000.000-00");</script>
                         </p> 
-                    </div>    
-                    -->     
+                    </div>      
+                    -->
 
                     <p>
                     <label style="font-size: 12px; margin: 0px">

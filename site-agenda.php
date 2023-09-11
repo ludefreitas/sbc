@@ -88,6 +88,32 @@ $app->get("/agenda/:idlocal/:data", function($idlocal, $data) {
 	$user = User::getFromSession();
 	$agenda = new Agenda();
 
+	$todasMsgs = Agenda::selectAllAgendaMsgLocal($idlocal);
+
+	for ($i = 0; $i < count($todasMsgs); $i++){
+		
+		$datainicial = $todasMsgs[$i]['dtinitmsg'];
+		$datafinal = $todasMsgs[$i]['dtfimmsg'];
+		$texto = $todasMsgs[$i]['msgtexto'];
+		$idusermsg = $todasMsgs[$i]['iduser'];
+
+		$usuario = User::getUserNameById($idusermsg);
+		$usuario = $usuario[0]['desperson'];
+
+		if($data >= $datainicial && $data <= $datafinal){
+
+			if($_SESSION['User']['inadmin'] == 1){
+				echo "<script>alert('Mensagem: ".$texto." - Criada por: ".$usuario."');";
+				echo "javascript:history.go(-1)</script>";
+				exit();
+			}else{
+				echo "<script>alert('".$texto."');";
+				echo "javascript:history.go(-1)</script>";
+				exit();
+			}		
+		}
+	}
+
 	$datalimite = date('Y-m-d l', strtotime('+4 week'));
 	$dataatual = date('Y-m-d');
 	$data = date('Y-m-d l', strtotime($data));
@@ -596,6 +622,10 @@ $app->get("/minhaagenda", function() {
 	$iduser = $user->getiduser();
 	
 	$titulo = 'raia';
+
+	$data = new DateTime();
+
+	$data = date('Y-m-d');
 	
 	$agenda = $agenda->getAgendaByIduser($iduser, $titulo);
 	//$agenda = $agenda->getAgendaAll();
@@ -610,6 +640,7 @@ $app->get("/minhaagenda", function() {
 
 	$page->setTpl("minhaagenda", [
 		'agenda'=>$agenda,
+		'data'=>$data,
 		'error'=>Agenda::getMsgError(),
 		'success'=>Agenda::getMsgSuccess()
 	]);
@@ -882,7 +913,6 @@ $app->get("/minhaagenda-avaliacao", function() {
 	$data = new DateTime();
 
 	$data = date('Y-m-d');
-
 	
 	$agenda = $agenda->getAgendaAvaliacaoByIduser($iduser, $titulo);
 

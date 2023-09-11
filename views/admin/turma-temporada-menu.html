@@ -14,7 +14,7 @@
 												</li>
 												<li class="treeview">
 												
-													<a href="/admin/turma-temporada/4/modalidade/32">
+													<a href="/admin/turma-temporada/4/modalidade/1">
 													
 											   			<i class="fa fa-link"></i> 
 											   			Por modalidades
@@ -37,7 +37,7 @@
 												</li>
 												<li class="treeview">
 												
-													<a href="/admin/turma-temporada/84/modalidade/32">
+													<a href="/admin/turma-temporada/84/modalidade/1">
 													
 											   			<i class="fa fa-link"></i> 
 											   			Por modalidades
@@ -60,7 +60,7 @@
 												</li>
 												<li class="treeview">
 												
-													<a href="/admin/turma-temporada/83/modalidade/32">
+													<a href="/admin/turma-temporada/83/modalidade/1">
 													
 											   			<i class="fa fa-link"></i> 
 											   			Por modalidades

@@ -1,0 +1,95 @@
+
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+<h4>
+ Locais de aulas do professor - temporada {$temporada.desctemporada}
+
+</h4>
+<ol class="breadcrumb">
+  <li><a href="/prof"><i class="fa fa-dashboard"></i> Home</a></li>
+  <li class="active"><a style="color: red" href="javascript: history.go(-1)">Voltar</a>
+    </li>
+</ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+<div class="row">
+
+  {if="$error != ''"}
+          <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
+      {$error}
+          </div>
+      {/if}
+  <div class="col-md-12">
+
+      <div class="box box-primary" > 
+
+        <div class="box-header"> 
+
+          <h4>Meus locais de aula</h4>
+
+       </div>
+
+      <div class="box-body" style="border: solid 1px lightblue; margin: 5px;"> 
+         {loop="$locais"}                          
+          <div class="box-body no-padding col-md-2">            
+                         
+                <div class="box-body" style="border: solid 1px lightblue; margin: 2px; text-align: center;">
+
+                  <div class="row">
+
+                    <div class="col-md-12" >
+                      <span style="">
+
+                      <a href="/prof/turma-temporada/{$temporada.idtemporada}/{$value.idlocal}"><strong>{$value.apelidolocal} </strong> </a>
+                       
+
+                     
+                      </span>
+                    </div>                     
+                   
+                  </div>
+                    
+                </div>
+             
+          </div>
+            {/loop}         
+
+        </div>
+        <!-- /.box-body --> 
+        {if="$locaiscoord"}
+          <div class="box-body col-md-12">
+                  <table class="table table-striped">
+                      <thead>
+                          <tr>
+                           <th>Turmas da temporada por centro esportivo (coordenador)</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+
+                          <tr>
+                          
+                          {loop="$locaiscoord"}
+                          <tr>
+                          <td>
+                              <a href="/prof/turma-temporada-coordenador/{$temporada.idtemporada}/local/{$value.idlocal}"><i class=""></i> {$value.idlocal} - {$value.apelidolocal}</a>
+                          </td>
+                          </tr>
+                          {/loop}
+
+                      </tbody>
+                  </table>
+              </div>
+          {/if}
+
+  </div>
+</div>
+</div>
+
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

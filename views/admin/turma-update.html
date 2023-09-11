@@ -55,11 +55,7 @@
                   {/loop}                            
                 </select>
             </div>    
-        
-            </div>
-
-            <div class="col-md-6">
-                
+                        
             <div class="form-group">
               <label for="turma">Atividade</label>
                 <select class="form-control" name="idativ">     
@@ -78,11 +74,29 @@
                 </select>
             </div>
              
+             </div>
 
-           <div class="form-group">
-              <label for="turma">Vagas</label>
-              <input type="number" class="form-control" id="vagasgeral" name="vagasgeral" placeholder="Informe a quantidade de vagas totais" value="">
-            </div>
+            <div class="col-md-6">
+
+                <div class="box-header">
+                  <label for="turma">Vagas público geral</label>
+                  <input type="number" class="form-control" id="vagas" name="vagas" placeholder="Informe a quantidade de vagas público geral" value="{$turma.vagas}">
+                </div>   
+
+                <div class="box-header">
+                  <label for="turma">Vagas público laudo</label>
+                  <input type="number" class="form-control" id="vagaslaudo" name="vagaslaudo" placeholder="Informe a quantidade de vagas público com laudo" value="{$turma.vagaslaudo}">
+                </div>   
+
+                <div class="box-header">
+                  <label for="turma">Vagas PCD</label>
+                  <input type="number" class="form-control" id="vagaspcd" name="vagaspcd" placeholder="Informe a quantidade de vagas público PCD " value="{$turma.vagaspcd}">
+                </div>   
+
+                <div class="box-header">
+                  <label for="turma">Vagas vulnerabilidade social</label>
+                  <input type="number" class="form-control" id="vagaspvs" name="vagaspvs" placeholder="Informe a quantidade de vagas público vulnerabilidade social" value="{$turma.vagaspvs}">
+                </div>   
             
             
             <div class="checkbox">

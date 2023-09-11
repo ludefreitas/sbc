@@ -31,6 +31,27 @@ class Insc extends Model {
 		if (count($results) > 0) {
 			$this->setData($results[0]);
 		}
+	}	
+
+	public function moveInscSave($idturmadestino, $idturmaorigem, $idinscdestino, $idinscorigem, $idtemporadadestino, $idtemporadaorigem, $tipomove, $observacao, $dtinscorigem, $dtmatricorigem, $dtmovimentacao){
+
+		$idmoveinsc = 0;
+
+		$sql = new Sql();												        
+		$results = $sql->select("CALL sp_moveinsc_save(:idmoveinsc, :idturmadestino, :idturmaorigem, :idinscdestino, :idinscorigem, :idtemporadadestino, :idtemporadaorigem, :tipomove, :observacao, :dtinscorigem, :dtmatricorigem, :dtmovimentacao)", [
+			':idmoveinsc'=>$idmoveinsc,
+			':idturmadestino'=>$idturmadestino,
+			':idturmaorigem'=>$idturmaorigem,
+			':idinscdestino'=>$idinscdestino,
+			':idinscorigem'=>$idinscorigem,
+			':idtemporadadestino'=>$idtemporadadestino,
+			':idtemporadaorigem'=>$idtemporadaorigem,
+			':tipomove'=>$tipomove,
+			':observacao'=>$observacao,
+			':dtinscorigem'=>$dtinscorigem,
+			':dtmatricorigem'=>$dtmatricorigem,
+			':dtmovimentacao'=>$dtmovimentacao
+		]);
 	}
 
 	public function save_presenca($idinsc, $statuspresenca, $data)
@@ -161,15 +182,15 @@ class Insc extends Model {
 		$results = $sql->select("
 			
 			SELECT * FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_presenca g ON g.idinsc = a.idinsc			
+			INNER JOIN tb_carts b ON b.idcart = a.idcart			
 			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus
-			INNER JOIN tb_presenca g ON g.idinsc = a.idinsc			
 			WHERE a.idturma = :idturma 
 			AND a.idtemporada = :idtemporada 
-			AND g.dtpresenca = :data
+			AND g.dtpresenca = :data 
 			AND a.dtmatric < g.dtpresenca 
 			AND f.idinscstatus = 1
 			ORDER BY c.nomepess;
@@ -190,12 +211,12 @@ class Insc extends Model {
 			
 			SELECT * FROM tb_insc a
 			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_presenca g ON g.idinsc = a.idinsc			
 			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus
-			INNER JOIN tb_presenca g ON g.idinsc = a.idinsc			
-			WHERE a.idturma = :idturma 
+			WHERE  a.idturma = :idturma
 			AND a.idtemporada = :idtemporada 
 			-- AND g.dtpresenca = :data
 			AND f.idinscstatus = 1
@@ -223,8 +244,8 @@ class Insc extends Model {
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus
 			-- INNER JOIN tb_presenca g ON g.idinsc = a.idinsc			
-			WHERE a.idturma = :idturma 
-			AND a.idtemporada = :idtemporada 
+			WHERE a.idtemporada = :idtemporada 
+			AND a.idturma = :idturma 
 			AND f.idinscstatus = 1
 			ORDER BY c.nomepess;
 			-- ORDER BY a.inscpcd DESC, a.laudo DESC, a.inscpvs DESC, a.numordem, a.idinscstatus;
@@ -242,6 +263,17 @@ class Insc extends Model {
 			':idtemporada'=>$idtemporada,
 			':idturma'=>$idturma,			
 		    ':mes'=>$mes 
+		]);
+		return $results;
+	}
+
+	public function GetDiasDoMesPresencaDescTemporada($idtemporada, $idturma, $mes, $desctemporada){
+		$sql = new Sql();
+			$results = $sql->select("CALL sp_select_dias_mes_presenca_desctemporada(:idtemporada, :idturma, :mes, :desctemporada)", [
+			':idtemporada'=>$idtemporada,
+			':idturma'=>$idturma,			
+		    ':mes'=>$mes,
+		    ':desctemporada'=>$desctemporada 
 		]);
 		return $results;
 	}
@@ -775,6 +807,17 @@ class Insc extends Model {
 			':idinsc'=>$this->getidinsc()
 		]);
 
+	}
+
+	public function deleteInscByIdinsc($idinsc)
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("			
+			CALL sp_insc_delete(:idinsc)
+		", [
+			':idinsc'=>$idinsc
+		]);
 	}
 
 	public function getCart():Cart

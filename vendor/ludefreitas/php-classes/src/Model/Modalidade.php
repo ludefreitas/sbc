@@ -241,6 +241,58 @@ class Modalidade extends Model {
 		];
 	}
 
+
+	public static function getModalidadesTemporadaByIdUser($idtemporada, $iduser)
+	{
+		$sql = new Sql();
+
+		return $sql->select("SELECT distinct a.* 
+			FROM tb_modalidade a
+			INNER JOIN 	tb_turma b ON b.idmodal = a.idmodal
+			INNER JOIN 	tb_turmatemporada c ON c.idturma = b.idturma
+			WHERE c.idtemporada = :idtemporada
+			AND c.iduser = :iduser", [
+			'idtemporada'=>$idtemporada,
+			'iduser'=>$iduser
+		]);
+	}
+
+	public static function getModalidadesTemporadaLocalByIdUser($idtemporada, $idlocal, $iduser)
+	{
+		$sql = new Sql();
+
+		return $sql->select("SELECT DISTINCT c.* FROM tb_turmatemporada a
+            INNER JOIN tb_turma b ON b.idturma = a.idturma
+            INNER JOIN tb_modalidade c ON c.idmodal = b.idmodal
+            INNER JOIN tb_espaco d ON d.idespaco = b.idespaco
+            INNER JOIN tb_local e ON e.idlocal = d.idlocal
+            WHERE a.idtemporada = :idtemporada
+            AND ( a.iduser = :iduser OR a.idestagiario = :iduser)
+            AND e.idlocal = :idlocal
+            ORDER BY c.descmodal", [
+            'idtemporada'=>$idtemporada,
+			'iduser'=>$iduser,
+			'idlocal'=>$idlocal
+		]);
+	}
+
+	public static function getModalidadesTemporadaByLocal($idtemporada, $idlocal)
+	{
+		$sql = new Sql();
+
+		return $sql->select("SELECT DISTINCT c.* FROM tb_turmatemporada a
+            INNER JOIN tb_turma b ON b.idturma = a.idturma
+            INNER JOIN tb_modalidade c ON c.idmodal = b.idmodal
+            INNER JOIN tb_espaco d ON d.idespaco = b.idespaco
+            INNER JOIN tb_local e ON e.idlocal = d.idlocal
+            WHERE a.idtemporada = :idtemporada
+            AND e.idlocal = :idlocal
+            ORDER BY c.descmodal", [
+            'idtemporada'=>$idtemporada,
+			'idlocal'=>$idlocal
+		]);
+	}
+
 	public static function setMsgError($msg)
 	{
 		$_SESSION[Modalidade::SESSION_ERROR] = $msg;

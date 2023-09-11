@@ -6,6 +6,8 @@ use \Sbc\Model\Endereco;
 use \Sbc\Model\Pessoa;
 use \Sbc\Model\User;
 use \Sbc\Model\Cart;
+use \Sbc\Model\Insc;
+use \Sbc\Model\Temporada;
 
 $app->get("/pessoa-create", function() {
 
@@ -43,6 +45,10 @@ $app->post("/registerpessoa", function(){
 		header("Location: /pessoa-create");
 		exit;
 	}
+	$nomepess = ltrim($_POST['nomepess']);
+
+	var_dump($nomepess);
+	exit;
 
 	if (!isset($_POST['dtnasc']) || $_POST['dtnasc'] == '') {
 
@@ -182,7 +188,7 @@ $app->post("/registerpessoa", function(){
 			header("Location: /pessoa-create");
 			exit;
 		}	
-	}	
+	}
 
 	$_POST['statuspessoa'] = 1;
 
@@ -192,7 +198,7 @@ $app->post("/registerpessoa", function(){
 
 	$pessoa->setData([
 		'iduser'=>$iduser, 		
-		'nomepess'=>$_POST['nomepess'],
+		'nomepess'=>$nomepess,
 		'dtnasc'=>$_POST['dtnasc'],
 		'sexo'=>$_POST['sexo'],
 		'numcpf'=>$_POST['numcpf'],
@@ -431,6 +437,8 @@ $app->post("/updatepessoa/:idpess", function($idpess){
 		header("Location: /user/pessoa/".$idpess."");
 		exit;
 	}
+
+	$nomepess = ltrim($_POST['nomepess']);
 
 	if (!isset($_POST['dtnasc']) || $_POST['dtnasc'] == '') {
 
@@ -683,7 +691,7 @@ $app->post("/updatepessoa/:idpess", function($idpess){
 	$pessoa->setData([
 		'idpess'=>$idpess, 		
 		'iduser'=>$iduser, 		
-		'nomepess'=>$_POST['nomepess'],
+		'nomepess'=>$nomepess,
 		'dtnasc'=>$_POST['dtnasc'],
 		'sexo'=>$_POST['sexo'],
 		'numcpf'=>$_POST['numcpf'],
@@ -728,5 +736,66 @@ $app->post("/updatepessoa/:idpess", function($idpess){
 	header('Location: /user/pessoas');
 	exit;
 });
+
+$app->get("/declaracao-de-matricula/:idpess/:idinsc", function($idpess, $idinsc) {
+
+	User::verifyLogin(false);
+
+	$insc = new Insc();
+
+	$insc->get((int)$idinsc);
+
+	$diahoje = date('d');
+	$mesatual = date('m');
+	$anoatual = date('Y');
+
+	$insc = $insc->getValues();
+
+	$idtemporada = $insc['idtemporada'];
+	$idturma = $insc['idturma'];
+
+	$iduserprof = Temporada::getIduserByTurmaTemporada($idturma, $idtemporada);
+	$dadosprof = User::getApelidopersonTelefoneByIduser($iduserprof);
+
+	$apelidoperson = $dadosprof['apelidoperson'];
+	$telefoneperson = $dadosprof['nrphone'];
+
+	/*
+	echo '<pre>';
+	print_r($dadosprof['nrphone']);
+	echo '</pre>';
+	exit;
+	*/
+	
+
+	if($mesatual == 1){ $nomemes = 'janeiro';}
+	if($mesatual == 2){ $nomemes = 'fevereiro';}
+	if($mesatual == 3){ $nomemes = 'março';}
+	if($mesatual == 4){ $nomemes = 'abril';}
+	if($mesatual == 5){ $nomemes = 'maio';}
+	if($mesatual == 6){ $nomemes = 'junho';}
+	if($mesatual == 7){ $nomemes = 'julho';}
+	if($mesatual == 8){ $nomemes = 'agosto';}
+	if($mesatual == 9){ $nomemes = 'setembro';}
+	if($mesatual == 10){ $nomemes = 'outubro';}
+	if($mesatual == 11){ $nomemes = 'novembro';}
+	if($mesatual == 12){ $nomemes = 'dezembro';}
+
+		$page = new Page([
+		'header'=>false,
+		'footer'=>false
+	]);
+
+		$page->setTpl("declaracao-de-matricula", [
+			'diahoje'=>$diahoje,
+			'nomemes'=>$nomemes,
+			'anoatual'=>$anoatual,
+			'insc'=>$insc,
+			'apelidoperson'=>$apelidoperson,
+			'telefoneperson'=>$telefoneperson 
+		]);	
+
+});
+
 
 ?>

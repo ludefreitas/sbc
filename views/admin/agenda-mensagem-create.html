@@ -1,0 +1,164 @@
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+
+<script type="text/javascript">
+
+   function excluirElemento(id){
+
+    document.getElementById('teste' + id).remove();
+
+    let url = '/admin/mensagem/agenda/excluir/' + id;
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+              alert(result);
+          
+        });
+      
+   }        
+  
+</script>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h4>
+   Criar período de pausa, inclusive nos feriados e emendas, na natação espontânea do
+   {if="$idlocal == 3"} BAETÃO {/if}
+   {if="$idlocal == 21"} PAULICÉIA {/if}
+  </h4>
+  <ol class="breadcrumb">
+    <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+  </ol>
+</section>
+
+<!-- Main content -->
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-success">
+        {if="$error != ''"}
+          <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
+        {$error}
+          </div>
+        {/if}
+        <!-- /.box-header -->
+        <!-- form start --><form role="form" action="/admin/mensagem/agenda/create" method="post">
+          <div class="box-body">
+            
+            <div class="box-header">
+              <label for="descmsg">
+                Descreva a mensagem para o período sem natação no
+                {if="$idlocal == 3"} BAETÃO {/if}
+                {if="$idlocal == 21"} PAULICÉIA {/if}
+              </label>
+              <input type="text" class="form-control" id="descmsg" name="descmsg" placeholder="Mensagem" value="{$createMsgAgendaValues.descmsg}">
+            </div>
+
+            <div class="box-header">
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="datainicial">Data de ínicio</label>
+                  <input type="date" class="form-control" id="datainicial" name="datainicial" value="{$createMsgAgendaValues.datainicial}">
+                </div>
+                <div class="col-md-6">
+                  <label for="datafinal">Data de término</label>
+                  <input type="date" class="form-control" id="datafinal" name="datafinal" value="{$createMsgAgendaValues.datafinal}">
+                </div>
+              </div>
+              <input hidden type="text" name="idlocal" value="{$idlocal}">
+            </div>
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <button type="submit" class="btn btn-success">Cadastrar</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <a type="button" class="btn btn-danger" href="javascript:window.history.go(-1)">Cancelar</a>
+          </div>
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-primary" style="margin: 10px;">        
+          
+      </div>
+      <div class="table-responsive">
+        <table class="table-sm table-striped" style="margin: 10px;">
+            <thead>
+                <tr style="border: solid 1px; padding: 1px">
+                  <th scope="col"></th>
+                  <th style="border: solid 1px; padding: 1px">Data início</th>
+                  <th scope="col"></th>
+                  <th style="border: solid 1px; padding: 1px">Data Final</th>
+                  <th scope="col"></th>
+                  <th style="border: solid 1px; padding: 1px">Local</th>
+                  <th scope="col"></th>
+                  <th style="border: solid 1px; padding: 1px">Responsável</th>
+                  <th scope="col"></th>
+                  <th style="border: solid 1px; padding: 1px">Mensagem</th>
+                  <th scope="col"></th>
+                  <th style="border: solid 1px; padding: 1px">Excluir</th>
+                </tr>
+            </thead>
+            <tbody>
+                {loop="$todasMsgs"}
+                <tr id="teste{$value.idagendamsg}" style="border: solid 2px black; padding: 5px" >
+                    <th scope="row"></th>
+                    <td style="padding: 5px">{function="formatDate($value.dtinitmsg)"} </td>
+                    <th scope="row"></th>
+                    <td style="padding: 5px">{function="formatDate($value.dtfimmsg)"} </td>
+                    <th scope="row"></th>
+                    <td style="padding: 5px">{function="getApelidoLocalById($value.idlocal)"} </td>
+                    <th scope="row"></th>
+                    <td style="padding: 5px">{function="getUserNameById($value.iduser)"} </td>
+                     <th scope="row"></th>
+                    <td style="padding: 5px">{$value.msgtexto} </td>
+                    <th scope="row"></th>
+
+                    <td style="padding: 5px; text-align: center;">
+
+                      <a onclick="excluirElemento({$value.idagendamsg})">
+                          <i class="fa fa-trash" style="color: red; padding: 5px"></i> 
+                      </a>     
+
+                    </td>
+                      
+                   
+                </tr>
+                 {else}
+                 <th colspan="12" scope="row"></th>
+                <tr style="font-weight: bold; color: red; font-size: 16px; text-align: center; padding: 5px;">
+                  <td colspan="12">
+                    Não há períodos sem natação espontânea cadastrada!
+                  </td>
+                </tr>
+          {/loop}
+                
+              </tbody>
+        </table>
+    </div>
+    </div>
+</div>
+
+  
+
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

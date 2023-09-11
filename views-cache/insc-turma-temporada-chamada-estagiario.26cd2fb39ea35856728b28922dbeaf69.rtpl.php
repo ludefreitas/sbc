@@ -52,7 +52,6 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
                 </tr>
                 <?php } ?>
                 
@@ -63,7 +62,7 @@
                     <i class="fa fa-print"></i> Imprimir
         </button>
         
-        <a class="btn btn-info"  href="javascript:window.history.go(-1)" style="font-weight: bold;">
+        <a class="btn btn-info"  href="javascript:window.history.go(-1)" style="margin-right: 5px; margin-top: 5px">
         <i class="fa fa-arrow-left"></i> 
             Voltar
         </a> 
