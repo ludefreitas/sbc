@@ -22,10 +22,7 @@
           
         });
       
-   }
-
-
-        
+   }        
   
 </script>
 
@@ -34,7 +31,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h4>
-   Criar período de pausa na natação espontânea 
+   Criar período de pausa, inclusive nos feriados e emendas, na natação espontânea do
    <?php if( $idlocal == 3 ){ ?> BAETÃO <?php } ?>
    <?php if( $idlocal == 21 ){ ?> PAULICÉIA <?php } ?>
   </h4>
@@ -63,6 +60,7 @@
                 <?php if( $idlocal == 3 ){ ?> BAETÃO <?php } ?>
                 <?php if( $idlocal == 21 ){ ?> PAULICÉIA <?php } ?>
               </label>
+              <input type="text" name="idlocal" value="<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>" hidden>
               <input type="text" class="form-control" id="descmsg" name="descmsg" placeholder="Mensagem" value="<?php echo htmlspecialchars( $createMsgAgendaValues["descmsg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
 
@@ -82,7 +80,7 @@
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
-            <button type="submit" class="btn btn-success">Cadastrar</button>
+            <button type="submit" class="btn btn-success">Criar</button>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <a type="button" class="btn btn-danger" href="javascript:window.history.go(-1)">Cancelar</a>
           </div>
@@ -121,7 +119,11 @@
             </thead>
             <tbody>
                 <?php $counter1=-1;  if( isset($todasMsgs) && ( is_array($todasMsgs) || $todasMsgs instanceof Traversable ) && sizeof($todasMsgs) ) foreach( $todasMsgs as $key1 => $value1 ){ $counter1++; ?>
-                <tr id="teste<?php echo htmlspecialchars( $value1["idagendamsg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="border: solid 2px black; padding: 5px" >
+                <?php if( $value1["dtfimmsg"] < $hoje ){ ?> 
+                  <tr id="teste<?php echo htmlspecialchars( $value1["idagendamsg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="border: solid 2px black; padding: 5px; color:  red;" >
+                <?php }else{ ?>
+                  <tr id="teste<?php echo htmlspecialchars( $value1["idagendamsg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="border: solid 2px black; padding: 5px;" >
+                <?php } ?>
                     <th scope="row"></th>
                     <td style="padding: 5px"><?php echo formatDate($value1["dtinitmsg"]); ?> </td>
                     <th scope="row"></th>

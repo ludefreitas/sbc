@@ -4,22 +4,22 @@
   function atualizaStatus(idturma, desctemporada, idtemporada){
 
         let status = prompt('Para atualizar o status da turma '+ idturma +' para a temporada '+ desctemporada +' selecionada, digite:\n 2 - para inscrições não iniciadas\n 3 - para inscrições abertas\n 4 - para inscrições suspensas\n 5 - para inscrições encerradas\n 6 - para turma não iniciada');  
-
+        
         if(status != 2 && status != 3 && status != 4 && status != 5 && status != 6){
           alert("Valor inválido!!!")
           return
         }   
         
-        let url = "/admin/atualiza/turmatemporada/"+idturma+"/"+idtemporada+"/"+desctemporada+"/"+status           
+        let url = "/admin/atualiza/turmatemporada/"+idturma+"/"+idtemporada+"/"+desctemporada+"/"+status        
 
         let ajax = new XMLHttpRequest();
         ajax.open('GET', 'url'); 
         $.ajax({
           url: url,
           method: 'GET'  
-        }).done(function(result){     
-
-          if(result){   
+        }).done(function(result){         
+            
+            if(result){   
             
             let texto = '- '+result
             let idlink = 'idlinkstatus'+idturma
@@ -38,7 +38,7 @@
 
         });
       }
-
+      
       function openDiv(idlocalidade){
 
         let idlocal = idlocalidade;
@@ -57,6 +57,30 @@
             document.getElementById('btnLocalClose'+idlocal ).hidden = true 
           
       }
+      
+      function expandir(idturma){
+
+        let iddaturma = idturma;
+
+            document.getElementById('lermais'+iddaturma).hidden = true 
+            document.getElementById('lermenos'+iddaturma).hidden = false 
+            document.getElementById('escondido1'+iddaturma ).hidden = false  
+            document.getElementById('escondido2'+iddaturma ).hidden = false 
+            document.getElementById('escondido3'+iddaturma ).hidden = false  
+          
+      }
+
+       function recolher(idturma){
+
+        let iddaturma = idturma;
+
+            document.getElementById('lermais'+iddaturma).hidden = false 
+            document.getElementById('lermenos'+iddaturma).hidden = true 
+            document.getElementById('escondido1'+iddaturma ).hidden = true  
+            document.getElementById('escondido2'+iddaturma ).hidden = true 
+            document.getElementById('escondido3'+iddaturma ).hidden = true  
+          
+      }
 
 </script>
 
@@ -64,7 +88,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
 <h1>
- 00 Turmas relacionadas à Temporada {$temporada.desctemporada} - {$temporada.descstatustemporada}   
+ Turmas relacionadas à Temporada {$temporada.desctemporada} - {$temporada.descstatustemporada}   
 
 </h1>
 <ol class="breadcrumb">
@@ -131,7 +155,7 @@
 
           {/if}       
        </div>
-
+            
                 {loop="$locais"}            
 
                 {$idlocal = $value.idlocal}
@@ -176,7 +200,7 @@
                             <a id="idlinkstatus{$value.idturma}" style="color: red; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.idturma}, {$value.desctemporada}, {$value.idtemporada})"> - Inscrições suspensas</a>
                           </span>
                           {/if}
-
+                          
                           {if="$value.idturmastatus == 5"}
                           <span>
                             <a id="idlinkstatus{$value.idturma}" style="color: darkred; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.idturma}, {$value.desctemporada}, {$value.idtemporada})"> - Inscrições encerradas</a>
@@ -192,13 +216,19 @@
                           - {$value.diasemana}
                           {$value.horainicio} ás {$value.horatermino} -  
                           <strong>{$value.descrfxetaria}  {$value.initidade} a {$value.fimidade} anos</strong>
-                          -  {$value.apelidolocal} - {$value.nomeespaco} - <strong>Professor: {if="$value.idperson == 1"} Admin Master {else} {$value.apelidoperson} {/if}</strong>&nbsp; Vagas: ({$value.vagas} Geral)&nbsp; - &nbsp;({$value.vagaslaudo} Laudo)&nbsp; - &nbsp;({$value.vagaspcd} PCD)&nbsp; - &nbsp;({$value.vagaspvs} PVS)
+                          -  {$value.apelidolocal} - {$value.nomeespaco} - <strong>Professor: {if="$value.idperson == 1"} Admin Master {else} {$value.apelidoperson} {/if}</strong>&nbsp; 
+                          
+                          
+                          <div id="escondido1{$value.idturma}" hidden>
+                              Vagas: ({$value.vagas} Geral)&nbsp; - &nbsp;({$value.vagaslaudo} Laudo)&nbsp; - &nbsp;({$value.vagaspcd} PCD)&nbsp; - &nbsp;({$value.vagaspvs} PVS)
+                           
+                          </div>
                       </span>
                     </div>      
                    <div class="col-md-6">
-
+                       
                       <h5 style="font-weight: bold; text-align: left; color: green;">
-                         <strong style="color: orange;">[{$value.idturma}]</strong> &nbsp;&nbsp;
+                         <strong style="color: orange;">[{$value.idturma}]</strong> 
                          <a href="/admin/insc-turma-temporada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}"> 
                          | &nbsp; Consultar {$value.numinscritos} inscritos &nbsp;
                          </a> &nbsp; 
@@ -229,16 +259,37 @@
                       <!--  | &nbsp; <a href="/insc-turma-temporada-para-sorteio/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: orangered;">  Sorteio |</a>  &nbsp;  
                       -->
 
+
+
                           <a href="/admin/token/{$value.idturma}" style="color: darkblue;"><i ></i> | Tokens</a>
                            <a href="/admin/insc-altera-turma-temporada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}"> 
                          | &nbsp; Mover inscritos &nbsp;
                          </a> &nbsp; 
+
+                         <a href="/admin/crialispersonalizadaautorizacao/{$value.idturma}/{$value.idtemporada}" style="color: purple;">
+                                | &nbsp; Criar uma Lista </a>  
+                                &nbsp;&nbsp;
+
+                         <br>
+                         <span id="lermais{$value.idturma}" style="color: darkblue;" onclick="expandir({$value.idturma})">Ler mais...</span> 
+                         
+                         
+                        
                       </h5>
+                      
+                         <span id="escondido2{$value.idturma}" hidden>
+                      
+                      <span id="escondido3{$value.idturma}" hidden>
+                        <strong> Observação: </strong>{$value.obs} 
+                      </span>
+                      <br>
+                      </span>
+                      
+                            <span id="lermenos{$value.idturma}" style="color: darkblue; font-weight: bold;" hidden onclick="recolher({$value.idturma})">Ler menos...</span>
                     </div>                    
                     
                   </div>
                 </div>
-                
                 {else}
 
                 {/if}

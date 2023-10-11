@@ -14,12 +14,24 @@
   
   }
 
+/*
 function msgProjetoSinais(){
   if (window.confirm('A Secretaria de Esporte e Lazer em parceria com o Ministério da Cidadania, vai realizar em 2023 o Projeto SINAIS, promovendo atividades físicas, esportivas, culturais e de lazer para crianças, jovens, adultos e idosos com deficiência auditiva. Se você tem interesse em participar, clique em "OK" e você será direcionado para prenecher o formulário de participação.'))
    {
    window.open('https://forms.gle/TYLx4pi91nWyw9ej7', '_blank');
    };
 }
+*/
+
+/*
+  function msgProjetoSinais(){
+  if (window.confirm('Para maiores informações sobre o Projeto Sinais, que desenvolve esportes e aulas de libras para surdos, entre em contato pelo Whatsapp. Clique em "OK" e você será direcionado para o whatsapp, onde irá conversar com um dos nossos atendentes. Digite sua mensagem, e no app clique em enviar msg.'))
+   {
+   window.open('https://wa.me/+5511912672403?text=Olá!', '_blank');
+   };
+}
+*/
+
 
 function leiamais(){
   var pontos = document.getElementById("pontos");
@@ -293,7 +305,7 @@ function leiamais(){
         
         
         <div class="col-md-5 btn" style="text-align-last: left; background-color: royalblue ; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
-            <a href="#" onclick="msgProjetoSinais()">                          
+            <a href="/modalidade/22" onclick="msgProjetoSinais()">                          
               <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 24px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
                           Esporte Para Surdos <br>(Projeto Sinais)
                          

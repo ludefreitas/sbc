@@ -21,7 +21,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <ol class="breadcrumb">
-    <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="/prof"><i class="fa fa-dashboard"></i> Home</a></li>
     <!--<li class="active"><a href="/admin/espaco/create">Cadastrar</a></li>-->
   </ol>
 </section>

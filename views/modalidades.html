@@ -81,22 +81,19 @@
           <div class="row alert-warning">
             <div class="col-md-6" style="margin: 10px 0px 5px 0px; ">
             
-                 {if="$value.idmodal == 44 OR $value.idmodal == 25"}
+                 {if="$value.idmodal == 44"}
                 
                     <a style="color: #0f71b3; text-decoration: none; font-weight: bold;" href="/modalidade/{$value.idmodal}" onclick="GrGa()">
                         {$value.descmodal}<br>
                     </a>
               
-                {else}
+                 {else}
               
                         <a style="color: #0f71b3; text-decoration: none; font-weight: bold;" href="/modalidade/{$value.idmodal}">
                         {$value.descmodal}<br>
-                         </a>
+                         </a>             
               
-                  
-              
-              
-              {/if}
+                 {/if}
               
               
             </div>

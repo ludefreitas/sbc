@@ -49,13 +49,10 @@
   	<div class="col-md-12">
   		<div class="box box-primary">
         <?php if( $error != '' ){ ?>
-
           <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
         <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
-
           </div>
         <?php } ?>
-
         <!-- /.box-header -->
         <!-- form start -->
         <form role="form" action="/admin/local/<?php echo htmlspecialchars( $local["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post">
@@ -126,10 +123,8 @@
               <select class="form-control" name="iduser">
                  <option selected="selected" value="">Selecione professor</option>
                   <?php $counter1=-1;  if( isset($prof) && ( is_array($prof) || $prof instanceof Traversable ) && sizeof($prof) ) foreach( $prof as $key1 => $value1 ){ $counter1++; ?>
-
                  <option  value="<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
                   <?php } ?>
-
               </select>
             </div>                                                
                 

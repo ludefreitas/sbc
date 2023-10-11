@@ -5,7 +5,12 @@
     
         function alertTokenCreebaPcd(){
 
-            alert("Conforme Resolução SESP Nº 004 de 28/10/2021 Art.7º, Os interessados em participar das turmas de inclusão para Pessoas com Deficiência (PCD) e/ou laudo médico do CREEBA, deverão comparecer pessoalmente (interessado ou representante legal) no CREEBA.")
+            alert("Conforme Resolução SESP Nº 004 de 28/10/2021 Art.7º, Os interessados em participar das turmas de inclusão para Pessoas com Deficiência (PCD) e/ou laudo médico, deverão comparecer pessoalmente (interessado ou representante legal) no Centro Esportivo do curso de interesse.")
+        }
+
+        function alertTokenVunerabilidade(){
+
+            alert("Pessoa em situação de vulnerabilidade social, é a pessoa que participa de programas sociais do governo, como por exemplo o Bolsa Família e que tem o cadastro no CadUnico/NIS com o respectivo número de inscrição. ")
         }
 
         function enormal(){ 
@@ -103,7 +108,9 @@
                     <div class="row" style="margin-top: 0px; margin-bottom: 0px;">
                         <div class="col-md-12 alert alert-success" style="text-align: justify; padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px;">
                             <strong>[<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>] - <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> -</strong> Temporada <strong><?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> -</strong><?php echo htmlspecialchars( $value1["periodo"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  das <strong><?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </strong>de <?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, para  <?php echo htmlspecialchars( $value1["descrfxetaria"], ENT_COMPAT, 'UTF-8', FALSE ); ?> de <?php echo htmlspecialchars( $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> a <?php echo htmlspecialchars( $value1["fimidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> anos,
-                            no <strong><?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong> - <?php echo htmlspecialchars( $value1["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - Nº <?php echo htmlspecialchars( $value1["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - bairro <?php echo htmlspecialchars( $value1["bairro"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["cidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <span style="color: red;"> - <?php echo htmlspecialchars( $value1["numinscritos"], ENT_COMPAT, 'UTF-8', FALSE ); ?> inscritos para <?php echo htmlspecialchars( $value1["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas geral, <?php echo htmlspecialchars( $value1["vagaslaudo"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas pessoas com laudo, <?php echo htmlspecialchars( $value1["vagaspcd"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas pcd`s e <?php echo htmlspecialchars( $value1["vagaspvs"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas vuln. social.
+                            no <strong><?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong> - <?php echo htmlspecialchars( $value1["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - Nº <?php echo htmlspecialchars( $value1["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - bairro <?php echo htmlspecialchars( $value1["bairro"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["cidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <span style="color: red;"> - <?php echo htmlspecialchars( $value1["numinscritos"], ENT_COMPAT, 'UTF-8', FALSE ); ?> inscritos 
+                            
+                            para <?php echo htmlspecialchars( $value1["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas geral, <?php echo htmlspecialchars( $value1["vagaslaudo"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas pessoas com laudo, <?php echo htmlspecialchars( $value1["vagaspcd"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas pcd`s e <?php echo htmlspecialchars( $value1["vagaspvs"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas vuln. social.
                             
                             </span>
                             <input type="hidden" name="idtemporada" value="<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
@@ -121,7 +128,12 @@
                         <div class="checkbox">
 
                                 <strong style="font-style: italic;"> Selecione uma das opções abaixo:
-                            </strong><br><br>  
+                            </strong><br><br>
+                            
+                            
+                            <!-- <?php if( $inscGeral >= $maxListaEsperaGeral ){ ?> 
+                                 <?php } ?>
+                            -->
                         <?php if( $tokencpf == 0 ){ ?>   
                             <input type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> 
                             &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> 
@@ -139,7 +151,7 @@
                                     <?php echo vagasTotaisListaEsperaGeral($value1["vagas"], $value1["idmodal"]); ?> vagas p/ lista de espera p/ público geral *</span><br>
                                 <?php } ?>                                
                               <?php }else{ ?>  
-                                 <?php if( naoHaVagasListaEsperaPubGeral($value1["idtemporada"], $value1["idturma"], $value1["idmodal"]) ){ ?>
+                                 <?php if( naoHaVagasListaEsperaPubGeral($value1["idtemporada"], $value1["idturma"], $value1["idmodal"], $value1["idturmastatus"]) ){ ?>
                                       <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> 
                                       &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> 
                                       <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)#</span>  <br>
@@ -163,6 +175,7 @@
                             <?php }else{ ?>
                                 <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
                                 Lembre-se: As aulas já começaram, seu nome irá para uma lista de espera. Assim que a vaga estiver diponível, entraremos em contato.
+
                                 </div> 
 
                             <?php } ?>
@@ -170,25 +183,30 @@
                             <br> 
                             
                         <?php if( $tokencpf == 0 ){ ?>   
-                            <input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) <span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscPlm, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagaslaudo"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas)</span>  <br>
+                            <input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">
+                            &nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
+                            <span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscPlm, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagaslaudo"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas)</span>  <br>
                         <?php }else{ ?>
                             <?php if( naoHaVagasPubLaudo($value1["idtemporada"], $value1["idturma"]) ){ ?>
-                                <?php if( naoHaVagasListaEsperaPubLaudo($value1["idtemporada"], $value1["idturma"], $value1["idmodal"]) ){ ?>
-                                    <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
+                                <?php if( naoHaVagasListaEsperaPubLaudo($value1["idtemporada"], $value1["idturma"], $value1["idmodal"], $value1["idturmastatus"]) ){ ?>
+                                    <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">
+                                    &nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
                                     <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público) *</span>   <br>                                       
                                 <?php }else{ ?>
-                                    <input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
-                                    <span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscPlm, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagaslaudo"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas) </span>                                
+                                    <input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">
+                                    &nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
                                     <span style="font-size: 12px; color: red"> <?php echo vagasListaEsperaPubLaudoMenosInscPubLaudo($value1["idtemporada"], $value1["idturma"], $value1["idmodal"]); ?> de 
                                         <?php echo vagasTotaisListaEsperaLaudo($value1["vagaslaudo"], $value1["idmodal"]); ?> vagas para lista de espera p/ pessoas com laudo médico</span> <br>                      
                                 <?php } ?>
                             <?php }else{ ?>
-                                <?php if( naoHaVagasListaEsperaPubLaudo($value1["idtemporada"], $value1["idturma"], $value1["idmodal"]) ){ ?>
-                                    <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
+                                <?php if( naoHaVagasListaEsperaPubLaudo($value1["idtemporada"], $value1["idturma"], $value1["idmodal"], $value1["idturmastatus"]) ){ ?>
+                                    <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">
+                                    &nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
                                     <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público) #</span>   <br>                                       
                                 <?php }else{ ?>
-                                    <input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
-                                    <span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscPlm, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagaslaudo"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas) </span>                               
+                                    <input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">
+                                    &nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
+                                    <span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscPlm, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagaslaudo"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas) </span>    <br>                                                 
                                     
                                 <?php } ?>
                             <?php } ?>                            
@@ -207,25 +225,30 @@
                                     </div> 
                                 <?php }else{ ?>
                                     <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
-                                   Lembre-se: As aulas já começaram, seu nome irá para uma lista de espera. Assim que a vaga estiver diponível, entraremos em contato.
+                                    Lembre-se: As aulas já começaram, seu nome irá para uma lista de espera. Assim que a vaga estiver diponível, entraremos em contato.
+
                                     </div> 
 
                                 <?php } ?>
                             </div>                            
                             <br>  
-                                
+                            
                             <?php if( $tokencpf == 0 ){ ?>   
-                                <input type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> <span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscPcd, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagaspcd"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas)</span>
+                                <input type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">
+                                &nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> 
+                                <span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscPcd, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagaspcd"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas)</span>
                                     <br>
                             <?php }else{ ?>
                                 <?php if( naoHaVagasPubPcd($value1["idtemporada"], $value1["idturma"]) ){ ?>
-                                    <?php if( naoHaVagasListaEsperaPubPcd($value1["idtemporada"], $value1["idturma"], $value1["idmodal"]) ){ ?>
-                                        <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)*</span>                                
+                                    <?php if( naoHaVagasListaEsperaPubPcd($value1["idtemporada"], $value1["idturma"], $value1["idmodal"], $value1["idturmastatus"]) ){ ?>
+                                        <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">
+                                        &nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> 
+                                        <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)*</span>                                
                                         <br>
                                     <?php }else{ ?>
-                                        <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> <span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscPcd, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagaspcd"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas)*</span> 
-                                        <br>                      
-                                               
+                                        <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">
+                                        &nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> 
+                                        <br>           
                                         <span style="font-size: 12px; color: red"><?php echo vagasListaEsperaPubPcdMenosInscPubPcd($value1["idtemporada"], $value1["idturma"], $value1["idmodal"]); ?> de 
                                         <?php echo vagasTotaisListaEsperaPcd($value1["vagaspcd"], $value1["idmodal"]); ?> vagas para lista de espera para PCD`s
                                         </span>  
@@ -238,11 +261,15 @@
                                             
                                     <?php } ?>
                                 <?php }else{ ?>
-                                    <?php if( naoHaVagasListaEsperaPubPcd($value1["idtemporada"], $value1["idturma"], $value1["idmodal"]) ){ ?>
-                                        <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)#</span>                                
+                                    <?php if( naoHaVagasListaEsperaPubPcd($value1["idtemporada"], $value1["idturma"], $value1["idmodal"], $value1["idturmastatus"]) ){ ?>
+                                        <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">
+                                        &nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> 
+                                        <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)#</span>                                
                                         <br>
                                     <?php }else{ ?>
-                                        <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> <span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscPcd, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagaspcd"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas)#</span>
+                                        <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">
+                                        &nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> 
+                                        <span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscPcd, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagaspcd"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas)#</span>
                                         <br>
                                         <span style="color: darkblue;" onmousemove="alertTokenCreebaPcd()" >
                                         <strong>Necessário token</strong>&nbsp;             
@@ -268,6 +295,7 @@
                                 <?php }else{ ?>
                                     <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
                                     Lembre-se: As aulas já começaram, seu nome irá para uma lista de espera. Assim que a vaga estiver diponível, entraremos em contato.
+
                                     </div> 
 
                                 <?php } ?>
@@ -275,36 +303,52 @@
                                 <br>
                                 
                             <?php if( $tokencpf == 0 ){ ?>   
-                                <input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong> <span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscPvs, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagaspvs"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas)</span>
+                                <input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
+                                &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong> 
+
+                                <a href="#" onmousemove="alertTokenVunerabilidade()"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a>
+
+                                <span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscPvs, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagaspvs"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas)</span>
                                     <br>
                             <?php }else{ ?>
                                 <?php if( naoHaVagasPubPvs($value1["idtemporada"], $value1["idturma"]) ){ ?>
-                                    <?php if( naoHaVagasListaEsperaPubPvs($value1["idtemporada"],$value1["idturma"], $value1["idmodal"]) ){ ?>
-                                        <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong>
+                                    <?php if( naoHaVagasListaEsperaPubPvs($value1["idtemporada"],$value1["idturma"], $value1["idmodal"], $value1["idturmastatus"]) ){ ?>
+                                        <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
+                                        &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong>
+
+                                        <a href="#" onmousemove="alertTokenVunerabilidade()"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a>
+
                                         <br>
                                         <span style="font-size: 12px; color: red">(Não há vagas disponíveis para este público)*</span>
                                         <br>
                                     <?php }else{ ?>
-                                        <input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong> 
+                                        <input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
+                                        &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong> 
+
+                                        <a href="#" onmousemove="alertTokenVunerabilidade()"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a>
+
                                         <br>
-                                         <span style="font-size: 12px; color: red"><?php echo vagasListaEsperaPubPvsMenosInscPubPvs($value1["idtemporada"], $value1["idturma"]); ?> de 
+                                         <span style="font-size: 12px; color: red"><?php echo vagasListaEsperaPubPvsMenosInscPubPvs($value1["idtemporada"], $value1["idturma"], $value1["idmodal"]); ?> de 
                                             <?php echo vagasTotaisListaEsperaPvs($value1["vagaspvs"], $value1["idmodal"]); ?> vagas para lista de espera para pessoas em Vuln. social</span>
                                             <br>
                                     <?php } ?>
                                 <?php }else{ ?>
-                                    <?php if( naoHaVagasListaEsperaPubPvs($value1["idtemporada"], $value1["idturma"], $value1["idmodal"]) ){ ?>
-                                        <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong>
+                                    <?php if( naoHaVagasListaEsperaPubPvs($value1["idtemporada"],$value1["idturma"], $value1["idmodal"], $value1["idturmastatus"]) ){ ?>
+                                        <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
+                                        &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong>
+
+                                        <a href="#" onmousemove="alertTokenVunerabilidade()"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a>
+
                                         <span style="font-size: 12px; color: red">(Não há vagas disponíveis para este público)#</span>
                                         <br>
-                                        <span style="font-size: 12px; color: red"><?php echo vagasListaEsperaPubPvsMenosInscPubPvs($value1["idtemporada"], $value1["idturma"], $value1["idmodal"]); ?> de 
-                                            <?php echo vagasTotaisListaEsperaPvs($value1["vagaspvs"], $value1["idmodal"]); ?> vagas para lista de espera para pessoas em Vuln. social</span>
-                                            <br>
-                                            <span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscPvs, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagaspvs"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas)</span> 
-                                            <br>
                                     <?php }else{ ?>
-                                        <input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong><span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscPvs, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagaspvs"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas)</span> 
+                                        <input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
+                                        &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong>
+
+                                        <a href="#" onmousemove="alertTokenVunerabilidade()"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a>
+
+                                        <span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscPvs, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagaspvs"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas)</span> 
                                         <br>
-                                         
                                     <?php } ?>
                                 <?php } ?>
                             <?php } ?>
@@ -321,6 +365,7 @@
                                 <?php }else{ ?>
                                     <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
                                     Lembre-se: As aulas já começaram, seu nome irá para uma lista de espera. Assim que a vaga estiver diponível, entraremos em contato.
+
                                     </div> 
 
                                 <?php } ?>

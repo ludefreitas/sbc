@@ -110,7 +110,7 @@ $app->get("/modalidades/local/:idlocal", function($idlocal) {
 
 	if(!isset($modalidades) || $modalidades == NULL){
 
-		Cart::setMsgError("Nãoo existe modalidades para esta temporada. A temporada pode não estar iniciada, estar em processo de sorteio ou foi encerrada. Aguarde, ou entre em contato com o Centro Esportivo mais próximo a sua casa. ");
+		Cart::setMsgError("Não existe modalidades para esta temporada. A temporada pode não estar iniciada, estar em processo de sorteio ou foi encerrada. Aguarde, ou entre em contato com o Centro Esportivo mais próximo a sua casa. ");
 	}	
 
 	$page = new Page();

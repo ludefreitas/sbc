@@ -61,8 +61,8 @@
                                 <td class="product-name">[<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>] - <?php echo htmlspecialchars( $value1["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> (<?php echo htmlspecialchars( $value1["periodo"], ENT_COMPAT, 'UTF-8', FALSE ); ?>) - <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </td>
                             </tr>
                             <tr>
-                                <th class="product-name">Horário / Professor</th>
-                                <td class="product-name"><?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?> das <?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - Prof. <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                                <th class="product-name">Horário</th>
+                                <td class="product-name"><?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?> das <?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </td>
                             </tr>
                             <tr>
                                 <th class="product-name">Local da aula (CREC)</th>
@@ -73,24 +73,24 @@
                                 <td class="product-name"><?php echo formatDateHour($value1["dtinsc"]); ?></td>
                             </tr> 
                              <tr>
-                                <th class="product-name">Laudo ?</th>
+                                <th class="product-name">Com laudo ?</th>
                                 <td class="product-name"><?php if( $value1["laudo"] == 1 ){ ?>Sim<?php }else{ ?>Não<?php } ?></td>
-                            </tr>      
-                            <tr>
+                            </tr>   
+                             <tr>
                                 <th class="product-name">PCD ?</th>
                                 <td class="product-name"><?php if( $value1["inscpcd"] == 1 ){ ?>Sim<?php }else{ ?>Não<?php } ?></td>
-                            </tr>
+                            </tr> 
                             <tr>
                                 <th class="product-name">PVS ?</th>
                                 <td class="product-name"><?php if( $value1["inscpvs"] == 1 ){ ?>Sim<?php }else{ ?>Não<?php } ?></td>
-                            </tr>                                                                                                                                                                        
+                            </tr>                                                                
                             <tr <?php echo colorStatus($value1["idinscstatus"]); ?>>
                                 <th class="product-name">Status da Inscrição</th>
                                 <td class="product-name"><?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                             </tr>
                             <tr>
                                 <th class="product-name">Respons. p/ inscrição</th>
-                                <td class="product-name">&nbsp;&nbsp;<?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php echo htmlspecialchars( $value1["deslogin"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                                <td class="product-name">&nbsp;&nbsp;<?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  <?php echo htmlspecialchars( $value1["deslogin"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                             </tr>                                        
 
                         </thead>
@@ -102,7 +102,7 @@
                             
                         </tfoot>
                     </table>
-
+                    <hr>
                     <?php }else{ ?>
 
                     <div class="product-big-title-area">

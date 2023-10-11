@@ -39,7 +39,7 @@ $app->get("/prof/turma-temporada/:idtemporada", function($idtemporada) {
 	]);	
 });
 
-$app->get("/prof/turma-temporada/:idtemporada/:local", function($idtemporada, $idlocal) {
+$app->get("/prof/turma-temporada/:idtemporada/:idlocal", function($idtemporada, $idlocal) {
 
 	User::verifyLoginProf();
 
@@ -52,9 +52,9 @@ $app->get("/prof/turma-temporada/:idtemporada/:local", function($idtemporada, $i
 	$temporada->get((int)$idtemporada);
 
 	// script dos locais relacionado ao coordenador
-	$local = new Local();
-	$locais = Local::listAllCoord($iduser);	
-	$local = $local->setapelidolocal('');
+	//$local = new Local();
+	//$locais = Local::listAllCoord($iduser);	
+	//$local = $local->setapelidolocal('');
 
 	// script dos locais relacionado ao professor
 	$localaula = new Local();
@@ -69,8 +69,46 @@ $app->get("/prof/turma-temporada/:idtemporada/:local", function($idtemporada, $i
 	$page = new PageProf();	
 
 	$page->setTpl("turmas-por-temporada", [	
-	    'local'=>$local,
-		'locais'=>$locais, 
+	    //'local'=>$local,
+		//'locais'=>$locais, 
+		'idlocal'=>$idlocal, 
+		'localdaaula'=>$localdaaula,  
+		'modalidades'=>$modalidades,
+		'temporada'=>$temporada->getValues(),
+		'turmas'=>Temporada::listAllTurmatemporadaProfessorLocal($idtemporada, $iduser, $idlocal),
+		'error'=>User::getError()
+	]);	
+});
+
+$app->get("/estagiario/turma-temporada/:idtemporada/:idlocal", function($idtemporada, $idlocal) {
+
+	User::verifyLoginEstagiario();
+
+	$iduser = (int)$_SESSION[User::SESSION]['iduser'];
+
+	$temporada = new Temporada();
+	$turma = new Turma();
+	$modalidade = new Modalidade();
+
+	$temporada->get((int)$idtemporada);
+
+	// script dos locais relacionado ao coordenador
+	//$local = new Local();
+	//$locais = Local::listAllCoord($iduser);	
+	//$local = $local->setapelidolocal('');
+
+	// script dos locais relacionado ao professor
+	$localaula = new Local();
+	$localaula->get((int)$idlocal);
+	$localdaaula = $localaula->getapelidolocal();
+
+	$modalidades = $modalidade->getModalidadesTemporadaLocalByIdUser($idtemporada, $idlocal, $iduser);
+
+	$page = new PageProf();	
+
+	$page->setTpl("turmas-por-temporada-estagiario", [	
+	    //'local'=>$local,
+		//'locais'=>$locais, 
 		'idlocal'=>$idlocal, 
 		'localdaaula'=>$localdaaula,  
 		'modalidades'=>$modalidades,
@@ -99,6 +137,27 @@ $app->get("/prof/local-por-turma-temporada/:idtemporada", function($idtemporada)
 	$page->setTpl("local-por-turma-temporada", [	
 		'locais'=>$locais,  
 		'locaiscoord'=>$locaiscoord,  
+		'temporada'=>$temporada->getValues(),
+		'error'=>User::getError()
+	]);	
+});
+
+$app->get("/estagiario/local-por-turma-temporada/:idtemporada", function($idtemporada) {
+
+	User::verifyLoginEstagiario();
+
+	$iduser = (int)$_SESSION[User::SESSION]['iduser'];
+
+	$temporada = new Temporada();
+
+	$locais = Local::listLocalturmasPorTemporadaByIdUserEstagiario($idtemporada, $iduser);
+
+	$temporada->get((int)$idtemporada);
+
+	$page = new PageProf();	
+
+	$page->setTpl("local-por-turma-temporada-estagiario", [	
+		'locais'=>$locais,  
 		'temporada'=>$temporada->getValues(),
 		'error'=>User::getError()
 	]);	

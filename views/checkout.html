@@ -8,6 +8,11 @@
             alert("Conforme Resolução SESP Nº 004 de 28/10/2021 Art.7º, Os interessados em participar das turmas de inclusão para Pessoas com Deficiência (PCD) e/ou laudo médico, deverão comparecer pessoalmente (interessado ou representante legal) no Centro Esportivo do curso de interesse.")
         }
 
+        function alertTokenVunerabilidade(){
+
+            alert("Pessoa em situação de VULNERABILIDADE SOCIAL, é a pessoa que participa de programas sociais do governo, como por exemplo o Bolsa Família e que tem o cadastro no CadUnico/NIS com o respectivo número de inscrição. ")
+        }
+
         function enormal(){ 
            document.getElementById('geral').hidden = false
            document.getElementById('temlaudo').hidden = true
@@ -194,7 +199,7 @@
                                         {function="vagasTotaisListaEsperaLaudo($value.vagaslaudo, $value.idmodal)"} vagas para lista de espera p/ pessoas com laudo médico</span> <br>                      
                                 {/if}
                             {else}
-                                {if="naoHaVagasListaEsperaPubLaudo($value.idtemporada, $value.idturma, $idmodal, $value.idturmastatus)"}
+                                {if="naoHaVagasListaEsperaPubLaudo($value.idtemporada, $value.idturma, $value.idmodal, $value.idturmastatus)"}
                                     <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">
                                     &nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
                                     <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público) #</span>   <br>                                       
@@ -300,6 +305,9 @@
                             {if="$tokencpf == 0"}   
                                 <input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
                                 &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong> 
+
+                                <a href="#" onmousemove="alertTokenVunerabilidade()"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a>
+
                                 <span style="font-size: 12px; color: red">({$inscPvs} insc. para {$value.vagaspvs} vagas)</span>
                                     <br>
                             {else}
@@ -307,12 +315,18 @@
                                     {if="naoHaVagasListaEsperaPubPvs($value.idtemporada,$value.idturma, $value.idmodal, $value.idturmastatus)"}
                                         <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
                                         &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong>
+
+                                        <a href="#" onmousemove="alertTokenVunerabilidade()"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a>
+
                                         <br>
                                         <span style="font-size: 12px; color: red">(Não há vagas disponíveis para este público)*</span>
                                         <br>
                                     {else}
                                         <input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
                                         &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong> 
+
+                                        <a href="#" onmousemove="alertTokenVunerabilidade()"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a>
+
                                         <br>
                                          <span style="font-size: 12px; color: red">{function="vagasListaEsperaPubPvsMenosInscPubPvs($value.idtemporada, $value.idturma, $value.idmodal)"} de 
                                             {function="vagasTotaisListaEsperaPvs($value.vagaspvs, $value.idmodal)"} vagas para lista de espera para pessoas em Vuln. social</span>
@@ -322,11 +336,18 @@
                                     {if="naoHaVagasListaEsperaPubPvs($value.idtemporada,$value.idturma, $value.idmodal, $value.idturmastatus)"}
                                         <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
                                         &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong>
+
+                                        <a href="#" onmousemove="alertTokenVunerabilidade()"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a>
+
                                         <span style="font-size: 12px; color: red">(Não há vagas disponíveis para este público)#</span>
                                         <br>
                                     {else}
                                         <input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
-                                        &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong><span style="font-size: 12px; color: red">({$inscPvs} insc. para {$value.vagaspvs} vagas)</span> 
+                                        &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong>
+
+                                        <a href="#" onmousemove="alertTokenVunerabilidade()"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a>
+
+                                        <span style="font-size: 12px; color: red">({$inscPvs} insc. para {$value.vagaspvs} vagas)</span> 
                                         <br>
                                     {/if}
                                 {/if}

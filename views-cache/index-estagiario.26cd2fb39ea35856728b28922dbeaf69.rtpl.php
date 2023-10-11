@@ -2,7 +2,9 @@
 
 <script type="text/javascript">
 
+        /*
         alert('O PAR-q declarado pelo aluno já está disponível. Acesse suas turmas, consulte os inscritos e clique na palavra "PAR-q" para verificar as respostas do aluno e atente-se ao ícone de alerta que aparece logo ao lado da palavra, se existir." ')
+        */
         
         /*
        alert('Agora você já pode adicionar o atestado clínico (NÃO dermatológico) do seu aluno, ao fazer a chamada, informando a data de emissão do atestado e fazer uma breve observação. Nesta observação você pode informar uma doença (se houver) , CID (se houver) , uma condição especial (se houver)...')

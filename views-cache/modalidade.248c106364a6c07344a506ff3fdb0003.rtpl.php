@@ -1,4 +1,5 @@
-<?php if(!class_exists('Rain\Tpl')){exit;}?><script type="text/javascript">
+<?php if(!class_exists('Rain\Tpl')){exit;}?>
+<script type="text/javascript">
 
     function getVagas(url){
 
@@ -22,9 +23,15 @@
     alert('As aulas de Ginástica Artística (GA) e Ginástica Rítimica (GR) começam a partir de 13/02/2023.')
     */
 
+     function alertTokenVunerabilidade(){
+
+        alert("Pessoa em situação de VULNERABILIDADE SOCIAL, é a pessoa que participa de programas sociais do governo, como por exemplo o Bolsa Família e que tem o cadastro no CadUnico/NIS com o respectivo número de inscrição. ")
+    }
+
     function encerradas(){
 
-        alert('As inscrições para o ano de 2022 estão encerradas! Para o ano de 2023 as inscrições começam a partir de 01/11/2022')
+        alert('As inscrições para a temporada de 2023 estão encerradas!\n\nAs inscrições para a temporada de 2024 tem a previsão de iniciar em 15 de janeiro de 2024.\n\nTodo o processo de inscrição será realizado pelo site:\n\nhttps://cursosesportivossbc.com\n\nImportante:\n\nDe 15/01 a 14/02, cada pessoa só poderá escolher 1(uma) modalidade\n\nDe 15/02 a 14/03, será permitida a inscrição em uma segunda modalidade\n\nA partir de 15/03 será permitida a inscrição em uma terceira modalidade')
+        
     }
 
   
@@ -77,26 +84,31 @@
                     Para fazer a inscrição na modalidade Zumba, Clique no link abaixo.
                 
                 <?php }else{ ?>
+                    <?php if( $modalidade["idmodal"] == 22 ){ ?>
+                        Para maiores informações sobre o Projeto Sinais, que desenvolve esportes e aulas de libras para surdos, entre em contato pelo Whatsapp clicando no link abaixo.
+                
+                    <?php }else{ ?>
         
-                    <?php if( checkLogin(false) ){ ?> 
-                
-                           <span style="color: black; font-weight: bold;">  <?php echo getUserName(); ?></span>!<br>           
-                                                                       
-                          Nesta etapa, selecione abaixo uma turma para praticar a aula de <span style="font-weight: bold; font-size: 20px; color: orange;"><?php echo htmlspecialchars( $modalidade["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span> e faça a sua inscrição ou a inscrição de seu dependente.
-                
-                    <?php }else{ ?>      
-                           
-                      
-                            <a href="/user-create">             
-                                     CADASTRE-SE               
-                            </a> 
-                             <span> ou faça o  </span>           
-                            <a href="/login" >                
-                                 LOGIN 
-                            </a>
-                            e nesta etapa selecione abaixo uma turma para praticar a aula de <span style="font-weight: bold; font-size: 20px; color: orange;"><?php echo htmlspecialchars( $modalidade["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>, faça a sua inscrição ou a inscrição de seu dependente.
+                        <?php if( checkLogin(false) ){ ?> 
+                    
+                               <span style="color: black; font-weight: bold;">  <?php echo getUserName(); ?></span>!<br>           
+                                                                           
+                              Nesta etapa, selecione abaixo uma turma para praticar a aula de <span style="font-weight: bold; font-size: 20px; color: orange;"><?php echo htmlspecialchars( $modalidade["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span> e faça a sua inscrição ou a inscrição de seu dependente.
+                    
+                        <?php }else{ ?>      
+                               
                           
-                      <?php } ?>
+                                <a href="/user-create">             
+                                         CADASTRE-SE               
+                                </a> 
+                                 <span> ou faça o  </span>           
+                                <a href="/login" >                
+                                     LOGIN 
+                                </a>
+                                e nesta etapa selecione abaixo uma turma para praticar a aula de <span style="font-weight: bold; font-size: 20px; color: orange;"><?php echo htmlspecialchars( $modalidade["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>, faça a sua inscrição ou a inscrição de seu dependente.
+                              
+                        <?php } ?>  
+                    <?php } ?>
                  <?php } ?>
              <?php } ?>
         <?php } ?>
@@ -334,8 +346,16 @@
 
           <?php }else{ ?>
                 
+             
               <a class="btn btn-info" style="background-color: #cc5d1e"  href="/cart/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/add">Inscrever-se</a>  
+             <!--
+
+                <a class="btn btn-info" style="background-color: #cc5d1e; color: white;"  onclick="encerradas()">Inscrever-se</a>  
+            -->
               <a class="btn btn-success" style="font-weight: bold; color: white;" onclick="getVagas('/vagas-turma/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturmastatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>')"> Vagas </a> 
+              &nbsp;&nbsp;
+              <a href="#" onmousemove="alertTokenVunerabilidade()"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a>
+
             <br> 
             <h6 style="color: blue; font-weight: bold">  
                      <a href="/insc-turma-temporada-listaespera/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/user/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: orangered;">Consulte a lista de espera, clicando aqui.  </a>
@@ -369,6 +389,18 @@
            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;FAÇA SUA INSCRIÇÃO E MATRICULA PELO WHATSAPP<br> (<a href="https://wa.me/+5511991000907?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do Sensei Guto. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: darkgreen; font-weight: bold;"></i><span style="color: black;"> 99100 0907&nbsp;</span></a>)
     
         <?php }else{ ?>
+
+          <?php if( $modalidade["idmodal"] == 22 ){ ?>
+    
+           &nbsp; OBTENHA MAIS INFORMAÇÕES SOBRE O PROJETO SINAIS<br> <a href="https://wa.me/+5511912672403?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp, onde irá conversar com um dos nossos atendentes. Digite sua mensagem, e no app clique em enviar msg.')"> Clique aqui <br>
+                   <i class="fa fa-whatsapp" style="color: darkgreen; font-weight: bold;"></i>&nbsp;<span style="color: black;">
+                  
+                   
+                   (11) 91267 2403
+
+           &nbsp;</span></a>
+    
+          <?php }else{ ?>
     
           <?php if( $modalidade["idmodal"] == 39 ){ ?>
     
@@ -387,7 +419,7 @@
             <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
               
                 
-    
+        <?php } ?>
         <?php } ?>  
           
          <?php } ?>

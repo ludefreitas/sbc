@@ -54,15 +54,8 @@
 
         <div class="box-header"> 
 
-          <?php if( $local == null ){ ?>
 
           <h3><?php echo htmlspecialchars( $localdaaula, ENT_COMPAT, 'UTF-8', FALSE ); ?></h3>
-
-          <?php }else{ ?>
-
-          <h3><?php echo htmlspecialchars( $local["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h3>
-
-          <?php } ?>       
 
        </div>
       </div>
@@ -71,6 +64,7 @@
 
             <div class="row">
             <div class="col-md-12">
+
             <?php $counter1=-1;  if( isset($modalidades) && ( is_array($modalidades) || $modalidades instanceof Traversable ) && sizeof($modalidades) ) foreach( $modalidades as $key1 => $value1 ){ $counter1++; ?>
 
             
@@ -161,11 +155,14 @@
                         
                           <a href="/prof/token/<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: darkblue;"><i ></i> | Tokens</a>
 
-                        <?php if( getUserId() == 1 ){ ?>
                           <a href="/prof/insc-altera-turma-temporada/<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value2["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/user/<?php echo htmlspecialchars( $value2["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> 
                          | &nbsp; Mover inscritos &nbsp;
                          </a> &nbsp; 
-                        <?php } ?>
+                         
+                            <a href="/prof/crialispersonalizadaautorizacao/<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value2["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: purple;">
+                                | &nbsp; Criar uma Lista </a>  
+                                &nbsp;&nbsp;
+                         
                         
                       </h5>
                     </div>                    
@@ -199,29 +196,7 @@
           
           
           <!-- /.box-body --> 
-          <?php if( $locaiscoord ){ ?>
-          <div class="box-body col-md-12">
-                  <table class="table table-striped">
-                      <thead>
-                          <tr>
-                           <th>Turmas da temporada por centro esportivo (coordenador)</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-
-                          <tr>
-                          <?php $counter1=-1;  if( isset($locaiscoord) && ( is_array($locaiscoord) || $locaiscoord instanceof Traversable ) && sizeof($locaiscoord) ) foreach( $locaiscoord as $key1 => $value1 ){ $counter1++; ?>
-                          <tr>
-                          <td>
-                              <a href="/prof/turma-temporada-coordenador/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/local/<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><i class=""></i> <?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a>
-                          </td>
-                          </tr>
-                          <?php } ?>
-
-                      </tbody>
-                  </table>
-              </div> 
-            <?php } ?>        
+          
 
           
 

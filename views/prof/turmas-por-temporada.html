@@ -54,15 +54,8 @@
 
         <div class="box-header"> 
 
-          {if="$local == null"}
 
           <h3>{$localdaaula}</h3>
-
-          {else}
-
-          <h3>{$local.apelidolocal}</h3>
-
-          {/if}       
 
        </div>
       </div>
@@ -71,6 +64,7 @@
 
             <div class="row">
             <div class="col-md-12">
+
             {loop="$modalidades"}
 
             
@@ -164,6 +158,11 @@
                           <a href="/prof/insc-altera-turma-temporada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}"> 
                          | &nbsp; Mover inscritos &nbsp;
                          </a> &nbsp; 
+                         
+                            <a href="/prof/crialispersonalizadaautorizacao/{$value.idturma}/{$value.idtemporada}" style="color: purple;">
+                                | &nbsp; Criar uma Lista </a>  
+                                &nbsp;&nbsp;
+                         
                         
                       </h5>
                     </div>                    
@@ -197,29 +196,7 @@
           
           
           <!-- /.box-body --> 
-          {if="$locaiscoord"}
-          <div class="box-body col-md-12">
-                  <table class="table table-striped">
-                      <thead>
-                          <tr>
-                           <th>Turmas da temporada por centro esportivo (coordenador)</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-
-                          <tr>
-                          {loop="$locaiscoord"}
-                          <tr>
-                          <td>
-                              <a href="/prof/turma-temporada-coordenador/{$temporada.idtemporada}/local/{$value.idlocal}"><i class=""></i> {$value.idlocal} - {$value.apelidolocal}</a>
-                          </td>
-                          </tr>
-                          {/loop}
-
-                      </tbody>
-                  </table>
-              </div> 
-            {/if}        
+          
 
           
 

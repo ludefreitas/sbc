@@ -284,5 +284,103 @@ $app->get("/estagiario/listapessoasporturma/:idturma/:idtemporada", function($id
 	
 });
 
+$app->get("/prof/crialispersonalizadaautorizacao/:idturma/:idtemporada", function($idturma, $idtemporada) {
+
+	User::verifyLoginProf();
+
+	$page = new PageProf();
+
+	$page->setTpl("autorizacao-create", [
+		'idturma'=>$idturma,
+		'idtemporada'=>$idtemporada,
+		'createlistaAutorizacaoValues'=>(isset($_SESSION['createlistaAutorizacaoValues'])) ? $_SESSION['createlistaAutorizacaoValues'] : ['textoAutorizacao'=>'', 'destino'=>'', 'dataInicio'=>'', 'dataTermino'=>'']
+	]);
+});
+
+$app->post("/prof/listapessoasporturmapersonalizada/:idturma/:idtemporada", function($idturma, $idtemporada) {
+
+	User::verifyLoginProf();
+
+	$texto = $_POST['textoAutorizacao'];
+	$destino = $_POST['destino'];
+	$datainicio = date($_POST['dataInicio']);
+	$datatermino = date($_POST['dataTermino']);
+
+
+	if (!isset($_POST['textoAutorizacao']) || $_POST['textoAutorizacao'] == '') {
+		echo "<script>alert('Faça uma descrição da autorização');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}
+
+	if (!isset($_POST['destino']) || $_POST['destino'] == '') {
+		echo "<script>alert('Informe o local do evento');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}
+
+	if (!isset($_POST['dataInicio']) || $_POST['dataInicio'] == '') {
+		echo "<script>alert('Informe a data de início do evento');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}
+
+	if (!isset($_POST['dataTermino']) || $_POST['dataTermino'] == '') {
+		echo "<script>alert('Informe a data de término do evento');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}
+
+	if ($datainicio > $datatermino) {
+		echo "<script>alert('Data de término não pode ser menor do que a data de início');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}
+
+	$diaUnico = true;
+	if($datainicio == $datatermino){		
+		$diaUnico = true;
+	}else{
+		$diaUnico = false;
+	}
+
+	$datainicio = date('d/m/Y', strtotime($_POST['dataInicio']));
+	$datatermino = date('d/m/Y', strtotime($_POST['dataTermino']));
+
+	$insc = new Insc();
+	$turma = new Turma();
+	$temporada = new Temporada();
+
+	$turma->get((int)$idturma);	
+	$temporada->get((int)$idtemporada);	
+
+	$descturma = $turma->getdescturma();
+
+	$listapessoas = Insc::getInscByTurmaTemporadaMatriculados($idturma, $idtemporada);
+
+	if(!isset($listapessoas) || $listapessoas == NULL){
+		echo "<script>alert('Não há inscritos para esta turma');";
+		echo "javascript:history.go(-1)</script>";
+	}else{
+
+		$page = new PageProf([
+		"header"=>false,
+		"footer"=>false
+		]);
+
+		$page->setTpl("listapessoasporturma-personalizada", [
+		'listapessoas'=>$listapessoas,
+		'descturma'=>$descturma	,
+		'idturma'=>$idturma,
+		'texto'=>$texto,
+		'destino'=>$destino,
+		'diaUnico'=>$diaUnico,
+		'datainicio'=>$datainicio,
+		'datatermino'=>$datatermino	
+		]);
+	}
+	
+});
+
 
 ?>

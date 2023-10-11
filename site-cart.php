@@ -413,6 +413,38 @@ if($_POST['idturma'] == 264 || $_POST['idturma'] == 265 || $_POST['idturma'] == 
 		}
 		
 		$mesCorrente = (int)date('m', strtotime('now'));
+
+		$diaAtual = (int)date('d', strtotime('now'));
+
+		
+		if( ($mesCorrente === 1) || ($mesCorrente === 2 && $diaAtual < 16) ){
+
+			$inscPorTemporada = (int)$cart->getCountInscExistTemporada($numcpf, $idtemporada);
+
+			if($inscPorTemporada === 1){
+
+				echo "<script>alert(' ".$nomepess." já tem uma inscrição válida para a temporada ".$desctemporada."! A partir de janeiro de ".$desctemporada." você poderá fazer mais uma inscrição.');";
+				echo "javascript:history.go(-1)</script>";
+				exit();
+
+			}
+
+		}
+
+		if( ($mesCorrente === 2) || ($mesCorrente === 3 && $diaAtual < 16) ){
+
+			$inscPorTemporada = (int)$cart->getCountInscExistTemporada($numcpf, $idtemporada);
+
+			if($inscPorTemporada === 2){
+
+				echo "<script>alert(' ".$nomepess." já tem 02 inscrições válidas para a temporada ".$desctemporada."! A partir de março de ".$desctemporada." você poderá fazer mais uma inscrição.');";
+				echo "javascript:history.go(-1)</script>";
+				exit();
+			}
+
+		}
+
+		/*
 		
 		if($mesCorrente === 11 || $mesCorrente === 12){
 
@@ -435,6 +467,7 @@ if($_POST['idturma'] == 264 || $_POST['idturma'] == 265 || $_POST['idturma'] == 
 				exit();
 			}		
 		}
+		*/
 
 
 		if ($cart->getInscExist($numcpf, $idpess, $idturma, $idtemporada)){

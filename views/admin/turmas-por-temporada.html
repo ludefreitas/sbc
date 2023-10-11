@@ -37,7 +37,7 @@
 
         });
       }
-
+      
       function openDiv(idmodalidade){
 
         let idmodal = idmodalidade;
@@ -45,9 +45,9 @@
             document.getElementById('idmodal'+idmodal ).hidden = false  
             document.getElementById('btnModalClose'+idmodal ).hidden = false
             document.getElementById('btnModalOpen'+idmodal ).hidden = true      
-  }
+    }
 
-  function closeDiv(idmodalidade){
+    function closeDiv(idmodalidade){
 
         let idmodal = idmodalidade;
 
@@ -55,7 +55,31 @@
             document.getElementById('btnModalOpen'+idmodal ).hidden = false  
             document.getElementById('btnModalClose'+idmodal ).hidden = true 
           
-  }
+    }
+    
+    function expandir(idturma){
+
+        let iddaturma = idturma;
+
+            document.getElementById('lermais'+iddaturma).hidden = true 
+            document.getElementById('lermenos'+iddaturma).hidden = false 
+            document.getElementById('escondido1'+iddaturma ).hidden = false  
+            document.getElementById('escondido2'+iddaturma ).hidden = false
+            document.getElementById('escondido3'+iddaturma ).hidden = false  
+          
+    }
+
+    function recolher(idturma){
+
+        let iddaturma = idturma;
+
+            document.getElementById('lermais'+iddaturma).hidden = false 
+            document.getElementById('lermenos'+iddaturma).hidden = true 
+            document.getElementById('escondido1'+iddaturma ).hidden = true  
+            document.getElementById('escondido2'+iddaturma ).hidden = true 
+            document.getElementById('escondido3'+iddaturma ).hidden = true  
+          
+    }
 
 </script>
 
@@ -130,12 +154,12 @@
 
           {/if}       
        </div>
-
-              {loop="$modalidades"}            
+            
+                {loop="$modalidades"}            
 
                 {$idmodalidade = $value.idmodal}
 
-                <div  id="btnModalOpen{$idmodalidade}">
+                 <div  id="btnModalOpen{$idmodalidade}">
                 <div style="text-align: center; border-radius: 5px; margin: 5px; height: 30px" class="btn-primary col-md-12" onclick="openDiv({$idmodalidade})" >{$value.descmodal} <i class="fa fa-caret-down"></i></div> 
                 </div>
 
@@ -192,14 +216,23 @@
                           - {$value.diasemana}
                           {$value.horainicio} ás {$value.horatermino} -  
                           <strong>{$value.descrfxetaria}  {$value.initidade} a {$value.fimidade} anos</strong>
-                          -  {$value.apelidolocal} - {$value.nomeespaco} - <strong>Professor: {if="$value.idperson == 1"} Admin Master {else} {$value.apelidoperson} {/if}</strong>&nbsp; Vagas: ({$value.vagas} Geral)&nbsp; - &nbsp;({$value.vagaslaudo} Laudo)&nbsp; - &nbsp;({$value.vagaspcd} PCD)&nbsp; - &nbsp;({$value.vagaspvs} PVS)
-                          - <strong> Obsevação: </strong>{$value.obs}  
+                          -  {$value.apelidolocal} - {$value.nomeespaco} - <strong>Professor: {if="$value.idperson == 1"} Admin Master {else} {$value.apelidoperson} {/if}</strong>&nbsp; 
+                          
+                          
+
+                          <div id="escondido1{$value.idturma}" hidden>
+                          
+                          Vagas: ({$value.vagas} Geral)&nbsp; - &nbsp;({$value.vagaslaudo} Laudo)&nbsp; - &nbsp;({$value.vagaspcd} PCD)&nbsp; - &nbsp;({$value.vagaspvs} PVS)
+
+                          </div>
+                          
+                        
                       </span>
                     </div>      
                    <div class="col-md-6">
+                       
                       <h5 style="font-weight: bold; text-align: left; color: green;">
-                           <strong style="color: orange;">[{$value.idturma}]</strong> 
-                        
+                           <strong style="color: orange;">[{$value.idturma}]</strong> &nbsp;&nbsp;
                          <a href="/admin/insc-turma-temporada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}"> 
                          | &nbsp; Consultar {$value.numinscritos} inscritos &nbsp;
                          </a> &nbsp; 
@@ -234,13 +267,36 @@
                           
                           <a href="/admin/insc-altera-turma-temporada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}"> 
                          | &nbsp; Mover inscritos &nbsp;
-                         </a> &nbsp; 
-                        
+                         </a> &nbsp;
+
+                         <a href="/admin/crialispersonalizadaautorizacao/{$value.idturma}/{$value.idtemporada}" style="color: purple;">
+                                | &nbsp; Criar uma Lista </a>  
+                                &nbsp;&nbsp;
+
+                         <br>
+                         
+                         <span id="lermais{$value.idturma}" style="color: darkblue;" onclick="expandir({$value.idturma})">Ler mais...</span> 
                       </h5>
+                      
+                           
+                        <span id="escondido2{$value.idturma}" hidden>
+                      
+                      
+                      <span id="escondido3{$value.idturma}" hidden>
+                        <strong> Observação: </strong>{$value.obs} 
+                      </span>
+                       <br>
+                      </span>
+                     
+                      
+                     
+                            <span id="lermenos{$value.idturma}" style="color: darkblue; font-weight: bold;" hidden onclick="recolher({$value.idturma})">Ler menos...</span>
+                      
                     </div>                    
                     
                   </div>
                 </div>
+                
                 {else}
 
                 {/if}
@@ -253,14 +309,9 @@
                   <i class="fa fa-print"></i> Imprimir
               </button>
             -->
-          </div>
+          </div>          
           
-          
-          <!-- /.box-body -->
-
-
-           
-            
+          <!-- /.box-body -->                
 
           <div class="box-footer clearfix">
             <ul class="pagination pagination-sm no-margin pull-right">

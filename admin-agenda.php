@@ -151,11 +151,14 @@ $app->get("/admin/mensagem/agenda/create/:idlocal", function($idlocal) {
 
 	$agenda = Agenda::selectAllAgendaMsgLocal($idlocal);	
 
+	$hoje = date('Y-m-d');
+
 	$page = new PageAdmin();
 
 	$page->setTpl("agenda-mensagem-create", array(
 		"idlocal"=>$idlocal,
 		"todasMsgs"=>$agenda,
+		"hoje"=>$hoje,
 		"error"=>Agenda::getMsgError(),
 		"success"=>Agenda::getMsgSuccess(),
 		"createMsgAgendaValues"=>(
@@ -169,29 +172,31 @@ $app->post("/admin/mensagem/agenda/create", function(){
 
 	User::verifyLogin();
 
+	$idlocal = $_POST['idlocal'];
+
 	$_SESSION['createMsgAgendaValues'] = $_POST;
 
 	if(!isset($_POST['descmsg']) || $_POST['descmsg'] == ''){	
 		Agenda::setMsgError("Descreva uma mensagem do período em que não haverá natação espontânea!");
-		header("Location: /admin/mensagem/agenda/create");
+		header("Location: /admin/mensagem/agenda/create/".$idlocal."");
 		exit();
 	}	
 
 	if(!isset($_POST['datainicial']) || $_POST['datainicial'] == ''){	
 		Agenda::setMsgError("Informe o início do período em que não haverá natação espontânea!");
-		header("Location: /admin/mensagem/agenda/create");
+		header("Location: /admin/mensagem/agenda/create/".$idlocal."");
 		exit();
 	}
 
 	if(!isset($_POST['datafinal']) || $_POST['datafinal'] == ''){	
 		Agenda::setMsgError("Informe o final do período em que não haverá natação espontânea!");
-		header("Location: /admin/mensagem/agenda/create");
+		header("Location: /admin/mensagem/agenda/create/".$idlocal."");
 		exit();
 	}	
 	/*
 	if(!isset($_POST['idlocal']) || $_POST['idlocal'] == ''){	
 		Agenda::setMsgError("Selecione o local da natação espontânea! ");
-		header("Location: /admin/mensagem/agenda/create");
+		header("Location: /admin/mensagem/agenda/create/".$idlocal."");
 		exit();
 	}
 	*/	

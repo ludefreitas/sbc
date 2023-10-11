@@ -566,7 +566,7 @@ class Agenda extends Model {
 
 		$sql = new Sql();
 		$results = $sql->select("SELECT * FROM tb_agendamsg 
-			WHERE idlocal = :idlocal ", [
+			WHERE idlocal = :idlocal ORDER BY dtinitmsg DESC ", [
 				':idlocal'=>$idlocal
 			]);
 		return $results;			

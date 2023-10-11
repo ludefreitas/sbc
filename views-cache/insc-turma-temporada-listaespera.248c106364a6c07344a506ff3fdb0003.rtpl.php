@@ -1,6 +1,6 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
 <php $x = 1; ?&gt;
-<head>
+
     <!-- Required meta tags -->   
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,25 +22,34 @@
     <title>Cursos Esportivos SBC</title>
     <link rel="icon" type="image/jpg" href="/../res/site/img/corpoacao.png" />
 
-    <style type="text/css">
-body {
-    margin: 10px;
-     padding: 20px;
-}
+    <script type="text/javascript">
+      
+      function alertTokenVunerabilidade(){
 
- #div1 {
-    display: flex;
-}
-table {
-    border: 1px solid #000;
-    flex-shrink:0;
-}
-</style>
+            alert("Pessoa em situação de vulnerabilidade social, é a pessoa que participa de programas sociais do governo, como por exemplo o Bolsa Família e que tem o cadastro no CadUnico/NIS com o respectivo número de inscrição. ")
+        }
+        
+    </script>
+
+    <style type="text/css">
+        body {
+            margin: 10px;
+             padding: 20px;
+        }
+
+         #div1 {
+            display: flex;
+        }
+        table {
+            border: 1px solid #000;
+            flex-shrink:0;
+        }
+    </style>
 
 
    
 
-</head>
+
 
 <hr>
 <div id="div1" style="text-align: center;">
@@ -107,7 +116,7 @@ table {
           <?php }else{ ?>
           <tr style="font-weight: bold; color: red; font-size: 22px; text-align: center; ">
             <td>       
-            0    
+            0
             </td>
           </tr>
           <?php } ?>        
@@ -205,8 +214,8 @@ table {
           </tr>
           <?php }else{ ?>
           <tr style="font-weight: bold; color: red; font-size: 22px; text-align: center; ">
-            <td>   
-            0        
+            <td>     
+            0
             </td>
           </tr>
           <?php } ?>        
@@ -305,7 +314,7 @@ table {
           </tr>
           <?php }else{ ?>
           <tr style="font-weight: bold; color: red; font-size: 22px; text-align: center; ">
-            <td>           
+            <td>
               0
             </td>
           </tr>
@@ -317,7 +326,10 @@ table {
         <tr>
               <td colspan="5" style="border: solid 1px; text-align: center;">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                 Lista de ESPERA de pessoas em vulnerabilidade social
+                 Lista de ESPERA de pessoas em vulnerabilidade social 
+
+                 <a href="#" onmousemove="alertTokenVunerabilidade()"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a>
+
                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               </td>
               
@@ -403,8 +415,8 @@ table {
           </tr>
           <?php }else{ ?>
           <tr style="font-weight: bold; color: red; font-size: 22px; text-align: center; ">
-            <td class="class1" style="text-align: center; border: solid 1px;">
-              0
+            <td>   
+            0
             </td>
           </tr>
           <?php } ?>        
@@ -415,7 +427,7 @@ table {
         <tr>
               <td colspan="5" style="border: solid 1px; text-align: center;">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                 Lista de ESPERA ampla concorrência (GERAL)
+                 Lista de ESPERA de pessoas ampla concorrência (GERAL)
                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               </td>
               

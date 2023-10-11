@@ -102,10 +102,15 @@
                             <?php if( $insc["idinscstatus"] == 1 ){ ?>
 
                             <tr>
+                                <th></th>
                                 <td class="product-name"> <a href="/declaracao-de-matricula/<?php echo htmlspecialchars( $insc["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $insc["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> Declaração Aluno  </a></td>
                             </tr>
                             <?php } ?>
 
+                            <tr>
+                                <th></th>
+                                <td class="product-name"> <a style="font-weight: bold;" href="/prof/insc/pessoa/<?php echo htmlspecialchars( $insc["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> Mais inscrições de <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  </a></td>
+                            </tr>
 
                         </thead>
                         <tbody>

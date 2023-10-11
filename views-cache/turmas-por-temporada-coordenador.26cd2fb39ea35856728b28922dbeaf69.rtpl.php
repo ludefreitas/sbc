@@ -161,11 +161,9 @@
                         
                           <a href="/prof/token/<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: darkblue;"><i ></i> | Tokens</a>
 
-                        <?php if( getUserId() == 1 ){ ?>
                           <a href="/prof/insc-altera-turma-temporada/<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value2["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/user/<?php echo htmlspecialchars( $value2["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> 
                          | &nbsp; Mover inscritos &nbsp;
                          </a> &nbsp; 
-                        <?php } ?>
                         
                       </h5>
                     </div>                    

@@ -316,6 +316,25 @@ class Local extends Model {
 		return $result;	
 	}
 
+	public static function listLocalturmasPorTemporadaByIdUserEstagiario($idtemporada, $iduser)
+	{
+
+		$sql = new Sql();
+
+		$result = $sql->select(
+			"SELECT distinct e.* FROM tb_turmatemporada a
+			INNER JOIN tb_turma b ON b.idturma = a.idturma
+			-- INNER JOIN tb_atividade c ON c.idativ = b.idativ
+			INNER JOIN tb_espaco d ON d.idespaco = b.idespaco
+			INNER JOIN tb_local e ON e.idlocal = d.idlocal
+			WHERE a.idtemporada = :idtemporada
+			AND a.idestagiario = :iduser", [
+			':idtemporada'=>$idtemporada,
+			':iduser'=>$iduser
+		]);		
+		return $result;	
+	}
+
 	public static function getLocalTemporadaByModalidades($idtemporada, $idmodal)
 	{
 		$sql = new Sql();

@@ -60,6 +60,7 @@
                 {if="$idlocal == 3"} BAETÃO {/if}
                 {if="$idlocal == 21"} PAULICÉIA {/if}
               </label>
+              <input type="text" name="idlocal" value="{$idlocal}" hidden>
               <input type="text" class="form-control" id="descmsg" name="descmsg" placeholder="Mensagem" value="{$createMsgAgendaValues.descmsg}">
             </div>
 
@@ -79,7 +80,7 @@
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
-            <button type="submit" class="btn btn-success">Cadastrar</button>
+            <button type="submit" class="btn btn-success">Criar</button>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <a type="button" class="btn btn-danger" href="javascript:window.history.go(-1)">Cancelar</a>
           </div>
@@ -118,7 +119,11 @@
             </thead>
             <tbody>
                 {loop="$todasMsgs"}
-                <tr id="teste{$value.idagendamsg}" style="border: solid 2px black; padding: 5px" >
+                {if="$value.dtfimmsg < $hoje"} 
+                  <tr id="teste{$value.idagendamsg}" style="border: solid 2px black; padding: 5px; color:  red;" >
+                {else}
+                  <tr id="teste{$value.idagendamsg}" style="border: solid 2px black; padding: 5px;" >
+                {/if}
                     <th scope="row"></th>
                     <td style="padding: 5px">{function="formatDate($value.dtinitmsg)"} </td>
                     <th scope="row"></th>

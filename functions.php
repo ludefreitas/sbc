@@ -295,15 +295,15 @@ function naoHaVagasListaEsperaPubLaudo($idtemporada, $idturma, $idmodal, $idturm
     $vagasListaEsperaPubLaudo = Turma::getVagasLaudoByIdTurma($idturma);
     if($idturmastatus == 6){
         if($idmodal == 25){
-            $vagasListaEsperaPubGeral = round($vagasListaEsperaPubGeral * 1.5); 
+            $vagasListaEsperaPubLaudo = round($vagasListaEsperaPubLaudo * 1.5); 
         }else{
-            $vagasListaEsperaPubGeral = round($vagasListaEsperaPubGeral * 1.2); 
+            $vagasListaEsperaPubLaudo = round($vagasListaEsperaPubLaudo * 1.2); 
         }
     }else{
         if($idmodal == 25){
-            $vagasListaEsperaPubGeral = round($vagasListaEsperaPubGeral * 0.5); 
+            $vagasListaEsperaPubLaudo = round($vagasListaEsperaPubLaudo * 0.5); 
         }else{
-            $vagasListaEsperaPubGeral = round($vagasListaEsperaPubGeral * 0.2); 
+            $vagasListaEsperaPubLaudo = round($vagasListaEsperaPubLaudo * 0.2); 
         }
     }
     $numinscListaEsperaPublicoLaudo = Insc::getNumInscListaEsperaPubLaudoTurmaTemporada($idtemporada, $idturma);
@@ -318,15 +318,15 @@ function naoHaVagasListaEsperaPubPcd($idtemporada, $idturma, $idmodal, $idturmas
     $vagasListaEsperaPubPcd = Turma::getVagasPcdByIdTurma($idturma);
     if($idturmastatus == 6){
         if($idmodal == 25){
-            $vagasListaEsperaPubGeral = round($vagasListaEsperaPubGeral * 1.5); 
+            $vagasListaEsperaPubPcd = round($vagasListaEsperaPubPcd * 1.5); 
         }else{
-            $vagasListaEsperaPubGeral = round($vagasListaEsperaPubGeral * 1.2); 
+            $vagasListaEsperaPubPcd = round($vagasListaEsperaPubPcd * 1.2); 
         }
     }else{
         if($idmodal == 25){
-            $vagasListaEsperaPubGeral = round($vagasListaEsperaPubGeral * 0.5); 
+            $vagasListaEsperaPubPcd = round($vagasListaEsperaPubPcd * 0.5); 
         }else{
-            $vagasListaEsperaPubGeral = round($vagasListaEsperaPubGeral * 0.2); 
+            $vagasListaEsperaPubPcd = round($vagasListaEsperaPubPcd * 0.2); 
         }
     }
     $numinscListaEsperaPublicoPcd = Insc::getNumInscListaEsperaPubPcdTurmaTemporada($idtemporada, $idturma);
@@ -341,15 +341,15 @@ function naoHaVagasListaEsperaPubPvs($idtemporada, $idturma, $idmodal, $idturmas
     $vagasListaEsperaPubPvs = Turma::getVagasPvsByIdTurma($idturma);
     if($idturmastatus == 6){
         if($idmodal == 25){
-            $vagasListaEsperaPubGeral = round($vagasListaEsperaPubGeral * 1.5); 
+            $vagasListaEsperaPubPvs = round($vagasListaEsperaPubPvs * 1.5); 
         }else{
-            $vagasListaEsperaPubGeral = round($vagasListaEsperaPubGeral * 1.2); 
+            $vagasListaEsperaPubPvs = round($vagasListaEsperaPubPvs * 1.2); 
         }
     }else{
         if($idmodal == 25){
-            $vagasListaEsperaPubGeral = round($vagasListaEsperaPubGeral * 0.5); 
+            $vagasListaEsperaPubPvs = round($vagasListaEsperaPubPvs * 0.5); 
         }else{
-            $vagasListaEsperaPubGeral = round($vagasListaEsperaPubGeral * 0.2); 
+            $vagasListaEsperaPubPvs = round($vagasListaEsperaPubPvs * 0.2); 
         }
     }
     
