@@ -318,6 +318,44 @@ $app->post("/hora-agenda", function() {
 
 	$selecionaagendadia = $selecionaagenda[0]['dia'];
 
+	// if para teste
+    if($idpess == 64){
+
+	//variável do dia limite que se pode agendar natação espontânea sem atestado
+	$dtLimiteSemAtestado = date('2023-10-26 00:00:00');
+
+	$selecionaagendaposdatalimite = $agenda->selecionaAgendaPorPessoaDiaTituloDataLimite($idpess, $titulo, $dtLimiteSemAtestado);
+
+	$selecionaagendadatalimitedia = $selecionaagendaposdatalimite[0]['dia'];
+	
+	if($selecionaagendadatalimitedia > 0){
+		//Verifica se o dia para qual foi agendado é maior que o dia de limite para agendar sem atestado.
+		if($selecionaagendadatalimitedia >= $dtLimiteSemAtestado){
+
+			$qtdAgendamento = Agenda::countAgendaPorPessoaDiaTituloPosDataLimite($idpess, $titulo, $dtLimiteSemAtestado);
+
+			if($qtdAgendamento[0]['count(*)'] <= 2){
+				
+				echo "<script>alert('ATENÇÃO: A partir de 01/01/2024 você só poderá fazer agendamento para a natação espontânea em nossas piscinas, caso você já tenha apresentado o atestado clínico(cardiológico) e o dermatológico, ambos válidos, aos nossos professores e/ou colaboradores nos locais de natação!!!!!')</script>;";
+			}else{
+							    
+			    echo "<script>alert('ATENÇÃO: Não existe cadastrado em nosso sistema o atestado clínico e/ou dermatológico para o(a) ".$nomepess.". Vá até um de nossos locais de natação e apresente-os para que você continue nadando em nossas piscinas  ');";
+			echo "javascript:history.go(-1)</script>";
+			exit();
+			    
+			}
+		}
+	}else{
+		var_dump('Não há agendamento!!! '.$selecionaagendadatalimite[0]['dia']);
+		exit();
+	}
+
+	//Rotina para impedir que aluno com mais de 02 agendamentos não faça agendamento
+
+	}
+	// if para teste (fim)
+
+
 	if($selecionaagendadia > $hoje){
 
 		$qtdAgendamento = Agenda::countAgendaPorPessoaDiaTitulo($idpess, $titulo);
@@ -549,7 +587,7 @@ $app->post("/horaagendada", function() {
 	$pessoa->get($idpess);	
 	$nomepess = $pessoa->getnomepess();
 	
-	$hoje = Date('Y-m-d');
+	$hoje = date('Y-m-d');
 
 	$selecionaagenda = $agenda->selecionaAgendaPorPessoaDiaTitulo($idpess, $titulo);
 
@@ -566,6 +604,31 @@ $app->post("/horaagendada", function() {
 		exit();
 		}
 	}
+
+	/*
+	//variável do dia limite que se pode agendar natação espontânea sem atestado
+	$dtLimiteSemAtestado = date('2023-10-24');
+
+	if($selecionaagendadia > $dtLimiteSemAtestado){
+
+		$qtdAgendamento = Agenda::countAgendaPorPessoaDiaTituloPosDataLimite($idpess, $titulo, $dtLimiteSemAtestado);
+
+		//var_dump((int)$qtdAgendamento[0]['count(*)'].' - '.$idpess);
+		//exit;
+
+		if((int)$qtdAgendamento[0]['count(*)'] >= 2){
+
+		echo "<script>alert('ATENÇÃO: A partir de 01/01/2024 você só poderá fazer agendamento para a natação espontânea em nossas piscinas, caso você já tenha apresentado o atestado clínico(cardiológico) e o dermatológico, ambos válidos, aos nossos professores e/ou colaboradores nos locais de natação!!')</script>;";
+		//echo "javascript:history.go(-2)</script>";
+		//exit();
+		}
+	}
+
+	Rotina para impedir que aluno com mais de 02 agendamentos não faça agendamento
+
+	//var_dump($selecionaagendadia.' - '.$dtLimiteSemAtestado);
+	//exit();
+	*/
 
 	$qtdAgendamento = Agenda::countAgendaPorPessoaLocalDia($idpess, $idlocal, $dia);
 

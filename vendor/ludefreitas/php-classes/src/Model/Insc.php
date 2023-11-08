@@ -2609,6 +2609,34 @@ class Insc extends Model {
 		]);
 		return $results[0]['count(*)'];		
 	}
+
+	public function InscByModalidadeByCpf($numcpf, $idtemporada, $idmodal, $idlocal)
+	{
+
+		$sql = new Sql();
+		
+		$results = $sql->select("
+			SELECT  * FROM tb_insc a
+			INNER JOIN tb_carts b ON b.idcart = a.idcart 
+			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_turma d ON d.idturma = a.idturma 
+            INNER JOIN tb_espaco e ON e.idespaco = d.idespaco
+            INNER JOIN tb_local f ON f.idlocal = e.idlocal 
+			INNER JOIN tb_modalidade g ON g.idmodal = d.idmodal 
+			WHERE a.idtemporada = :idtemporada 
+			AND c.numcpf = :numcpf
+			AND g.idmodal = :idmodal
+			AND f.idlocal != :idlocal
+			AND a.idinscstatus = 1
+			", [
+				":idtemporada"=>$idtemporada,
+				":numcpf"=>$numcpf,				
+				":idmodal"=>$idmodal,
+				":idlocal"=>$idlocal
+		]);		
+
+			return $results;		
+	}
 }
 
 

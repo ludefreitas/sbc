@@ -1,5 +1,38 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
+<style type="text/css">
+    #alert-box{
+   display:block;
+   position:fixed;
+   width:200px;
+   padding:5px 20px 20px;
+   background:#ddd;
+   border:1px solid #999;
+   text-align:center;
+   transform:translate(-50%,-50%);
+   top:50%;
+   left:50%;
+   z-index:99999;
+   -webkit-box-shadow: 0px 0px 33px -6px rgba(0,0,0,0.59);
+   -moz-box-shadow: 0px 0px 33px -6px rgba(0,0,0,0.59);
+   box-shadow: 0px 0px 33px -6px rgba(0,0,0,0.59);
+}
+</style>
 <script type="text/javascript">
+
+    function alertTokenVunerabilidade(idlocal){
+
+        let local = idlocal
+
+        let msg_alerta = '<div id="alert-box">'
+        +'<h5>O que é Vulnerabilidade Social?</h5>'
+        +'<p>“Vulnerabilidade social é o conceito que caracteriza a condição dos grupos de indivíduos que estão à margem da sociedade, ou seja, pessoas ou famílias que estão em processo de exclusão social, principalmente por fatores socioeconômicos. (…) As pessoas que são consideradas “vulneráveis sociais” são aquelas que estão perdendo sua representatividade na sociedade, e geralmente dependem de auxílios de terceiros para garantirem a sua sobrevivência”.</p>'
+        +'<input style="padding:5px 10px;" type="button" value="OK" onclick="this.parentNode.outerHTML=\'\';window.location.href=\' '+local+'\';" />'
+
+        +'</div>';
+
+    document.write(msg_alerta);
+
+    }       
 
     function getVagas(url){
 
@@ -23,10 +56,12 @@
     alert('As aulas de Ginástica Artística (GA) e Ginástica Rítimica (GR) começam a partir de 13/02/2023.')
     */
 
+    /*
      function alertTokenVunerabilidade(){
 
-        alert("Pessoa em situação de VULNERABILIDADE SOCIAL, é a pessoa que participa de programas sociais do governo, como por exemplo o Bolsa Família e que tem o cadastro no CadUnico/NIS com o respectivo número de inscrição. ")
+        alert("O que é Vulnerabilidade Social?\n\nPessoa em situação de VULNERABILIDADE SOCIAL, é a pessoa que participa de programas sociais do governo, como por exemplo o Bolsa Família e que tem o cadastro no CadUnico/NIS com o respectivo número de inscrição. ")
     }
+    */
 
     function encerradas(){
 
@@ -346,15 +381,17 @@
 
           <?php }else{ ?>
                 
-             
+             <?php if( $value1["idturma"] == 929 OR $value1["idturma"] == 930 OR $value1["idturma"] == 931 OR $value1["idturma"] == 932 OR $value1["idturma"] == 878 OR $value1["idturma"] == 879 OR $value1["idturma"] == 880 OR $value1["idturma"] == 881 ){ ?>
               <a class="btn btn-info" style="background-color: #cc5d1e"  href="/cart/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/add">Inscrever-se</a>  
-             <!--
+
+              <?php }else{ ?>           
 
                 <a class="btn btn-info" style="background-color: #cc5d1e; color: white;"  onclick="encerradas()">Inscrever-se</a>  
-            -->
+            
+             <?php } ?>
               <a class="btn btn-success" style="font-weight: bold; color: white;" onclick="getVagas('/vagas-turma/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturmastatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>')"> Vagas </a> 
               &nbsp;&nbsp;
-              <a href="#" onmousemove="alertTokenVunerabilidade()"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a>
+              <a href="#" onmousemove="alertTokenVunerabilidade(<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a>
 
             <br> 
             <h6 style="color: blue; font-weight: bold">  

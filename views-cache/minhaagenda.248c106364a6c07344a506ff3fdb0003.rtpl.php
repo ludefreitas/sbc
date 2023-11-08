@@ -28,7 +28,7 @@
           padding: 20px;
       }
 
-      #div1 {
+       #div1 {
           display: flex;
       }
 
@@ -60,32 +60,27 @@
 <div id="div1">  
     <a href="javascript:history.go(-2)">
         <i class="fa fa-arrow-left"></i> 
-            Início
+            Voltar
     </a> 
 </div>
 <hr>
 
+<div id="div1">
 
-          
-
-<!----------------------------------------GERAL-------------------------------------------->
-
-
-<div id="div1" style="padding-right: 20px;">
-
+      
       <table>
           <?php if( $error != '' ){ ?>
           <tr>
             <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; color: red;" colspan="7"><?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?></th>
           </tr>
           <?php } ?>
-
+          
           <?php if( $success != '' ){ ?>
           <tr>
             <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; color: green;" colspan="7"><?php echo htmlspecialchars( $success, ENT_COMPAT, 'UTF-8', FALSE ); ?></th>
           </tr>
           <?php } ?>
-
+          
 
           <tr>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Data</th>
@@ -119,7 +114,7 @@
                   <span style="color: red"> X </span>
               <?php }else{ ?>
                 <td style="text-align: center; border: solid 1px;  padding: 5px;">     
-                  <span style="color: green;"> <i class="fa fa-check"></i> </span>
+                  <span style="color: green"> <i class="fa fa-check"></i> </span>
               <?php } ?>           
               </td>
               <td style="text-align: center; border: solid 1px; padding: 5px;">
@@ -127,9 +122,8 @@
 
                 <?php }else{ ?>
                 <a href="/agendadelete/<?php echo htmlspecialchars( $value1["idagen"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-danger">
-                <i class="fa fa-trash"></i>
+                  <i class="fa fa-trash"></i>
                 </a>
-
                 <?php } ?>
               </td>
               

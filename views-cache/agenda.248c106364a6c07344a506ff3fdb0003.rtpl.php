@@ -1,5 +1,18 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
 <script>
+
+    let data = new Date()
+    let dia = data.getDate()
+    let mes = (data.getMonth() + 1)
+    let ano = data.getFullYear()
+
+    let hoje = ano+'-'+mes+'-'+dia
+    let datalimite = '2023-11-06'       
+
+    if(datalimite > hoje){
+        alert('\n ATENÇÃO: \n\n A partir de 01/01/2024 você só poderá fazer agendamento para a natação espontânea em nossas piscinas, caso você já tenha apresentado o atestado clínico(cardiológico) e o dermatológico, ambos válidos, aos nossos professores e/ou colaboradores nos locais de natação!!')
+    }
+
     /*
     function quantosAnos(nascimento, hoje) {
 

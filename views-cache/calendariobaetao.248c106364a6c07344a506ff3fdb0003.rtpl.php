@@ -217,16 +217,14 @@
             //return;
             
            // alert(diaSemanaDaEscolha)
-           // return
-           
+           // return           
            
            //hora = 10
            
            //alert(hora)
 
             var dataAtual = new Date();
-           var horas = dataAtual.getHours();
-           
+            var horas = dataAtual.getHours();           
             
             if( local == 3 && diaSemanaDaEscolha == 5 && strDiaSemana == 5  && horas > 12) {
 

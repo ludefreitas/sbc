@@ -10,6 +10,18 @@ use \Sbc\Model\Agenda;
 use \Sbc\Model\Pessoa;
 use \Sbc\Model\Local;
 
+function PegaInscByModalidadeByCpf($numcpf, $idtemporada, $idmodal, $idlocal){
+
+    $InscByModalidadeByCpf = new Insc();
+    $InscByModalidadeByCpf = (int)Insc::InscByModalidadeByCpf($numcpf, $idtemporada, $idmodal, $idlocal);
+    if($InscByModalidadeByCpf > 0){
+        return true;
+    }else{
+        return false;
+    }
+    
+}
+
 function repostaSimParq($idpess){
 
     $saude = new Saude();

@@ -9,6 +9,7 @@ use \Sbc\Model\Temporada;
 use \Sbc\Model\InscStatus;
 use \Sbc\Model\Sorteio;
 use \Sbc\Model\Agenda;
+use \Sbc\Model\Modalidade;
 
 
 $app->get("/admin/insc", function() {
@@ -907,7 +908,7 @@ $app->get("/admin/calendario-lista-presenca/:idtemporada/:idturma", function($id
 	]);	
 });
 
-$app->get("/admin/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/:data", function($idtemporada, $idturma, $data) {
+$app->get("/admin/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/:data/:diasemana", function($idtemporada, $idturma, $data, $diasemana) {
 
 	User::verifyLogin(false);
 	$turma = new Turma();
@@ -981,12 +982,36 @@ $app->get("/admin/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/:data
 			$nomemes = 'DEZEMBRO';
 		}	
 
+		if($diasemana == '0'){
+			$nomediasemana = 'Segunda-feira';
+		}
+		if($diasemana == '1'){
+			$nomediasemana = 'Terça-feira';
+		}
+		if($diasemana == '2'){
+			$nomediasemana = 'Quarta-feira';
+		}
+		if($diasemana == '3'){
+			$nomediasemana = 'Quinta-feira';
+		}
+		if($diasemana == '4'){
+			$nomediasemana = 'Sexta-feira';
+		}
+		if($diasemana == '5'){
+			$nomediasemana = 'Sábado';
+		}
+		if($diasemana == '6'){
+			$nomediasemana = 'Domingo';
+		}
+
 		$page->setTpl("insc-turma-temporada-fazer-chamada", [
 			'turma'=>$turma->getValues(),
 			'data'=>$data,
 			'idtemporada'=>$idtemporada,
 			'desctemporada'=>$desctemporada,
 			'insc'=>$insc,
+			'diasemana'=>$diasemana,
+			'nomediasemana'=>$nomediasemana,
 			'dias_do_mes'=>$dias_do_mes,
 			'mes'=>$mes,
 			'nomemes'=>$nomemes,
@@ -1034,6 +1059,28 @@ $app->get("/admin/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/:data
 		if($mes == '12'){
 			$nomemes = 'DEZEMBRO';
 		}
+
+		if($diasemana == '0'){
+			$nomediasemana = 'Segunda-feira';
+		}
+		if($diasemana == '1'){
+			$nomediasemana = 'Terça-feira';
+		}
+		if($diasemana == '2'){
+			$nomediasemana = 'Quarta-feira';
+		}
+		if($diasemana == '3'){
+			$nomediasemana = 'Quinta-feira';
+		}
+		if($diasemana == '4'){
+			$nomediasemana = 'Sexta-feira';
+		}
+		if($diasemana == '5'){
+			$nomediasemana = 'Sábado';
+		}
+		if($diasemana == '6'){
+			$nomediasemana = 'Domingo';
+		}
 	
 		$page->setTpl("insc-turma-temporada-fazer-chamada", [
 			'turma'=>$turma->getValues(),
@@ -1041,6 +1088,8 @@ $app->get("/admin/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/:data
 			'idtemporada'=>$idtemporada,
 			'desctemporada'=>$desctemporada,
 			'insc'=>$insc,
+			'diasemana'=>$diasemana,
+			'nomediasemana'=>$nomediasemana,
 			'dias_do_mes'=>$dias_do_mes,
 			'mes'=>$mes,
 			'nomemes'=>$nomemes,
@@ -1279,7 +1328,7 @@ $app->get("/admin/insc-turma-temporada-justificar/:idtemporada/:idturma/:data/:i
 		//exit();				
 });
 
-$app->get("/admin/insc-altera-turma-temporada/:idturma/:idtemporada/user/:iduser", function($idturma, $idtemporada, $iduser) {
+$app->get("/admin/insc-altera-turma-temporada/:idmodal/:idturma/:idtemporada/user/:iduser", function($idmodal, $idturma, $idtemporada, $iduser) {
 
 	User::verifyLogin();
 	
@@ -1287,8 +1336,10 @@ $app->get("/admin/insc-altera-turma-temporada/:idturma/:idtemporada/user/:iduser
 	$turma = new Turma();
 	$user = new User();
 	$temporada = new Temporada();
+	$modalidade = new Modalidade();
 	$temporada->get((int)$idtemporada);
 	$turma->get((int)$idturma);
+	$modalidade->get((int)$idmodal);
 
 	$iduserprof = User::getIdUseInTurmaTemporada($idturma, $idtemporada);
 	
@@ -1307,6 +1358,7 @@ $app->get("/admin/insc-altera-turma-temporada/:idturma/:idtemporada/user/:iduser
 		'iduserprof'=>$iduserprof,	
 		'inscTodas'=>$inscTodas->getValues(),
 		'turma'=>$turma->getValues(),
+		'modalidade'=>$modalidade->getValues(),
 		'temporada'=>$temporada->getValues(),
 		'error'=>User::getError(),
 		'success'=>User::getSuccess(),

@@ -277,7 +277,7 @@
                     <div class="col-md-12" style="border: 1px solid black; margin: 0; padding: 0; text-align: center; font-weight: bold; background-color: #ccc;" >
                           <div class="col-md-12">
 
-                             <?php echo FormatDate($data); ?> - Dia Semana
+                             <?php echo FormatDate($data); ?> - <?php echo htmlspecialchars( $diasemana, ENT_COMPAT, 'UTF-8', FALSE ); ?>
 
                           </div>   
                     </div>
@@ -397,13 +397,11 @@
                   Não há pessoas matriculadas 
                 </div>
                 <?php } ?>
-               <br>
 
                <div class="col-md-12 btn btn-success" style="font-weight: bold; font-size: 16x; text-align: center; margin-top: 10px;">
                   <a style="color: white;" href="/prof/insc-turma-temporada-fazer-chamada/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>">Atualizar</a>
                 </div>
 
-                &nbsp;&nbsp;&nbsp;
 
                 <div class="col-md-12 btn btn-info" style="font-weight: bold; font-size: 16x; text-align: center; ">
                   <a style="color: white;" href="/prof/insc-turma-temporada-mes-chamada-atualizada/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $mes, ENT_COMPAT, 'UTF-8', FALSE ); ?>">Lista de chamada do mês de <?php echo htmlspecialchars( $nomemes, ENT_COMPAT, 'UTF-8', FALSE ); ?></a>

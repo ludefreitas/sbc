@@ -1,22 +1,14 @@
 <script type="text/javascript">
+     
+      function VerificaInscricaoModalidade(nomepess){
 
-      function requisitarPaginaEndereco(url){
+        let nome = nomepess;
 
-        let ajax = new XMLHttpRequest();
-        let idurl = url.substr(53);              
-        ajax.open('GET', 'url');
-        
-        $.ajax({
-          url: url,
-          method: 'GET'  
-        }).done(function(result){
-
-          if(result){              
-                alert(result)
-          }else{
-            alert('Endereço não encontrado!')
-          }
-        });
+        let checkbox = document.getElementById("checkbox");
+        const isChecked = checkbox.checked;
+        if (isChecked) {
+          alert('Existem uma ou mais inscrições válidas para o(a) '+nome+' nesta modalidade em outro Centro Esportivo. Clique em "Todas inscrições de '+nomepess+'" para ver mais detalhes.')
+        } 
       }   
 
 </script>
@@ -72,12 +64,17 @@
                   <div class="col-md-12" style="margin: 2; padding: 2">
                     <h5 style="text-align: left;">
 
+                      {if="PegaInscByModalidadeByCpf($value.numcpf, $temporada.idtemporada, $modalidade.idmodal, $turma.idlocal) == true"}
+                        <input id="checkbox" onclick="VerificaInscricaoModalidade('{$value.nomepess}')" type="checkbox" name="listaInsc[]" value="{$value.idinsc}">  &nbsp;&nbsp;&nbsp;
+                      {else}
+                        <input type="checkbox" name="listaInsc[]" value="{$value.idinsc}">  &nbsp;&nbsp;&nbsp;
 
-                      <input type="checkbox" name="listaInsc[]" value="{$value.idinsc}">  &nbsp;&nbsp;&nbsp;
+                      {/if}
 
                       {$value.numordem}º -
                       <strong>[{$value.idinsc}] - {$value.nomepess}</strong>
                       &nbsp;{function="formatCpf($value.numcpf)"}&nbsp;
+                      &nbsp;{$value.numcpf}&nbsp;
                       <strong>{function="calcularIdade($value.dtnasc)"} anos</strong>
                       &nbsp;Nascim.: {function="formatDate($value.dtnasc)"}&nbsp;
                        <strong>Dt Insc.: {function="formatDate($value.dtinsc)"}</strong>
@@ -151,6 +148,14 @@
                         </span>
                       
                       {/if} 
+
+                      {if="PegaInscByModalidadeByCpf($value.numcpf, $temporada.idtemporada, $modalidade.idmodal, $turma.idlocal) == true"}
+
+                      &nbsp;&nbsp;&nbsp; <a href="/prof/insc/pessoa/{$value.idpess}"><span style="font-weight: bold; text-align: left; color: red;">                                    
+                          <span>[Todas inscrições de {$value.nomepess}]</span>
+                        </span>
+
+                      {/if}
                        
                        </h5>
                   </div>

@@ -1,4 +1,8 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
+
+    <script>
+        alert('Lembramos que ao fazer seu agendamento, você está ciente da necessidade de se apresentar em nossas piscinas, no dia agendado para nadar, com sunga (para os homens) maiô (para as mulheres) e touca de natação')
+    </script>
      <div class="container"> <!-- container 1 -->
                 <div class="row"> <!-- row 2 -->
                   <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 5px 0px 50px 0px;">
@@ -26,7 +30,7 @@
                     </div>
                     <div style="text-align: center; color: blue; font-weight: bold;">
                         <label>
-                        	Nome: <?php echo htmlspecialchars( $nomepess, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                        	Nome: <?php echo htmlspecialchars( $nomepess, ENT_COMPAT, 'UTF-8', FALSE ); ?> 
                         </label>                        
                     </div>
                     <div style="color: blue; text-align: center; font-weight: bold;">
@@ -42,14 +46,13 @@
                     </div>
 
 
-                        <input type="text" name="dataPost" value="<?php echo htmlspecialchars( $dataPost, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;">
+                        <input type="text" name="dataPost" value="<?php echo htmlspecialchars( $dataPost, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;">    
                         <input type="text" name="titulo" value="<?php echo htmlspecialchars( $titulo, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;">
-
                         <input type="text" name="idpess" value="<?php echo htmlspecialchars( $idpess, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;"> 
                         <input type="text" name="ispresente" value="<?php echo htmlspecialchars( $ispresente, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;">
                         <input type="text" name="idlocal" value="<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;"> 
                          <input type="text" name="nomediasemana" value="<?php echo htmlspecialchars( $nomeDiaSemana, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;"> 
-                         <input type="text" name="horarioinicial" value="<?php echo htmlspecialchars( $horarioinicial, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;"> 
+                         <input type="text" name="horarioinicial" value="<?php echo htmlspecialchars( $horarioinicial, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;">
                          <input type="text" name="idhoradiasemana" value="<?php echo htmlspecialchars( $idhoradiasemana, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;"> 
                          <input type="text" name="horariofinal" value="<?php echo htmlspecialchars( $horariofinal, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;"> 
                          <input type="text" name="dataSemSemana" value="<?php echo htmlspecialchars( $dataSemSemana, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;"> 
@@ -61,11 +64,21 @@
                         Confirme seus dados, a data escolhida, o horário e clique no botão "ENVIAR".
                         </label> 
                     </div>
-
+                    
                     <div class="row" style="padding-top: 0px;">
                         <div class="col-md-12 alert-primary" style="text-align-last: left; padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; font-size: 12px;">
+                            
+                            <?php if( calcularIdade($dtnasc) < 18 ){ ?>       
+                            
+                                <strong style="color: red">Você está agendando a natação espontânea para uma pessoa menor de idade, então:</strong>   <br>                     
 
-                            Ao clicar no botão <strong>ENVIAR</strong> você <strong>declara</strong> a precisão das infromações prestadas neste site, assim como que <strong>se encontra APTO(A)</strong> a prática de ATIVIDADES FÍSICAS, isentando o professor e a Secretaria de Esportes e Lazer do Município de São Bernardo do Campo de qualquer responsabilidade. Declaro ainda estar Ciente do Art. 5º da Lei 10.848/2001 que trata da obrigatoriedade da apresentação de <strong>ATESTADO MÉDICO.</strong> Declara ainda que autoriza a divulgação de eventuais imagens registradas em momentos de aula espontânea para arquivo e divulgação institucional<br>  
+                              Ao clicar no botão <strong>ENVIAR</strong> você <strong>declara</strong> a precisão das informações prestadas neste site, assim como que o(a) menor, da qual você é responsável, <strong>se encontra APTO(A)</strong> a prática de ATIVIDADES FÍSICAS, isentando o professor e a Secretaria de Esportes e Lazer do Município de São Bernardo do Campo de qualquer responsabilidade. Declaro ainda estar Ciente do Art. 5º da Lei 10.848/2001 que trata da obrigatoriedade da apresentação de <strong>ATESTADO MÉDICO.</strong> Declara ainda que autoriza a divulgação de eventuais imagens registradas em momentos de aula espontânea para arquivo e divulgação institucional<br>  
+
+                             <?php }else{ ?>
+
+                              Ao clicar no botão <strong>ENVIAR</strong> você <strong>declara</strong> a precisão das infromações prestadas neste site, assim como que <strong>se encontra APTO(A)</strong> a prática de ATIVIDADES FÍSICAS, isentando o professor e a Secretaria de Esportes e Lazer do Município de São Bernardo do Campo de qualquer responsabilidade. Declaro ainda estar Ciente do Art. 5º da Lei 10.848/2001 que trata da obrigatoriedade da apresentação de <strong>ATESTADO MÉDICO.</strong> Declara ainda que autoriza a divulgação de eventuais imagens registradas em momentos de aula espontânea para arquivo e divulgação institucional<br>  
+
+                             <?php } ?> 
 
                         </div>
                     </div>  
@@ -91,8 +104,6 @@
 
         </div>    
     </div>     
-
-   
 
     </div> <!-- final da index -->               
 

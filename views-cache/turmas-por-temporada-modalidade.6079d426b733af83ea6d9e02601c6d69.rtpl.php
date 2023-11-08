@@ -262,9 +262,14 @@
 
 
                           <a href="/admin/token/<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: darkblue;"><i ></i> | Tokens</a>
-                           <a href="/admin/insc-altera-turma-temporada/<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value2["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/user/<?php echo htmlspecialchars( $value2["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> 
+                           <a href="/admin/insc-altera-turma-temporada/<?php echo htmlspecialchars( $value2["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value2["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/user/<?php echo htmlspecialchars( $value2["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> 
                          | &nbsp; Mover inscritos &nbsp;
                          </a> &nbsp; 
+
+                         <a href="/admin/crialispersonalizadaautorizacao/<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value2["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: purple;">
+                                | &nbsp; Criar uma Lista </a>  
+                                &nbsp;&nbsp;
+
                          <br>
                          <span id="lermais<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: darkblue;" onclick="expandir(<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)">Ler mais...</span> 
                          

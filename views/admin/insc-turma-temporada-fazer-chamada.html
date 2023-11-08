@@ -267,7 +267,7 @@
                     <div class="col-md-12" style="border: 1px solid black; margin: 0; padding: 0; text-align: center; font-weight: bold; background-color: #ccc;" >
                           <div class="col-md-12">
 
-                             {function="FormatDate($data)"} - Dia Semana
+                             {function="FormatDate($data)"} - {$nomediasemana}
 
                           </div>   
                     </div>
@@ -389,7 +389,7 @@
                 {/loop}
 
                 <div class="col-md-12 btn btn-success" style="font-weight: bold; font-size: 16x; text-align: center; margin-top: 10px;">
-                  <a style="color: white;" href="/admin/insc-turma-temporada-fazer-chamada/{$idtemporada}/{$turma.idturma}/{$data}">Atualizar Lista</a>
+                  <a style="color: white;" href="/admin/insc-turma-temporada-fazer-chamada/{$idtemporada}/{$turma.idturma}/{$data}/{$diasemana}">Atualizar Lista</a>
                 </div>
 
 

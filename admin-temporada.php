@@ -713,6 +713,16 @@ $app->get("/admin/turma-temporada/:idtemporada/local/:idlocal", function($idtemp
 
 	$modalidades = $modalidade->getModalidadesTemporadaByLocal($idtemporada, $idlocal);
 
+	$turmasTemporada = Temporada::listAllTurmatemporadaLocal($idtemporada, $idlocal);
+
+	//pegar nome do dia da semama com a função date()
+	for ($i=0; $i < count($turmasTemporada)  ; $i++ ) { 
+		echo '<pre>';
+		var_dump($turmasTemporada[$i]['diasemana']);
+		echo '</pre>';
+	}
+	exit();
+
 	$page = new PageAdmin();	
 
 	$page->setTpl("turmas-por-temporada", [
@@ -721,7 +731,8 @@ $app->get("/admin/turma-temporada/:idtemporada/local/:idlocal", function($idtemp
 		'modalidades'=>$modalidades,
 		'temporada'=>$temporada->getValues(),
 		//'turmaRelated'=>$temporada->getTurma(true)
-		'turmas'=>Temporada::listAllTurmatemporadaLocal($idtemporada, $idlocal),
+		'turmas'=>$turmasTemporada,
+		//'turmas'=>Temporada::listAllTurmatemporadaLocal($idtemporada, $idloca
 		//'turmaNotRelated'=>$temporada->getTurma(false)
 		'error'=>User::getError()
 	]);	

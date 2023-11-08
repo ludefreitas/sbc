@@ -1,22 +1,14 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?><script type="text/javascript">
 
-      function requisitarPaginaEndereco(url){
+      function VerificaInscricaoModalidade(nomepess){
 
-        let ajax = new XMLHttpRequest();
-        let idurl = url.substr(53);              
-        ajax.open('GET', 'url');
-        
-        $.ajax({
-          url: url,
-          method: 'GET'  
-        }).done(function(result){
+        let nome = nomepess;
 
-          if(result){              
-                alert(result)
-          }else{
-            alert('Endereço não encontrado!')
-          }
-        });
+        let checkbox = document.getElementById("checkbox");
+        const isChecked = checkbox.checked;
+        if (isChecked) {
+          alert('Existem uma ou mais inscrições válidas para o(a) '+nome+' nesta modalidade em outro Centro Esportivo. Clique em "Todas inscrições de '+nomepess+'" para ver mais detalhes.')
+        } 
       }   
 
 </script>
@@ -73,7 +65,12 @@
                     <h5 style="text-align: left;">
 
 
-                      <input type="checkbox" name="listaInsc[]" value="<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">  &nbsp;&nbsp;&nbsp;
+                      <?php if( PegaInscByModalidadeByCpf($value1["numcpf"], $temporada["idtemporada"], $modalidade["idmodal"], $turma["idlocal"]) == true ){ ?>
+                        <input id="checkbox" onclick="VerificaInscricaoModalidade('<?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>')" type="checkbox" name="listaInsc[]" value="<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">  &nbsp;&nbsp;&nbsp;
+                      <?php }else{ ?>
+                        <input type="checkbox" name="listaInsc[]" value="<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">  &nbsp;&nbsp;&nbsp;
+
+                      <?php } ?>
 
                       <?php echo htmlspecialchars( $value1["numordem"], ENT_COMPAT, 'UTF-8', FALSE ); ?>º -
                       <strong>[<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>] - <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
@@ -151,6 +148,14 @@
                         </span>
                       
                       <?php } ?> 
+
+                      <?php if( PegaInscByModalidadeByCpf($value1["numcpf"], $temporada["idtemporada"], $modalidade["idmodal"], $turma["idlocal"]) == true ){ ?>
+
+                      &nbsp;&nbsp;&nbsp; <a href="/admin/insc/pessoa/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><span style="font-weight: bold; text-align: left; color: red;">                  
+                          <span>[Todas inscrições de <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>]</span>
+                        </span></a>
+
+                      <?php } ?>
                       
                        </h5>
                   </div>

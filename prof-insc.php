@@ -9,7 +9,7 @@ use \Sbc\Model\Pessoa;
 use \Sbc\Model\InscStatus;
 use \Sbc\Model\Agenda;
 use \Sbc\Model\Endereco;
-
+use \Sbc\Model\Modalidade;
 
 $app->get("/prof/insc-turma-temporada/:idturma/:idtemporada/user/:iduser", function($idturma, $idtemporada, $iduser) {
 
@@ -1102,7 +1102,7 @@ $app->get("/estagiario/calendario-lista-presenca/:idtemporada/:idturma", functio
 	]);	
 });
 
-$app->get("/prof/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/:data", function($idtemporada, $idturma, $data) {
+$app->get("/prof/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/:data/:diasemana", function($idtemporada, $idturma, $data, $diasemana) {
 
 	User::checkLoginProf();
 	$turma = new Turma();
@@ -1178,12 +1178,36 @@ $app->get("/prof/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/:data"
 			$nomemes = 'DEZEMBRO';
 		}
 
+		if($diasemana == '0'){
+			$nomediasemana = 'Segunda-feira';
+		}
+		if($diasemana == '1'){
+			$nomediasemana = 'Terça-feira';
+		}
+		if($diasemana == '2'){
+			$nomediasemana = 'Quarta-feira';
+		}
+		if($diasemana == '3'){
+			$nomediasemana = 'Quinta-feira';
+		}
+		if($diasemana == '4'){
+			$nomediasemana = 'Sexta-feira';
+		}
+		if($diasemana == '5'){
+			$nomediasemana = 'Sábado';
+		}
+		if($diasemana == '6'){
+			$nomediasemana = 'Domingo';
+		}
+
 		$page->setTpl("insc-turma-temporada-fazer-chamada", [
 			'turma'=>$turma->getValues(),
 			'data'=>$data,
 			'idtemporada'=>$idtemporada,
 			'desctemporada'=>$desctemporada,
 			'insc'=>$insc,
+			'diasemana'=>$diasemana,
+			'nomediasemana'=>$nomediasemana,
 			//'dias_do_mes'=>$dias_do_mes,
 			'mes'=>$mes,
 			'nomemes'=>$nomemes,
@@ -1230,6 +1254,28 @@ $app->get("/prof/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/:data"
 		if($mes == '12'){
 			$nomemes = 'DEZEMBRO';
 		}
+
+		if($diasemana == '0'){
+			$nomediasemana = 'Segunda-feira';
+		}
+		if($diasemana == '1'){
+			$nomediasemana = 'Terça-feira';
+		}
+		if($diasemana == '2'){
+			$nomediasemana = 'Quarta-feira';
+		}
+		if($diasemana == '3'){
+			$nomediasemana = 'Quinta-feira';
+		}
+		if($diasemana == '4'){
+			$nomediasemana = 'Sexta-feira';
+		}
+		if($diasemana == '5'){
+			$nomediasemana = 'Sábado';
+		}
+		if($diasemana == '6'){
+			$nomediasemana = 'Domingo';
+		}
 		
     	$page->setTpl("insc-turma-temporada-fazer-chamada", [
     		'turma'=>$turma->getValues(),
@@ -1237,6 +1283,8 @@ $app->get("/prof/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/:data"
     		'idtemporada'=>$idtemporada,
     		'desctemporada'=>$desctemporada,
     		'insc'=>$insc,
+    		'diasemana'=>$diasemana,
+    		'nomediasemana'=>$nomediasemana,
     		//'dias_do_mes'=>$dias_do_mes,
     		'mes'=>$mes,
     		'nomemes'=>$nomemes,
@@ -1287,7 +1335,7 @@ $app->get("/prof/insc-turma-temporada-mes-chamada-atualizada/:idtemporada/:idtur
     	]);	    
 });
 
-$app->get("/estagiario/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/:data", function($idtemporada, $idturma, $data) {
+$app->get("/estagiario/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/:data/:diasemana", function($idtemporada, $idturma, $data, $diasemana) {
 
 	User::checkLoginEstagiario();
 	$turma = new Turma();
@@ -1363,12 +1411,36 @@ $app->get("/estagiario/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/
 			$nomemes = 'DEZEMBRO';
 		}
 
+		if($diasemana == '0'){
+			$nomediasemana = 'Segunda-feira';
+		}
+		if($diasemana == '1'){
+			$nomediasemana = 'Terça-feira';
+		}
+		if($diasemana == '2'){
+			$nomediasemana = 'Quarta-feira';
+		}
+		if($diasemana == '3'){
+			$nomediasemana = 'Quinta-feira';
+		}
+		if($diasemana == '4'){
+			$nomediasemana = 'Sexta-feira';
+		}
+		if($diasemana == '5'){
+			$nomediasemana = 'Sábado';
+		}
+		if($diasemana == '6'){
+			$nomediasemana = 'Domingo';
+		}
+
 		$page->setTpl("insc-turma-temporada-fazer-chamada-estagiario", [
 			'turma'=>$turma->getValues(),
 			'data'=>$data,
 			'idtemporada'=>$idtemporada,
 			'desctemporada'=>$desctemporada,
 			'insc'=>$insc,
+			'diasemana'=>$diasemana,
+			'nomediasemana'=>$nomediasemana,
 			'dias_do_mes'=>$dias_do_mes,
 			'mes'=>$mes,
 			'nomemes'=>$nomemes,
@@ -1415,6 +1487,28 @@ $app->get("/estagiario/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/
 		if($mes == '12'){
 			$nomemes = 'DEZEMBRO';
 		}
+
+		if($diasemana == '0'){
+			$nomediasemana = 'Segunda-feira';
+		}
+		if($diasemana == '1'){
+			$nomediasemana = 'Terça-feira';
+		}
+		if($diasemana == '2'){
+			$nomediasemana = 'Quarta-feira';
+		}
+		if($diasemana == '3'){
+			$nomediasemana = 'Quinta-feira';
+		}
+		if($diasemana == '4'){
+			$nomediasemana = 'Sexta-feira';
+		}
+		if($diasemana == '5'){
+			$nomediasemana = 'Sábado';
+		}
+		if($diasemana == '6'){
+			$nomediasemana = 'Domingo';
+		}
 		
     	$page->setTpl("insc-turma-temporada-fazer-chamada-estagiario", [
     		'turma'=>$turma->getValues(),
@@ -1422,6 +1516,8 @@ $app->get("/estagiario/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/
     		'idtemporada'=>$idtemporada,
     		'desctemporada'=>$desctemporada,
     		'insc'=>$insc,
+    		'diasemana'=>$diasemana,
+    		'nomediasemana'=>$nomediasemana,
     		'dias_do_mes'=>$dias_do_mes,
     		'mes'=>$mes,
     		'nomemes'=>$nomemes,
@@ -1536,21 +1632,22 @@ $app->get("/estagiario/insc-turma-temporada-endereco/:idpess", function($idpess)
 		//exit();				
 });
 
-$app->get("/prof/insc-altera-turma-temporada/:idturma/:idtemporada/user/:iduser", function($idturma, $idtemporada, $iduser) {
+$app->get("/prof/insc-altera-turma-temporada/:idmodal/:idturma/:idtemporada/user/:iduser", function($idmodal, $idturma, $idtemporada, $iduser) {
 
 	User::verifyLoginProf();
-	
+
 	$inscTodas = new Insc();
 	$turma = new Turma();
 	$user = new User();
+	$modalidade = new Modalidade();
 	$temporada = new Temporada();
 	$temporada->get((int)$idtemporada);
 	$turma->get((int)$idturma);
+	$modalidade->get((int)$idmodal);
 
 	$iduserprof = User::getIdUseInTurmaTemporada($idturma, $idtemporada);
 	
 	$inscTodas->getInscByTurmaTemporadaTodas($idturma, $idtemporada);
-	
 	
 	$vagas = (int)$turma->getvagas();
 
@@ -1564,6 +1661,7 @@ $app->get("/prof/insc-altera-turma-temporada/:idturma/:idtemporada/user/:iduser"
 		'iduserprof'=>$iduserprof,	
 		'inscTodas'=>$inscTodas->getValues(),
 		'turma'=>$turma->getValues(),
+		'modalidade'=>$modalidade->getValues(),
 		'temporada'=>$temporada->getValues(),
 		'error'=>User::getError(),
 		'success'=>User::getSuccess(),
@@ -1644,8 +1742,34 @@ $app->post("/prof/insc/altera/turma", function(){
 
 	    	$insc = new Insc();
 	    	$insc->get($listaidinsc[$i]);
+	    	$modalidade = new Modalidade();
 	    	$insc = $insc->getValues();
+
+	    	/*
+	    	$numcpf = $insc['numcpf'];
+	    	$idlocal = $insc['idlocal'];
+	    	$idinscstatus = $insc['idinscstatus'];
+	    	$apelidolocal = $insc['apelidolocal'];
+	    	$nomepess = $insc['nomepess'];
+	    	$idmodal = $insc['idmodal'];
+
+	    	$modalidade->get($insc['idmodal']);
+
+	    	$descmodal = $modalidade->getdescmodal();
+
+	    	//var_dump($modalidade->getdescmodal());
+	    	//exit();    
+
+	    	//var_dump($numcpf.' -> '.$idlocal.' -> '.$idinscstatus.' -> '.$apelidolocal.'');
+	    	//exit();    
+
+	    	echo "<script>alert('Existe uma inscrição válida para o(a) ".$nomepess." para a modalidade ".$descmodal." no ".$apelidolocal."');";
+			echo "javascript:history.go(-1)</script>";
+			//exit();    
+			*/
 	    	
+
+	    
 	    	$idinscorigem = $insc['idinsc'];
 	    	$idinscstatus = $insc['idinscstatus'];
 	    	$idcart = $insc['idcart'];
@@ -1687,6 +1811,7 @@ $app->post("/prof/insc/altera/turma", function(){
 			exit;
 			*/
 
+			
 			$insc->save();	
 
 	    	if($tipomove == 'substituir'){
@@ -1706,9 +1831,13 @@ $app->post("/prof/insc/altera/turma", function(){
 
 	    	//echo 'Movimentação efetuada com sucesso!';
 	    	//header("Location: /prof/insc-altera-turma-temporada/".$idturmaorigem."/".$idtemporadaorigem."/user/".$iduser);
-			//exit();					
+			//exit();
+
+							
 
 	   	}
+
+	   	
 	   	echo "<script>alert('Movimentação efetuada com sucesso!');";
 	    echo "javascript:history.go(-1)</script>";
 	}
