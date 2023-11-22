@@ -499,6 +499,19 @@ class Agenda extends Model {
 		return $results;		
 	}
 
+	public static function countAgendaPorPessoaDiaTitulo($idpess, $titulo){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT count(*) FROM tb_agenda 
+			WHERE idpess = :idpess 
+			AND titulo = :titulo", [
+				':idpess'=>$idpess,
+				':titulo'=>$titulo
+			]);
+
+		return $results;		
+	}
 
 	public static function selecionaAgendaPorPessoaDiaTituloDataLimite($idpess, $titulo, $data){
 
@@ -517,20 +530,6 @@ class Agenda extends Model {
 		return $results;		
 	}
 	
-	public static function countAgendaPorPessoaDiaTitulo($idpess, $titulo){
-
-		$sql = new Sql();
-
-		$results = $sql->select("SELECT count(*) FROM tb_agenda 
-			WHERE idpess = :idpess 
-			AND titulo = :titulo", [
-				':idpess'=>$idpess,
-				':titulo'=>$titulo
-			]);
-
-		return $results;		
-	}
-
 	public static function countAgendaPorPessoaDiaTituloPosDataLimite($idpess, $titulo, $data){
 
 		$sql = new Sql();

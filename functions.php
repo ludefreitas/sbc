@@ -10,6 +10,22 @@ use \Sbc\Model\Agenda;
 use \Sbc\Model\Pessoa;
 use \Sbc\Model\Local;
 
+function numeroNaListaDePresençaByIdturmaData($idturma, $ano, $mes, $dia){
+
+    $data = ''.$ano.'-'.$mes.'-'.$dia;
+
+    $numeroListaDePresenca = new Insc();
+    $numeroListaDePresenca = Insc::getCountNumeroNaListaDePresençaByIdturmaData($idturma, $data);
+
+    $numeroListaDePresenca = (int)$numeroListaDePresenca[0]["count(*)"];    
+
+    if($numeroListaDePresenca <= 0){
+        return 0;
+    }else{
+         return 1;       
+    }    
+}
+
 function PegaInscByModalidadeByCpf($numcpf, $idtemporada, $idmodal, $idlocal){
 
     $InscByModalidadeByCpf = new Insc();
@@ -64,10 +80,24 @@ function getAtestadoIcone($idpess){
     $atestado = $saude->getCountAtestadoByIdPess($idpess);
      $html = [];
     if($atestado > 0){ 
-        array_push($html, '<span style="color: darkgreen;">Atestado</span><i style="font-size: 12px; color: darkorange" class="fa fa-check"></i>'
+        array_push($html, '<span style="color: darkgreen;">Clínico</span><i style="font-size: 12px; color: darkorange" class="fa fa-check"></i>'
             );                          
     }else{
-        array_push($html, '[Atestado]'
+        array_push($html, '[Clínico]'
+            );
+    }
+    return $html[0];
+}
+
+function getAtestadoDermaIcone($idpess){
+    $saude = new Saude();
+    $atestado = $saude->getCountAtestadoDermaByIdPess($idpess);
+     $html = [];
+    if($atestado > 0){ 
+        array_push($html, '<span style="color: darkgreen;">Dermato</span><i style="font-size: 12px; color: darkorange" class="fa fa-check"></i>'
+            );                          
+    }else{
+        array_push($html, '[Dermato]'
             );
     }
     return $html[0];

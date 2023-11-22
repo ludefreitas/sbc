@@ -322,7 +322,7 @@ $app->post("/hora-agenda", function() {
     if($idpess == 64){
 
 	//variável do dia limite que se pode agendar natação espontânea sem atestado
-	$dtLimiteSemAtestado = date('2023-10-26 00:00:00');
+	$dtLimiteSemAtestado = date('2023-12-01 00:00:00');
 
 	$selecionaagendaposdatalimite = $agenda->selecionaAgendaPorPessoaDiaTituloDataLimite($idpess, $titulo, $dtLimiteSemAtestado);
 
@@ -332,22 +332,26 @@ $app->post("/hora-agenda", function() {
 		//Verifica se o dia para qual foi agendado é maior que o dia de limite para agendar sem atestado.
 		if($selecionaagendadatalimitedia >= $dtLimiteSemAtestado){
 
-			$qtdAgendamento = Agenda::countAgendaPorPessoaDiaTituloPosDataLimite($idpess, $titulo, $dtLimiteSemAtestado);
+			$qtdAgendamento = Agenda::countAgendaPorPessoaDiaTituloPosDataLimite($idpess, $titulo, $dtLimiteSemAtestado);				
 
-			if($qtdAgendamento[0]['count(*)'] <= 2){
-				
-				echo "<script>alert('ATENÇÃO: A partir de 01/01/2024 você só poderá fazer agendamento para a natação espontânea em nossas piscinas, caso você já tenha apresentado o atestado clínico(cardiológico) e o dermatológico, ambos válidos, aos nossos professores e/ou colaboradores nos locais de natação!!!!!')</script>;";
-			}else{
-							    
-			    echo "<script>alert('ATENÇÃO: Não existe cadastrado em nosso sistema o atestado clínico e/ou dermatológico para o(a) ".$nomepess.". Vá até um de nossos locais de natação e apresente-os para que você continue nadando em nossas piscinas  ');";
-			echo "javascript:history.go(-1)</script>";
-			exit();
+			if($qtdAgendamento[0]['count(*)'] >= 2){
+
+			    if(($saude->getAtestadoUltimoByIdPessResults($idpess) <= 0) || ($saude->getAtestadoDermaUltimoByIdPessResults($idpess) <= 0)){
+
+			    	//var_dump($saude->getAtestadoUltimoByIdPess($idpess));
+			    	//exit;
 			    
+			    	echo "<script>alert('ATENÇÃO: Não existe, cadastrado em nosso sistema, o atestado clínico e/ou dermatológico para o(a) ".$nomepess.". Vá até um dos locais, onde existe a natação espontânea, e apresente os atestados, se você já os têm, aos nossos professores ou colaboradores, para que você continue nadando em nossas piscinas  ');";
+			    	echo "javascript:history.go(-1)</script>";
+			    	exit();
+
+			    }
+				
+			}else{
+					
+				echo "<script>alert('ATENÇÃO: A partir de agora (01/12/2023),  este será um de seus 02 últimos agendamentos para a natação espontânea sem que você tenha apresentado os atestatos dermatológico e clínico(cardiológico). A partir de 01/01/2024 você só poderá fazer agendamento para a natação espontânea em nossas piscinas, caso você já tenha apresentado o atestado clínico(cardiológico) e o dermatológico, ambos válidos, aos nossos professores e/ou colaboradores nos locais de natação!!!!!')</script>;";
 			}
 		}
-	}else{
-		var_dump('Não há agendamento!!! '.$selecionaagendadatalimite[0]['dia']);
-		exit();
 	}
 
 	//Rotina para impedir que aluno com mais de 02 agendamentos não faça agendamento

@@ -367,6 +367,218 @@
 			]);
 		}
 
+		public static function listAllTurmatemporadaDiaSemana($idtemporada, $nomeDiasemana)
+		{
+			if($nomeDiasemana == 'Segunda'){
+				$diasemana1 = 'Segunda';
+				$diasemana2 = 'Segunda e Quarta';
+				$diasemana3 = 'Segunda a Sexta';
+				$diasemana4 = '';
+				$diasemana5 = '';
+				$diasemana6 = 'Segunda a Sábado';
+			}
+			if($nomeDiasemana == 'Terça'){
+				$diasemana1 = 'Terça';
+				$diasemana2 = 'Terça e Quinta';
+				$diasemana3 = 'Segunda a Sexta';
+				$diasemana4 = 'Terça a Sexta';
+				$diasemana5 = '';
+				$diasemana6 = 'Segunda a Sábado';
+			}
+
+			if($nomeDiasemana == 'Quarta'){
+				$diasemana1 = 'Quarta';
+				$diasemana2 = 'Segunda e Quarta';
+				$diasemana3 = 'Quarta e Sexta';
+				$diasemana4 = 'Segunda a Sexta';
+				$diasemana5 = 'Terça a Sexta';
+				$diasemana6 = 'Segunda a Sábado';
+			}
+			if($nomeDiasemana == 'Quinta'){
+				$diasemana1 = 'Quinta';
+				$diasemana2 = 'Terça e Quinta';
+				$diasemana3 = 'Segunda a Sexta';
+				$diasemana4 = 'Terça a Sexta';
+				$diasemana5 = '';
+				$diasemana6 = 'Segunda a Sábado';
+			}
+			if($nomeDiasemana == 'Sexta'){
+				$diasemana1 = 'Sexta';
+				$diasemana2 = '';
+				$diasemana3 = 'Quarta e Sexta';
+				$diasemana4 = 'Segunda a Sexta';
+				$diasemana5 = 'Terça a Sexta';
+				$diasemana6 = 'Segunda a Sábado';
+			}
+			if($nomeDiasemana == 'Sábado'){
+				$diasemana1 = 'Sábado';
+				$diasemana2 = '';
+				$diasemana3 = '';
+				$diasemana4 = '';
+				$diasemana5 = '';
+				$diasemana6 = 'Segunda a Sábado';
+			}
+			if($nomeDiasemana == 'Domingo'){
+				$diasemana1 = 'Domingo';
+				$diasemana2 = '';
+				$diasemana3 = '';
+				$diasemana4 = '';
+				$diasemana5 = '';
+				$diasemana6 = '';
+			}
+			$sql = new Sql();
+
+			return $sql->select("SELECT * 
+				FROM tb_turmatemporada a 
+				INNER JOIN tb_turma i            
+				using(idturma)
+				INNER JOIN tb_users b
+				using(iduser)
+				INNER JOIN tb_atividade c
+				using(idativ)
+				INNER JOIN tb_espaco d
+				using(idespaco)
+				INNER JOIN tb_local e
+				using(idlocal)
+				-- INNER JOIN tb_turmastatus f
+				-- using(idturmastatus)
+				INNER JOIN tb_horario g
+				using(idhorario)
+				INNER JOIN tb_fxetaria h
+				using(idfxetaria)	            
+	            INNER JOIN tb_temporada j           
+				using(idtemporada)   
+	            INNER JOIN tb_statustemporada k          
+				using(idstatustemporada)
+				INNER JOIN tb_modalidade l
+				using(idmodal)
+	            INNER JOIN tb_persons m
+				using(idperson)            
+				WHERE a.idtemporada = :idtemporada
+				AND (g.diasemana = :diasemana1
+				OR g.diasemana = :diasemana2
+				OR g.diasemana = :diasemana3
+				OR g.diasemana = :diasemana4
+				OR g.diasemana = :diasemana5
+				OR g.diasemana = :diasemana6) 
+				ORDER BY a.numinscritos DESC", [
+				':idtemporada'=>$idtemporada,
+				':diasemana1'=>$diasemana1,
+				':diasemana2'=>$diasemana2,
+				':diasemana3'=>$diasemana3,
+				':diasemana4'=>$diasemana4,
+				':diasemana5'=>$diasemana5,
+				':diasemana6'=>$diasemana6
+			]);
+		}
+
+		public static function listAllTurmatemporadaLocalDiaSemana($idtemporada, $idlocal, $nomeDiasemana)
+		{
+			if($nomeDiasemana == 'Segunda'){
+				$diasemana1 = 'Segunda';
+				$diasemana2 = 'Segunda e Quarta';
+				$diasemana3 = 'Segunda a Sexta';
+				$diasemana4 = '';
+				$diasemana5 = '';
+				$diasemana6 = 'Segunda a Sábado';
+			}
+			if($nomeDiasemana == 'Terça'){
+				$diasemana1 = 'Terça';
+				$diasemana2 = 'Terça e Quinta';
+				$diasemana3 = 'Segunda a Sexta';
+				$diasemana4 = 'Terça a Sexta';
+				$diasemana5 = '';
+				$diasemana6 = 'Segunda a Sábado';
+			}
+
+			if($nomeDiasemana == 'Quarta'){
+				$diasemana1 = 'Quarta';
+				$diasemana2 = 'Segunda e Quarta';
+				$diasemana3 = 'Quarta e Sexta';
+				$diasemana4 = 'Segunda a Sexta';
+				$diasemana5 = 'Terça a Sexta';
+				$diasemana6 = 'Segunda a Sábado';
+			}
+			if($nomeDiasemana == 'Quinta'){
+				$diasemana1 = 'Quinta';
+				$diasemana2 = 'Terça e Quinta';
+				$diasemana3 = 'Segunda a Sexta';
+				$diasemana4 = 'Terça a Sexta';
+				$diasemana5 = '';
+				$diasemana6 = 'Segunda a Sábado';
+			}
+			if($nomeDiasemana == 'Sexta'){
+				$diasemana1 = 'Sexta';
+				$diasemana2 = '';
+				$diasemana3 = 'Quarta e Sexta';
+				$diasemana4 = 'Segunda a Sexta';
+				$diasemana5 = 'Terça a Sexta';
+				$diasemana6 = 'Segunda a Sábado';
+			}
+			if($nomeDiasemana == 'Sábado'){
+				$diasemana1 = 'Sábado';
+				$diasemana2 = '';
+				$diasemana3 = '';
+				$diasemana4 = '';
+				$diasemana5 = '';
+				$diasemana6 = 'Segunda a Sábado';
+			}
+			if($nomeDiasemana == 'Domingo'){
+				$diasemana1 = 'Domingo';
+				$diasemana2 = '';
+				$diasemana3 = '';
+				$diasemana4 = '';
+				$diasemana5 = '';
+				$diasemana6 = '';
+			}
+			$sql = new Sql();
+
+			return $sql->select("SELECT * 
+				FROM tb_turmatemporada a 
+				INNER JOIN tb_turma i            
+				using(idturma)
+				INNER JOIN tb_users b
+				using(iduser)
+				INNER JOIN tb_atividade c
+				using(idativ)
+				INNER JOIN tb_espaco d
+				using(idespaco)
+				INNER JOIN tb_local e
+				using(idlocal)
+				-- INNER JOIN tb_turmastatus f
+				-- using(idturmastatus)
+				INNER JOIN tb_horario g
+				using(idhorario)
+				INNER JOIN tb_fxetaria h
+				using(idfxetaria)	            
+	            INNER JOIN tb_temporada j           
+				using(idtemporada)   
+	            INNER JOIN tb_statustemporada k          
+				using(idstatustemporada)
+				INNER JOIN tb_modalidade l
+				using(idmodal)
+	            INNER JOIN tb_persons m
+				using(idperson)            
+				WHERE a.idtemporada = :idtemporada
+				AND e.idlocal = :idlocal 
+				AND (g.diasemana = :diasemana1
+				OR g.diasemana = :diasemana2
+				OR g.diasemana = :diasemana3
+				OR g.diasemana = :diasemana4
+				OR g.diasemana = :diasemana5
+				OR g.diasemana = :diasemana6) 
+				ORDER BY a.numinscritos DESC", [
+				':idtemporada'=>$idtemporada,
+				':idlocal'=>$idlocal,
+				':diasemana1'=>$diasemana1,
+				':diasemana2'=>$diasemana2,
+				':diasemana3'=>$diasemana3,
+				':diasemana4'=>$diasemana4,
+				':diasemana5'=>$diasemana5,
+				':diasemana6'=>$diasemana6
+			]);
+		}
+
 		public static function listAllTurmaTemporadaLocalByIdUser($idtemporada, $idlocal, $iduser)
 		{
 			$sql = new Sql();
@@ -727,6 +939,7 @@
 			//Temporada::updateFileAdminTemporada();
 			Temporada::updateFileAdminInscricoes();
 			Temporada::updateFileAdminTurmaTemporada();
+			Temporada::updateFileAdminTurmaTemporadaHoje();
 			Temporada::updateFileAdminTurmaTemporadaAudi();
 			Temporada::updateFileProfInscricoes();
 			Temporada::updateFileProfTurmaTemporada();
@@ -774,6 +987,7 @@
 			//Temporada::updateFileAdminTemporada();
 			Temporada::updateFileAdminInscricoes();
 			Temporada::updateFileAdminTurmaTemporada();
+			Temporada::updateFileAdminTurmaTemporadaHoje();	
 			Temporada::updateFileAdminTurmaTemporadaAudi();
 			Temporada::updateFileProfInscricoes();
 			Temporada::updateFileProfTurmaTemporada();
@@ -855,6 +1069,35 @@
 
 			}
 			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."prof".DIRECTORY_SEPARATOR."insc-temporada-menu.html", implode('', $html));
+		}
+
+		public static function updateFileAdminTurmaTemporadaHoje()	
+		{
+			$temporada = Temporada::listAll();
+
+			$html = [];
+
+			foreach ($temporada as $row) {
+				array_push($html, '<li class="treeview">
+										<a href="/admin/turma-temporada-hoje/'.$row['idtemporada'].'">
+								   			<i class="fa fa-link"></i> 
+								   			Turmas/Temporada '.$row['desctemporada'].'
+								   		</a>
+
+									   		<ul class="treeview-menu">
+	            								<li class="treeview">
+	            								
+													<a href="/admin/turma-temporada-hoje/'.$row['idtemporada'].'/local/6">
+									   					<i class="fa fa-link"></i> 
+									   					Por Locais
+									   				</a>								   		
+												</li>											
+			          						</ul>								   		
+									</li>'
+								);
+
+			}
+			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."turma-temporada-menu-hoje.html", implode('', $html));
 		}
 
 		public static function updateFileAdminTurmaTemporada()	

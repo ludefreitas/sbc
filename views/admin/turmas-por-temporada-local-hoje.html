@@ -1,0 +1,213 @@
+<script type="text/javascript">
+ 
+  function atualizaStatus(idturma, desctemporada, idtemporada){
+
+        let status = prompt('Para atualizar o status da turma '+ idturma +' para a temporada '+ desctemporada +' selecionada, digite:\n 2 - para inscrições não iniciadas\n 3 - para inscrições abertas\n 4 - para inscrições suspensas\n 5 - para inscrições encerradas\n 6 - para turma não iniciada');  
+        
+        if(status != 2 && status != 3 && status != 4 && status != 5 && status != 6){
+          alert("Valor inválido!!!")
+          return
+        }   
+        
+        let url = "/admin/atualiza/turmatemporada/"+idturma+"/"+idtemporada+"/"+desctemporada+"/"+status        
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url'); 
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){         
+            if(result){   
+            
+                let texto = '- '+result
+                let idlink = 'idlinkstatus'+idturma
+    
+                if(status != null){
+                  document.getElementById(idlink).innerHTML = texto   
+                }         
+                            
+                if(status == 2){ document.getElementById(idlink).style.color = 'orange'; }
+                if(status == 3){ document.getElementById(idlink).style.color = 'darkgreen'; }
+                if(status == 4){ document.getElementById(idlink).style.color = "red"; }
+                if(status == 5){ document.getElementById(idlink).style.color = 'darkred'; }
+                if(status == 6){ document.getElementById(idlink).style.color = 'blue'; }  
+
+          } 
+
+        });
+      }
+      
+      function openDiv(idmodalidade){
+
+        let idmodal = idmodalidade;
+              
+            document.getElementById('idmodal'+idmodal ).hidden = false  
+            document.getElementById('btnModalClose'+idmodal ).hidden = false
+            document.getElementById('btnModalOpen'+idmodal ).hidden = true      
+    }
+
+    function closeDiv(idmodalidade){
+
+        let idmodal = idmodalidade;
+
+            document.getElementById('idmodal'+idmodal ).hidden = true  
+            document.getElementById('btnModalOpen'+idmodal ).hidden = false  
+            document.getElementById('btnModalClose'+idmodal ).hidden = true 
+          
+    }
+    
+    function expandir(idturma){
+
+        let iddaturma = idturma;
+
+            document.getElementById('lermais'+iddaturma).hidden = true 
+            document.getElementById('lermenos'+iddaturma).hidden = false 
+            document.getElementById('escondido1'+iddaturma ).hidden = false  
+            document.getElementById('escondido2'+iddaturma ).hidden = false
+            document.getElementById('escondido3'+iddaturma ).hidden = false  
+          
+    }
+
+    function recolher(idturma){
+
+        let iddaturma = idturma;
+
+            document.getElementById('lermais'+iddaturma).hidden = false 
+            document.getElementById('lermenos'+iddaturma).hidden = true 
+            document.getElementById('escondido1'+iddaturma ).hidden = true  
+            document.getElementById('escondido2'+iddaturma ).hidden = true 
+            document.getElementById('escondido3'+iddaturma ).hidden = true  
+          
+    }
+
+</script>
+
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+<h1>
+ Turmas relacionadas à Temporada {$temporada.desctemporada} - {$temporada.descstatustemporada}   
+
+</h1>
+<ol class="breadcrumb">
+  <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+  <li><a href="/admin/insc/{$temporada.idtemporada}"> Todas inscrições {$temporada.desctemporada} </a></li>
+  <li><a href="/admin/temporada/{$temporada.idtemporada}/turma"> Inserir turma {$temporada.desctemporada}</a></li>
+</ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+<div class="row">
+
+  {if="$error != ''"}
+          <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
+      {$error}
+          </div>
+      {/if}
+  
+  <div class="col-md-12">
+
+      <div class="box box-primary"> 
+      <div class="box-body" style="border: solid 1px lightblue; margin: 5px; padding-bottom: 0; "> 
+        <form action="/admin/turma-temporada-hoje/{$temporada.idtemporada}/local/{$local.idlocal}" method="GET">
+            Escolha outra data: <br>
+            <input class="form-group" type="text" name="data" placeholder="DD-MM-AAAA"> 
+            <input type="submit" name="Enviar">  
+        </form>
+      </div>
+      <div class="box-body" style="border: solid 1px lightblue; margin: 5px;"> 
+      <div class="box-body col-md-2">
+
+          {loop="$locais"}
+                  <a href="/admin/turma-temporada-hoje/{$temporada.idtemporada}/local/{$value.idlocal}"><i class=""></i>{$value.apelidolocal}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          {/loop}
+          <a href="/admin/turma-temporada-hoje/{$temporada.idtemporada}"><i class=""></i>TODOS OS LOCAIS</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            
+      </div> 
+          <div class="box-body no-padding col-md-10">
+
+              <div class="box-header">
+
+          {if="$local == null"}
+
+          <h3>Todos locais</h3>
+
+          {else}
+
+          <h3>{$local.apelidolocal}</h3>
+
+          {/if}       
+       </div>             
+
+                {loop="$modalidades"}            
+
+                {$idmodalidade = $value.idmodal}
+
+                 <div  id="btnModalOpen{$idmodalidade}">
+                <div style="text-align: center; border-radius: 5px; margin: 5px; height: 30px" class="btn-primary col-md-12" onclick="openDiv({$idmodalidade})" >{$value.descmodal} <i class="fa fa-caret-down"></i></div> 
+                </div>
+
+                <div  id="btnModalClose{$idmodalidade}" hidden>
+                <div style="text-align: center; border-radius: 5px; margin: 5px; height: 30px" class="btn-primary col-md-12" onclick="closeDiv({$idmodalidade})" >{$value.descmodal} <i class="fa fa-caret-up"> </i></div> 
+                </div>
+            
+                <div id="idmodal{$idmodalidade}" hidden >                 
+                
+                {loop="$turmas"}
+                 {if="$idmodalidade == $value.idmodal"}
+                 
+                {if="numeroNaListaDePresençaByIdturmaData($value.idturma, $ano, $mes, $dia) == 0"}
+                    <div id="caixa{$value.idturma}" class="box-body col-md-2" style="border: solid 1px lightblue; margin: 5px; background-color: lightgray; ">
+                {else}
+                    <div id="caixa{$value.idturma}" class="box-body col-md-2" style="border: solid 1px lightblue; margin: 5px; background-color: lightgreen; ">
+                {/if}     
+
+                    <span style="text-align: left;">
+                          <strong style="color: orange;">[{$value.idturma}]</strong> &nbsp;&nbsp;
+                          <strong> {$value.descturma} </strong> 
+                         
+                             
+                          <strong>- {$value.diasemana}
+                          {$value.horainicio} ás {$value.horatermino} -  </strong>
+                            {$value.apelidolocal} <strong> - Professor: {if="$value.idperson == 1"} Admin Master {else} {$value.apelidoperson} {/if}</strong>&nbsp; 
+                          
+                           
+                        
+                    </div>   
+                    {else}
+
+                {/if}   
+                
+                {/loop}
+              </div>
+              {/loop}
+             
+            <!--
+            <button type="button" onclick="window.print()" class="btn btn-primary pull-right" style="margin-right: 5px;">
+                  <i class="fa fa-print"></i> Imprimir
+              </button>
+            -->
+          </div>          
+          
+          <!-- /.box-body -->                
+
+          <div class="box-footer clearfix">
+            <ul class="pagination pagination-sm no-margin pull-right">
+              {loop="$pages"}
+              <li><a href="{$value.href}">{$value.text}</a></li>
+              {/loop}
+            </ul>
+          </div>
+
+        </div>
+
+  </div>
+</div>
+</div>
+
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

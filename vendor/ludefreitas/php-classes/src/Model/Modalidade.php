@@ -293,6 +293,180 @@ class Modalidade extends Model {
 		]);
 	}
 
+	public static function getModalidadesTemporadaDiaSemana($idtemporada, $nomeDiasemana)
+	{
+		if($nomeDiasemana == 'Segunda'){
+				$diasemana1 = 'Segunda';
+				$diasemana2 = 'Segunda e Quarta';
+				$diasemana3 = 'Segunda a Sexta';
+				$diasemana4 = '';
+				$diasemana5 = '';
+				$diasemana6 = 'Segunda a Sábado';
+			}
+			if($nomeDiasemana == 'Terça'){
+				$diasemana1 = 'Terça';
+				$diasemana2 = 'Terça e Quinta';
+				$diasemana3 = 'Segunda a Sexta';
+				$diasemana4 = 'Terça a Sexta';
+				$diasemana5 = '';
+				$diasemana6 = 'Segunda a Sábado';
+			}
+
+			if($nomeDiasemana == 'Quarta'){
+				$diasemana1 = 'Quarta';
+				$diasemana2 = 'Segunda e Quarta';
+				$diasemana3 = 'Quarta e Sexta';
+				$diasemana4 = 'Segunda a Sexta';
+				$diasemana5 = 'Terça a Sexta';
+				$diasemana6 = 'Segunda a Sábado';
+			}
+			if($nomeDiasemana == 'Quinta'){
+				$diasemana1 = 'Quinta';
+				$diasemana2 = 'Terça e Quinta';
+				$diasemana3 = 'Segunda a Sexta';
+				$diasemana4 = 'Terça a Sexta';
+				$diasemana5 = '';
+				$diasemana6 = 'Segunda a Sábado';
+			}
+			if($nomeDiasemana == 'Sexta'){
+				$diasemana1 = 'Sexta';
+				$diasemana2 = '';
+				$diasemana3 = 'Quarta e Sexta';
+				$diasemana4 = 'Segunda a Sexta';
+				$diasemana5 = 'Terça a Sexta';
+				$diasemana6 = 'Segunda a Sábado';
+			}
+			if($nomeDiasemana == 'Sábado'){
+				$diasemana1 = 'Sábado';
+				$diasemana2 = '';
+				$diasemana3 = '';
+				$diasemana4 = '';
+				$diasemana5 = '';
+				$diasemana6 = 'Segunda a Sábado';
+			}
+			if($nomeDiasemana == 'Domingo'){
+				$diasemana1 = 'Domingo';
+				$diasemana2 = '';
+				$diasemana3 = '';
+				$diasemana4 = '';
+				$diasemana5 = '';
+				$diasemana6 = '';
+			}
+		$sql = new Sql();
+
+		return $sql->select("SELECT DISTINCT c.* FROM tb_turmatemporada a
+            INNER JOIN tb_turma b ON b.idturma = a.idturma
+            INNER JOIN tb_modalidade c ON c.idmodal = b.idmodal
+            -- INNER JOIN tb_espaco d ON d.idespaco = b.idespaco
+            -- INNER JOIN tb_local e ON e.idlocal = d.idlocal
+            INNER JOIN tb_horario f ON f.idhorario = b.idhorario
+            WHERE a.idtemporada = :idtemporada
+            -- AND e.idlocal = :idlocal
+            AND (f.diasemana = :diasemana1
+				OR f.diasemana = :diasemana2
+				OR f.diasemana = :diasemana3
+				OR f.diasemana = :diasemana4
+				OR f.diasemana = :diasemana5
+				OR f.diasemana = :diasemana6) 
+            ORDER BY c.descmodal", [
+            'idtemporada'=>$idtemporada,
+			//'idlocal'=>$idlocal,
+			':diasemana1'=>$diasemana1,
+			':diasemana2'=>$diasemana2,
+			':diasemana3'=>$diasemana3,
+			':diasemana4'=>$diasemana4,
+			':diasemana5'=>$diasemana5,
+			':diasemana6'=>$diasemana6
+		]);
+	}
+
+	public static function getModalidadesTemporadaByLocalDiaSemana($idtemporada, $idlocal, $nomeDiasemana)
+	{
+		if($nomeDiasemana == 'Segunda'){
+				$diasemana1 = 'Segunda';
+				$diasemana2 = 'Segunda e Quarta';
+				$diasemana3 = 'Segunda a Sexta';
+				$diasemana4 = '';
+				$diasemana5 = '';
+				$diasemana6 = 'Segunda a Sábado';
+			}
+			if($nomeDiasemana == 'Terça'){
+				$diasemana1 = 'Terça';
+				$diasemana2 = 'Terça e Quinta';
+				$diasemana3 = 'Segunda a Sexta';
+				$diasemana4 = 'Terça a Sexta';
+				$diasemana5 = '';
+				$diasemana6 = 'Segunda a Sábado';
+			}
+
+			if($nomeDiasemana == 'Quarta'){
+				$diasemana1 = 'Quarta';
+				$diasemana2 = 'Segunda e Quarta';
+				$diasemana3 = 'Quarta e Sexta';
+				$diasemana4 = 'Segunda a Sexta';
+				$diasemana5 = 'Terça a Sexta';
+				$diasemana6 = 'Segunda a Sábado';
+			}
+			if($nomeDiasemana == 'Quinta'){
+				$diasemana1 = 'Quinta';
+				$diasemana2 = 'Terça e Quinta';
+				$diasemana3 = 'Segunda a Sexta';
+				$diasemana4 = 'Terça a Sexta';
+				$diasemana5 = '';
+				$diasemana6 = 'Segunda a Sábado';
+			}
+			if($nomeDiasemana == 'Sexta'){
+				$diasemana1 = 'Sexta';
+				$diasemana2 = '';
+				$diasemana3 = 'Quarta e Sexta';
+				$diasemana4 = 'Segunda a Sexta';
+				$diasemana5 = 'Terça a Sexta';
+				$diasemana6 = 'Segunda a Sábado';
+			}
+			if($nomeDiasemana == 'Sábado'){
+				$diasemana1 = 'Sábado';
+				$diasemana2 = '';
+				$diasemana3 = '';
+				$diasemana4 = '';
+				$diasemana5 = '';
+				$diasemana6 = 'Segunda a Sábado';
+			}
+			if($nomeDiasemana == 'Domingo'){
+				$diasemana1 = 'Domingo';
+				$diasemana2 = '';
+				$diasemana3 = '';
+				$diasemana4 = '';
+				$diasemana5 = '';
+				$diasemana6 = '';
+			}
+		$sql = new Sql();
+
+		return $sql->select("SELECT DISTINCT c.* FROM tb_turmatemporada a
+            INNER JOIN tb_turma b ON b.idturma = a.idturma
+            INNER JOIN tb_modalidade c ON c.idmodal = b.idmodal
+            INNER JOIN tb_espaco d ON d.idespaco = b.idespaco
+            INNER JOIN tb_local e ON e.idlocal = d.idlocal
+            INNER JOIN tb_horario f ON f.idhorario = b.idhorario
+            WHERE a.idtemporada = :idtemporada
+            AND e.idlocal = :idlocal
+            AND (f.diasemana = :diasemana1
+				OR f.diasemana = :diasemana2
+				OR f.diasemana = :diasemana3
+				OR f.diasemana = :diasemana4
+				OR f.diasemana = :diasemana5
+				OR f.diasemana = :diasemana6) 
+            ORDER BY c.descmodal", [
+            'idtemporada'=>$idtemporada,
+			'idlocal'=>$idlocal,
+			':diasemana1'=>$diasemana1,
+			':diasemana2'=>$diasemana2,
+			':diasemana3'=>$diasemana3,
+			':diasemana4'=>$diasemana4,
+			':diasemana5'=>$diasemana5,
+			':diasemana6'=>$diasemana6
+		]);
+	}
+
 	public static function setMsgError($msg)
 	{
 		$_SESSION[Modalidade::SESSION_ERROR] = $msg;

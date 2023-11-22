@@ -24,7 +24,9 @@
     
     <script type="text/javascript">
 
-      alert('O PAR-q declarado pelo aluno já está disponível. Clique na palavra "PAR-q" para verificar as respostas do aluno e atente-se ao ícone de alerta que aparece logo ao lado da palavra, se existir." ')
+      /*
+      alert('O PAR-q declarado pelo aluno já está disponível. Clique na palavra "PAR-q" para verificar as respostas do aluno e atente-se ao ícone de alerta que aparece logo ao lado da palavra, se existir. " ')
+      */
       
       function dadosAtestado(idpess){
 
@@ -40,13 +42,13 @@
 
           if (window.confirm(' '+ result + 'Para atulizar atestado clique em "OK"'))
           {
-              adicionarArtestado(idpess)
+              adicionarAtestado(idpess)
           };
 
         });
       }
       
-      function adicionarArtestado(idpess){
+      function adicionarAtestado(idpess){
         
         //let confirmaAtestado = confirm('Já existe um atestado válido até:'+"\n"+'Deseja adicionar atestado? ')
         let confirmaAtestado = confirm('Deseja adicionar atestado? ')
@@ -107,6 +109,88 @@
 
         });
       }
+      
+      function dadosAtestadoDerma(idpess){
+
+        let url = '/prof/saude/dadosatestadoderma/'+idpess
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if (window.confirm(' '+ result + 'Para atulizar atestado clique em "OK"'))
+          {
+              adicionarAtestadoDerma(idpess)
+          };
+
+        });
+      }
+      
+      function adicionarAtestadoDerma(idpess){
+        
+        //let confirmaAtestado = confirm('Já existe um atestado válido até:'+"\n"+'Deseja adicionar atestado? ')
+        let confirmaAtestado = confirm('Deseja adicionar atestado dermatológico? ')
+
+        if(confirmaAtestado == true)
+        {                      
+            var data = prompt("Informe a data da emissão do Atestado. Ex.: dd-mm-aaaa");     
+
+            if (data == null || data == "") {
+
+                alert("As informaçãoes do atestado não foram atualizadas! Informe a data e faça alguma observação")
+            } else {
+
+                 var traco1 = data.substr(2,1)
+                 var traco2 = data.substr(5,1)
+                 var dia = data.substr(0,2);
+                 var mes = data.substr(3,2);
+                 var ano = data.substr(6,4); 
+                 
+
+                 if((traco1 != '-') || (traco2 != '-') || (ano.length < 4)){
+                    alert('Formato da data inválida');
+                 }else{
+
+                    if((dia > 31) || (dia == 0) || (mes > 12) || (mes == 0)){
+
+                    alert('data inválida!')
+                    
+                    }else{
+                        
+                        var observ = prompt("Digite uma observação");
+                        if (observ == null || observ == "") {
+                                lert("As informaçãoes do atestado não foram atualizadas! Informe a data e faça alguma observação");
+                        } else {
+
+                            let url = '/prof/saude/atulizaatestadoderma/'+idpess+'/'+data+'/'+observ+''
+
+                            atualizarAtestadoDerma(url) 
+
+                        }     
+                    }                           
+                }
+            }        
+        }  
+    }
+     
+    function atualizarAtestadoDerma(url){
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          alert(result)
+
+        });
+      }
     </script>
 
     <style type="text/css">
@@ -148,14 +232,14 @@
 
           {if="$error != ''"}
           <tr>
-            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; color: green;" colspan="9">
+            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; color: green;" colspan="12">
             {$error}
           </th>
           </tr>
           {/if}
 
           <tr>
-            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;" colspan="9">
+            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;" colspan="12">
               Cursos esportivos SBC
             <h5 style="margin: 0 0 0 0">LISTA DA AGENDA DE NATAÇÃO ESPONTÂNEA (  {$apelidolocal}  )
             <br>
@@ -169,10 +253,13 @@
                <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">ID</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Nome</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Atestado <br>Clínico</th>
+              <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Atestado <br>Dermato</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">PAR-q</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Email</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Whats/Fone</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">CPF</th>
+             
+
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">DT Agendam.</th>
 
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Compareceu?</th>
@@ -198,9 +285,13 @@
                           <br>                                                                   
               </td>
               <td style="text-align: left; border: solid 1px; color: darkblue; padding: 5px;">
+                <a style="color: orange; text-align-last: right;" onclick="dadosAtestadoDerma({$value.idpess})">{function="getAtestadoDermaIcone($value.idpess)"}</a>
+                          <br>                                                                   
+              </td>
+              <td style="text-align: left; border: solid 1px; color: darkblue; padding: 5px;">
                 {if="existeParq($value.idpess)"}
                   {if="repostaSimParq($value.idpess)"}
-                    <a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/{$value.idpess}"> <i style="color: orange;" class="fa fa-exclamation-triangle"> </i> PAR-q <i style="color: orange;" class="fa fa-exclamation-triangle"> </i></a> 
+                    <a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/{$value.idpess}">  PAR-q <i style="color: orange;" class="fa fa-exclamation-triangle"> </i></a> 
                   {else}
                     <a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/{$value.idpess}"> PAR-q </a> 
                   {/if}
@@ -245,7 +336,7 @@
           </tr>
           {else}
           <tr style="font-weight: bold; color: red; font-size: 22px; text-align: center; padding: 10px;">
-            <td colspan="9" style="padding: 10px">
+            <td colspan="12" style="padding: 10px">
               Não há horário agendado para natação espontânea nesta data !
             </td>
           </tr>

@@ -21,10 +21,12 @@
 
     <title>Cursos Esportivos SBC</title>
     <link rel="icon" type="image/jpg" href="/../res/site/img/corpoacao.png" />
-
+    
     <script type="text/javascript">
 
-      alert('Você já pode atualizar dados de saúde do aluno, inserindo ou editando atestado. Clique na palavra "Atestado" ')
+      /*
+      alert('O PAR-q declarado pelo aluno já está disponível. Clique na palavra "PAR-q" para verificar as respostas do aluno e atente-se ao ícone de alerta que aparece logo ao lado da palavra, se existir. " ')
+      */
       
       function dadosAtestado(idpess){
 
@@ -40,13 +42,13 @@
 
           if (window.confirm(' '+ result + 'Para atulizar atestado clique em "OK"'))
           {
-              adicionarArtestado(idpess)
+              adicionarAtestado(idpess)
           };
 
         });
       }
       
-      function adicionarArtestado(idpess){
+      function adicionarAtestado(idpess){
         
         //let confirmaAtestado = confirm('Já existe um atestado válido até:'+"\n"+'Deseja adicionar atestado? ')
         let confirmaAtestado = confirm('Deseja adicionar atestado? ')
@@ -107,6 +109,88 @@
 
         });
       }
+      
+      function dadosAtestadoDerma(idpess){
+
+        let url = '/prof/saude/dadosatestadoderma/'+idpess
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if (window.confirm(' '+ result + 'Para atulizar atestado clique em "OK"'))
+          {
+              adicionarAtestadoDerma(idpess)
+          };
+
+        });
+      }
+      
+      function adicionarAtestadoDerma(idpess){
+        
+        //let confirmaAtestado = confirm('Já existe um atestado válido até:'+"\n"+'Deseja adicionar atestado? ')
+        let confirmaAtestado = confirm('Deseja adicionar atestado dermatológico? ')
+
+        if(confirmaAtestado == true)
+        {                      
+            var data = prompt("Informe a data da emissão do Atestado. Ex.: dd-mm-aaaa");     
+
+            if (data == null || data == "") {
+
+                alert("As informaçãoes do atestado não foram atualizadas! Informe a data e faça alguma observação")
+            } else {
+
+                 var traco1 = data.substr(2,1)
+                 var traco2 = data.substr(5,1)
+                 var dia = data.substr(0,2);
+                 var mes = data.substr(3,2);
+                 var ano = data.substr(6,4); 
+                 
+
+                 if((traco1 != '-') || (traco2 != '-') || (ano.length < 4)){
+                    alert('Formato da data inválida');
+                 }else{
+
+                    if((dia > 31) || (dia == 0) || (mes > 12) || (mes == 0)){
+
+                    alert('data inválida!')
+                    
+                    }else{
+                        
+                        var observ = prompt("Digite uma observação");
+                        if (observ == null || observ == "") {
+                                lert("As informaçãoes do atestado não foram atualizadas! Informe a data e faça alguma observação");
+                        } else {
+
+                            let url = '/prof/saude/atulizaatestadoderma/'+idpess+'/'+data+'/'+observ+''
+
+                            atualizarAtestadoDerma(url) 
+
+                        }     
+                    }                           
+                }
+            }        
+        }  
+    }
+     
+    function atualizarAtestadoDerma(url){
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          alert(result)
+
+        });
+      }
     </script>
 
     <style type="text/css">
@@ -129,7 +213,9 @@
           background: lightgray;
       }
     </style>
-  </head>
+   
+
+</head>
 
 
 <div id="div1">  
@@ -139,23 +225,23 @@
     </a> 
 </div>
 
-<!----------------------------------------GERAL-------------------------------------------->
+<!-- _________________________________GERAL________________________________ -->
 
 <div id="div1">      
       <table>
 
           <?php if( $error != '' ){ ?>
           <tr>
-            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; color: green;" colspan="8">
+            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; color: green;" colspan="12">
             <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
           </th>
           </tr>
           <?php } ?>
 
           <tr>
-            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; " colspan="9"; >
+            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;" colspan="12">
               Cursos esportivos SBC
-            <h5 style="margin: 0 0 0 0";>LISTA DA AGENDA DE NATAÇÃO ESPONTÂNEA (  <?php echo htmlspecialchars( $apelidolocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>  )
+            <h5 style="margin: 0 0 0 0">LISTA DA AGENDA DE NATAÇÃO ESPONTÂNEA (  <?php echo htmlspecialchars( $apelidolocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>  )
             <br>
             <?php echo formatDate($data); ?> <?php echo htmlspecialchars( $nomediadasemana, ENT_COMPAT, 'UTF-8', FALSE ); ?></h5>
             </th>
@@ -164,14 +250,13 @@
 
           <tr>            
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Horário</th>
-
+               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">ID</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Nome</th>
-
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Atestado <br>Clínico</th>
-
+              <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Atestado <br>Dermato</th>
+              <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">PAR-q</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Email</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Whats/Fone</th>
-
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">CPF</th>
              
 
@@ -182,13 +267,16 @@
 
               </tr>
 
-              </tr>
+              
           <?php $counter1=-1;  if( isset($agenda) && ( is_array($agenda) || $agenda instanceof Traversable ) && sizeof($agenda) ) foreach( $agenda as $key1 => $value1 ){ $counter1++; ?>
           
           <tr style="padding: 5px">
               <td style="text-align: center; border: solid 1px; padding: 5px;">
                 <?php echo htmlspecialchars( $value1["horainicial"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $value1["horafinal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-              </td>              
+              </td> 
+              <td style="text-align: left; border: solid 1px; color: darkblue; padding: 5px;">
+                <?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+              </td>
               <td style="text-align: left; border: solid 1px; color: darkblue; padding: 5px;">
                 <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
               </td>
@@ -197,9 +285,23 @@
                           <br>                                                                   
               </td>
               <td style="text-align: left; border: solid 1px; color: darkblue; padding: 5px;">
+                <a style="color: orange; text-align-last: right;" onclick="dadosAtestadoDerma(<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)"><?php echo getAtestadoDermaIcone($value1["idpess"]); ?></a>
+                          <br>                                                                   
+              </td>
+              <td style="text-align: left; border: solid 1px; color: darkblue; padding: 5px;">
+                <?php if( existeParq($value1["idpess"]) ){ ?>
+                  <?php if( repostaSimParq($value1["idpess"]) ){ ?>
+                    <a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">  PAR-q <i style="color: orange;" class="fa fa-exclamation-triangle"> </i></a> 
+                  <?php }else{ ?>
+                    <a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> PAR-q </a> 
+                  <?php } ?>
+                <?php }else{ ?>
+                  <a style="font-weight: bold; color: red;" onclick="alert('Não existe Par-q para este aluno')"> PAR-q </a> 
+                <?php } ?>
+              </td>
+              <td style="text-align: left; border: solid 1px; color: darkblue; padding: 5px;">
                 <?php echo htmlspecialchars( $value1["deslogin"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
               </td>
-              
               <td style="text-align: left; border: solid 1px; color: darkblue; padding: 5px;">
                 
                 <a href="https://wa.me/+55<?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?text=Olá%20<?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>,%20tudo%20bem?!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp com a msg de saudação')"><i></i><?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a>
@@ -234,7 +336,7 @@
           </tr>
           <?php }else{ ?>
           <tr style="font-weight: bold; color: red; font-size: 22px; text-align: center; padding: 10px;">
-            <td colspan="8" style="padding: 10px">
+            <td colspan="12" style="padding: 10px">
               Não há horário agendado para natação espontânea nesta data !
             </td>
           </tr>

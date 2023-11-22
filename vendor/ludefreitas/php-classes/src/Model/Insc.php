@@ -348,6 +348,25 @@ class Insc extends Model {
 		}		
 	}
 
+	public static function getCountNumeroNaListaDePresençaByIdturmaData($idturma, $data)
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT count(*)
+			FROM tb_presenca a
+            INNER JOIN tb_insc b ON b.idinsc = a.idinsc
+            INNER JOIN tb_turma c ON c.idturma = b.idturma
+            WHERE c.idturma = :idturma 
+			AND a.dtpresenca = :data
+		", [
+			':idturma'=>$idturma,
+			':data'=>$data
+		]);
+		
+		return $results;	
+
+	}
+
 	public static function inscricaoEmail($idinsc, $numsorte, $idpess, $nomepess, $email, $desperson, $desctemporada, $turma){
 	
 		//$email = "lulufreitas08@hotmail.com";

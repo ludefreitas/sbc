@@ -210,6 +210,111 @@ class Saude extends Model {
 		return $results[0]['count(*)'];
 	}
 	
+	public function saveatestadoderma()
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("CALL sp_atestado_derma_save(:idatestadoderma, :idpess, :iduser, :cpf, :dataemissao, :datavalidade, :observ)", array(
+			":idatestadoderma"=>$this->getidatestadoderma(),
+			":idpess"=>$this->getidpess(),
+			":iduser"=>$this->getiduser(),
+			":cpf"=>$this->getcpf(),						
+			":dataemissao"=>$this->getdataemissao(),						
+			":datavalidade"=>$this->getdatavalidade(),						
+			":observ"=>$this->getobserv()
+		));
+
+		if (count($results) > 0) {
+
+			$this->setData($results[0]);
+		}
+	}
+	
+	public function getAtestadoDermaUltimoByIdPess(int $idpess)
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_atestado_derma WHERE dataatualizacao = (SELECT  MAX(dataatualizacao) FROM tb_atestado_derma WHERE idpess = :idpess)", array(
+			":idpess"=>$idpess			
+		));
+		
+		//return $results;
+		
+		if (count($results) > 0) {
+			$this->setData($results[0]);
+		}
+	}	
+
+	public function getAtestadoDermaUltimoByIdPessResults(int $idpess)
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT count(*) FROM tb_atestado_derma WHERE dataatualizacao = (SELECT  MAX(dataatualizacao) FROM tb_atestado WHERE idpess = :idpess)", array(
+			":idpess"=>$idpess			
+		));
+		
+		return $results[0]['count(*)'];
+		
+		//if (count($results) > 0) {
+			//$this->setData($results[0]);
+		//}
+	}		
+
+	public function getAtestadoDermaUltimoByNumcpf($numcpf)
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_atestado_derma WHERE dataatualizacao = (SELECT  MAX(dataatualizacao) FROM tb_atestado_derma WHERE cpf = :numcpf)", array(
+			":numcpf"=>$numcpf			
+		));
+		return $results;
+	}	
+	
+	public function getCountAtestadoDermaByIdPess($idpess){
+
+		$sql = new Sql();
+		
+		$results = $sql->select("SELECT count(*) FROM tb_atestado_derma 
+			WHERE idpess = :idpess
+			", array(
+			":idpess"=>$idpess
+		));
+
+		return $results[0]['count(*)'];
+	}
+	
+	public function getCountAtestadoDermaByNumcpf($numcpf){
+
+		$sql = new Sql();
+		
+		$results = $sql->select("SELECT count(*) FROM tb_atestado_derma 
+			WHERE cpf = :numcpf
+			", array(
+			":numcpf"=>$numcpf
+		));
+
+		return $results[0]['count(*)'];
+	}
+	
+	public function updateAtestadoDermaCpf($cpf, $idpess)
+	{
+		$sql = new Sql();
+		
+		$results = $sql->select("UPDATE tb_atestado_derma SET cpf = :cpf WHERE idpess = :idpess", array(
+			":cpf"=>$cpf,
+			":idpess"=>$idpess			
+		));		
+	}
+
+	public function selectAllAtestadoDerma(){
+
+		$sql = new Sql();	
+
+		$results = $sql->select("SELECT idpess, cpf FROM tb_atestado_derma");
+
+		return $results;
+	}
+
 	public function saveatestado()
 	{
 		$sql = new Sql();
@@ -227,7 +332,6 @@ class Saude extends Model {
 		if (count($results) > 0) {
 
 			$this->setData($results[0]);
-
 		}
 	}
 	
@@ -239,10 +343,27 @@ class Saude extends Model {
 			":idpess"=>$idpess			
 		));
 		
+		//return $results;
+		
 		if (count($results) > 0) {
 			$this->setData($results[0]);
 		}
-	}	
+	}
+
+	public function getAtestadoUltimoByIdPessResults(int $idpess)
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT count(*) FROM tb_atestado WHERE dataatualizacao = (SELECT  MAX(dataatualizacao) FROM tb_atestado WHERE idpess = :idpess)", array(
+			":idpess"=>$idpess			
+		));
+		
+		return $results['count(*)'];
+		
+		//if (count($results) > 0) {
+			//$this->setData($results[0]);
+		//}
+	}		
 
 	public function getAtestadoUltimoByNumcpf($numcpf)
 	{
@@ -289,7 +410,6 @@ class Saude extends Model {
 			":idpess"=>$idpess			
 		));		
 	}
-
 
 	public function selectAllAtestado(){
 

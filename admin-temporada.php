@@ -9,6 +9,7 @@ use \Sbc\Model\Turma;
 use \Sbc\Model\Sorteio;
 use \Sbc\Model\Local;
 use \Sbc\Model\Modalidade;
+use \Sbc\Model\Insc;
 
 $app->get("/admin/temporada", function() {
 
@@ -715,17 +716,335 @@ $app->get("/admin/turma-temporada/:idtemporada/local/:idlocal", function($idtemp
 
 	$turmasTemporada = Temporada::listAllTurmatemporadaLocal($idtemporada, $idlocal);
 
-	//pegar nome do dia da semama com a função date()
-	for ($i=0; $i < count($turmasTemporada)  ; $i++ ) { 
-		echo '<pre>';
-		var_dump($turmasTemporada[$i]['diasemana']);
-		echo '</pre>';
-	}
-	exit();
-
 	$page = new PageAdmin();	
 
 	$page->setTpl("turmas-por-temporada", [
+		'local'=>$local->getValues(),
+		'locais'=>Local::listAll(),
+		'modalidades'=>$modalidades,
+		'temporada'=>$temporada->getValues(),
+		//'turmaRelated'=>$temporada->getTurma(true)
+		'turmas'=>$turmasTemporada,
+		//'turmas'=>Temporada::listAllTurmatemporadaLocal($idtemporada, $idloca
+		//'turmaNotRelated'=>$temporada->getTurma(false)
+		'error'=>User::getError()
+	]);	
+});
+
+$app->get("/admin/turma-temporada-hoje-icon/:idtemporada", function($idtemporada) {
+
+	User::verifyLogin();
+
+	$temporada = new Temporada();
+	$turma = new Turma();
+	$local = new Local();
+	$modalidade = new Modalidade();
+
+	$temporada->get((int)$idtemporada);
+
+	$local = $local->setapelidolocal('');
+	//$modalidade = $modalidade->setdescmodal('');
+
+	$numeroDiaSemana = date('w');
+
+	 if(!isset($_GET['data']) || $_GET['data'] == ''){
+
+	 }else{
+
+		 $traco1 = substr($_GET['data'], 2,1);
+	     $traco2 = substr($_GET['data'], 5,1);
+	     $datadia = substr($_GET['data'], 0,2);
+	     $datames = substr($_GET['data'], 3,2);
+	     $dataano = substr($_GET['data'], 6,4); 
+
+	            
+	     if(($traco1 != '-') || ($traco2 != '-') || (strlen($dataano) < 4)){
+
+	     	echo "<script>alert('Formato da data inválida!');";
+			echo "javascript:history.go(-1)</script>";
+			exit();         
+
+	     }else{
+
+	     	if(($datadia > 31) || ($datadia == 0) || ($datames > 12) || ($datames == 0)){
+
+	     		echo "<script>alert('data inválida!');";
+				echo "javascript:history.go(-1)</script>";
+				exit();            	
+	                    
+	    	}
+		}
+	}
+
+	if (!isset($_GET['data']) || $_GET['data'] == '') {
+		$data = date('Y-m-d');
+		$data = getdate(strtotime($data));
+	}else{
+		$data = new DateTime($_GET['data']);
+		$data = $data->format('Y-m-d');
+		$data = getdate(strtotime($data));
+	}
+
+	$dia = (int)$data['mday'];
+	if($dia < 10){ $dia = '0'.$dia; }
+	$mes = (int)$data['mon'];
+	if($mes < 10){ $mes = '0'.$mes; }
+	$ano = (int)$data['year'];		
+
+	$dataformatada = $ano.'-'.$mes.'-'.$dia;
+
+	$nameweekday = $data['weekday'];
+
+	if($nameweekday == 'Monday'){
+		$nomeDiasemana = 'Segunda';
+	}
+	if($nameweekday == 'Tuesday'){
+		$nomeDiasemana = 'Terça';
+	}
+	if($nameweekday == 'Wednesday'){
+		$nomeDiasemana = 'Quarta';
+	}
+	if($nameweekday == 'Thursday'){
+		$nomeDiasemana = 'Quinta';
+	}
+	if($nameweekday == 'Friday'){
+		$nomeDiasemana = 'Sexta';
+	}
+	if($nameweekday == 'Saturday'){
+		$nomeDiasemana = 'Sábado';
+	}
+	if($nameweekday == 'Sunday'){
+		$nomeDiasemana = 'Domingo';
+	}
+
+	//$modalidades = $modalidade->getModalidadesTemporadaByLocal($idtemporada, $idlocal);
+
+	$modalidades = $modalidade->getModalidadesTemporadaDiaSemana($idtemporada, $nomeDiasemana);
+
+	$turmasTemporada = Temporada::listAllTurmatemporadaDiaSemana($idtemporada, $nomeDiasemana);
+	//$turmasTemporada = Temporada::listAllTurmatemporada($idtemporada, $nomeDiasemana);
+
+	$page = new PageAdmin();
+
+	$page->setTpl("turmas-por-temporada-hoje-icon", [
+		'dia'=>$dia,
+		'mes'=>$mes,
+		'ano'=>$ano,
+		'local'=>$local,
+		'modalidade'=>$modalidade,
+		'locais'=>Local::listAll(),
+		'modalidades'=>$modalidades,
+		'temporada'=>$temporada->getValues(),
+		'turmas'=>$turmasTemporada,
+		'error'=>User::getError()
+	]);	
+});
+
+$app->get("/admin/turma-temporada-hoje/:idtemporada", function($idtemporada) {
+
+	User::verifyLogin();
+
+	$temporada = new Temporada();
+	$turma = new Turma();
+	$local = new Local();
+	$modalidade = new Modalidade();
+
+	$temporada->get((int)$idtemporada);
+
+	$local = $local->setapelidolocal('');
+	//$modalidade = $modalidade->setdescmodal('');
+
+	$numeroDiaSemana = date('w');
+
+	 if(!isset($_GET['data']) || $_GET['data'] == ''){
+
+	 }else{
+
+		 $traco1 = substr($_GET['data'], 2,1);
+	     $traco2 = substr($_GET['data'], 5,1);
+	     $datadia = substr($_GET['data'], 0,2);
+	     $datames = substr($_GET['data'], 3,2);
+	     $dataano = substr($_GET['data'], 6,4); 
+
+	            
+	     if(($traco1 != '-') || ($traco2 != '-') || (strlen($dataano) < 4)){
+
+	     	echo "<script>alert('Formato da data inválida!');";
+			echo "javascript:history.go(-1)</script>";
+			exit();         
+
+	     }else{
+
+	     	if(($datadia > 31) || ($datadia == 0) || ($datames > 12) || ($datames == 0)){
+
+	     		echo "<script>alert('data inválida!');";
+				echo "javascript:history.go(-1)</script>";
+				exit();            	
+	                    
+	    	}
+		}
+	}
+
+	if (!isset($_GET['data']) || $_GET['data'] == '') {
+		$data = date('Y-m-d');
+		$data = getdate(strtotime($data));
+	}else{
+		$data = new DateTime($_GET['data']);
+		$data = $data->format('Y-m-d');
+		$data = getdate(strtotime($data));
+	}
+
+	$dia = (int)$data['mday'];
+	if($dia < 10){ $dia = '0'.$dia; }
+	$mes = (int)$data['mon'];
+	if($mes < 10){ $mes = '0'.$mes; }
+	$ano = (int)$data['year'];		
+
+	$dataformatada = $ano.'-'.$mes.'-'.$dia;
+
+	$nameweekday = $data['weekday'];
+
+	if($nameweekday == 'Monday'){
+		$nomeDiasemana = 'Segunda';
+	}
+	if($nameweekday == 'Tuesday'){
+		$nomeDiasemana = 'Terça';
+	}
+	if($nameweekday == 'Wednesday'){
+		$nomeDiasemana = 'Quarta';
+	}
+	if($nameweekday == 'Thursday'){
+		$nomeDiasemana = 'Quinta';
+	}
+	if($nameweekday == 'Friday'){
+		$nomeDiasemana = 'Sexta';
+	}
+	if($nameweekday == 'Saturday'){
+		$nomeDiasemana = 'Sábado';
+	}
+	if($nameweekday == 'Sunday'){
+		$nomeDiasemana = 'Domingo';
+	}
+
+	//$modalidades = $modalidade->getModalidadesTemporadaByLocal($idtemporada, $idlocal);
+
+	$modalidades = $modalidade->getModalidadesTemporadaDiaSemana($idtemporada, $nomeDiasemana);
+
+	$turmasTemporada = Temporada::listAllTurmatemporadaDiaSemana($idtemporada, $nomeDiasemana);
+	//$turmasTemporada = Temporada::listAllTurmatemporada($idtemporada, $nomeDiasemana);
+
+	$page = new PageAdmin();
+
+	$page->setTpl("turmas-por-temporada-hoje", [
+		'dia'=>$dia,
+		'mes'=>$mes,
+		'ano'=>$ano,
+		'local'=>$local,
+		'modalidade'=>$modalidade,
+		'locais'=>Local::listAll(),
+		'modalidades'=>$modalidades,
+		'temporada'=>$temporada->getValues(),
+		'turmas'=>$turmasTemporada,
+		'error'=>User::getError()
+	]);	
+});
+
+$app->get("/admin/turma-temporada-hoje/:idtemporada/local/:idlocal", function($idtemporada, $idlocal) {
+
+	User::verifyLogin();
+
+	$temporada = new Temporada();
+	$turma = new Turma();
+	$local = new Local();
+	$modalidade = new Modalidade();
+	$temporada->get((int)$idtemporada);
+	$local->get((int)$idlocal);
+
+	$numeroDiaSemana = date('w');
+
+	if(!isset($_GET['data']) || $_GET['data'] == ''){
+
+	 }else{
+
+		 $traco1 = substr($_GET['data'], 2,1);
+	     $traco2 = substr($_GET['data'], 5,1);
+	     $datadia = substr($_GET['data'], 0,2);
+	     $datames = substr($_GET['data'], 3,2);
+	     $dataano = substr($_GET['data'], 6,4); 
+
+	            
+	     if(($traco1 != '-') || ($traco2 != '-') || (strlen($dataano) < 4)){
+
+	     	echo "<script>alert('Formato da data inválida!');";
+			echo "javascript:history.go(-1)</script>";
+			exit();         
+
+	     }else{
+
+	     	if(($datadia > 31) || ($datadia == 0) || ($datames > 12) || ($datames == 0)){
+
+	     		echo "<script>alert('data inválida!');";
+				echo "javascript:history.go(-1)</script>";
+				exit();            	
+	                    
+	    	}
+		}
+	}
+
+	if (!isset($_GET['data']) || $_GET['data'] == '') {
+		$data = date('Y-m-d');
+		$data = getdate(strtotime($data));
+	}else{
+		$data = new DateTime($_GET['data']);
+		$data = $data->format('Y-m-d');
+		$data = getdate(strtotime($data));
+	}
+
+	$dia = (int)$data['mday'];
+	if($dia < 10){ $dia = '0'.$dia; }
+	$mes = (int)$data['mon'];
+	if($mes < 10){ $mes = '0'.$mes; }
+	$ano = (int)$data['year'];		
+
+	$dataformatada = $ano.'-'.$mes.'-'.$dia;
+
+	$nameweekday = $data['weekday'];
+
+	if($nameweekday == 'Monday'){
+		$nomeDiasemana = 'Segunda';
+	}
+	if($nameweekday == 'Tuesday'){
+		$nomeDiasemana = 'Terça';
+	}
+	if($nameweekday == 'Wednesday'){
+		$nomeDiasemana = 'Quarta';
+	}
+	if($nameweekday == 'Thursday'){
+		$nomeDiasemana = 'Quinta';
+	}
+	if($nameweekday == 'Friday'){
+		$nomeDiasemana = 'Sexta';
+	}
+	if($nameweekday == 'Saturday'){
+		$nomeDiasemana = 'Sábado';
+	}
+	if($nameweekday == 'Sunday'){
+		$nomeDiasemana = 'Domingo';
+	}
+
+	//$modalidades = $modalidade->getModalidadesTemporadaByLocal($idtemporada, $idlocal);
+
+	$modalidades = $modalidade->getModalidadesTemporadaByLocalDiaSemana($idtemporada, $idlocal, $nomeDiasemana);
+
+	$turmasTemporada = Temporada::listAllTurmatemporadaLocalDiaSemana($idtemporada, $idlocal, $nomeDiasemana);
+	//$turmasTemporada = Temporada::listAllTurmatemporadaLocal($idtemporada, $idlocal);
+
+	$page = new PageAdmin();	
+
+	$page->setTpl("turmas-por-temporada-local-hoje", [
+		'dia'=>$dia,
+		'mes'=>$mes,
+		'ano'=>$ano,
 		'local'=>$local->getValues(),
 		'locais'=>Local::listAll(),
 		'modalidades'=>$modalidades,
@@ -1328,6 +1647,24 @@ $app->get("/admin/atualiza/turmatemporada/:idturma/:idtemporada/:desctemporada/:
 		
 	echo $texto;
 
+});
+
+$app->get("/admin/chamada/:idturma/:data/", function($idturma, $data) {
+
+    $numeroListaDePresenca = new Insc();
+    $numeroListaDePresenca = Insc::getCountNumeroNaListaDePresençaByIdturmaData($idturma, $data);
+
+    $numeroListaDePresenca = (int)$numeroListaDePresenca[0]["count(*)"];
+
+	if($numeroListaDePresenca > 0){
+
+		$texto = $numeroListaDePresenca.'lightgreen';
+
+	}else{
+		 $texto = $numeroListaDePresenca.'lightgray'; 		
+	}
+	echo  $texto;
+	
 });
 
 

@@ -285,7 +285,18 @@ desired effect
         </li> 
          <li>
           <a href="/admin/temporada"><i class="fa fa-link"></i><span>Temporadas</span></a>
-        </li>     
+        </li> 
+        <li class="treeview">
+          <a href="/admin"><i class="fa fa-reorder"></i>  <span>Chamadas por turmas <span style="color: red; font-size: 10px">(Novo)</span> </span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <?php require $this->checkTemplate("turma-temporada-menu-hoje");?>
+
+          </ul>
+        </li> 
         <li class="treeview">
           <a href="/admin"><i class="fa fa-link"></i> <span>TURMAS por temporada</span>
             <span class="pull-right-container">
