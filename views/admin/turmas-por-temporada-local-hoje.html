@@ -120,10 +120,11 @@
       <div class="box-body" style="border: solid 1px lightblue; margin: 5px;"> 
       <div class="box-body col-md-2">
 
+           <a href="/admin/turma-temporada-hoje/{$temporada.idtemporada}"><i class=""></i>TODOS OS LOCAIS</a>&nbsp;&nbsp;&nbsp;&nbsp; <br>
           {loop="$locais"}
                   <a href="/admin/turma-temporada-hoje/{$temporada.idtemporada}/local/{$value.idlocal}"><i class=""></i>{$value.apelidolocal}</a>&nbsp;&nbsp;&nbsp;&nbsp;
           {/loop}
-          <a href="/admin/turma-temporada-hoje/{$temporada.idtemporada}"><i class=""></i>TODOS OS LOCAIS</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          
             
       </div> 
           <div class="box-body no-padding col-md-10">
@@ -159,11 +160,10 @@
                  {if="$idmodalidade == $value.idmodal"}
                  
                 {if="numeroNaListaDePresençaByIdturmaData($value.idturma, $ano, $mes, $dia) == 0"}
-                    <div id="caixa{$value.idturma}" class="box-body col-md-2" style="border: solid 1px lightblue; margin: 5px; background-color: lightgray; ">
+                    <div  class="box-body col-md-1" style="border: solid 1px lightblue; margin: 5px; background-color: lightgray; font-size: 7px; width: 70px; height: 100px; display: inline-block; ">
                 {else}
-                    <div id="caixa{$value.idturma}" class="box-body col-md-2" style="border: solid 1px lightblue; margin: 5px; background-color: lightgreen; ">
+                    <div  class="box-body col-md-1" style="border: solid 1px lightblue; margin: 5px; background-color: lightgreen; font-size: 7px; width: 70px; height: 100px; display: inline-block; ">
                 {/if}     
-
                     <span style="text-align: left;">
                           <strong style="color: orange;">[{$value.idturma}]</strong> &nbsp;&nbsp;
                           <strong> {$value.descturma} </strong> 

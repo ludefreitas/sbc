@@ -301,66 +301,55 @@ $app->get("/prof/insc/:idinsc/:iduserprof/:idturma/statusMatriculada", function(
 	
 	$dtInicmatricula = $insc->getdtinicmatricula();
 	$hoje = date('Y-m-d H:i:s');
-	
-	if($hoje > $dtInicmatricula){
-	    
-	    //if($idturma != 756){
-	        /*
-    	    $dtInicmatricula = date('Y-m-d H:i:s', strtotime($dtInicmatricula));
-    
-    		echo "<script>alert('A matrícula só poderá ser efetuada a partir de ".$dtInicmatricula."!');";
-    			echo "javascript:history.go(-1)</script>";
-    		*/
-    
-    	//}else{		
 
-        	$turma->get((int)$idturma);
-        
-        	$vagas = (int)$turma->getvagas();
-        
-        	$numMatriculados = $temporada->setNummatriculadosTemporada($idtemporada, $idturma);	
-        
-        	if($numMatriculados['nummatriculados'] >= $vagas){
-        
-        		$numcpf = $insc->getnumcpf();
-        		
-        		$tokencpf = Turma::getTokenPorCpfeTurma($numcpf, $idturma);	
-        
-        		if(Turma::temTokenCpf($idturma, $numcpf)){
-        
-        			$insc->alteraStatusInscricaoMatriculada($idinsc, $idturma, $idtemporada);
-        			Turma::setUsedTokenCpf($idturma, $tokencpf);
-        			//User::setSuccess("Aluno matriculado com sucesso!");		
-        			echo "<script>alert('Aluno matriculado com sucesso!');";
-        			echo "javascript:history.go(-1)</script>";
-        			//header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
-        			//exit();
-        
-        		}else{
-        
-        			//User::setError("Número de vagas insuficiente para efetuar matrícula!");
-        			echo "<script>alert('Número de vagas insuficiente para efetuar matrícula! Gere um token para autorizar a matrícula.');";
-        			echo "javascript:history.go(-1)</script>";	
-        			exit;	
-        			//header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
-        			//exit();
-        		}	
-        	}else{
-        
-        		$insc->alteraStatusInscricaoMatriculada($idinsc, $idturma, $idtemporada);
-        		echo "<script>alert('Aluno matriculado com sucesso!');";
-        			echo "javascript:history.go(-1)</script>";
-        	}
-        	
-	}else{
+	if($hoje < $dtInicmatricula){
 	    
-	     $dtInicmatricula = date('d-m-Y H:i:s', strtotime($dtInicmatricula));
+	    $turma->get((int)$idturma);
+	    $idmodal = (int)$turma->getidmodal();
+
+	    if($idmodal != 60){
+
+	     	$dtInicmatricula = date('d-m-Y H:i:s', strtotime($dtInicmatricula));
     
     		echo "<script>alert('A matrícula só poderá ser efetuada a partir de ".$dtInicmatricula."!');";
-    			echo "javascript:history.go(-1)</script>";
+    		echo "javascript:history.go(-1)</script>";
+    		exit();
+
+	    }
 	}
-    	//}
-	
+
+    $turma->get((int)$idturma);
+        
+    $vagas = (int)$turma->getvagas();
+        
+    $numMatriculados = $temporada->setNummatriculadosTemporada($idtemporada, $idturma);	
+        
+    if($numMatriculados['nummatriculados'] >= $vagas){
+        
+       	$numcpf = $insc->getnumcpf();
+       		
+       	$tokencpf = Turma::getTokenPorCpfeTurma($numcpf, $idturma);	
+        
+       	if(Turma::temTokenCpf($idturma, $numcpf)){
+        
+       		$insc->alteraStatusInscricaoMatriculada($idinsc, $idturma, $idtemporada);
+        	Turma::setUsedTokenCpf($idturma, $tokencpf);
+       		echo "<script>alert('Aluno matriculado com sucesso!');";
+        	echo "javascript:history.go(-1)</script>";
+        
+        }else{
+        
+        	echo "<script>alert('Número de vagas insuficiente para efetuar matrícula! Gere um token para autorizar a matrícula.');";
+        	echo "javascript:history.go(-1)</script>";	
+        	exit();	
+        
+        }	
+    }else{
+        
+     	$insc->alteraStatusInscricaoMatriculada($idinsc, $idturma, $idtemporada);
+       	echo "<script>alert('Aluno matriculado com sucesso!');";
+       	echo "javascript:history.go(-1)</script>";        
+    }	
 
 });
 
@@ -379,67 +368,65 @@ $app->get("/estagiario/insc/:idinsc/:iduserprof/:idturma/statusMatriculada", fun
 	$idtemporada = $insc->getidtemporada();
 	$iduser = (int)$iduserprof;
 
+	$idturmastatus = $temporada->getStatusTurmaTemporada($idturma, $idtemporada);
+		
+	if($idturmastatus == 6){
+		echo "<script>alert('Você precisa alterar o status da turma, nesta temporada, para ( 3 - Inscrições abertas ) e assim alterar o status da inscrição.');";
+		echo "javascript:history.go(-1)</script>";	
+		exit;	
+	}
+
 	$dtInicmatricula = $insc->getdtinicmatricula();
 	$hoje = date('Y-m-d H:i:s');
 
-	if($hoje > $dtInicmatricula){
+	if($hoje < $dtInicmatricula){
 	    
-	    //if($idturma != 756){
-	        /*
-    	    $dtInicmatricula = date('Y-m-d H:i:s', strtotime($dtInicmatricula));
-    
-    		echo "<script>alert('A matrícula só poderá ser efetuada a partir de ".$dtInicmatricula."!');";
-    			echo "javascript:history.go(-1)</script>";
-    		*/
-    
-    	//}else{		
+	    $turma->get((int)$idturma);
+	    $idmodal = (int)$turma->getidmodal();
+	    
+	    if($idmodal != 60){
 
-        	$turma->get((int)$idturma);
-        
-        	$vagas = (int)$turma->getvagas();
-        
-        	$numMatriculados = $temporada->setNummatriculadosTemporada($idtemporada, $idturma);	
-        
-        	if($numMatriculados['nummatriculados'] >= $vagas){
-        
-        		$numcpf = $insc->getnumcpf();
-        		
-        		$tokencpf = Turma::getTokenPorCpfeTurma($numcpf, $idturma);	
-        
-        		if(Turma::temTokenCpf($idturma, $numcpf)){
-        
-        			$insc->alteraStatusInscricaoMatriculada($idinsc, $idturma, $idtemporada);
-        			Turma::setUsedTokenCpf($idturma, $tokencpf);
-        			//User::setSuccess("Aluno matriculado com sucesso!");		
-        			echo "<script>alert('Aluno matriculado com sucesso!');";
-        			echo "javascript:history.go(-1)</script>";
-        			//header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
-        			//exit();
-        
-        		}else{
-        
-        			//User::setError("Número de vagas insuficiente para efetuar matrícula!");
-        			echo "<script>alert('Número de vagas insuficiente para efetuar matrícula! Gere um token para autorizar a matrícula.');";
-        			echo "javascript:history.go(-1)</script>";	
-        			exit;	
-        			//header("Location: /prof/insc-turma-temporada/".$idturma."/".$idtemporada."/user/".$iduser."");
-        			//exit();
-        		}	
-        	}else{
-        
-        		$insc->alteraStatusInscricaoMatriculada($idinsc, $idturma, $idtemporada);
-        		echo "<script>alert('Aluno matriculado com sucesso!');";
-        			echo "javascript:history.go(-1)</script>";
-        	}
-        	
-	}else{
-	    
-	     $dtInicmatricula = date('d-m-Y H:i:s', strtotime($dtInicmatricula));
+	     	$dtInicmatricula = date('d-m-Y H:i:s', strtotime($dtInicmatricula));
     
-    		echo "<script>alert('A matrícula só poderá ser efetuada a partir de ".$dtInicmatricula."!');";
-    			echo "javascript:history.go(-1)</script>";
+    		echo "<script>alert('A matrícula só poderá ser efetuada a partir de ".$dtInicmatricula."!!');";
+    		echo "javascript:history.go(-1)</script>";
+    		exit();
+
+	    }
 	}
-    	//}	
+	
+    $turma->get((int)$idturma);
+        
+    $vagas = (int)$turma->getvagas();
+        
+    $numMatriculados = $temporada->setNummatriculadosTemporada($idtemporada, $idturma);	
+        
+    if($numMatriculados['nummatriculados'] >= $vagas){
+        
+       	$numcpf = $insc->getnumcpf();
+       		
+       	$tokencpf = Turma::getTokenPorCpfeTurma($numcpf, $idturma);	
+        
+       	if(Turma::temTokenCpf($idturma, $numcpf)){
+        
+       		$insc->alteraStatusInscricaoMatriculada($idinsc, $idturma, $idtemporada);
+        	Turma::setUsedTokenCpf($idturma, $tokencpf);
+       		echo "<script>alert('Aluno matriculado com sucesso!');";
+        	echo "javascript:history.go(-1)</script>";
+        
+        }else{
+        
+        	echo "<script>alert('Número de vagas insuficiente para efetuar matrícula! Gere um token para autorizar a matrícula.');";
+        	echo "javascript:history.go(-1)</script>";	
+        	exit();	
+        
+        }	
+    }else{
+        
+     	$insc->alteraStatusInscricaoMatriculada($idinsc, $idturma, $idtemporada);
+       	echo "<script>alert('Aluno matriculado com sucesso!');";
+       	echo "javascript:history.go(-1)</script>";        
+    }	
 });
 
 $app->get("/prof/insc/:idinsc/:iduserprof/:idturma/statusAguardandoMatricula", function($idinsc, $iduserprof, $idturma){
@@ -777,6 +764,12 @@ $app->get("/prof/calendario-lista-presenca/:idtemporada/:idturma", function($idt
 			$dia2 = $dias_da_semana[2];
 		}else{
 			$dia2 = "";
+		}
+
+		if(isset($dias_da_semana[1])){
+			$dias_da_semana[1] = $dias_da_semana[1];
+		}else{
+			$dias_da_semana[1] = "";
 		}
 		
 	}
@@ -1767,8 +1760,6 @@ $app->post("/prof/insc/altera/turma", function(){
 			echo "javascript:history.go(-1)</script>";
 			//exit();    
 			*/
-	    	
-
 	    
 	    	$idinscorigem = $insc['idinsc'];
 	    	$idinscstatus = $insc['idinscstatus'];
@@ -1779,10 +1770,38 @@ $app->post("/prof/insc/altera/turma", function(){
 	    	$inscpvs = $insc['inscpvs'];
 	    	$idturmaorigem = $insc['idturma'];
 	    	$idtemporadaorigem = $insc['idtemporada'];
+	    	$desctemporadaorigem = $insc['desctemporada'];
+	    	$idmodalorigem = $insc['idmodal'];
 	    	$dtinscorigem = $insc['dtinsc'];
 	    	$dtmatricorigem = $insc['dtmatric'];
 
-	    	if($idturmaorigem == $idturmadestino){
+	    	$inscPresencaExiste = Insc::getPresencaExisteByIdinsc($idinscorigem);
+
+	    	if(($_POST['tipomove']	== "substituir") && ($inscPresencaExiste > 0)){	    		
+	    		
+		    	echo "<script>alert('Você não pode substituir uma inscrição que já está na lista de chamada da turma atual, você só pode copiar. Copie e, se necessário, marque a inscrição da turma atual como desistente.');";
+				echo "javascript:history.go(-1)</script>";
+				exit();    
+	    		
+	    	}	    	
+
+	    	$idmodaldestino = Turma::getIdmodalByIdturma($idturmadestino);
+
+	    	if((int)$desctemporadaorigem == (int)$desctemporadadestino){
+	    		if(($_POST['tipomove']	== "substituir") && ($idmodalorigem != $idmodaldestino)){
+		    		echo "<script>alert('Ao substituir, você não pode mover uma inscrição para uma turma de modalidade diferente da atual.');";
+					echo "javascript:history.go(-1)</script>";
+					exit();    
+	    		}
+	    	}	    	
+
+	    	if((int)$desctemporadaorigem > (int)$desctemporadadestino){
+	    		echo "<script>alert('Você não pode movimentar esta inscrição datemporada atual para a temporada passada.');";
+				echo "javascript:history.go(-1)</script>";
+				exit();    
+	    	}
+
+	    	if($idturmaorigem == $idturmadestino && $idtemporadaorigem == $idtemporadadestino){
 	    		echo "<script>alert('Turma de destino não pode ser a mesma da origem.');";
 				echo "javascript:history.go(-1)</script>";
 				exit();    

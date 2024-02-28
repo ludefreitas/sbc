@@ -15,7 +15,7 @@
                  {loop="$insc"}
                 <div class="row alert-info">
                     <div class="col-md-12">
-                        <hr>
+                      
                         {if="$value.idinscstatus == 9"}
                         
                         <strong>INSCRIÇÃO Nº: </strong><span>{$value.idinsc}</span>&nbsp;&nbsp;[
@@ -32,14 +32,12 @@
                             {/if}
 
                         {/if}
-                        <br>
-                        
                         <strong>NOME DO ALUNO: </strong> <span>{$value.nomepess}</span><br>
+                        <strong>TURMA: </strong>{$value.idturma} - {$value.descativ} - {$value.desctemporada}<br>
                         <strong>COM LAUDO? </strong> <span>{if="$value.laudo == 0"}Não{else}Sim{/if}</span><br>
                         <strong>PARA PESSOA COM DEFICIÊNCIA? </strong> <span>{if="$value.inscpcd == 0"}Não{else}Sim{/if}</span><br>
                         <strong>PESSOA EM SITUAÇÃO DE VULNERABILIDADE SOCIAL? </strong> <span>{if="$value.inscpvs == 0"}Não{else}Sim{/if}</span><br>
-                        <strong>TURMA: </strong>{$value.idturma} - {$value.descativ}<br>
-                        <strong>Temporada: </strong>{$value.desctemporada}<br>
+                        
 
                         <div class="row">
                             <div class="col-md-4">

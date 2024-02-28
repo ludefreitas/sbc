@@ -4,12 +4,12 @@
 									   				Profs Temporada 2023
 									   			</a>
 									   		</li><li class="treeview">
-									   			<a href="/admin/professor-temporada/84">
+									   			<a href="/admin/professor-temporada/83">
 									   				<i class="fa fa-link"></i>
-									   				Profs Temporada 2020
+									   				Profs Temporada 2021
 									   			</a>
 									   		</li><li class="treeview">
-									   			<a href="/admin/professor-temporada/83">
+									   			<a href="/admin/professor-temporada/84">
 									   				<i class="fa fa-link"></i>
 									   				Profs Temporada 2019
 									   			</a>

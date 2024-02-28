@@ -1,10 +1,61 @@
-<?php if(!class_exists('Rain\Tpl')){exit;}?>
+<?php if(!class_exists('Rain\Tpl')){exit;}?><style type="text/css">
+ 
+#popup{
+    position: fixed;
+    top: 0; 
+    bottom: 0;
+    left: 0; 
+    right: 0;
+    margin: auto;
+    width: 300px;
+    height: 216px;
+    padding: 0px; 
+    background-color: lightgray;
+  }
+
+  #popupimage{
+    position: fixed;
+    top: 0; 
+    bottom: 0;
+    left: 0; 
+    right: 0;
+    margin: auto;
+    width: 300px;
+    height: 180px;
+    padding: 0px;
+    border: solid 1px #4c4d4f;
+    background: #ccc;    
+  }
+</style>
+
 <script type="text/javascript">
+
+    function habilitaformulariotorkn(numcpf){
+
+        let cpf = numcpf
+
+        //alert(elemento.id)
+        
+        document.getElementById(cpf).hidden = false  
+        //document.getElementById(cpf).disabled = false  
+    }
+
+     function imageNone() {
+
+    document.getElementById('popup').hidden = true 
+    
+    }
+
+    function encerradas(){
+
+        alert('As inscrições para a temporada de 2023 estão encerradas!\n\nAs inscrições para a temporada de 2024 tem a previsão de iniciar em 15 de janeiro de 2024.\n\nTodo o processo de inscrição será realizado pelo site:\n\nhttps://cursosesportivossbc.com\n\nImportante:\n\nDe 15/01 a 14/02, cada pessoa só poderá escolher 1(uma) modalidade.\n\nDe 15/02 a 14/03, será permitida a inscrição em uma segunda modalidade.\n\nA partir de 15/03 será permitida a inscrição em uma terceira modalidade.')
+        
+    }
   
     function alertToken(){
 
 
-      alert("Conforme Resolução SESP Nº 004 de 28/10/2021 Art.7º, Os interessados em participar das turmas de inclusão para Pessoas com Deficiência (PCD) e/ou laudo médico do CREEBA, deverão comparecer pessoalmente (interessado ou representante legal) no CREEBA")
+      alert("Conforme Resolução SESP Nº 006 de 15/12/2023 Art.2º §2º, os interessados em participar das turmas de inclusão para Pessoas com Deficiência (PCD) e/ou laudo médico do CREEBA, deverão comparecer pessoalmente (interessado ou representante legal) no CREEBA")
     }
 $(document).ready(function(){
 
@@ -50,7 +101,7 @@ $(document).ready(function(){
        <?php if( $error != '' ){ ?>
         <?php if( $value1["idstatustemporada"] == 2 OR $value1["idstatustemporada"] == 3 OR $value1["idstatustemporada"] == 6 ){ ?>
             <div class="alert alert-danger" style="text-align-last: center;">
-                <a style="color: darkblue; text-align-last: center;" href="https://www.saobernardo.sp.gov.br/documents/1136654/1245027/Edital+NM/42aa453e-2d70-8651-96e5-41d2d779d24c">Resolução SESP Nº 004 de 28 de outubro de 2021. </a>
+                <a style="color: darkblue; text-align-last: center;" href="https://www.saobernardo.sp.gov.br/documents/1136654/1807257/Inscri%C3%A7%C3%B5es+2024/0812eb93-95c5-b325-ea0a-60b5ca9c4c28">Resolução SESP Nº 006 de 15 de dezembro de 2023. </a>
              </div>
         <?php } ?>   
     <?php } ?>
@@ -94,7 +145,7 @@ $(document).ready(function(){
             -->                      
 
             <div class="col-md-6">
-               TURMA: <span style="color: #cc5d1e;"><?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["periodo"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </span> /
+               TURMA: <span style="color: #cc5d1e;"><?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["periodo"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </span> / <?php echo htmlspecialchars( $value1["origativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> 
                <span class="amount"> 
                   LOCAL: <?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["rua"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, Nº <?php echo htmlspecialchars( $value1["numero"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["bairro"], ENT_COMPAT, 'UTF-8', FALSE ); ?> / 
                </span> 
@@ -109,13 +160,13 @@ $(document).ready(function(){
               <?php } ?>
               
               <?php if( $value1["obs"] ){ ?>
-			  OBSERVAÇÃO: <strong><?php echo htmlspecialchars( $value1["obs"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong><br>
-			  <?php } ?>
+              OBSERVAÇÃO: <strong><?php echo htmlspecialchars( $value1["obs"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong><br>
+              <?php } ?>
               </span> 
               
                 <span class="amount">
-				   <br> <span style="color: red; font-weight: bold;">Se esta não é a turma que você quer fazer a inscrição clique aqui <a title="Remove this item" class="remove" href="/cart/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/remove"> <i class="fa fa-arrow-right" style="color: green;"></i> <i class="fa fa-trash" style="color: green;"></i> <i class="fa fa-arrow-left" style="color: green;"></i></span><p style="color: green;">(Selecionar uma outra turma)</p></a>
-			   </span>  
+                   <br> <span style="color: red; font-weight: bold;">Se esta não é a turma que você quer fazer a inscrição clique aqui <a title="Remove this item" class="remove" href="/cart/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/remove"> <i class="fa fa-arrow-right" style="color: green;"></i> <i class="fa fa-trash" style="color: green;"></i> <i class="fa fa-arrow-left" style="color: green;"></i></span><p style="color: green;">(Selecionar uma outra turma)</p></a>
+               </span>  
 
                <input type="text" name="idturma" hidden="" value="<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                <input type="text" name="idtemporada" hidden="" value="<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">  
@@ -183,9 +234,10 @@ $(document).ready(function(){
                                 <?php $idturma = $value1["idturma"]; ?>
                                     <?php $counter2=-1;  if( isset($pessoa) && ( is_array($pessoa) || $pessoa instanceof Traversable ) && sizeof($pessoa) ) foreach( $pessoa as $key2 => $value2 ){ $counter2++; ?>
                                     <p>
-                                    <input type="radio" name="idpess" value="<?php echo htmlspecialchars( $value2["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="height: 20px; width: 20px;"> <?php echo htmlspecialchars( $value2["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>; <?php echo calcularIdade($value2["dtnasc"]); ?> anos
+                                    <input type="radio" onchange="habilitaformulariotorkn('<?php echo htmlspecialchars( $value2["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>')" name="idpess" value="<?php echo htmlspecialchars( $value2["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="height: 20px; width: 20px;"> <?php echo htmlspecialchars( $value2["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>; <?php echo calcularIdade($value2["dtnasc"]); ?> anos
                                         <br>
                                         <?php echo temTokenPorTurmaCpf($idturma, $value2["numcpf"]); ?>
+                                        
                                         
                                     </p>                                
                                     <?php }else{ ?>
@@ -216,6 +268,18 @@ $(document).ready(function(){
             </div>
              
         </div>
+
+        <?php if( $value1["origativ"] == 'SESP' ){ ?> 
+  <div id="popup" style="text-align-last: center; border-radius: 15px"> 
+            <div style="text-align-last: right; font-weight: bold; " onclick="imageNone()"> x &nbsp;&nbsp;
+            </div>  
+            
+            <div style="background-color: orange; text-align: justify; border-radius: 15px 15px 15px 15px; padding: 10px; font-size: 13px; font-weight: bold;">
+                <span style="color: red;"> ATENÇÃO! </span><br>
+                    LEMBRAMOS que: O início das aulas e a matrícula para ESTA TURMA e para as outras TURMAS do PELC irão acontecer simultaneamente a partir do dia<span style="color: blue;" > 1º de MARÇO</span>, no dia e no horário da aula. (Para as incrições com status <span style="color: green;" >"Aguardando Matrícula"</span>).
+            </div> 
+    </div>
+ <?php } ?>
          
         <?php }else{ ?>
         <div class="row">
@@ -241,6 +305,10 @@ $(document).ready(function(){
                          
 </form>
  </div> <!-- final da index -->
+ 
+ 
+ 
+
 
 
                                                                 

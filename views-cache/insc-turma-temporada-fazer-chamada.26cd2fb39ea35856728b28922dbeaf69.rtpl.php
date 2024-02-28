@@ -37,7 +37,7 @@
           method: 'GET'  
         }).done(function(result){
 
-          if (window.confirm(' '+ result + 'Para atualizar atestado clique em "OK"'))
+          if (window.confirm(' '+ result + 'Para atualizar atestado CLÍNICO clique em "OK"'))
           {
               adicionarArtestado(idpess)
           };
@@ -47,16 +47,16 @@
 
       function adicionarArtestado(idpess){
         
-        let confirmaAtestado = confirm('Deseja realmente atualizar atestado?')
+        let confirmaAtestado = confirm('Deseja realmente atualizar atestado CLÍNICO?')
 
         if(confirmaAtestado == true)
         {                      
-            var data = prompt("Informe a data da emissão do Atestado. Ex.: dd-mm-aaaa");     
+            var data = prompt("Informe a data da emissão do Atestado CLÍNICO. Ex.: dd-mm-aaaa");     
 
 
             if (data == null || data == "") {
 
-                alert("As informaçãoes do atestado não foram atualizadas! Informe a data e faça alguma observação")
+                alert("As informaçãoes do atestado CLÍNICO não foram atualizadas! Informe a data e faça alguma observação")
             } else {
 
                  var traco1 = data.substr(2,1)
@@ -80,7 +80,7 @@
                         
                         var observ = prompt("Digite uma observação");
                         if (observ == null || observ == "") {
-                                lert("As informaçãoes do atestado não foram atualizadas! Informe a data e faça alguma observação.");
+                                lert("As informaçãoes do atestado CLÍNICO não foram atualizadas! Informe a data e faça alguma observação.");
                         } else {
 
                             let url = '/prof/saude/atulizaatestado/'+idpess+'/'+data+'/'+observ+''
@@ -126,6 +126,92 @@
 
         });
       }
+
+      function atualizarAtestadoDerma(url){
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          alert(result)
+
+        });
+      }
+
+      function dadosAtestadoDerma(idpess){
+
+        let url = '/prof/saude/dadosatestadoderma/'+idpess
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if (window.confirm(' '+ result + 'Para atualizar atestado DERMATOLÓGICO clique em "OK"'))
+          {
+              adicionarArtestadoDerma(idpess)
+          };
+
+        });
+      }
+
+      function adicionarArtestadoDerma(idpess){
+        
+        let confirmaAtestado = confirm('Deseja realmente atualizar atestado DERMATOLÓGICO?')
+
+        if(confirmaAtestado == true)
+        {                      
+            var data = prompt("Informe a data da emissão do Atestado DERMATOLÓGICO. Ex.: dd-mm-aaaa");     
+
+
+            if (data == null || data == "") {
+
+                alert("As informaçãoes do atestado DERMATOLÓGICO não foram atualizadas! Informe a data e faça alguma observação")
+            } else {
+
+                 var traco1 = data.substr(2,1)
+                 var traco2 = data.substr(5,1)
+                 var dia = data.substr(0,2);
+                 var mes = data.substr(3,2);
+                 var ano = data.substr(6,4); 
+                 
+                 if((traco1 != '-') || (traco2 != '-') || (ano.length < 4)){
+                    alert('Formato da data inválida');
+                 }else{
+
+                    if((dia > 31) || (dia == 0) || (mes > 12) || (mes == 0)){
+
+                    alert('data inválida!')
+                    
+                    }else{
+
+                        //alert('Data validada!!! ' + dia + ' ' + mes + ' ' + ano)
+
+                        
+                        var observ = prompt("Digite uma observação");
+                        if (observ == null || observ == "") {
+                                lert("As informaçãoes do atestado DERMATOLÓGICO não foram atualizadas! Informe a data e faça alguma observação.");
+                        } else {
+
+                            let url = '/prof/saude/atulizaatestadoderma/'+idpess+'/'+data+'/'+observ+''
+
+                            atualizarAtestadoDerma(url) 
+                        }           
+                    }                           
+                }
+            }        
+        } 
+         //let url = '/prof/saude/dadosatestado/'+idpess
+
+        //dadosAtestado(url)  
+    }
       
       function requisitarPaginaPresente(url){
 
@@ -277,7 +363,7 @@
                     <div class="col-md-12" style="border: 1px solid black; margin: 0; padding: 0; text-align: center; font-weight: bold; background-color: #ccc;" >
                           <div class="col-md-12">
 
-                             <?php echo FormatDate($data); ?> - <?php echo htmlspecialchars( $diasemana, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                             <?php echo FormatDate($data); ?> - <?php echo htmlspecialchars( $nomediasemana, ENT_COMPAT, 'UTF-8', FALSE ); ?>
 
                           </div>   
                     </div>
@@ -344,13 +430,26 @@
                          <a style="color: orange; text-align-last: right;" onclick="adicionarArtestado(<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)"><?php echo getAtestadoIcone($value1["idpess"]); ?></a>
                           <br><br>
                           -->
-                          &nbsp;&nbsp;<?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> &nbsp;&nbsp; 
-                           - &nbsp;
+                           &nbsp;&nbsp;<?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> &nbsp;&nbsp; 
+                            &nbsp;
                          <!--
                          <a style="color: orange; text-align-last: right;" onclick="dadosAtestado(<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)"><?php echo getAtestadoIcone($value1["idpess"]); ?></a>
                          -->
-                         <a style="color: orange; text-align-last: right;" onclick="dadosAtestado(<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)"><?php echo getAtestadoIconeByNumCpf($value1["numcpf"]); ?></a>                     
-                          <br><br>
+                         <br>
+                          &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                        <span style="color: darkred; font-weight:">  
+                        <?php echo getAtestadoClinicoProfExiste($value1["numcpf"], 1); ?>
+                        </span>
+                        &nbsp;
+                         <a style="color: orange; text-align-last: right;" onclick="dadosAtestado(<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)"><?php echo getAtestadoIconeByNumCpf($value1["numcpf"]); ?></a>   
+                         
+                         &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+                         <span style="color: darkred;">  
+                         <?php echo getAtestadoDermaProfExiste($value1["numcpf"], 2); ?>
+                          </span>
+                        &nbsp;                          
+                         <a style="color: orange; text-align-last: right;" onclick="dadosAtestadoDerma(<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)"><?php echo getAtestadoDermaIconeByNumCpf($value1["numcpf"]); ?></a>
+                          <br>
                                                       
                                   
                         <?php if( $value1["idinscstatus"] == 9 ){ ?>
@@ -360,7 +459,7 @@
                                 <span style="color: red;">DESISTENTE</span>
                             <?php }else{ ?>
                              
-                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onchange="requisitarPaginaPresente('/prof/insc-turma-temporada-presente/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>')" name=""><label style="color: green;">Presente</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                     &nbsp;&nbsp;<input type="checkbox" id="<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onchange="requisitarPaginaPresente('/prof/insc-turma-temporada-presente/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>')" name=""><label style="color: green;">Presente</label>&nbsp;&nbsp;&nbsp;&nbsp;
                                 <!--
                                    <a class="presente" id="<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" href="#" onclick="requisitarPaginaPresente('/prof/insc-turma-temporada-presente/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>')" style="color: green;">Presente?</i></a>&nbsp;&nbsp;&nbsp;&nbsp;                                 
 
@@ -399,7 +498,7 @@
                 <?php } ?>
 
                <div class="col-md-12 btn btn-success" style="font-weight: bold; font-size: 16x; text-align: center; margin-top: 10px;">
-                  <a style="color: white;" href="/prof/insc-turma-temporada-fazer-chamada/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>">Atualizar</a>
+                  <a style="color: white;" href="/prof/insc-turma-temporada-fazer-chamada/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $diasemana, ENT_COMPAT, 'UTF-8', FALSE ); ?>">Atualizar lista</a>
                 </div>
 
 

@@ -40,7 +40,7 @@
           method: 'GET'  
         }).done(function(result){
 
-          if (window.confirm(' '+ result + 'Para atulizar atestado clique em "OK"'))
+          if (window.confirm(' '+ result + 'Para atulizar atestado CLÍNICO clique em "OK"'))
           {
               adicionarAtestado(idpess)
           };
@@ -51,15 +51,15 @@
       function adicionarAtestado(idpess){
         
         //let confirmaAtestado = confirm('Já existe um atestado válido até:'+"\n"+'Deseja adicionar atestado? ')
-        let confirmaAtestado = confirm('Deseja adicionar atestado? ')
+        let confirmaAtestado = confirm('Deseja adicionar atestado CLÍNICO? ')
 
         if(confirmaAtestado == true)
         {                      
-            var data = prompt("Informe a data da emissão do Atestado. Ex.: dd-mm-aaaa");     
+            var data = prompt("Informe a data da emissão do Atestado CLÍNICO. Ex.: dd-mm-aaaa");     
 
             if (data == null || data == "") {
 
-                alert("As informaçãoes do atestado não foram atualizadas! Informe a data e faça alguma observação")
+                alert("As informaçãoes do atestado CLÍNICO não foram atualizadas! Informe a data e faça alguma observação")
             } else {
 
                  var traco1 = data.substr(2,1)
@@ -81,7 +81,7 @@
                         
                         var observ = prompt("Digite uma observação");
                         if (observ == null || observ == "") {
-                                lert("As informaçãoes do atestado não foram atualizadas! Informe a data e faça alguma observação");
+                                lert("As informaçãoes do atestado CLÍNICO não foram atualizadas! Informe a data e faça alguma observação");
                         } else {
 
                             let url = '/prof/saude/atulizaatestado/'+idpess+'/'+data+'/'+observ+''
@@ -122,7 +122,7 @@
           method: 'GET'  
         }).done(function(result){
 
-          if (window.confirm(' '+ result + 'Para atulizar atestado clique em "OK"'))
+          if (window.confirm(' '+ result + 'Para atulizar atestado DERMATOLÓGICO clique em "OK"'))
           {
               adicionarAtestadoDerma(idpess)
           };
@@ -133,15 +133,15 @@
       function adicionarAtestadoDerma(idpess){
         
         //let confirmaAtestado = confirm('Já existe um atestado válido até:'+"\n"+'Deseja adicionar atestado? ')
-        let confirmaAtestado = confirm('Deseja adicionar atestado dermatológico? ')
+        let confirmaAtestado = confirm('Deseja adicionar atestado DERMATOLÓGICO dermatológico? ')
 
         if(confirmaAtestado == true)
         {                      
-            var data = prompt("Informe a data da emissão do Atestado. Ex.: dd-mm-aaaa");     
+            var data = prompt("Informe a data da emissão do Atestado DERMATOLÓGICO. Ex.: dd-mm-aaaa");     
 
             if (data == null || data == "") {
 
-                alert("As informaçãoes do atestado não foram atualizadas! Informe a data e faça alguma observação")
+                alert("As informaçãoes do atestado DERMATOLÓGICO não foram atualizadas! Informe a data e faça alguma observação")
             } else {
 
                  var traco1 = data.substr(2,1)
@@ -281,11 +281,20 @@
                 <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
               </td>
               <td style="text-align: left; border: solid 1px; color: darkblue; padding: 5px;">
-                <a style="color: orange; text-align-last: right;" onclick="dadosAtestado(<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)"><?php echo getAtestadoIcone($value1["idpess"]); ?></a>
+                <span style="color: darkred; font-weight:">  
+                  <?php echo getAtestadoClinicoProfExiste($value1["numcpf"], 1); ?>
+                </span>
+                &nbsp;
+                <a style="color: orange; text-align-last: right;" onclick="dadosAtestado(<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)"><?php echo getAtestadoIconeByNumCpf($value1["numcpf"]); ?></a>
                           <br>                                                                   
               </td>
+              
               <td style="text-align: left; border: solid 1px; color: darkblue; padding: 5px;">
-                <a style="color: orange; text-align-last: right;" onclick="dadosAtestadoDerma(<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)"><?php echo getAtestadoDermaIcone($value1["idpess"]); ?></a>
+                <span style="color: darkred;">  
+                <?php echo getAtestadoDermaProfExiste($value1["numcpf"], 2); ?>
+               </span>
+                &nbsp;
+                <a style="color: orange; text-align-last: right;" onclick="dadosAtestadoDerma(<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)"><?php echo getAtestadoDermaIconeByNumCpf($value1["numcpf"]); ?></a>
                           <br>                                                                   
               </td>
               <td style="text-align: left; border: solid 1px; color: darkblue; padding: 5px;">

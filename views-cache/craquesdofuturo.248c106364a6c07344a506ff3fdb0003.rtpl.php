@@ -1,13 +1,34 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?><script type="text/javascript">
 
-  function projetoCraquesDoFututo(){
+    let data = new Date()
+    let dia = data.getDate()
+    let mes = (data.getMonth() + 1)
+    let ano = data.getFullYear()
 
-  if (window.confirm('A inscrições para o Projeto Craques do Futuro serão abertas a partir do dia 20/01/2023 ! Se você tem interesse em participar, clique em "OK" e você será direcionado para preencher o formulário de participação.'))
-   {
-   //window.open('https://cursosesportivossbc.com', '_blank');
-   alert('A partir do dia 20 de janeiro de 2023 você será direcionado ao formulário específico para preencher. Obrigado.')
-   };  
-}
+    function DirecionarForms(){
+
+        if(mes < 10){
+            mes = '0'+mes
+            let hoje = ano+'-'+mes+'-'+dia
+            let datalimite = '2024-01-29' 
+            if (datalimite > hoje) {
+              alert('Abertura das inscrições para o Projeto Craques do Futuro a partir do dia 30/01/2024! Aguardem!')
+            }else{          
+              window.open('http://forms.gle/N7e1neBJx5QcTXjaA', '_blank')
+
+              window.location.
+            }
+    
+        }else{       
+            let hoje = ano+'-'+mes+'-'+dia
+            let datalimite = '2024-01-29'        
+            if (datalimite > hoje) {
+              alert('Abertura das inscrições para o Projeto Craques do Futuro a partir do dia 30/01/2024! Aguardem!')
+            }else{          
+              window.open('http://forms.gle/N7e1neBJx5QcTXjaA', 'blank')
+            }
+        }
+    }    
   
 </script>
 
@@ -43,61 +64,69 @@
         Olá! seja bem vindo! <br><br>
 
         <?php } ?>
-
-      
+        
+            <p>
+                Para maiores informações sobre as Escolinhas de Futebol do PROJETO CRAQUES DO FUTURO, pedimos que entre em contato pelos telefones <span style="color: red;">(11)2630-7427 </span> ou <span style="color: red;">(11)2630-7426 </span>
+            </p>                  
       </div>
   </div> 
 
   </div>
  
+  <!--
   <hr style="background-color: #0f71b3;">
   <div class="row" style="margin: -5px -5px -5px -5px; ">   
-  <div class="col-md-12" style="border: 5px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif;"> 
-    
-      <div style="text-align-last: center; font-weight: bold; line-height: 15px; color: #0f71b3; font-size: 10px; font-style: italic; margin: 0px 5px 0px 5px; ">                                               
-           A inscrições para o Projeto Craques do Futuro serão abertas a partir do dia 20/01/2023 !
-      </div>
-   
-  </div> 
+      <div class="col-md-12" style="border: 5px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif;"> 
+        
+          <div style="text-align-last: left; font-weight: bold; line-height: 15px; color: #00f; font-size: 14px; font-style: italic; margin: 0px 5px 0px 5px; ">       
+             <span style="font-weight: bold; color: #f00">           
+               Importante: 
+             </span>
+             Previsão de início de incrições dia <span style="font-weight: bold; color: #f00">30/01</span> pelo site.
+              
+          </div>
+          
+      </div> 
 
   </div>
+  -->
+  
   <hr style="background-color: #0f71b3;">
-
-
 
   <div class="container"> 
     <div class="row">    
+        
+       
+        <div  class="col-md-5 btn" style="text-align-last: left; background-color: #0f71b3; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
 
-        <div class="col-md-5 btn" style="text-align-last: left; background-color: #0f71b3; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
-             <a href="http://forms.gle/XvGDKyGwtQevcrZT6" target="_blank">                      
+               <a href="http://forms.gle/N7e1neBJx5QcTXjaA" target="_blank">                 
               <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 20px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
-                          Inscreva-se no <br>
+                          Inscreva-se no projeto <br>
                           Craques do Futuro
+              </div>
+               </a>
+            
+        </div> 
+       
+        
+        
+        <div class="col-md-5 btn" style="text-align-last: left; background-color: #15a03f; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
+            <a href="https://wa.me/551126307427?text=Olá,%20Craques%20do%20Futuro%20SBC! " target="_blank">
+              <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 20px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
+                          Whatsapp  <br>
+                         (11) 2630-7427
               </div>
             </a>
         </div> 
-
+        
         <div class="col-md-5 btn" style="text-align-last: left; background-color: #cc5d1e; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
-            <a href="/../res/site/arquivos-pdfs/enderecocraques.pdf">
+            <a href="/../res/site/arquivos-pdfs/enderecocraques2.pdf">
               <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 20px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
                           Endereços dos locais <br>
                           Craques do Futuro
               </div>
             </a>
         </div> 
-
-        <div class="col-md-5 btn" style="text-align-last: left; background-color: #15a03f; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
-            <a href="https://wa.me/551126307426?text=Olá,%20Craques%20do%20Futuro%20SBC! " target="_blank">
-              <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 20px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
-                          Whatsapp  <br>
-                         (11)26307426
-              </div>
-            </a>
-        </div> 
-
-        
-        
-                                                                                                                                                                                                                                                                                                                                         
         
     </div> 
   </div> 

@@ -300,6 +300,64 @@ class Turma extends Model {
 
 	}
 
+	public static function listAllTurmaTemporadaModalidadeFull($idmodal)
+	{
+		$idStatusTemporadaTemporadaNaoIniciada = StatusTemporada::TEMPORADA_NAO_INICIADA;
+		$idStatusTemporadaTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
+		$idStatusTemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
+		$idStatusTemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
+		$idStatusTemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
+		$idStatusTemporadaInscricoesEncerradas = StatusTemporada::INSCRICOES_ENCERRADAS;
+
+		$sql = new Sql();
+
+		return $sql->select("SELECT * 
+			FROM tb_turmatemporada a 
+			INNER JOIN tb_turma j            
+			using(idturma)
+			INNER JOIN tb_users b
+			using(iduser)
+			INNER JOIN tb_persons c
+			using(idperson)
+			INNER JOIN tb_atividade d
+			using(idativ)
+			INNER JOIN tb_espaco e
+			using(idespaco)
+			INNER JOIN tb_local f
+			using(idlocal)
+			-- INNER JOIN tb_turmastatus g
+			-- using(idturmastatus)
+			INNER JOIN tb_horario h
+			using(idhorario)
+			INNER JOIN tb_fxetaria i
+			using(idfxetaria)
+            INNER JOIN tb_temporada k          
+			using(idtemporada)   
+            INNER JOIN tb_statustemporada l          
+			using(idstatustemporada)
+			INNER JOIN tb_modalidade m         
+			using(idmodal)
+      		WHERE j.idmodal = :idmodal
+            AND ( b.iduser != 1 AND (
+            k.idstatustemporada = :idStatusTemporadaMatriculasEncerradas 
+            OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada 
+            OR k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
+            OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada 
+            OR k.idstatustemporada = :idStatusTemporadaInscricoesEncerradas
+            OR k.idstatustemporada = :idStatusTemporadaTemporadaNaoIniciada))
+            AND (a.idturmastatus = 3 OR a.idturmastatus = 6)
+      		ORDER BY a.numinscritos, RAND()", [
+      			':idmodal'=>$idmodal,
+				':idStatusTemporadaMatriculasEncerradas'=>$idStatusTemporadaMatriculasEncerradas,
+				':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada,
+				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
+				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
+				':idStatusTemporadaInscricoesEncerradas'=>$idStatusTemporadaInscricoesEncerradas,
+				':idStatusTemporadaTemporadaNaoIniciada'=>$idStatusTemporadaTemporadaNaoIniciada
+				
+			]);
+	}
+
 	public static function listAllTurmaTemporadaModalidade($idmodal)
 	{
 		$idStatusTemporadaTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
@@ -351,6 +409,65 @@ class Turma extends Model {
 				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
 				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
 				':idStatusTemporadaInscricoesEncerradas'=>$idStatusTemporadaInscricoesEncerradas
+				
+			]);
+	}
+
+	public static function listAllTurmaTemporadaModalidadeLocalFull($idmodal, $idlocal)
+	{
+		$idStatusTemporadaTemporadaNaoIniciada = StatusTemporada::TEMPORADA_NAO_INICIADA;
+		$idStatusTemporadaTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
+		$idStatusTemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
+		$idStatusTemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
+		$idStatusTemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
+		$idStatusTemporadaInscricoesEncerradas = StatusTemporada::INSCRICOES_ENCERRADAS;
+
+		$sql = new Sql();
+
+		return $sql->select("SELECT * 
+			FROM tb_turmatemporada a 
+			INNER JOIN tb_turma j            
+			using(idturma)
+			INNER JOIN tb_users b
+			using(iduser)
+			INNER JOIN tb_persons c
+			using(idperson)
+			INNER JOIN tb_atividade d
+			using(idativ)
+			INNER JOIN tb_espaco e
+			using(idespaco)
+			INNER JOIN tb_local f
+			using(idlocal)
+			-- INNER JOIN tb_turmastatus g
+			-- using(idturmastatus)
+			INNER JOIN tb_horario h
+			using(idhorario)
+			INNER JOIN tb_fxetaria i
+			using(idfxetaria)
+            INNER JOIN tb_temporada k          
+			using(idtemporada)   
+            INNER JOIN tb_statustemporada l          
+			using(idstatustemporada)
+			INNER JOIN tb_modalidade m         
+			using(idmodal)
+      		WHERE j.idmodal = :idmodal AND f.idlocal = :idlocal 
+      		AND (a.idturmastatus = 3 OR a.idturmastatus = 6)
+            AND ( b.iduser != 1 AND (
+            k.idstatustemporada = :idStatusTemporadaMatriculasEncerradas 
+            OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada 
+            OR k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
+            OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada 
+            OR k.idstatustemporada = :idStatusTemporadaInscricoesEncerradas
+            OR k.idstatustemporada = :idStatusTemporadaTemporadaNaoIniciada))
+      		ORDER BY a.numinscritos, RAND()", [
+      			':idlocal'=>$idlocal,
+      			':idmodal'=>$idmodal,
+				':idStatusTemporadaMatriculasEncerradas'=>$idStatusTemporadaMatriculasEncerradas,
+				':idStatusTemporadaTemporadaIniciada'=>$idStatusTemporadaTemporadaIniciada,
+				':idStatusTemporadaInscricaoIniciada'=>$idStatusTemporadaInscricaoIniciada,
+				':idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
+				':idStatusTemporadaInscricoesEncerradas'=>$idStatusTemporadaInscricoesEncerradas,
+				':idStatusTemporadaTemporadaNaoIniciada'=>$idStatusTemporadaTemporadaNaoIniciada
 				
 			]);
 	}
@@ -737,6 +854,32 @@ class Turma extends Model {
 
 	}
 
+	public function selectTurmaTemporadaById($idturma, $idtemporada)
+	{
+		$sql = new Sql();
+
+		$rows = $sql->select(
+			"SELECT * FROM tb_turmatemporada
+			INNER JOIN tb_turma a USING(idturma)
+			INNER JOIN 	tb_users USING(iduser)
+			INNER JOIN 	tb_persons USING(idperson)	
+			INNER JOIN tb_atividade USING(idativ) 
+			INNER JOIN tb_fxetaria USING(idfxetaria)
+			INNER JOIN tb_espaco USING(idespaco) 
+			INNER JOIN tb_horario USING(idhorario) 
+			INNER JOIN tb_local USING(idlocal)
+			INNER JOIN tb_modalidade USING(idmodal)
+			INNER JOIN tb_temporada USING(idtemporada)
+			WHERE idturma = :idturma
+			AND idtemporada = :idtemporada LIMIT 1
+			", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+
+		return $rows;
+	}
+
 	/*
 	public function getFromIdTurmaModalidade($idmodal, $idtemporada)
 	{
@@ -986,6 +1129,21 @@ class Turma extends Model {
 			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
 		];
 
+	}
+
+	public static function getIdmodalByIdturma($idturma){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT idmodal FROM tb_turma WHERE idturma = :idturma ", [
+			':idturma'=>$idturma
+		]);
+
+		if($results){
+			return (int)$results[0]['idmodal'];
+		}else{
+			return 0;
+		}
 	}
 
 	/*

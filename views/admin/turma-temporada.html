@@ -1,3 +1,86 @@
+<script type="text/javascript">
+
+    function adicionar(idturma, idtemporada){ 
+
+        let url = "/admin/temporada/"+idtemporada+"/turma/"+idturma+"/add";
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url'); 
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){         
+            
+            if(result){   
+
+            let divturmaAdiciona = 'divTurmaAdicionar'+idturma
+            document.getElementById(divturmaAdiciona).hidden = true             
+            
+          }else{                
+            alert("Não foi possivel adicionar a turma!\nTente novamente ou atualize a página!");
+          }    
+        });        
+    }
+
+    function remover(idturma, idtemporada){ 
+        let url = "/admin/temporada/"+idtemporada+"/turma/"+idturma+"/remove";
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url'); 
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){             
+            if(result){   
+            let divturmaRemove = 'divTurmaRemover'+idturma
+            document.getElementById(divturmaRemove).hidden = true                
+          }else{                
+            alert("Não foi possivel remover a turma!\nTente novamente ou atualize a página!");
+          }    
+
+        });
+        
+    }
+    
+    function openDiv(idlocalidade){
+
+        let idlocal = idlocalidade;
+              
+            document.getElementById('idlocal'+idlocal ).hidden = false  
+            document.getElementById('btnLocalClose'+idlocal ).hidden = false
+            document.getElementById('btnLocalOpen'+idlocal ).hidden = true      
+      }
+
+      function closeDiv(idlocalidade){
+
+        let idlocal = idlocalidade;
+
+            document.getElementById('idlocal'+idlocal ).hidden = true  
+            document.getElementById('btnLocalOpen'+idlocal ).hidden = false  
+            document.getElementById('btnLocalClose'+idlocal ).hidden = true 
+          
+      }
+
+      function openDivRed(idlocalidade){
+
+        let idlocal = idlocalidade;
+              
+            document.getElementById('idlocalRed'+idlocal ).hidden = false  
+            document.getElementById('btnLocalRedClose'+idlocal ).hidden = false
+            document.getElementById('btnLocalRedOpen'+idlocal ).hidden = true      
+      }
+
+      function closeDivRed(idlocalidade){
+
+        let idlocal = idlocalidade;
+
+            document.getElementById('idlocalRed'+idlocal ).hidden = true  
+            document.getElementById('btnLocalRedOpen'+idlocal ).hidden = false  
+            document.getElementById('btnLocalRedClose'+idlocal ).hidden = true 
+          
+      }
+
+</script>
+
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
@@ -31,28 +114,54 @@
                 <!-- /.box-header -->
                 <!-- form start -->
                 <div class="box-body">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                            <th style="width: 10px">#</th>
-                            <th>Turmas</th>
-                            <th style="width: 240px">&nbsp;</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {loop="$turmaNotRelated"}
-                            <tr>
-                            <td>{$value.idturma}</td>
-                            <td>{$value.descturma} - {$value.apelidolocal} - {$value.nomeativ} - 
-                             {$value.diasemana} - {$value.horainicio} - {$value.horatermino} - {$value.initidade} - {$value.fimidade} - {$value.descrfxetaria}<br> {$value.vagas} vagas </td>
-                            <td>
-                                <a href="/admin/temporada/{$temporada.idtemporada}/turma/{$value.idturma}/add" class="btn btn-primary btn-xs pull-right"><i class="fa fa-arrow-right"></i> Adicionar</a>
-                            </td>
-                            </tr>
-                            {/loop}
-                        </tbody>
-                    </table>
-                </div>
+                    
+                        {loop="$locais"}            
+
+                        {$idlocal = $value.idlocal}
+                            
+                            <div  id="btnLocalOpen{$idlocal}">
+                            <div style="text-align: center; border-radius: 5px; margin: 5px; height: 30px" class="btn-primary col-md-12" onclick="openDiv({$idlocal})" >{$value.apelidolocal} <i class="fa fa-caret-down"></i></div> 
+                            </div>
+
+                            <div  id="btnLocalClose{$idlocal}" hidden>
+                            <div style="text-align: center; border-radius: 5px; margin: 5px; height: 30px" class="btn-primary col-md-12" onclick="closeDiv({$idlocal})" >{$value.apelidolocal} <i class="fa fa-caret-up"> </i></div> 
+                            </div>                        
+
+                            
+                            <div id="idlocal{$idlocal}" hidden>
+                                <table class="table table-striped">
+                                    
+                                    <tbody>
+                                        {loop="$turmaNotRelated"}
+
+                                        
+                                            <div>
+                                                {if="$idlocal == $value.idlocal"}
+                                                                                
+                                                <tr id="divTurmaAdicionar{$value.idturma}">
+                                                <td>{$value.idturma}</td>
+                                                <td>{$value.descturma} - {$value.apelidolocal} - {$value.nomeativ} - 
+                                                 {$value.diasemana} - {$value.horainicio} - {$value.horatermino} - {$value.initidade} - {$value.fimidade} - {$value.descrfxetaria}<br> vagas: [{$value.vagas} GERAL] [{$value.vagaslaudo} LAUDO] [{$value.vagaspcd} PCD] [{$value.vagaspvs} PVS] </td>
+                                                <td>
+                                                                                                       
+                                                    <button onclick="adicionar({$value.idturma}, {$temporada.idtemporada})" class="btn btn-primary btn-xs pull-right">Adicionar <i class="fa fa-arrow-right"></i> </button>
+                                                    
+                                                </td>
+                                                </tr>
+
+                                
+                                            {else}
+
+                                            {/if}
+                                        </div>
+                                        
+
+                                         {/loop}                           
+                                    </tbody>
+                                </table>
+                            </div >
+                        {/loop}
+                    </div>
             </div>
         </div>
         <div class="col-md-6">
@@ -63,28 +172,45 @@
                 <!-- /.box-header -->
                 <!-- form start -->
                 <div class="box-body">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                            <th style="width: 10px">#</th>
-                            <th>Turmas para {$temporada.desctemporada}</th>
-                            <th style="width: 240px">&nbsp;</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {loop="$turmaRelated"}
-                            <tr>
-                            <td>{$value.idturma}</td>
-                            <td>{$value.descturma} - {$value.apelidolocal} - {$value.nomeativ} - 
-                             {$value.diasemana} - {$value.horainicio} - {$value.horatermino} - {$value.initidade} - {$value.fimidade} - {$value.descrfxetaria}<br> {$value.vagas} vagas </td>
-                            <td>
-                                <a href="/admin/temporada/{$temporada.idtemporada}/turma/{$value.idturma}/remove" class="btn btn-danger btn-xs pull-right"><i class="fa fa-arrow-left"></i> Remover</a>
-                            </td>
-                            </tr>
-                            {/loop}
-                        </tbody>
-                    </table>
-                </div>
+                    {loop="$locais"}            
+
+                    {$idlocal = $value.idlocal}
+
+                        <div  id="btnLocalRedOpen{$idlocal}">
+                            <div style="text-align: center; border-radius: 5px; margin: 5px; height: 30px" class="btn-danger col-md-12" onclick="openDivRed({$idlocal})" >{$value.apelidolocal} <i class="fa fa-caret-down"></i></div> 
+                            </div>
+
+                            <div  id="btnLocalRedClose{$idlocal}" hidden>
+                            <div style="text-align: center; border-radius: 5px; margin: 5px; height: 30px" class="btn-danger col-md-12" onclick="closeDivRed({$idlocal})" >{$value.apelidolocal} <i class="fa fa-caret-up"> </i></div> 
+                            </div>                        
+                                                   
+                        <div id="idlocalRed{$idlocal}" hidden>
+
+                        <table class="table table-striped">
+                           
+                            <tbody>
+                                {loop="$turmaRelated"}
+
+                                {if="$idlocal == $value.idlocal"}
+
+                                    <tr id="divTurmaRemover{$value.idturma}">
+                                    <td>{$value.idturma}</td>
+                                    <td>{$value.descturma} - {$value.apelidolocal} - {$value.nomeativ} - 
+                                     {$value.diasemana} - {$value.horainicio} - {$value.horatermino} - {$value.initidade} - {$value.fimidade} - {$value.descrfxetaria}<br> vagas: [{$value.vagas} GERAL] [{$value.vagaslaudo} LAUDO] [{$value.vagaspcd} PCD] [{$value.vagaspvs} PVS]  </td>
+                                    <td>
+                                        <button onclick="remover({$value.idturma}, {$temporada.idtemporada})" class="btn btn-danger btn-xs pull-right"><i class="fa fa-arrow-left"></i> Remover </button>
+                                    </td>
+                                    </tr>
+                                    {else}
+
+                                    {/if}
+
+                                    {/loop} 
+                                 </tbody>
+                            </table>
+                        </div >                          
+                    {/loop}
+                       
             </div>
         </div>        
     </div>
@@ -93,3 +219,4 @@
 <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+

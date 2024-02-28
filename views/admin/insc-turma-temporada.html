@@ -1,5 +1,193 @@
 <script type="text/javascript">
 
+      function dadosAtestado(idpess){
+
+        let url = '/admin/saude/dadosatestado/'+idpess
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if (window.confirm(' '+ result + 'Para atualizar atestado CLÍNICO clique em "OK"'))
+          {
+              adicionarArtestado(idpess)
+          };
+
+        });
+      }
+
+      function adicionarArtestado(idpess){
+        
+        let confirmaAtestado = confirm('Deseja realmente atualizar atestado CLÍNICO?')
+
+        if(confirmaAtestado == true)
+        {                      
+            var data = prompt("Informe a data da emissão do Atestado CLÍNICO. Ex.: dd-mm-aaaa");     
+
+
+            if (data == null || data == "") {
+
+                alert("As informaçãoes do atestado CLÍNICO não foram atualizadas! Informe a data e faça alguma observação")
+            } else {
+
+                 var traco1 = data.substr(2,1)
+                 var traco2 = data.substr(5,1)
+                 var dia = data.substr(0,2);
+                 var mes = data.substr(3,2);
+                 var ano = data.substr(6,4); 
+                 
+                 if((traco1 != '-') || (traco2 != '-') || (ano.length < 4)){
+                    alert('Formato da data inválida');
+                 }else{
+
+                    if((dia > 31) || (dia == 0) || (mes > 12) || (mes == 0)){
+
+                    alert('data inválida!')
+                    
+                    }else{
+
+                        //alert('Data validada!!! ' + dia + ' ' + mes + ' ' + ano)
+
+                        
+                        var observ = prompt("Digite uma observação");
+                        if (observ == null || observ == "") {
+                                lert("As informaçãoes do atestado CLÍNICO não foram atualizadas! Informe a data e faça alguma observação.");
+                        } else {
+
+                            let url = '/admin/saude/atulizaatestado/'+idpess+'/'+data+'/'+observ+''
+
+                            atualizarAtestado(url) 
+                        }           
+                    }                           
+                }
+            }        
+        } 
+         //let url = '/admin/saude/dadosatestado/'+idpess
+
+        //dadosAtestado(url)  
+    }
+      /*
+      function dadosAtestado(url){
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          alert(result)
+
+        });
+      }
+      */
+
+      function atualizarAtestado(url){
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          alert(result)
+
+        });
+      }
+
+      function atualizarAtestadoDerma(url){
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          alert(result)
+
+        });
+      }
+
+      function dadosAtestadoDerma(idpess){
+
+        let url = '/admin/saude/dadosatestadoderma/'+idpess
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if (window.confirm(' '+ result + 'Para atualizar atestado DERMATOLÓGICO clique em "OK"'))
+          {
+              adicionarArtestadoDerma(idpess)
+          };
+
+        });
+      }
+
+      function adicionarArtestadoDerma(idpess){
+        
+        let confirmaAtestado = confirm('Deseja realmente atualizar atestado DERMATOLÓGICO?')
+
+        if(confirmaAtestado == true)
+        {                      
+            var data = prompt("Informe a data da emissão do Atestado DERMATOLÓGICO. Ex.: dd-mm-aaaa");     
+
+
+            if (data == null || data == "") {
+
+                alert("As informaçãoes do atestado DERMATOLÓGICO não foram atualizadas! Informe a data e faça alguma observação")
+            } else {
+
+                 var traco1 = data.substr(2,1)
+                 var traco2 = data.substr(5,1)
+                 var dia = data.substr(0,2);
+                 var mes = data.substr(3,2);
+                 var ano = data.substr(6,4); 
+                 
+                 if((traco1 != '-') || (traco2 != '-') || (ano.length < 4)){
+                    alert('Formato da data inválida');
+                 }else{
+
+                    if((dia > 31) || (dia == 0) || (mes > 12) || (mes == 0)){
+
+                    alert('data inválida!')
+                    
+                    }else{
+
+                        //alert('Data validada!!! ' + dia + ' ' + mes + ' ' + ano)
+
+                        
+                        var observ = prompt("Digite uma observação");
+                        if (observ == null || observ == "") {
+                                lert("As informaçãoes do atestado DERMATOLÓGICO não foram atualizadas! Informe a data e faça alguma observação.");
+                        } else {
+
+                            let url = '/admin/saude/atulizaatestadoderma/'+idpess+'/'+data+'/'+observ+''
+
+                            atualizarAtestadoDerma(url) 
+                        }           
+                    }                           
+                }
+            }        
+        } 
+         //let url = '/admin/saude/dadosatestado/'+idpess
+
+        //dadosAtestado(url)  
+    }
+
       function requisitarPaginaEndereco(url){
 
         let ajax = new XMLHttpRequest();
@@ -81,6 +269,42 @@
                       {/if}                      
                       <strong>{function="calcularIdade($value.dtnasc)"} anos</strong>
                       &nbsp;Nascim.: {function="formatDate($value.dtnasc)"}&nbsp;
+
+                      {if="existeParq($value.idpess)"}
+
+                        {if="repostaSimParq($value.idpess)"}
+
+                        <strong><a style="font-weight: bold; color: green;" href="/admin/par-q/pessoa/{$value.idpess}"> <i style="color: orange;" class="fa fa-exclamation-triangle"> </i> PAR-Q <i style="color: orange;" class="fa fa-exclamation-triangle"> </i></a> </strong>
+
+                        {else}
+
+                        <strong><a style="font-weight: bold; color: green;" href="/admin/par-q/pessoa/{$value.idpess}"> PAR-Q </a> </strong>
+
+                        {/if}
+
+
+                      {else}
+
+                      <strong><a style="font-weight: bold; color: red;" onclick="alert('Não existe Par-q para este aluno')"> PAR-Q </a> </strong>
+
+                      {/if}   
+
+                       <br><br>
+                      <span style="color: black; font-weight: bold">Atestado:  </span>
+                      <span style="color: darkred; font-weight: bold">  
+                        {function="getAtestadoClinicoProfExiste($value.numcpf, 1)"}
+                        </span>
+                        &nbsp;
+                         <a style="color: orange; text-align-last: right;" onclick="dadosAtestado({$value.idpess})">{function="getAtestadoIconeByNumCpf($value.numcpf)"}</a>   
+                         
+                          &nbsp;&nbsp;
+                         <span style="color: darkred;">  
+                         {function="getAtestadoDermaProfExiste($value.numcpf, 2)"}
+                          </span>
+                        &nbsp;                          
+                         <a style="color: orange; text-align-last: right;" onclick="dadosAtestadoDerma({$value.idpess})">{function="getAtestadoDermaIconeByNumCpf($value.numcpf)"}</a>
+                          &nbsp; &nbsp;
+
                     </h5>
                   </div>
 
@@ -317,6 +541,22 @@
                       <strong><a style="font-weight: bold; color: red;" onclick="alert('Não existe Par-q para este aluno')"> PAR-Q </a> </strong>
 
                       {/if}   
+
+                       <br><br>
+                      <span style="color: black; font-weight: bold">Atestado:  </span>
+                      <span style="color: darkred; font-weight: bold">  
+                        {function="getAtestadoClinicoProfExiste($value.numcpf, 1)"}
+                        </span>
+                        &nbsp;
+                         <a style="color: orange; text-align-last: right;" onclick="dadosAtestado({$value.idpess})">{function="getAtestadoIconeByNumCpf($value.numcpf)"}</a>   
+                         
+                          &nbsp;&nbsp;
+                         <span style="color: darkred;">  
+                         {function="getAtestadoDermaProfExiste($value.numcpf, 2)"}
+                          </span>
+                        &nbsp;                          
+                         <a style="color: orange; text-align-last: right;" onclick="dadosAtestadoDerma({$value.idpess})">{function="getAtestadoDermaIconeByNumCpf($value.numcpf)"}</a>
+                          &nbsp; &nbsp;                      
 
                     </h5>
                   </div>
@@ -563,6 +803,23 @@
                       <strong><a style="font-weight: bold; color: red;" onclick="alert('Não existe Par-q para este aluno')"> PAR-Q </a> </strong>
 
                       {/if}   
+
+                       <br><br>
+                      <span style="color: black; font-weight: bold">Atestado:  </span>
+                      <span style="color: darkred; font-weight: bold">  
+                        {function="getAtestadoClinicoProfExiste($value.numcpf, 1)"}
+                        </span>
+                        &nbsp;
+                         <a style="color: orange; text-align-last: right;" onclick="dadosAtestado({$value.idpess})">{function="getAtestadoIconeByNumCpf($value.numcpf)"}</a>   
+                         
+                          &nbsp;&nbsp;
+                         <span style="color: darkred;">  
+                         {function="getAtestadoDermaProfExiste($value.numcpf, 2)"}
+                          </span>
+                        &nbsp;                          
+                         <a style="color: orange; text-align-last: right;" onclick="dadosAtestadoDerma({$value.idpess})">{function="getAtestadoDermaIconeByNumCpf($value.numcpf)"}</a>
+                          &nbsp; &nbsp;                      
+
                     </h5>
                   </div>
 
@@ -797,6 +1054,22 @@
 
                       {/if}   
 
+                       <br><br>
+                      <span style="color: black; font-weight: bold">Atestado:  </span>
+                      <span style="color: darkred; font-weight: bold">  
+                        {function="getAtestadoClinicoProfExiste($value.numcpf, 1)"}
+                        </span>
+                        &nbsp;
+                         <a style="color: orange; text-align-last: right;" onclick="dadosAtestado({$value.idpess})">{function="getAtestadoIconeByNumCpf($value.numcpf)"}</a>   
+                         
+                          &nbsp;&nbsp;
+                         <span style="color: darkred;">  
+                         {function="getAtestadoDermaProfExiste($value.numcpf, 2)"}
+                          </span>
+                        &nbsp;                          
+                         <a style="color: orange; text-align-last: right;" onclick="dadosAtestadoDerma({$value.idpess})">{function="getAtestadoDermaIconeByNumCpf($value.numcpf)"}</a>
+                          &nbsp; &nbsp;                      
+
                     </h5>
                   </div>
 
@@ -1024,7 +1297,23 @@
 
                       <strong><a style="font-weight: bold; color: red;" onclick="alert('Não existe Par-q para este aluno')"> PAR-Q </a> </strong>
 
-                      {/if}   
+                      {/if}  
+
+                       <br><br>
+                      <span style="color: black; font-weight: bold">Atestado:  </span>
+                      <span style="color: darkred; font-weight: bold">  
+                        {function="getAtestadoClinicoProfExiste($value.numcpf, 1)"}
+                        </span>
+                        &nbsp;
+                         <a style="color: orange; text-align-last: right;" onclick="dadosAtestado({$value.idpess})">{function="getAtestadoIconeByNumCpf($value.numcpf)"}</a>   
+                         
+                          &nbsp;&nbsp;
+                         <span style="color: darkred;">  
+                         {function="getAtestadoDermaProfExiste($value.numcpf, 2)"}
+                          </span>
+                        &nbsp;                          
+                         <a style="color: orange; text-align-last: right;" onclick="dadosAtestadoDerma({$value.idpess})">{function="getAtestadoDermaIconeByNumCpf($value.numcpf)"}</a>
+                          &nbsp; &nbsp;                       
 
                     </h5>
                   </div>
@@ -1251,6 +1540,22 @@
                       <strong><a style="font-weight: bold; color: red;" onclick="alert('Não existe Par-q para este aluno')"> PAR-Q </a> </strong>
 
                       {/if}   
+
+                       <br><br>
+                      <span style="color: black; font-weight: bold">Atestado:  </span>
+                      <span style="color: darkred; font-weight: bold">  
+                        {function="getAtestadoClinicoProfExiste($value.numcpf, 1)"}
+                        </span>
+                        &nbsp;
+                         <a style="color: orange; text-align-last: right;" onclick="dadosAtestado({$value.idpess})">{function="getAtestadoIconeByNumCpf($value.numcpf)"}</a>   
+                         
+                          &nbsp;&nbsp;
+                         <span style="color: darkred;">  
+                         {function="getAtestadoDermaProfExiste($value.numcpf, 2)"}
+                          </span>
+                        &nbsp;                          
+                         <a style="color: orange; text-align-last: right;" onclick="dadosAtestadoDerma({$value.idpess})">{function="getAtestadoDermaIconeByNumCpf($value.numcpf)"}</a>
+                          &nbsp; &nbsp;                      
 
                     </h5>
                   </div>

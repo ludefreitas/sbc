@@ -2,11 +2,7 @@
 <script type="text/javascript">
 
   function getDadosTurmaTemporada(idturma, idtemporada){
-
-        alert(idturma+'-'+idtemporada)
-        
-        
-        /*
+  
         let url = "/admin/dados/turmatemporada/"+idturma+"/"+idtemporada
 
         let ajax = new XMLHttpRequest();
@@ -23,7 +19,7 @@
           } 
 
         });
-        */
+        
       }
  
   function atualizaStatus(idturma, desctemporada, idtemporada){
@@ -146,10 +142,11 @@
       <div class="box-body" style="border: solid 1px lightblue; margin: 5px;"> 
       <div class="box-body col-md-2">
 
+          <a href="/admin/turma-temporada-hoje/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><i class=""></i>TODOS OS LOCAIS</a>&nbsp;&nbsp;&nbsp;&nbsp;<br>
           <?php $counter1=-1;  if( isset($locais) && ( is_array($locais) || $locais instanceof Traversable ) && sizeof($locais) ) foreach( $locais as $key1 => $value1 ){ $counter1++; ?>
                   <a href="/admin/turma-temporada-hoje/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/local/<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><i class=""></i><?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a>&nbsp;&nbsp;&nbsp;&nbsp;
           <?php } ?>
-          <a href="/admin/turma-temporada-hoje/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><i class=""></i>TODOS OS LOCAIS</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          
             
       </div> 
           <div class="box-body no-padding col-md-10">
@@ -185,9 +182,9 @@
                  <?php if( $idmodalidade == $value2["idmodal"] ){ ?>
                  
                 <?php if( numeroNaListaDePresençaByIdturmaData($value2["idturma"], $ano, $mes, $dia) == 0 ){ ?>
-                    <div onclick="getDadosTurmaTemporada($value.idturma, $value.idtemporada)" class="box-body col-md-1" style="border: solid 1px lightblue; margin: 5px; background-color: lightgray; font-size: 7px; ">
+                    <div  class="box-body col-md-1" style="border: solid 1px lightblue; margin: 5px; background-color: lightgray; font-size: 7px;  display: inline-block; ">
                 <?php }else{ ?>
-                    <div onclick="getDadosTurmaTemporada($value.idturma, $value.idtemporada)" class="box-body col-md-1" style="border: solid 1px lightblue; margin: 5px; background-color: lightgreen; font-size: 7px; ">
+                    <div  class="box-body col-md-1" style="border: solid 1px lightblue; margin: 5px; background-color: lightgreen; font-size: 7px;  display: inline-block; ">
                 <?php } ?>     
 
                     <span style="text-align: left;">
@@ -196,8 +193,8 @@
                          
                              
                           <strong>- <?php echo htmlspecialchars( $value2["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-                          <?php echo htmlspecialchars( $value2["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ás <?php echo htmlspecialchars( $value2["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> -  </strong>
-                            <?php echo htmlspecialchars( $value2["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <strong> - Professor: <?php if( $value2["idperson"] == 1 ){ ?> Admin Master <?php }else{ ?> <?php echo htmlspecialchars( $value2["apelidoperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php } ?></strong>&nbsp; 
+                          <?php echo htmlspecialchars( $value2["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> ás <?php echo htmlspecialchars( $value2["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> -  
+                            <?php echo htmlspecialchars( $value2["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  - Professor: <?php if( $value2["idperson"] == 1 ){ ?> Admin Master <?php }else{ ?> <?php echo htmlspecialchars( $value2["apelidoperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php } ?></strong>&nbsp; 
                           
                            
                         

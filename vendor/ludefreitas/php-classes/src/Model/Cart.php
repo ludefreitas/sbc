@@ -186,6 +186,52 @@ class Cart extends Model {
 		]);
 	}
 
+	public function getTurmaFull()
+	{
+		$idStatustemporadaTemporadaIniciada = 2;
+		$statusTemporadaInscricoesEncerradas = 3;
+		$idStatustemporadaInscricaoIniciada = 4;
+		$idStatusTemporadaMatriculaIniciada = 6;
+		$idstatustemporadaMatriculaEncerrada = 5;
+		$sql = new Sql();
+
+		$rows = $sql->select("
+			SELECT * 
+			FROM tb_turmatemporada a 
+			INNER JOIN tb_cartsturmas b ON b.idturma = a.idturma
+			INNER JOIN tb_turma c ON c.idturma = a.idturma 
+            INNER JOIN tb_espaco d ON d.idespaco = c.idespaco
+            INNER JOIN tb_atividade e ON e.idativ = c.idativ
+			INNER JOIN tb_fxetaria f ON f.idfxetaria = e.idfxetaria
+			INNER JOIN tb_horario g ON g.idhorario = c.idhorario
+			INNER JOIN tb_local h ON h.idlocal = d.idlocal
+			INNER JOIN tb_users i ON i.iduser = a.iduser
+			INNER JOIN tb_persons j ON j.idperson = i.idperson
+			INNER JOIN tb_temporada k ON k.idtemporada = a.idtemporada
+            INNER JOIN tb_statustemporada l ON l.idstatustemporada = k.idstatustemporada
+            -- INNER JOIN tb_tokenturma m ON m.idturma = a.idturma
+            WHERE b.idcart = :idcart AND b.dtremoved IS NULL
+            AND (k.idstatustemporada = :idStatustemporadaTemporadaIniciada 
+            OR k.idstatustemporada = :idStatustemporadaInscricaoIniciada 
+            OR k.idstatustemporada = :statusTemporadaInscricoesEncerradas 
+            OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
+            OR k.idstatustemporada = :idstatustemporadaMatriculaEncerrada
+            OR k.idstatustemporada = 1)          
+			-- GROUP BY b.idturma, b.descturma
+			-- ORDER BY b.descturma
+		", [
+			':idcart'=>$this->getidcart(),
+			'idStatustemporadaTemporadaIniciada'=>$idStatustemporadaTemporadaIniciada,
+			'idStatustemporadaInscricaoIniciada'=>$idStatustemporadaInscricaoIniciada,
+			'statusTemporadaInscricoesEncerradas'=>$statusTemporadaInscricoesEncerradas,
+			'idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
+			'idstatustemporadaMatriculaEncerrada'=>$idstatustemporadaMatriculaEncerrada
+		]);
+
+		return Turma::checkList($rows);
+
+	}
+
 	public function getTurma()
 	{
 		$idStatustemporadaTemporadaIniciada = 2;
@@ -220,6 +266,103 @@ class Cart extends Model {
 			-- ORDER BY b.descturma
 		", [
 			':idcart'=>$this->getidcart(),
+			'idStatustemporadaTemporadaIniciada'=>$idStatustemporadaTemporadaIniciada,
+			'idStatustemporadaInscricaoIniciada'=>$idStatustemporadaInscricaoIniciada,
+			'statusTemporadaInscricoesEncerradas'=>$statusTemporadaInscricoesEncerradas,
+			'idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
+			'idstatustemporadaMatriculaEncerrada'=>$idstatustemporadaMatriculaEncerrada
+		]);
+
+		return Turma::checkList($rows);
+
+	}
+
+	public function getTurmaFullByIdturma($idturma)
+	{
+		$idStatustemporadaTemporadaIniciada = 2;
+		$statusTemporadaInscricoesEncerradas = 3;
+		$idStatustemporadaInscricaoIniciada = 4;
+		$idStatusTemporadaMatriculaIniciada = 6;
+		$idstatustemporadaMatriculaEncerrada = 5;
+		$sql = new Sql();
+
+		$rows = $sql->select("
+			SELECT * 
+			FROM tb_turmatemporada a 
+			INNER JOIN tb_cartsturmas b ON b.idturma = a.idturma
+			INNER JOIN tb_turma c ON c.idturma = a.idturma 
+            INNER JOIN tb_espaco d ON d.idespaco = c.idespaco
+            INNER JOIN tb_atividade e ON e.idativ = c.idativ
+			INNER JOIN tb_fxetaria f ON f.idfxetaria = e.idfxetaria
+			INNER JOIN tb_horario g ON g.idhorario = c.idhorario
+			INNER JOIN tb_local h ON h.idlocal = d.idlocal
+			INNER JOIN tb_users i ON i.iduser = a.iduser
+			INNER JOIN tb_persons j ON j.idperson = i.idperson
+			INNER JOIN tb_temporada k ON k.idtemporada = a.idtemporada
+            INNER JOIN tb_statustemporada l ON l.idstatustemporada = k.idstatustemporada
+            -- INNER JOIN tb_tokenturma m ON m.idturma = a.idturma
+            WHERE b.idcart = :idcart 
+            AND b.idturma = :idturma
+            AND b.dtremoved IS NULL
+            AND (k.idstatustemporada = :idStatustemporadaTemporadaIniciada 
+            OR k.idstatustemporada = :idStatustemporadaInscricaoIniciada 
+            OR k.idstatustemporada = :statusTemporadaInscricoesEncerradas 
+            OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
+            OR k.idstatustemporada = :idstatustemporadaMatriculaEncerrada
+            OR k.idstatustemporada = 1) LIMIT 1       
+			-- GROUP BY b.idturma, b.descturma
+			-- ORDER BY b.descturma
+		", [
+			':idcart'=>$this->getidcart(),
+			':idturma'=>$idturma,
+			'idStatustemporadaTemporadaIniciada'=>$idStatustemporadaTemporadaIniciada,
+			'idStatustemporadaInscricaoIniciada'=>$idStatustemporadaInscricaoIniciada,
+			'statusTemporadaInscricoesEncerradas'=>$statusTemporadaInscricoesEncerradas,
+			'idStatusTemporadaMatriculaIniciada'=>$idStatusTemporadaMatriculaIniciada,
+			'idstatustemporadaMatriculaEncerrada'=>$idstatustemporadaMatriculaEncerrada
+		]);
+
+		return Turma::checkList($rows);
+
+	}
+
+	public function getTurmaByIdturma($idturma)
+	{
+		$idStatustemporadaTemporadaIniciada = 2;
+		$statusTemporadaInscricoesEncerradas = 3;
+		$idStatustemporadaInscricaoIniciada = 4;
+		$idStatusTemporadaMatriculaIniciada = 6;
+		$idstatustemporadaMatriculaEncerrada = 5;
+		$sql = new Sql();
+
+		$rows = $sql->select("
+			SELECT * 
+			FROM tb_turmatemporada a 
+			INNER JOIN tb_cartsturmas b ON b.idturma = a.idturma
+			INNER JOIN tb_turma c ON c.idturma = a.idturma 
+            INNER JOIN tb_espaco d ON d.idespaco = c.idespaco
+            INNER JOIN tb_atividade e ON e.idativ = c.idativ
+			INNER JOIN tb_fxetaria f ON f.idfxetaria = e.idfxetaria
+			INNER JOIN tb_horario g ON g.idhorario = c.idhorario
+			INNER JOIN tb_local h ON h.idlocal = d.idlocal
+			INNER JOIN tb_users i ON i.iduser = a.iduser
+			INNER JOIN tb_persons j ON j.idperson = i.idperson
+			INNER JOIN tb_temporada k ON k.idtemporada = a.idtemporada
+            INNER JOIN tb_statustemporada l ON l.idstatustemporada = k.idstatustemporada
+            -- INNER JOIN tb_tokenturma m ON m.idturma = a.idturma
+            WHERE b.idcart = :idcart 
+            AND b.idturma = :idturma
+            AND b.dtremoved IS NULL
+            AND (k.idstatustemporada = :idStatustemporadaTemporadaIniciada 
+            OR k.idstatustemporada = :idStatustemporadaInscricaoIniciada 
+            OR k.idstatustemporada = :statusTemporadaInscricoesEncerradas 
+            OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada
+            OR k.idstatustemporada = :idstatustemporadaMatriculaEncerrada) LIMIT 1       
+			-- GROUP BY b.idturma, b.descturma
+			-- ORDER BY b.descturma
+		", [
+			':idcart'=>$this->getidcart(),
+			'idturma'=>$idturma,
 			'idStatustemporadaTemporadaIniciada'=>$idStatustemporadaTemporadaIniciada,
 			'idStatustemporadaInscricaoIniciada'=>$idStatustemporadaInscricaoIniciada,
 			'statusTemporadaInscricoesEncerradas'=>$statusTemporadaInscricoesEncerradas,
@@ -404,7 +547,7 @@ class Cart extends Model {
 		}
 	}
 
-	public function getInscExist($numcpf, $idpess, $idturma, $idtemporada) {
+	public function getInscExist($numcpf, $idturma, $idtemporada) {
 
 		$sql = new Sql();
 
@@ -437,6 +580,36 @@ class Cart extends Model {
 			throw new \Exception("Esta pessoa já está inscrita nesta turma!", 1);			
 		}
 
+	}
+
+	public function getInscModalidadeExist($numcpf, $idmodal, $idtemporada) {
+
+		$sql = new Sql();
+
+		$results = $sql->select(
+			"SELECT count(*) FROM tb_insc a
+			INNER JOIN tb_carts b USING(idcart)
+			INNER JOIN tb_pessoa c USING(idpess)
+			INNER JOIN tb_turma d USING(idturma)  
+			INNER JOIN tb_temporada h USING(idtemporada)  
+            WHERE a.idinscstatus != 8 
+            AND a.idinscstatus != 9
+			AND c.numcpf = :numcpf 
+            AND d.idmodal = :idmodal
+            AND h.idtemporada = :idtemporada            
+			", [
+			':numcpf'=>$numcpf,
+			':idmodal'=>$idmodal,
+			':idtemporada'=>$idtemporada
+		]);
+
+		if($results){
+			$results = (int)$results[0]['count(*)'];
+		}else{
+			$results = 0;
+		}
+
+		return $results;		
 	}
 	
 	public function getInscDesistenteExist($numcpf, $idpess, $idturma, $idtemporada) {

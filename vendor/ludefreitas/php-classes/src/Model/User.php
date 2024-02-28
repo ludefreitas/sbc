@@ -166,7 +166,7 @@ class User extends Model {
 
 		if(count($results) === 0)
 		{
-			throw new \Exception("Usuário inexistente ou senha inválida!!!", 1);
+			throw new \Exception("Usuário inexistente ou senha inválida!!!  Caso você tenha esquecido a sua senha clique em (RECUPERAR SENHA) logo abaixo.", 1);
 		}
 
 		$data = $results[0];
@@ -192,7 +192,7 @@ class User extends Model {
 			return $user;
 
 		}else {
-			throw new \Exception("Usuário inexistente ou senha inválida!");			
+			throw new \Exception("Usuário inexistente ou senha inválida!!! Caso você tenha esquecido a sua senha clique em: (RECUPERAR SENHA) logo abaixo.");			
 		}
 
 	}
@@ -851,7 +851,7 @@ class User extends Model {
 			FROM tb_users a 
 			INNER JOIN tb_persons b USING(idperson)
 
-			WHERE isprof = 1 AND b.desperson LIKE :search OR b.desemail = :search OR a.deslogin LIKE :search
+			WHERE (a.isprof = 1) AND (b.desperson LIKE :search OR b.desemail = :search OR a.deslogin LIKE :search)
 			ORDER BY b.desperson
 			LIMIT $start, $itemsPerPage;
 		", [
@@ -992,7 +992,7 @@ class User extends Model {
 			SELECT SQL_CALC_FOUND_ROWS *
 			FROM tb_users a 
 			INNER JOIN tb_persons b USING(idperson)
-			WHERE isprof = 0 AND inadmin = 0 AND isaudi = 0 AND b.desperson LIKE :search OR b.desemail = :search OR a.deslogin LIKE :search
+			WHERE (a.isprof = 0 OR a.inadmin = 0 OR a.isaudi = 0) AND (b.desperson LIKE :search OR b.desemail = :search OR a.deslogin LIKE :search)
 			ORDER BY b.desperson
 			LIMIT $start, $itemsPerPage;
 		", [

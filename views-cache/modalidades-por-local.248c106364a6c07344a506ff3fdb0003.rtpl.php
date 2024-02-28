@@ -6,14 +6,17 @@
         
         confirm('As turmas de natação intermediário, avançado e aperfeiçoamento são dedicadas aos alunos egressoas das turmas de iniciante do ano passado, ou aquelas pessoas que já sabem nadar o básico e pretendem aperfeiçoar o nado. Para ingressar em uma dessas turmas, você deve realizar o agendamento de uma avaliação junto a nossa equipe de professores para verificar em qual turma você pode ingressar.')
     }
-    /*
-    alert('As aulas de Ginástica Artística (GA) e Ginástica Rítimica (GR) começam a partir de 13/02/2023.')
-    */
+    
+    function GR(){
 
-    function GrGa(){
-
-        alert('As aulas de Ginástica Artística (GA) e Ginástica Rítimica (GR) começam a partir de 13/02/2023.')
+        alert('Incrições para as vagas remanescentes de Ginástica Rítimica (GR) estarão disponíveis no site a partir de 07/02/2023.')
     }
+    
+    /*
+    function GrGa(){
+        alert('Novas inscrições para as turmas de Ginástica Artística (GA) do Redenção e da Arena Caixa estarão disponíveis a partir de 15 de janeiro de 2024.\n\nLembramos da obrigatoriedade de se apresentar o Atestado Médido no início das aulas.\n\nA não entrega do Atestado Médico implica no CANCELAMENTO da Inscrição e/ou Matrícula!! ')
+    }
+    */
 
 </script>
  <div class="container"> <!-- container 1 -->
@@ -85,34 +88,28 @@
           <div class="row alert-warning">
             <div class="col-md-6" style="margin: 10px 0px 5px 0px; ">
               
-              <?php if( $value1["idmodal"] == 44 OR $value1["idmodal"] == 25 ){ ?>
-                
-              <a style="color: #0f71b3; text-decoration: none; font-weight: bold;" href="/modalidade/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>" onclick="GrGa()">
-                <?php echo htmlspecialchars( $value1["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
-              </a>
               
-              <?php }else{ ?>
               
                 
                     <a style="color: #0f71b3; text-decoration: none; font-weight: bold;" href="/modalidade/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                   <?php echo htmlspecialchars( $value1["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
+                  <?php if( $value1["idmodal"] == 19 ){ ?>
+                        <span style="font-size: 14px; font-weight: bold;"> ( Yoga, Chi Kung e Dança circular )</span>                        
+
+                    <?php } ?>
                     </a>
 
               
-              <?php } ?>
+              
               
             </div>
             <div class="col-md-6" style="text-align-last: center; margin: 5px 0px 5px 0px; color: white; padding: 0px 0px 0px 0px">
                 
               
-              <?php if( $value1["idmodal"] == 44 OR $value1["idmodal"] == 25 ){ ?>
-               <a class="card card-just-text" style="background-color: #cc5d1e; color: white; padding: 5px 0px 5px 0px;  text-decoration: none" href="/modalidade/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>" onclick="GrGa()" text-decoration="none">Cursos dísponíveis
-              </a>
-             
-              <?php }else{ ?>
+              
              <a class="card card-just-text" style="background-color: #cc5d1e; color: white; padding: 5px 0px 5px 0px;  text-decoration: none" href="/modalidade/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>" text-decoration="none">Cursos dísponíveis
               </a>
-              <?php } ?>
+              
               
               
             </div>

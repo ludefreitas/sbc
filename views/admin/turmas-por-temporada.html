@@ -3,7 +3,7 @@
   
   function atualizaStatus(idturma, desctemporada, idtemporada){
 
-        let status = prompt('Para atualizar o status da turma '+ idturma +' para a temporada '+ desctemporada +' selecionada, digite:\n 2 - para inscrições não iniciadas\n 3 - para inscrições abertas\n 4 - para inscrições suspensas\n 5 - para inscrições encerradas\n 6 - para turma não iniciada');  
+        let status = prompt('Para atualizar o status da turma '+ idturma +' para a temporada '+ desctemporada +' selecionada, digite (n) para:\n 2 - Inscrições não iniciadas\n 3 - Inscrições abertas\n 4 - Inscrições suspensas\n 5 - Inscrições encerradas\n 6 - Turma não iniciada');  
         
         if(status != 2 && status != 3 && status != 4 && status != 5 && status != 6){
           alert("Valor inválido!!!")

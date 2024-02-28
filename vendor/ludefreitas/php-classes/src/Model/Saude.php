@@ -210,7 +210,7 @@ class Saude extends Model {
 		return $results[0]['count(*)'];
 	}
 	
-	public function saveatestadoderma()
+	public function savedermaatestado()
 	{
 		$sql = new Sql();
 
@@ -222,6 +222,24 @@ class Saude extends Model {
 			":dataemissao"=>$this->getdataemissao(),						
 			":datavalidade"=>$this->getdatavalidade(),						
 			":observ"=>$this->getobserv()
+		));
+
+		if (count($results) > 0) {
+
+			$this->setData($results[0]);
+		}
+	}
+
+	public function atestadoarquivosave()
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("CALL sp_atestado_arquivo_save(:idatestadoarquivo, :idpess, :cpf, :tipoatestado, :nomearquivo)", array(
+			":idatestadoarquivo"=>$this->getidatestadoarquivo(),
+			":idpess"=>$this->getidpess(),
+			":cpf"=>$this->getcpf(),						
+			":tipoatestado"=>$this->gettipoatestado(),						
+			":nomearquivo"=>$this->getnomearquivo()
 		));
 
 		if (count($results) > 0) {
@@ -418,6 +436,63 @@ class Saude extends Model {
 		$results = $sql->select("SELECT idpess, cpf FROM tb_atestado");
 
 		return $results;
+	}
+
+	public function getArquivoPdfAnteriorByCpf($cpf, $tipoatestado){
+
+		$sql = new Sql();	
+
+		$results = $sql->select("SELECT nomearquivo 
+			FROM tb_atestado_arquivo 
+			WHERE cpf = :cpf
+			AND tipoatestado = :tipoatestado LIMIT 1", array(
+			":cpf"=>$cpf,
+			":tipoatestado"=>$tipoatestado			
+		));
+
+		if($results){
+			return $results;
+		}else{
+			return 0;
+		}		
+	}
+
+	public function selectIdByNomeArquivo($nomearquivo)
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT idatestadoarquivo 
+			FROM tb_atestado_arquivo 
+			WHERE nomearquivo = :nomearquivo", array(
+			":nomearquivo"=>$nomearquivo			
+		));	
+
+		if($results){
+			return $results;
+		}else{
+			return 0;
+		}			
+	}
+
+	public function deleteArquivoPdfAnteriorById($idatestadoarquivo)
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("DELETE FROM tb_atestado_arquivo WHERE idatestadoarquivo = :idatestadoarquivo", [
+			':idatestadoarquivo'=>$idatestadoarquivo
+		]);		
+	}
+
+
+	public function deleteArquivoPdfAnterior($cpf, $tipoatestado, $nomearquivo)
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("CALL sp_atestado_arquivo_delete(:cpf, :tipoatestado, :nomearquivo)", array(
+			':cpf'=>$cpf,
+			':tipoatestado'=>$tipoatestado,
+			'nomearquivo'=>$nomearquivo
+		));		
 	}
 
 	public function get(int $idpess)

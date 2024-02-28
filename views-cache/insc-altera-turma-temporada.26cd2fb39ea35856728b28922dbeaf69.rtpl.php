@@ -153,7 +153,7 @@
 
                       &nbsp;&nbsp;&nbsp; <a href="/prof/insc/pessoa/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><span style="font-weight: bold; text-align: left; color: red;">                                    
                           <span>[Todas inscrições de <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>]</span>
-                        </span>
+                        </span></a>
 
                       <?php } ?>
                        

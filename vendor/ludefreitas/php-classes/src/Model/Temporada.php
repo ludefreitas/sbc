@@ -56,7 +56,7 @@
 	            INNER JOIN tb_persons m
 				using(idperson)            
 				WHERE idtemporada = :idtemporada
-				ORDER BY a.numinscritos DESC", [
+				ORDER BY a.idturma", [
 				':idtemporada'=>$idtemporada 
 			]);
 		}
@@ -612,7 +612,7 @@
 				WHERE a.idtemporada = :idtemporada
 				AND e.idlocal = :idlocal
 				AND e.iduser = :iduser
-				ORDER BY a.numinscritos DESC", [
+				ORDER BY a.idturma", [
 				':idtemporada'=>$idtemporada,
 				':idlocal'=>$idlocal,
 				':iduser'=>$iduser
@@ -651,7 +651,7 @@
 				using(idperson)            
 				WHERE a.idtemporada = :idtemporada
 				AND l.idmodal = :idmodal
-				ORDER BY a.numinscritos DESC", [
+				ORDER BY a.idturma", [
 				':idtemporada'=>$idtemporada,
 				':idmodal'=>$idmodal
 			]);
@@ -691,7 +691,7 @@
 				using(idperson)            
 				WHERE idtemporada = :idtemporada
 				AND (a.iduser = :iduser OR a.idestagiario = :iduser)
-				ORDER BY i.descturma", [
+				ORDER BY i.descturma, i.idturma", [
 				':idtemporada'=>$idtemporada ,
 				':iduser'=>$iduser 
 			]);
@@ -730,7 +730,7 @@
 				WHERE a.idtemporada = :idtemporada
 				AND e.idlocal = :idlocal
 				AND (a.iduser = :iduser OR a.idestagiario = :iduser)
-				ORDER BY i.descturma", [
+				ORDER BY i.descturma, i.idturma", [
 				':idtemporada'=>$idtemporada,
 				':idlocal'=>$idlocal,
 				':iduser'=>$iduser 
@@ -1080,15 +1080,15 @@
 			foreach ($temporada as $row) {
 				array_push($html, '<li class="treeview">
 										<a href="/admin/turma-temporada-hoje/'.$row['idtemporada'].'">
-								   			<i class="fa fa-link"></i> 
-								   			Turmas/Temporada '.$row['desctemporada'].'
+								   			<i class="fa fa-reorder"></i> 
+								   			Chamadas/Turmas '.$row['desctemporada'].'
 								   		</a>
 
 									   		<ul class="treeview-menu">
 	            								<li class="treeview">
 	            								
 													<a href="/admin/turma-temporada-hoje/'.$row['idtemporada'].'/local/6">
-									   					<i class="fa fa-link"></i> 
+									   					<i class="fa fa-reorder"></i> 
 									   					Por Locais
 									   				</a>								   		
 												</li>											
@@ -1477,8 +1477,7 @@
 				':idtemporada'=>$idtemporada
 			]);
 		}
-
-		/*
+		
 		public function alterarStatusTemporadaParaMatriculasIniciadas($dtTerminscricao, $idtemporada){
 
 			$hoje = date('Y-m-d H:i:s');
@@ -1490,8 +1489,7 @@
 
 				Temporada::updateStatusTemporadaParaMatriculasIniciadas($idtemporada);					
 			}
-		} 
-		*/
+		} 		
 
 		// Esta função é chamada quando é realizado o sorteio (Sorteio::Sortear)
 		public function updateStatusTemporadaParaMatriculasIniciadas($idtemporada){

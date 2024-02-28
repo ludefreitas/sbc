@@ -3,14 +3,14 @@
 
     //alert('Estamos no período de rematrícula. ESTA INSCRIÇÃO NÃO GARANTE VAGA')
     
+        function alertTokenVunerabilidade(){
+
+            alert(" “Vulnerabilidade social é o conceito que caracteriza a condição dos grupos de indivíduos que estão à margem da sociedade, ou seja, pessoas ou famílias que estão em processo de exclusão social, principalmente por fatores socioeconômicos. (…) As pessoas que são consideradas “vulneráveis sociais” são aquelas que estão perdendo sua representatividade na sociedade, e geralmente dependem de auxílios de terceiros para garantirem a sua sobrevivência” ")
+        }
+    
         function alertTokenCreebaPcd(){
 
             alert("Conforme Resolução SESP Nº 004 de 28/10/2021 Art.7º, Os interessados em participar das turmas de inclusão para Pessoas com Deficiência (PCD) e/ou laudo médico, deverão comparecer pessoalmente (interessado ou representante legal) no Centro Esportivo do curso de interesse.")
-        }
-
-        function alertTokenVunerabilidade(){
-
-            alert("Pessoa em situação de vulnerabilidade social, é a pessoa que participa de programas sociais do governo, como por exemplo o Bolsa Família e que tem o cadastro no CadUnico/NIS com o respectivo número de inscrição. ")
         }
 
         function enormal(){ 
@@ -118,6 +118,7 @@
                             <input type="hidden" name="idlocal" value="<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                             <input type="hidden" name="initidade" value="<?php echo htmlspecialchars( $value1["initidade"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                              <input type="hidden" name="idmodal" value="<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                             <input type="hidden" name="origativ" value="<?php echo htmlspecialchars( $value1["origativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                             <input type="hidden" name="token" value="<?php echo htmlspecialchars( $token, ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                             <input type="hidden" name="tokencpf" value="<?php echo htmlspecialchars( $tokencpf, ENT_COMPAT, 'UTF-8', FALSE ); ?>">
 
@@ -129,43 +130,51 @@
 
                                 <strong style="font-style: italic;"> Selecione uma das opções abaixo:
                             </strong><br><br>
-                            
-                            
-                            <!-- <?php if( $inscGeral >= $maxListaEsperaGeral ){ ?> 
-                                 <?php } ?>
-                            -->
+
+                        <!--
+
                         <?php if( $tokencpf == 0 ){ ?>   
                             <input type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> 
                             &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> 
                             <span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscGeral, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas)</span>   <br>
-                        <?php }else{ ?>                       
-                           <?php if( naoHaVagasPubGeral($value1["idtemporada"], $value1["idturma"]) ){ ?>
-                                 <?php if( naoHaVagasListaEsperaPubGeral($value1["idtemporada"], $value1["idturma"], $value1["idmodal"], $value1["idturmastatus"]) ){ ?>
+                        <?php }else{ ?>           
+                           <?php if( $inscGeral >= $vagasGeral ){ ?>                                
+                                 <?php if( $numinscListaEsperaPublicoGeral >= $vagasListaEsperaGeral ){ ?>
                                       <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> 
                                       &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> 
-                                      <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)*</span>  <br>
-                                <?php }else{ ?>
+                                      <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)(**)</span>  <br>
+                                <?php }else{ ?>                                            
                                     <input type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> 
                                     &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> 
-                                    <span style="font-size: 12px; color: red"><?php echo vagasListaEsperaPubGeralMenosInscPubGeral($value1["idtemporada"], $value1["idturma"], $value1["idmodal"]); ?> de 
-                                    <?php echo vagasTotaisListaEsperaGeral($value1["vagas"], $value1["idmodal"]); ?> vagas p/ lista de espera p/ público geral *</span><br>
+                                    <span style="font-size: 12px; color: red"><?php echo htmlspecialchars( $vagasListaEsperaGeral - $numinscListaEsperaPublicoGeral, ENT_COMPAT, 'UTF-8', FALSE ); ?> de 
+                                    <?php echo htmlspecialchars( $vagasListaEsperaGeral, ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas p/ lista de espera p/ público geral (*)</span><br>
+                                    
                                 <?php } ?>                                
-                              <?php }else{ ?>  
-                                 <?php if( naoHaVagasListaEsperaPubGeral($value1["idtemporada"], $value1["idturma"], $value1["idmodal"], $value1["idturmastatus"]) ){ ?>
+                            <?php }else{ ?>  
+                                <?php if( $numinscListaEsperaPublicoGeral >= $vagasListaEsperaGeral ){ ?>
                                       <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> 
                                       &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> 
                                       <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)#</span>  <br>
                                 <?php }else{ ?>
-                                    <input type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> 
-                                    &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> 
-                                    <span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscGeral, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas)#</span>     
-                                    <br>
+                                    <?php if( $value1["idturmastatus"] != 3 ){ ?>
+                                        <input type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> 
+                                        &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> 
+                                        <span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscGeral, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas)##</span>     
+                                        <br>
+                                    <?php }else{ ?>
+                                        <input type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> 
+                                        &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> 
+                                        <span style="font-size: 12px; color: red"><?php echo htmlspecialchars( $vagasListaEsperaGeral - $numinscListaEsperaPublicoGeral, ENT_COMPAT, 'UTF-8', FALSE ); ?> de 
+                                        <?php echo htmlspecialchars( $vagasListaEsperaGeral, ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas p/ lista de espera p/ público geral (##)</span><br>
+                                    <?php } ?>
                                 <?php } ?>                                
                             <?php } ?>        
                         <?php } ?>
-                            
+
+                        -->
+                            <?php echo vagasPublicoGeral($value1["idturma"], $value1["idtemporada"], $value1["idmodal"], $value1["idturmastatus"], $tokencpf); ?>
                             <div id="geral" hidden="true">    
-                             <?php if( $inscGeral >= $value1["vagas"] ){ ?>                             
+                             <?php if( $inscGeral >= $vagasGeral ){ ?>                             
                                 <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
                                     <!--
                                     <input type="radio" name="espera" required="required" style="height: 20px; width: 20px;">&nbsp; Estou ciente que esta inscrição não garante vaga e que estou numa lista de espera no Grupo do Público em Geral, aguardando ser comunicado de uma eventual vaga. Confirmo ainda que tenho cadastrado e atualizado, neste site, meu número de telefone celular com whatsapp para receber o comunicado.
@@ -173,50 +182,69 @@
                                     Ao clicar nesta opção de inscrição você está ciente que esta não garante vaga e que você está numa lista de espera do Grupo do Público em Geral, aguardando ser comunicado de uma eventual vaga. Você confirma ainda que tem cadastrado e atualizado, neste site, seu número de telefone celular com whatsapp para receber o comunicado.
                                 </div> 
                             <?php }else{ ?>
-                                <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
-                                Lembre-se: As aulas já começaram, seu nome irá para uma lista de espera. Assim que a vaga estiver diponível, entraremos em contato.
 
-                                </div> 
+                            <?php if( $value1["idturmastatus"] == 3 ){ ?>
+                                <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
+                                Lembre-se: As aulas já começaram, ou estão prestes a começar, seu nome irá para uma lista de espera. Assim que a vaga estiver diponível, entraremos em contato.
+                                </div>                                
+                            <?php }else{ ?>                                
+
+                                <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
+                                    Lembre-se: Caso não tenha vaga disponível, seu nome irá para uma lista de espera. Assim que a vaga estiver disponível, aguarde, entraremos em contato. Caso contrario, sua inscrição está aguardando matricula, e se as aulas já começaram, compareça no local da atividade que você escolheu, no dia e horário da aula para fazer a matrícula.
+                                </div>   
+                            <?php } ?>                             
+                                
 
                             <?php } ?>
                             </div>                           
                             <br> 
-                            
+
+                        <!--
                         <?php if( $tokencpf == 0 ){ ?>   
-                            <input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">
-                            &nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
-                            <span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscPlm, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagaslaudo"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas)</span>  <br>
+                                <input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">
+                                &nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
+                                <span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscPlm, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagaslaudo"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas)</span>  <br>
                         <?php }else{ ?>
-                            <?php if( naoHaVagasPubLaudo($value1["idtemporada"], $value1["idturma"]) ){ ?>
-                                <?php if( naoHaVagasListaEsperaPubLaudo($value1["idtemporada"], $value1["idturma"], $value1["idmodal"], $value1["idturmastatus"]) ){ ?>
+                         
+                            <?php if( $inscPlm >= $vagasPlm ){ ?>
+                                
+                                <?php if( $numinscListaEsperaPublicoLaudo >= $vagasListaEsperaPlm ){ ?>
                                     <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">
                                     &nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
-                                    <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público) *</span>   <br>                                       
+                                    <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)(**) </span>   <br>                                       
                                 <?php }else{ ?>
                                     <input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">
                                     &nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
-                                    <span style="font-size: 12px; color: red"> <?php echo vagasListaEsperaPubLaudoMenosInscPubLaudo($value1["idtemporada"], $value1["idturma"], $value1["idmodal"]); ?> de 
-                                        <?php echo vagasTotaisListaEsperaLaudo($value1["vagaslaudo"], $value1["idmodal"]); ?> vagas para lista de espera p/ pessoas com laudo médico</span> <br>                      
+                                    <span style="font-size: 12px; color: red"> <?php echo htmlspecialchars( $vagasListaEsperaPlm - $numinscListaEsperaPublicoLaudo, ENT_COMPAT, 'UTF-8', FALSE ); ?> de 
+                                        <?php echo htmlspecialchars( $vagasListaEsperaPlm, ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas para lista de espera p/ pessoas com laudo médico</span> <br>                      
                                 <?php } ?>
                             <?php }else{ ?>
-                                <?php if( naoHaVagasListaEsperaPubLaudo($value1["idtemporada"], $value1["idturma"], $value1["idmodal"], $value1["idturmastatus"]) ){ ?>
+
+                                <?php if( $numinscListaEsperaPublicoLaudo >= $vagasListaEsperaPlm ){ ?>
                                     <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">
                                     &nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
                                     <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público) #</span>   <br>                                       
                                 <?php }else{ ?>
-                                    <input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">
-                                    &nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
-                                    <span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscPlm, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagaslaudo"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas) </span>    <br>                                                 
-                                    
+                                    <?php if( $value1["idturmastatus"] != 3 ){ ?>
+                                        <input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">
+                                        &nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
+                                        <span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscPlm, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagaslaudo"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas)## </span>    <br>
+                                    <?php }else{ ?>
+                                        <input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">
+                                        &nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
+                                        <span style="font-size: 12px; color: red"> <?php echo htmlspecialchars( $vagasListaEsperaPlm - $numinscListaEsperaPublicoLaudo, ENT_COMPAT, 'UTF-8', FALSE ); ?> de 
+                                        <?php echo htmlspecialchars( $vagasListaEsperaPlm, ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas para lista de espera p/ pessoas com laudo médico</span> <br>                      
+                                    <?php } ?>                                                                 
                                 <?php } ?>
                             <?php } ?>                            
                         <?php } ?>
-
+                        -->
+                            <?php echo vagasPublicoLaudo($value1["idturma"], $value1["idtemporada"], $value1["idmodal"], $value1["idturmastatus"], $tokencpf); ?>
                             <div id="temlaudo" hidden="true"> 
                                 <input type="text" name="temlaudo" id="temlaudo" placeholder="Informe o CID da doença" style="width: 300px">
                                     <br>
                                 <span style="color: red; font-size: 12px; font-style: italic;">* Ao clicar nesta opção de inscrição com laudo médico, você deverá informar no campo acima o CID da doença e apresentar, <strong>OBRIGATÓRIAMENTE</strong> ao professor, a solicitação médica com o respectivo CID, para efetuar a matrícula.</span><br>
-                                <?php if( $inscPlm >= $value1["vagaslaudo"] ){ ?>
+                                <?php if( $inscPlm >= $vagasPlm ){ ?>
                                     <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
                                         <!--
                                         <input type="radio" name="espera" required="required" style="height: 20px; width: 20px;">&nbsp; Estou ciente que esta inscrição não garante vaga e que estou numa lista de espera do Grupo de Pessoas Com Laudo Médico, aguardando ser comunicado de uma eventual vaga. Confirmo ainda que tenho cadastrado e atualizado, neste site, meu número de telefone celular com whatsapp para receber o comunicado.
@@ -224,23 +252,33 @@
                                         Ao clicar nesta opção de inscrição você está ciente que esta não garante vaga e que você está numa lista de espera do Grupo de Pessoas Com Laudo Médico, aguardando ser comunicado de uma eventual vaga. Você confirma ainda que tem cadastrado e atualizado, neste site, seu número de telefone celular com whatsapp para receber o comunicado.
                                     </div> 
                                 <?php }else{ ?>
-                                    <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
-                                    Lembre-se: As aulas já começaram, seu nome irá para uma lista de espera. Assim que a vaga estiver diponível, entraremos em contato.
+                                    <?php if( $value1["idturmastatus"] == 3 ){ ?>
+                                        <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
+                                        Lembre-se: As aulas já começaram, ou estão prestes a começar, seu nome irá para uma lista de espera. Assim que a vaga estiver diponível, entraremos em contato.
 
-                                    </div> 
+                                        </div>                                
+                                    <?php }else{ ?>                                
+
+                                        <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
+                                        Lembre-se: Caso não tenha vaga disponível, seu nome irá para uma lista de espera. Assim que a vaga estiver disponível, aguarde, entraremos em contato. Caso contrario, sua inscrição está aguardando matricula, e se as aulas já começaram, compareça no local da atividade que você escolheu, no dia e horário da aula para fazer a matrícula.
+
+                                        </div>   
+                                     <?php } ?>                             
 
                                 <?php } ?>
                             </div>                            
                             <br>  
-                            
+                        <!--
                             <?php if( $tokencpf == 0 ){ ?>   
                                 <input type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">
                                 &nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> 
                                 <span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscPcd, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagaspcd"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas)</span>
                                     <br>
                             <?php }else{ ?>
-                                <?php if( naoHaVagasPubPcd($value1["idtemporada"], $value1["idturma"]) ){ ?>
-                                    <?php if( naoHaVagasListaEsperaPubPcd($value1["idtemporada"], $value1["idturma"], $value1["idmodal"], $value1["idturmastatus"]) ){ ?>
+                             
+                                    <?php if( $inscPcd >= $vagasPcd ){ ?>
+                                
+                                    <?php if( $numinscListaEsperaPublicoPcd >= $vagasListaEsperaPcd ){ ?>
                                         <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">
                                         &nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> 
                                         <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)*</span>                                
@@ -249,8 +287,8 @@
                                         <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">
                                         &nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> 
                                         <br>           
-                                        <span style="font-size: 12px; color: red"><?php echo vagasListaEsperaPubPcdMenosInscPubPcd($value1["idtemporada"], $value1["idturma"], $value1["idmodal"]); ?> de 
-                                        <?php echo vagasTotaisListaEsperaPcd($value1["vagaspcd"], $value1["idmodal"]); ?> vagas para lista de espera para PCD`s
+                                        <span style="font-size: 12px; color: red"><?php echo htmlspecialchars( $vagasListaEsperaPcd - $numinscListaEsperaPublicoPcd, ENT_COMPAT, 'UTF-8', FALSE ); ?> de 
+                                        <?php echo htmlspecialchars( $vagasListaEsperaPcd, ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas para lista de espera para PCD`s
                                         </span>  
                                         <br>
                                         <span style="color: darkblue;" onmousemove="alertTokenCreebaPcd()" >
@@ -261,31 +299,48 @@
                                             
                                     <?php } ?>
                                 <?php }else{ ?>
-                                    <?php if( naoHaVagasListaEsperaPubPcd($value1["idtemporada"], $value1["idturma"], $value1["idmodal"], $value1["idturmastatus"]) ){ ?>
+                                
+                                    <?php if( $numinscListaEsperaPublicoPcd >= $vagasListaEsperaPcd ){ ?>
                                         <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">
                                         &nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> 
                                         <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)#</span>                                
                                         <br>
                                     <?php }else{ ?>
-                                        <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">
-                                        &nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> 
-                                        <span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscPcd, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagaspcd"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas)#</span>
-                                        <br>
-                                        <span style="color: darkblue;" onmousemove="alertTokenCreebaPcd()" >
-                                        <strong>Necessário token</strong>&nbsp;             
-                                        </span>
-                                            <a href="#" onmousemove="alertTokenCreebaPcd()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></a>
-                                        <br>                                    
-                                            
+                                        <?php if( $value1["idturmastatus"] != 3 ){ ?>
+                                            <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">
+                                            &nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> 
+                                            <span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscPcd, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagaspcd"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas)##</span>
+                                            <br>
+                                            <span style="color: darkblue;" onmousemove="alertTokenCreebaPcd()" >
+                                            <strong>Necessário token</strong>&nbsp;             
+                                            </span>
+                                                <a href="#" onmousemove="alertTokenCreebaPcd()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></a>
+                                            <br>                                    
+                                        <?php }else{ ?>
+                                            <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">
+                                            &nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> 
+                                            <br>           
+                                            <span style="font-size: 12px; color: red"><?php echo htmlspecialchars( $vagasListaEsperaPcd - $numinscListaEsperaPublicoPcd, ENT_COMPAT, 'UTF-8', FALSE ); ?> de 
+                                            <?php echo htmlspecialchars( $vagasListaEsperaPcd, ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas para lista de espera para PCD`s (##)
+                                            </span>  
+                                            <br>
+                                            <span style="color: darkblue;" onmousemove="alertTokenCreebaPcd()" >
+                                            <strong>Necessário token</strong>&nbsp;             
+                                            </span>
+                                                <a href="#" onmousemove="alertTokenCreebaPcd()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></a>
+                                            <br>
+                                         <?php } ?>                     
                                     <?php } ?>
                                 <?php } ?>
                             <?php } ?>
-                            
-                           <div id="deficiente" hidden="true">
+                        -->
+                            <?php echo vagasPublicoPcd($value1["idturma"], $value1["idtemporada"], $value1["idmodal"], $value1["idturmastatus"], $tokencpf); ?> 
+
+                            <div id="deficiente" hidden="true">
                                 <input type="text" name="deficiente" id="deficiente" placeholder="Informe o CID da deficiência" style="width: 300px">
                                     <br>
                                 <span style="color: red; font-size: 12px; font-style: italic;">* Ao clicar nesta opção de inscrição para Pessoa Com Deficiência você deverá informar no campo acima o <strong>CID</strong> da doença, igual ao que você informou nos dados de saúde do(a) <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>!</span><br>
-                                <?php if( $inscPcd >= $value1["vagaspcd"] ){ ?>
+                                <?php if( $inscPcd >= $vagasPcd ){ ?>
                                     <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
                                         <!--
                                         <input type="radio" name="espera" required="required">&nbsp;&nbsp; Estou ciente que esta inscrição não garante vaga e que estou numa lista de espera do Grupo de Pessoas Com Deficiência, aguardando ser comunicado de uma eventual vaga. Confirmo que tenho cadastrado e atualizado, neste site, meu número de telefone celular com whatsapp para receber o comunicado.
@@ -293,15 +348,23 @@
                                         Ao clicar nesta opção de inscrição você está ciente que esta não garante vaga e que você está numa lista de espera do Grupo de Pessoas Com Deficiência, aguardando ser comunicado de uma eventual vaga. Você confirma ainda que tem cadastrado e atualizado, neste site, seu número de telefone celular com whatsapp para receber o comunicado.
                                     </div> 
                                 <?php }else{ ?>
-                                    <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
-                                    Lembre-se: As aulas já começaram, seu nome irá para uma lista de espera. Assim que a vaga estiver diponível, entraremos em contato.
+                                    <?php if( $value1["idturmastatus"] == 3 ){ ?>
+                                        <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
+                                        Lembre-se: As aulas já começaram, ou estão prestes a começar, seu nome irá para uma lista de espera. Assim que a vaga estiver diponível, entraremos em contato.
 
-                                    </div> 
+                                        </div>                                
+                                    <?php }else{ ?>                                
+
+                                        <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
+                                        Lembre-se: Caso não tenha vaga disponível, seu nome irá para uma lista de espera. Assim que a vaga estiver disponível, aguarde, entraremos em contato. Caso contrario, sua inscrição está aguardando matricula, e se as aulas já começaram, compareça no local da atividade que você escolheu, no dia e horário da aula para fazer a matrícula.
+
+                                        </div>   
+                                     <?php } ?>                             
 
                                 <?php } ?>
                                 </div>                                
                                 <br>
-                                
+                        <!--        
                             <?php if( $tokencpf == 0 ){ ?>   
                                 <input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
                                 &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong> 
@@ -311,9 +374,11 @@
                                 <span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscPvs, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagaspvs"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas)</span>
                                     <br>
                             <?php }else{ ?>
-                                <?php if( naoHaVagasPubPvs($value1["idtemporada"], $value1["idturma"]) ){ ?>
-                                    <?php if( naoHaVagasListaEsperaPubPvs($value1["idtemporada"],$value1["idturma"], $value1["idmodal"], $value1["idturmastatus"]) ){ ?>
-                                        <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
+                            
+                                <?php if( $inscPvs >= $vagasPvs ){ ?>
+                                
+                                    <?php if( $numinscListaEsperaPublicoPvs >= $vagasListaEsperaPvs ){ ?>
+                                      <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
                                         &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong>
 
                                         <a href="#" onmousemove="alertTokenVunerabilidade()"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a>
@@ -328,12 +393,12 @@
                                         <a href="#" onmousemove="alertTokenVunerabilidade()"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a>
 
                                         <br>
-                                         <span style="font-size: 12px; color: red"><?php echo vagasListaEsperaPubPvsMenosInscPubPvs($value1["idtemporada"], $value1["idturma"], $value1["idmodal"]); ?> de 
-                                            <?php echo vagasTotaisListaEsperaPvs($value1["vagaspvs"], $value1["idmodal"]); ?> vagas para lista de espera para pessoas em Vuln. social</span>
+                                         <span style="font-size: 12px; color: red"><?php echo htmlspecialchars( $vagasListaEsperaPvs - $numinscListaEsperaPublicoPvs, ENT_COMPAT, 'UTF-8', FALSE ); ?> de 
+                                            <?php echo htmlspecialchars( $vagasListaEsperaPvs, ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas para lista de espera para pessoas em Vuln. social</span>
                                             <br>
                                     <?php } ?>
                                 <?php }else{ ?>
-                                    <?php if( naoHaVagasListaEsperaPubPvs($value1["idtemporada"],$value1["idturma"], $value1["idmodal"], $value1["idturmastatus"]) ){ ?>
+                                    <?php if( $numinscListaEsperaPublicoPvs >= $vagasListaEsperaPvs ){ ?>
                                         <input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
                                         &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong>
 
@@ -342,17 +407,31 @@
                                         <span style="font-size: 12px; color: red">(Não há vagas disponíveis para este público)#</span>
                                         <br>
                                     <?php }else{ ?>
-                                        <input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
-                                        &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong>
+                                        <?php if( $value1["idturmastatus"] != 3 ){ ?>
+                                            <input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
+                                            &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong>
+
+                                            <a href="#" onmousemove="alertTokenVunerabilidade()"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a>
+                                            <span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscPvs, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagaspvs"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas)##</span> 
+                                            <br>
+                                        <?php }else{ ?>
+                                            <input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
+                                        &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong> 
 
                                         <a href="#" onmousemove="alertTokenVunerabilidade()"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a>
 
-                                        <span style="font-size: 12px; color: red">(<?php echo htmlspecialchars( $inscPvs, ENT_COMPAT, 'UTF-8', FALSE ); ?> insc. para <?php echo htmlspecialchars( $value1["vagaspvs"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas)</span> 
                                         <br>
+                                         <span style="font-size: 12px; color: red"><?php echo htmlspecialchars( $vagasListaEsperaPvs - $numinscListaEsperaPublicoPvs, ENT_COMPAT, 'UTF-8', FALSE ); ?> de 
+                                            <?php echo htmlspecialchars( $vagasListaEsperaPvs, ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas para lista de espera para pessoas em Vuln. social (##)</span>
+                                            <br>
+                                         <?php } ?>                     
+                                       
                                     <?php } ?>
                                 <?php } ?>
                             <?php } ?>
-                            
+                        -->
+
+                            <?php echo vagasPublicoPvs($value1["idturma"], $value1["idtemporada"], $value1["idmodal"], $value1["idturmastatus"], $tokencpf); ?> 
                             <div id="vulneravel" hidden="true"> 
                                 <span style="color: red; font-size: 12px; font-style: italic;">* Ao clicar nesta opção de inscrição para pessoa em vulnerabilidade social (pessoa participante de programas sociais do governo), você deve ter cadastrado o <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> informando o número de inscrição no Cadùnico/NIS e apresentar, <strong>OBRIGATÓRIAMENTE,</strong> ao professor para fazer a matrícula.</span><br>
                                 <?php if( $inscPvs >= $vagasPvs ){ ?>
@@ -363,10 +442,18 @@
                                         Ao clicar nesta opção de inscrição você está ciente que esta não garante vaga e que você está numa lista de espera do Grupo de Pessoas em Vulnerabilidade Social, aguardando ser comunicado de uma eventual vaga. Você confirma ainda que tem cadastrado e atualizado, neste site, seu número de telefone celular com whatsapp para receber o comunicado.
                                     </div> 
                                 <?php }else{ ?>
-                                    <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
-                                    Lembre-se: As aulas já começaram, seu nome irá para uma lista de espera. Assim que a vaga estiver diponível, entraremos em contato.
+                                    <?php if( $value1["idturmastatus"] == 3 ){ ?>
+                                        <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
+                                        Lembre-se: As aulas já começaram, ou estão prestes a começar, seu nome irá para uma lista de espera. Assim que a vaga estiver diponível, entraremos em contato.
 
-                                    </div> 
+                                        </div>                                
+                                    <?php }else{ ?>                                
+
+                                        <div class="col-md-12 alert alert-danger" style="padding-top: 5px; margin-top: 5px; margin-bottom: 5px; padding-bottom: 5px; text-align: justify;">
+                                        Lembre-se: Caso não tenha vaga disponível, seu nome irá para uma lista de espera. Assim que a vaga estiver disponível, aguarde, entraremos em contato. Caso contrario, sua inscrição está aguardando matricula, e se as aulas já começaram, compareça no local da atividade que você escolheu, no dia e horário da aula para fazer a matrícula.
+
+                                        </div>   
+                                     <?php } ?>                             
 
                                 <?php } ?>
                             </div>                            

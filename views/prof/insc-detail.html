@@ -52,9 +52,14 @@
                             <tr>
                                 <th colspan="2" class="product-name"><h3>Nome: {$pessoa.nomepess} -  {function="calcularIdade($pessoa.dtnasc)"} anos - <strong>{if="$pessoa.pcd == 1"}PCD{/if}</strong></h3></th>
                             </tr>
+                            <!--
                             <tr>
-                                <th colspan="2" class="product-name"><h3>número para concorrer no sorteio: {$insc.numsorte}</h3></th>
+                                <th colspan="2" class="product-name">
+                                    <h3>número para concorrer no sorteio: {$insc.numsorte}
+                                    </h3>
+                                </th>
                             </tr>
+                            -->
                             <tr>
                                 <th class="product-name">Turma / Temporada</th>
                                 <td class="product-name">[{$insc.idturma}] - {$insc.descturma} - {$insc.desctemporada}</td>

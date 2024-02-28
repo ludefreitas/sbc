@@ -2,11 +2,7 @@
 <script type="text/javascript">
 
   function getDadosTurmaTemporada(idturma, idtemporada){
-
-        alert(idturma+'-'+idtemporada)
-        
-        
-        /*
+  
         let url = "/admin/dados/turmatemporada/"+idturma+"/"+idtemporada
 
         let ajax = new XMLHttpRequest();
@@ -23,7 +19,7 @@
           } 
 
         });
-        */
+        
       }
  
   function atualizaStatus(idturma, desctemporada, idtemporada){
@@ -146,10 +142,11 @@
       <div class="box-body" style="border: solid 1px lightblue; margin: 5px;"> 
       <div class="box-body col-md-2">
 
+          <a href="/admin/turma-temporada-hoje/{$temporada.idtemporada}"><i class=""></i>TODOS OS LOCAIS</a>&nbsp;&nbsp;&nbsp;&nbsp;<br>
           {loop="$locais"}
                   <a href="/admin/turma-temporada-hoje/{$temporada.idtemporada}/local/{$value.idlocal}"><i class=""></i>{$value.apelidolocal}</a>&nbsp;&nbsp;&nbsp;&nbsp;
           {/loop}
-          <a href="/admin/turma-temporada-hoje/{$temporada.idtemporada}"><i class=""></i>TODOS OS LOCAIS</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          
             
       </div> 
           <div class="box-body no-padding col-md-10">
@@ -185,9 +182,9 @@
                  {if="$idmodalidade == $value.idmodal"}
                  
                 {if="numeroNaListaDePresençaByIdturmaData($value.idturma, $ano, $mes, $dia) == 0"}
-                    <div onclick="getDadosTurmaTemporada($value.idturma, $value.idtemporada)" class="box-body col-md-1" style="border: solid 1px lightblue; margin: 5px; background-color: lightgray; font-size: 7px; ">
+                    <div  class="box-body col-md-1" style="border: solid 1px lightblue; margin: 5px; background-color: lightgray; font-size: 7px; width: 70px; height: 100px; display: inline-block; ">
                 {else}
-                    <div onclick="getDadosTurmaTemporada($value.idturma, $value.idtemporada)" class="box-body col-md-1" style="border: solid 1px lightblue; margin: 5px; background-color: lightgreen; font-size: 7px; ">
+                    <div  class="box-body col-md-1" style="border: solid 1px lightblue; margin: 5px; background-color: lightgreen; font-size: 7px; width: 70px; height: 100px; display: inline-block; ">
                 {/if}     
 
                     <span style="text-align: left;">
@@ -196,8 +193,8 @@
                          
                              
                           <strong>- {$value.diasemana}
-                          {$value.horainicio} ás {$value.horatermino} -  </strong>
-                            {$value.apelidolocal} <strong> - Professor: {if="$value.idperson == 1"} Admin Master {else} {$value.apelidoperson} {/if}</strong>&nbsp; 
+                          {$value.horainicio} ás {$value.horatermino} -  
+                            {$value.apelidolocal}  - Professor: {if="$value.idperson == 1"} Admin Master {else} {$value.apelidoperson} {/if}</strong>&nbsp; 
                           
                            
                         

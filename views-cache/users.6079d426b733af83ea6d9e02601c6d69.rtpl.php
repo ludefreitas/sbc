@@ -40,7 +40,8 @@
               </div>
             </div>
             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
-              
+              <div class="row">
+              </div>
            
             <?php $counter1=-1;  if( isset($users) && ( is_array($users) || $users instanceof Traversable ) && sizeof($users) ) foreach( $users as $key1 => $value1 ){ $counter1++; ?>
 
@@ -64,11 +65,6 @@
                   <strong>&nbsp;Admin</strong>
                   <?php } ?>
 
-                  <?php if( $value1["isestagiario"] == 1 ){ ?>
-
-                  <strong>&nbsp;Estagiário</strong>
-                  <?php } ?>
-
                 </h5>
               </div>                
               <div class="col-md-2" >
@@ -78,9 +74,13 @@
             </div>
             <?php } ?>
 
-
+            
               </div>
-          </div>           
+          </div>
+
+
+
+           
             <!-- /.box-body -->
             <div class="box-footer clearfix">
               <ul class="pagination pagination-sm no-margin pull-right">

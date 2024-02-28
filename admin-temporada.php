@@ -1196,6 +1196,9 @@ $app->get("/admin/temporada/:idtemporada/turma", function($idtemporada) {
 
 	User::verifyLogin();
 
+	$local = new Local();
+	$locais = $local->listAll();
+
 	$temporada = new Temporada();
 
 	$temporada->get((int)$idtemporada);	
@@ -1204,6 +1207,7 @@ $app->get("/admin/temporada/:idtemporada/turma", function($idtemporada) {
 
 	$page->setTpl("turma-temporada", [
 		'temporada'=>$temporada->getValues(),
+		'locais'=>$locais,
 		'turmaRelated'=>$temporada->getTurma(true),
 		'turmaNotRelated'=>$temporada->getTurma(false),
 		'error'=>User::getError(),
@@ -1649,20 +1653,16 @@ $app->get("/admin/atualiza/turmatemporada/:idturma/:idtemporada/:desctemporada/:
 
 });
 
-$app->get("/admin/chamada/:idturma/:data/", function($idturma, $data) {
+$app->get("/admin/dados/turmatemporada/:idturma/:idtemporada/", function($idturma, $idtemporada) {
 
-    $numeroListaDePresenca = new Insc();
-    $numeroListaDePresenca = Insc::getCountNumeroNaListaDePresençaByIdturmaData($idturma, $data);
+    
+	$turmaTemporada = new Turma();
 
-    $numeroListaDePresenca = (int)$numeroListaDePresenca[0]["count(*)"];
+	$turmaTemporada = $turmaTemporada->selectTurmaTemporadaById($idturma, $idtemporada);
 
-	if($numeroListaDePresenca > 0){
-
-		$texto = $numeroListaDePresenca.'lightgreen';
-
-	}else{
-		 $texto = $numeroListaDePresenca.'lightgray'; 		
-	}
+	var_dump($turmaTemporada);
+	exit;
+	
 	echo  $texto;
 	
 });

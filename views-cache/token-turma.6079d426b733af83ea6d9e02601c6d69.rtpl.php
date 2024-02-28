@@ -7,6 +7,8 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active"><a style="color: red" href="javascript: history.go(-1)">Voltar</a>
+    </li>
   </ol>
 </section>
 
@@ -14,8 +16,8 @@
 <section class="content">
 
   <div class="row">
-    <div class="col-md-12">
-      <div class="box box-primary">
+  	<div class="col-md-12">
+  		<div class="box box-primary">
         <?php if( $error != '' ){ ?>
           <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
         <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
@@ -29,8 +31,8 @@
              
 
             <input hidden type="text" name="idturma" value="<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-            <input hidden type="text" name="iduser" value="<?php echo htmlspecialchars( $turma["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-            <!--<input type="text" name="numcpf" placeholder="Digite o CPF, se necessário">-->
+             <input hidden type="text" name="iduser" value="<?php echo htmlspecialchars( $turma["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+            <!--<input type="text" name="numcpf" placeholder="000.000.000-00">-->
             <input style="width: 170px; float: left;" type="text" maxlength="14" id="numcpf" name="numcpf" class="input-text" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}"  placeholder="000.000.000-00">
                     <script type="text/javascript">$("#numcpf").mask("000.000.000-00");</script>
             </div>
@@ -38,9 +40,8 @@
             <input class="btn btn-success" type="submit" name="" value="Gerar Token">
 
             </div>
-        </form>
 
-        <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
             <div class="row" style="margin: 5px;">
               <?php $counter1=-1;  if( isset($tokens) && ( is_array($tokens) || $tokens instanceof Traversable ) && sizeof($tokens) ) foreach( $tokens as $key1 => $value1 ){ $counter1++; ?>
                 <div class="col-md-2" style="border: solid 1px; text-align: center;">
@@ -49,34 +50,33 @@
                     <span style="font-weight: bold; color: darkblue;">                  
                         <?php echo htmlspecialchars( $value1["token"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span> <br>
                         <?php if( $value1["numcpf"] ){ ?>
-                            <?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?> 
+                            <?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                         <?php }else{ ?>
                             NULL
                         <?php } ?>
                
                     <?php }else{ ?>
                     <span style="font-weight: bold; color: red;">                  
-                        <s><?php echo htmlspecialchars( $value1["token"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </s><i class="fa fa-check" style="color: green;"></i>
-                    </span><br>
+                        <s><?php echo htmlspecialchars( $value1["token"], ENT_COMPAT, 'UTF-8', FALSE ); ?></s>
+                    </span><i class="fa fa-check" style="color: green;"></i><br>
 
                         <?php if( $value1["numcpf"] ){ ?>
-                            <?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?> 
+                            <?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                         <?php }else{ ?>
                             NULL
                         <?php } ?>               
                     <?php } ?>
-                <br>   
+                    <br>   
 
                     Criado por: <?php echo getUserNameById($value1["creator"]); ?>
-            </div>  
-
-           
-
+            </div>     
+                
           <?php } ?>           
             <!-- /.box-body -->
         </div>
     </div>
-</div>
+  	</div>
+  </div>
 
 </section>
 <!-- /.content -->

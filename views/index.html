@@ -1,5 +1,38 @@
 <script type="text/javascript">
 
+  function imageNone() {
+
+    document.getElementById('popup').hidden = true 
+  }
+
+   let ajax = new XMLHttpRequest();
+    ajax.open('GET', 'url'); 
+    $.ajax({
+        statusCode: {
+          500: function() {
+            //window.location.href ="/admin";
+            alert('Limite de usuários online excedido! TENTE NOVAMENTE MAIS TARDE!');
+
+            document.location.href ="/redirecionando";
+            //alert('Página não encontrada');
+          } 
+        }
+    });
+    
+    // let ajax = new XMLHttpRequest();
+    ajax.open('GET', 'url'); 
+    $.ajax({
+        statusCode: {
+          505: function() {
+            //window.location.href ="/admin";
+            alert('Limite de usuários online excedido! TENTE NOVAMENTE MAIS TARDE!');
+            document.location.href ="/redirecionando";
+            //alert('Página não encontrada');
+          } 
+        }
+    });
+
+
     /*
     alert('As turmas do PELC, como por exemplo, Ballet; Ritmos; Yoga; Capoeira; e Artesanato, terão seu início a partir da primeira quinzena de MARÇO/2023! ');
     */
@@ -55,6 +88,34 @@ function leiamais(){
   #mais{
     display: none;
   }
+
+  #popup{
+    position: fixed;
+    top: 0; 
+    bottom: 0;
+    left: 0; 
+    right: 0;
+    margin: auto;
+    width: 300px;
+    height: 216px;
+    padding: 0px; 
+    background-color: lightgray;
+  }
+
+  #popupimage{
+    position: fixed;
+    top: 0; 
+    bottom: 0;
+    left: 0; 
+    right: 0;
+    margin: auto;
+    width: 300px;
+    height: 180px;
+    padding: 0px;
+    border: solid 1px #4c4d4f;
+    background: #ccc;    
+  }
+ 
 </style>
 
  <div class="container" style="margin-top: 0px;"> <!-- container 1 -->
@@ -96,12 +157,37 @@ function leiamais(){
                         
         </a>                                       
 
-
-
 <hr style="background-color: #0f71b3;">
   <div class="row" style="margin: -5px -5px -5px -5px; ">   
   <div class="col-md-12" style="border: 5px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif;"> 
-  
+
+           <div id="popup" style="text-align-last: center; border-radius: 15px"> 
+                <div style="text-align-last: right; font-weight: bold; " onclick="imageNone()"> x &nbsp;&nbsp;</div>  
+                <div style="background-color: lightgreen; text-align: justify; border-radius: 15px 15px 0px 0px; padding: 10px; font-size: 13px; font-weight: bold;">
+                    <span style="color: red;"> ATENÇÃO! </span><br>
+                        LEMRAMOS que: Se você já fez uma inscrição, sua PRIMEIRA OPÇÃO, para a temporada 2024 e está matriculado(a), ou está aguardando matrícula, ou ainda está na lista de espera. Você deve aguardar até o dia 15/02 para fazer uma nova inscrição, sua SEGUNDA OPÇÃO, para as vagas remanescentes. 
+                </div> 
+                
+           </div>
+
+
+           <!--
+           <div id="popup" style="text-align-last: center; border-radius: 15px"> 
+                <div style="text-align-last: right; font-weight: bold; " onclick="imageNone()"> x &nbsp;&nbsp;</div>  
+                <div style="background-color: lightblue; text-align: justify; border-radius: 15px 15px 0px 0px; padding: 10px; font-size: 13px; font-weight: bold;">
+                    <span style="color: red;"> ATENÇÃO! </span><br>
+                    Você já pode inserir, aqui mesmo em nosso site, seu ATESTADO MÉDICO clínico e/ou dermatológico em formato PDF. O atestado ficará disponível para que o seu professor o valide e para que, depois de validado, você possa praticar suas atividades físicas com segurança em nossos Centros , Esportivos. 
+                        LEMRAMOS que: alunos de hidroginástica, natação, natação espontânea e avaliação para a natação, deverão, OBRIGATÓRIAMENTE, inserir o atestado CLÍNICO E DERMATOLÓGICO.
+                </div> 
+                <div style="text-align: center;">
+                    <div  class="btn btn-info" style="border-radius: 0px 0px 15px 15px; width: 300px">
+                     <a href="/atestado-upload" style="color: white;" > Inserir Atestado PDF </a>
+                    </div>   
+                </div>   
+                !-->       
+                <!-- <img src="\res\site\img\insc2024detail.jpg" onclick="imageNone()"> -->
+           </div>
+
      
        <div style="text-align: justify; line-height: 20px; color: blue; font-size: 14px; font-style: italic; margin: 0px 5px 0px 5px; ">     
        {if="checkLogin(false)"}  
@@ -115,43 +201,52 @@ function leiamais(){
 
         {/if}
         
-       <span>(Atualizado 20/01/2023)
+       <span>
+           <u>Cursos Esportivos 2024 </u>
+           <br><br>
+           
+           <span style="color: red">(Atualizado 21/12/2023)</span>
+
         <br><br>
 
-        A Secretaria de Esportes e Lazer do Município de São Bernardo do Campo, por intermédio da Seção de Educação e Formação Esportiva, oferece gratuitamente, Cursos Esportivos para todas as idades, através dos Programas: “Corpo em Ação”, “PELC” e “Hora do Treino”, nos diferentes Centros Esportivos da Cidade.
+        A Secretaria de Esportes e Lazer inicia no dia <b>15 de janeiro de 2024</b>, as inscrições para os Cursos Esportivos dos Programas “Hora do Treino” e “Corpo em Ação” que promovem atividade física para todas as idades, a partir de atividades orientadas pelos profissionais de Educação Física da Secretaria de Esportes, nos Centros Esportivos da Cidade.
         </span><span id="pontos">...</span>
  
         <span id="mais">
         <br><br>
-        O Programa “Hora do Treino” oferece cursos de iniciação esportiva, direcionados às crianças e adolescentes, com idade entre 7 e 17 anos, e compreende a iniciação esportiva nas modalidades de futsal, vôlei, basquete, handebol, badminton, natação entre outros.
+        O <b>Programa “Hora do Treino”</b> oferece cursos de iniciação esportiva, direcionados às crianças e adolescentes, com idade entre 7 e 17 anos, e compreende a iniciação esportiva nas modalidades de futsal, vôlei, basquete, handebol, judô, ginástica rítmica, ginástica artística, natação entre outros.
         <br><br>
 
-        Para o público adulto, a partir dos 18 anos de idade, as atividades desenvolvidas através do Programa “Corpo em Ação” compreendem a ginástica, hidroginástica, alongamento, yoga, tai chi chuan, pilates, ginástica funcional, entre outras atividades para adultos e idosos, com o objetivo de promover a saúde da população.
+        Para o público adulto, a partir dos 18 anos de idade, as atividades desenvolvidas pelo <b>Programa “Corpo em Ação”</b> compreendem a hidroginástica, natação, dança fitness, alongamento, yoga, tai chi chuan, pilates, ginástica funcional, entre outras atividades para adultos e idosos.
         <br><br>   
 
-        Com a perspectiva de promover a autonomia frente ao lazer e o esporte recreativo, desde 2019 o município, realiza a continuidade do Programa Esporte e Lazer da Cidade, o PELC, que busca ampliar a oferta de modalidades esportivas, dentre elas, oficinas de ritmos, artesanato, dança, capoeira, dança cigana, dentre outros.
+        Um dos destaques do Programa Corpo em Ação é o Projeto <b>Perca o Medo de Nadar</b>, que promove a aprendizagem da natação para pessoas que tem medo de entrar na água. O projeto tem sido muito bem avaliado pelos participantes, e neste primeiro semestre, serão disponibilizadas 400 vagas para início dia 22 de janeiro.
         <br><br>   
 
-        A participação em todas as atividades é totalmente gratuita, porém, as vagas são limitadas e destinadas exclusivamente aos munícipes devidamente cadastrados, aqui mesmo, neste site: www.cursosesportivossbc.com.
-        <br><br>   
-
-        Para o ano de 2023, conforme resultado de consultas públicas realizadas junto à população e, em conformidade com o previsto na
-
-        <a href="http://www.saobernardo.sp.gov.br/documents/1136654/1572881/Edital+2023/17c16f83-8a66-f3e6-853b-8561dc1c8ca4" target="_blank"> Resolução 003/2022</a>,
+        <b>A participação nos cursos é totalmente gratuita</b>, porém, as vagas são limitadas, sendo preenchidas por ordem de inscrição, respeitando o limite de 01 (uma) vaga/modalidade por pessoa, durante o período de 15 de janeiro à 14 de fevereiro de 2024. Caso às vagas não sejam preenchidas, a partir de 15 de fevereiro, será permitida a inscrição em uma segunda modalidade.
+        <br><br> 
         
-
-        as vagas serão preenchidas gradualmente, permitindo inicialmente, apenas a escolha de uma modalidade por pessoa, sendo oportunizado gradualmente o acesso a mais cursos ao longo do ano.
-        <br><br>           
-
-        A partir de 01 de novembro de 2022, as vagas para os Programas “Corpo e Ação” e “Hora do Treino” já foram disponibilizadas no site. A partir de 01 de fevereiro, serão disponibilizadas novas turmas dos “PELC”, Ginástica Artística e Ginástica Rítmica, Artes Marciais, Zumba e Escolinhas de Esporte.
-        <br><br>          
-
-        As inscrições pelo site ficarão disponíveis durante todo o ano, e o munícipe interessado, poderá acompanhar e se inscrever gratuitamente para as vagas disponíveis!  
-        <br><br>           
-
-        Maiores informações pelos whatsapp (11) 2630-7415, ou (11) 2630-7421, ou pelos telefones: 2630-7419, 2630-7420 ou 2630-7433 na Secretaria de Esportes e Lazer, Seção de Educação e Formação Esportiva.
+        A resolução que disciplina o processo de inscrições prevê a reserva de 30% das vagas para atendimento prioritário às pessoas com deficiência, laudo médico ou em vulnerabilidade social.
         
+        <br><br> 
+
+        As inscrições devem ser realizadas somente pelo site: <a href="https://cursosesportivossbc.com"> www.cursosesportivossbc.com </a>e o interessado deve fazer o seu cadastro, com seus dados pessoais, e depois escolher uma turma de interesse. O serviço é destinado apenas a moradores de São Bernardo do Campo.
+        <br><br>  
+
+        Maiores informações pelos whatsapp (11) 2630-7415, ou (11) 2630-7421, ou pelos telefones: 2630-7419, 2630-7420 ou 2630-7433 na Secretaria de Esportes e Lazer, Seção de Educação e Formação Esportiva.         
+
+        Participe! Pratique atividade física!
+        <br><br> 
+
+        <span>
+
+          Edital que regulamenta o proceesso de inscrições: 
+          <a href="https://www.saobernardo.sp.gov.br/documents/1136654/1807257/Inscri%C3%A7%C3%B5es+2024/0812eb93-95c5-b325-ea0a-60b5ca9c4c28" style="color: darkgreen;"> Clique aqui </a> 
         </span>
+
+        <br><br> 
+        
+        </span> 
 
         <a onclick="leiamais()" id="btnLeiaMais" class="btn btn-default" style="font-size: 14px; color: red;">Leia mais</a>
 
@@ -339,7 +434,17 @@ function leiamais(){
               </div>
             </a>
         </div> 
+
         
+        <div class="col-md-5 btn" style="text-align-last: left; background-color: #cc5d1e; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
+            <a href="/judo">                          
+              <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 24px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
+                        Inscreva-se <br> para Judô 
+              </div>
+            </a>
+        </div> 
+      
+        <!--
         <div class="col-md-5 btn" style="text-align-last: left; background-color: #ff5d95 ; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
             <a href="/zumba">                          
               <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 24px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
@@ -347,6 +452,7 @@ function leiamais(){
               </div>
             </a>
         </div> 
+      -->
         
         <div class="col-md-5 btn" style="text-align-last: left; background-color: orange ; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
             <a href="/tutorial">                          

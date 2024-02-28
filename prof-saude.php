@@ -78,35 +78,53 @@ $app->get("/prof/saude/dadosatestado/:idpess", function($idpess) {
 
 	$saude->getAtestadoUltimoByIdPess($idpess);
 
-	$validade = $saude->getdatavalidade();
-	$validade = new DateTime($validade);
-	$validade = $validade->format('Y-m-d');
-	$hoje = date('Y-m-d');
-
-	$iduser = $saude->getiduser();
-
-	$nome = $user->getUserNameById($iduser);
-
-	$nome = $nome[0]['desperson'];
-
-	$observ = $saude->getobserv();
-	
-	$dataatualizacao = $saude->getdataatualizacao();
-
-	if($dataatualizacao == ''){
-
-		$texto = 'Atestado Clínico de '.$nomepess.' não encontrado!!'."\r\n".'';
-
+	if($saude->getdataatualizacao() == NULL){
+		$texto = 'Atestado Clínico de '.$nomepess.' não encontrado!!!'."\r\n".'';
 	}else{
-		 if($hoje > $validade){
-		 	$validade = new DateTime($validade);
-		 	$validade = $validade->format('d/m/Y');
-            $texto = ''.$nomepess."\r\n".'Observação: '.$observ."\r\n".'Validade Atestado Clínico: '.$validade.''."\r\n".' >>>  VENCIDO  <<< '."\r\n".'Atualizado por: '.$nome."\r\n".'';
-        }else{
-        	$validade = new DateTime($validade);
-        	$validade = $validade->format('d/m/Y');
-            $texto = ''.$nomepess."\r\n".'Observação: '.$observ."\r\n".'Validade Atestado Clínico: '.$validade.''."\r\n".'Atualizado por: '.$nome."\r\n".'';
-        } 		
+
+		$validade = $saude->getdatavalidade();
+		$validade = new DateTime($validade);
+		$validade = $validade->format('Y-m-d');
+		$hoje = date('Y-m-d');
+
+		$iduser = $saude->getiduser();
+
+		$nome = $user->getUserNameById($iduser);
+
+		$nome = $nome[0]['desperson'];
+
+		$observ = $saude->getobserv();
+		
+		$dataatualizacao = $saude->getdataatualizacao();
+
+		if($dataatualizacao == ''){
+
+			$texto = 'Atestado Clínico de '.$nomepess.' não encontrado!!'."\r\n".'';
+
+		}else{
+			 if($hoje > $validade){
+			 	$validade = new DateTime($validade);
+			 	$validade = $validade->format('d/m/Y');
+	            $texto = ''.$nomepess."\r\n".'Observação: '.$observ."\r\n".'Validade Atestado Clínico: '.$validade.''."\r\n".' >>>  VENCIDO  <<< '."\r\n".'Atualizado por: '.$nome."\r\n".'';
+	        }else{
+	        	$validade = new DateTime($validade);
+	        	$validade = $validade->format('Y-m-d');
+
+	        	$data_validade_menos_2meses = date('Y-m-d', strtotime("-2 month", strtotime($validade))); 
+
+	        	if ($hoje > $data_validade_menos_2meses) {
+	        		$validade = new DateTime($validade);
+	        		$validade = $validade->format('d-m-Y');
+	        		$texto = ''.$nomepess."\r\n".'Observação: '.$observ."\r\n".'Atestado CLÍNICO está prestes a VENCER! '."\r\n".'Validade Atestado Clínico: '.$validade.''."\r\n".'Atualizado por: '.$nome."\r\n".'';
+	        		
+	        	}else{
+	        		$validade = new DateTime($validade);
+	        		$validade = $validade->format('d-m-Y');
+	        		$texto = ''.$nomepess."\r\n".'Observação: '.$observ."\r\n".'Validade Atestado Clínico: '.$validade.''."\r\n".'Atualizado por: '.$nome."\r\n".'';
+
+	        	}	            
+	        } 		
+		}
 	}
 	echo  $texto;
 	
@@ -143,7 +161,7 @@ $app->get("/prof/saude/atulizaatestadoderma/:idpess/:data/:observ", function($id
 		'observ'=>$observ
 	]);
 
-	$saude->saveatestadoderma();
+	$saude->savedermaatestado();
 
 	echo 'Atestado Dermatológico atualizado com sucesso!!!';
 	
@@ -161,38 +179,58 @@ $app->get("/prof/saude/dadosatestadoderma/:idpess", function($idpess) {
 
 	$nomepess = $pessoa->getnomepess();
 
-	$saude->getAtestadoDermaUltimoByIdPess($idpess);
-
-	$validade = $saude->getdatavalidade();
-	$validade = new DateTime($validade);
-	$validade = $validade->format('Y-m-d');
-	$hoje = date('Y-m-d');
-
-	$iduser = $saude->getiduser();
-
-	$nome = $user->getUserNameById($iduser);
-
-	$nome = $nome[0]['desperson'];
-
-	$observ = $saude->getobserv();
+	$saude->getAtestadoDermaUltimoByIdPess($idpess);	
 	
-	$dataatualizacao = $saude->getdataatualizacao();
-
-	if($dataatualizacao == ''){
-
-		$texto = 'Atestado Dermatológico de '.$nomepess.' não encontrado!!'."\r\n".'';
-
+	if($saude->getdataatualizacao() == NULL){
+		$texto = 'Atestado Dermatológico de '.$nomepess.' não encontrado!!!'."\r\n".'';
 	}else{
-		 if($hoje > $validade){
-		 	$validade = new DateTime($validade);
-		 	$validade = $validade->format('d/m/Y');
-            $texto = ''.$nomepess."\r\n".'Observação: '.$observ."\r\n".'Validade Atestado Dermatológico: '.$validade.''."\r\n".' >>>  VENCIDO  <<< '."\r\n".'Atualizado por: '.$nome."\r\n".'';
-        }else{
-        	$validade = new DateTime($validade);
-        	$validade = $validade->format('d/m/Y');
-            $texto = ''.$nomepess."\r\n".'Observação: '.$observ."\r\n".'Validade Atestado Dermatológico: '.$validade.''."\r\n".'Atualizado por: '.$nome."\r\n".'';
-        } 		
+
+		$validade = $saude->getdatavalidade();
+		$validade = new DateTime($validade);
+		$validade = $validade->format('Y-m-d');
+		$hoje = date('Y-m-d');
+
+		$iduser = $saude->getiduser();
+
+		$nome = $user->getUserNameById($iduser);
+
+		$nome = $nome[0]['desperson'];
+
+		$observ = $saude->getobserv();
+		
+		$dataatualizacao = $saude->getdataatualizacao();		
+		
+
+		if($dataatualizacao == ''){
+
+			$texto = 'Atestado Dermatológico de '.$nomepess.' não encontrado!!'."\r\n".'';
+
+		}else{
+			 if($hoje > $validade){
+			 	$validade = new DateTime($validade);
+			 	$validade = $validade->format('d/m/Y');
+	            $texto = ''.$nomepess."\r\n".'Observação: '.$observ."\r\n".'Validade Atestado Dermatológico: '.$validade.''."\r\n".' >>>  VENCIDO  <<< '."\r\n".'Atualizado por: '.$nome."\r\n".'';
+	        }else{
+	        	$validade = new DateTime($validade);
+	        	$validade = $validade->format('Y-m-d');
+
+	        	$data_validade_menos_2meses = date('Y-m-d', strtotime("-2 month", strtotime($validade))); 
+
+	        	if ($hoje > $data_validade_menos_2meses) {
+	        		$validade = new DateTime($validade);
+	        		$validade = $validade->format('d-m-Y');
+	        		$texto = ''.$nomepess."\r\n".'Observação: '.$observ."\r\n".'Atestado DERMATOLÓGICO está prestes a VENCER! '."\r\n".'Validade Atestado Dermatológico: '.$validade.''."\r\n".'Atualizado por: '.$nome."\r\n".'';
+	        		
+	        	}else{
+	        		$validade = new DateTime($validade);
+	        		$validade = $validade->format('d-m-Y');
+	        		$texto = ''.$nomepess."\r\n".'Observação: '.$observ."\r\n".'Validade Atestado Dermatológico: '.$validade.''."\r\n".'Atualizado por: '.$nome."\r\n".'';
+
+	        	}
+	        } 		
+		}
 	}
+
 	echo  $texto;
 	
 });

@@ -1,5 +1,4 @@
-<?php if(!class_exists('Rain\Tpl')){exit;}?>
-<style type="text/css">
+<?php if(!class_exists('Rain\Tpl')){exit;}?><style type="text/css">
     #alert-box{
    display:block;
    position:fixed;
@@ -16,24 +15,80 @@
    -moz-box-shadow: 0px 0px 33px -6px rgba(0,0,0,0.59);
    box-shadow: 0px 0px 33px -6px rgba(0,0,0,0.59);
 }
+
+#popup{
+    position: fixed;
+    top: 0; 
+    bottom: 0;
+    left: 0; 
+    right: 0;
+    margin: auto;
+    width: 300px;
+    height: 216px;
+    padding: 0px; 
+    background-color: lightgray;
+  }
+
+  #popupimage{
+    position: fixed;
+    top: 0; 
+    bottom: 0;
+    left: 0; 
+    right: 0;
+    margin: auto;
+    width: 300px;
+    height: 180px;
+    padding: 0px;
+    border: solid 1px #4c4d4f;
+    background: #ccc;    
+  }
 </style>
+
 <script type="text/javascript">
 
-    function alertTokenVunerabilidade(idlocal){
+    function imageNone() {
+
+    document.getElementById('popup').hidden = true 
+    
+    }
+
+    function alertTokenVulnerabilidade(idlocal){
 
         let local = idlocal
 
         let msg_alerta = '<div id="alert-box">'
         +'<h5>O que é Vulnerabilidade Social?</h5>'
-        +'<p>“Vulnerabilidade social é o conceito que caracteriza a condição dos grupos de indivíduos que estão à margem da sociedade, ou seja, pessoas ou famílias que estão em processo de exclusão social, principalmente por fatores socioeconômicos. (…) As pessoas que são consideradas “vulneráveis sociais” são aquelas que estão perdendo sua representatividade na sociedade, e geralmente dependem de auxílios de terceiros para garantirem a sua sobrevivência”.</p>'
-        +'<input style="padding:5px 10px;" type="button" value="OK" onclick="this.parentNode.outerHTML=\'\';window.location.href=\' '+local+'\';" />'
+        +'<p>“Vulnerabilidade social é o conceito que caracteriza a condição dos grupos de indivíduos que estão à margem da sociedade, ou seja, pessoas ou famílias que estão em processo de exclusão social, principalmente por fatores socioeconômicos. (…) As pessoas que são consideradas “vulneráveis sociais” são aquelas que estão perdendo sua representatividade na sociedade, e geralmente dependem de auxílios de terceiros para garantirem a sua sobrevivência” </p>'
+        +'<a href="javascript:history.go(0)" style="padding:5px 10px;" type="button" value="OK"  >Voltar</a>'
 
         +'</div>';
 
     document.write(msg_alerta);
 
     }       
+    /*
+    function encerradas(){
 
+        alert('As inscrições para a temporada de 2024 tem a previsão de iniciar em 15 de janeiro de 2024, a parir das 10:00h para as turmas de natação e hidroginástica e a partir das 16:00h para as demais modalidades.\n\nTodo o processo de inscrição será realizado pelo site:\n\nhttps://cursosesportivossbc.com\n\nImportante:\n\nDe 15/01 a 14/02, cada pessoa só poderá escolher 1(uma) modalidade\n\nDe 15/02 a 14/03, será permitida a inscrição em uma segunda modalidade\n\nA partir de 15/03 será permitida a inscrição em uma terceira modalidade')
+        
+    }
+    */
+
+    /*
+    let msg_alerta = '<div id="alert-box">'
+        +'<h5>O que é Vulnerabilidade Social?</h5>'
+        +'<p>Pessoa em situação de VULNERABILIDADE SOCIAL, é a pessoa que participa de programas sociais do governo, como por exemplo o "Bolsa Família" e que tem o cadastro no CadUnico/NIS com o respectivo número de inscrição.</p>'
+        +'<input style="padding:5px 10px;" type="button" value="OK" onclick="sair()" />'
+        +'</div>';
+
+    document.write(msg_alerta);
+
+    function sair(){
+
+        document.getElementById('alert-box').hidden = true
+    }
+
+    */
     function getVagas(url){
 
         let ajax = new XMLHttpRequest();
@@ -52,12 +107,16 @@
         });
       } 
 
-    /*
-    alert('As aulas de Ginástica Artística (GA) e Ginástica Rítimica (GR) começam a partir de 13/02/2023.')
-    */
 
+    function GR(){
+
+        alert('Incrições para as vagas remanescentes de Ginástica Rítimica (GR) estarão disponíveis no site a partir de 07/02/2023.')
+    }
+    
+    
     /*
-     function alertTokenVunerabilidade(){
+    
+    function alertTokenVunerabilidade(){
 
         alert("O que é Vulnerabilidade Social?\n\nPessoa em situação de VULNERABILIDADE SOCIAL, é a pessoa que participa de programas sociais do governo, como por exemplo o Bolsa Família e que tem o cadastro no CadUnico/NIS com o respectivo número de inscrição. ")
     }
@@ -65,24 +124,26 @@
 
     function encerradas(){
 
-        alert('As inscrições para a temporada de 2023 estão encerradas!\n\nAs inscrições para a temporada de 2024 tem a previsão de iniciar em 15 de janeiro de 2024.\n\nTodo o processo de inscrição será realizado pelo site:\n\nhttps://cursosesportivossbc.com\n\nImportante:\n\nDe 15/01 a 14/02, cada pessoa só poderá escolher 1(uma) modalidade\n\nDe 15/02 a 14/03, será permitida a inscrição em uma segunda modalidade\n\nA partir de 15/03 será permitida a inscrição em uma terceira modalidade')
+        alert('As inscrições para a temporada de 2024 tem a previsão de iniciar em 15 de janeiro de 2024, a parir das 10:00h para as turmas de natação e hidroginástica e a partir das 16:00h para as demais modalidades.\n\nTodo o processo de inscrição será realizado pelo site:\n\nhttps://cursosesportivossbc.com\n\nImportante:\n\nDe 15/01 a 14/02, cada pessoa só poderá escolher 1(uma) modalidade\n\nDe 15/02 a 14/03, será permitida a inscrição em uma segunda modalidade\n\nA partir de 15/03 será permitida a inscrição em uma terceira modalidade')
+        return
         
     }
+
 
   
    function alertTokenCreeba(){
 
-      alert("Conforme Resolução SESP Nº 004 de 28/10/2021 Art.7º, Os interessados em participar das turmas de inclusão para Pessoas com Deficiência (PCD) e/ou laudo médico do CREEBA, deverão comparecer pessoalmente (interessado ou representante legal) no CREEBA")
+      alert("Conforme Resolução SESP Nº 006 de 15/12/2023 Art.2º §2º, os interessados em participar das turmas de inclusão para Pessoas com Deficiência (PCD) e/ou laudo médico do CREEBA, deverão comparecer pessoalmente (interessado ou representante legal) no CREEBA")
     }
     
     function alertTokenBaetao(){
 
-      alert("Para fazer a inscrição nas turmas de natação intermediário, avançado e aperfeiçoamento para o ano de 2023 é necessário ser egresso das turmas do ano de 2022 e ter autorização fornecida pelo professor.")
+      alert("Para fazer a inscrição nas turmas de natação intermediário, avançado e aperfeiçoamento para o ano de 2024 é necessário ser egresso das turmas do ano de 2023 e ter autorização fornecida pelo professor.")
     }
     
     function alertTokenPauliceia(){
 
-      alert("Para fazer a inscrição nas turmas de natação intermediário, avançado e aperfeiçoamento para o ano de 2023 é necessário ser egresso das turmas do ano de 2022 e ter autorização fornecida pelo professor.")
+      alert("Para fazer a inscrição nas turmas de natação intermediário, avançado e aperfeiçoamento para o ano de 2024 é necessário ser egresso das turmas do ano de 2023 e ter autorização fornecida pelo professor.")
     }
 
 </script>
@@ -102,6 +163,8 @@
    
    <div class="col-md-12" style="text-align-last: left; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; border-radius: 15px;"> 
    
+   
+   
    <?php if( $modalidade["idmodal"] == 55 ){ ?>
             Para fazer a inscrição e matrícula na modalidade Xadrez, você deve entrar em contato com o profº Rodrigo Scimini através Whatsapp abaixo.
         <?php }else{ ?>
@@ -115,15 +178,16 @@
             
             <?php }else{ ?>
             
-                <?php if( $modalidade["idmodal"] == 46 ){ ?>
-                    Para fazer a inscrição na modalidade Zumba, Clique no link abaixo.
+                <?php if( $modalidade["idmodal"] == 61 ){ ?>
+                        Para maiores informações sobre o <span style="font-weight: bold; font-size: 20px; color: orange;"><?php echo htmlspecialchars( $modalidade["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>, que desenvolve esportes e aulas de libras para surdos, entre em contato pelo Whatsapp clicando no link abaixo.
                 
                 <?php }else{ ?>
-                    <?php if( $modalidade["idmodal"] == 22 ){ ?>
-                        Para maiores informações sobre o Projeto Sinais, que desenvolve esportes e aulas de libras para surdos, entre em contato pelo Whatsapp clicando no link abaixo.
-                
+            
+                    <?php if( $modalidade["idmodal"] == 46 ){ ?>
+                        Para fazer a inscrição na modalidade Zumba, Clique no link abaixo.
+                    
                     <?php }else{ ?>
-        
+            
                         <?php if( checkLogin(false) ){ ?> 
                     
                                <span style="color: black; font-weight: bold;">  <?php echo getUserName(); ?></span>!<br>           
@@ -142,9 +206,9 @@
                                 </a>
                                 e nesta etapa selecione abaixo uma turma para praticar a aula de <span style="font-weight: bold; font-size: 20px; color: orange;"><?php echo htmlspecialchars( $modalidade["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>, faça a sua inscrição ou a inscrição de seu dependente.
                               
-                        <?php } ?>  
-                    <?php } ?>
-                 <?php } ?>
+                          <?php } ?>
+                     <?php } ?>
+                <?php } ?>
              <?php } ?>
         <?php } ?>
     <?php } ?>
@@ -171,7 +235,6 @@
                 <div class="col-md-12 alert alert-info" style="font-size: 20px; text-align: justify ">
                     <span style="font-size: 20px; font-weight: bold;">
 
-                        Novas inscrições! <br>
                         Leiam atentamente as observações de cada turma.<br>
                         <span style="color: red;">Sujeito a alterações de acordo com divisão das turmas.</span>
                         
@@ -188,7 +251,7 @@
                 <div class="col-md-12 alert alert-info" style="font-size: 20px; text-align: justify ">
                     <span style="font-size: 20px; font-weight: bold;">
                         
-                         Novas inscrições! <br>
+                        
                         Leiam atentamente as observações de cada turma.<br>
                         <span style="color: red;">Sujeito a alterações de acordo com divisão das turmas.</span>
                         
@@ -236,11 +299,17 @@
               [ <span style="font-weight: bold; font-size: 14px; color: darkorange;">
               <?php echo htmlspecialchars( $value1["descstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  </span>]
               <?php } ?>            
-                <?php echo htmlspecialchars( $value1["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>    
-            </span><br>
+                <?php echo htmlspecialchars( $value1["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  
+                <?php if( $modalidade["idmodal"] == 19 ){ ?>
+                <span style="font-size: 14px; font-weight: bold; color: green;"> - ( Yoga, Chi Kung e Dança Circular )</span>
+                <?php } ?>
+                <br>
+            
             <span style="color: darkgreen; font-size: 16px">
                 [<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>] - <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
             </span><br>
+            
+           
              
               <?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?> das <?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <br>  
                Local da aula: <?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>             
@@ -253,18 +322,15 @@
               <?php } ?>
               
              <?php if( $value1["obs"] ){ ?>
-			  OBSERVAÇÃO: <strong><?php echo htmlspecialchars( $value1["obs"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong><br>
-			  <?php } ?>
-			  
+              OBSERVAÇÃO: <strong><?php echo htmlspecialchars( $value1["obs"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong><br>
+              <?php } ?>
+              
 
                    
                         
               
-              <?php if( $value1["idstatustemporada"] == 2 ){ ?> 
-               <span style="font-weight: bold;">
-              <?php echo htmlspecialchars( $value1["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas<br>
-              <?php } ?>          
-
+             
+              <!--
               <?php if( $value1["idstatustemporada"] == 4 ){ ?> 
                <span style="color: red;">
                 <?php echo htmlspecialchars( $value1["descstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
@@ -272,20 +338,28 @@
                <span style="font-weight: bold;">
               <?php echo htmlspecialchars( $value1["numinscritos"], ENT_COMPAT, 'UTF-8', FALSE ); ?> inscritos para <?php echo htmlspecialchars( $value1["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?> vagas                          
               <?php } ?>
+              -->
+             
 
               <?php if( $value1["idstatustemporada"] == 6 ){ ?> 
-               <span style="color: red;">
-                <?php echo htmlspecialchars( $value1["descstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>. <br>
-                <span style="color: black;">Novas inscrições a partir de <?php echo formatDate($value1["dttermmatricula"]); ?>.</span>
+              
+                     
+
+                         <span style="color: red;">
+                         <?php echo htmlspecialchars( $value1["descstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>. <br>
+                        <span style="color: black;">Novas inscrições a partir de <?php echo formatDate($value1["dttermmatricula"]); ?>.</span>
+                        
+                   
               <?php } ?>
               
-
+              <!--
               <?php if( $value1["numinscritos"] > $value1["vagas"] && $value1["idstatustemporada"] == 4 ){ ?> <br>
               </span> 
                <span style="color: orange;">
                 Para esta turma terá sorteio de vagas<br>
               </span>              
               <?php } ?>
+              -->
 
               <?php if( $value1["idstatustemporada"] == 5 ){ ?>
               
@@ -381,18 +455,45 @@
 
           <?php }else{ ?>
                 
-             <?php if( $value1["idturma"] == 929 OR $value1["idturma"] == 930 OR $value1["idturma"] == 931 OR $value1["idturma"] == 932 OR $value1["idturma"] == 878 OR $value1["idturma"] == 879 OR $value1["idturma"] == 880 OR $value1["idturma"] == 881 ){ ?>
-              <a class="btn btn-info" style="background-color: #cc5d1e"  href="/cart/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/add">Inscrever-se</a>  
+          
+                <?php if( $value1["idstatustemporada"] == 2 ){ ?> 
+                
+                        <a class="btn btn-info" style="background-color: #cc5d1e; color: white;"  onclick="encerradas()">Inscrever-se</a>
+                
+                <?php } ?>
+                
+                <?php if( $value1["idstatustemporada"] == 3 ){ ?> 
+                    
+                
+                        <a class="btn btn-info" style="background-color: #cc5d1e; color: white;"  onclick="encerradas()">Inscrever-se</a>
+                    
+                
+                <?php } ?>
+                
+                <?php if( $value1["idstatustemporada"] == 4 ){ ?> 
+                    
+                
+                    <a class="btn btn-info" style="background-color: #cc5d1e; color: white;"  href="/cart/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/add">Inscrever-se</a>
+                    
+               
+              <?php } ?>
+              
+              <?php if( $value1["idstatustemporada"] == 5 ){ ?> 
+                    <a class="btn btn-info" style="background-color: #cc5d1e; color: white;"  href="/cart/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/add">Inscrever-se</a>
+                
+               
+              <?php } ?>
+                
+             
 
-              <?php }else{ ?>           
-
-                <a class="btn btn-info" style="background-color: #cc5d1e; color: white;"  onclick="encerradas()">Inscrever-se</a>  
+                
             
-             <?php } ?>
+            
+                
               <a class="btn btn-success" style="font-weight: bold; color: white;" onclick="getVagas('/vagas-turma/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturmastatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>')"> Vagas </a> 
               &nbsp;&nbsp;
-              <a href="#" onmousemove="alertTokenVunerabilidade(<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a>
-
+              <a href="#" onclick="alertTokenVulnerabilidade(<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a>
+              
             <br> 
             <h6 style="color: blue; font-weight: bold">  
                      <a href="/insc-turma-temporada-listaespera/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/user/<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: orangered;">Consulte a lista de espera, clicando aqui.  </a>
@@ -426,40 +527,41 @@
            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;FAÇA SUA INSCRIÇÃO E MATRICULA PELO WHATSAPP<br> (<a href="https://wa.me/+5511991000907?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do Sensei Guto. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: darkgreen; font-weight: bold;"></i><span style="color: black;"> 99100 0907&nbsp;</span></a>)
     
         <?php }else{ ?>
-
-          <?php if( $modalidade["idmodal"] == 22 ){ ?>
+        
+            <?php if( $modalidade["idmodal"] == 61 ){ ?>
     
-           &nbsp; OBTENHA MAIS INFORMAÇÕES SOBRE O PROJETO SINAIS<br> <a href="https://wa.me/+5511912672403?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp, onde irá conversar com um dos nossos atendentes. Digite sua mensagem, e no app clique em enviar msg.')"> Clique aqui <br>
+               &nbsp; OBTENHA MAIS INFORMAÇÕES SOBRE O PROJETO SINAIS<br> <a href="https://wa.me/+5511912672403?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp, onde irá conversar com um dos nossos atendentes. Digite sua mensagem, e no app clique em enviar msg.')"> Clique aqui <br>
                    <i class="fa fa-whatsapp" style="color: darkgreen; font-weight: bold;"></i>&nbsp;<span style="color: black;">
                   
                    
                    (11) 91267 2403
-
-           &nbsp;</span></a>
     
-          <?php }else{ ?>
+               &nbsp;</span></a>
     
-          <?php if( $modalidade["idmodal"] == 39 ){ ?>
+           <?php }else{ ?>
     
-              Faça a sua inscrição para o <br> JUDÔ <br> <a href="/judo"><span style="color: red;"> &nbsp;clique aqui</span></a>
-    
-          <?php }else{ ?>
-          
-          <?php if( $modalidade["idmodal"] == 46 ){ ?>
-    
-              Ainda não começaram as inscrições para a ZUMBA. O link para a inscrição irá aparecer aqui a partir da segunda quinzena de fevereiro de 2023. Aguardem!!!
-    
-          <?php }else{ ?>
-          
+                  <?php if( $modalidade["idmodal"] == 39 ){ ?>
+            
+                      Faça a sua inscrição para o <br> JUDÔ <br> <a href="/judo"><span style="color: red;"> &nbsp;clique aqui</span></a>
+            
+                  <?php }else{ ?>
+                  
+                      <?php if( $modalidade["idmodal"] == 46 ){ ?>
                 
-    
-            <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
-              
+                          Ainda não começaram as inscrições para a ZUMBA. O link para a inscrição irá aparecer aqui a partir da segunda quinzena de fevereiro de 2023. Aguardem!!!
                 
-        <?php } ?>
-        <?php } ?>  
-          
-         <?php } ?>
+                      <?php }else{ ?>
+                      
+                            
+                
+                        <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                          
+                            
+                
+                    <?php } ?>  
+                  
+                 <?php } ?>
+            <?php } ?>
     
         <?php } ?>
     <?php } ?>
@@ -485,6 +587,18 @@
       </div>
     </a>
   </div>
+  
+  <!--
+  <div id="popup" style="text-align-last: center; border-radius: 15px"> 
+            <div style="text-align-last: right; font-weight: bold; " onclick="imageNone()"> x &nbsp;&nbsp;
+            </div>  
+            
+            <div style="background-color: lightgreen; text-align: justify; border-radius: 15px 15px 15px 15px; padding: 10px; font-size: 13px; font-weight: bold;">
+                <span style="color: red;"> ATENÇÃO! </span><br>
+                    LEMBRAMOS que: se você já fez uma inscrição, sua PRIMEIRA OPÇÃO, para a temporada 2024 e está matriculado(a), ou está aguardando matrícula, ou ainda está na lista de espera, você deve aguardar até o dia 15/02 para fazer uma nova inscrição, sua SEGUNDA OPÇÃO, para as vagas remanescentes. 
+            </div> 
+    </div>
+ -->
   
 <!--
   <div class="col-md-4" style="text-align-last: left; background-color: #909090; border: 5px white; margin: 0px 0px 10px 0px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">

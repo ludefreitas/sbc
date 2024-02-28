@@ -113,6 +113,10 @@
 
                         <?php } ?>   
                         <br>
+                        <p style="color: red;">
+                           Atualizar ATESTADO?
+                        <a href="/atestado-upload"> Clique aqui </a>
+                        </p>                
 
                         <label style="color: blue;">
                             SELECIONE UMA PESSOA<br>
@@ -132,7 +136,8 @@
                         
                         <p>
                            <a href="/pessoa-create">  INSERIR UMA NOVA PESSOA </a>
-                        </p>                  
+                        </p>  
+                        
                 
             </div>
         </div>

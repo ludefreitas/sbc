@@ -272,13 +272,12 @@ desired effect
             <?php if( getUserId() == 7 OR getUserId() == 1 OR getUserId() == 156 ){ ?>
 
 
-            <li><a href="/admin/admins"><i class="fa fa-users"></i>Administradores</a></li>
-
-            <?php } ?>
-
-            
+            <li><a href="/admin/admins"><i class="fa fa-users"></i>Administradores</a></li>            
             <li><a href="/admin/prof"><i class="fa fa-users"></i>Professores</a></li>
             <li><a href="/admin/estagiarios"><i class="fa fa-users"></i>Estagiários</a></li>
+            
+            <?php } ?>
+
             <li><a href="/admin/users-cliente"><i class="fa fa-users"></i>Clientes</a></li>
             <li><a href="/admin/pessoas"><i class="fa fa-users"></i>Alunos</a></li>          
           </ul>
@@ -286,17 +285,7 @@ desired effect
          <li>
           <a href="/admin/temporada"><i class="fa fa-link"></i><span>Temporadas</span></a>
         </li> 
-        <li class="treeview">
-          <a href="/admin"><i class="fa fa-reorder"></i>  <span>Chamadas por turmas <span style="color: red; font-size: 10px">(Novo)</span> </span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <?php require $this->checkTemplate("turma-temporada-menu-hoje");?>
-
-          </ul>
-        </li> 
+        
         <li class="treeview">
           <a href="/admin"><i class="fa fa-link"></i> <span>TURMAS por temporada</span>
             <span class="pull-right-container">
@@ -305,6 +294,17 @@ desired effect
           </a>
           <ul class="treeview-menu">
             <?php require $this->checkTemplate("turma-temporada-menu");?>
+
+          </ul>
+        </li> 
+        <li class="treeview">
+          <a href="/admin"><i class="fa fa-reorder"></i>  <span>Chamadas<span style="color: red; font-size: 10px">(Novo)</span> </span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <?php require $this->checkTemplate("turma-temporada-menu-hoje");?>
 
           </ul>
         </li> 
@@ -457,6 +457,8 @@ desired effect
                   </li>            
           </ul>
         </li>  
+        <?php if( getUserId() == 7 OR getUserId() == 1 OR getUserId() == 156 ){ ?>
+
         <li>
           <a href="/admin/turma"><i class="fa fa-link"></i> <span>Todas Turmas</span></a>
         </li>                        
@@ -479,6 +481,8 @@ desired effect
         <li>
           <a href="/admin/horario"><i class="fa fa-link"></i> <span>Horários</span></a>
         </li>
+        <?php } ?>
+
       </ul>
       <?php }else{ ?>
 

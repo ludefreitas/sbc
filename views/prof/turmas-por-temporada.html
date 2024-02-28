@@ -1,5 +1,42 @@
 
 <script type="text/javascript">
+
+  function atualizaStatus(idturma, desctemporada, idtemporada){
+
+        let status = prompt('Para atualizar o status da turma '+ idturma +' para a temporada '+ desctemporada +' selecionada, digite (n) para:\n 2 - Inscrições não iniciadas\n 3 - Inscrições abertas\n 4 - Inscrições suspensas\n 5 - Inscrições encerradas\n 6 - Turma não iniciada');  
+        
+        if(status != 2 && status != 3 && status != 4 && status != 5 && status != 6){
+          alert("Valor inválido!!!")
+          return
+        }   
+        
+        let url = "/prof/atualiza/turmatemporada/"+idturma+"/"+idtemporada+"/"+desctemporada+"/"+status        
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url'); 
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){         
+            if(result){   
+            
+                let texto = '- '+result
+                let idlink = 'idlinkstatus'+idturma
+    
+                if(status != null){
+                  document.getElementById(idlink).innerHTML = texto   
+                }         
+                            
+                if(status == 2){ document.getElementById(idlink).style.color = 'orange'; }
+                if(status == 3){ document.getElementById(idlink).style.color = 'darkgreen'; }
+                if(status == 4){ document.getElementById(idlink).style.color = "red"; }
+                if(status == 5){ document.getElementById(idlink).style.color = 'darkred'; }
+                if(status == 6){ document.getElementById(idlink).style.color = 'blue'; }  
+
+          } 
+
+        });
+      }
   
 
   function openDiv(idmodalidade){
@@ -95,25 +132,38 @@
                       <strong>{$value.descturma} </strong> 
 
                         {if="$value.idturmastatus == 2"}
-                          <span style="color: orange; font-weight: bold;">- Inscrições não iniciadas</span>                  
-                        {/if}
-                       
-                        {if="$value.idturmastatus == 3"}
-                          <span style="color: darkgreen; font-weight: bold;">- Inscrições abertas</span>
-                         
-                        {/if}
+                          <span>
+                            <a id="idlinkstatus{$value.idturma}" style="color: orange; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.idturma}, {$value.desctemporada}, {$value.idtemporada})">- Inscrições não iniciadas</a>
+                          </span>
 
-                        {if="$value.idturmastatus == 4"}
-                          <span style="color: red; font-weight: bold;"> - Inscrições suspensas</span>
+                          {/if}
                           
-                        {/if}
+                          {if="$value.idturmastatus == 3"}
+                          <span>
+                            <a id="idlinkstatus{$value.idturma}" style="color: darkgreen; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.idturma}, {$value.desctemporada}, {$value.idtemporada})">- Inscrições abertas</a>
+                          </span>
 
-                        {if="$value.idturmastatus == 6"}
-                          <span style="color: blue; font-weight: bold;"> - Turma não iniciada</span>
+                          {/if}
+
+                          {if="$value.idturmastatus == 4"}
+                          <span>
+                            <a id="idlinkstatus{$value.idturma}" style="color: red; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.idturma}, {$value.desctemporada}, {$value.idtemporada})"> - Inscrições suspensas</a>
+                          </span>
+                          {/if}
                           
-                        {/if}
+                          {if="$value.idturmastatus == 5"}
+                          <span>
+                            <a id="idlinkstatus{$value.idturma}" style="color: darkred; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.idturma}, {$value.desctemporada}, {$value.idtemporada})"> - Inscrições encerradas</a>
+                          </span>
+                          {/if}
 
-                       {$value.diasemana} {$value.horainicio} ás {$value.horatermino} - 
+                          {if="$value.idturmastatus == 6"}
+                          <span>
+                            <a id="idlinkstatus{$value.idturma}" style="color: blue; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.idturma}, {$value.desctemporada}, {$value.idtemporada})"> - Turma não iniciada</a>
+                          </span>
+                          {/if}
+
+                       - {$value.diasemana} {$value.horainicio} ás {$value.horatermino} - 
                        <strong>{$value.descrfxetaria}  {$value.initidade} a {$value.fimidade} anos -</strong>   {$value.apelidolocal} - {$value.nomeespaco}&nbsp; <strong> Vagas: ({$value.vagas} Geral)&nbsp; - &nbsp;({$value.vagaslaudo} Laudo)&nbsp; - &nbsp;({$value.vagaspcd} PCD)&nbsp; - &nbsp;({$value.vagaspvs} PVS)</strong>
                        - <strong> Obsevação: </strong>{$value.obs}  
                       </span>

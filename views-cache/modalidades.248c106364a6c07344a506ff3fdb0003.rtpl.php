@@ -7,9 +7,9 @@
         }
     
 
-    function GrGa(){
+    function GR(){
 
-        alert('As aulas de Ginástica Artística (GA) e Ginástica Rítimica (GR) começam a partir de 13/02/2023.')
+       alert('O inicio das aulas para as turmas de GR começam a partir do dia 19/02/2024. Então fique atento ao dia da semana e horário da turma da qual você irá fazer a inscrição')
     }
 
 </script>
@@ -64,6 +64,50 @@
 </div>
 <hr style="background-color: orange;">
 
+<div class="container"> <!-- container 3 -->
+    <div class="row"> <!-- row 4 -->      
+      <div class="col-md-12" style="text-align-last: left; line-height: 20px;  font-size: 20px; font-style: normal; margin: 5px 0px 5px 0px; padding: 0px 0px 0px 0px">
+        <div class="container">
+          <div class="row alert-warning">
+            <div class="col-md-6" style="margin: 10px 0px 5px 0px; ">                 
+                <a style="color: #0f71b3; text-decoration: none; font-weight: bold;" href="/judo">
+                    Judô
+                    <br>
+                </a>     
+            </div>
+            <div class="col-md-6" style="text-align-last: center; margin: 5px 0px 5px 0px; color: white; padding: 0px 0px 0px 0px">                
+                <a class="card card-just-text" style="background-color: #cc5d1e; color: white; padding: 5px 0px 5px 0px;  text-decoration: none" href="/judo" text-decoration="none">
+                    Cursos dísponíveis
+                </a>
+            </div>
+          </div>
+        </div>
+      </div>                        
+    </div> <!-- row 4 -->
+  </div> <!-- container 3 -->
+
+  <div class="container"> <!-- container 3 -->
+    <div class="row"> <!-- row 4 -->      
+      <div class="col-md-12" style="text-align-last: left; line-height: 20px;  font-size: 20px; font-style: normal; margin: 5px 0px 5px 0px; padding: 0px 0px 0px 0px">
+        <div class="container">
+          <div class="row alert-warning">
+            <div class="col-md-6" style="margin: 10px 0px 5px 0px; ">                 
+                <a style="color: #0f71b3; text-decoration: none; font-weight: bold;" href="/xadrez">
+                    Xadrez
+                    <br>
+                </a>     
+            </div>
+            <div class="col-md-6" style="text-align-last: center; margin: 5px 0px 5px 0px; color: white; padding: 0px 0px 0px 0px">                
+                <a class="card card-just-text" style="background-color: #cc5d1e; color: white; padding: 5px 0px 5px 0px;  text-decoration: none" href="/xadrez" text-decoration="none">
+                    Cursos dísponíveis
+                </a>
+            </div>
+          </div>
+        </div>
+      </div>                        
+    </div> <!-- row 4 -->
+  </div> <!-- container 3 -->
+
 <?php $counter1=-1;  if( isset($modalidades) && ( is_array($modalidades) || $modalidades instanceof Traversable ) && sizeof($modalidades) ) foreach( $modalidades as $key1 => $value1 ){ $counter1++; ?>
 
     
@@ -81,19 +125,24 @@
           <div class="row alert-warning">
             <div class="col-md-6" style="margin: 10px 0px 5px 0px; ">
             
-                 <?php if( $value1["idmodal"] == 44 OR $value1["idmodal"] == 25 ){ ?>
-                
-                    <a style="color: #0f71b3; text-decoration: none; font-weight: bold;" href="/modalidade/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onclick="GrGa()">
+                 <?php if( $value1["idmodal"] == 25 ){ ?>
+                    
+                    <a style="color: #0f71b3; text-decoration: none; font-weight: bold;" href="/modalidade/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onclick="GR()">
                         <?php echo htmlspecialchars( $value1["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
                     </a>
+                    
+                    
+                    
               
-                <?php }else{ ?>
-              
+                <?php }else{ ?>              
                         <a style="color: #0f71b3; text-decoration: none; font-weight: bold;" href="/modalidade/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                         <?php echo htmlspecialchars( $value1["descmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
-                         </a>
-              
-                  
+                        <?php if( $value1["idmodal"] == 5 ){ ?>
+                         <span style="font-size: 14px; font-weight: bold;"> ( Yoga, Chi Kung e Dança circular )</span>                        
+
+                        <?php } ?>
+                        <br>
+                         </a>                    
               
               
               <?php } ?>
@@ -102,17 +151,13 @@
             </div>
             <div class="col-md-6" style="text-align-last: center; margin: 5px 0px 5px 0px; color: white; padding: 0px 0px 0px 0px">
                 
-             <?php if( $value1["idmodal"] == 44 OR $value1["idmodal"] == 25 ){ ?>
-              <a class="card card-just-text" style="background-color: #cc5d1e; color: white; padding: 5px 0px 5px 0px;  text-decoration: none" href="/modalidade/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onclick="GrGa()" text-decoration="none">Cursos dísponíveis
+             <?php if( $value1["idmodal"] == 25 ){ ?>
+              <a class="card card-just-text" style="background-color: #cc5d1e; color: white; padding: 5px 0px 5px 0px;  text-decoration: none" href="/modalidade/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onclick="GR()" text-decoration="none">Cursos dísponíveis
               </a>
               <?php }else{ ?>
               
-                
-              
                 <a class="card card-just-text" style="background-color: #cc5d1e; color: white; padding: 5px 0px 5px 0px;  text-decoration: none" href="/modalidade/<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" text-decoration="none">Cursos dísponíveis
                 </a>
-                
-               
               
               <?php } ?>
               

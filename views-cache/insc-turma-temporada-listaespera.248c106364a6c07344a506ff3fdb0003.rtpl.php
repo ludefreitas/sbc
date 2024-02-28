@@ -22,21 +22,12 @@
     <title>Cursos Esportivos SBC</title>
     <link rel="icon" type="image/jpg" href="/../res/site/img/corpoacao.png" />
 
-    <script type="text/javascript">
-      
-      function alertTokenVunerabilidade(){
-
-            alert("Pessoa em situação de vulnerabilidade social, é a pessoa que participa de programas sociais do governo, como por exemplo o Bolsa Família e que tem o cadastro no CadUnico/NIS com o respectivo número de inscrição. ")
-        }
-        
-    </script>
-
     <style type="text/css">
         body {
             margin: 10px;
              padding: 20px;
         }
-
+        
          #div1 {
             display: flex;
         }
@@ -45,6 +36,15 @@
             flex-shrink:0;
         }
     </style>
+    
+    <script type="text/javascript">
+      
+      function alertTokenVunerabilidade(){
+
+            alert(" “Vulnerabilidade social é o conceito que caracteriza a condição dos grupos de indivíduos que estão à margem da sociedade, ou seja, pessoas ou famílias que estão em processo de exclusão social, principalmente por fatores socioeconômicos. (…) As pessoas que são consideradas “vulneráveis sociais” são aquelas que estão perdendo sua representatividade na sociedade, e geralmente dependem de auxílios de terceiros para garantirem a sua sobrevivência” ")
+            }
+        
+    </script>
 
 
    
@@ -89,50 +89,20 @@
 
     <div id="div1">
 
-      <table style="margin-bottom: 10px;">
-          
-          <tr rowspan="2">
-            <th class="class1" style="border: solid 1px; text-align: center; font-weight: bold;">
-              >>>
-            </th>    
-          </tr>
-          <tr rowspan="2">
-            <th class="class1" style="border: solid 1px; text-align: center;  background-color: yellow; font-size: 12px; font-weight: bold;">
-              <br>ORDEM
-            </th>    
-          </tr>
-          <?php $counter1=-1;  if( isset($inscCountPlm) && ( is_array($inscCountPlm) || $inscCountPlm instanceof Traversable ) && sizeof($inscCountPlm) ) foreach( $inscCountPlm as $key1 => $value1 ){ $counter1++; ?>
-          
-          
-
-                  <tr style="background: linear-gradient(to bottom, rgba(96, 96, 192, 0.4), transparent);">
-                      
-                  <tr>
-                  
-              <td class="class1" style="text-align: center; border: solid 1px;">
-              <?php echo htmlspecialchars( $value1["numordem"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-            </td>
-          </tr>
-          <?php }else{ ?>
-          <tr style="font-weight: bold; color: red; font-size: 22px; text-align: center; ">
-            <td>       
-            0
-            </td>
-          </tr>
-          <?php } ?>        
-      </table>
+      
       <table>
           <tr>
               <td colspan="5" style="border: solid 1px; text-align: center;">
                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                 <span style="color: blue">
                  Lista de ESPERA de pessoas com laudo (indicação médica)
-                 &nbsp;&nbsp;&nbsp;
+                 &nbsp;&nbsp;&nbsp;</span>
               </td>
               
           </tr>
 
           <tr>
-              <th style="border: solid 1px; text-align: center; font-size: 12px; font-weight: bold;">Numero de<br> sorteio</th>
+              <th style="border: solid 1px; text-align: center; font-size: 12px; font-weight: bold;">Número<br>na turma</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold;">Nome</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold;">Lista</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold;">CPF</th>
@@ -193,46 +163,21 @@
     
     <div id="div1">
 
-      <table style="margin-bottom: 10px;">
-          
-          <tr rowspan="2">
-            <th class="class1" style="border: solid 1px; text-align: center; font-weight: bold;">
-              >>>
-            </th>    
-          </tr>
-          <tr rowspan="2">
-            <th class="class1" style="border: solid 1px; text-align: center;  background-color: yellow; font-size: 12px; font-weight: bold;">
-              <br>ORDEM
-            </th>    
-          </tr>
-          <?php $counter1=-1;  if( isset($inscCountPcd) && ( is_array($inscCountPcd) || $inscCountPcd instanceof Traversable ) && sizeof($inscCountPcd) ) foreach( $inscCountPcd as $key1 => $value1 ){ $counter1++; ?>
-          
-          <tr>
-              <td class="class1" style="text-align: center; border: solid 1px;">
-              <?php echo htmlspecialchars( $value1["numordem"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-            </td>
-          </tr>
-          <?php }else{ ?>
-          <tr style="font-weight: bold; color: red; font-size: 22px; text-align: center; ">
-            <td>     
-            0
-            </td>
-          </tr>
-          <?php } ?>        
-      </table>
-
+      
 
       <table id="table1">
         <tr>
               <td colspan="5" style="border: solid 1px; text-align: center;">
                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                 <span style="color: blue">
                  Lista de ESPERA de pessoas com deficiência
+                 </span>
                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               </td>
               
           </tr>
           <tr>
-              <th style="border: solid 1px; text-align: center; font-size: 12px; font-weight: bold;">Numero de<br> sorteio</th>
+              <th style="border: solid 1px; text-align: center; font-size: 12px; font-weight: bold;">Número<br>na turma</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold;">Nome</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold;">Lista</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold;">CPF</th>
@@ -293,49 +238,24 @@
 
 <div id="div1">
 
-      <table style="margin-bottom: 10px;">
-          
-          <tr rowspan="2">
-            <th class="class1" style="border: solid 1px; text-align: center; font-weight: bold;">
-              >>>
-            </th>    
-          </tr>
-          <tr rowspan="2">
-            <th class="class1" style="border: solid 1px; text-align: center;  background-color: yellow; font-size: 12px; font-weight: bold;">
-              <br>ORDEM
-            </th>    
-          </tr>
-          <?php $counter1=-1;  if( isset($inscCountPvs) && ( is_array($inscCountPvs) || $inscCountPvs instanceof Traversable ) && sizeof($inscCountPvs) ) foreach( $inscCountPvs as $key1 => $value1 ){ $counter1++; ?>
-          
-          <tr>
-              <td class="class1" style="text-align: center; border: solid 1px;">
-              <?php echo htmlspecialchars( $value1["numordem"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-            </td>
-          </tr>
-          <?php }else{ ?>
-          <tr style="font-weight: bold; color: red; font-size: 22px; text-align: center; ">
-            <td>
-              0
-            </td>
-          </tr>
-          <?php } ?>        
-      </table>
-
+     
 
       <table id="table1">
         <tr>
               <td colspan="5" style="border: solid 1px; text-align: center;">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                 Lista de ESPERA de pessoas em vulnerabilidade social 
-
+                <span style="color: blue">
+                 Lista de ESPERA de pessoas em vulnerabilidade social
+                 </span>
+                 
                  <a href="#" onmousemove="alertTokenVunerabilidade()"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a>
-
+                 
                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               </td>
               
           </tr>
           <tr>
-              <th style="border: solid 1px; text-align: center; font-size: 12px; font-weight: bold;">Numero de<br> sorteio</th>
+              <th style="border: solid 1px; text-align: center; font-size: 12px; font-weight: bold;">Número<br>na turma</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold;">Nome</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold;">Lista</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold;">CPF</th>
@@ -394,46 +314,22 @@
 
 <div id="div1">
 
-      <table style="margin-bottom: 10px;">
-          
-          <tr rowspan="2">
-            <th class="class1" style="border: solid 1px; text-align: center; font-weight: bold;">
-              >>>
-            </th>    
-          </tr>
-          <tr rowspan="2">
-            <th class="class1" style="border: solid 1px; text-align: center;  background-color: yellow; font-size: 12px; font-weight: bold;">
-             <br>ORDEM
-            </th>    
-          </tr>
-          <?php $counter1=-1;  if( isset($inscCountAmp) && ( is_array($inscCountAmp) || $inscCountAmp instanceof Traversable ) && sizeof($inscCountAmp) ) foreach( $inscCountAmp as $key1 => $value1 ){ $counter1++; ?>
-          
-          <tr>
-              <td class="class1" style="text-align: center; border: solid 1px;">
-              <?php echo htmlspecialchars( $value1["numordem"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-            </td>
-          </tr>
-          <?php }else{ ?>
-          <tr style="font-weight: bold; color: red; font-size: 22px; text-align: center; ">
-            <td>   
-            0
-            </td>
-          </tr>
-          <?php } ?>        
-      </table>
+      
 
 
       <table id="table1">
         <tr>
               <td colspan="5" style="border: solid 1px; text-align: center;">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span style="color: blue">
                  Lista de ESPERA de pessoas ampla concorrência (GERAL)
+                 </span>
                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               </td>
               
           </tr>
           <tr>
-              <th style="border: solid 1px; text-align: center; font-size: 12px; font-weight: bold;">Numero de<br> sorteio</th>
+              <th style="border: solid 1px; text-align: center; font-size: 12px; font-weight: bold;">Número<br>na turma</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold;">Nome</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold;">Lista</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold;">CPF</th>

@@ -110,7 +110,7 @@
                     <span style="font-weight: bold;"> Horário:  </span>     <?php echo htmlspecialchars( $insc["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $insc["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?>                  
                     <br>
                     <span style="font-weight: bold;"> Obs: </span>
-                    Confirmar a frequência mensalmente com o professor(a) <?php echo htmlspecialchars( $apelidoperson, ENT_COMPAT, 'UTF-8', FALSE ); ?> no telefone <?php echo htmlspecialchars( $telefoneperson, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                    Confirmar a frequência mensalmente com o professor(a) <?php echo htmlspecialchars( $apelidoperson, ENT_COMPAT, 'UTF-8', FALSE ); ?> no telefone: _______________
                 </h7>
             </div>            
         </div>

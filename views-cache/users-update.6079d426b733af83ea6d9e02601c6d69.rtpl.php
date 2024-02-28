@@ -30,11 +30,11 @@
         <form role="form" action="/admin/users/<?php echo htmlspecialchars( $user["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post">
           <div class="box-body">
             <div class="form-group">
-              <label for="desperson">Nome</label>
+              <label for="desperson">Nome [<?php echo htmlspecialchars( $user["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>]</label> 
               <input disabled="true" type="text" class="form-control" id="desperson" name="desperson" placeholder="Digite o nome" value="<?php echo htmlspecialchars( $user["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
             <div class="form-group">
-              <label>-Apelido</label>
+              <label for="desperson">-Apelido</label>
               <input type="text" class="form-control" id="apelidoperson" name="apelidoperson" placeholder="Digite o apelido" value="<?php echo htmlspecialchars( $user["apelidoperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
             <!--
@@ -51,7 +51,9 @@
               <input type="email" class="form-control" id="desemail" name="desemail" placeholder="Digite o e-mail" value="<?php echo htmlspecialchars( $user["desemail"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
           -->
-            <?php if( getUserId() == 2 OR getUserId() == 1 OR getUserId() == 156 ){ ?>
+            <div class="checkbox">
+                
+            <?php if( getUserId() == 1 OR getUserId() == 7 OR getUserId() == 156 ){ ?>
 
 
                 <div class="checkbox">
@@ -68,7 +70,7 @@
                </div>
 
                 <div class="checkbox">
-                  <label>
+                <label>
                 <?php if( $user["isaudi"] == 1 ){ ?>
 
                 <input type="checkbox" name="isaudi" value="1" checked> Acesso de Auditor
@@ -77,13 +79,13 @@
                   <input type="checkbox" name="isaudi" value="1" > Acesso de Auditor
                 <?php } ?>
 
-              </label>
+                </label>
                </div>
 
             <?php } ?>
 
             
-
+            
             <div class="checkbox">
               <label>
                 <?php if( $user["isprof"] == 1 ){ ?>
@@ -100,13 +102,12 @@
               <label>
                 <?php if( $user["isestagiario"] == 1 ){ ?>
 
-                <input type="checkbox" name="isestagiario" value="1"checked> Acesso de Estagiário
+                <input type="checkbox" name="isestagiario" value="1" checked> Acesso de Estagiário
                 <?php }else{ ?>
 
                   <input type="checkbox" name="isestagiario" value="1" > Acesso de Estagiário
                 <?php } ?>
 
-                
               </label>
             </div>
             <!--
@@ -121,7 +122,7 @@
           <!-- /.box-body -->
           <div class="box-footer">
             <button type="submit" class="btn btn-primary">Salvar</button>
-            &nbsp&nbsp&nbsp&nbsp
+            &nbsp;&nbsp;&nbsp;&nbsp;
             <a type="button" class="btn btn-danger" href="javascript:window.history.go(-1)">Cancelar</a>
           </div>
         </form>

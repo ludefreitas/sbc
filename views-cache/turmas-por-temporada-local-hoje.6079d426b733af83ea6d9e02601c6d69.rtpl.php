@@ -120,10 +120,11 @@
       <div class="box-body" style="border: solid 1px lightblue; margin: 5px;"> 
       <div class="box-body col-md-2">
 
+           <a href="/admin/turma-temporada-hoje/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><i class=""></i>TODOS OS LOCAIS</a>&nbsp;&nbsp;&nbsp;&nbsp; <br>
           <?php $counter1=-1;  if( isset($locais) && ( is_array($locais) || $locais instanceof Traversable ) && sizeof($locais) ) foreach( $locais as $key1 => $value1 ){ $counter1++; ?>
                   <a href="/admin/turma-temporada-hoje/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/local/<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><i class=""></i><?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a>&nbsp;&nbsp;&nbsp;&nbsp;
           <?php } ?>
-          <a href="/admin/turma-temporada-hoje/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><i class=""></i>TODOS OS LOCAIS</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          
             
       </div> 
           <div class="box-body no-padding col-md-10">
@@ -159,11 +160,10 @@
                  <?php if( $idmodalidade == $value2["idmodal"] ){ ?>
                  
                 <?php if( numeroNaListaDePresençaByIdturmaData($value2["idturma"], $ano, $mes, $dia) == 0 ){ ?>
-                    <div id="caixa<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="box-body col-md-2" style="border: solid 1px lightblue; margin: 5px; background-color: lightgray; ">
+                    <div  class="box-body col-md-1" style="border: solid 1px lightblue; margin: 5px; background-color: lightgray; font-size: 7px; width: 70px; height: 100px; display: inline-block; ">
                 <?php }else{ ?>
-                    <div id="caixa<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="box-body col-md-2" style="border: solid 1px lightblue; margin: 5px; background-color: lightgreen; ">
+                    <div  class="box-body col-md-1" style="border: solid 1px lightblue; margin: 5px; background-color: lightgreen; font-size: 7px; width: 70px; height: 100px; display: inline-block; ">
                 <?php } ?>     
-
                     <span style="text-align: left;">
                           <strong style="color: orange;">[<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>]</strong> &nbsp;&nbsp;
                           <strong> <?php echo htmlspecialchars( $value2["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </strong> 

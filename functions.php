@@ -94,10 +94,10 @@ function getAtestadoDermaIcone($idpess){
     $atestado = $saude->getCountAtestadoDermaByIdPess($idpess);
      $html = [];
     if($atestado > 0){ 
-        array_push($html, '<span style="color: darkgreen;">Dermato</span><i style="font-size: 12px; color: darkorange" class="fa fa-check"></i>'
+        array_push($html, '<span style="color: darkgreen;">Dermatológico</span><i style="font-size: 12px; color: darkorange" class="fa fa-check"></i>'
             );                          
     }else{
-        array_push($html, '[Dermato]'
+        array_push($html, '[Dermatológico]'
             );
     }
     return $html[0];
@@ -107,22 +107,131 @@ function getAtestadoIconeByNumCpf($numcpf){
     $saude = new Saude();
     $atestado = $saude->getCountAtestadoByNumcpf($numcpf);
     $validade = $saude->getAtestadoUltimoByNumcpf($numcpf);
-
-    $hoje = date('Y-m-d');
-    $validade = $validade[0]['datavalidade'];
-    
+ 
     $html = [];
     if($atestado > 0){
+        $hoje = date('Y-m-d');
+        $validade = $validade[0]['datavalidade'];
         if($hoje > $validade){
-            array_push($html, '<span style="color: darkgreen;">Atestado</span>&nbsp;<i style="font-size: 12px; color: red" class="fa fa-question-circle"></i>'
-            );                          
+
+            array_push($html, '<span style="color: darkgreen;">Clínico</span>&nbsp;<i style="font-size: 12px; color: red" class="fa fa-question-circle"></i>'
+            );      
+
         }else{
-            array_push($html, '<span style="color: darkgreen;">Atestado</span><i style="font-size: 12px; color: darkorange" class="fa fa-check"></i>'
-            );                          
+            $data_validade_menos_2meses = date('Y-m-d', strtotime("-2 month", strtotime($validade))); 
+            if($hoje > $data_validade_menos_2meses){
+
+                array_push($html, '<span style="color: darkgreen;">Clínico</span><i style="font-size: 12px; color: darkorange" class="fa fa-exclamation-triangle"></i>'
+                );       
+            }else{
+
+                array_push($html, '<span style="color: darkgreen;">Clínico</span><i style="font-size: 12px; color: darkorange" class="fa fa-check"></i>'
+                );
+            }                   
         } 
         
     }else{
-        array_push($html, '[Atestado]'
+        array_push($html, '[Clínico]'
+            );
+    }
+    return $html[0];
+}
+
+function getAtestadoDermaIconeByNumCpf($numcpf){
+    $saude = new Saude();
+    $atestado = $saude->getCountAtestadoDermaByNumcpf($numcpf);
+    $validade = $saude->getAtestadoDermaUltimoByNumcpf($numcpf);
+
+    $html = [];
+    if($atestado > 0){
+        $hoje = date('Y-m-d');
+        $validade = $validade[0]['datavalidade'];
+        if($hoje > $validade){
+            array_push($html, '<span style="color: darkgreen;">Dermatológico</span>&nbsp;<i style="font-size: 12px; color: red" class="fa fa-question-circle"></i>'
+            );                          
+        }else{
+            $data_validade_menos_2meses = date('Y-m-d', strtotime("-2 month", strtotime($validade))); 
+            if($hoje > $data_validade_menos_2meses){
+
+                array_push($html, '<span style="color: darkgreen;">Dermatológico</span><i style="font-size: 12px; color: darkorange" class="fa fa-exclamation-triangle"></i>'
+                );                          
+            }else{
+
+                array_push($html, '<span style="color: darkgreen;">Dermatológico</span><i style="font-size: 12px; color: darkorange" class="fa fa-check"></i>'
+                );                          
+            }                   
+        } 
+        
+    }else{
+        array_push($html, '[Dermatológico]'
+            );
+    }
+    return $html[0];
+}
+
+function getAtestadoDermaExiste($numcpf, $tipoatestado){
+
+    $saude = new Saude();
+    $atestado = $saude->getArquivoPdfAnteriorByCpf($numcpf, $tipoatestado); 
+
+    $html = [];
+    if($atestado > 0){        
+        
+        array_push($html, '<a href="res/site/atestadoderma/'.$atestado[0]['nomearquivo'].'"> <i class="fa fa-file-pdf-o"></i></a>'
+            );         
+    }else{
+        array_push($html, ''
+            );
+    }
+    return $html[0];
+}
+
+function getAtestadoClinicoExiste($numcpf, $tipoatestado){
+
+    $saude = new Saude();
+    $atestado = $saude->getArquivoPdfAnteriorByCpf($numcpf, $tipoatestado); 
+
+    $html = [];
+    if($atestado > 0){        
+        
+        array_push($html, '<a href="res/site/atestadoderma/'.$atestado[0]['nomearquivo'].'"> <i class="fa fa-file-pdf-o"></i></a>'
+            );         
+    }else{
+        array_push($html, ''
+            );
+    }
+    return $html[0];
+}
+
+function getAtestadoDermaProfExiste($numcpf, $tipoatestado){
+
+    $saude = new Saude();
+    $atestado = $saude->getArquivoPdfAnteriorByCpf($numcpf, $tipoatestado); 
+
+    $html = [];
+    if($atestado > 0){        
+        
+        array_push($html, '<a href="/../res/site/atestadoderma/'.$atestado[0]['nomearquivo'].'"> <i class="fa fa-file-pdf-o"></i></a>'
+            );         
+    }else{
+        array_push($html, ''
+            );
+    }
+    return $html[0];
+}
+
+function getAtestadoClinicoProfExiste($numcpf, $tipoatestado){
+
+    $saude = new Saude();
+    $atestado = $saude->getArquivoPdfAnteriorByCpf($numcpf, $tipoatestado); 
+
+    $html = [];
+    if($atestado > 0){        
+        
+        array_push($html, '<a href="/../res/site/atestadoderma/'.$atestado[0]['nomearquivo'].'"> <i class="fa fa-file-pdf-o"></i></a>'
+            );         
+    }else{
+        array_push($html, ''
             );
     }
     return $html[0];
@@ -209,6 +318,280 @@ function getCid($idpess){
     }    
 }
 
+function vagasPublicoGeral($idturma, $idtemporada, $idmodal, $idturmastatus, $tokencpf){
+
+    $html = [];
+    $vagasPubGeral = Turma::getVagasByIdTurma($idturma);
+    $numinscPublicoGeral = Insc::getNumInscPublicoGeralValidaTurmaTemporada($idtemporada, $idturma);
+    $vagasMenosInscritosPubGeral = ($vagasPubGeral - $numinscPublicoGeral);
+
+    if($tokencpf == 0 ){
+         array_push($html, '<input type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> 
+                            &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> 
+                            <span style="font-size: 12px; color: red">('.$vagasMenosInscritosPubGeral.' de '.$vagasPubGeral.' vagas para público em geral)</span>   <br>'
+                    );  
+        return $html[0]; 
+    }else{       
+        if($idmodal == 25){
+            $vagasListaEsperaPubGeral = ceil($vagasPubGeral * 0.5);            
+        }else{
+            $vagasListaEsperaPubGeral = ceil($vagasPubGeral * 0.2);
+        }
+        $numinscListaEsperaPublicoGeral = Insc::getNumInscListaEsperaPubGeralTurmaTemporada($idtemporada, $idturma);
+        $vagasMenosInscritosListaEsperaPubGeral =  ($vagasListaEsperaPubGeral - $numinscListaEsperaPublicoGeral);
+
+        if($numinscPublicoGeral >= $vagasPubGeral){          
+            if($numinscListaEsperaPublicoGeral >= $vagasListaEsperaPubGeral){
+                 array_push($html, '<input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> 
+                     <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)#</span>  <br> ');
+                 return $html[0]; 
+            }else{                
+                array_push($html, '<input type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> 
+                                    &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> 
+                                    <span style="font-size: 12px; color: red">('.$vagasMenosInscritosListaEsperaPubGeral.' vagas na lista de espera p/ público geral(#)</span><br>');
+                 return $html[0];       
+            }      
+        }else{            
+            if($numinscListaEsperaPublicoGeral >= $vagasListaEsperaPubGeral){               
+                array_push($html, '<input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;">&nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> 
+                    <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)*</span>  <br>');
+                 return $html[0];       
+            }else{
+                
+                if($idturmastatus == 3){
+                    $vagasMenosInscritosPubGeral = ($vagasPubGeral - $numinscPublicoGeral);
+        
+                     array_push($html, '<input type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> 
+                                            &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> 
+                                            <span style="font-size: 12px; color: red">('.$vagasMenosInscritosPubGeral.'  vagas na lista de espera p/ público geral)(*)</span><br>'
+                    );  
+                    return $html[0]; 
+                }else{
+                    array_push($html, '<input type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> 
+                                            &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> 
+                                            <span style="font-size: 12px; color: red">('.$vagasMenosInscritosPubGeral.' de '.$vagasPubGeral.' vagas para público geral)(**)</span>     
+                                            <br>'
+                    );  
+                    return $html[0];    
+                }
+            }
+        }
+    }
+}
+
+function vagasPublicoLaudo($idturma, $idtemporada, $idmodal, $idturmastatus, $tokencpf){
+
+    $html = [];
+    $vagasPubLaudo = Turma::getVagasLaudoByIdTurma($idturma);
+    $numinscPublicoLaudo = Insc::getNumInscPublicoLaudoValidaTurmaTemporada($idtemporada, $idturma);
+    $vagasMenosInscritosPubLaudo = ($vagasPubLaudo - $numinscPublicoLaudo);
+
+    if($tokencpf == 0 ){
+         array_push($html, '<input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">
+                            &nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
+                            <span style="font-size: 12px; color: red">('.$vagasMenosInscritosPubLaudo.' de '.$vagasPubLaudo.' vagas para público com laudo)</span>  <br>'
+                    );  
+        return $html[0]; 
+    }else{       
+        if($idmodal == 25){
+            $vagasListaEsperaPubLaudo = ceil($vagasPubLaudo * 0.5);
+        }else{
+            $vagasListaEsperaPubLaudo = ceil($vagasPubLaudo * 0.2);
+        }
+        $numinscListaEsperaPublicoLaudo = Insc::getNumInscListaEsperaPubLaudoTurmaTemporada($idtemporada, $idturma);
+        $vagasMenosInscritosListaEsperaPubLaudo =  ($vagasListaEsperaPubLaudo - $numinscListaEsperaPublicoLaudo);       
+
+        if($numinscPublicoLaudo >= $vagasPubLaudo){
+            if($numinscListaEsperaPublicoLaudo >= $vagasListaEsperaPubLaudo){  
+                 array_push($html, '<input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">&nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
+                     <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)#</span>   <br>');
+                 return $html[0]; 
+            }else{                                
+                array_push($html, '<input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">
+                                    &nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
+                                    <span style="font-size: 12px; color: red">('.$vagasMenosInscritosListaEsperaPubLaudo.'  vagas na lista de espera p/ pessoas com laudo médico)(#)</span> <br>'
+                );
+                return $html[0];       
+            }      
+        }else{            
+            if($numinscListaEsperaPublicoLaudo >= $vagasListaEsperaPubLaudo){
+
+                 array_push($html, '<input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">
+                    &nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
+                    <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)*</span>   <br>'
+                );
+                 return $html[0];       
+            }else{
+                if($idturmastatus == 3){
+                    $vagasMenosInscritosPubLaudo = ($vagasPubLaudo - $numinscPublicoLaudo);
+                    array_push($html, '<input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">
+                                        &nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
+                                        <span style="font-size: 12px; color: red">('.$vagasMenosInscritosPubLaudo.' vagas na lista de espera p/ pessoas com laudo médico)(*)</span> <br>'
+                    );  
+                    return $html[0]; 
+
+                }else{                                        
+                    array_push($html, '<input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">
+                                        &nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
+                                        <span style="font-size: 12px; color: red">('.$vagasMenosInscritosPubLaudo.' de '.$vagasPubLaudo.' vagas para público com laudo)(**) </span>    <br>'
+                    );  
+                    return $html[0];    
+                }
+            }
+        }
+    }
+}
+
+function vagasPublicoPcd($idturma, $idtemporada, $idmodal, $idturmastatus, $tokencpf){
+
+    $html = [];
+
+    $vagasPubPcd = Turma::getVagasPcdByIdTurma($idturma);
+    $numinscPublicoPcd = Insc::getNumInscPublicoPcdValidaTurmaTemporada($idtemporada, $idturma);
+    $vagasMenosInscritosPubPcd = ($vagasPubPcd - $numinscPublicoPcd);
+
+    if($tokencpf == 0 ){        
+        array_push($html, '<input type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">
+                                &nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> 
+                                <span style="font-size: 12px; color: red">('.$vagasMenosInscritosPubPcd.' de '.$vagasPubPcd.' vagas para público PCD)</span>
+                                    <br>'
+                    );  
+        return $html[0];         
+    }else{       
+        if($idmodal == 25){
+            $vagasListaEsperaPubPcd = ceil($vagasPubPcd * 0.5);
+        }else{
+            $vagasListaEsperaPubPcd = ceil($vagasPubPcd * 0.2);
+        }
+        $numinscListaEsperaPublicoPcd = Insc::getNumInscListaEsperaPubPcdTurmaTemporada($idtemporada, $idturma);
+        $vagasMenosInscritosListaEsperaPubPcd =  ($vagasListaEsperaPubPcd - $numinscListaEsperaPublicoPcd);
+
+        if($numinscPublicoPcd >= $vagasPubPcd){
+            if($numinscListaEsperaPublicoPcd >= $vagasListaEsperaPubPcd){
+                 array_push($html, '<input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">
+                    &nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> 
+                    <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)#</span>   <br>'
+                );
+                 return $html[0];
+            }else{                                
+                array_push($html, '<input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">
+                    &nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> <br>           
+                    <span style="font-size: 12px; color: red">('.$vagasMenosInscritosListaEsperaPubPcd.' vagas na lista de espera para PCD`s)(#) </span> <br>
+                    <span style="color: darkblue;" onmousemove="alertTokenCreebaPcd()" > <strong>Necessário token</strong>&nbsp; </span>
+                    <a href="#" onmousemove="alertTokenCreebaPcd()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></a> <br>'
+                );
+                return $html[0];       
+            }      
+        }else{            
+            if($numinscListaEsperaPublicoPcd >= $vagasListaEsperaPubPcd){
+
+                array_push($html, '<input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">
+                    &nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> 
+                    <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)*</span> <br>'
+                );
+                return $html[0];  
+
+            }else{
+                if($idturmastatus == 3){
+                    $vagasMenosInscritosPubPcd = ($vagasPubPcd - $numinscPublicoPcd);
+                    array_push($html, '<input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">
+                        &nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> <br>           
+                        <span style="font-size: 12px; color: red">('.$vagasMenosInscritosPubPcd.' vagas na lista de espera para PCD`s)(*)</span> <br>
+                        <span style="color: darkblue;" onmousemove="alertTokenCreebaPcd()" > <strong>Necessário token</strong>&nbsp;</span>
+                        <a href="#" onmousemove="alertTokenCreebaPcd()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></a> <br>'
+                    );  
+                    return $html[0]; 
+
+                }else{                                        
+                    array_push($html, '<input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">
+                        &nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> 
+                        <span style="font-size: 12px; color: red">('.$vagasMenosInscritosPubPcd.' de '.$vagasPubPcd.' vagas para público PCD)(**)</span> <br>
+                        <span style="color: darkblue;" onmousemove="alertTokenCreebaPcd()" >
+                        <strong>Necessário token</strong>&nbsp;             
+                        </span>
+                        <a href="#" onmousemove="alertTokenCreebaPcd()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></a><br>                                    '
+                    );  
+                    return $html[0];    
+                }
+            }
+        }
+    }
+}
+
+function vagasPublicoPvs($idturma, $idtemporada, $idmodal, $idturmastatus, $tokencpf){
+
+    $html = [];
+
+    $vagasPubPvs = Turma::getVagasPvsByIdTurma($idturma);
+    $numinscPublicoPvs = Insc::getNumInscPublicoPvsValidaTurmaTemporada($idtemporada, $idturma);
+    $vagasMenosInscritosPubPvs = ($vagasPubPvs - $numinscPublicoPvs);
+
+    if($tokencpf == 0 ){        
+        array_push($html, '<input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
+            &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong> 
+            <a href="#" onmousemove="alertTokenVunerabilidade()"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a>
+            <span style="font-size: 12px; color: red">('.$vagasMenosInscritosPubPvs.' de '.$vagasPubPvs.' vagas para pessoas em vulnerabilidade social)</span> <br>'
+            );  
+        return $html[0];         
+    }else{       
+        if($idmodal == 25){
+            $vagasListaEsperaPubPvs = ceil($vagasPubPvs * 0.5);
+        }else{
+            $vagasListaEsperaPubPvs = ceil($vagasPubPvs * 0.2);
+        }
+        $numinscListaEsperaPublicoPvs = Insc::getNumInscListaEsperaPubPvsTurmaTemporada($idtemporada, $idturma);
+        $vagasMenosInscritosListaEsperaPubPvs =  ($vagasListaEsperaPubPvs - $numinscListaEsperaPublicoPvs);
+
+        if($numinscPublicoPvs >= $vagasPubPvs){
+
+            if($numinscListaEsperaPublicoPvs >= $vagasListaEsperaPubPvs){
+                array_push($html, '<input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
+                    &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong>
+                    <a href="#" onmousemove="alertTokenVunerabilidade()"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a> <br>
+                    <span style="font-size: 12px; color: red">(Não há vagas disponíveis para este público)#</span> <br>'
+                );
+                return $html[0];
+            }else{                                
+                array_push($html, '<input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
+                    &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong> 
+                    <a href="#" onmousemove="alertTokenVunerabilidade()"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a>   <br>
+                    <span style="font-size: 12px; color: red">('.$vagasMenosInscritosListaEsperaPubPvs.' vagas na lista de espera para pessoas em Vuln. social)(#)</span> <br>'
+                );
+                return $html[0];       
+            }      
+        }else{            
+            if($numinscListaEsperaPublicoPvs >= $vagasListaEsperaPubPvs){
+                array_push($html, '<input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
+                    &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong>
+                    <a href="#" onmousemove="alertTokenVunerabilidade()"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a>
+                    <span style="font-size: 12px; color: red">(Não há vagas disponíveis para este público)*</span> <br>'
+                );
+                return $html[0];  
+
+            }else{
+                if($idturmastatus == 3){
+                   $vagasMenosInscritosPubPvs = ($vagasPubPvs - $numinscPublicoPvs);
+
+                    array_push($html, '<input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
+                        &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong> 
+                        <a href="#" onmousemove="alertTokenVunerabilidade()"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a> <br>
+                        <span style="font-size: 12px; color: red">('.$vagasMenosInscritosPubPvs.' vagas na lista de espera para pessoas em vuln. social) (*)</span> <br>'
+                    );  
+                    return $html[0]; 
+
+                }else{                                        
+                    array_push($html, '<input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
+                        &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong> 
+                        <a href="#" onmousemove="alertTokenVunerabilidade()"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a>
+                        <span style="font-size: 12px; color: red">('.$vagasMenosInscritosPubPvs.' de '.$vagasPubPvs.' vagas para pessoas em vuln. social)(**)</span> <br>'
+                    );  
+                    return $html[0];
+                }
+            }
+        }
+    }
+}
+
 function vagasPubGeralMenosInscPubGeral($idtemporada, $idturma){
     $vagasPubGeral = Turma::getVagasByIdTurma($idturma);
     $numinscPublicoGeral = Insc::getNumInscPublicoGeralValidaTurmaTemporada($idtemporada, $idturma);
@@ -286,16 +669,16 @@ function vagasTotaisListaEsperaLaudo($vagaslaudo, $idmodal){
     if($idmodal == 25){
         $vagastotais = round($vagaslaudo * 0.5);
     }else{
-        $vagastotais = round($vagaslaudo * 0.2);
+        $vagastotais = ceil($vagaslaudo * 0.2);
     }    
     return $vagastotais;
 }
 
 function vagasTotaisListaEsperaPcd($vagaspcd, $idmodal){
      if($idmodal == 25){
-        $vagastotais = round($vagaslaudo * 0.5);
+        $vagastotais = round($vagaspcd * 0.5);
     }else{
-        $vagastotais = round($vagaslaudo * 0.2);
+        $vagastotais = ceil($vagaspcd * 0.2);
     }    
     return $vagastotais;
 }
@@ -304,25 +687,25 @@ function vagasTotaisListaEsperaPvs($vagaspvs, $idmodal){
     if($idmodal == 25){
         $vagastotais = round($vagaspvs * 0.5);   
     }else{
-        $vagastotais = round($vagaspvs * 0.2);
+        $vagastotais = ceil($vagaspvs * 0.2);
     }
     
     return $vagastotais;
 }
 
 function naoHaVagasListaEsperaPubGeral($idtemporada, $idturma, $idmodal, $idturmastatus){
-    $vagasListaEsperaPubGeral = Turma::getVagasByIdTurma($idturma);
-    if($idturmastatus == 6){
+    $vagasPubGeral = Turma::getVagasByIdTurma($idturma);
+    if($idturmastatus == 3){
         if($idmodal == 25){
-            $vagasListaEsperaPubGeral = round($vagasListaEsperaPubGeral * 1.5); 
+            $vagasListaEsperaPubGeral = round($vagasPubGeral * 1.5); 
         }else{
-            $vagasListaEsperaPubGeral = round($vagasListaEsperaPubGeral * 1.2); 
+            $vagasListaEsperaPubGeral = round($vagasPubGeral * 1.2); 
         }
     }else{
         if($idmodal == 25){
-            $vagasListaEsperaPubGeral = round($vagasListaEsperaPubGeral * 0.5); 
+            $vagasListaEsperaPubGeral = round($vagasPubGeral * 0.5); 
         }else{
-            $vagasListaEsperaPubGeral = round($vagasListaEsperaPubGeral * 0.2); 
+            $vagasListaEsperaPubGeral = ceil($vagasPubGeral * 0.2); 
         }
     }
     $numinscListaEsperaPublicoGeral = Insc::getNumInscListaEsperaPubGeralTurmaTemporada($idtemporada, $idturma);
@@ -334,18 +717,18 @@ function naoHaVagasListaEsperaPubGeral($idtemporada, $idturma, $idmodal, $idturm
 }
 
 function naoHaVagasListaEsperaPubLaudo($idtemporada, $idturma, $idmodal, $idturmastatus){
-    $vagasListaEsperaPubLaudo = Turma::getVagasLaudoByIdTurma($idturma);
-    if($idturmastatus == 6){
+    $vagasPubLaudo = Turma::getVagasLaudoByIdTurma($idturma);
+    if($idturmastatus == 3){
         if($idmodal == 25){
-            $vagasListaEsperaPubLaudo = round($vagasListaEsperaPubLaudo * 1.5); 
+            $vagasListaEsperaPubLaudo = round($vagasPubLaudo * 1.5); 
         }else{
-            $vagasListaEsperaPubLaudo = round($vagasListaEsperaPubLaudo * 1.2); 
+            $vagasListaEsperaPubLaudo = round($vagasPubLaudo * 1.2); 
         }
     }else{
         if($idmodal == 25){
-            $vagasListaEsperaPubLaudo = round($vagasListaEsperaPubLaudo * 0.5); 
+            $vagasListaEsperaPubLaudo = round($vagasPubLaudo * 0.5); 
         }else{
-            $vagasListaEsperaPubLaudo = round($vagasListaEsperaPubLaudo * 0.2); 
+            $vagasListaEsperaPubLaudo = ceil($vagasPubLaudo * 0.2); 
         }
     }
     $numinscListaEsperaPublicoLaudo = Insc::getNumInscListaEsperaPubLaudoTurmaTemporada($idtemporada, $idturma);
@@ -357,18 +740,18 @@ function naoHaVagasListaEsperaPubLaudo($idtemporada, $idturma, $idmodal, $idturm
 }
 
 function naoHaVagasListaEsperaPubPcd($idtemporada, $idturma, $idmodal, $idturmastatus){
-    $vagasListaEsperaPubPcd = Turma::getVagasPcdByIdTurma($idturma);
-    if($idturmastatus == 6){
+    $vagasPubPcd = Turma::getVagasPcdByIdTurma($idturma);
+    if($idturmastatus == 3){
         if($idmodal == 25){
-            $vagasListaEsperaPubPcd = round($vagasListaEsperaPubPcd * 1.5); 
+            $vagasListaEsperaPubPcd = round($vagasPubPcd * 1.5); 
         }else{
-            $vagasListaEsperaPubPcd = round($vagasListaEsperaPubPcd * 1.2); 
+            $vagasListaEsperaPubPcd = round($vagasPubPcd * 1.2); 
         }
     }else{
         if($idmodal == 25){
-            $vagasListaEsperaPubPcd = round($vagasListaEsperaPubPcd * 0.5); 
+            $vagasListaEsperaPubPcd = round($vagasPubPcd * 0.5); 
         }else{
-            $vagasListaEsperaPubPcd = round($vagasListaEsperaPubPcd * 0.2); 
+            $vagasListaEsperaPubPcd = ceil($vagasPubPcd * 0.2); 
         }
     }
     $numinscListaEsperaPublicoPcd = Insc::getNumInscListaEsperaPubPcdTurmaTemporada($idtemporada, $idturma);
@@ -380,18 +763,18 @@ function naoHaVagasListaEsperaPubPcd($idtemporada, $idturma, $idmodal, $idturmas
 }
 
 function naoHaVagasListaEsperaPubPvs($idtemporada, $idturma, $idmodal, $idturmastatus){
-    $vagasListaEsperaPubPvs = Turma::getVagasPvsByIdTurma($idturma);
-    if($idturmastatus == 6){
+    $vagasPubPvs = Turma::getVagasPvsByIdTurma($idturma);
+    if($idturmastatus == 3){
         if($idmodal == 25){
-            $vagasListaEsperaPubPvs = round($vagasListaEsperaPubPvs * 1.5); 
+            $vagasListaEsperaPubPvs = round($vagasPubPvs * 1.5); 
         }else{
-            $vagasListaEsperaPubPvs = round($vagasListaEsperaPubPvs * 1.2); 
+            $vagasListaEsperaPubPvs = round($vagasPubPvs * 1.2); 
         }
     }else{
         if($idmodal == 25){
-            $vagasListaEsperaPubPvs = round($vagasListaEsperaPubPvs * 0.5); 
+            $vagasListaEsperaPubPvs = round($vagasPubPvs * 0.5); 
         }else{
-            $vagasListaEsperaPubPvs = round($vagasListaEsperaPubPvs * 0.2); 
+            $vagasListaEsperaPubPvs = ceil($vagasPubPvs * 0.2); 
         }
     }
     
@@ -404,44 +787,45 @@ function naoHaVagasListaEsperaPubPvs($idtemporada, $idturma, $idmodal, $idturmas
 }
 
 function vagasListaEsperaPubGeralMenosInscPubGeral($idtemporada, $idturma, $idmodal){
-    $vagasListaEsperaPubGeral = Turma::getVagasByIdTurma($idturma);
+    $vagasPubGeral = Turma::getVagasByIdTurma($idturma);
     if($idmodal == 25){
-        $vagasListaEsperaPubGeral = round($vagasListaEsperaPubGeral * 0.5);
+        $vagasListaEsperaPubGeral = round($vagasPubGeral * 0.5);
     }else{
-        $vagasListaEsperaPubGeral = round($vagasListaEsperaPubGeral * 0.2);
+        $vagasListaEsperaPubGeral = ceil($vagasPubGeral * 0.2);
     }    
     $numinscListaEsperaPublicoGeral = Insc::getNumInscListaEsperaPubGeralTurmaTemporada($idtemporada, $idturma);
     return ($vagasListaEsperaPubGeral - $numinscListaEsperaPublicoGeral);
 }
 
 function vagasListaEsperaPubLaudoMenosInscPubLaudo($idtemporada, $idturma, $idmodal){
-    $vagasListaEsperaPubLaudo = Turma::getVagasLaudoByIdTurma($idturma);
+    $vagasPubLaudo = Turma::getVagasLaudoByIdTurma($idturma);
+   
     if($idmodal == 25){
-        $vagasListaEsperaPubLaudo = round($vagasListaEsperaPubLaudo * 0.5);  
+        $vagasListaEsperaPubLaudo = round($vagasPubLaudo * 0.5);  
     }else{
-        $vagasListaEsperaPubLaudo = round($vagasListaEsperaPubLaudo * 0.2);
+        $vagasListaEsperaPubLaudo = round($vagasPubLaudo * 0.2);
     }    
     $numinscListaEsperaPublicoLaudo = Insc::getNumInscListaEsperaPubLaudoTurmaTemporada($idtemporada, $idturma);
     return ($vagasListaEsperaPubLaudo - $numinscListaEsperaPublicoLaudo);
 }
 
 function vagasListaEsperaPubPcdMenosInscPubPcd($idtemporada, $idturma, $idmodal){
-    $vagasListaEsperaPubPcd = Turma::getVagasPcdByIdTurma($idturma);
+    $vagasPubPcd = Turma::getVagasPcdByIdTurma($idturma);
     if($idmodal == 25){
-        $vagasListaEsperaPubPcd = round($vagasListaEsperaPubPcd * 0.5);  
+        $vagasListaEsperaPubPcd = round($vagasPubPcd * 0.5);  
     }else{
-        $vagasListaEsperaPubPcd = round($vagasListaEsperaPubPcd * 0.2);
+        $vagasListaEsperaPubPcd = ceil($vagasPubPcd * 0.2);
     }
     $numinscListaEsperaPublicoPcd = Insc::getNumInscListaEsperaPubPcdTurmaTemporada($idtemporada, $idturma);
     return ($vagasListaEsperaPubPcd - $numinscListaEsperaPublicoPcd);
 }
 
 function vagasListaEsperaPubPvsMenosInscPubPvs($idtemporada, $idturma, $idmodal){
-    $vagasListaEsperaPubPvs = Turma::getVagasPvsByIdTurma($idturma);
+    $vagasPubPvs = Turma::getVagasPvsByIdTurma($idturma);
     if($idmodal == 25){
-        $vagasListaEsperaPubPvs = round($vagasListaEsperaPubPvs * 0.5);   
+        $vagasListaEsperaPubPvs = round($vagasPubPvs * 0.5);   
     }else{
-        $vagasListaEsperaPubPvs = round($vagasListaEsperaPubPvs * 0.2);
+        $vagasListaEsperaPubPvs = ceil($vagasPubPvs * 0.2);
     }
     
     $numinscListaEsperaPublicoPvs = Insc::getNumInscListaEsperaPubPvsTurmaTemporada($idtemporada, $idturma);
@@ -532,7 +916,13 @@ function getUserNameById($iduser){
 
     $nome = $user->getUserNameById($iduser);
 
-    return $nome[0]['desperson'];
+    if(!$nome){
+        return '';
+    }else{
+        return $nome[0]['desperson'];
+    }
+
+    
 
 }
 
@@ -646,7 +1036,7 @@ function temTokenPorTurmaCpf($idturma, $numcpf){
 
     $html = [];
 
-    array_push($html, '<input type="text" name="tokencpf" value="" placeholder="Insira aqui o TOKEN"/>'
+    array_push($html, '<input hidden  id="'.$numcpf.'" type="text" name="tokencpf" value="" placeholder="Insira aqui o TOKEN"/>'
                         
     );
 

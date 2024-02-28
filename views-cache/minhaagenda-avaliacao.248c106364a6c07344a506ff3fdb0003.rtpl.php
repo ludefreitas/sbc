@@ -82,14 +82,13 @@
 
           <?php if( $success != '' ){ ?>
           <tr>
-            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; color: green;" colspan="7"><?php echo htmlspecialchars( $success, ENT_COMPAT, 'UTF-8', FALSE ); ?></th>
+            <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; color: green;" colspan="6"><?php echo htmlspecialchars( $success, ENT_COMPAT, 'UTF-8', FALSE ); ?></th>
           </tr>
           <?php } ?>
 
 
           <tr>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Data</th>
-              <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Dia</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Horário</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Nome</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">Local (Crec)</th>
@@ -102,9 +101,7 @@
               <td style="text-align: center; border: solid 1px; padding: 5px;">
                 <?php echo formatDate($value1["dia"]); ?>
               </td>              
-              <td style="text-align: center; border: solid 1px; color: darkblue; padding: 5px;">
-                <?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-              </td>
+              
               <td style="text-align: center; border: solid 1px; padding: 5px;">
                 <?php echo htmlspecialchars( $value1["horainicial"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $value1["horafinal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
               </td>              

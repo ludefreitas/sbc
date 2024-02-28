@@ -296,9 +296,9 @@ $app->get("/estagiario/turma-temporada/:idtemporada/local/:idlocal", function($i
 
 $app->get("/prof/atualiza/turmatemporada/:idturma/:idtemporada/:desctemporada/:status", function($idturma, $idtemporada, $desctemporada, $status) {
 
-	User::verifyLogin();
+	User::verifyLoginProf();
 	
-	if($status != 3 && $status != 4 && $status != 6){
+	if($status != 2 && $status != 3 && $status != 4 && $status != 5 && $status != 6){
 		echo 'Valor inválido!';
 		exit();
 	}
@@ -308,12 +308,21 @@ $app->get("/prof/atualiza/turmatemporada/:idturma/:idtemporada/:desctemporada/:s
 	$temporada = new Temporada();
 
 	//$novoStatus = $temporada->getIdturmastatusTurmaTemporada($idturma, $idtemporada);
+
+	if($status == 2){ $texto = "Inscrições não iniciadas"; }
+	if($status == 3){ $texto = "Inscrições abertas"; }
+	if($status == 4){ $texto = "Inscrições suspensas"; }
+	if($status == 5){ $texto = "Inscrições encerradas"; }
+	if($status == 6){ $texto = "Turma não iniciada"; }
 	
-	$texto = 'Status da turma '.$idturma.' da '.$desctemporada.' alterado com sucesso! Atualize a página para conferir. ';
+	//$texto = 'Status da turma '.$idturma.' da '.$desctemporada.' alterado com sucesso! Atualize a página para conferir. ';
 		
 	echo $texto;
 
 });
+
+
+
 
 
 

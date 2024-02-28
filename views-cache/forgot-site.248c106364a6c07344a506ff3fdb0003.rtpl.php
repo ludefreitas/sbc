@@ -32,7 +32,7 @@
 
   <!-- START LOCK SCREEN ITEM -->
   <div class="help-block text-center">
-    Digite seu e-mail, uma nova senha, repita a nova senha e clique em confirmar.
+    <span style="font-weight: bold;"> Digite seu e-mail, digite também seu CPF com pontos e o traço, uma nova senha, repita a nova senha e clique em confirmar.<span>
   </div>
   <div class="lockscreen-item">
 
@@ -40,15 +40,15 @@
     <form  action="/forgot-site" method="post">
       <div class="input-group">
         <input type="email" class="form-control" placeholder="Digite o e-mail cadastrado" name="email">
-
-         <input type="numcpf" class="form-control" placeholder="Digite o CPF cadastrado - ( 000.000.000-00 )" name="numcpf">
+        
+        <input type="numcpf" class="form-control" placeholder="Digite o CPF cadastrado - ( 000.000.000-00 )" name="numcpf">
 
         <input type="password" class="form-control" placeholder="Digite a nova senha" name="novasenha">
 
         <input type="password" class="form-control" placeholder="Repita a nova senha" name="repetesenha">
 
         <div style="text-align: right;">
-          <i class="fa fa-arrow-right text-muted" style="color: darkgreen;"></i>
+         <i class="fa fa-arrow-right text-muted" style="color: darkgreen;"></i>
           <button type="submit" class="btn" style="font-weight: bold; color: darkgreen;"> Confirmar </button>
         </div>
       </div>

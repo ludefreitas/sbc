@@ -308,6 +308,155 @@ $app->get("/par-q/pessoa/:idpess", function($idpess) {
 	));
 });
 
+$app->get("/atestado-upload", function() {
+
+	User::verifyLogin(false);
+
+	$user = User::getFromSession();	
+	
+	$page = new Page();
+
+	$page->setTpl("atestado-upload", [		
+		'pessoa'=>$user->getPessoa()	
+	]);
+});
+
+$app->get("/saude/atulizaatestadoderma/:idpess/:data/:arquivotipo/:arquivoname/:arquivosize", function($idpess, $data, $arquivotipo, $arquivoname, $arquivosize) {
+
+	User::verifyLogin(false);
+	
+	$pessoa = new Pessoa();
+
+	$saude = new Saude();
+
+	$iduser = $_SESSION['User']['iduser'];
+
+	$data = strtotime($data);
+
+	$maisUmAno = $data + (365 * 24 * 60 * 60);
+
+	$validade = $maisUmAno;
+
+	$data = date('Y-m-d', $data);
+
+	$validade = date('Y-m-d', $validade);
+	
+	$cpf = $pessoa->getNumcpfByIdpess($idpess);
+
+	//$saude->saveatestadoderma();
+
+	echo 'Atestado Dermatológico atualizado com sucesso!!!';
+	
+});
+
+$app->post("/saude/atulizaatestadoarquivopdf", function() {
+
+	User::verifyLogin(false);		
+
+	$pessoa = new Pessoa();
+
+	$saude = new Saude();
+
+
+	if(!isset($_POST['idpess']) || $_POST['idpess'] <= 0){	
+		echo "<script>alert('Você precisa selecionar uma pessoa!');";
+		echo "javascript:history.go(-1)</script>";
+		exit();		
+	}	
+
+	if(!isset($_POST['tipoatestado']) || $_POST['tipoatestado'] == ''){	
+		echo "<script>alert('Você precisa selecionar um tipo de atestado (Clínico ou Dermatológico)!');";
+		echo "javascript:history.go(-1)</script>";
+		exit();		
+	}	
+
+	$tipoatestadoselecionado = $_POST['tipoatestado'];
+
+	$idpess = $_POST['idpess'];
+
+	$pessoa->get($idpess);
+
+	$arquivo = $_FILES;	
+
+	if($arquivo['arquivo']['size'] == '') {
+		echo "<script>alert('Nenhum arquivo selecionado! Selecione um arquivo tipo PDF !!');";
+    	echo "javascript:history.go(-1)</script>";
+    	exit();
+	}
+
+	if($arquivo['arquivo']['type'] != 'application/pdf'){
+		echo "<script>alert('O arquivo selecionado não tem o formato PDF. Selecione um arquivo com terminação ( .pdf ) !!');";
+    	echo "javascript:history.go(-1)</script>";
+    	exit();
+	}
+
+	$renomear_arquivo = date('Ymd').$idpess.'-'.md5(time()).'.pdf';
+
+	$caminho_upload = 'res/site/atestadoderma/';
+	
+	if(move_uploaded_file($arquivo['arquivo']['tmp_name'], $caminho_upload . $renomear_arquivo)){
+
+    	$nomearquivopdf = $renomear_arquivo;
+    	
+    	$cpf = $pessoa->getNumcpfByIdpess($idpess);
+    
+    	if($tipoatestadoselecionado == 'clinico'){ $tipoatestado = 1; }
+    	if($tipoatestadoselecionado == 'dermatologico'){ $tipoatestado = 2; }     
+    
+    	$saude->setData([
+    		'idpess'=>$idpess,
+    		'cpf'=>$cpf,
+    		'tipoatestado'=>$tipoatestado,
+    		'nomearquivo'=>$nomearquivopdf
+    	]);
+
+    	$caminho_remover = 'res/site/atestadoderma/';
+
+    	$nomeArquivoRemover = $saude->getArquivoPdfAnteriorByCpf($cpf, $tipoatestado); 
+
+    	if(!isset($nomeArquivoRemover[0]['nomearquivo']) ||  $nomeArquivoRemover[0]['nomearquivo'] == 0){
+
+    		$nomeArquivoRemover = '';
+
+    	}else{  		
+    		
+    		$nomeArquivoRemover = $nomeArquivoRemover[0]['nomearquivo'];
+    		$caminhoArquivoRemover = $caminho_remover . $nomeArquivoRemover; 
+
+    		$idatestadoarquivo = $saude->selectIdByNomeArquivo($nomeArquivoRemover);
+    		
+    		if(!isset($idatestadoarquivo[0]['idatestadoarquivo']) ||  $idatestadoarquivo[0]['idatestadoarquivo'] == 0){
+
+    			$idatestadoarquivo = 0;
+    		}else{
+    			$idatestadoarquivo = $idatestadoarquivo[0]['idatestadoarquivo'];
+    		}
+
+    		unlink($caminhoArquivoRemover);
+    		$saude->deleteArquivoPdfAnteriorById($idatestadoarquivo); 
+    	}
+
+    	$saude->atestadoarquivosave();   	    	
+
+	    	if($tipoatestado == 1){	    	
+	    		echo "<script>alert('Arquivo de atestado Clínico inserido com sucesso.');";
+	        	echo "javascript:history.go(-1)</script>";
+	    		exit();
+	    	}    	
+    
+	    	if($tipoatestado == 2){	    		
+	    		echo "<script>alert('Arquivo de atestado Dermatológico inserido com sucesso.');";
+	    		echo "javascript:history.go(-1)</script>";
+	        	exit();	    		    		
+	    	}
+    	
+	}else{
+		echo "<script>alert('Arquivo não foi inserido !!');";
+    	echo "javascript:history.go(-1)</script>";
+    	exit();
+	}
+	
+});
 
 
 ?>

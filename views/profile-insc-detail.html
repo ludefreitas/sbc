@@ -14,9 +14,16 @@
             {if="$success != ''"}
             
                 {if="$insc.idinscstatus == 2"}
-                    <script type="text/javascript">  
-                        alert('Inscrição efetuada com sucesso!!! As aulas já começaram. Se o status desta inscrição é "Aguardando matrícula", então você deve comprarecer com os documentos pessoais, sem falta, já na próxima aula, no Centro Esportivo no dia e horário da aula escolhida.');
-                    </script>
+                    {if="$insc.idmodal == 25"}
+                         <script type="text/javascript">  
+                            alert('Lembre-se: Se o status desta inscrição é 'Aguardando matrícula', então você deve comprarecer com os documentos pessoais, sem falta, a partir do dia 19/02, no Centro Esportivo no dia e horário da aula escolhida para efetuar a matrícula e já para início das aulas. Leia as observações da turma!');
+                        </script> 
+                    {else}
+                         <script type="text/javascript">  
+                            alert('Inscrição EFETUADA COM SUCESSO! Lembre-se: Se o status desta inscrição é 'Aguardando matrícula', então você deve comprarecer com os documentos pessoais, sem falta, no período de matrículas de 05 a 09 de fevereiro conforme consta no edital, no Centro Esportivo no dia e horário da aula escolhida. Algumas turmas de natação iniciante, e o projeto "Perca o Medo de Nadar" tem datas diferenciadas. Leia as observações da turma!');
+                        </script>
+                    {/if}
+
                 {/if}
                 
                 {if="$insc.idinscstatus == 7"}
@@ -39,7 +46,7 @@
                    
                 {if="$insc.idinscstatus == 9"}
                     <div class="col-md-5 alert alert-success" style="text-align-last: center;">
-                        <p><h5 style="text-align: center"><strong style="color: red; font-size: 20px;"> {$insc.descstatus} </strong></h5>
+                        <p><h5 style="text-align: center"><strong style="color: red; font-size: 20px;"> {$insc.descstatus}  </strong></h5>
                         <p>
                     </div> 
 
@@ -145,7 +152,17 @@
              {/if}
 
              {if="$insc.idinscstatus == 2"}
-             As aulas já começaram. Se o status desta inscrição é "Aguardando matrícula", então você deve comprarecer com os documentos pessoais, sem falta, já na próxima aula, no Centro Esportivo no dia e horário da aula escolhida.
+                {if="$insc.idmodal == 25"}
+                     Lembre-se: Se o status desta inscrição é 'Aguardando matrícula', então você deve comprarecer com os documentos pessoais, sem falta, a partir do dia 19/02, no Centro Esportivo no dia e horário da aula escolhida para efetuar a matrícula e já para início das aulas. Leia as observações da turma! 
+                {else}
+                     {if="$insc.origativ == 'PELC'"}
+
+                        LEMBRAMOS que: O início das aulas e a matrícula para ESTA TURMA e para as outras TURMAS do PELC irão acontecer simultaneamente a partir do dia<span style="color: blue;" > 4 de MARÇO</span>, no dia e no horário da aula. (Para as incrições com status <span style="color: darkblue;" >"Aguardando Matrícula")</span>. Leia as observações da turma!
+
+                    {else}
+                        Lembre-se: Se o status desta inscrição é 'Aguardando matrícula', então você deve comprarecer com os documentos pessoais, sem falta, para efetuar a matrícula, no Centro Esportivo, a patir do dia 19/02, no dia da semana e horário da aula desta aula. Algumas turmas de natação iniciante, e o projeto 'Perca o Medo de Nadar' tem datas diferenciadas. Leia as observações da turma!
+                    {/if}
+                {/if}
              {/if}
 
              {if="$insc.idinscstatus == 7"}
@@ -159,7 +176,7 @@
              {if="$insc.idinscstatus == 9"}
              Se o status desta inscrição é "Cancelada", você cancelou esta inscrição.
              {/if}
-                <strong>Leia a observção abaixo, se existir.</strong>
+                <strong>Leia a observação abaixo, se existir.</strong>
             {if="$insc.obs"}
             <br> <span style="color: red; font-weight: bold;"> Atenção! </span> <span style="color: red;">{$insc.obs}</span>
             {/if}

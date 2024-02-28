@@ -732,6 +732,12 @@ $app->get("/agendadelete/:idagen", function($idagen) {
 $app->get("/agenda-avaliacao/:idlocal", function($idlocal) {
 
 	//User::verifyLogin(false);
+	
+	if($_SESSION['User']['isprof'] != 1){
+		echo "<script>alert('Novas datas para participar da avaliação da natação, a partir de março de 2024, aguardem!');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+    }
 
 	$local = new Local();
 	$user = User::getFromSession();
@@ -757,6 +763,12 @@ $app->get("/agenda-avaliacao/:idlocal", function($idlocal) {
 $app->post("/hora-agenda-avaliacao", function() {
 
 	//User::verifyLogin(false);
+
+	if($_SESSION['User']['isprof'] != 1){
+		echo "<script>alert('Novas datas para participar da avaliação da natação, a partir de março de 2024, aguardem!');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+    }
 
 	$pessoa = new Pessoa();
 	$agenda = new Agenda();
@@ -904,7 +916,7 @@ $app->post("/hora-agenda-avaliacao", function() {
 	}
 	*/
 
-	$maisumasemana = date('Y-m-d', strtotime('+8 week'));
+	$maisoitosemanas = date('Y-m-d', strtotime('+8 week'));
 
 	
 	if($diasemana == "Quinta"){
@@ -917,7 +929,7 @@ $app->post("/hora-agenda-avaliacao", function() {
 
 	$nomepess = $pessoa->getnomepess();
 
-	if($dataPost > $maisumasemana){
+	if($dataPost > $maisoitosemanas){
 
 		echo "<script>alert('A agenda para este dia ainda não foi aberta');";
 		echo "javascript:history.go(-1)</script>";
