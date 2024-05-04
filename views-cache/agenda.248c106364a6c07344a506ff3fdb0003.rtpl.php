@@ -112,7 +112,15 @@
                         <input type="text" name="horamarcadafinal" value="<?php echo htmlspecialchars( $value1["horamarcadafinal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none">
 
                         <?php } ?>   
+
                         <br>
+                        <p>
+                           
+                        <a style="color: lightgreen;" href="/minhaagenda"> Minha agenda de natação </a>
+                        </p>                
+
+
+                        
                         <p style="color: red;">
                            Atualizar ATESTADO?
                         <a href="/atestado-upload"> Clique aqui </a>

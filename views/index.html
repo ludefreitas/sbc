@@ -1,5 +1,37 @@
 <script type="text/javascript">
 
+
+  let paginaAnterior = document.referrer
+  
+  if(paginaAnterior == 'http://www.cursosesportivos.com.br/forgot-site'){
+
+    alert( 'Você já está logado(a)!. \nEscolha um local, uma modalidade e faça já a sua inscrição.' )
+
+  } 
+
+  function poupAgendaNatacaoBaetao() {
+
+    document.getElementById('baetaopopup').hidden = false
+
+  }  
+
+  function poupAgendaNatacaoPauliceia() {
+
+    document.getElementById('pauliceiapopup').hidden = false
+
+  }  
+
+  function irAgendaNatacaoPauliceia() {
+
+    window.location.href = "http://www.cursosesportivos.com.br/calendariopauliceia/21"
+  }  
+
+  function irAgendaNatacaoBaetao() {
+
+    window.location.href = "http://www.cursosesportivos.com.br/calendariobaetao/3"
+  }  
+     
+
   function imageNone() {
 
     document.getElementById('popup').hidden = true 
@@ -89,7 +121,20 @@ function leiamais(){
     display: none;
   }
 
-  #popup{
+  #pauliceiapopup{
+    position: fixed;
+    top: 0; 
+    bottom: 0;
+    left: 0; 
+    right: 0;
+    margin: auto;
+    width: 300px;
+    height: 216px;
+    padding: 0px; 
+    background-color: lightgray;
+  }
+
+  #baetaopopup{
     position: fixed;
     top: 0; 
     bottom: 0;
@@ -161,31 +206,7 @@ function leiamais(){
   <div class="row" style="margin: -5px -5px -5px -5px; ">   
   <div class="col-md-12" style="border: 5px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif;"> 
 
-           <div id="popup" style="text-align-last: center; border-radius: 15px"> 
-                <div style="text-align-last: right; font-weight: bold; " onclick="imageNone()"> x &nbsp;&nbsp;</div>  
-                <div style="background-color: lightgreen; text-align: justify; border-radius: 15px 15px 0px 0px; padding: 10px; font-size: 13px; font-weight: bold;">
-                    <span style="color: red;"> ATENÇÃO! </span><br>
-                        LEMRAMOS que: Se você já fez uma inscrição, sua PRIMEIRA OPÇÃO, para a temporada 2024 e está matriculado(a), ou está aguardando matrícula, ou ainda está na lista de espera. Você deve aguardar até o dia 15/02 para fazer uma nova inscrição, sua SEGUNDA OPÇÃO, para as vagas remanescentes. 
-                </div> 
-                
-           </div>
-
-
-           <!--
-           <div id="popup" style="text-align-last: center; border-radius: 15px"> 
-                <div style="text-align-last: right; font-weight: bold; " onclick="imageNone()"> x &nbsp;&nbsp;</div>  
-                <div style="background-color: lightblue; text-align: justify; border-radius: 15px 15px 0px 0px; padding: 10px; font-size: 13px; font-weight: bold;">
-                    <span style="color: red;"> ATENÇÃO! </span><br>
-                    Você já pode inserir, aqui mesmo em nosso site, seu ATESTADO MÉDICO clínico e/ou dermatológico em formato PDF. O atestado ficará disponível para que o seu professor o valide e para que, depois de validado, você possa praticar suas atividades físicas com segurança em nossos Centros , Esportivos. 
-                        LEMRAMOS que: alunos de hidroginástica, natação, natação espontânea e avaliação para a natação, deverão, OBRIGATÓRIAMENTE, inserir o atestado CLÍNICO E DERMATOLÓGICO.
-                </div> 
-                <div style="text-align: center;">
-                    <div  class="btn btn-info" style="border-radius: 0px 0px 15px 15px; width: 300px">
-                     <a href="/atestado-upload" style="color: white;" > Inserir Atestado PDF </a>
-                    </div>   
-                </div>   
-                !-->       
-                <!-- <img src="\res\site\img\insc2024detail.jpg" onclick="imageNone()"> -->
+           
            </div>
 
      
@@ -280,9 +301,10 @@ function leiamais(){
       </div>
   </div> 
 
-  </div>
+  
  
   <hr style="background-color: #0f71b3;">
+
   <div class="row" style="margin: -5px -5px -5px -5px; ">   
   <div class="col-md-12" style="border: 5px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif;"> 
     
@@ -357,10 +379,19 @@ function leiamais(){
                           Cursos por<br> modalidade
                   </div>
             </a>
-        </div>   
+        </div> 
+
+        <div class="col-md-5 btn" style="text-align-last: left; background-color: orange ; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
+            <a href="/eventos">                          
+              <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 18px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
+                          EVENTOS <br> <i  class="fa fa-calendar-alt" style="font-size: 32px;"></i>   
+                         
+              </div>
+            </a>
+        </div>  
                                     
         <div class="col-md-5 btn" style="text-align-last: left; background-color: #15a03f; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
-            <a href="/calendariobaetao/3">                          
+            <a onclick="poupAgendaNatacaoBaetao()">                          
               <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 20px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
                           Espontâneo <br>
                           Baetão
@@ -368,17 +399,37 @@ function leiamais(){
             </a>
         </div> 
         <div class="col-md-5 btn" style="text-align-last: left; background-color: #909090; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
-            <a href="/calendariopauliceia/21">                          
+            <a onclick="poupAgendaNatacaoPauliceia()">                          
               <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 20px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
                           Espontâneo <br>
                           Crec Paulicéia
               </div>
             </a>
         </div> 
+         
         
+        <div class="col-md-5 btn" style="text-align-last: left; background-color: orange ; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
+            <a href="/locaisnatacao-avaliacao">                          
+              <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 24px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
+                          Avaliação <br> Natação
+                         
+              </div>
+            </a>
+        </div> 
+
+         <div class="col-md-5 btn" style="text-align-last: left; background-color: #ce2c3e ; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
+            <a href="/atestado-upload">                          
+              <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 18px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
+                          Insira seu ATESTADO<br>
+                          (Arquivo em PDF) 
+                         
+              </div>
+            </a>
+        </div>
+
          <!--
         <div class="col-md-5 btn" style="text-align-last: left; background-color: #ce2c3e ; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
-            <a href="#" onclick="msgPelc()">                          
+            <a href="/atestado-upload">                          
               <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 28px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
                           Pelc <br>Zumba 
                          
@@ -386,16 +437,6 @@ function leiamais(){
             </a>
         </div>
         -->
-        
-        
-        <div class="col-md-5 btn" style="text-align-last: left; background-color: orange ; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
-            <a href="/locaisnatacao-avaliacao">                          
-              <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 28px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
-                          Avaliação <br> Natação
-                         
-              </div>
-            </a>
-        </div> 
         
         
         
@@ -440,6 +481,14 @@ function leiamais(){
             <a href="/judo">                          
               <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 24px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
                         Inscreva-se <br> para Judô 
+              </div>
+            </a>
+        </div> 
+
+        <div class="col-md-5 btn" style="text-align-last: left; background-color: #0f71b3; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
+            <a href="/taekwondo">                          
+              <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 24px; font-style: normal; margin: 10px 5px 10px 0px; ">                          
+                        Inscreva-se <br> para Taekwondo 
               </div>
             </a>
         </div> 
@@ -633,3 +682,48 @@ function leiamais(){
 
               </div>
 
+                     <!--
+        <div id="popup" style="text-align-last: center; border-radius: 15px"> 
+                <div style="text-align-last: right; font-weight: bold; " onclick="imageNone()"> x &nbsp;&nbsp;</div>  
+                <div style="background-color: lightgreen; text-align: justify; border-radius: 15px 15px 15px 15px; padding: 10px; font-size: 13px; font-weight: bold;">
+                    <span style="color: red;"> ATENÇÃO! </span><br>
+                        LEMRAMOS que: Se você já fez uma inscrição, sua PRIMEIRA OPÇÃO, para a temporada 2024 e está matriculado(a), ou está aguardando matrícula, ou ainda está na lista de espera. Você deve aguardar até o dia 15/02 para fazer uma nova inscrição, sua SEGUNDA OPÇÃO, para as vagas remanescentes. 
+                </div> 
+                
+           </div>
+  
+        -->
+        
+        <div hidden id="pauliceiapopup" style="text-align-last: center; border-radius: 15px"> 
+                <div style="text-align-last: right; font-weight: bold; color: red; " onclick="irAgendaNatacaoPauliceia()"> Fechar ( x ) &nbsp;&nbsp;</div>  
+                <div style="background-color: lightblue; text-align: justify; border-radius: 15px 15px 0px 0px; padding: 10px; font-size: 13px; font-weight: bold;">
+                    <span style="color: red;"> ATENÇÃO! </span><br>
+                    Você já pode inserir, aqui mesmo em nosso site, seu ATESTADO MÉDICO clínico e/ou dermatológico em formato PDF. O atestado ficará disponível para que o seu professor o valide e para que, depois de validado, você possa praticar suas atividades físicas com segurança em nossos Centros , Esportivos. 
+                        LEMRAMOS que: alunos de hidroginástica, natação, natação espontânea e avaliação para a natação deverão, OBRIGATÓRIAMENTE, inserir o atestado CLÍNICO E DERMATOLÓGICO.
+                </div> 
+                <div style="text-align: center;">
+                    <div  class="btn btn-info" style="border-radius: 0px 0px 15px 15px; width: 300px">
+                     <a href="/atestado-upload" style="color: white;" > Inserir Atestado PDF </a>
+                    </div>   
+                </div>  
+             <!-- <img src="\res\site\img\insc2024detail.jpg" onclick="imageNone()"> -->
+            
+            </div>  
+           
+           <div hidden id="baetaopopup" style="text-align-last: center; border-radius: 15px"> 
+                <div style="text-align-last: right; font-weight: bold; color: red; " onclick="irAgendaNatacaoBaetao()"> Fechar ( x )&nbsp;&nbsp;</div>  
+                <div style="background-color: lightblue; text-align: justify; border-radius: 15px 15px 0px 0px; padding: 10px; font-size: 13px; font-weight: bold;">
+                    <span style="color: red;"> ATENÇÃO! </span><br>
+                    Você já pode inserir, aqui mesmo em nosso site, seu ATESTADO MÉDICO clínico e/ou dermatológico em formato PDF. O atestado ficará disponível para que o seu professor o valide e para que, depois de validado, você possa praticar suas atividades físicas com segurança em nossos Centros , Esportivos. 
+                        LEMRAMOS que: alunos de hidroginástica, natação, natação espontânea e avaliação para a natação deverão, OBRIGATÓRIAMENTE, inserir o atestado CLÍNICO E DERMATOLÓGICO.
+                </div> 
+                <div style="text-align: center;">
+                    <div  class="btn btn-info" style="border-radius: 0px 0px 15px 15px; width: 300px">
+                     <a href="/atestado-upload" style="color: white;" > Inserir Atestado PDF </a>
+                    </div>   
+                </div>   
+           
+                <!-- <img src="\res\site\img\insc2024detail.jpg" onclick="imageNone()"> -->
+            
+            </div> 
+            

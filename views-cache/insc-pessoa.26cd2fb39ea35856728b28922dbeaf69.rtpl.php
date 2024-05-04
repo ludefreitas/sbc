@@ -50,7 +50,13 @@
                     <table class="">
                         <thead>                           
                             <tr>
-                                <th colspan="2" ><h3>INCRIÇÃO Nº: <?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <br>Número para concorrer no sorteio: &nbsp;&nbsp;&nbsp;<?php echo htmlspecialchars( $value1["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h3></th>
+                                <th colspan="2" >
+                                    <h3>
+                                        INCRIÇÃO Nº: <?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?> 
+                                    <!--    <br>Número para concorrer no sorteio: &nbsp;&nbsp;&nbsp;<?php echo htmlspecialchars( $value1["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?> -->
+
+                                    </h3>
+                                </th>
                             </tr>
                             <tr>
                                 <th class="product-name">Turma / Temporada</th>
@@ -58,7 +64,7 @@
                             </tr>
                             <tr>
                                 <th class="product-name">Horário / Professor</th>
-                                <td class="product-name"><?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?> das <?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - Prof. <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                                <td class="product-name"><?php echo htmlspecialchars( $value1["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?> das <?php echo htmlspecialchars( $value1["horainicio"], ENT_COMPAT, 'UTF-8', FALSE ); ?> às <?php echo htmlspecialchars( $value1["horatermino"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - Prof. <?php echo htmlspecialchars( $value1["apelidoperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                             </tr>
                             <tr>
                                 <th class="product-name">Local da aula (CREC)</th>

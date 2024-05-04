@@ -146,6 +146,11 @@
       alert("Para fazer a inscrição nas turmas de natação intermediário, avançado e aperfeiçoamento para o ano de 2024 é necessário ser egresso das turmas do ano de 2023 e ter autorização fornecida pelo professor.")
     }
 
+    function alertTokenGeral(){
+
+      alert("Para fazer a inscrição nesta turma é necessário ter autorização fornecida pelo professor. Leia a descrição e a observação da turma.")
+    }
+
 </script>
   <div class="container" style="margin-top: 0px;"> <!-- container 1 -->
             <div class="row"> <!-- row 2 -->
@@ -409,30 +414,41 @@
         <!-- </a> -->
         {if="$value.token == 1"} 
            
-          {if="$value.idlocal == 5"}
+            {if="$value.idlocal == 5"}
 
-              <h5><span style="color: darkblue;" >
+                <h5><span style="color: darkblue;" >
                 <strong>Necessário token</strong>&nbsp;             
-              </span>
-              <a href="#" onmousemove="alertTokenCreeba()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></a></h5>
-            {/if}
+                </span>
+                <a href="#" onmousemove="alertTokenCreeba()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></a></h5>
 
-            {if="$value.idlocal == 3"}
+            {else}
 
-              <h5><span style="color: darkblue;" >
-                <strong>Necessário token</strong>&nbsp;             
-              </span>
-              <a href="#" onmousemove="alertTokenBaetao()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></a></h5>
-            {/if}
-            
-            {if="$value.idlocal == 21"}
+                {if="$value.idlocal == 3"}
 
-              <h5><span style="color: darkblue;" >
-                <strong>Necessário token</strong>&nbsp;             
-              </span>
-              <a href="#" onmousemove="alertTokenBaetao()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></a></h5>
-            {/if}
-            
+                    <h5><span style="color: darkblue;" >
+                    <strong>Necessário token</strong>&nbsp;             
+                    </span>
+                    <a href="#" onmousemove="alertTokenBaetao()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></a></h5>
+
+                {else}
+                 
+                    {if="$value.idlocal == 21"}
+
+                        <h5><span style="color: darkblue;" >
+                        <strong>Necessário token</strong>&nbsp;             
+                        </span>
+                        <a href="#" onmousemove="alertTokenBaetao()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></a></h5>
+
+                    {else}
+
+                        <h5><span style="color: darkblue;" >
+                        <strong>Necessário token</strong>&nbsp;             
+                        </span>
+                        <a href="#" onmousemove="alertTokenGeral()"><i class="fa fa-info-circle" style="font-size: 24px;"></i></a></h5>
+
+                    {/if}
+                {/if}
+            {/if} 
         {/if} 
           
         {if="$value.idstatustemporada == 6"} 

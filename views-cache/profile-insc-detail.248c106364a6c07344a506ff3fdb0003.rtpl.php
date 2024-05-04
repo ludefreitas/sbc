@@ -157,7 +157,7 @@
                 <?php }else{ ?>
                      <?php if( $insc["origativ"] == 'PELC' ){ ?>
 
-                        LEMBRAMOS que: O início das aulas e a matrícula para ESTA TURMA e para as outras TURMAS do PELC irão acontecer simultaneamente a partir do dia<span style="color: blue;" > 1º de MARÇO</span>, no dia e no horário da aula. (Para as incrições com status <span style="color: darkblue;" >"Aguardando Matrícula")</span>. Leia as observações da turma!
+                        LEMBRAMOS que: O início das aulas e a matrícula para ESTA TURMA e para as outras TURMAS do PELC irão acontecer simultaneamente a partir do dia<span style="color: blue;" > 4 de MARÇO</span>, no dia e no horário da aula. (Para as incrições com status <span style="color: darkblue;" >"Aguardando Matrícula")</span>. Leia as observações da turma!
 
                     <?php }else{ ?>
                         Lembre-se: Se o status desta inscrição é 'Aguardando matrícula', então você deve comprarecer com os documentos pessoais, sem falta, para efetuar a matrícula, no Centro Esportivo, a patir do dia 19/02, no dia da semana e horário da aula desta aula. Algumas turmas de natação iniciante, e o projeto 'Perca o Medo de Nadar' tem datas diferenciadas. Leia as observações da turma!

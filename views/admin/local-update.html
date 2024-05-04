@@ -118,14 +118,17 @@
               </label>
             </div>
 
-             <div class="box-header">
+             <div class="form-group">
               <label for="idlocal">Professor / Coordenador</label>
               <select class="form-control" name="iduser">
                  <option selected="selected" value="">Selecione professor</option>
+                  
                   {loop="$prof"}
-                 <option  value="{$value.iduser}">{$value.desperson}</option>
-                  {/loop}
+                    <option {if="$value.iduser === $local.iduser"}selected="selected"{/if} value="{$value.iduser}">{$value.desperson}</option>
+                  {/loop}  
+
               </select>
+
             </div>                                                
                 
               </div>

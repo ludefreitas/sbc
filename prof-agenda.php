@@ -66,7 +66,7 @@ $app->get("/estagiario/calendarioagendapauliceia/:idlocal", function($idlocal) {
 	]);	
 });
 
-$app->get("/prof/listaagendapordata/:idlocal/:data", function($idlocal, $data) {
+$app->get("/prof/listaagendapordata/:idlocal/:data/:iduser", function($idlocal, $data, $iduser) {
 
 	User::checkLoginProf();
 
@@ -123,6 +123,7 @@ $app->get("/prof/listaagendapordata/:idlocal/:data", function($idlocal, $data) {
 	]);
 
 	$page->setTpl("listaagendapordata", [
+		'iduser'=>$iduser,
 		'idlocal'=>$idlocal,
 		'apelidolocal'=>$apelidolocal,
 		'agenda'=>$agenda,
@@ -132,7 +133,7 @@ $app->get("/prof/listaagendapordata/:idlocal/:data", function($idlocal, $data) {
 	]);	
 });
 
-$app->get("/estagiario/listaagendapordata/:idlocal/:data", function($idlocal, $data) {
+$app->get("/estagiario/listaagendapordata/:idlocal/:data/:iduser", function($idlocal, $data, $iduser) {
 
 	User::checkLoginEstagiario();
 
@@ -189,6 +190,7 @@ $app->get("/estagiario/listaagendapordata/:idlocal/:data", function($idlocal, $d
 	]);
 
 	$page->setTpl("listaagendapordata-estagiario", [
+		'iduser'=>$iduser,
 		'idlocal'=>$idlocal,
 		'apelidolocal'=>$apelidolocal,
 		'agenda'=>$agenda,

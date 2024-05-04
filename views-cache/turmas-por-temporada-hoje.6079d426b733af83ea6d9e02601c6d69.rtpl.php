@@ -135,7 +135,7 @@
       <div class="box-body" style="border: solid 1px lightblue; margin: 5px; padding-bottom: 0; "> 
         <form action="/admin/turma-temporada-hoje/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="GET">
             Escolha outra data: <br>
-            <input class="form-group" type="text" name="data" placeholder="DD-MM-AAAA"> 
+            <input class="form-group" type="date" name="data" placeholder="DD-MM-AAAA"> 
             <input type="submit" name="Enviar">  
         </form>
       </div>
@@ -182,9 +182,9 @@
                  <?php if( $idmodalidade == $value2["idmodal"] ){ ?>
                  
                 <?php if( numeroNaListaDePresençaByIdturmaData($value2["idturma"], $ano, $mes, $dia) == 0 ){ ?>
-                    <div  class="box-body col-md-1" style="border: solid 1px lightblue; margin: 5px; background-color: lightgray; font-size: 7px;  display: inline-block; ">
+                    <div  class="box-body col-md-1" style="border: solid 1px lightblue; margin: 5px; background-color: lightgray; font-size: 7px; width: 70px; height: 100px; display: inline-block; ">
                 <?php }else{ ?>
-                    <div  class="box-body col-md-1" style="border: solid 1px lightblue; margin: 5px; background-color: lightgreen; font-size: 7px;  display: inline-block; ">
+                    <div  class="box-body col-md-1" style="border: solid 1px lightblue; margin: 5px; background-color: lightgreen; font-size: 7px; width: 70px; height: 100px; display: inline-block; ">
                 <?php } ?>     
 
                     <span style="text-align: left;">

@@ -1350,6 +1350,18 @@ class Turma extends Model {
 			":tokencpf"=>$tokencpf
 		));
 	}
+
+	public function setUsedTokenCpfOnly($tokencpf){
+
+		$isused = 1;
+
+		$sql = new Sql();
+		$sql->query("UPDATE tb_tokenturma SET isused = :isused, dtuso = current_timestamp() WHERE token = :tokencpf", array(
+			":isused"=>$isused,
+			":tokencpf"=>$tokencpf
+		));
+	}
+
 	
 	public static function listTokenTurma($idturma)
 	{

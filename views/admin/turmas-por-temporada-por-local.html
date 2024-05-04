@@ -49,8 +49,10 @@
 </h1>
 <ol class="breadcrumb">
   <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+  {if="getUserId() == 1 OR getUserId() == 156"}
   <li><a href="/admin/insc/{$temporada.idtemporada}"> Todas inscrições {$temporada.desctemporada} </a></li>
   <li><a href="/admin/temporada/{$temporada.idtemporada}/turma"> Inserir turma {$temporada.desctemporada}</a></li>
+  {/if}
 </ol>
 </section>
 

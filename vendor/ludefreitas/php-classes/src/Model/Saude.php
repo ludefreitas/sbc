@@ -267,7 +267,7 @@ class Saude extends Model {
 	{
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT count(*) FROM tb_atestado_derma WHERE dataatualizacao = (SELECT  MAX(dataatualizacao) FROM tb_atestado WHERE idpess = :idpess)", array(
+		$results = $sql->select("SELECT count(*) FROM tb_atestado_derma WHERE dataatualizacao = (SELECT  MAX(dataatualizacao) FROM tb_atestado_derma WHERE idpess = :idpess)", array(
 			":idpess"=>$idpess			
 		));
 		
@@ -351,6 +351,22 @@ class Saude extends Model {
 
 			$this->setData($results[0]);
 		}
+	}
+
+	public function saveatestadoClinico($idpess, $iduser, $cpf, $data, $validade, $observ){
+
+		$sql = new Sql();
+
+		$results = $sql->select("CALL sp_atestado_save(:idatestado, :idpess, :iduser, :cpf, :dataemissao, :datavalidade, :observ)", array(
+			":idatestado"=>$this->getidatestado(),
+			":idpess"=>$idpess,
+			":iduser"=>$iduser,
+			":cpf"=>$cpf,						
+			":dataemissao"=>$data,						
+			":datavalidade"=>$validade,						
+			":observ"=>$observ
+		));
+
 	}
 	
 	public function getAtestadoUltimoByIdPess(int $idpess)

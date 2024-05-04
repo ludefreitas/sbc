@@ -172,6 +172,88 @@
 				':idmodal'=>$idmodal 
 			]);
 		}
+
+		public static function listAllTurmaTemporadaControleFrequenciaModalLocal($idtemporada, $idmodal, $idlocal)
+		{
+			$sql = new Sql();
+
+			return $sql->select("SELECT * 
+				FROM tb_turmatemporada a 
+				INNER JOIN tb_turma i            
+				using(idturma)
+				INNER JOIN tb_users b
+				using(iduser)
+				INNER JOIN tb_atividade c
+				using(idativ)
+				INNER JOIN tb_espaco d
+				using(idespaco)
+				INNER JOIN tb_local e
+				using(idlocal)
+				-- INNER JOIN tb_turmastatus f
+				-- using(idturmastatus)
+				INNER JOIN tb_horario g
+				using(idhorario)
+				INNER JOIN tb_fxetaria h
+				using(idfxetaria)	            
+	            INNER JOIN tb_temporada j           
+				using(idtemporada)   
+	            INNER JOIN tb_statustemporada k          
+				using(idstatustemporada)
+				INNER JOIN tb_modalidade l
+				using(idmodal)
+	            INNER JOIN tb_persons m
+				using(idperson)            
+				WHERE a.idtemporada = :idtemporada
+				AND l.idmodal = :idmodal
+				AND e.idlocal = :idlocal
+				ORDER BY e.apelidolocal, l.descmodal, g.diasemana, g.periodo, g.horainicio", [
+				':idtemporada'=>$idtemporada,
+				':idmodal'=>$idmodal,
+				':idlocal'=>$idlocal
+			]);
+		}
+
+		public static function listAllTurmaTemporadaControleFrequenciaModalLocalUser($idtemporada, $idmodal, $idlocal, $iduser)
+		{
+			$sql = new Sql();
+
+			return $sql->select("SELECT * 
+				FROM tb_turmatemporada a 
+				INNER JOIN tb_turma i            
+				using(idturma)
+				INNER JOIN tb_users b
+				using(iduser)
+				INNER JOIN tb_atividade c
+				using(idativ)
+				INNER JOIN tb_espaco d
+				using(idespaco)
+				INNER JOIN tb_local e
+				using(idlocal)
+				-- INNER JOIN tb_turmastatus f
+				-- using(idturmastatus)
+				INNER JOIN tb_horario g
+				using(idhorario)
+				INNER JOIN tb_fxetaria h
+				using(idfxetaria)	            
+	            INNER JOIN tb_temporada j           
+				using(idtemporada)   
+	            INNER JOIN tb_statustemporada k          
+				using(idstatustemporada)
+				INNER JOIN tb_modalidade l
+				using(idmodal)
+	            INNER JOIN tb_persons m
+				using(idperson)            
+				WHERE a.idtemporada = :idtemporada
+				AND l.idmodal = :idmodal
+				AND e.idlocal = :idlocal
+				AND b.iduser = :iduser
+				ORDER BY e.apelidolocal, l.descmodal, g.diasemana, g.periodo, g.horainicio", [
+				':idtemporada'=>$idtemporada,
+				':idmodal'=>$idmodal,
+				':idlocal'=>$idlocal,
+				':iduser'=>$iduser
+			]);
+		}
 		
 		public static function listAllTurmaTemporadaControleFrequenciaAnoAnt($idturma, $idtemporada, $desctemporada)
 		{
@@ -937,6 +1019,9 @@
 
 			//Temporada::updateFile();
 			//Temporada::updateFileAdminTemporada();
+			Temporada::updateFileEventoTemporada();
+			Temporada::updateFileAgendaMinhaTemporada();
+			Temporada::updateFileAdminInscricoesVazio();	
 			Temporada::updateFileAdminInscricoes();
 			Temporada::updateFileAdminTurmaTemporada();
 			Temporada::updateFileAdminTurmaTemporadaHoje();
@@ -985,6 +1070,9 @@
 
 			//Temporada::updateFile();
 			//Temporada::updateFileAdminTemporada();
+			Temporada::updateFileEventoTemporada();
+			Temporada::updateFileAgendaMinhaTemporada();
+			Temporada::updateFileAdminInscricoesVazio();
 			Temporada::updateFileAdminInscricoes();
 			Temporada::updateFileAdminTurmaTemporada();
 			Temporada::updateFileAdminTurmaTemporadaHoje();	
@@ -1051,6 +1139,24 @@
 
 			}
 			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."insc-temporada-menu.html", implode('', $html));
+		}
+
+		public static function updateFileAdminInscricoesVazio()	
+		{
+			$temporada = Temporada::listAll();
+
+			$html = [];
+
+			foreach ($temporada as $row) {
+				array_push($html, '<li class="treeview">
+								   		<a href="/admin/insc-pessoa-vazio/'.$row['idtemporada'].'">
+								   			<i class="fa fa-link"></i> 
+								   			Inscrições vazio - '.$row['desctemporada'].'
+								   		</a>								   		
+									</li>');
+
+			}
+			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."insc-temporada-vazio-menu.html", implode('', $html));
 		}
 
 		public static function updateFileProfInscricoes()	
@@ -1266,6 +1372,25 @@
 			}
 			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."prof".DIRECTORY_SEPARATOR."turma-temporada-menu.html", implode('', $html));
 		}
+
+		public static function updateFileEventoTemporada()	
+		{
+			$temporada = Temporada::listAll();
+
+			$html = [];
+
+			foreach ($temporada as $row) {
+				array_push($html, '<li class="treeview">						   		
+									<a href="/admin/eventos-por-temporada/'.$row['idtemporada'].'">
+								   			<i class="fa fa-link"></i> 
+								   			Eventos - '.$row['desctemporada'].'
+								   		</a> 
+								   	</li>'
+								);
+
+			}
+			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."evento-menu.html", implode('', $html));
+		}
 		
 		public static function updateFileEstagiarioTurmaTemporada()	
 		{
@@ -1322,6 +1447,20 @@
 
 			}
 			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."estagiario-temporada-menu.html", implode('', $html));
+		}
+
+		public static function updateFileAgendaMinhaTemporada()	
+		{
+			$temporada = Temporada::listAll();
+
+			$html = [];
+
+			foreach ($temporada as $row) {
+				array_push($html, '<a href="/minhaagenda/'.$row['desctemporada'].'">'.$row['desctemporada'].'</a> '
+								);
+
+			}
+			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."minhaagenda-menu.html", implode('', $html));
 		}
 
 		public static function updateFileSorteioPorTemporada()	

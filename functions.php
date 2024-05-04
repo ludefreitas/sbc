@@ -169,6 +169,44 @@ function getAtestadoDermaIconeByNumCpf($numcpf){
     return $html[0];
 }
 
+function getAtestadoColorDivCpf($numcpf){
+    $saude = new Saude();
+    $atestado = $saude->getCountAtestadoByNumcpf($numcpf);
+    $validade = $saude->getAtestadoUltimoByNumcpf($numcpf);
+ 
+    $html = [];
+    if($atestado > 0){
+        $hoje = date('Y-m-d');
+        $validade = $validade[0]['datavalidade'];
+        if($hoje > $validade){
+
+            array_push($html, '<div class="col-md-12" style="background: rgba(255, 0, 0, 0.15);">'
+                );                          
+
+        }else{
+            $data_validade_menos_2meses = date('Y-m-d', strtotime("-2 month", strtotime($validade))); 
+            if($hoje > $data_validade_menos_2meses){
+
+                array_push($html, '<div class="col-md-12" style="background: rgba(255, 255, 0, 0.15);">'
+                );                          
+
+            }else{
+
+                array_push($html, '<div class="col-md-12" style="background: rgba(0, 255, 0, 0.15);">'
+                );                          
+            }                   
+        } 
+        
+    }else{
+
+        array_push($html, '<div class="col-md-12" style="background-color: white;">'
+                );                          
+    }
+
+    return $html[0];
+   
+}
+
 function getAtestadoDermaExiste($numcpf, $tipoatestado){
 
     $saude = new Saude();
@@ -1036,9 +1074,7 @@ function temTokenPorTurmaCpf($idturma, $numcpf){
 
     $html = [];
 
-    array_push($html, '<input hidden  id="'.$numcpf.'" type="text" name="tokencpf" value="" placeholder="Insira aqui o TOKEN"/>'
-                        
-    );
+    array_push($html, '<input  type="text" name="tokencpf" value="" placeholder="Insira aqui o TOKEN"/>');
 
     if(Turma::temtokenCpf($idturma, $numcpf)){
 

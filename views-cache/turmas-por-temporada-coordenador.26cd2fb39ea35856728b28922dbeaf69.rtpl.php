@@ -88,6 +88,13 @@
 
 
                 <div id="idmodal<?php echo htmlspecialchars( $idmodalidade, ENT_COMPAT, 'UTF-8', FALSE ); ?>" hidden >
+
+                <div style="text-align: right;">  
+                    <a href="/prof/controle-frequencia-coordenador-por-modalidade-local/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idmodalidade, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: red; font-weight: bold;"> 
+                        Controle de frequência da modalidade
+                    </a>
+                </div>
+
                 <?php $counter2=-1;  if( isset($turmas) && ( is_array($turmas) || $turmas instanceof Traversable ) && sizeof($turmas) ) foreach( $turmas as $key2 => $value2 ){ $counter2++; ?>
                 
                 <?php if( $idmodalidade == $value2["idmodal"] ){ ?>

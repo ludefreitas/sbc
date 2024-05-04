@@ -59,12 +59,14 @@
                             {if="($value.idinscstatus) !== '8' && ($value.idinscstatus) !== '9'"} 
 
 
+                                {if="$value.desctemporada >= $anoAtual"}
+                                    <a href="/insc/{$value.idinsc}/statusCancelada" onclick="return confirm('Deseja realmente excluir PERMANENTEMENTE a inscrição {$value.idinsc} do(a) {$value.nomepess} da turma {$value.descativ} - {$value.desctemporada}? Lembramos que se você clicar em OK a inscrição e a matricula se existir, serão definitivamente canceladas.')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
+                                {/if}                    
 
-                            <a href="/insc/{$value.idinsc}/statusCancelada" onclick="return confirm('Deseja realmente excluir PERMANENTEMENTE a inscrição {$value.idinsc} do(a) {$value.nomepess} da turma {$value.descativ} - {$value.desctemporada}? Lembramos que se você clicar em OK a inscrição e a matricula se existir, serão definitivamente canceladas.')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
-
-                                {if="$value.idinscstatus === '1'"}
+                                {if="($value.idinscstatus === '1') && ($value.desctemporada == $anoAtual)"}
                                         
                                     <a href="/declaracao-de-matricula/{$value.idpess}/{$value.idinsc}"  class="btn btn-success btn-xs"><i class="fa fa-check"></i> Declaração</a>
+
                                 {/if}                    
 
                             {/if}  

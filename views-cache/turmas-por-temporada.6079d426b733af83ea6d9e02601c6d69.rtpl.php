@@ -92,8 +92,10 @@
 </h1>
 <ol class="breadcrumb">
   <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+  <?php if( getUserId() == 1 OR getUserId() == 156 ){ ?>
   <li><a href="/admin/insc/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> Todas inscrições <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </a></li>
   <li><a href="/admin/temporada/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/turma"> Inserir turma <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a></li>
+  <?php } ?>
 </ol>
 </section>
 
@@ -117,6 +119,7 @@
           <?php $counter1=-1;  if( isset($locais) && ( is_array($locais) || $locais instanceof Traversable ) && sizeof($locais) ) foreach( $locais as $key1 => $value1 ){ $counter1++; ?>
                   <a href="/admin/turma-temporada/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/local/<?php echo htmlspecialchars( $value1["idlocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><i class=""></i><?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a>&nbsp;&nbsp;&nbsp;&nbsp;
           <?php } ?>
+          <a style="font-weight: bold" href="/admin/turma-temporada/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><i class=""></i>TODOS OS LOCAIS</a>&nbsp;&nbsp;&nbsp;&nbsp;
               <!--    <table class="table table-striped">
                       <thead>
                           <tr>
@@ -169,6 +172,18 @@
               
             
                 <div id="idmodal<?php echo htmlspecialchars( $idmodalidade, ENT_COMPAT, 'UTF-8', FALSE ); ?>" hidden >
+                <!--
+                <div style="text-align: right;">  
+                    <a href="/admin/controle-frequencia-por-modalidade-local/<?php echo htmlspecialchars( $temporada["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idmodalidade, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                    
+                    /{idlocal}
+
+                    " style="color: red; font-weight: bold;"> 
+                        Controle de frequência da modalidade
+                    </a>
+                </div>
+              -->
+
                 <?php $counter2=-1;  if( isset($turmas) && ( is_array($turmas) || $turmas instanceof Traversable ) && sizeof($turmas) ) foreach( $turmas as $key2 => $value2 ){ $counter2++; ?>
                 <?php if( $idmodalidade == $value2["idmodal"] ){ ?>
                 <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
@@ -234,20 +249,20 @@
                       <h5 style="font-weight: bold; text-align: left; color: green;">
                            <strong style="color: orange;">[<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>]</strong> &nbsp;&nbsp;
                          <a href="/admin/insc-turma-temporada/<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value2["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/user/<?php echo htmlspecialchars( $value2["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> 
-                         | &nbsp; Consultar <?php echo htmlspecialchars( $value2["numinscritos"], ENT_COMPAT, 'UTF-8', FALSE ); ?> inscritos &nbsp;
+                         | &nbsp; Consultar <?php echo htmlspecialchars( $value2["numinscritos"], ENT_COMPAT, 'UTF-8', FALSE ); ?> inscritos &nbsp; |
                          </a> &nbsp; 
 
                          <a href="/admin/insc-turma-temporada-chamada/<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value2["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/user/<?php echo htmlspecialchars( $value2["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: green;"> 
-                         | &nbsp; Imprimir lista chamada (<?php echo htmlspecialchars( $value2["nummatriculados"], ENT_COMPAT, 'UTF-8', FALSE ); ?>) &nbsp; 
+                         &nbsp; Imprimir lista chamada (<?php echo htmlspecialchars( $value2["nummatriculados"], ENT_COMPAT, 'UTF-8', FALSE ); ?>) &nbsp; 
                          </a> &nbsp; 
                          
                          <a href="/admin/calendario-lista-presenca/<?php echo htmlspecialchars( $value2["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: orangered;">
-                         | &nbsp;Fazer Chamada </a>  &nbsp; 
-                         &nbsp;  
+                         | &nbsp; Fazer Chamada &nbsp; |
+                         </a> &nbsp;  
                          
                          <a href="/admin/listapessoasporturma/<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value2["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: black;">
-                         | &nbsp; Lista com endereços </a>  &nbsp; 
-                         &nbsp;  
+                         &nbsp; Lista com endereços &nbsp; 
+                         </a> &nbsp;  
                          
                          <!--
                          <a href="/insc-turma-temporada-classificadas/<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value2["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/user/<?php echo htmlspecialchars( $value2["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: orangered;">
@@ -262,16 +277,30 @@
                          
                       <!--  | &nbsp; <a href="/insc-turma-temporada-para-sorteio/<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value2["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/user/<?php echo htmlspecialchars( $value2["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: orangered;">  Sorteio |</a>  &nbsp;  
                       -->
+                          <?php if( $value2["token"] == 1 ){ ?>
+                          <a href="/admin/token/<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: darkblue;"> 
+                          | &nbsp; 
+                          <span style="color: darkorange;">
+                               NECESSÁRIO 
+                               <i class="fa fa-info-circle" style="font-size: 14px;"></i> &nbsp;
+                          </span>  Tokens &nbsp; |
+                          </a> &nbsp;
+                          <?php }else{ ?>
                         
-                          <a href="/admin/token/<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: darkblue;"><i ></i> | Tokens</a>
+                          <a href="/admin/token/<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: darkblue;"> 
+                          | &nbsp;  Tokens  &nbsp; | 
+                          </a> &nbsp;
+                          <?php } ?>
+                        
+                          
                           
                           <a href="/admin/insc-altera-turma-temporada/<?php echo htmlspecialchars( $value2["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value2["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/user/<?php echo htmlspecialchars( $value2["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> 
-                         | &nbsp; Mover inscritos &nbsp;
+                         &nbsp; Mover inscritos &nbsp;
                          </a> &nbsp;
 
                          <a href="/admin/crialispersonalizadaautorizacao/<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value2["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="color: purple;">
-                                | &nbsp; Criar uma Lista </a>  
-                                &nbsp;&nbsp;
+                          | &nbsp; Criar uma Lista &nbsp; |
+                          </a> &nbsp;
 
                          <br>
                          
@@ -286,6 +315,7 @@
                         <strong> Observação: </strong><?php echo htmlspecialchars( $value2["obs"], ENT_COMPAT, 'UTF-8', FALSE ); ?> 
                       </span>
                        <br>
+                       
                       </span>
                      
                       

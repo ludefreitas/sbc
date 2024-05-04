@@ -26,6 +26,26 @@
 
     <title>Cursos Esportivos SBC</title>
     <link rel="icon" type="image/jpg" href="/../res/site/img/corpoacao.png" />
+    
+    <script type="text/javascript">
+
+      function sumQuantity() {
+
+        var elements = document.getElementsByClassName('itemTable');
+        var sum = 0;
+
+        for (i = 0; i < elements.length; i++) {
+          sum = sum + parseFloat(elements[i].innerHTML);
+        };
+
+        alert(sum);
+
+        document.getElementById('somavagas').value = sum;
+      }
+      
+      
+
+    </script>
 
     <style type="text/css">
      
@@ -109,15 +129,18 @@
 <hr>
 
 <div id="div1">
+    
+    
 
   <div class="div-center rounded">
     <h5>CONTROLE DE FREQUÊNCIA <?php echo htmlspecialchars( $local, ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </h5>
-    <h5 id="title" hidden><?php echo htmlspecialchars( $local, ENT_COMPAT, 'UTF-8', FALSE ); ?>_<?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </h5>
-        
+    <h5 id="title" hidden><?php echo htmlspecialchars( $local, ENT_COMPAT, 'UTF-8', FALSE ); ?><?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h5>
+
       <table class="table table-bordered" id="table">
         
         <thead>
-          <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">ID</th>
+            <tr>
+              <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">ID</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">LOCAL</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">ESPAÇO</th>
               <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px;">PROFESSOR</th>
@@ -189,60 +212,72 @@
               <td style="text-align: center; border: solid 1px; color: darkblue; padding: 5px;">
                <?php echo htmlspecialchars( $value1["origativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
               </td>
-              <td style="text-align: center; border: solid 1px; padding: 5px;">
+              <td class="itemTable" style="text-align: center; border: solid 1px; padding: 5px;">
                <?php echo htmlspecialchars( $value1["vagas"]+$value1["vagaslaudo"]+$value1["vagaspcd"]+$value1["vagaspvs"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-              </td>              
+              </td>
               <td style="text-align: center; border: solid 1px; padding: 5px;">
                <?php echo htmlspecialchars( $value1["nummatriculados"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-              </td>  
+              </td>
               <td style="text-align: center; border: solid 1px; padding: 5px;">
                <?php echo getNumInscListaEsperaTurmaTemporada($value1["idtemporada"], $value1["idturma"]); ?>
-              </td>
+              </td> 
               <td style="text-align: center; border: solid 1px; color: darkblue; padding: 5px;">
                <?php echo ControleFrequenciaAnoAnt($value1["idturma"], $value1["idtemporada"], $value1["desctemporada"]); ?>
               </td> 
-              <td style="text-align: center; border: solid 1px; padding: 5px;">  
-                <a href="/admin/insc-turma-temporada-chamada-mensal/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>-01-01">                             
-                <?php echo ControleFrequenciaJan($value1["idturma"], $value1["idtemporada"], $value1["desctemporada"]); ?>    </a> 
-              </td>             
-              <td style="text-align: center; border: solid 1px; padding: 5px;"> 
-              <a href="/admin/insc-turma-temporada-chamada-mensal/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>-02-01">                              
-                <?php echo ControleFrequenciaFev($value1["idturma"], $value1["idtemporada"], $value1["desctemporada"]); ?>     </a>
-              </td>
-              <td style="text-align: center; border: solid 1px; padding: 5px;">   
-              <a href="/admin/insc-turma-temporada-chamada-mensal/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>-03-01">                            
-                <?php echo ControleFrequenciaMar($value1["idturma"], $value1["idtemporada"], $value1["desctemporada"]); ?>     </a>
-              </td>      
               <td style="text-align: center; border: solid 1px; padding: 5px;">
-              <a href="/admin/insc-turma-temporada-chamada-mensal/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>-04-01">                               
-                <?php echo ControleFrequenciaAbr($value1["idturma"], $value1["idtemporada"], $value1["desctemporada"]); ?>     </a>
+                  <a style="color: black;" href="/admin/insc-turma-temporada-chamada-mensal/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>-01-01">                               
+                <?php echo ControleFrequenciaJan($value1["idturma"], $value1["idtemporada"], $value1["desctemporada"]); ?>   
+                  </a>
+              </td>             
+              <td style="text-align: center; border: solid 1px; padding: 5px;">    
+                <a style="color: black;" href="/admin/insc-turma-temporada-chamada-mensal/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>-02-01">                               
+                <?php echo ControleFrequenciaFev($value1["idturma"], $value1["idtemporada"], $value1["desctemporada"]); ?>   
+                </a>
+              </td>
+              <td style="text-align: center; border: solid 1px; padding: 5px;">            
+                <a style="color: black;" href="/admin/insc-turma-temporada-chamada-mensal/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>-03-01">                               
+                <?php echo ControleFrequenciaMar($value1["idturma"], $value1["idtemporada"], $value1["desctemporada"]); ?>     
+                </a>
+              </td>      
+              <td style="text-align: center; border: solid 1px; padding: 5px;">      
+                <a style="color: black;" href="/admin/insc-turma-temporada-chamada-mensal/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>-04-01">                               
+                <?php echo ControleFrequenciaAbr($value1["idturma"], $value1["idtemporada"], $value1["desctemporada"]); ?>  
+                </a>
               </td> 
-              <td style="text-align: center; border: solid 1px; padding: 5px;">   
-              <a href="/admin/insc-turma-temporada-chamada-mensal/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>-05-01">                            
-                <?php echo ControleFrequenciaMai($value1["idturma"], $value1["idtemporada"], $value1["desctemporada"]); ?>     </a>
+              <td style="text-align: center; border: solid 1px; padding: 5px;">      
+                <a style="color: black;" href="/admin/insc-turma-temporada-chamada-mensal/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>-05-01">                               
+                <?php echo ControleFrequenciaMai($value1["idturma"], $value1["idtemporada"], $value1["desctemporada"]); ?> 
+                </a>
               </td>     
               <td style="text-align: center; border: solid 1px; padding: 5px;">  
-              <a href="/admin/insc-turma-temporada-chamada-mensal/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>-06-01">                              
-                <?php echo ControleFrequenciaJun($value1["idturma"], $value1["idtemporada"], $value1["desctemporada"]); ?>  </a>   
+                <a style="color: black;" href="/admin/insc-turma-temporada-chamada-mensal/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>-06-01">                               
+                <?php echo ControleFrequenciaJun($value1["idturma"], $value1["idtemporada"], $value1["desctemporada"]); ?>     
+                </a>
               </td>   
               <td style="text-align: center; border: solid 1px; padding: 5px;">  
-              <a href="/admin/insc-turma-temporada-chamada-mensal/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>-07-01">                              
-                <?php echo ControleFrequenciaJul($value1["idturma"], $value1["idtemporada"], $value1["desctemporada"]); ?>  </a>   
+                <a style="color: black;" href="/admin/insc-turma-temporada-chamada-mensal/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>-07-01">                               
+                <?php echo ControleFrequenciaJul($value1["idturma"], $value1["idtemporada"], $value1["desctemporada"]); ?>  
+                </a>
               </td>    
-              <td style="text-align: center; border: solid 1px; padding: 5px;">  
-              <a href="/admin/insc-turma-temporada-chamada-mensal/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>-08-01">                
-                <?php echo ControleFrequenciaAgo($value1["idturma"], $value1["idtemporada"], $value1["desctemporada"]); ?>    </a> 
+              <td style="text-align: center; border: solid 1px; padding: 5px;">    
+                <a style="color: black;" href="/admin/insc-turma-temporada-chamada-mensal/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>-08-01">                               
+                <?php echo ControleFrequenciaAgo($value1["idturma"], $value1["idtemporada"], $value1["desctemporada"]); ?> 
+                </a>
               </td> 
-              <td style="text-align: center; border: solid 1px; padding: 5px;">   
-              <a href="/admin/insc-turma-temporada-chamada-mensal/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>-09-01">               
-                <?php echo ControleFrequenciaSet($value1["idturma"], $value1["idtemporada"], $value1["desctemporada"]); ?>     </a>
+              <td style="text-align: center; border: solid 1px; padding: 5px;"> 
+                <a style="color: black;" href="/admin/insc-turma-temporada-chamada-mensal/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>-09-01">                               
+                <?php echo ControleFrequenciaSet($value1["idturma"], $value1["idtemporada"], $value1["desctemporada"]); ?>  
+                </a>
               </td> 
-              <td style="text-align: center; border: solid 1px; padding: 5px;">   
-              <a href="/admin/insc-turma-temporada-chamada-mensal/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>-10-01">               
-                <?php echo ControleFrequenciaOut($value1["idturma"], $value1["idtemporada"], $value1["desctemporada"]); ?>    </a> 
+              <td style="text-align: center; border: solid 1px; padding: 5px;">             
+                <a style="color: black;" href="/admin/insc-turma-temporada-chamada-mensal/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>-10-01">                               
+                <?php echo ControleFrequenciaOut($value1["idturma"], $value1["idtemporada"], $value1["desctemporada"]); ?> 
+                </a>
               </td>   
-              <td style="text-align: center; border: solid 1px; padding: 5px;">                
-              <a href="/admin/insc-turma-temporada-chamada-mensal/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>-11-01">  <?php echo ControleFrequenciaNov($value1["idturma"], $value1["idtemporada"], $value1["desctemporada"]); ?>  </a>   
+              <td style="text-align: center; border: solid 1px; padding: 5px;"> 
+                <a style="color: black;" href="/admin/insc-turma-temporada-chamada-mensal/<?php echo htmlspecialchars( $value1["idtemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>-11-01">                               
+                <?php echo ControleFrequenciaNov($value1["idturma"], $value1["idtemporada"], $value1["desctemporada"]); ?>
+                </a>
               </td>                                                                                     
           </tr>
           </tbody>
@@ -252,9 +287,18 @@
               Não há turmas relacionadas a este local!
             </td>
           </tr>
+          
           </tbody>
           <?php } ?>
-        </tbody>
+          <tr>
+            <td colspan="11" style="text-align: center; border: solid 1px; padding: 5px;"> 
+              
+            </td>
+            <td style="text-align: center; border: solid 1px; padding: 5px;"> 
+              <a href="" onclick="sumQuantity()">soma </a>
+            </td>
+          </tr>
+        
       </table>
 
       <button

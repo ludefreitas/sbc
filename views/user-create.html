@@ -1,6 +1,23 @@
 
 <script>
 
+    function formatarCampo(campoTexto) {
+      if (campoTexto.value.length <= 11) {
+        campoTexto.value = mascaraCpf(campoTexto.value);
+      } else {
+        campoTexto.value = mascaraCnpj(campoTexto.value);
+      }
+    }
+    function retirarFormatacao(campoTexto) {
+      campoTexto.value = campoTexto.value.replace(/(\.|\/|\-)/g,"");
+    }
+    function mascaraCpf(valor) {
+      return valor.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g,"\$1.\$2.\$3\-\$4");
+    }
+    function mascaraCnpj(valor) {
+      return valor.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g,"\$1.\$2.\$3\/\$4\-\$5");
+    }
+
     function quantosAnos(nascimento, hoje) {
 
         var diferencaAnos = hoje.getFullYear() - nascimento.getFullYear();
@@ -177,9 +194,9 @@
                     </p>  
 
                     <p>
-                        <label style="font-size: 12px; margin: 0px">Número do CPF</label>
-                         <input style="width: 100%; float: right;" type="text" maxlength="14" id="numcpf" name="numcpf" class="form-control" value="{$registerpessoaValues.numcpf}" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}" required="required">
-                        <script type="text/javascript">$("#numcpf").mask("000.000.000-00");</script>
+                        <label style="font-size: 12px; margin: 0px">Número do CPF (Somente Números)</label>
+                         <input style="width: 100%; float: right;" type="text" maxlength="14" id="numcpf" name="numcpf" class="form-control" value="{$registerpessoaValues.numcpf}" onfocus="javascript: retirarFormatacao(this);" onblur="javascript: formatarCampo(this);" required="required">
+                        <!-- <script type="text/javascript">$("#numcpf").mask("000.000.000-00");</script> -->
                     </p>  
                 <!--
                     <p>

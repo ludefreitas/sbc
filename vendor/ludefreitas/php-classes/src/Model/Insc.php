@@ -171,6 +171,25 @@ class Insc extends Model {
 
 		return $results[0]['count(*)'];
 	}
+	
+	public function getAlunosPresentesPorDataTurma($data, $idturma){
+		
+		$statuspresenca = 1;
+
+		$sql = new Sql();
+		$results = $sql->select("SELECT count(*) FROM tb_presenca a 
+			INNER JOIN tb_insc b ON b.idinsc = a.idinsc
+	        INNER JOIN tb_turma d ON d.idturma = b.idturma	
+			WHERE d.idturma  = :idturma
+			AND dtpresenca = :data
+			AND statuspresenca = :statuspresenca", array(
+			":idturma"=>$idturma,
+			":data"=>$data,
+			":statuspresenca"=>$statuspresenca
+			));
+
+		return $results[0]['count(*)'];
+	}
 
 	public static function temChamadaData($data, $idturma){
 
@@ -203,11 +222,13 @@ class Insc extends Model {
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus
+			-- INNER JOIN tb_atestado h ON h.idpess = c.idpess /* esta */
 			WHERE a.idturma = :idturma 
 			AND a.idtemporada = :idtemporada 
 			AND g.dtpresenca = :data 
 			AND a.dtmatric < g.dtpresenca 
 			AND f.idinscstatus = 1
+			-- AND h.dataatualizacao = (SELECT  MAX(h.dataatualizacao) FROM tb_atestado h WHERE h.cpf = c.numcpf ) /* esta */
 			ORDER BY c.nomepess;
 		", [
 			':idturma'=>$idturma,
@@ -258,10 +279,12 @@ class Insc extends Model {
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus
+			-- INNER JOIN tb_atestado h ON h.idpess = c.idpess /* esta */
 			-- INNER JOIN tb_presenca g ON g.idinsc = a.idinsc			
 			WHERE a.idtemporada = :idtemporada 
 			AND a.idturma = :idturma 
 			AND f.idinscstatus = 1
+			-- AND h.dataatualizacao = (SELECT  MAX(h.dataatualizacao) FROM tb_atestado h WHERE h.cpf = c.numcpf ) /* esta */
 			ORDER BY c.nomepess;
 			-- ORDER BY a.inscpcd DESC, a.laudo DESC, a.inscpvs DESC, a.numordem, a.idinscstatus;
 		", [
@@ -851,6 +874,23 @@ class Insc extends Model {
 			CALL sp_insc_delete(:idinsc)
 		", [
 			':idinsc'=>$idinsc
+		]);
+	}
+
+	public function deleteInscWhereIdPessIsNull($idinsc, $idcart, $idturma, $idtemporada)
+	{
+
+		$sql = new Sql();
+
+		$sql->query("DELETE FROM tb_insc 
+			WHERE idinsc = :idinsc
+			AND idcart = :idcart
+			AND idturma = :idturma
+			AND idtemporada = :idtemporada", [
+			':idinsc'=>$idinsc,
+			':idcart'=>$idcart,
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
 		]);
 	}
 
@@ -2790,6 +2830,28 @@ class Insc extends Model {
 		]);		
 
 			return $results;		
+	}
+
+	public function inscPessoaVazioTbCarts($idtemporada)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT * FROM tb_insc a 
+			INNER JOIN tb_carts b ON b.idcart = a.idcart 
+            INNER JOIN tb_turma c ON c.idturma = a.idturma 
+            INNER JOIN tb_espaco d ON d.idespaco = c.idespaco 
+            INNER JOIN tb_local e ON e.idlocal = d.idlocal 
+            INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus
+			WHERE idtemporada = :idtemporada
+			AND b.idpess IS NULL 
+			AND (a.idinscstatus != 8 AND a.idinscstatus != 9) 
+			ORDER BY a.idinsc
+		", [
+			":idtemporada"=>$idtemporada
+		]);
+		return $results;		
 	}
 }
 

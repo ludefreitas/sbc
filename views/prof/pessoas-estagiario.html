@@ -79,6 +79,26 @@
                   &nbsp; <strong>Email.: {$value.deslogin}</strong>
                   &nbsp; Status: {if="$value.statuspessoa == 1"}Ativo{else}Inativo{/if}   
                   &nbsp; <span style="color: red">{if="$value.pcd == 1"}(PCD){/if}</span>
+
+                   <br>
+                      <span style="color: black; font-weight: bold">Atestado:  </span>
+                      &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+                      <span style="color: darkred; font-weight: bold">  
+                        {function="getAtestadoClinicoProfExiste($value.numcpf, 1)"}
+                        </span>
+
+                         <a style="color: orange; text-align-last: right;">
+                         {function="getAtestadoIconeByNumCpf($value.numcpf)"}</a>  
+
+
+                         &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+                         <span style="color: darkred;">  
+                         {function="getAtestadoDermaProfExiste($value.numcpf, 2)"}
+                          </span>
+
+                        &nbsp; 
+                        
+                         <a style="color: orange; text-align-last: right;" >{function="getAtestadoDermaIconeByNumCpf($value.numcpf)"}</a>
                     
                 </h5>
               </div>                

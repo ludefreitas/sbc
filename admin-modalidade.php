@@ -77,7 +77,8 @@ $app->post("/admin/modalidades/create", function() {
 
 	if (!isset($_POST['descmodal']) || $_POST['descmodal'] == '') {
 		Horario::setMsgError("Informe o nome da modalidade.");
-		header("Location: /admin/modalidade/create");
+		echo "<script>window.location.href = '/admin/modalidade/create'</script>";
+		//header("Location: /admin/modalidade/create");
 		exit;		
 	}	
 
@@ -87,7 +88,8 @@ $app->post("/admin/modalidades/create", function() {
 
 	$_SESSION['createModalidadeValues'] = NULL;
 
-	header("Location: /admin/modalidades");
+	echo "<script>window.location.href = '/admin/modalidades'</script>";
+	//header("Location: /admin/modalidades");
 	exit();	
 });
 
@@ -101,7 +103,8 @@ $app->get("/admin/modalidades/:idmodal/delete", function($idmodal) {
 
 	$modalidade->delete();
 
-	header("Location: /admin/modalidades");
+	echo "<script>window.location.href = '/admin/modalidadeS'</script>";
+	//header("Location: /admin/modalidades");
 	exit();
 	
 });
@@ -131,7 +134,8 @@ $app->post("/admin/modalidades/:idmodal", function($idmodal) {
 
 	if (!isset($_POST['descmodal']) || $_POST['descmodal'] == '') {
 		Horario::setMsgError("Informe o nome da modalidade.");
-		header("Location: /admin/modalidade/".$idmodal."");
+		echo "<script>window.location.href = '/admin/modalidade/".$idmodal."'</script>";
+		//header("Location: /admin/modalidade/".$idmodal."");
 		exit;		
 	}	
 
@@ -141,7 +145,8 @@ $app->post("/admin/modalidades/:idmodal", function($idmodal) {
 
 	$modalidade->save();
 
-	header("Location: /admin/modalidades");
+	echo "<script>window.location.href = '/admin/modalidades'</script>";
+	//header("Location: /admin/modalidades");
 	exit();	
 });
 

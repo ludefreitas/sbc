@@ -34,70 +34,7 @@
             let datasemanas = new Date(info.dateStr);
             let data = info.dateStr;
 
-            /*
-            
-            if(data == '2023-05-27'){
-                  alert('Na data escolhida não haverá natação espontânea.');                  
-                  return;
-            }
-            
-            if(data == '2023-04-07'){
-                  alert('A data escolhida é um feriado, não haverá natação espontânea.');                  
-                  return;
-            }
-            
-             if(data == '2023-04-08'){
-                  alert('A data escolhida é ponto facultativo, não haverá natação espontânea.');                  
-                  return;
-            }
-            
-            if(data == '2023-04-21'){
-                  alert('A data escolhida é um feriado, não haverá natação espontânea.');                  
-                  return;
-            }
-            
-            if(data == '2023-04-22'){
-                  alert('A data escolhida é ponto facultativo, não haverá natação espontânea.');                  
-                  return;
-            }
-            
-            if(data == '2023-05-01'){
-                  alert('A data escolhida é um feriado, não haverá natação espontânea');                  
-                  return;
-            }
-            
-            if(data == '2023-05-13'){
-                  alert('Não haverá natação espontânea nesta data devido a realização da Copa São Bernado de Natação');                  
-                  return;
-            }
-            
-            if(data == '2023-06-08'){
-                  alert('A data escolhida é um feriado, não haverá natação espontânea.');                  
-                  return;
-            }
-            
-            if(data == '2023-06-09'){
-                  alert('A data escolhida é ponto facultativo, não haverá natação espontânea.');                  
-                  return;
-            }
-            
-            if(data == '2023-06-10'){
-                  alert('A data escolhida é ponto facultativo, não haverá natação espontânea.');                  
-                  return;
-            }
-            
-            if(data == '2023-06-11'){
-                  alert('A data escolhida é ponto facultativo, não haverá natação espontânea.');                  
-                  return;
-            }
-            
-             if(data >= '2023-07-01' && data <= '2023-07-31'){
-                  alert('A agenda para o período de 01/07 a 31/07/2023 ainda não foi programada. Aguardem!.');             
-                  return;
-            }
-
-            */
-            
+                        
             Date.prototype.addDias = function(dias){
               this.setDate(this.getDate() + dias)
             };

@@ -80,54 +80,62 @@ $app->post("/admin/atividade/create", function() {
 
 	if (!isset($_POST['nomeativ']) || $_POST['nomeativ'] == '') {
 		Atividade::setMsgError("Informe o nome da atividade.");
-		header("Location: /admin/atividade/create");
+		echo "<script>window.location.href = '/admin/atividade/create'</script>";
+		//header("Location: /admin/atividade/create");
 		exit;		
 	}	
 
 	if (!isset($_POST['descativ']) || $_POST['descativ'] == '') {
 		Atividade::setMsgError("Informe uma descrição para a atividade.");
-		header("Location: /admin/atividade/create");
+		echo "<script>window.location.href = '/admin/atividade/create'</script>";
+		//header("Location: /admin/atividade/create");
 		exit;		
 	}
 
 	if (!isset($_POST['prograativ']) || $_POST['prograativ'] == '') {
 		Atividade::setMsgError("Informe a que programa pertence a atividade.");
-		header("Location: /admin/atividade/create");
+		echo "<script>window.location.href = '/admin/atividade/create'</script>";
+		//header("Location: /admin/atividade/create");
 		exit;		
 	}						
 
 	if (!isset($_POST['tipoativ']) || $_POST['tipoativ'] == '') {
 		Atividade::setMsgError("Informe qual o tipo da atividade (Terrestre ou Aquática).");
-		header("Location: /admin/atividade/create");
+		echo "<script>window.location.href = '/admin/atividade/create'</script>";
+		//header("Location: /admin/atividade/create");
 		exit;		
 	}						
 
 	if (!isset($_POST['origativ']) || $_POST['origativ'] == '') {
 		Atividade::setMsgError("Informe é a origem desta atividade.");
-		header("Location: /admin/atividade/create");
+		echo "<script>window.location.href = '/admin/atividade/create'</script>";
+		//header("Location: /admin/atividade/create");
 		exit;		
 	}
 	/*
 	if (!isset($_POST['geneativ']) || $_POST['geneativ'] == '') {
 		Atividade::setMsgError("Informe o genêro para esta atividade.");
-		header("Location: /admin/atividade/create");
+		echo "<script>window.location.href = '/admin/atividade/create'</script>";
+		//header("Location: /admin/atividade/create");
 		exit;		
 	}
 	*/
 
 	if (!isset($_POST['idfxetaria']) || $_POST['idfxetaria'] == '') {
 		Atividade::setMsgError("Informe a faixa etária para esta atividade.");
-		header("Location: /admin/atividade/create");
+		echo "<script>window.location.href = '/admin/atividade/create'</script>";
+		//header("Location: /admin/atividade/create");
 		exit;		
 	}
-
+	
 	$atividade->setData($_POST);
 
 	$atividade->save();
 
 	$_SESSION['createAtivValues'] = NULL;
 
-	header("Location: /admin/atividade");
+	//header("Location: /admin/atividade");
+	echo "<script>window.location.href = '/admin/atividade'</script>";
 	exit();	
 });
 
@@ -141,7 +149,8 @@ $app->get("/admin/atividade/:idativ/delete", function($idativ) {
 
 	$atividade->delete();
 
-	header("Location: /admin/atividade");
+	echo "<script>window.location.href = '/admin/atividade'</script>";
+	//header("Location: /admin/atividade");
 	exit();
 	
 });
@@ -174,44 +183,52 @@ $app->post("/admin/atividade/:idativ", function($idativ) {
 
 	if (!isset($_POST['nomeativ']) || $_POST['nomeativ'] == '') {
 		Atividade::setMsgError("Informe o nome da atividade.");
-		header("Location: /admin/atividade/".$idativ."");
+		echo "<script>window.location.href = '/admin/atividade/".$idativ."'</script>";
+		//header("Location: /admin/atividade/".$idativ."");
 		exit;		
 	}	
 
 	if (!isset($_POST['descativ']) || $_POST['descativ'] == '') {
 		Atividade::setMsgError("Informe uma descrição para a atividade.");
-		header("Location: /admin/atividade/".$idativ."");
+		echo "<script>window.location.href = '/admin/atividade/".$idativ."'</script>";
+		//header("Location: /admin/atividade/".$idativ."");
 		exit;		
 	}
 
 	if (!isset($_POST['prograativ']) || $_POST['prograativ'] == '') {
 		Atividade::setMsgError("Informe a que programa pertence a atividade.");
-		header("Location: /admin/atividade/".$idativ."");
+		echo "<script>window.location.href = '/admin/atividade/".$idativ."'</script>";
+		//header("Location: /admin/atividade/".$idativ."");
 		exit;		
 	}						
 
 	if (!isset($_POST['tipoativ']) || $_POST['tipoativ'] == '') {
 		Atividade::setMsgError("Informe qual o tipo da atividade (Terrestre ou Aquática).");
-		header("Location: /admin/atividade/".$idativ."");
+		echo "<script>window.location.href = '/admin/atividade/".$idativ."'</script>";
+		//header("Location: /admin/atividade/".$idativ."");
 		exit;		
 	}						
 
 	if (!isset($_POST['origativ']) || $_POST['origativ'] == '') {
 		Atividade::setMsgError("Informe é a origem desta atividade.");
-		header("Location: /admin/atividade/".$idativ."");
+		echo "<script>window.location.href = '/admin/atividade/".$idativ."'</script>";
+		//header("Location: /admin/atividade/".$idativ."");
 		exit;		
 	}
+	
 	/*
 	if (!isset($_POST['geneativ']) || $_POST['geneativ'] == '') {
 		Atividade::setMsgError("Informe o genêro para esta atividade.");
-		header("Location: /admin/atividade/".$idativ."");
+		echo "<script>window.location.href = '/admin/atividade/".$idativ."'</script>";
+		//header("Location: /admin/atividade/".$idativ."");
 		exit;		
 	}
 	*/
 
 	if (!isset($_POST['idfxetaria']) || $_POST['idfxetaria'] == '') {
 		Atividade::setMsgError("Informe a faixa etária para esta atividade.");
-		header("Location: /admin/atividade/".$idativ."");
+		echo "<script>window.location.href = '/admin/atividade/".$idativ."'</script>";
+		//header("Location: /admin/atividade/".$idativ."");
 		exit;		
 	}
 	

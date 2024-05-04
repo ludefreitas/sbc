@@ -30,14 +30,8 @@
 
 <script type="text/javascript">
 
-    function habilitaformulariotorkn(numcpf){
-
-        let cpf = numcpf
-
-        //alert(elemento.id)
-        
-        document.getElementById(cpf).hidden = false  
-        //document.getElementById(cpf).disabled = false  
+    function voltar() {
+        history.back();
     }
 
      function imageNone() {
@@ -164,8 +158,15 @@ $(document).ready(function(){
               <?php } ?>
               </span> 
               
+              <!--
                 <span class="amount">
                    <br> <span style="color: red; font-weight: bold;">Se esta não é a turma que você quer fazer a inscrição clique aqui <a title="Remove this item" class="remove" href="/cart/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/remove"> <i class="fa fa-arrow-right" style="color: green;"></i> <i class="fa fa-trash" style="color: green;"></i> <i class="fa fa-arrow-left" style="color: green;"></i></span><p style="color: green;">(Selecionar uma outra turma)</p></a>
+               </span>
+              -->
+
+
+               <span class="amount">
+                   <br> <span style="color: red; font-weight: bold;">Se esta não é a turma que você quer fazer a inscrição clique aqui <a title="Remove this item" class="remove" onclick="voltar()" href="#void"> <i class="fa fa-arrow-right" style="color: green;"></i> <i class="fa fa-trash" style="color: green;"></i> <i class="fa fa-arrow-left" style="color: green;"></i><p style="color: green;">(Selecionar uma outra turma)</p></a>
                </span>  
 
                <input type="text" name="idturma" hidden="" value="<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
@@ -179,6 +180,9 @@ $(document).ready(function(){
                <input type="text" name="idmodal" hidden="" value="<?php echo htmlspecialchars( $value1["idmodal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                <input type="text" name="vagas" hidden="" value="<?php echo htmlspecialchars( $value1["vagas"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                <input type="text" name="temtoken" hidden="" value="<?php echo htmlspecialchars( $temtoken, ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+               <input type="text" name="idcart" hidden value="<?php echo htmlspecialchars( $idcartcart, ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+               <input type="text" name="dessessionid" hidden value="<?php echo htmlspecialchars( $sessionidcart, ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+               <input type="text" name="idpess" hidden value="<?php echo htmlspecialchars( $idpesscart, ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
             
             <div class="col-md-6">
@@ -231,13 +235,13 @@ $(document).ready(function(){
                                 -->
 
                                 <div class="box-body">
+
                                 <?php $idturma = $value1["idturma"]; ?>
                                     <?php $counter2=-1;  if( isset($pessoa) && ( is_array($pessoa) || $pessoa instanceof Traversable ) && sizeof($pessoa) ) foreach( $pessoa as $key2 => $value2 ){ $counter2++; ?>
                                     <p>
-                                    <input type="radio" onchange="habilitaformulariotorkn('<?php echo htmlspecialchars( $value2["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>')" name="idpess" value="<?php echo htmlspecialchars( $value2["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="height: 20px; width: 20px;"> <?php echo htmlspecialchars( $value2["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>; <?php echo calcularIdade($value2["dtnasc"]); ?> anos
+                                    <input type="radio" name="idpess" value="<?php echo htmlspecialchars( $value2["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="height: 20px; width: 20px;"> <?php echo htmlspecialchars( $value2["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>; <?php echo calcularIdade($value2["dtnasc"]); ?> anos
                                         <br>
                                         <?php echo temTokenPorTurmaCpf($idturma, $value2["numcpf"]); ?>
-                                        
                                         
                                     </p>                                
                                     <?php }else{ ?>
@@ -268,18 +272,17 @@ $(document).ready(function(){
             </div>
              
         </div>
-
-        <?php if( $value1["origativ"] == 'SESP' ){ ?> 
+  <!--
   <div id="popup" style="text-align-last: center; border-radius: 15px"> 
             <div style="text-align-last: right; font-weight: bold; " onclick="imageNone()"> x &nbsp;&nbsp;
             </div>  
             
             <div style="background-color: orange; text-align: justify; border-radius: 15px 15px 15px 15px; padding: 10px; font-size: 13px; font-weight: bold;">
                 <span style="color: red;"> ATENÇÃO! </span><br>
-                    LEMBRAMOS que: O início das aulas e a matrícula para ESTA TURMA e para as outras TURMAS do PELC irão acontecer simultaneamente a partir do dia<span style="color: blue;" > 1º de MARÇO</span>, no dia e no horário da aula. (Para as incrições com status <span style="color: green;" >"Aguardando Matrícula"</span>).
+                    LEMBRAMOS que: O início das aulas e a matrícula para ESTA TURMA e para as outras TURMAS do PELC irão acontecer simultaneamente a partir do dia<span style="color: blue;" > 4 de MARÇO</span>, no dia e no horário da aula. (Para as incrições com status <span style="color: green;" >"Aguardando Matrícula"</span>).
             </div> 
     </div>
- <?php } ?>
+   -->
          
         <?php }else{ ?>
         <div class="row">

@@ -88,6 +88,13 @@
 
 
                 <div id="idmodal{$idmodalidade}" hidden >
+
+                <div style="text-align: right;">  
+                    <a href="/prof/controle-frequencia-coordenador-por-modalidade-local/{$temporada.idtemporada}/{$idmodalidade}/{$idlocal}" style="color: red; font-weight: bold;"> 
+                        Controle de frequência da modalidade
+                    </a>
+                </div>
+
                 {loop="$turmas"}
                 
                 {if="$idmodalidade == $value.idmodal"}

@@ -136,6 +136,15 @@ $app->post("/prof/turma/create/token", function() {
 	$iduserTurmaTemporada = $user->getIdUseInTurmaTemporada($idturma, $idtemporada);
 	
 	$iduserTurmaTemporada = (int)$iduserTurmaTemporada['iduser'];
+
+	$pontoUm = substr($_POST['numcpf'], 3, 1);
+	$pontoDois = substr($_POST['numcpf'], 7, 1);
+	$traco = substr($_POST['numcpf'], 11, 1);
+	if($pontoUm != '.' || $pontoDois != '.' || $traco != '-'){
+		echo "<script>alert('Formato de CPF inválido!');";
+	  	echo "javascript:history.go(-1)</script>";
+	   	exit;
+	}
 	
 	/*
 	if($iduserTurmaTemporada !== $iduserSession){
@@ -155,13 +164,13 @@ $app->post("/prof/turma/create/token", function() {
 	$token = substr($token, 4);
 
 	if(isset($_POST['numcpf']) && $_POST['numcpf'] == ""){
-		echo "<script>alert('Informe o n«âmero do CPF!');";
+		echo "<script>alert('Informe número do CPF!');";
 	  	echo "javascript:history.go(-1)</script>";
 	   	exit;
 	}
 
 	if(!Pessoa::validaCPF($_POST['numcpf'])){
-		echo "<script>alert('Informe um n«âmero de cpf v«¡lido!');";
+		echo "<script>alert('Informe um número de cpf válido!');";
 	    echo "javascript:history.go(-1)</script>";
 		exit;
 	}

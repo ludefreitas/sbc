@@ -92,6 +92,28 @@
         <div class="container">
           <div class="row alert-warning">
             <div class="col-md-6" style="margin: 10px 0px 5px 0px; ">                 
+                <a style="color: #0f71b3; text-decoration: none; font-weight: bold;" href="/taekwondo">
+                    Taekwondo
+                    <br>
+                </a>     
+            </div>
+            <div class="col-md-6" style="text-align-last: center; margin: 5px 0px 5px 0px; color: white; padding: 0px 0px 0px 0px">                
+                <a class="card card-just-text" style="background-color: #cc5d1e; color: white; padding: 5px 0px 5px 0px;  text-decoration: none" href="/taekwondo" text-decoration="none">
+                    Cursos dísponíveis
+                </a>
+            </div>
+          </div>
+        </div>
+      </div>                        
+    </div> <!-- row 4 -->
+  </div> <!-- container 3 -->
+
+  <div class="container"> <!-- container 3 -->
+    <div class="row"> <!-- row 4 -->      
+      <div class="col-md-12" style="text-align-last: left; line-height: 20px;  font-size: 20px; font-style: normal; margin: 5px 0px 5px 0px; padding: 0px 0px 0px 0px">
+        <div class="container">
+          <div class="row alert-warning">
+            <div class="col-md-6" style="margin: 10px 0px 5px 0px; ">                 
                 <a style="color: #0f71b3; text-decoration: none; font-weight: bold;" href="/xadrez">
                     Xadrez
                     <br>

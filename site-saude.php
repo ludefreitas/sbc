@@ -76,18 +76,20 @@ $app->post("/buscacid/:idpess/:nomepess", function($idpess, $nomepess){
 		$_SESSION['idcid'] = '';
 
     	Saude::setError("Dados de doença não encontrado! Verifique se o CID foi digitado corretamente.");
-		header("Location: /saude-atualiza/".$idpess."/".$nomepess."");
+    	echo "<script>window.location.href = '/saude-atualiza/".$idpess."/".$nomepess."'</script>";
+		//header("Location: /saude-atualiza/".$idpess."/".$nomepess."");
 		exit;
 
     }else{
 
-	$dadosDeonca = $saude->obtemDoencaCid($codigo);
+		$dadosDeonca = $saude->obtemDoencaCid($codigo);
 
-	$_SESSION['doenca'] =  $dadosDeonca[0]['doenca'];
-	$_SESSION['codigo'] = $dadosDeonca[0]['codigo'];
-	$_SESSION['idcid'] = $dadosDeonca[0]['idcid'];
+		$_SESSION['doenca'] =  $dadosDeonca[0]['doenca'];
+		$_SESSION['codigo'] = $dadosDeonca[0]['codigo'];
+		$_SESSION['idcid'] = $dadosDeonca[0]['idcid'];
 
-	header("Location: /saude-atualiza/".$idpess."/".$nomepess."");
+		echo "<script>window.location.href = '/saude-atualiza/".$idpess."/".$nomepess."'</script>";
+		//header("Location: /saude-atualiza/".$idpess."/".$nomepess."");
 		exit;
 	}
 });
@@ -114,7 +116,8 @@ $app->post("/registersaude", function(){
 	if($pessoa->getpcd() == 1){
     	if(!isset($_POST['auditiva']) && !isset($_POST['visual']) && !isset($_POST['fisica']) && !isset($_POST['intelectual']) && !isset($_POST['autismo']) && !isset($_POST['tea'])){
     		Saude::setError('No cadastro é declarado que esta pessoa é PCD. Então, selecione a opção "Sim" e informe pelo menos um tipo de deficiência');
-    		header("Location: /saude-atualiza/".$_POST['idpess']."/".$_POST['nomepess']."");
+    		echo "<script>window.location.href = '/saude-atualiza/".$_POST['idpess']."/".$_POST['nomepess']."'</script>";
+    		//header("Location: /saude-atualiza/".$_POST['idpess']."/".$_POST['nomepess']."");
     		exit;
     	}
 	}
@@ -131,7 +134,8 @@ $app->post("/registersaude", function(){
     	if (!isset($_POST['codigo']) || $_POST['codigo'] == '') {
     
     		Saude::setError("No cadastro é declarado que esta pessoa é PCD. Então, é necessário irformar o CID! Digite o número do CID.");
-    		header("Location: /saude-atualiza/".$_POST['idpess']."/".$_POST['nomepess']."");
+    		echo "<script>window.location.href = '/saude-atualiza/".$_POST['idpess']."/".$_POST['nomepess']."'</script>";
+    		//header("Location: /saude-atualiza/".$_POST['idpess']."/".$_POST['nomepess']."");
     		exit;
     	}
     	
@@ -142,7 +146,8 @@ $app->post("/registersaude", function(){
 			$_SESSION['idcid'] = '';
 
 	    	Saude::setError("Dados de doença não encontrado! Verifique se o CIDs foi digitado corretamente.");
-			header("Location: /saude-atualiza/".$idpess."/".$nomepess."");
+	    	echo "<script>window.location.href = '/saude-atualiza/".$_POST['idpess']."/".$_POST['nomepess']."'</script>";
+			//header("Location: /saude-atualiza/".$idpess."/".$nomepess."");
 			exit;
 
     		}else{    			
@@ -196,7 +201,8 @@ $app->post("/registersaude", function(){
 	    $_SESSION['idcid'] = NULL;
 	
 	    Cart::setSuccess("Dados de saúde atualizado com sucesso!!.");
-		header('Location: /user/pessoas');
+	    echo "<script>window.location.href = '/user/pessoas'</script>";
+		//header('Location: /user/pessoas');
 		exit;	
 });
 
@@ -209,8 +215,9 @@ $app->get("/user/saude/pessoa/:idpess", function($idpess) {
 	if( $pessoa->getidpess() != $idpess){
 
 		Pessoa::setErrorRegister("Pessoa não encontrado!!!");
-			header("Location: /user/pessoas");
-			exit();			
+		echo "<script>window.location.href = '/user/pessoas'</script>";
+		//header("Location: /user/pessoas");
+		exit();			
 	}
 	
 	$page = new Page();

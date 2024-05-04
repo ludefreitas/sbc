@@ -9,8 +9,11 @@
         Olá! <?php echo htmlspecialchars( $user["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, seja bem vindo!
       </h3>
       <ol class="breadcrumb">
-        <li><a href="/admin"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
+        <?php if( UserIsAdmin() ){ ?> 
+            <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+        <?php }else{ ?>
+            <li><a href="/admin-audi"><i class="fa fa-dashboard"></i> Home</a></li>
+        <?php } ?>
       </ol>
     </section>
 
@@ -124,6 +127,66 @@
           <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">Inscrições</span>: <?php echo pegaInscTemporadaModalidade(($desctemporada), 14); ?></div>
           
         </div>  
+
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Natação Avançado </div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(($desctemporada), 59); ?></div>
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">Inscrições</span>: <?php echo pegaInscTemporadaModalidade(($desctemporada), 59); ?></div>
+          
+        </div>   
+
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Natação Inclusiva </div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(($desctemporada), 58); ?></div>
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">Inscrições</span>: <?php echo pegaInscTemporadaModalidade(($desctemporada), 58); ?></div>
+          
+        </div>  
+
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Natação Iniciante</div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(($desctemporada), 56); ?></div>
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">Inscrições</span>: <?php echo pegaInscTemporadaModalidade(($desctemporada), 56); ?></div>
+          
+        </div> 
+
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Natação Intermediário </div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(($desctemporada), 57); ?></div>
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">Inscrições</span>: <?php echo pegaInscTemporadaModalidade(($desctemporada), 57); ?></div>
+          
+        </div> 
+
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Natação Perca o Medo de Nadar </div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(($desctemporada), 60); ?></div>
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">Inscrições</span>: <?php echo pegaInscTemporadaModalidade(($desctemporada), 60); ?></div>
+          
+        </div>
         
         <div class="row">
           <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Ginástica </div>

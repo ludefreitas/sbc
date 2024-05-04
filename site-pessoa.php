@@ -42,39 +42,42 @@ $app->post("/registerpessoa", function(){
 	if (!isset($_POST['nomepess']) || $_POST['nomepess'] == '') {
 
 		User::setErrorRegister("Preencha o nome completo da pessoa.");
-		header("Location: /pessoa-create");
+		echo "<script>window.location.href = '/pessoa-create'</script>";
+		//header("Location: /pessoa-create");
 		exit;
 	}
+	
 	$nomepess = ltrim($_POST['nomepess']);
-
-	var_dump($nomepess);
-	exit;
 
 	if (!isset($_POST['dtnasc']) || $_POST['dtnasc'] == '') {
 
 		User::setErrorRegister("Informe a data de nascimento.");
-		header("Location: /pessoa-create");
+		echo "<script>window.location.href = '/pessoa-create'</script>";
+		//header("Location: /pessoa-create");
 		exit;
 	}
 
 	if (!isset($_POST['sexo']) || $_POST['sexo'] == '') {
 
 		User::setErrorRegister("Informe o sexo.");
-		header("Location: /pessoa-create");
+		echo "<script>window.location.href = '/pessoa-create'</script>";
+		//header("Location: /pessoa-create");
 		exit;
 	}
 
 	if (!isset($_POST['numcpf']) || $_POST['numcpf'] == '') {
 
 		User::setErrorRegister("Informe o número do CPF.");
-		header("Location: /pessoa-create");
+		echo "<script>window.location.href = '/pessoa-create'</script>";
+		//header("Location: /pessoa-create");
 		exit;
 	}
 
 	if(!Pessoa::validaCPF($_POST['numcpf'])){
 
 		User::setErrorRegister("Informe um número de CPF válido para a pessoa!");
-		header("Location: /pessoa-create");
+		echo "<script>window.location.href = '/pessoa-create'</script>";
+		//header("Location: /pessoa-create");
 		exit;
 
 	}
@@ -82,7 +85,8 @@ $app->post("/registerpessoa", function(){
 	if (Pessoa::checkCpfExist($_POST['numcpf'], $iduser) === true) {
 
 		Pessoa::setErrorRegister("Este CPF pertence a uma pessoa já cadastrada. Consulte-o no seu perfil em 'Minha Família'");
-		header("Location: /pessoa-create");
+		echo "<script>window.location.href = '/pessoa-create'</script>";
+		//header("Location: /pessoa-create");
 		exit;
 	}
 
@@ -90,35 +94,40 @@ $app->post("/registerpessoa", function(){
 	if (!isset($_POST['numrg']) || $_POST['numrg'] == '') {
 
 		User::setErrorRegister("Informe o número do RG.");
-		header("Location: /pessoa-create");
+		echo "<script>window.location.href = '/pessoa-create'</script>";
+		//header("Location: /pessoa-create");
 		exit;
 	}	
 	*/
 	if (!isset($_POST['numsus']) || $_POST['numsus'] == '') {
 
 		User::setErrorRegister("Informe o número do Cartão do SUS.");
-		header("Location: /pessoa-create");
+		echo "<script>window.location.href = '/pessoa-create'</script>";
+		//header("Location: /pessoa-create");
 		exit;
 	}	
 
 	if (!isset($_POST['vulnsocial']) || $_POST['vulnsocial'] == '') {
 
 		User::setErrorRegister("Informe se a pessoa participa de programas sociais.");
-		header("Location: /pessoa-create");
+		echo "<script>window.location.href = '/pessoa-create'</script>";
+		//header("Location: /pessoa-create");
 		exit;
 	}	
 	
 	if ($_POST['vulnsocial'] === '1' && (!isset($_POST['cadunico']) || $_POST['cadunico'] == '')) {
 
 		User::setErrorRegister("Informe o número do Cadastro Único (cadunico)");
-		header("Location: /pessoa-create");
+		echo "<script>window.location.href = '/pessoa-create'</script>";
+		//header("Location: /pessoa-create");
 		exit;
 	}	
 
 	if (!isset($_POST['pcd']) || $_POST['pcd'] == '') {
 
 		User::setErrorRegister("Informe se a pessoa é portador de  deficiência (PCD).");
-		header("Location: /pessoa-create");
+		echo "<script>window.location.href = '/pessoa-create'</script>";
+		//header("Location: /pessoa-create");
 		exit;
 	}	
 
@@ -128,28 +137,32 @@ $app->post("/registerpessoa", function(){
 		if ((!isset($_POST['nomemae']) || $_POST['nomemae'] == '') && (!isset($_POST['nomepai']) || $_POST['nomepai'] == '')) {
 
 			User::setErrorRegister("Informe pelo menos o nome ou da mãe, ou do pai ou do responsável.");
-			header("Location: /pessoa-create");
+			echo "<script>window.location.href = '/pessoa-create'</script>";
+		    //header("Location: /pessoa-create");
 			exit;
 		}
 
 		if($_POST['nomemae'] !== '' && $_POST['cpfmae'] === ''){
 
-				User::setErrorRegister("Você informou o nome da mãe. Informe então o número do CPF da mãe!");
-			header("Location: /pessoa-create");
+			User::setErrorRegister("Você informou o nome da mãe. Informe então o número do CPF da mãe!");
+			echo "<script>window.location.href = '/pessoa-create'</script>";
+		    //header("Location: /pessoa-create");
 			exit;
 		}
 
 		if($_POST['cpfmae'] === $_POST['numcpf']){
 
 			User::setErrorRegister("CPF da mãe não pode ser igual ao do(a) menor!");
-			header("Location: /pessoa-create");
+			echo "<script>window.location.href = '/pessoa-create'</script>";
+		    //header("Location: /pessoa-create");
 			exit;
 		}
 
 		if($_POST['cpfpai'] === $_POST['numcpf']){
 
 			User::setErrorRegister("CPF do pai não pode ser igual ao do(a) menor!");
-			header("Location: /pessoa-create");
+			echo "<script>window.location.href = '/pessoa-create'</script>";
+		    //header("Location: /pessoa-create");
 			exit;
 		}			
 
@@ -157,38 +170,43 @@ $app->post("/registerpessoa", function(){
 		{
 
 			User::setErrorRegister("CPF da mãe não pode ser igual ao CPF do pai!");
-			header("Location: /pessoa-create");
+			echo "<script>window.location.href = '/pessoa-create'</script>";
+		    //header("Location: /pessoa-create");
 			exit;
 		}			
 
 		if($_POST['cpfmae'] !== '' && !Pessoa::validaCPF($_POST['cpfmae'])){
 
 			User::setErrorRegister("Informe um número de CPF válido para a mãe da pessoa!");
-			header("Location: /pessoa-create");
+			echo "<script>window.location.href = '/pessoa-create'</script>";
+		    //header("Location: /pessoa-create");
 			exit;
 		}
 
 		if($_POST['nomepai'] !== '' && $_POST['cpfpai'] === ''){
 
 			User::setErrorRegister("Você informou o nome do pai. Informe então o número do CPF do pai!");
-			header("Location: /pessoa-create");
+			echo "<script>window.location.href = '/pessoa-create'</script>";
+		    //header("Location: /pessoa-create");
 			exit;
 		}	
 
 		if($_POST['cpfpai'] !== '' && !Pessoa::validaCPF($_POST['cpfpai'])){
 
 			User::setErrorRegister("Informe um número de CPF válido para o pai da pessoa!");
-			header("Location: /pessoa-create");
+			echo "<script>window.location.href = '/pessoa-create'</script>";
+		    //header("Location: /pessoa-create");
 			exit;
 		}
 
 		if ((!isset($_POST['cpfmae']) || $_POST['cpfmae'] == '') && (!isset($_POST['cpfpai']) || $_POST['cpfpai'] == '')) {
 
 			User::setErrorRegister("Informe pelo menos o CPF ou da mãe, ou do pai ou do responsável.");
-			header("Location: /pessoa-create");
+			echo "<script>window.location.href = '/pessoa-create'</script>";
+		    //header("Location: /pessoa-create");
 			exit;
 		}	
-	}
+	}	
 
 	$_POST['statuspessoa'] = 1;
 
@@ -222,56 +240,65 @@ $app->post("/registerpessoa", function(){
 
 	if (!isset($_POST['cep']) || $_POST['cep'] == '') {
 		User::setErrorRegister("Digite o número do cep.");
-		header("Location: /pessoa-create");
+		echo "<script>window.location.href = '/pessoa-create'</script>";
+		//header("Location: /pessoa-create");
 		exit;		
 	}
 
 	if (($_POST['cep']) < $cepMenor || ($_POST['cep']) > $cepMaior){
 
 		User::setErrorRegister("As inscrições nos cursos esportivos são exclusivas para os moradores de São B. do Campo. Ou o CEP que você digitou é inválido");
-		header("Location: /pessoa-create");
+		echo "<script>window.location.href = '/pessoa-create'</script>";
+		//header("Location: /pessoa-create");
 		exit;		
 	}
 
 	if ( $_POST['rua'] == 'undefined' || $_POST['bairro'] == 'undefined' || $_POST['cidade'] == 'undefined' || $_POST['estado'] == 'undefined' ) {
 		Pessoa::setErrorRegister("Verifique o CEP digitado, pode estar incorreto!");
-		header("Location: /pessoa-create");
+		echo "<script>window.location.href = '/pessoa-create'</script>";
+		//header("Location: /pessoa-create");
 		exit;		
 	}	
 
 	if (!isset($_POST['rua']) || $_POST['rua'] == '') {
 		Pessoa::setErrorRegister("Informe o nome da rua, avenida ou logradouro.");
-		header("Location: /pessoa-create");
+		echo "<script>window.location.href = '/pessoa-create'</script>";
+		//header("Location: /pessoa-create");
 		exit;		
 	}	
 
 	if (!isset($_POST['numero']) || $_POST['numero'] == '') {
 		Pessoa::setErrorRegister("Informe o número do local.");
-		header("Location: /pessoa-create");
+		echo "<script>window.location.href = '/pessoa-create'</script>";
+		//header("Location: /pessoa-create");
 		exit;		
 	}
 
 	if (!isset($_POST['bairro']) || $_POST['bairro'] == '') {
 		Pessoa::setErrorRegister("Informe o nome do bairro.");
-		header("Location: /pessoa-create");
+		echo "<script>window.location.href = '/pessoa-create'</script>";
+		//header("Location: /pessoa-create");
 		exit;		
 	}	
 		
 	if (!isset($_POST['cidade']) || $_POST['cidade'] == '') {
 		Pessoa::setErrorRegister("Informe o nome da cidade.");
-		header("Location: /pessoa-create");
+		echo "<script>window.location.href = '/pessoa-create'</script>";
+		//header("Location: /pessoa-create");
 		exit;		
 	}	
 
 	if (!isset($_POST['estado']) || $_POST['estado'] == '') {
 		Pessoa::setErrorRegister("Informe o nome da estado.");
-		header("Location: /pessoa-create");
+		echo "<script>window.location.href = '/pessoa-create'</script>";
+		//header("Location: /pessoa-create");
 		exit;		
 	}
 
 	if (!isset($_POST['telres']) || $_POST['telres'] == '') {
 		User::setErrorRegister("Informe um número de telefone residencial ou celular.");
-		header("Location: /pessoa-create");
+		echo "<script>window.location.href = '/pessoa-create'</script>";
+		//header("Location: /pessoa-create");
 		exit;		
 	}
 	$_POST['telres'] = preg_replace('/[^\p{L}\p{N}\s]/', '', $_POST['telres'] );
@@ -280,17 +307,20 @@ $app->post("/registerpessoa", function(){
 	if(strlen($_POST['telres']) !== 10 && strlen($_POST['telres']) !== 11 ){
 
 		User::setErrorRegister("Número de telefone inválido! Digite o número de um tefefone celular ou residencial com DDD.");
-		header("Location: /pessoa-create");
+		echo "<script>window.location.href = '/pessoa-create'</script>";
+		//header("Location: /pessoa-create");
 		exit;
 	}
 	if (!isset($_POST['contato']) || $_POST['contato'] == '') {
 		User::setErrorRegister("Informe um nome para entrar em contato, em caso de emergência!");
-		header("Location: /pessoa-create");
+		echo "<script>window.location.href = '/pessoa-create'</script>";
+		//header("Location: /pessoa-create");
 		exit;		
 	}
 	if (!isset($_POST['telemer']) || $_POST['telemer'] == '') {
 		User::setErrorRegister("Informe um número de telefone para ligar em caso de emergência!");
-		header("Location: /pessoa-create");
+		echo "<script>window.location.href = '/pessoa-create'</script>";
+		//header("Location: /pessoa-create");
 		exit;		
 	}
 	$_POST['telemer'] = preg_replace('/[^\p{L}\p{N}\s]/', '', $_POST['telemer'] );
@@ -298,7 +328,8 @@ $app->post("/registerpessoa", function(){
 	if(strlen($_POST['telemer']) !== 10 && strlen($_POST['telemer']) !== 11 ){
 
 		User::setErrorRegister("Número de telefone inválido! Digite o número de um tefefone celular ou residencial com DDD.");
-		header("Location: /pessoa-create");
+		echo "<script>window.location.href = '/pessoa-create'</script>";
+		//header("Location: /pessoa-create");
 		exit;
 	}	
 
@@ -330,7 +361,8 @@ $app->post("/registerpessoa", function(){
 
 	$_SESSION['registerpessoaValues'] = NULL;
 
-		header('Location: /user/pessoas');
+        echo "<script>window.location.href = '/user/pessoas'</script>";
+		//header('Location: /user/pessoas');
 		exit;
 });
 
@@ -350,8 +382,8 @@ $app->get("/user/:idpess/status", function($idpess){
 	$pessoa->save();
 
 	Pessoa::setSuccess("Status atualizado.");
-
-	header("Location: /user/pessoas");
+	echo "<script>window.location.href = '/user/pessoas'</script>";
+	//header('Location: /user/pessoas');
 	exit;
 
 });
@@ -410,7 +442,8 @@ $app->get("/user/pessoa/:idpess", function($idpess) {
 	if( $pessoa->getidpess() != $idpess){
 
 		Pessoa::setErrorRegister("Pessoa não encontrado!!!");
-		header("Location: /user-pessoas");
+		echo "<script>window.location.href = '/user/pessoas'</script>";
+		//header('Location: /user/pessoas');
 		exit();			
 	}
 	
@@ -434,30 +467,34 @@ $app->post("/updatepessoa/:idpess", function($idpess){
 	if (!isset($_POST['nomepess']) || $_POST['nomepess'] == '') {
 
 		Pessoa::setErrorRegister("Preencha o nome completo da pessoa.");
-		header("Location: /user/pessoa/".$idpess."");
+		echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		//header("Location: /user/pessoa/".$idpess."");
 		exit;
 	}
-
+	
 	$nomepess = ltrim($_POST['nomepess']);
 
 	if (!isset($_POST['dtnasc']) || $_POST['dtnasc'] == '') {
 
 		Pessoa::setErrorRegister("Informe a data de nascimento.");
-		header("Location: /user/pessoa/".$idpess."");
+		echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		//header("Location: /user/pessoa/".$idpess."");
 		exit;
 	}
 
 	if (!isset($_POST['sexo']) || $_POST['sexo'] == '') {
 
 		Pessoa::setErrorRegister("Informe o sexo.");
-		header("Location: /user/pessoa/".$idpess."");
+		echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		//header("Location: /user/pessoa/".$idpess."");
 		exit;
 	}
 
 	if(!Pessoa::validaCPF($_POST['numcpf'])){
 
 		Pessoa::setErrorRegister("Informe um número de CPF válido para a pessoa!");
-		header("Location: /user/pessoa/".$idpess."");
+		echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		//header("Location: /user/pessoa/".$idpess."");
 		exit;
 
 	}
@@ -465,7 +502,8 @@ $app->post("/updatepessoa/:idpess", function($idpess){
 	if (!isset($_POST['numcpf']) || $_POST['numcpf'] == '') {
 
 		Pessoa::setErrorRegister("Informe o número do CPF.");
-		header("Location: /user/pessoa/".$idpess."");
+		echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		//header("Location: /user/pessoa/".$idpess."");
 		exit;
 	}
 	
@@ -473,7 +511,8 @@ $app->post("/updatepessoa/:idpess", function($idpess){
 	if (Pessoa::checkCpfExist($_POST['numcpf']) === true) {
 
 		Pessoa::setErrorRegister("Este CPF pertence a outro usuário.");
-		header("Location: /user/pessoa/".$idpess."");
+		echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		//header("Location: /user/pessoa/".$idpess."");
 		exit;
 	}
 	*/
@@ -482,7 +521,8 @@ $app->post("/updatepessoa/:idpess", function($idpess){
 	if (!isset($_POST['numrg']) || $_POST['numrg'] == '') {
 
 		Pessoa::setErrorRegister("Informe o número do RG.");
-		header("Location: /user/pessoa/".$idpess."");
+		echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		//header("Location: /user/pessoa/".$idpess."");
 		exit;
 	}	
 	*/
@@ -490,14 +530,16 @@ $app->post("/updatepessoa/:idpess", function($idpess){
 	if (!isset($_POST['numsus']) || $_POST['numsus'] == '') {
 
 		Pessoa::setErrorRegister("Informe o número do Cartão do SUS.");
-		header("Location: /user/pessoa/".$idpess."");
+		echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		//header("Location: /user/pessoa/".$idpess."");
 		exit;
 	}	
 
 	if (!isset($_POST['vulnsocial']) || $_POST['vulnsocial'] == '') {
 
 		Pessoa::setErrorRegister("Informe se a pessoa participa de programas sociais.");
-		header("Location: /user/pessoa/".$idpess."");
+		echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		//header("Location: /user/pessoa/".$idpess."");
 		exit;
 	}	
 
@@ -507,7 +549,8 @@ $app->post("/updatepessoa/:idpess", function($idpess){
 	if ($_POST['vulnsocial'] === '1' && (!isset($_POST['cadunico']) || $_POST['cadunico'] == '')) {
 
 		Pessoa::setErrorRegister("Informe o número do Cadastro Único (cadunico)");
-		header("Location: /user/pessoa/".$idpess."");
+		echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		//header("Location: /user/pessoa/".$idpess."");
 		exit;
 	}
 	
@@ -519,7 +562,8 @@ $app->post("/updatepessoa/:idpess", function($idpess){
 	if (!isset($_POST['pcd']) || $_POST['pcd'] == '') {
 
 		Pessoa::setErrorRegister("Informe se a pessoa é portadora de deficiência (PCD).");
-		header("Location: /user/pessoa/".$idpess."");
+		echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		//header("Location: /user/pessoa/".$idpess."");
 		exit;
 	}	
 
@@ -529,49 +573,56 @@ $app->post("/updatepessoa/:idpess", function($idpess){
 		if ((!isset($_POST['nomemae']) || $_POST['nomemae'] == '') && (!isset($_POST['nomepai']) || $_POST['nomepai'] == '')) {
 
 			Pessoa::setErrorRegister("Informe pelo menos o nome ou da mãe, ou do pai ou do responsável.");
-			header("Location: /user/pessoa/".$idpess."");
+			echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		    //header("Location: /user/pessoa/".$idpess."");
 			exit;
 		}
 
 		if($_POST['nomemae'] !== '' && $_POST['cpfmae'] === ''){
 
 			Pessoa::setErrorRegister("Informe um número do CPF da mãe!");
-			header("Location: /user/pessoa/".$idpess."");
+			echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		    //header("Location: /user/pessoa/".$idpess."");
 			exit;
 		}	
 
 		if($_POST['cpfmae'] !== '' && !Pessoa::validaCPF($_POST['cpfmae'])){
 
 			Pessoa::setErrorRegister("Informe um número de CPF válido para a mãe da pessoa!");
-			header("Location: /user/pessoa/".$idpess."");
+			echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		    //header("Location: /user/pessoa/".$idpess."");
 			exit;
 		}
 
 		if($_POST['nomepai'] !== '' && $_POST['cpfpai'] === ''){
 
 			Pessoa::setErrorRegister("Informe um número do CPF do pai!");
-			header("Location: /user/pessoa/".$idpess."");
+			echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		    //header("Location: /user/pessoa/".$idpess."");
 			exit;
 		}	
 
 		if($_POST['cpfpai'] !== '' && !Pessoa::validaCPF($_POST['cpfpai'])){
 
 			Pessoa::setErrorRegister("Informe um número de CPF válido para o pai da pessoa!");
-			header("Location: /user/pessoa/".$idpess."");
+			echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		    //header("Location: /user/pessoa/".$idpess."");
 			exit;
 		}
 		
 		if($_POST['cpfmae'] === $_POST['numcpf']){
 
 			Pessoa::setErrorRegister("CPF da mãe não pode ser igual ao do(a) menor!");
-			header("Location: /user/pessoa/".$idpess."");
+			echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		    //header("Location: /user/pessoa/".$idpess."");
 			exit;
 		}
 
 		if($_POST['cpfpai'] === $_POST['numcpf']){
 
 			Pessoa::setErrorRegister("CPF do pai não pode ser igual ao do(a) menor!");
-			header("Location: /user/pessoa/".$idpess."");
+			echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		    //header("Location: /user/pessoa/".$idpess."");
 			exit;
 		}			
 
@@ -579,14 +630,16 @@ $app->post("/updatepessoa/:idpess", function($idpess){
 		{
 
 			Pessoa::setErrorRegister("CPF da mãe não pode ser igual ao CPF do pai!");
-			header("Location: /user/pessoa/".$idpess."");
+			echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		    //header("Location: /user/pessoa/".$idpess."");
 			exit;
 		}
 
 		if ((!isset($_POST['cpfmae']) || $_POST['cpfmae'] === '') && (!isset($_POST['cpfpai']) || $_POST['cpfpai'] === '')) {
 
 			Pessoa::setErrorRegister("Informe pelo menos o CPF ou da mãe, ou do pai ou do responsável.");
-			header("Location: /user/pessoa/".$idpess."");
+			echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		    //header("Location: /user/pessoa/".$idpess."");
 			exit;
 
 		}	
@@ -599,56 +652,65 @@ $app->post("/updatepessoa/:idpess", function($idpess){
 
 	if (!isset($_POST['cep']) || $_POST['cep'] == '') {
 		Pessoa::setErrorRegister("Digite o número do cep.");
-		header("Location: /user/pessoa/".$idpess."");
+		echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		//header("Location: /user/pessoa/".$idpess."");
 		exit;		
 	}
 
     if (($_POST['cep']) < $cepMenor || ($_POST['cep']) > $cepMaior){
 
 		Pessoa::setErrorRegister("As inscrições nos cursos esportivos são exclusivas para os moradores de São B. do Campo. Ou o CEP que você digitou é inválido");
-		header("Location: /user/pessoa/".$idpess."");
+		echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		//header("Location: /user/pessoa/".$idpess."");
 		exit;		
 	}
 	
 	if ( $_POST['rua'] == 'undefined' || $_POST['bairro'] == 'undefined' || $_POST['cidade'] == 'undefined' || $_POST['estado'] == 'undefined' ) {
 		Pessoa::setErrorRegister("Verifique o CEP digitado, pode estar incorreto!");
-		header("Location: /user/pessoa/".$idpess."");
+		echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		//header("Location: /user/pessoa/".$idpess."");
 		exit;		
 	}	
 
 	if (!isset($_POST['rua']) || $_POST['rua'] == '') {
 		Pessoa::setErrorRegister("Informe o nome da rua, avenida ou logradouro.");
-		header("Location: /user/pessoa/".$idpess."");
+		echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		//header("Location: /user/pessoa/".$idpess."");
 		exit;		
 	}	
 
 	if (!isset($_POST['numero']) || $_POST['numero'] == '') {
 		Pessoa::setErrorRegister("Informe o número do local.");
-		header("Location: /user/pessoa/".$idpess."");
+		echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		//header("Location: /user/pessoa/".$idpess."");
 		exit;		
 	}
 
 	if (!isset($_POST['bairro']) || $_POST['bairro'] == '') {
 		Pessoa::setErrorRegister("Informe o nome do bairro.");
-		header("Location: /user/pessoa/".$idpess."");
+		echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		//header("Location: /user/pessoa/".$idpess."");
 		exit;		
 	}	
 		
 	if (!isset($_POST['cidade']) || $_POST['cidade'] == '') {
 		Pessoa::setErrorRegister("Informe o nome da cidade.");
-		header("Location: /user/pessoa/".$idpess."");
+		echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		//header("Location: /user/pessoa/".$idpess."");
 		exit;		
 	}	
 
 	if (!isset($_POST['estado']) || $_POST['estado'] == '') {
 		Pessoa::setErrorRegister("Informe o nome da estado.");
-		header("Location: /user/pessoa/".$idpess."");
+		echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		//header("Location: /user/pessoa/".$idpess."");
 		exit;		
 	}
 
 	if (!isset($_POST['telres']) || $_POST['telres'] == '') {
 		Pessoa::setErrorRegister("Informe um número de telefone residencial ou celular.");
-		header("Location: /user/pessoa/".$idpess."");
+		echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		//header("Location: /user/pessoa/".$idpess."");
 		exit;		
 	}
 	$_POST['telres'] = preg_replace('/[^\p{L}\p{N}\s]/', '', $_POST['telres'] );
@@ -657,18 +719,21 @@ $app->post("/updatepessoa/:idpess", function($idpess){
 	if(strlen($_POST['telres']) !== 10 && strlen($_POST['telres']) !== 11 ){
 
 		Pessoa::setErrorRegister("Número de telefone inválido! Digite o número de um tefefone celular ou residencial com DDD.");
-		header("Location: /user/pessoa/".$idpess."");
+		echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		//header("Location: /user/pessoa/".$idpess."");
 		exit;
 	}
 	
 	if (!isset($_POST['contato']) || $_POST['contato'] == '') {
 		Pessoa::setErrorRegister("Informe um nome para entrar em contato, em caso de emergência!");
-		header("Location: /user/pessoa/".$idpess."");
+		echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		//header("Location: /user/pessoa/".$idpess."");
 		exit;		
 	}
 	if (!isset($_POST['telemer']) || $_POST['telemer'] == '') {
 		Pessoa::setErrorRegister("Informe um número de telefone para ligar em caso de emergência!");
-		header("Location: /user/pessoa/".$idpess."");
+		echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		//header("Location: /user/pessoa/".$idpess."");
 		exit;		
 	}
 	$_POST['telemer'] = preg_replace('/[^\p{L}\p{N}\s]/', '', $_POST['telemer'] );
@@ -676,7 +741,8 @@ $app->post("/updatepessoa/:idpess", function($idpess){
 	if(strlen($_POST['telemer']) !== 10 && strlen($_POST['telemer']) !== 11 ){
 
 		Pessoa::setErrorRegister("Número de telefone inválido! Digite o número de um tefefone celular ou residencial com DDD.");
-		header("Location: /user/pessoa/".$idpess."");
+		echo "<script>window.location.href = '/user/pessoa/".$idpess."'</script>";
+		//header("Location: /user/pessoa/".$idpess."");
 		exit;
 	}
 	
@@ -732,7 +798,8 @@ $app->post("/updatepessoa/:idpess", function($idpess){
 	$endereco->updateEndrecoPessoa($idpess);	
 	
 	//$_SESSION['registerpessoaValues'] = NULL;
-
+	
+	echo "<script>window.location.href = '/user/pessoas'</script>";
 	header('Location: /user/pessoas');
 	exit;
 });
@@ -748,7 +815,7 @@ $app->get("/declaracao-de-matricula/:idpess/:idinsc", function($idpess, $idinsc)
 	$diahoje = date('d');
 	$mesatual = date('m');
 	$anoatual = date('Y');
-
+	
 	$insc = $insc->getValues();
 
 	$idtemporada = $insc['idtemporada'];
@@ -762,11 +829,10 @@ $app->get("/declaracao-de-matricula/:idpess/:idinsc", function($idpess, $idinsc)
 
 	/*
 	echo '<pre>';
-	print_r($dadosprof['nrphone']);
+	print_r($iduserprof);
 	echo '</pre>';
 	exit;
 	*/
-	
 
 	if($mesatual == 1){ $nomemes = 'janeiro';}
 	if($mesatual == 2){ $nomemes = 'fevereiro';}
@@ -796,6 +862,5 @@ $app->get("/declaracao-de-matricula/:idpess/:idinsc", function($idpess, $idinsc)
 		]);	
 
 });
-
 
 ?>

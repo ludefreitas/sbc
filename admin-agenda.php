@@ -178,25 +178,29 @@ $app->post("/admin/mensagem/agenda/create", function(){
 
 	if(!isset($_POST['descmsg']) || $_POST['descmsg'] == ''){	
 		Agenda::setMsgError("Descreva uma mensagem do período em que não haverá natação espontânea!");
-		header("Location: /admin/mensagem/agenda/create/".$idlocal."");
+		echo "<script>window.location.href = '/admin/mensagem/agenda/create/".$idlocal."'</script>";
+		//header("Location: /admin/mensagem/agenda/create/".$idlocal."");
 		exit();
 	}	
 
 	if(!isset($_POST['datainicial']) || $_POST['datainicial'] == ''){	
 		Agenda::setMsgError("Informe o início do período em que não haverá natação espontânea!");
-		header("Location: /admin/mensagem/agenda/create/".$idlocal."");
+		echo "<script>window.location.href = '/admin/mensagem/agenda/create/".$idlocal."'</script>";
+		//header("Location: /admin/mensagem/agenda/create/".$idlocal."");
 		exit();
 	}
 
 	if(!isset($_POST['datafinal']) || $_POST['datafinal'] == ''){	
 		Agenda::setMsgError("Informe o final do período em que não haverá natação espontânea!");
-		header("Location: /admin/mensagem/agenda/create/".$idlocal."");
+		echo "<script>window.location.href = '/admin/mensagem/agenda/create/".$idlocal."'</script>";
+		//header("Location: /admin/mensagem/agenda/create/".$idlocal."");
 		exit();
 	}	
 	/*
 	if(!isset($_POST['idlocal']) || $_POST['idlocal'] == ''){	
 		Agenda::setMsgError("Selecione o local da natação espontânea! ");
-		header("Location: /admin/mensagem/agenda/create/".$idlocal."");
+		echo "<script>window.location.href = '/admin/mensagem/agenda/create/".$idlocal."'</script>";
+		//header("Location: /admin/mensagem/agenda/create/".$idlocal."");
 		exit();
 	}
 	*/	
@@ -366,25 +370,29 @@ $app->post("/admin/horario-dia-semana/create", function(){
 
 	if(!isset($_POST['horainicial']) || $_POST['horainicial'] == ''){	
 		Agenda::setMsgError("Informe o hora inicial da natação espontânea!");
-		header("Location: /admin/agenda/horario-dia-semana/create/".$idlocal."");
+		echo "<script>window.location.href = '/admin/agenda/horario-dia-semana/create/".$idlocal."'</script>";
+		//header("Location: /admin/agenda/horario-dia-semana/create/".$idlocal."");
 		exit();
 	}	
 
 	if(!isset($_POST['horafinal']) || $_POST['horafinal'] == ''){	
 		Agenda::setMsgError("Informe o hora final da natação espontânea!");
-		header("Location: /admin/agenda/horario-dia-semana/create/".$idlocal."");
+		echo "<script>window.location.href = '/admin/agenda/horario-dia-semana/create/".$idlocal."'</script>";
+		//header("Location: /admin/agenda/horario-dia-semana/create/".$idlocal."");
 		exit();
 	}
 
 	if(!isset($_POST['vagas']) || $_POST['vagas'] == ''){	
 		Agenda::setMsgError("Informe a quantidade de vagas do horário da natação espontânea!");
-		header("Location: /admin/agenda/horario-dia-semana/create/".$idlocal."");
+		echo "<script>window.location.href = '/admin/agenda/horario-dia-semana/create/".$idlocal."'</script>";
+		//header("Location: /admin/agenda/horario-dia-semana/create/".$idlocal."");
 		exit();
 	}		
 
 	if(!isset($_POST['diasemana']) || $_POST['diasemana'] == ''){	
 		Agenda::setMsgError("Informe o dia da semana da natação espontânea!");
-		header("Location: /admin/agenda/horario-dia-semana/create/".$idlocal."");
+		echo "<script>window.location.href = '/admin/agenda/horario-dia-semana/create/".$idlocal."'</script>";
+		//header("Location: /admin/agenda/horario-dia-semana/create/".$idlocal."");
 		exit();
 	}	
 

@@ -7,7 +7,9 @@
      <link href="/../res/site/js/fullcalendar/main.css" rel="stylesheet" />
 
     <script src="/../res/site/js/fullcalendar/main.min.js"></script>    
-    <script>   
+    <script>
+    
+    //alert('Agora temos mais horários para a natação espontânea e também às terças e quintas. Aproveite !');  
 
      
       /*
@@ -48,27 +50,7 @@
 
             let datasemanas = new Date(info.dateStr);
             let data = info.dateStr;
-
-            if(data == '2022-04-15'){
-                  alert('A data escolhida é um feriado, não haverá natação espontânea');                  
-                  return;
-            }
-
-            if(data == '2022-04-22'){
-                  alert('A data escolhida é emenda de feriado, não haverá natação espontânea');             
-                  return;
-            }
-
-            if(data == '2022-06-17'){
-                  alert('A data escolhida é emenda de feriado, não haverá natação espontânea');             
-                  return;
-            }
-
-            if(data == '2022-12-02'){
-                  alert('Na data escolhida não haverá natação espontânea');             
-                  return;
-            }
-
+            
             Date.prototype.addDias = function(dias){
               this.setDate(this.getDate() + dias)
             };
@@ -86,8 +68,8 @@
               return `${ano}-${mes}-${dia}`;
             }
 
-            let hojeMaisUmaSemanaFormatada = maisUmaSemanaFormatada();               
-
+            let hojeMaisUmaSemanaFormatada = maisUmaSemanaFormatada();  
+            
             function dataAtualFormatada(){
               let data = new Date(),
               dia  = data.getDate().toString().padStart(2, '0'),
@@ -96,20 +78,17 @@
               //return `${dia}/${mes}/${ano}`;
               return `${ano}-${mes}-${dia}`;
             }
-            
 
             let hoje = dataAtualFormatada();
 
             let strDiaSemana = datasemanas.getDay();           
 
-           if(local == 21 && (strDiaSemana == 0 || strDiaSemana == 2 || strDiaSemana == 4)){
-
-                if(hojeMaisUmaSemanaFormatada <= data){    
-
-                 alert('A agenda para esta data ainda não está aberta!');                  
+           if(local == 21 && (strDiaSemana == 0 || strDiaSemana == 1 || strDiaSemana == 2 || strDiaSemana == 3 || strDiaSemana == 4)){
+               
+               if(hojeMaisUmaSemanaFormatada <= data){ 
+                   alert('A agenda para esta data ainda não está aberta!');  
                   return;
-
-                }
+               }
 
                 if(hoje > data){
 
@@ -118,21 +97,44 @@
 
                 }else{
               
-                   window.location.href=`http://www.cursosesportivos.com.br/agenda/` + local + '/' + info.dateStr;
+                   window.location.href=`https://www.cursosesportivossbc.com/agenda/` + local + `/` + info.dateStr;
                 }           
                
             }else{
                 
-                alert('A natação espontânea no Paulicéia acontece às segundas, quartas e  sextas-feiras. Escolha uma data nestes dias da semana para agendar sua natação!');
+                alert('A natação espontânea no Paulicéia acontece de segunda à  sextas-feiras. Escolha uma data nestes dias da semana para agendar sua natação!');
                 return;               
              }           
 
-            
-          },     
+            /*
+            alert('Clicked on: ' + info.dateStr + ' - ' + local);
+            alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+            alert('Current view: ' + info.view.type);
+            // change the day's background color just for fun
+            info.dayEl.style.backgroundColor = 'red';
+            */
+          
+          },
+
+           /*
+           events: '/../res/site/js/events.json',
+           */
+
+           //events: '/../res/site/js/agenda.json',
+
+          /*
+          events: [
+            { // this object will be "parsed" into an Event Object
+              title: 'natação', // a property!
+              start: '2022-01-06', // a property!
+              end: '2022-02-07' // a property! ** see important note below about 'end' **
+             }
+          ]
+          */
 
           eventClick: function(info) {
 
-            window.location.href=`http://www.cursosesportivos.com.br/admin/turma/${info.event.id}`
+            window.location.href=`https://www.cursosesportivossbc.com/admin/turma/${info.event.id}`
             /*
             alert('Event: ' + info.event.title);
             alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
@@ -158,13 +160,12 @@
     </script>
   </head>
   
-    <?php if( $error != '' ){ ?>
-    <div class="alert alert-danger">
-    <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
-    </div>
-    <?php } ?>
-    
-    <div id='calendar' class="calendar"></div>
+                <?php if( $error != '' ){ ?>
+                <div class="alert alert-danger">
+                <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                </div>
+                <?php } ?>
+    <div id='calendar' class="calendar" style="padding: 20px; font-family: Arial, sans-serif;"></div>
 
      <input type="text" name="local" id="local" value="<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>" hidden="true">
 

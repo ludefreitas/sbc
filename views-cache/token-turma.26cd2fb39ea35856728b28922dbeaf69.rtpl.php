@@ -1,4 +1,23 @@
-<?php if(!class_exists('Rain\Tpl')){exit;}?>
+<?php if(!class_exists('Rain\Tpl')){exit;}?><script>
+    function formatarCampo(campoTexto) {
+      if (campoTexto.value.length <= 11) {
+        campoTexto.value = mascaraCpf(campoTexto.value);
+      } else {
+        campoTexto.value = mascaraCnpj(campoTexto.value);
+      }
+    }
+    function retirarFormatacao(campoTexto) {
+      campoTexto.value = campoTexto.value.replace(/(\.|\/|\-)/g,"");
+    }
+    function mascaraCpf(valor) {
+      return valor.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g,"\$1.\$2.\$3\-\$4");
+    }
+    function mascaraCnpj(valor) {
+      return valor.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g,"\$1.\$2.\$3\/\$4\-\$5");
+    }
+
+</script>
+
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -36,8 +55,9 @@
              <input hidden type="text" name="iduser" value="<?php echo htmlspecialchars( $turma["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
              <input hidden type="text" name="idtemporada" value="<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>"/>
            
-            <input style="width: 170px; float: left;" type="text" maxlength="14" id="numcpf" name="numcpf" class="input-text" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}"  placeholder="000.000.000-00">
-                    <script type="text/javascript">$("#numcpf").mask("000.000.000-00");</script>
+           <label>Digite o CPF (somente números)</label><br>
+            <input style="width: 200px; float: left;" type="text" maxlength="14" id="numcpf" name="numcpf" class="input-text" onfocus="javascript: retirarFormatacao(this);" onblur="javascript: formatarCampo(this);"  placeholder="000.000.000-00">
+            
             </div>
             <div class="box-header">
             <input class="btn btn-success" type="submit" name="" value="Gerar Token">

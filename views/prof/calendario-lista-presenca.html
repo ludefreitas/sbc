@@ -46,6 +46,7 @@
             let quartodiasemana = document.getElementById('quartodiasemana').value;          
             let quintodiasemana = document.getElementById('quintodiasemana').value;          
             let unicodiasemana = document.getElementById('unicodiasemana').value;    
+            let iduser = document.getElementById('iduser').value;    
 
             let datasemanas = new Date(info.dateStr);
             let data = info.dateStr;
@@ -82,7 +83,7 @@
               }
             }            
 
-            window.location.href=`http://www.cursosesportivos.com.br/prof/insc-turma-temporada-fazer-chamada/` + idtemporada + '/' + idturma + '/' + info.dateStr + '/' + strDiaSemana;          
+            window.location.href=`http://www.cursosesportivos.com.br/prof/insc-turma-temporada-fazer-chamada/` + idtemporada + '/' + idturma + '/' + info.dateStr + '/' + strDiaSemana+ '/' + iduser;          
           
           },
 
@@ -152,6 +153,7 @@
      <input type="text" name="quartodiasemana" id="quartodiasemana" value="{$quartodiasemana}" hidden="true">
      <input type="text" name="quintodiasemana" id="quintodiasemana" value="{$quintodiasemana}" hidden="true">
      <input type="text" name="unicodiasemana" id="unicodiasemana" value="{$unicodiasemana}" hidden="true">
+     <input type="text" name="iduser" id="iduser" value='{function="getUserId()"}' hidden>
 
     <!-- Main content -->
     <section class="content">

@@ -87,31 +87,36 @@ $app->post("/admin/espaco/create", function() {
 
 	if (!isset($_POST['nomeespaco']) || $_POST['nomeespaco'] == '') {
 		Espaco::setMsgError("Informe o nome do espaço.");
-		header("Location: /admin/espaco/create");
+		echo "<script>window.location.href = '/admin/espaco/create'</script>";
+		//header("Location: /admin/espaco/create");
 		exit;		
 	}	
 
 	if (!isset($_POST['descespaco']) || $_POST['descespaco'] == '') {
 		Espaco::setMsgError("Informe uma descrição para o espaço.");
-		header("Location: /admin/espaco/create");
+		echo "<script>window.location.href = '/admin/espaco/create'</script>";
+		//header("Location: /admin/espaco/create");
 		exit;		
 	}
 
 	if (!isset($_POST['areaespaco']) || $_POST['areaespaco'] == '') {
 		Espaco::setMsgError("Informe a área em (m²) a medida do espaço.");
-		header("Location: /admin/espaco/create");
+		echo "<script>window.location.href = '/admin/espaco/create'</script>";
+		//header("Location: /admin/espaco/create");
 		exit;		
 	}						
 
 	if (!isset($_POST['observacao']) || $_POST['observacao'] == '') {
 		Espaco::setMsgError("Descreva uma observação para o espaço.");
-		header("Location: /admin/espaco/create");
+		echo "<script>window.location.href = '/admin/espaco/create'</script>";
+		//header("Location: /admin/espaco/create");
 		exit;		
 	}
 
 	if (!isset($_POST['idlocal']) || $_POST['idlocal'] == '') {
 		Espaco::setMsgError("Informe onde está localizado este espaço.");
-		header("Location: /admin/espaco/create");
+		echo "<script>window.location.href = '/admin/espaco/create'</script>";
+		//header("Location: /admin/espaco/create");
 		exit;		
 	}												
 
@@ -121,7 +126,8 @@ $app->post("/admin/espaco/create", function() {
 
 	$_SESSION['createEspacoValues'] = NULL;
 
-	header("Location: /admin/espaco");
+	echo "<script>window.location.href = '/admin/espaco'</script>";
+	//header("Location: /admin/espaco");
 	exit();	
 });
 
@@ -135,7 +141,8 @@ $app->get("/admin/espaco/:idespaco/delete", function($idespaco) {
 
 	$espaco->delete();
 
-	header("Location: /admin/espaco");
+	echo "<script>window.location.href = '/admin/espaco'</script>";
+	//header("Location: /admin/espaco");
 	exit();
 	
 });
@@ -174,7 +181,8 @@ $app->post("/admin/espaco/:idespaco", function($idespaco) {
 
 	$espaco->save();
 
-	header("Location: /admin/espaco");
+	echo "<script>window.location.href = '/admin/espaco'</script>";
+	//header("Location: /admin/espaco");
 	exit();	
 });
 

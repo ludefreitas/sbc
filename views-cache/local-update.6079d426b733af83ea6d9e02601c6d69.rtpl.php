@@ -118,14 +118,17 @@
               </label>
             </div>
 
-             <div class="box-header">
+             <div class="form-group">
               <label for="idlocal">Professor / Coordenador</label>
               <select class="form-control" name="iduser">
                  <option selected="selected" value="">Selecione professor</option>
+                  
                   <?php $counter1=-1;  if( isset($prof) && ( is_array($prof) || $prof instanceof Traversable ) && sizeof($prof) ) foreach( $prof as $key1 => $value1 ){ $counter1++; ?>
-                 <option  value="<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
-                  <?php } ?>
+                    <option <?php if( $value1["iduser"] === $local["iduser"] ){ ?>selected="selected"<?php } ?> value="<?php echo htmlspecialchars( $value1["iduser"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                  <?php } ?>  
+
               </select>
+
             </div>                                                
                 
               </div>

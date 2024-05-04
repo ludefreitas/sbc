@@ -114,6 +114,28 @@ $app->get("/admin/insc/:idtemporada", function($idtemporada) {
 	));
 });
 
+$app->get("/admin/insc-pessoa-vazio/:idtemporada", function($idtemporada) {
+
+	User::verifyLogin();
+
+	$insc = new Insc;
+	$temporada = new Temporada();
+	$temporada->get((int)$idtemporada);	
+	$desctemporada = $temporada->getdesctemporada();
+
+	$inscvazio = $insc->inscPessoaVazioTbCarts($idtemporada);
+
+	$page = new PageAdmin();
+
+	$page->setTpl("insc-pessoa-vazio", array( 
+		"insc"=>$inscvazio,
+		"desctemporada"=>$desctemporada,
+		"idtemporada"=>$idtemporada,
+		"error"=>User::getError()
+		
+	));
+});
+
 
 
 $app->get("/admin/insc/create", function() {
@@ -135,7 +157,8 @@ $app->post("/admin/insc/create", function() {
 
 	$insc->save();
 
-	header("Location: /admin/insc");
+	echo "<script>window.location.href = '/admin/insc'</script>";
+	//header("Location: /admin/insc");
 	exit();
 });
 
@@ -149,7 +172,8 @@ $app->get("/admin/insc/:idinsc/delete", function($idinsc) {
 
 	$insc->delete();
 
-	header("Location: /admin/insc");
+	echo "<script>window.location.href = '/admin/insc'</script>";
+	//header("Location: /admin/insc");
 	exit();
 	
 });
@@ -217,14 +241,16 @@ $app->get("/admin/profile/insc/:idinsc/:idpess/:idturma", function($idinsc, $idp
 	if( !$insc->getidinsc()){
 
 		User::setError("Inscrição selecionada não existe!");
-		header("Location: /admin/insc");
+		echo "<script>window.location.href = '/admin/insc'</script>";
+		//header("Location: /admin/insc");
 		exit();			
 	}
 
 	if( $insc->getidpess() != $idpess){
 
 		User::setError("Aluno selecionado não está relacionado para esta inscrição!");
-		header("Location: /admin/insc");
+		echo "<script>window.location.href = '/admin/insc'</script>";
+		//header("Location: /admin/insc");
 		exit();			
 	}
 
@@ -1531,5 +1557,21 @@ $app->post("/admin/insc/altera/turma", function(){
 	}
 });
 
+$app->get("/admin/insc/delete/:idinsc/:idturma/:idtemporada/:idcart", function($idinsc, $idturma, $idtemporada, $idcart){
+
+	User::verifyLogin();
+
+	$insc = new Insc();
+
+	$iduser = (int)$_SESSION['User']['iduser'];
+
+	$insc->deleteInscWhereIdPessIsNull($idinsc, $idcart, $idturma, $idtemporada);
+
+	Temporada::updateNumInscritosMenos($idturma, $idtemporada);
+
+	echo "<script>alert('Exclusão efetuada com sucesso!');";
+	 echo "javascript:history.go(-1)</script>";
+	
+});	
 
 ?>

@@ -173,12 +173,15 @@ $app->post("/admin/login", function() {
 
 		if((int)$_SESSION[User::SESSION]["inadmin"] === 1){
 
-			header("Location: /admin");
+
+			echo "<script>window.location.href = '/admin'</script>";
+			//header("Location: /admin");
 			exit;
 
 		}else{			
 
-			header("Location: /");
+			echo "<script>window.location.href = '/'</script>";
+			//header("Location: /");
 			exit;
 		
 		}
@@ -186,7 +189,8 @@ $app->post("/admin/login", function() {
 	} catch(Exception $e) {
 
 		User::setError($e->getMessage());
-		header("Location: /admin/login");
+		echo "<script>window.location.href = '/admin/login'</script>";
+		//header("Location: /admin/login");
 		exit;
 	}
 
@@ -199,7 +203,8 @@ $app->get("/admin/logout", function(){
 
 	session_destroy();
 
-	header("Location: /admin/login");
+	echo "<script>window.location.href = '/admin/login'</script>";
+	//header("Location: /admin/login");
 	exit;
 });
 
@@ -218,7 +223,8 @@ $app->post("/admin/forgot", function(){
 
 	$user = User::getForgot($_POST["email"]);
 
-	header("Location: /admin/forgot/sent");
+	echo "<script>window.location.href = '/admin/forgot/sent'</script>";
+	//header("Location: /admin/forgot/sent");
 	exit();
 });
 

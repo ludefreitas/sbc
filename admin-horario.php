@@ -58,6 +58,11 @@ $app->get("/admin/horario/create", function() {
 
 	User::verifyLogin();
 
+	//echo '<pre>';
+	//var_dump($_SESSION);
+	//echo '</pre>';
+	//exit;
+
 	$page = new PageAdmin();
 
 	$page->setTpl("horario-create", [
@@ -76,25 +81,29 @@ $app->post("/admin/horario/create", function() {
 
 	if (!isset($_POST['horainicio']) || $_POST['horainicio'] == '') {
 		Horario::setMsgError("Informe o horário de início.");
-		header("Location: /admin/horario/create");
+		echo "<script>window.location.href = '/admin/horario/create'</script>";
+		//header("Location: /admin/horario/create");
 		exit;		
 	}	
 
 	if (!isset($_POST['horatermino']) || $_POST['horatermino'] == '') {
 		Horario::setMsgError("Informe o horário de término.");
-		header("Location: /admin/horario/create");
+		echo "<script>window.location.href = '/admin/horario/create'</script>";
+		//header("Location: /admin/horario/create");
 		exit;		
 	}
 
 	if (!isset($_POST['diasemana']) || $_POST['diasemana'] == '') {
 		Horario::setMsgError("Informe os dias da semana.");
-		header("Location: /admin/horario/create");
+		echo "<script>window.location.href = '/admin/horario/create'</script>";
+		//header("Location: /admin/horario/create");
 		exit;		
 	}						
 
 	if (!isset($_POST['periodo']) || $_POST['periodo'] == '') {
 		Horario::setMsgError("Informe o período.");
-		header("Location: /admin/horario/create");
+		echo "<script>window.location.href = '/admin/horario/create'</script>";
+		//header("Location: /admin/horario/create");
 		exit;		
 	}
 
@@ -104,7 +113,8 @@ $app->post("/admin/horario/create", function() {
 
 	$horario->save();
 
-	header("Location: /admin/horario");
+	echo "<script>window.location.href = '/admin/horario'</script>";
+	//header("Location: /admin/horario");
 	exit();
 });
 
@@ -118,7 +128,8 @@ $app->get("/admin/horario/:idhorario/delete", function($idhorario) {
 
 	$horario->delete();
 
-	header("Location: /admin/horario");
+	echo "<script>window.location.href = '/admin/horario'</script>";
+	//header("Location: /admin/horario");
 	exit();
 	
 });
@@ -152,31 +163,36 @@ $app->post("/admin/horario/:idhorario", function($idhorario) {
 
 	if (!isset($_POST['horainicio']) || $_POST['horainicio'] == '') {
 		Horario::setMsgError("Informe o horário de início.");
-		header("Location: /admin/horario/".$idhorario."");
+		echo "<script>window.location.href = '/admin/horario/".$idhorario."'</script>";
+		//header("Location: /admin/horario/".$idhorario."");
 		exit;		
 	}	
 
 	if (!isset($_POST['horatermino']) || $_POST['horatermino'] == '') {
 		Horario::setMsgError("Informe o horário de término.");
-		header("Location: /admin/horario/".$idhorario."");
+		echo "<script>window.location.href = '/admin/horario/".$idhorario."'</script>";
+		//header("Location: /admin/horario/".$idhorario."");
 		exit;		
 	}
 
 	if (!isset($_POST['diasemana']) || $_POST['diasemana'] == '') {
 		Horario::setMsgError("Informe os dias da semana.");
-		header("Location: /admin/horario/".$idhorario."");
+		echo "<script>window.location.href = '/admin/horario/".$idhorario."'</script>";
+		//header("Location: /admin/horario/".$idhorario."");
 		exit;		
 	}						
 
 	if (!isset($_POST['periodo']) || $_POST['periodo'] == '') {
 		Horario::setMsgError("Informe o período.");
-		header("Location: /admin/horario/".$idhorario."");
+		echo "<script>window.location.href = '/admin/horario/".$idhorario."'</script>";
+		//header("Location: /admin/horario/".$idhorario."");
 		exit;		
 	}
 
 	$horario->save();
 
-	header("Location: /admin/horario");
+	echo "<script>window.location.href = '/admin/horario'</script>";
+	//header("Location: /admin/horario");
 	exit();		
 });
 

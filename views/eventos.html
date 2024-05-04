@@ -1,0 +1,66 @@
+
+ <div class="container" style="margin-top: 0px;"> <!-- container 1 -->
+            <div class="row"> <!-- row 2 -->
+              <div class="col-md-8" style="text-align-last: left; background-color: white; margin: 0px 0px 0px 0px;">
+
+<div class="container" style="margin: 0px 0px 0px 0px; ">
+
+  
+
+  {if="$error != ''"}
+    <div class="alert alert-danger">
+      {$error}
+    </div>
+  {/if}
+  </div>
+  
+ <hr style="background-color: #0f71b3;">
+
+  <div class="container"> <!-- container 3 -->
+    <div class="row"> <!-- row 4 --> 
+
+        <div class="col-md-12">
+        {loop="$eventos"}
+
+            {if="$value.divulgar_evento == 1"}
+
+            <div class="col-md-12 btn" style="text-align-last: left; background-color: #0f71b3; ; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
+                <a href="/evento/{$value.id_evento}">                          
+                <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 18px; font-style: normal; margin: 10px 5px 10px 0px; ">  
+                    {$value.desc_evento} - 
+                    <br>Data: {function="formatDate($value.dia_inicio_evento)"} às {$value.hora_inicio_evento} 
+                    <br>Local: {$value.apelidolocal}      
+                </div>
+                </a>
+            </div>  
+            {/if}
+
+        {else} 
+            <div class="col-md-12 btn" style="text-align-last: left; background-color: lightcoral ; border: 5px white; margin: 0px 5px 5px 5px;  line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial,sans-serif; text-align: center; border-radius: 15px;">  
+                <div style="text-align-last: center; font-weight: 600; line-height: 30px; color: white; font-size: 18px; font-style: normal; margin: 10px 5px 10px 0px; ">  
+                    Não há heventos programados!
+                    <br>
+                    Aguardem, em breve teremos novidades!             
+                </div>   
+            </div> 
+        {/loop} 
+      </div>    
+            
+    </div> <!-- row 4 -->
+  </div> <!-- container 3 -->
+
+<hr style="background-color: #0f71b3;">
+  
+  <span style="font-size 12px;"> Dúvidas, sugestões e reclamações: </span>
+           <strong style="font-size 16px; color: darkorange">contato@cursosesportivossbc.com</strong> 
+
+<hr style="background-color: #0f71b3;">
+  
+  </div> <!-- final da index -->
+
+  
+                </div>
+                
+
+              </div>
+

@@ -1,0 +1,557 @@
+<script type="text/javascript">
+
+      function dadosAtestado(idpess){
+
+        let url = '/admin/saude/dadosatestado/'+idpess
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if (window.confirm(' '+ result + 'Para atualizar atestado CLÍNICO clique em "OK"'))
+          {
+              adicionarArtestado(idpess)
+          };
+
+        });
+      }
+
+      function adicionarArtestado(idpess){
+        
+        let confirmaAtestado = confirm('Deseja realmente atualizar atestado CLÍNICO?')
+
+        if(confirmaAtestado == true)
+        {                      
+            var data = prompt("Informe a data da emissão do Atestado CLÍNICO. Ex.: dd-mm-aaaa");     
+
+
+            if (data == null || data == "") {
+
+                alert("As informaçãoes do atestado CLÍNICO não foram atualizadas! Informe a data e faça alguma observação")
+            } else {
+
+                 var traco1 = data.substr(2,1)
+                 var traco2 = data.substr(5,1)
+                 var dia = data.substr(0,2);
+                 var mes = data.substr(3,2);
+                 var ano = data.substr(6,4); 
+                 
+                 if((traco1 != '-') || (traco2 != '-') || (ano.length < 4)){
+                    alert('Formato da data inválida');
+                 }else{
+
+                    if((dia > 31) || (dia == 0) || (mes > 12) || (mes == 0)){
+
+                    alert('data inválida!')
+                    
+                    }else{
+
+                        //alert('Data validada!!! ' + dia + ' ' + mes + ' ' + ano)
+
+                        
+                        var observ = prompt("Digite uma observação");
+                        if (observ == null || observ == "") {
+                                lert("As informaçãoes do atestado CLÍNICO não foram atualizadas! Informe a data e faça alguma observação.");
+                        } else {
+
+                            let url = '/admin/saude/atulizaatestado/'+idpess+'/'+data+'/'+observ+''
+
+                            atualizarAtestado(url) 
+                        }           
+                    }                           
+                }
+            }        
+        } 
+         //let url = '/admin/saude/dadosatestado/'+idpess
+
+        //dadosAtestado(url)  
+    }
+      /*
+      function dadosAtestado(url){
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          alert(result)
+
+        });
+      }
+      */
+
+      function atualizarAtestado(url){
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          alert(result)
+
+        });
+      }
+
+      function atualizarAtestadoDerma(url){
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          alert(result)
+
+        });
+      }
+
+      function dadosAtestadoDerma(idpess){
+
+        let url = '/admin/saude/dadosatestadoderma/'+idpess
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if (window.confirm(' '+ result + 'Para atualizar atestado DERMATOLÓGICO clique em "OK"'))
+          {
+              adicionarArtestadoDerma(idpess)
+          };
+
+        });
+      }
+
+      function adicionarArtestadoDerma(idpess){
+        
+        let confirmaAtestado = confirm('Deseja realmente atualizar atestado DERMATOLÓGICO?')
+
+        if(confirmaAtestado == true)
+        {                      
+            var data = prompt("Informe a data da emissão do Atestado DERMATOLÓGICO. Ex.: dd-mm-aaaa");     
+
+
+            if (data == null || data == "") {
+
+                alert("As informaçãoes do atestado DERMATOLÓGICO não foram atualizadas! Informe a data e faça alguma observação")
+            } else {
+
+                 var traco1 = data.substr(2,1)
+                 var traco2 = data.substr(5,1)
+                 var dia = data.substr(0,2);
+                 var mes = data.substr(3,2);
+                 var ano = data.substr(6,4); 
+                 
+                 if((traco1 != '-') || (traco2 != '-') || (ano.length < 4)){
+                    alert('Formato da data inválida');
+                 }else{
+
+                    if((dia > 31) || (dia == 0) || (mes > 12) || (mes == 0)){
+
+                    alert('data inválida!')
+                    
+                    }else{
+
+                        //alert('Data validada!!! ' + dia + ' ' + mes + ' ' + ano)
+
+                        
+                        var observ = prompt("Digite uma observação");
+                        if (observ == null || observ == "") {
+                                lert("As informaçãoes do atestado DERMATOLÓGICO não foram atualizadas! Informe a data e faça alguma observação.");
+                        } else {
+
+                            let url = '/admin/saude/atulizaatestadoderma/'+idpess+'/'+data+'/'+observ+''
+
+                            atualizarAtestadoDerma(url) 
+                        }           
+                    }                           
+                }
+            }        
+        } 
+         //let url = '/admin/saude/dadosatestado/'+idpess
+
+        //dadosAtestado(url)  
+    }
+
+      function requisitarPaginaEndereco(url){
+
+        let ajax = new XMLHttpRequest();
+        let idurl = url.substr(53);              
+        ajax.open('GET', 'url');
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if(result){              
+                alert(result)
+          }else{
+            alert('Endereço não encontrado!')
+          }
+        });
+      }   
+
+      function openDiv(id_categoria_evento){
+
+        let idcategoria = id_categoria_evento;
+              
+            document.getElementById('idcategoria'+idcategoria ).hidden = false  
+            document.getElementById('btnCategoriaClose'+idcategoria ).hidden = false
+            document.getElementById('btnCategoriaOpen'+idcategoria ).hidden = true      
+      }
+
+      function closeDiv(id_categoria_evento){
+
+        let idcategoria = id_categoria_evento;
+
+            document.getElementById('idcategoria'+idcategoria ).hidden = true  
+            document.getElementById('btnCategoriaOpen'+idcategoria ).hidden = false  
+            document.getElementById('btnCategoriaClose'+idcategoria ).hidden = true 
+          
+      }
+
+</script>
+
+
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+     [{$evento.id_evento}]  {$evento.desc_evento} {$evento.apelidolocal} -   {$temporada.desctemporada}
+  </h1>
+  <ol class="breadcrumb">
+
+    <li><a href="/admin/evento/create"><i class="fa fa-pencil"></i> Criar evento</a></li>
+    <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active"><a href="/admin/eventos-por-temporada/{$temporada.idtemporada}">Eventos temporada atual</a></li>
+    <li class="active"><a style="color: red" href="javascript: history.go(-1)">Voltar</a>
+    </li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary">
+
+          {if="$error != ''"}
+                <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
+            {$error}
+                </div>
+          {/if}
+          {if="$success != ''"}
+                <div class="alert alert-success" style="margin: 10px 10px 0px 10px">
+            {$success}
+                </div>
+          {/if}
+            
+            <div class="box-header">
+           
+            </div>
+
+          <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+           
+
+        {loop="$categorias"}            
+
+                {$idcategoria_evento = $value.idcategoria_evento}
+
+                    <div  id="btnCategoriaOpen{$idcategoria_evento}">
+                        <div style="text-align: center; border-radius: 5px; margin: 5px; height: 30px" class="btn-primary col-md-12" onclick="openDiv({$idcategoria_evento})" >{$value.desc_categoria_evento}
+
+                        <i class="fa fa-caret-down"></i></div> 
+                    </div>
+
+                    <div  id="btnCategoriaClose{$idcategoria_evento}" hidden>
+                        <div style="text-align: center; border-radius: 5px; margin: 5px; height: 30px" class="btn-primary col-md-12" onclick="closeDiv({$idcategoria_evento})" >{$value.desc_categoria_evento}
+
+                     <i class="fa fa-caret-up"> </i></div> 
+                    </div>
+
+                <div id="idcategoria{$idcategoria_evento}" hidden >
+
+                {$idadeinicial = $value.idade_inicial}
+                {$idadefinal = $value.idade_final}
+
+              
+            {loop="$insc_eventoTodas"}
+
+            {if="$value.idade_pessoa_no_evento >= $idadeinicial && $value.idade_pessoa_no_evento <= $idadefinal "}            
+            
+            <div style="text-align: center; border: solid 1px lightblue;">
+              <div {function="colorStatus($value.idstatus_insc_evento)"} style="margin: 5px">
+              
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="col-md-6" style="margin: 2; padding: 2">
+                    <h5 style="text-align: left;">
+                      {$value.numordem_evento}º -
+                      <strong>[{$value.idinsc_evento_indiv}] - {$value.nomepess}</strong>
+                      {if="UserIsAdmin()"}
+                      &nbsp;{$value.numcpf}&nbsp;
+                      {else}
+                      &nbsp;{function="formatCpf($value.numcpf)"}&nbsp;
+                      {/if}                      
+                      <strong>{function="calcularIdade($value.dtnasc)"} anos - </strong> 
+                      &nbsp;idade declarada: [{$value.idade_pessoa_no_evento}]&nbsp; 
+                      <strong>Nascim.: {function="formatDate($value.dtnasc)"}<strong>
+
+                      {if="existeParq($value.idpess)"}
+
+                        {if="repostaSimParq($value.idpess)"}
+
+                        <strong><a style="font-weight: bold; color: green;" href="/admin/par-q/pessoa/{$value.idpess}"> <i style="color: orange;" class="fa fa-exclamation-triangle"> </i> PAR-Q <i style="color: orange;" class="fa fa-exclamation-triangle"> </i></a> </strong>
+
+                        {else}
+
+                        <strong><a style="font-weight: bold; color: green;" href="/admin/par-q/pessoa/{$value.idpess}"> PAR-Q </a> </strong>
+
+                        {/if}
+
+
+                      {else}
+
+                      <strong><a style="font-weight: bold; color: red;" onclick="alert('Não existe Par-q para este aluno')"> PAR-Q </a> </strong>
+
+                      {/if}   
+
+                       <br><br>
+                      <span style="color: black; font-weight: bold">Atestado:  </span>
+                      <span style="color: darkred; font-weight: bold">  
+                        {function="getAtestadoClinicoProfExiste($value.numcpf, 1)"}
+                        </span>
+                        &nbsp;
+                         <a style="color: orange; text-align-last: right;" onclick="dadosAtestado({$value.idpess})">{function="getAtestadoIconeByNumCpf($value.numcpf)"}</a>   
+                         
+                          &nbsp;&nbsp;
+                         <span style="color: darkred;">  
+                         {function="getAtestadoDermaProfExiste($value.numcpf, 2)"}
+                          </span>
+                        &nbsp;                          
+                         <a style="color: orange; text-align-last: right;" onclick="dadosAtestadoDerma({$value.idpess})">{function="getAtestadoDermaIconeByNumCpf($value.numcpf)"}</a>
+                          &nbsp; &nbsp;
+
+                    </h5>
+                  </div>
+
+                  <div class="col-md-6" style="margin: 2; padding: 2">
+                    <h5 style="text-align: left;">               
+                       <strong>Resp: </strong>{$value.desperson}
+                       &nbsp;
+                       <a href="https://wa.me/+55{$value.nrphone}?text=Olá {$value.desperson}!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')"><i class="fa fa-whatsapp" style="color: darkgreen; font-weight: bold;"></i><span style="color: black;"> {$value.nrphone}&nbsp;</span></a>
+                       
+                       &nbsp;&nbsp;&nbsp;&nbsp;
+
+                       <a style="font-weight: bold;" onclick="requisitarPaginaEndereco('/prof/insc-evento-temporada-endereco/{$value.idpess}')"><i class="fas fa-map-marker-alt"></i> Endereço </a>         
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                       
+                      <strong>Dt Insc.: </strong>{function="formatDate($value.dt_insc_evento)"}
+                      &nbsp;<strong>Dt Exclusão.: </strong>{function="formatDate($value.dt_exclusao_insc_evento)"}&nbsp;
+                    </h5>
+                  </div>                   
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">                  
+
+                  <div class="col-md-6" style="margin: 2; padding: 2">
+                    <h5 style="text-align: left;">  
+
+                      <span style="font-weight: bold; text-align: left; color: brown;">                  
+                        {if="$value.insc_evento_pvs == 1"} (Vuln. Social) &nbsp;&nbsp;{/if}
+                      </span> 
+                      
+                      <span style="font-weight: bold; text-align: left; color: darkblue;">  
+                        {if="$value.insc_evento_pcd == 1"} PCD &nbsp;&nbsp;{/if}  
+                      </span> 
+
+                      <span style="font-weight: bold; text-align: left; color: darkgreen; font-weight: bold;">                  
+                        {if="$value.insc_evento_laudo == 1"}LAUDO  &nbsp;&nbsp;{/if}
+                       </span>
+                   
+                  
+
+                    {if="$value.idstatus_insc_evento == 1"}              
+                    <span style="font-weight: bold; text-align: left; color: blue;">                  
+                      <span>{$value.descstatus_insc_evento}</span>
+                    </span>             
+                    {/if}
+
+                  
+              
+                    {if="$value.idstatus_insc_evento == 2"}
+              
+                    <span style="font-weight: bold; text-align: left; color: darkgreen;">                  
+                      <span>{$value.descstatus_insc_evento}</span>
+                    </span>
+             
+                    {/if}
+               
+
+                      {if="$value.idstatus_insc_evento == 3"}
+                      
+                        <span style="font-weight: bold; text-align: left; color: green;">                  
+                          <span>*{$value.descstatus_insc_evento}*</span>
+                        </span>
+                      
+                      {/if}
+
+                      {if="$value.idstatus_insc_evento == 6"}
+                        <span style="font-weight: bold; text-align: left; color: darkorange;">                  
+                          <span>{$value.descstatus_insc_evento}</span>
+                        </span>
+                      {/if}
+
+
+                      {if="$value.idstatus_insc_evento == 7"}
+                        <span style="font-weight: bold; text-align: left; color: darkblue;">                  
+                          <span>{$value.descstatus_insc_evento}</span>
+                        </span>
+                      {/if}
+
+                      
+                      {if="$value.idstatus_insc_evento == 8"}
+                        <span style="font-weight: bold; text-align: left; color: orange;">                  
+                          Status: <span>{$value.descstatus_insc_evento}</span>
+                        </span>
+                      {/if}
+                      
+                      {if="$value.idstatus_insc_evento == 9"}
+                      
+                        <span style="font-weight: bold; text-align: left; color: red;">                  
+                          <span>{$value.descstatus_insc_evento}</span>
+                        </span>
+                      
+                      {/if} 
+                       </h5>               
+                    </div>
+
+
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/admin/profile/insc_evento/{$value.idinsc_evento_indiv}/{$value.idpess}/{$evento.id_evento}" role="button">Detalhes</a>
+                </h5>
+              </div> 
+
+
+              
+              {if="$value.idstatus_insc_evento == 1"}
+                <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a class="btn btn-danger btn-xs" href="/admin/insc_evento/{$value.idinsc_evento_indiv}/{$value.id_evento}/{$value.idpess}/statusDesistente" role="button" onclick="return confirm('Deseja realmente informar como desistente o {$value.nomepess} da inscrição {$value.idinsc_evento_indiv}?')">Marcar como desistente</a>
+                </h5>
+                </div>
+              {/if}         
+
+              {if="$value.idstatus_insc_evento == 2"}
+                <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/admin/insc_evento/{$value.idinsc_evento_indiv}/{$iduserprof.iduser}/{$evento.id_evento}/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA do(a) {$value.nomepess} na evento {$evento.desc_evento} da temporada {$temporada.desctemporada} ?')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                </h5>
+                </div>
+                
+              {/if}
+
+              {if="$value.idstatus_insc_evento == 3"}
+            <!--
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">            
+                  <a href="/admin/insc_evento/{$value.idinsc_evento_indiv}/{$iduserprof.iduser}/{$evento.id_evento}/enviarEmailASorteado" onclick="return confirm('Deseja realmente enviar email para que o(a) {$value.nomepess} fique sabendo que foi sorteado na evento de {$evento.desc_evento} da temporada {$temporada.desctemporada} ?')" class="btn btn-info btn-xs"><i></i> Avisar Sorteado </a>
+                </h5>
+              </div>
+            -->
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/admin/insc_evento/{$value.idinsc_evento_indiv_evento_indiv}/{$iduserprof.iduser}/{$evento.id_evento}/statusMatriculada" onclick="return confirm('Deseja realmente efetuar a MATRÍCULA do(a) {$value.nomepess} na evento {$evento.desc_evento} da temporada {$temporada.desctemporada} ?')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                </h5>
+                </div>
+                
+
+              {/if}
+              
+              {if="$value.idstatus_insc_evento == 7"}
+              <div class="col-md-2" style="margin: 1; padding: 1">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="https://wa.me/+55{$value.nrphone}?text=Olá,%20informamos%20que%20temos%20uma%20vaga%20disponível%20para%20o(a)%20{$value.nomepess}%20na%20evento%20de%20{$evento.desc_evento}%20-%20{$evento.diasemana}%20das%20{$evento.horainicio}%20às%20{$evento.horatermino}%20no%20{$evento.apelidolocal}%20-%20{$evento.rua}%20-%20Nº%20{$evento.numero}%20-%20{$evento.bairro},%20da%20qual%20você%20fez%20inscrição.%20Se%20você%20ainda%20tem%20interesse%20na%20vaga,%20responda%20SIM%20nas%20próximas%2024%20horas,%20que%20vamos%20passar%20mais%20informações.%20Se%20você%20não%20tiver%20interesse%20ou%20não%20responder,%20vamos%20chamar%20o%20próximo%20inscrito%20da%20lista%20de%20espera%20e%20você%20terá%20que%20fazer%20uma%20nova%20inscrição%20para%20esta%20evento." target="_blank" onclick="return confirm('Você será direcionado para o whatsapp com a mensagem referente a vaga disponível já preenchida. No app clique em enviar msg.')" class="btn btn-success btn-xs"><i></i>Informar vaga pelo WhatsApp</a>
+              
+              
+              </h5>
+              </div>
+                <div class="col-md-2" style="margin: 1; padding: 1">
+              <h5>
+              
+               
+                  <a href="/admin/insc_evento/{$value.idinsc_evento_indiv}/{$iduserprof.iduser}/{$evento.id_evento}/statusAguardandoMatricula" onclick="return confirm('Você já informou, por telefone ou whatsapp, o(a) {$value.nomepess} sobre a vaga disponível para a evento de {$evento.desc_evento}? Se sim, clique em OK, se não imformou, clique em cancelar e informe o aluno sobre a vaga.')" class="btn btn-warning btn-xs"><i></i> Marcar aguardandado matrícula</a>
+                </h5>
+              </div>
+              <!--
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/admin/insc_evento/{$value.idinsc_evento_indiv}/{$iduserprof.iduser}/{$evento.id_evento}/statusSorteada" class="btn btn-danger btn-xs"><i></i> Sorteada ?</a>
+                </h5>
+              </div>
+              -->
+               
+              <!--
+              <div class="col-md-2" style="margin: 2; padding: 2">
+                <h5 style="font-weight: bold; text-align: left;">                  
+                  <a href="/admin/insc_evento/{$value.idinsc_evento_indiv}/{$iduserprof.iduser}/{$evento.id_evento}/statusSorteada" onclick="return confirm('Deseja realmente que a inscrição {$value.idinsc}  do(da) {$value.nomepess} seja confirmada como Sorteada na evento de {$evento.desc_evento} da temporada {$temporada.desctemporada} ?')" class="btn btn-danger btn-xs"><i></i> Sorteada ?</a>
+                </h5>
+              </div>
+            -->
+            
+            
+               {/if}
+                  
+                </div>
+              </div>
+              
+            </div>
+          </div>
+
+          {else}
+            <div style="text-align: center; color: red; border: solid 1px lightblue;">Não há inscrições para a categoria de {$idadeinicial} a {$idadefinal} anos</div>
+          {/if}
+          
+           
+          {/loop}
+
+          
+
+          </div>  
+          {/loop}
+
+          
+                         
+
+          </div>
+    </div>
+  </div>
+
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+
+

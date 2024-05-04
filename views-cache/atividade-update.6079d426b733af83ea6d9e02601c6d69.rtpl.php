@@ -47,13 +47,27 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="prograativ">Programa</label>
-                  <input type="text" class="form-control" id="prograativ" name="prograativ" placeholder="Informe qual é o programa" value="<?php echo htmlspecialchars( $atividade["prograativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                    <label for="prograativ">Programa</label>
+                    <select class="form-control" name="prograativ" id="prograativ">  
+         
+                        <option selected="selected" value="<?php echo htmlspecialchars( $atividade["prograativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $atividade["prograativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option> 
+                        <option value="Hora do Treino">Hora do Treino</option>
+                        <option value="Corpo em Ação">Corpo em Ação</option>
+                        <option value="GR São Bernardo">GR São Bernardo</option>
+                        <option value="Campeões da vida">Campeões da vida</option>
+                                            
+                    </select>
                 </div>
 
                 <div class="form-group">
-                  <label for="tipoativ">Tipo</label>
-                  <input type="text" class="form-control" id="tipoativ" name="tipoativ" placeholder="Informe qual o tipo da atividade" value="<?php echo htmlspecialchars( $atividade["tipoativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                    <label for="tipoativ">Tipo</label>
+                    <select class="form-control" name="tipoativ" id="tipoativ">  
+                  
+                        <option selected="selected" value="<?php echo htmlspecialchars( $atividade["tipoativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $atividade["tipoativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>  
+                        <option value="Aquática">Aquática</option>
+                        <option value="Terrestre">Terrestre</option>
+                                            
+                    </select>
                 </div>
                 
               </div>
@@ -61,13 +75,28 @@
               <div class="col-md-6">
 
                 <div class="form-group">
-                  <label for="origativ">Origem</label>
-                  <input type="text" class="form-control" id="origativ" name="origativ" placeholder="Informe a origem da atividade" value="<?php echo htmlspecialchars( $atividade["origativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                    <label for="origativ">Origem</label>
+                    <select class="form-control" name="origativ" id="origativ">  
+                    
+                        <option selected="selected" value="<?php echo htmlspecialchars( $atividade["origativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $atividade["origativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>  
+                        <option value="SESP">SESP</option>
+                        <option value="PELC">PELC</option>
+                        <option value="Voluntário">Voluntário</option>
+                        <option value="Convênio Esportes">Convênio Esportes</option>
+                                            
+                  </select>
                 </div>
 
                 <div class="form-group">
-                  <label for="geneativ">Gênero</label>
-                  <input type="text" class="form-control" id="geneativ" name="geneativ" placeholder="Informe o gênero da atividade" value="<?php echo htmlspecialchars( $atividade["geneativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                    <label for="geneativ">Gênero</label>
+                    <select class="form-control" name="geneativ" id="geneativ">  
+
+                        <option selected="selected" value="<?php echo htmlspecialchars( $atividade["geneativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $atividade["geneativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>   
+                        <option value="Feminino">Feminino</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="">Ambos</option>
+                                            
+                    </select>
                 </div>
 
                 <div class="form-group">

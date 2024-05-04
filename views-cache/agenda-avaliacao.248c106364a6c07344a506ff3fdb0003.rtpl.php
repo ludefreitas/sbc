@@ -329,34 +329,59 @@
                          
                          <br>
                     -->
-                         <span style="font-weight: bold;">03/04/2024 - quarta-feira </span><br>
-                         <input type="radio" name="datahoramarcada" value="Quarta-2024-04-03-10:00-10:30-vagas20">
-                         &nbsp;10:00 às 10:30 - 20 vagas <br>
-                         <input type="radio" name="datahoramarcada" value="Quarta-2024-04-03-10:30-11:00-vagas20">
-                         &nbsp;10:30 às 11:00 - 20 vagas <br>
-                         <input type="radio" name="datahoramarcada" value="Quarta-2024-04-03-16:00-16:30-vagas20">
-                         &nbsp;16:00 às 16:30 - 20 vagas <br>
-                         <input type="radio" name="datahoramarcada" value="Quarta-2024-04-03-16:30-17:00-vagas20">
-                         &nbsp;16:30 às 17:00 - 20 vagas <br>
-                         <input type="radio" name="datahoramarcada" value="Quarta-2024-04-03-18:00-18:30-vagas20">
-                         &nbsp;18:00 às 18:30 - 20 vagas <br>
-                         <input type="radio" name="datahoramarcada" value="Quarta-2024-04-03-18:30-19:00-vagas20">
-                         &nbsp;18:30 às 19:00 - 20 vagas <br>
-
-                         <span style="font-weight: bold;">04/04/2024 - quinta-feira </span><br>
+                         <span style="font-weight: bold;">04/04/2024 - Quinta-feira </span><br>
                          <input type="radio" name="datahoramarcada" value="Quinta-2024-04-04-10:00-10:30-vagas20">
-                         &nbsp;10:00 às 10:30 - 20 vagas <br>
+                         &nbsp;10:00 às 10:30 <br>
                          <input type="radio" name="datahoramarcada" value="Quinta-2024-04-04-10:30-11:00-vagas20">
-                         &nbsp;10:30 às 11:00 - 20 vagas <br>
+                         &nbsp;10:30 às 11:00 <br>
                          <input type="radio" name="datahoramarcada" value="Quinta-2024-04-04-16:00-16:30-vagas20">
-                         &nbsp;16:00 às 16:30 - 20 vagas <br>
+                         &nbsp;16:00 às 16:30 <br>
                          <input type="radio" name="datahoramarcada" value="Quinta-2024-04-04-16:30-17:00-vagas20">
-                         &nbsp;16:30 às 17:00 - 20 vagas <br>
+                         &nbsp;16:30 às 17:00 <br>
                          <input type="radio" name="datahoramarcada" value="Quinta-2024-04-04-18:00-18:30-vagas20">
-                         &nbsp;18:00 às 18:30 - 20 vagas <br>
+                         &nbsp;18:00 às 18:30 <br>
                          <input type="radio" name="datahoramarcada" value="Quinta-2024-04-04-18:30-19:00-vagas20">
-                         &nbsp;18:30 às 19:00 - 20 vagas <br>    
-                         
+                         &nbsp;18:30 às 19:00 <br>
+
+                         <br>
+
+                         <span style="font-weight: bold;">05/04/2024 - Sexta-feira </span><br>
+                         <input type="radio" name="datahoramarcada" value="Sexta--2024-04-05-10:00-10:30-vagas20">
+                         &nbsp;10:00 às 10:30 <br>
+                         <input type="radio" name="datahoramarcada" value="Sexta--2024-04-05-10:30-11:00-vagas20">
+                         &nbsp;10:30 às 11:00 <br>
+                         <input type="radio" name="datahoramarcada" value="Sexta--2024-04-05-16:00-16:30-vagas20">
+                         &nbsp;16:00 às 16:30 <br>
+                         <input type="radio" name="datahoramarcada" value="Sexta--2024-04-05-16:30-17:00-vagas20">
+                         &nbsp;16:30 às 17:00 <br>
+                    
+                         <br>
+
+                         <span style="font-weight: bold;">20/06/2024 - Quinta-feira </span><br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2024-06-20-10:00-10:30-vagas20">
+                         &nbsp;10:00 às 10:30 <br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2024-06-20-10:30-11:00-vagas20">
+                         &nbsp;10:30 às 11:00 <br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2024-06-20-16:00-16:30-vagas20">
+                         &nbsp;16:00 às 16:30 <br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2024-06-20-16:30-17:00-vagas20">
+                         &nbsp;16:30 às 17:00 <br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2024-06-20-18:00-18:30-vagas20">
+                         &nbsp;18:00 às 18:30 <br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2024-06-20-18:30-19:00-vagas20">
+                         &nbsp;18:30 às 19:00 <br>
+
+                         <br>
+
+                         <span style="font-weight: bold;">21/06/2024 - Sexta-feira </span><br>
+                         <input type="radio" name="datahoramarcada" value="Sexta--2024-06-21-10:00-10:30-vagas20">
+                         &nbsp;10:00 às 10:30 <br>
+                         <input type="radio" name="datahoramarcada" value="Sexta--2024-06-21-10:30-11:00-vagas20">
+                         &nbsp;10:30 às 11:00 <br>
+                         <input type="radio" name="datahoramarcada" value="Sexta--2024-06-21-16:00-16:30-vagas20">
+                         &nbsp;16:00 às 16:30 <br>
+                         <input type="radio" name="datahoramarcada" value="Sexta--2024-06-21-16:30-17:00-vagas20">
+                         &nbsp;16:30 às 17:00 <br>
                     
                          <br>
                         
@@ -486,19 +511,33 @@
                        
                        -->
 
-                        <span style="font-weight: bold;">03/04/2024 - quarta-feira </span><br>
-                         <input type="radio" name="datahoramarcada" value="Quarta-2024-04-03-09:00-09:30-vagas12">
-                         &nbsp;09:00 às 09:30 - 12 vagas <br>
-                         <input type="radio" name="datahoramarcada" value="Quarta-2024-04-03-18:30-19:00-vagas12">
-                         &nbsp;18:30 às 19:00 - 12 vagas <br>
+                        <span style="font-weight: bold;">04/04/2024 - Quinta-feira </span><br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2024-04-04-09:00-09:30-vagas12">
+                         &nbsp;09:00 às 09:30 <br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2024-04-04-18:30-19:00-vagas12">
+                         &nbsp;18:30 às 19:00 <br>
                          
                          <br>
 
-                         <span style="font-weight: bold;">04/04/2024 - quinta-feira </span><br>
-                         <input type="radio" name="datahoramarcada" value="Quinta-2024-04-04-09:00-09:30-vagas12">
-                         &nbsp;09:00 às 09:30 - 12 vagas <br>
-                         <input type="radio" name="datahoramarcada" value="Quinta-2024-04-04-18:30-19:00-vagas12">
-                         &nbsp;18:30 às 19:00 - 12 vagas <br>
+                         <span style="font-weight: bold;">05/04/2024 - Sexta-feira </span><br>
+                         <input type="radio" name="datahoramarcada" value="Sexta--2024-04-05-09:00-09:30-vagas12">
+                         &nbsp;09:00 às 09:30 <br>
+
+
+                         <br>
+
+                         <span style="font-weight: bold;">20/06/2024 - Quinta-feira </span><br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2024-06-20-09:00-09:30-vagas12">
+                         &nbsp;09:00 às 09:30 <br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2024-06-20-18:30-19:00-vagas12">
+                         &nbsp;18:30 às 19:00 <br>
+                         
+                         <br>
+
+                         <span style="font-weight: bold;">21/06/2024 - Sexta-feira </span><br>
+                         <input type="radio" name="datahoramarcada" value="Sexta--2024-06-21-09:00-09:30-vagas12">
+                         &nbsp;09:00 às 09:30 <br>
+                         
 
                          <br>
                          

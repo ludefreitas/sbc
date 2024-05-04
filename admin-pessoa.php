@@ -130,7 +130,8 @@ $app->get("/admin/pessoas/:idpess/delete", function($idpess) {
 
 	$pessoa->delete();
 
-	header("Location: /admin/pessoas");
+	echo "<script>window.location.href = '/admin/pessoas'</script>";
+	//header("Location: /admin/pessoas");
 	exit();
 });
 
@@ -167,7 +168,8 @@ $app->post("/admin/pessoas/create", function() {
 
 	$pessoa->save();
 
-	header("Location: /admin/pessoas");
+	echo "<script>window.location.href = '/admin/pessoas'</script>";
+	//header("Location: /admin/pessoas");
 	exit();
 });
 

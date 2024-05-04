@@ -40,6 +40,8 @@
 
             </div>
 
+          <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+              
             <?php $counter1=-1;  if( isset($horario) && ( is_array($horario) || $horario instanceof Traversable ) && sizeof($horario) ) foreach( $horario as $key1 => $value1 ){ $counter1++; ?>
 
             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">

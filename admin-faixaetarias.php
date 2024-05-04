@@ -78,25 +78,29 @@ $app->post("/admin/faixaetaria/create", function() {
 
 	if (!isset($_POST['initidade']) || $_POST['initidade'] == '') {
 		Faixaetaria::setMsgError("Informe a idade inicial.");
-		header("Location: /admin/faixaetaria/create");
+		echo "<script>window.location.href = '/admin/faixaetaria/create'</script>";
+		//header("Location: /admin/faixaetaria/create");
 		exit;		
 	}	
 
 	if (!isset($_POST['fimidade']) || $_POST['fimidade'] == '') {
 		Faixaetaria::setMsgError("Informe a idade final.");
-		header("Location: /admin/faixaetaria/create");
+		echo "<script>window.location.href = '/admin/faixaetaria/create'</script>";
+		//header("Location: /admin/faixaetaria/create");
 		exit;		
 	}
 
 	if ($_POST['initidade'] >= $_POST['fimidade']) {
 		Faixaetaria::setMsgError("Idade final deve ser maior que a idade inicial.");
-		header("Location: /admin/faixaetaria/create");
+		echo "<script>window.location.href = '/admin/faixaetaria/create'</script>";
+		//header("Location: /admin/faixaetaria/create");
 		exit;		
 	}	
 
 	if (!isset($_POST['descrfxetaria']) || $_POST['descrfxetaria'] == '') {
 		Faixaetaria::setMsgError("descreva a faixa etária.");
-		header("Location: /admin/faixaetaria/create");
+		echo "<script>window.location.href = '/admin/faixaetaria/create'</script>";
+		//header("Location: /admin/faixaetaria/create");
 		exit;		
 	}						
 
@@ -106,7 +110,8 @@ $app->post("/admin/faixaetaria/create", function() {
 
 	$_SESSION['createFaixaetariaValues'] = NULL;
 
-	header("Location: /admin/faixaetaria");
+	echo "<script>window.location.href = '/admin/faixaetaria'</script>";
+	//header("Location: /admin/faixaetaria");
 	exit();
 });
 
@@ -120,7 +125,8 @@ $app->get("/admin/faixaetaria/:idfxetaria/delete", function($idfxetaria) {
 
 	$faixaetaria->delete();
 
-	header("Location: /admin/faixaetaria");
+	echo "<script>window.location.href = '/admin/faixaetaria'</script>";
+	//header("Location: /admin/faixaetaria");
 	exit();
 	
 });
@@ -152,25 +158,29 @@ $app->post("/admin/faixaetaria/:idfxetaria", function($idfxetaria) {
 
 	if (!isset($_POST['initidade']) || $_POST['initidade'] == '') {
 		Faixaetaria::setMsgError("Informe a idade inicial.");
-		header("Location: /admin/faixaetaria/".$idfxetaria."");
+		echo "<script>window.location.href = '/admin/faixaetaria/".$idfxetaria."'</script>";
+		//header("Location: /admin/faixaetaria/".$idfxetaria."");
 		exit;		
 	}	
 
 	if (!isset($_POST['fimidade']) || $_POST['fimidade'] == '') {
 		Faixaetaria::setMsgError("Informe a idade final.");
-		header("Location: /admin/faixaetaria/".$idfxetaria."");
+		echo "<script>window.location.href = '/admin/faixaetaria/".$idfxetaria."'</script>";
+		//header("Location: /admin/faixaetaria/".$idfxetaria."");
 		exit;		
 	}
 
 	if ($_POST['initidade'] >= $_POST['fimidade']) {
 		Faixaetaria::setMsgError("Idade final deve ser maior que a idade inicial.");
-		header("Location: /admin/faixaetaria/".$idfxetaria."");
+		echo "<script>window.location.href = '/admin/faixaetaria/".$idfxetaria."'</script>";
+		//header("Location: /admin/faixaetaria/".$idfxetaria."");
 		exit;		
 	}	
 
 	if (!isset($_POST['descrfxetaria']) || $_POST['descrfxetaria'] == '') {
 		Faixaetaria::setMsgError("descreva a faixa etária.");
-		header("Location: /admin/faixaetaria/".$idfxetaria."");
+		echo "<script>window.location.href = '/admin/faixaetaria/".$idfxetaria."'</script>";
+		//header("Location: /admin/faixaetaria/".$idfxetaria."");
 		exit;		
 	}						
 
@@ -178,7 +188,9 @@ $app->post("/admin/faixaetaria/:idfxetaria", function($idfxetaria) {
 
 	$faixaetaria->save();
 
-	header("Location: /admin/faixaetaria");
+	echo "<script>window.location.href = '/admin/faixaetaria'</script>";
+	//header("Location: /admin/faixaetaria");
+	
 	exit();		
 });
 

@@ -80,6 +80,20 @@
             <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; color: green;" colspan="7"><?php echo htmlspecialchars( $success, ENT_COMPAT, 'UTF-8', FALSE ); ?></th>
           </tr>
           <?php } ?>
+
+          <tr>
+            <th style="border: solid 1px; padding: 5px;" colspan="7">
+              Temporada: &nbsp;
+              <?php require $this->checkTemplate("minhaagenda-menu");?>
+            </th>
+          </tr>
+
+          <tr>
+            <th style="border: solid 1px; padding: 5px; text-align: center;" colspan="7">
+              
+              <?php echo htmlspecialchars( $desctemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+            </th>
+          </tr>
           
 
           <tr>
@@ -132,7 +146,7 @@
           <?php }else{ ?>
           <tr style="font-weight: bold; color: red; font-size: 22px; text-align: center; padding: 5px;">
             <td colspan="7">
-              Não há horário agendado para natação espontânea!
+              Não há horário agendado para natação espontânea nesta temporada!
             </td>
           </tr>
           <?php } ?>

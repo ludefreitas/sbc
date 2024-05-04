@@ -59,10 +59,11 @@
                 </h5>
               </div>  
               
-              
+              {if="getUserId() == 1 OR getUserId() == 156"}
               <div class="col-md-2" >
                   <a href="/admin/users/{$value.iduser}" class="btn btn-success"></i>Admin / Prof</a>
               </div>
+              {/if}
             </div>           
             </div>
             {/loop}

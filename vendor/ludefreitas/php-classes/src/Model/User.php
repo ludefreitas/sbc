@@ -210,7 +210,9 @@ class User extends Model {
 			}
 			exit;
 			*/
-			header("Location: /login");
+			echo "<script>window.location.href = '/login'</script>";
+			
+			//header("Location: /login");
 			exit;
 
 		}
@@ -230,7 +232,8 @@ class User extends Model {
 			}
 			exit;
 			*/
-			header("Location: /cursos/login");
+			echo "<script>window.location.href = '/cursos/login'</script>";
+			//header("Location: /cursos/login");
 			exit;
 		}
 
@@ -249,7 +252,8 @@ class User extends Model {
 			}
 			exit;
 			*/
-			header("Location: /login");
+			echo "<script>window.location.href = '/login'</script>";
+			//header("Location: /login");
 			exit;
 		}
 
@@ -268,7 +272,8 @@ class User extends Model {
 			}
 			exit;
 			*/
-			header("Location: /login");
+			echo "<script>window.location.href = '/login'</script>";
+			//header("Location: /login");
 			exit;
 		}
 
@@ -286,7 +291,8 @@ class User extends Model {
 			}
 			exit;
 			*/
-			header("Location: /login");
+			echo "<script>window.location.href = '/login'</script>";
+			//header("Location: /login");
 			exit;
 		}
 
@@ -362,6 +368,20 @@ class User extends Model {
 			WHERE isestagiario = 1
 			ORDER BY b.desperson");
 	}
+
+	public static function listAllProfEstagiario()
+	{
+
+		$sql = new Sql();
+
+		return $sql->select("
+			SELECT * FROM tb_users a 
+			INNER JOIN tb_persons b 
+			using(idperson) 
+			WHERE isestagiario = 1 
+			OR isprof = 1
+			ORDER BY b.desperson");
+	}
 	
 		public static function listAllAudi()
 	{
@@ -418,7 +438,8 @@ class User extends Model {
 		}else{
 
 			User::setError("Usuário selecionado não existe!");
-			header("Location: /admin/users");
+			echo "<script>window.location.href = '/admin/users'</script>";
+			//header("Location: /admin/users");
 			exit();			
 		}
 		
@@ -563,7 +584,8 @@ class User extends Model {
          //throw new \Exception("Não foi possível recuperar a senha.");
          
          User::setError("Não foi possível recuperar a senha!! Usuário ou email não cadastrado!");
-		 header("Location: /login");
+         echo "<script>window.location.href = '/login'</script>";
+		 //header("Location: /login");
 			exit();			
 
      }
@@ -580,7 +602,8 @@ class User extends Model {
              //throw new \Exception("Não foi possível recuperar a senha.");
 
              User::setError("Não foi possível recuperar a senha!! Código expirado!");
-		 	header("Location: /login");
+             echo "<script>window.location.href = '/login'</script>";
+		 	//header("Location: /login");
 			exit();			
          }
          else
@@ -603,8 +626,9 @@ class User extends Model {
              if (!$emailEnviado)
      		{
 
-        		User::setError("Não foi possivel enviar o email para recuperar senha. Verifique se o email foi digitado corretamente ou entre em contato conosco.");        	
-        		header("Location: /login");
+        		User::setError("Não foi possivel enviar o email para recuperar senha. Verifique se o email foi digitado corretamente ou entre em contato conosco.");
+        		echo "<script>window.location.href = '/login'</script>";        	
+        		//header("Location: /login");
 				exit();			
      		}
      		
@@ -636,7 +660,8 @@ class User extends Model {
      if (count($results) === 0)
      {
          User::setError("Não foi possível recuperar a senha!! Código expirado!");
-		 	header("Location: /login");
+         	echo "<script>window.location.href = '/login'</script>";
+		 	//header("Location: /login");
 			exit();			
      }
      else
@@ -1613,6 +1638,42 @@ class User extends Model {
 				AND idtemporada = :idtemporada
 				-- AND iduser = :iduser ", [
 				':idturma'=>$idturma,
+				':idtemporada'=>$idtemporada
+				//':iduser'=>$iduser
+			]);
+
+			return $rows[0];
+			
+		}
+
+		public static function getIdUserInEventoTemporada($id_evento, $idtemporada){
+
+			$sql = new Sql();
+
+			$rows = $sql->select(
+				"SELECT iduser FROM tb_evento 			
+				WHERE id_evento = :id_evento
+				AND idtemporada = :idtemporada
+				-- AND iduser = :iduser ", [
+				':id_evento'=>$id_evento,
+				':idtemporada'=>$idtemporada
+				//':iduser'=>$iduser
+			]);
+
+			return $rows[0];
+			
+		}
+
+		public static function getIdUser2InEventoTemporada($id_evento, $idtemporada){
+
+			$sql = new Sql();
+
+			$rows = $sql->select(
+				"SELECT iduser2 FROM tb_evento 			
+				WHERE id_evento = :id_evento
+				AND idtemporada = :idtemporada
+				-- AND iduser = :iduser ", [
+				':id_evento'=>$id_evento,
 				':idtemporada'=>$idtemporada
 				//':iduser'=>$iduser
 			]);

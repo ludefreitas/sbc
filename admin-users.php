@@ -312,7 +312,8 @@ $app->get("/admin/users/:iduser/delete", function($iduser) {
 
 	$user->delete();
 
-	header("Location: /admin/users");
+	echo "<script>window.location.href = '/admin/users'</script>";
+	//header("Location: /admin/users");
 	exit();
 });
 
@@ -327,7 +328,8 @@ $app->get("/admin/users/:iduser", function($iduser) {
 	if( $user->getiduser() != $iduser){
 
 		User::setError("Usuário não encontrado!!!");
-		header("Location: /admin/users");
+		echo "<script>window.location.href = '/admin/users'</script>";
+		//header("Location: /admin/users");
 		exit();			
 	}
 
@@ -357,7 +359,8 @@ $app->post("/admin/users/create", function() {
 
 	$user->save();
 
-	header("Location: /admin/users");
+	echo "<script>window.location.href = '/admin/users'</script>";
+	//header("Location: /admin/users");
 	exit();
 });
 
@@ -379,7 +382,8 @@ $app->post("/admin/users/:iduser", function($iduser) {
 
 		if (!isset($_POST['apelidoperson']) || $_POST['apelidoperson'] == '') {
 			User::setError("Preencha o campo apelido.");
-			header("Location: /admin/users/".$iduser."");
+			echo "<script>window.location.href = '/admin/users/".$iduser."'</script>";
+			//header("Location: /admin/users/".$iduser."");
 			exit;		
 		}
 	}

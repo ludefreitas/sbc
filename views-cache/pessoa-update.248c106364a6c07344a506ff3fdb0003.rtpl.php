@@ -55,30 +55,6 @@
         xmlHttp.send()
         
     }
-
-    /*
-    function getDadosCodigoDoenca(cid){
-
-         let url = 'https://cid.api.mokasoft.org/cid10/'+cid+''
-
-        let xmlHttp = new XMLHttpRequest()
-        xmlHttp.open('GET', url)
-
-        xmlHttp.onreadystatechange = () => {
-            if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
-
-                let dadosJSONText = xmlHttp.responseText
-
-                let dadosJSONObj = JSON.parse(dadosJSONText)
-
-                document.getElementById('dadosDoenca').value = dadosJSONObj.nome                                                               
-            }
-            
-        }
-
-        xmlHttp.send()        
-    }  
-    */
     
 </script>
 
@@ -88,12 +64,8 @@
 
     <div class="container">
         <div class="row" style="padding-bottom: 5px">
-
-            <div class="col-md-3" style="margin: 0px -5px 5px 0px">
-                <?php require $this->checkTemplate("user-profile-menu");?>
-            </div>
         
-            <div class="col-md-9">
+            <div class="col-md-12">
 
                 <div class="alert alert-success" style="text-align-last: center;">
                     <span style="font-weight: bold;">ATUALIZAR PESSOA/DEPENDENTE</span style="font-weight: bold;">

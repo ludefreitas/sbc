@@ -389,7 +389,26 @@ class Agenda extends Model {
 		]);
 
 		return $results;		
+	}
 
+	public static function getAgendaByIduserTemporada($iduser, $titulo, $desctemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_agenda a
+			INNER JOIN tb_pessoa b USING (idpess)
+			INNER JOIN tb_users c USING (iduser)
+			INNER JOIN tb_local d USING (idlocal)
+			INNER JOIN tb_horadiasemana e USING (idhoradiasemana)
+			WHERE c.iduser = :iduser AND a.titulo = :titulo
+			AND MID(a.dia, 1, 4) = :desctemporada
+			ORDER BY a.dia DESC", [
+			':iduser'=>$iduser,
+			':titulo'=>$titulo,
+			':desctemporada'=>$desctemporada
+		]);
+
+		return $results;		
 	}
 	
 	public static function getAgendaAvaliacaoByIduser($iduser, $titulo){
@@ -459,7 +478,9 @@ class Agenda extends Model {
 		$results = $sql->select("SELECT count(*) FROM tb_agenda 
 			WHERE idpess = :idpess 
 			AND idlocal = :idlocal 
-			AND dia = :data", [
+			-- AND dia = :data
+			AND dia >=:data
+			", [
 				':idpess'=>$idpess,
 				':idlocal'=>$idlocal,
 				':data'=>$data
@@ -483,6 +504,24 @@ class Agenda extends Model {
 
 		return $results;		
 	}
+
+	public static function countAgendaPorPessoaLocalDiaTituloHoje($idpess, $idlocal, $titulo, $data){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT count(*) FROM tb_agenda 
+			WHERE idpess = :idpess 
+			AND idlocal = :idlocal 
+			AND titulo = :titulo
+			AND dia >= :data", [
+				':idpess'=>$idpess,
+				':idlocal'=>$idlocal,
+				':titulo'=>$titulo,
+				':data'=>$data
+			]);
+
+		return $results;		
+	}
 	
 	public static function selecionaAgendaPorPessoaDiaTitulo($idpess, $titulo){
 
@@ -491,7 +530,7 @@ class Agenda extends Model {
 		$results = $sql->select("SELECT * FROM tb_agenda 
 			WHERE idpess = :idpess 
 			AND titulo = :titulo
-			-- ORDER BY dia DESC", [
+			ORDER BY dia DESC", [
 				':idpess'=>$idpess,
 				':titulo'=>$titulo
 			]);

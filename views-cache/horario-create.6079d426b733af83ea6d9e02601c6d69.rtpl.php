@@ -15,8 +15,8 @@
   <section class="content">
 
     <div class="row">
-    	<div class="col-md-12">
-    		<div class="box box-success">
+        <div class="col-md-12">
+            <div class="box box-success">
           <?php if( $error != '' ){ ?>
 
           <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
@@ -38,7 +38,43 @@
                     </div>
                     <div class="box-header">
                       <label for="diasemana">Dias da semana</label>
-                      <input type="text" class="form-control" id="diasemana" name="diasemana" placeholder="Dias da semana em que aula accontece" value="<?php echo htmlspecialchars( $createHorarioValues["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                      
+
+                            <select class="form-control" name="diasemana" id="diasemana">  
+                            <?php if( $createHorarioValues["diasemana"] ){ ?>
+
+                            <option selected="selected" value="<?php echo htmlspecialchars( $createHorarioValues["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $createHorarioValues["diasemana"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>  
+                            <?php }else{ ?>
+
+                            <option selected="selected" value="">Selecione</option>  
+                            <?php } ?>                 
+                            <option value="Segunda">Segunda</option>
+                            <option value="Segunda e Quarta">Segunda e Quarta</option>
+                            <option value="Segunda e Quinta">Segunda e Quinta</option>
+                            <option value="Segunda e Sexta">Segunda e Sexta</option>
+                            <option value="Segunda a Quinta">Segunda a Quinta</option>
+                            <option value="Segunda a Sexta">Segunda a Sexta</option>
+
+                            <option value="Terça">Terça</option>
+                            <option value="Terça e Quinta">Terça e Quinta</option>
+                            <option value="Terça e Sexta">Terça e Sexta</option>
+                            <option value="Terça a Quinta">Terça a Quinta</option>
+                            <option value="Terça a Sexta">Terça a Sexta</option>
+
+                            <option value="Quarta">Quarta</option>
+                            <option value="Quarta e Sexta">Quarta e Sexta</option>
+                            <option value="Quarta a Sexta">Quarta a Sexta</option>
+
+                            <option value="Quinta">Quinta</option>
+
+                            <option value="Sexta">Sexta</option>
+
+                            <option value="Sábado">Sábado</option>
+                            
+                            
+                                                       
+                        </select>
+
                      </div>
                   </div>
                   <div class="col-md-6">
@@ -48,20 +84,36 @@
                     </div>
                     <div class="box-header">
                       <label for="periodo">Período</label>
-                      <input type="text" class="form-control" id="periodo" name="periodo" placeholder="Período em que aula accontece" value="<?php echo htmlspecialchars( $createHorarioValues["periodo"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+
+                        <select class="form-control" name="periodo" id="periodo">  
+                            <?php if( $createHorarioValues["periodo"] ){ ?>
+
+                            <option selected="selected" value="<?php echo htmlspecialchars( $createHorarioValues["periodo"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $createHorarioValues["periodo"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>  
+                            <?php }else{ ?>
+
+                            <option selected="selected" value="">Selecione</option>  
+                            <?php } ?>                 
+                            <option value="Manhã">Manhã</option>
+                            <option value="Tarde">Tarde</option>
+                            <option value="Noite">Noite</option>
+                                                       
+                        </select>
+
                     </div>                  
+
+
                   </div>
                 </div>
                 <div class="box-footer">
                   <button type="submit" class="btn btn-success">Cadastrar</button>
-                    &nbsp&nbsp&nbsp&nbsp
+                    &nbsp;&nbsp;&nbsp;&nbsp;
             <a type="button" class="btn btn-danger" href="javascript:window.history.go(-1)">Cancelar</a>
 
               </form>
             </div>
             <!-- /.box-body -->        
         </div>
-    	</div>
+        </div>
     </div>
 
   </section>

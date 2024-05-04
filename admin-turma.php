@@ -104,7 +104,8 @@ $app->post("/admin/turma/create", function() {
 
 	if (!isset($_POST['descturma']) || $_POST['descturma'] == '') {
 		Turma::setMsgError("Informe uam descrição para a turma.");
-		header("Location: /admin/turma/create");
+		echo "<script>window.location.href = '/admin/turma/create'</script>";
+		//header("Location: /admin/turma/create");
 		exit;		
 	}
 	
@@ -112,31 +113,36 @@ $app->post("/admin/turma/create", function() {
 
 	if (!isset($_POST['idmodal']) || $_POST['idmodal'] == '') {
 		Turma::setMsgError("Selecione uma modalidade.");
-		header("Location: /admin/turma/create");
+		echo "<script>window.location.href = '/admin/turma/create'</script>";
+		//header("Location: /admin/turma/create");
 		exit;		
 	}
 
 	if (!isset($_POST['idhorario']) || $_POST['idhorario'] == '') {
 		Turma::setMsgError("Selecione um horário.");
-		header("Location: /admin/turma/create");
+		echo "<script>window.location.href = '/admin/turma/create'</script>";
+		//header("Location: /admin/turma/create");
 		exit;		
 	}																																					
 
 	if (!isset($_POST['idativ']) || $_POST['idativ'] == '') {
 		Turma::setMsgError("Selecione uma atividade.");
-		header("Location: /admin/turma/create");
+		echo "<script>window.location.href = '/admin/turma/create'</script>";
+		//header("Location: /admin/turma/create");
 		exit;		
 	}																							
 
 	if (!isset($_POST['idespaco']) || $_POST['idespaco'] == '') {
 		Turma::setMsgError("Selecione um espaço");
-		header("Location: /admin/turma/create");
+		echo "<script>window.location.href = '/admin/turma/create'</script>";
+		//header("Location: /admin/turma/create");
 		exit;		
 	}
     /*
 	if (!isset($_POST['idturmastatus']) || $_POST['idturmastatus'] == '') {
 		Turma::setMsgError("Selecione o status.");
-		header("Location: /admin/turma/create");
+		echo "<script>window.location.href = '/admin/turma/create'</script>";
+		//header("Location: /admin/turma/create");
 		exit;		
 	}
 	*/
@@ -189,7 +195,8 @@ $app->post("/admin/turma/create", function() {
 
 	$_SESSION['createTurmaValues'] = NULL;
 
-	header("Location: /admin/turma");
+	echo "<script>window.location.href = '/admin/turma'</script>";
+	//header("Location: /admin/turma");
 	exit();	
 });
 
@@ -203,7 +210,8 @@ $app->get("/admin/turma/:idturma/delete", function($idturma) {
 
 	$turma->delete();
 
-	header("Location: /admin/turma");
+	echo "<script>window.location.href = '/admin/turma'</script>";
+	//header("Location: /admin/turma");
 	exit();
 	
 });
@@ -444,6 +452,16 @@ $app->post("/admin/turma/create/token", function() {
 	   	exit;
 	}
 
+	$pontoUm = substr($_POST['numcpf'], 3, 1);
+	$pontoDois = substr($_POST['numcpf'], 7, 1);
+	$traco = substr($_POST['numcpf'], 11, 1);
+	
+	if($pontoUm != '.' || $pontoDois != '.' || $traco != '-'){
+		echo "<script>alert('Formato de CPF inválido!');";
+	  	echo "javascript:history.go(-1)</script>";
+	   	exit;
+	}
+
 	$token = time();
 	$token = substr($token, 4);
 
@@ -540,7 +558,7 @@ $app->get("/admin/token/:idturma/:idtemporada", function($idturma, $idtemporada)
 
 $app->get("/admin/listapessoasporturma/:idturma/:idtemporada", function($idturma, $idtemporada) {
 
-	User::verifyLoginProf();
+	User::verifyLogin();
 
 	$insc = new Insc();
 	$turma = new Turma();

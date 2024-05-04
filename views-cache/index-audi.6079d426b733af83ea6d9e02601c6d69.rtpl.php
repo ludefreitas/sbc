@@ -22,7 +22,7 @@
         <div class="row">
             Dados das temporadas: &nbsp;&nbsp;
             <?php $counter1=-1;  if( isset($temporada) && ( is_array($temporada) || $temporada instanceof Traversable ) && sizeof($temporada) ) foreach( $temporada as $key1 => $value1 ){ $counter1++; ?>
-                <a href="/audi/dadostemporada/<?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a> &nbsp;&nbsp;
+                <a href="/admin/dadostemporada/<?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a> &nbsp;&nbsp;
             <?php } ?>
             <br><br>
         </div>

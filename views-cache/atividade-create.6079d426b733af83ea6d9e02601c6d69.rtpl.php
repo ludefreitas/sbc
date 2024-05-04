@@ -45,12 +45,39 @@
 
               <div class="box-header">
                 <label for="prograativ">Programa</label>
-                <input type="text" class="form-control" id="prograativ" name="prograativ" placeholder="Informe qual é o programa" value="<?php echo htmlspecialchars( $createAtivValues["prograativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                <select class="form-control" name="prograativ" id="prograativ">  
+                  <?php if( $createAtivValues["prograativ"] ){ ?>
+
+                  <option selected="selected" value="<?php echo htmlspecialchars( $createAtivValues["prograativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $createAtivValues["prograativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>  
+                  <?php }else{ ?>
+
+                  <option selected="selected" value="">Selecione</option>  
+                  <?php } ?>                 
+                   
+                    <option value="Hora do Treino">Hora do Treino</option>
+                    <option value="Corpo em Ação">Corpo em Ação</option>
+                    <option value="GR São Bernardo">GR São Bernardo</option>
+                    <option value="Campeões da vida">Campeões da vida</option>
+                                            
+                </select>
               </div>    
 
                <div class="box-header">
                 <label for="tipoativ">Tipo</label>
-                <input type="text" class="form-control" id="tipoativ" name="tipoativ" placeholder="Informe qual o tipo da atividade (Terrestre ou Aquática)" value="<?php echo htmlspecialchars( $createAtivValues["tipoativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                <select class="form-control" name="tipoativ" id="tipoativ">  
+                  <?php if( $createAtivValues["tipoativ"] ){ ?>
+
+                  <option selected="selected" value="<?php echo htmlspecialchars( $createAtivValues["tipoativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $createAtivValues["tipoativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>  
+                  <?php }else{ ?>
+
+                  <option selected="selected" value="">Selecione</option>  
+                  <?php } ?>                 
+                   
+                    <option value="Aquática">Aquática</option>
+                    <option value="Terrestre">Terrestre</option>
+                                            
+                </select>
+                
               </div>                 
 
             </div>
@@ -59,12 +86,40 @@
 
               <div class="box-header">
                 <label for="origativ">Origem</label>
-                <input type="text" class="form-control" id="origativ" name="origativ" placeholder="Informe a origem da atividade" value="<?php echo htmlspecialchars( $createAtivValues["origativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                <select class="form-control" name="origativ" id="origativ">  
+                  <?php if( $createAtivValues["origativ"] ){ ?>
+
+                  <option selected="selected" value="<?php echo htmlspecialchars( $createAtivValues["origativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $createAtivValues["origativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>  
+                  <?php }else{ ?>
+
+                  <option selected="selected" value="">Selecione</option>  
+                  <?php } ?>                 
+                   
+                    <option value="SESP">SESP</option>
+                    <option value="PELC">PELC</option>
+                    <option value="Voluntário">Voluntário</option>
+                    <option value="Convênio Esportes">Convênio Esportes</option>
+                                            
+                  </select>
               </div>  
 
               <div class="box-header">
                 <label for="geneativ">Gênero</label>
-                <input type="text" class="form-control" id="geneativ" name="geneativ" placeholder="Informe o gênero da atividade" value="<?php echo htmlspecialchars( $createAtivValues["geneativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                <select class="form-control" name="geneativ" id="geneativ">  
+                  <option selected="selected" value="">Selecione</option> 
+                  <?php if( $createAtivValues["geneativ"] ){ ?>
+
+                  <option selected="selected" value="<?php echo htmlspecialchars( $createAtivValues["geneativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $createAtivValues["geneativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>  
+                  <?php }else{ ?>
+
+                  <option selected="selected" value="">Selecione</option>  
+                  <?php } ?>                                   
+                   
+                    <option value="Feminino">Feminino</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="">Ambos</option>
+                                            
+                  </select>
               </div>            
 
               <div class="box-header">
@@ -80,7 +135,7 @@
 
                 <div class="box-footer">
                   <button type="submit" class="btn btn-success">Cadastrar</button>
-                    &nbsp&nbsp&nbsp&nbsp
+                    &nbsp;&nbsp;&nbsp;&nbsp;
             <a type="button" class="btn btn-danger" href="javascript:window.history.go(-1)">Cancelar</a>
                 </div>        
 

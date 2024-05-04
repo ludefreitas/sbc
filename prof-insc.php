@@ -221,14 +221,16 @@ $app->get("/prof/profile/insc/:idinsc/:idpess/:idturma", function($idinsc, $idpe
 	if( !$insc->getidinsc()){
 
 		User::setError("Inscrição selecionada não existe!");
-		header("Location: /prof/insc");
+		//header("Location: /prof/insc");
+		echo "<script>window.location.href = '/prof/insc'</script>";
 		exit();			
 	}
 
 	if( $insc->getidpess() != $idpess){
 
 		User::setError("Aluno selecionado não está relacionado para esta inscrição!");
-		header("Location: /prof/insc");
+		//header("Location: /prof/insc");
+		echo "<script>window.location.href = '/prof/insc'</script>";
 		exit();			
 	}
 
@@ -258,14 +260,16 @@ $app->get("/estagiario/profile/insc/:idinsc/:idpess/:idturma", function($idinsc,
 	if( !$insc->getidinsc()){
 
 		User::setError("Inscrição selecionada não existe!");
-		header("Location: /prof/insc");
+		//header("Location: /prof/insc");
+		echo "<script>window.location.href = '/prof/insc'</script>";
 		exit();			
 	}
 
 	if( $insc->getidpess() != $idpess){
 
 		User::setError("Aluno selecionado não está relacionado para esta inscrição!");
-		header("Location: /prof/insc");
+		//header("Location: /prof/insc");
+		echo "<script>window.location.href = '/prof/insc'</script>";
 		exit();			
 	}
 
@@ -586,6 +590,16 @@ $app->get("/prof/insc/:idinsc/:idturma/:idpess/statusDesistente", function($idin
 	$idturma = (int)$idturma;
 	$idtemporada = $insc->getidtemporada();
 	$idpess = (int)$idpess;
+
+	$temporada->get((int)$idtemporada);
+	$desctemporada = (int)$temporada->getdesctemporada();
+	$desctemporadaAtual = (int)date('Y');
+
+	if($desctemporada != $desctemporadaAtual){
+		echo "<script>alert('Não é permitido marcar como desistente uma inscrição que não seja da temporada atual.');";
+        echo "javascript:history.go(-1)</script>";	
+        exit;	
+	}	
 
 	$insc->alteraStatusInscricaoDesistente($idinsc, $idturma, $idtemporada);
 	
@@ -1095,7 +1109,7 @@ $app->get("/estagiario/calendario-lista-presenca/:idtemporada/:idturma", functio
 	]);	
 });
 
-$app->get("/prof/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/:data/:diasemana", function($idtemporada, $idturma, $data, $diasemana) {
+$app->get("/prof/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/:data/:diasemana/:iduser", function($idtemporada, $idturma, $data, $diasemana, $iduser) {
 
 	User::checkLoginProf();
 	$turma = new Turma();
@@ -1194,6 +1208,7 @@ $app->get("/prof/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/:data/
 		}
 
 		$page->setTpl("insc-turma-temporada-fazer-chamada", [
+			'iduser'=>$iduser,
 			'turma'=>$turma->getValues(),
 			'data'=>$data,
 			'idtemporada'=>$idtemporada,
@@ -1271,6 +1286,7 @@ $app->get("/prof/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/:data/
 		}
 		
     	$page->setTpl("insc-turma-temporada-fazer-chamada", [
+    		'iduser'=>$iduser,
     		'turma'=>$turma->getValues(),
     		'data'=>$data,
     		'idtemporada'=>$idtemporada,
@@ -1328,7 +1344,7 @@ $app->get("/prof/insc-turma-temporada-mes-chamada-atualizada/:idtemporada/:idtur
     	]);	    
 });
 
-$app->get("/estagiario/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/:data/:diasemana", function($idtemporada, $idturma, $data, $diasemana) {
+$app->get("/estagiario/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/:data/:diasemana/:iduser", function($idtemporada, $idturma, $data, $diasemana, $iduser) {
 
 	User::checkLoginEstagiario();
 	$turma = new Turma();
@@ -1427,6 +1443,7 @@ $app->get("/estagiario/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/
 		}
 
 		$page->setTpl("insc-turma-temporada-fazer-chamada-estagiario", [
+			'iduser'=>$iduser,
 			'turma'=>$turma->getValues(),
 			'data'=>$data,
 			'idtemporada'=>$idtemporada,
@@ -1504,6 +1521,7 @@ $app->get("/estagiario/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/
 		}
 		
     	$page->setTpl("insc-turma-temporada-fazer-chamada-estagiario", [
+    		'iduser'=>$iduser,
     		'turma'=>$turma->getValues(),
     		'data'=>$data,
     		'idtemporada'=>$idtemporada,
@@ -1796,7 +1814,7 @@ $app->post("/prof/insc/altera/turma", function(){
 	    	}	    	
 
 	    	if((int)$desctemporadaorigem > (int)$desctemporadadestino){
-	    		echo "<script>alert('Você não pode movimentar esta inscrição datemporada atual para a temporada passada.');";
+	    		echo "<script>alert('Você não pode movimentar esta inscrição da temporada atual para a temporada passada.');";
 				echo "javascript:history.go(-1)</script>";
 				exit();    
 	    	}

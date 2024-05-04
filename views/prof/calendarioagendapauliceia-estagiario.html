@@ -38,7 +38,8 @@
 
           dateClick: function(info) {
 
-            let local = document.getElementById('local').value;          
+            let local = document.getElementById('local').value;    
+            let iduser = document.getElementById('iduser').value;                 
 
 
             let datasemanas = new Date(info.dateStr);
@@ -57,7 +58,7 @@
 
             let strDiaSemana = datasemanas.getDay();
 
-             window.location.href=`http://www.cursosesportivos.com.br/estagiario/listaagendapordata/` + local + '/' + info.dateStr;          
+             window.location.href=`http://www.cursosesportivos.com.br/estagiario/listaagendapordata/` + local + '/' + info.dateStr+ '/' + iduser;
           },
 
           eventClick: function(info) {
@@ -102,6 +103,7 @@
 
      <div id='calendar' class="calendar" style="padding: 20px; font-family: Arial, sans-serif;"></div>
      <input type="text" name="local" id="local" value="{$idlocal}" hidden="true">
+     <input type="text" name="iduser" id="iduser" value='{function="getUserId()"}' hidden>
 
     <!-- Main content -->
     <section class="content">

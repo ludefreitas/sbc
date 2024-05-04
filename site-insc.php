@@ -13,10 +13,12 @@ $app->get("/profile/insc", function(){
 	User::verifyLogin(false);
 
 	$user = User::getFromSession();
+	$anoAtual = (int)date('Y');
 
 	$page = new Page();
 
 	$page->setTpl("profile-insc", [
+		'anoAtual'=>$anoAtual,
 		'insc'=>$user->getInsc()
 	]);
 
@@ -47,12 +49,24 @@ $app->get("/profile/insc/:idinsc/:idepess", function($idinsc, $idpess){
 $app->get("/insc/:idinsc/statusCancelada", function($idinsc){
 
 	$insc = new Insc();
+	$temporada = new Temporada();
 
 	$insc->get((int)$idinsc);
+	$idtemporada = $insc->getidtemporada();
+	$temporada->get((int)$idtemporada);
+	$desctemporada = (int)$temporada->getdesctemporada();
+	$desctemporadaAtual = (int)date('Y');
+
+	if($desctemporada < $desctemporadaAtual){
+		echo "<script>alert('Não é permitido excluir esta inscrição. Turma e temporada encerradas!!');";
+        echo "javascript:history.go(-1)</script>";	
+        exit;	
+	}
 
 	$insc->alteraStatusInscricaoCancelada($idinsc);
 
-	header('Location: /profile/insc');
+	echo "<script>window.location.href = '/profile/insc'</script>";
+	//header('Location: /profile/insc');
 	exit();
 
 });

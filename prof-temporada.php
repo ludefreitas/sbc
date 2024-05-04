@@ -257,6 +257,7 @@ $app->get("/prof/turma-temporada-coordenador/:idtemporada/local/:idlocal", funct
 
 	$page->setTpl("turmas-por-temporada-coordenador", [
 		'local'=>$local->getValues(),
+		'idlocal'=>$idlocal,
 		'locaiscoord'=>$locaiscoord,
 		'modalidades'=>$modalidades,
 		'temporada'=>$temporada->getValues(),
@@ -320,6 +321,87 @@ $app->get("/prof/atualiza/turmatemporada/:idturma/:idtemporada/:desctemporada/:s
 	echo $texto;
 
 });
+
+$app->get("/prof/controle-frequencia-por-modalidade-local/:idtemporada/:idmodal/:idlocal", function($idtemporada, $idmodal, $idlocal) {
+
+	User::verifyLoginProf();
+
+	$iduser = (int)$_SESSION[User::SESSION]['iduser'];
+
+	$temporada = new Temporada();
+	$turma = new Turma();
+	$modalidade = new Modalidade();
+	$local = new Local();
+	$temporada->get((int)$idtemporada);
+	$modalidade->get((int)$idmodal);
+	$local->get((int)$idlocal);
+
+	$modalidade = $modalidade->getdescmodal();
+
+	$modalidades = Modalidade::getModalidadesTemporadaLocalByIdUser($idtemporada, $idlocal, $iduser);
+
+	$local = $local->getapelidolocal();
+
+	$page = new PageProf([
+		'header'=>false,
+		'footer'=>false
+	]);
+
+	$page->setTpl("controle-frequencia-modalidades-local", [
+		'modalidade'=>$modalidade,
+		'idlocal'=>$idlocal,
+		'local'=>$local,
+		'modalidades'=>$modalidades,
+		'temporada'=>$temporada->getValues(),
+		//'turmaRelated'=>$temporada->getTurma(true)
+		'turmas'=>Temporada::listAllTurmaTemporadaControleFrequenciaModalLocalUser($idtemporada, $idmodal, $idlocal, $iduser),
+		//'turmas'=>Temporada::listAllTurmaTemporadaControleFrequenciaModalLocal($idtemporada, $idmodal, $idlocal),
+		//'turmaNotRelated'=>$temporada->getTurma(false)
+		//'countIncricoesJan'=>$countIncricoesJan,
+		'error'=>User::getError()
+	]);	
+});
+
+$app->get("/prof/controle-frequencia-coordenador-por-modalidade-local/:idtemporada/:idmodal/:idlocal", function($idtemporada, $idmodal, $idlocal) {
+
+	User::verifyLoginProf();
+
+	$iduser = (int)$_SESSION[User::SESSION]['iduser'];
+
+	$temporada = new Temporada();
+	$turma = new Turma();
+	$modalidade = new Modalidade();
+	$local = new Local();
+	$temporada->get((int)$idtemporada);
+	$modalidade->get((int)$idmodal);
+	$local->get((int)$idlocal);
+
+	$modalidade = $modalidade->getdescmodal();
+
+	//$modalidades = Modalidade::getModalidadesTemporadaLocalByIdUser($idtemporada, $idlocal, $iduser);
+	$modalidades = Modalidade::getModalidadesTemporadaByLocal($idtemporada, $idlocal);
+
+	$local = $local->getapelidolocal();
+
+	$page = new PageProf([
+		'header'=>false,
+		'footer'=>false
+	]);
+
+	$page->setTpl("controle-frequencia-coordenador-modalidades-local", [
+		'modalidade'=>$modalidade,
+		'idlocal'=>$idlocal,
+		'local'=>$local,
+		'modalidades'=>$modalidades,
+		'temporada'=>$temporada->getValues(),
+		//'turmaRelated'=>$temporada->getTurma(true)
+		'turmas'=>Temporada::listAllTurmaTemporadaControleFrequenciaModalLocal($idtemporada, $idmodal, $idlocal),
+		//'turmaNotRelated'=>$temporada->getTurma(false)
+		//'countIncricoesJan'=>$countIncricoesJan,
+		'error'=>User::getError()
+	]);	
+});
+
 
 
 

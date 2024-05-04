@@ -127,55 +127,64 @@ $app->post("/admin/local/create", function() {
 
 	if (!isset($_POST['apelidolocal']) || $_POST['apelidolocal'] == '') {
 		Local::setMsgError("Informe o nome de como é conhecido o local.");
-		header("Location: /admin/local/create");
+		echo "<script>window.location.href = '/admin/local/create'</script>";
+		//header("Location: /admin/local/create");
 		exit;		
 	}	
 
 	if (!isset($_POST['nomelocal']) || $_POST['nomelocal'] == '') {
 		Local::setMsgError("Informe o nome completo do local.");
-		header("Location: /admin/local/create");
+		echo "<script>window.location.href = '/admin/local/create'</script>";
+		//header("Location: /admin/local/create");
 		exit;		
 	}
 	
 		if (!isset($_POST['rua']) || $_POST['rua'] == '') {
 		Local::setMsgError("Informe em qual rua que está o local.");
-		header("Location: /admin/local/create");
+		echo "<script>window.location.href = '/admin/local/create'</script>";
+		//header("Location: /admin/local/create");
 		exit;		
 	}
 
 	if (!isset($_POST['numero']) || $_POST['numero'] == '') {
 		Local::setMsgError("Informe número, em que está o local, na rua.");
-		header("Location: /admin/local/create");
+		echo "<script>window.location.href = '/admin/local/create'</script>";
+		//header("Location: /admin/local/create");
 		exit;		
 	}	
 
 	if (!isset($_POST['bairro']) || $_POST['bairro'] == '') {
 		Local::setMsgError("Informe o bairro onde está localizado este espaço.");
-		header("Location: /admin/local/create");
+		echo "<script>window.location.href = '/admin/local/create'</script>";
+		//header("Location: /admin/local/create");
 		exit;		
 	}																			
 
 	if (!isset($_POST['cidade']) || $_POST['cidade'] == '') {
 		Local::setMsgError("Informe em qual cidade está o local.");
-		header("Location: /admin/local/create");
+		echo "<script>window.location.href = '/admin/local/create'</script>";
+		//header("Location: /admin/local/create");
 		exit;		
 	}																			
 
 	if (!isset($_POST['estado']) || $_POST['estado'] == '') {
 		Local::setMsgError("Informe o estado.");
-		header("Location: /admin/local/create");
+		echo "<script>window.location.href = '/admin/local/create'</script>";
+		//header("Location: /admin/local/create");
 		exit;		
 	}
 
 	if (!isset($_POST['telefone']) || $_POST['telefone'] == '') {
 		Local::setMsgError("Informe o número do telefone.");
-		header("Location: /admin/local/create");
+		echo "<script>window.location.href = '/admin/local/create'</script>";
+		//header("Location: /admin/local/create");
 		exit;		
 	}
 	
 	if (!isset($_POST['cep']) || $_POST['cep'] == '') {
 		Local::setMsgError("Informe o cep do local.");
-		header("Location: /admin/local/create");
+		echo "<script>window.location.href = '/admin/local/create'</script>";
+		//header("Location: /admin/local/create");
 		exit;		
 	}
 	
@@ -183,7 +192,8 @@ $app->post("/admin/local/create", function() {
 
 	if (!isset($_POST['iduser']) || $_POST['iduser'] == '') {
 		Local::setMsgError("Informe o nome do professor coordenador.");
-		header("Location: /admin/local/create");
+		echo "<script>window.location.href = '/admin/local/create'</script>";
+		//header("Location: /admin/local/create");
 		exit;		
 	}
 
@@ -193,7 +203,8 @@ $app->post("/admin/local/create", function() {
 
 	$_SESSION['createLocalValues'] = NULL;
 
-	header("Location: /admin/local");
+	echo "<script>window.location.href = '/admin/local'</script>";
+	//header("Location: /admin/local");
 	exit();
 });
 
@@ -207,7 +218,8 @@ $app->get("/admin/local/:idlocal/delete", function($idlocal) {
 
 	$local->delete();
 
-	header("Location: /admin/local");
+	echo "<script>window.location.href = '/admin/local'</script>";
+	//header("Location: /admin/local");
 	exit();
 	
 });
@@ -242,61 +254,71 @@ $app->post("/admin/local/:idlocal", function($idlocal) {
 
 	if (!isset($_POST['apelidolocal']) || $_POST['apelidolocal'] == '') {
 		Local::setMsgError("Informe o nome de como é conhecido o local.");
-		header("Location: /admin/local/".$idlocal."");
+		echo "<script>window.location.href = '/admin/local/".$idlocal."'</script>";
+		//header("Location: /admin/local/".$idlocal."");
 		exit;		
 	}	
 
 	if (!isset($_POST['nomelocal']) || $_POST['nomelocal'] == '') {
 		Local::setMsgError("Informe o nome completo do local.");
-		header("Location: /admin/local/".$idlocal."");
+		echo "<script>window.location.href = '/admin/local/".$idlocal."'</script>";
+		//header("Location: /admin/local/".$idlocal."");
 		exit;		
 	}
 
 	if (!isset($_POST['cep']) || $_POST['cep'] == '') {
 		Local::setMsgError("Informe o cep do local.");
-		header("Location: /admin/local/".$idlocal."");
+		echo "<script>window.location.href = '/admin/local/".$idlocal."'</script>";
+		//header("Location: /admin/local/".$idlocal."");
 		exit;		
 	}						
 
 	if (!isset($_POST['rua']) || $_POST['rua'] == '') {
 		Local::setMsgError("Informe em qual rua que está o local.");
-		header("Location: /admin/local/".$idlocal."");
+		echo "<script>window.location.href = '/admin/local/".$idlocal."'</script>";
+		//header("Location: /admin/local/".$idlocal."");
 		exit;		
 	}
 
 	if (!isset($_POST['numero']) || $_POST['numero'] == '') {
 		Local::setMsgError("Informe número, em que está o local, na rua.");
-		header("Location: /admin/local/".$idlocal."");
+		echo "<script>window.location.href = '/admin/local/".$idlocal."'</script>";
+		//header("Location: /admin/local/".$idlocal."");
 		exit;		
 	}	
 
 	if (!isset($_POST['bairro']) || $_POST['bairro'] == '') {
 		Local::setMsgError("Informe o bairro onde está localizado este espaço.");
-		header("Location: /admin/local/".$idlocal."");
+		echo "<script>window.location.href = '/admin/local/".$idlocal."'</script>";
+		//header("Location: /admin/local/".$idlocal."");
 		exit;		
 	}																							
 
 	if (!isset($_POST['cidade']) || $_POST['cidade'] == '') {
 		Local::setMsgError("Informe em qual cidade está o local.");
-		header("Location: /admin/local/".$idlocal."");
+		echo "<script>window.location.href = '/admin/local/".$idlocal."'</script>";
+		//header("Location: /admin/local/".$idlocal."");
 		exit;		
 	}																							
 
 	if (!isset($_POST['estado']) || $_POST['estado'] == '') {
 		Local::setMsgError("Informe o estado.");
-		header("Location: /admin/local/".$idlocal."");
+		echo "<script>window.location.href = '/admin/local/".$idlocal."'</script>";
+		//header("Location: /admin/local/".$idlocal."");
 		exit;		
 	}
 
 	if (!isset($_POST['telefone']) || $_POST['telefone'] == '') {
 		Local::setMsgError("Informe o número do telefone.");
-		header("Location: /admin/local/".$idlocal."");
+		echo "<script>window.location.href = '/admin/local/".$idlocal."'</script>";
+		//header("Location: /admin/local/".$idlocal."");
 		exit;		
 	}	
 
 	if (!isset($_POST['iduser']) || $_POST['iduser'] == '') {
 		Local::setMsgError("Informe o nome do professor coordenador.");
-		header("Location: /admin/local/".$idlocal."");
+		echo "<script>window.location.href = '/admin/local/".$idlocal."'</script>";
+		//header("Location: /admin/local/".$idlocal."");
 		exit;		
 	}		
 
@@ -306,7 +328,8 @@ $app->post("/admin/local/:idlocal", function($idlocal) {
 
 	$local->save();
 
-	header("Location: /admin/local");
+	echo "<script>window.location.href = '/admin/local'</script>";
+	//header("Location: /admin/local");
 	exit();		
 });
 

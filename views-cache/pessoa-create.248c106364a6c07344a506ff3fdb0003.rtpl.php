@@ -1,6 +1,23 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
 <script>
 
+    function formatarCampo(campoTexto) {
+      if (campoTexto.value.length <= 11) {
+        campoTexto.value = mascaraCpf(campoTexto.value);
+      } else {
+        campoTexto.value = mascaraCnpj(campoTexto.value);
+      }
+    }
+    function retirarFormatacao(campoTexto) {
+      campoTexto.value = campoTexto.value.replace(/(\.|\/|\-)/g,"");
+    }
+    function mascaraCpf(valor) {
+      return valor.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g,"\$1.\$2.\$3\-\$4");
+    }
+    function mascaraCnpj(valor) {
+      return valor.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g,"\$1.\$2.\$3\/\$4\-\$5");
+    }
+
     function quantosAnos(nascimento, hoje) {
 
         var diferencaAnos = hoje.getFullYear() - nascimento.getFullYear();
@@ -129,8 +146,15 @@
                     <label for="numcpf">
                         <br><br>Número do CPF                         
                     </label>
+                    <input style="width: 100%; float: right;" type="text" maxlength="14" id="numcpf" name="numcpf" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onfocus="javascript: retirarFormatacao(this);" onblur="javascript: formatarCampo(this);" required="required">
+                   
+                <!--
+                    <label for="numcpf">
+                        <br><br>Número do CPF                         
+                    </label>
                     <input style="width: 100%; float: right;" type="text" maxlength="14" id="numcpf" name="numcpf" class="input-text" value="<?php echo htmlspecialchars( $registerpessoaValues["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}" required="required">
                     <script type="text/javascript">$("#numcpf").mask("000.000.000-00");</script>
+                -->
                    
                  <!--
                     <label for="numrg">

@@ -86,13 +86,15 @@ $app->post("/admin/sortear", function() {
 			Insc::alteraStatusInscricaoParaSorteadaPvs($idtemporada);
 			Insc::alteraStatusInscricaoParaFilaDeEspera($idtemporada);
 
-			header("Location: /admin/sorteio/".$idtemporada."");
+			echo "<script>window.location.href = '/admin/sorteio/".$idtemporada."'</script>";
+			//header("Location: /admin/sorteio/".$idtemporada."");
 			exit();	
 
 	}else{
 
 		Sorteio::setError("Sorteio Já realizado! Você precisa excluir o sorteio atual para realizar novo sorteio.");
-		header("Location: /admin/sorteio/".$idtemporada."");
+		echo "<script>window.location.href = '/admin/sorteio/".$idtemporada."'</script>";
+			//header("Location: /admin/sorteio/".$idtemporada."");
 		exit();
 	}	
 

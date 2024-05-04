@@ -382,6 +382,13 @@ $app->get("/craquesdofuturo", function() {
 		$page->setTpl("xadrez");
 	});
 
+	$app->get("/taekwondo", function() {
+
+		$page = new Page();
+
+		$page->setTpl("taekwondo");
+	});
+
 
 /*
 $app->get("/modalidade/:idmodal", function($idmodal){

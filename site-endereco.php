@@ -37,50 +37,58 @@ $app->post("/endereco", function() {
 
 	if (!isset($_POST['cep']) || $_POST['cep'] == '') {
 		Endereco::setMsgError("Digite o número do cep.");
-		header("Location: /endereco");
+		//header("Location: /endereco");
+		echo "<script>window.location.href = '/endereco'</script>";
 		exit;		
 	}
 
 	if (($_POST['cep']) < $cepMenor || ($_POST['cep']) > $cepMaior){
 
 		Endereco::setMsgError("As inscrições nos cursos esportivos são exclusivas para os moradores de São B. do Campo. Ou o CEP que você digitou é inválido");
-		header("Location: /endereco");
+		//header("Location: /endereco");
+		echo "<script>window.location.href = '/endereco'</script>";
 		exit;		
 	}
 
 	if (!isset($_POST['rua']) || $_POST['rua'] == '') {
 		Endereco::setMsgError("Informe o nome da rua, avenida ou logradouro.");
-		header("Location: /endereco");
+		//header("Location: /endereco");
+		echo "<script>window.location.href = '/endereco'</script>";
 		exit;		
 	}	
 
 	if (!isset($_POST['numero']) || $_POST['numero'] == '') {
 		Endereco::setMsgError("Informe o número do local.");
-		header("Location: /endereco");
+		//header("Location: /endereco");
+		echo "<script>window.location.href = '/endereco'</script>";
 		exit;		
 	}
 
 	if (!isset($_POST['bairro']) || $_POST['bairro'] == '') {
 		Endereco::setMsgError("Informe o nome do bairro.");
-		header("Location: /endereco");
+		//header("Location: /endereco");
+		echo "<script>window.location.href = '/endereco'</script>";
 		exit;		
 	}	
 		
 	if (!isset($_POST['cidade']) || $_POST['cidade'] == '') {
 		Endereco::setMsgError("Informe o nome da cidade.");
-		header("Location: /endereco");
+		//header("Location: /endereco");
+		echo "<script>window.location.href = '/endereco'</script>";
 		exit;		
 	}	
 
 	if (!isset($_POST['estado']) || $_POST['estado'] == '') {
 		Endereco::setMsgError("Informe o nome da estado.");
-		header("Location: /endereco");
+		//header("Location: /endereco");
+		echo "<script>window.location.href = '/endereco'</script>";
 		exit;		
 	}
 
 	if (!isset($_POST['telres']) || $_POST['telres'] == '') {
 		Endereco::setMsgError("Informe um número de telefone residencial ou celular.");
-		header("Location: /endereco");
+		//header("Location: /endereco");
+		echo "<script>window.location.href = '/endereco'</script>";
 		exit;		
 	}
 	$_POST['telres'] = preg_replace('/[^\p{L}\p{N}\s]/', '', $_POST['telres'] );
@@ -89,17 +97,20 @@ $app->post("/endereco", function() {
 	if(strlen($_POST['telres']) !== 10 && strlen($_POST['telres']) !== 11 ){
 
 		Endereco::setMsgError("Número de telefone inválido! Digite o número de um tefefone celular ou residencial com DDD.");
-		header("Location: /endereco");
+		//header("Location: /endereco");
+		echo "<script>window.location.href = '/endereco'</script>";
 		exit;
 	}
 	if (!isset($_POST['contato']) || $_POST['contato'] == '') {
 		Endereco::setMsgError("Informe um nome para entrar em contato, em caso de emergência!");
-		header("Location: /endereco");
+		//header("Location: /endereco");
+		echo "<script>window.location.href = '/endereco'</script>";
 		exit;		
 	}
 	if (!isset($_POST['telemer']) || $_POST['telemer'] == '') {
 		Endereco::setMsgError("Informe um número de telefone para ligar em caso de emergência!");
-		header("Location: /endereco");
+		//header("Location: /endereco");
+		echo "<script>window.location.href = '/endereco'</script>";
 		exit;		
 	}
 	$_POST['telemer'] = preg_replace('/[^\p{L}\p{N}\s]/', '', $_POST['telemer'] );
@@ -107,7 +118,8 @@ $app->post("/endereco", function() {
 	if(strlen($_POST['telemer']) !== 10 && strlen($_POST['telemer']) !== 11 ){
 
 		Endereco::setMsgError("Número de telefone inválido! Digite o número de um tefefone celular ou residencial com DDD.");
-		header("Location: /endereco");
+		//header("Location: /endereco");
+		echo "<script>window.location.href = '/endereco'</script>";
 		exit;
 	}
 
@@ -134,7 +146,8 @@ $app->post("/endereco", function() {
 
 	$_SESSION['enderecoValues'] = NULL;															
 
-	header("Location: /");
+	//header("Location: /");
+		echo "<script>window.location.href = '/'</script>";
 	exit();
 });
 
@@ -148,7 +161,8 @@ $app->get("/user/endereco/update", function(){
 
 	if(!Endereco::seEnderecoExiste($idperson)){
 		Endereco::setMsgError('Você ainda não tem um endereço cadastrad0, Cadastre um endereço abaixo!');
-			header("Location: /endereco");
+			//header("Location: /endereco");
+		echo "<script>window.location.href = '/endereco'</script>";
 			exit();			
 	}
 
@@ -192,50 +206,58 @@ $app->post("/endereco/update", function() {
 
 	if (!isset($_POST['cep']) || $_POST['cep'] == '') {
 		Endereco::setMsgError("Digite o número do cep.");
-		header("Location: /user/endereco/update");
+		//header("Location: /user/endereco/update");
+		echo "<script>window.location.href = '/user/endereco/update'</script>";
 		exit;		
 	}
 
 	if (($_POST['cep']) < $cepMenor || ($_POST['cep']) > $cepMaior){
 
 		Endereco::setMsgError("As inscrições nos cursos esportivos são exclusivas para os moradores de São B. do Campo. Ou o CEP que você digitou é inválido");
-		header("Location: /user/endereco/update");
+		//header("Location: /user/endereco/update");
+		echo "<script>window.location.href = '/user/endereco/update'</script>";
 		exit;		
 	}
 
 	if (!isset($_POST['rua']) || $_POST['rua'] == '') {
 		Endereco::setMsgError("Informe o nome da rua, avenida ou logradouro.");
-		header("Location: /user/endereco/update");
+		//header("Location: /user/endereco/update");
+		echo "<script>window.location.href = '/user/endereco/update'</script>";
 		exit;		
 	}	
 
 	if (!isset($_POST['numero']) || $_POST['numero'] == '') {
 		Endereco::setMsgError("Informe o número do local.");
-		header("Location: /user/endereco/update");
+		//header("Location: /user/endereco/update");
+		echo "<script>window.location.href = '/user/endereco/update'</script>";
 		exit;		
 	}
 
 	if (!isset($_POST['bairro']) || $_POST['bairro'] == '') {
 		Endereco::setMsgError("Informe o nome do bairro.");
-		header("Location: /user/endereco/update");
+		//header("Location: /user/endereco/update");
+		echo "<script>window.location.href = '/user/endereco/update'</script>";
 		exit;		
 	}	
 		
 	if (!isset($_POST['cidade']) || $_POST['cidade'] == '') {
 		Endereco::setMsgError("Informe o nome da cidade.");
-		header("Location: /user/endereco/update");
+		//header("Location: /user/endereco/update");
+		echo "<script>window.location.href = '/user/endereco/update'</script>";
 		exit;		
 	}	
 
 	if (!isset($_POST['estado']) || $_POST['estado'] == '') {
 		Endereco::setMsgError("Informe o nome da estado.");
-		header("Location: /user/endereco/update");
+		//header("Location: /user/endereco/update");
+		echo "<script>window.location.href = '/user/endereco/update'</script>";
 		exit;		
 	}
 
 	if (!isset($_POST['telres']) || $_POST['telres'] == '') {
 		Endereco::setMsgError("Informe um número de telefone residencial ou celular.");
-		header("Location: /user/endereco/update");
+		//header("Location: /user/endereco/update");
+		echo "<script>window.location.href = '/user/endereco/update'</script>";
 		exit;		
 	}
 	$_POST['telres'] = preg_replace('/[^\p{L}\p{N}\s]/', '', $_POST['telres'] );
@@ -244,19 +266,22 @@ $app->post("/endereco/update", function() {
 	if(strlen($_POST['telres']) !== 10 && strlen($_POST['telres']) !== 11 ){
 
 		Endereco::setMsgError("Número de telefone inválido! Digite o número de um tefefone celular ou residencial com DDD.");
-		header("Location: /user/endereco/update");
+		//header("Location: /user/endereco/update");
+		echo "<script>window.location.href = '/user/endereco/update'</script>";
 		exit;
 	}
 
 	if (!isset($_POST['contato']) || $_POST['contato'] == '') {
 		Endereco::setMsgError("Informe um nome para entrar em contato, em caso de emergência");
-		header("Location: /user/endereco/update");
+		//header("Location: /user/endereco/update");
+		echo "<script>window.location.href = '/user/endereco/update'</script>";
 		exit;		
 	}
 
 	if (!isset($_POST['telemer']) || $_POST['telemer'] == '') {
 		Endereco::setMsgError("Informe um número de telefone para ligar, em caso de emergência.");
-		header("Location: /user/endereco/update");
+		//header("Location: /user/endereco/update");
+		echo "<script>window.location.href = '/user/endereco/update'</script>";
 		exit;		
 	}
 	$_POST['telemer'] = preg_replace('/[^\p{L}\p{N}\s]/', '', $_POST['telemer'] );
@@ -265,7 +290,8 @@ $app->post("/endereco/update", function() {
 	if(strlen($_POST['telemer']) !== 10 && strlen($_POST['telemer']) !== 11 ){
 
 		Endereco::setMsgError("Número de telefone inválido! Digite o número de um tefefone celular ou residencial com DDD.");
-		header("Location: /user/endereco/update");
+		//header("Location: /user/endereco/update");
+		echo "<script>window.location.href = '/user/endereco/update'</script>";
 		exit;
 	}
 
@@ -294,7 +320,8 @@ $app->post("/endereco/update", function() {
 
 	$_SESSION['enderecoUpdateValues'] = NULL;															
 
-	header("Location: /");
+	//header("Location: /");
+		echo "<script>window.location.href = '/'</script>";
 	exit();
 });
 

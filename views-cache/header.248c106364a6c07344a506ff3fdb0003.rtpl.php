@@ -1,4 +1,25 @@
-<?php if(!class_exists('Rain\Tpl')){exit;}?><!doctype html>
+<?php if(!class_exists('Rain\Tpl')){exit;}?>
+
+<script type="text/javascript">
+
+    function hidden(){
+    
+        let paginaatual = document.referrer
+
+        if(paginaatual != "http://www.cursosesportivos.com.br/login"){
+
+            document.getElementById('divFormEntrar').hidden = false;
+
+        }else{
+
+            document.getElementById('divFormEntrar').hidden = true;
+
+        }
+    }
+
+</script>
+
+<!doctype html>
 <html lang="pt-br">
   <head>
     <!-- Required meta tags -->   
@@ -35,12 +56,38 @@
                 <a href="/" class="navbar-brand">
                     <img src="/../res/site/icon/ico-home.png" title="CursosEsportivosSBC" width="30">
                 </a>
+
+                 <?php if( !checkLogin(false) ){ ?>
+                 <div id="divFormEntrar" style="border: solid 2px solid red; font-size: 10px;">
+                      
+                    <form id="myform" action="/login" method="post">
+
+                        <span style="color: white; font-weight: bold;">Entrar:   </span><br>
+
+                        <input type="text" id="login" name="login" placeholder="E-mail" style="width: 100px; height: 5px; border-radius: 5px;">
+                           
+                        <input type="password" id="password" name="password" placeholder="Senha" style="width: 100px; height: 5px; border-radius: 5px;">
+                            &nbsp;&nbsp;
+                            
+                        <span style="color: white; font-weight: bold; font-size: 14px;">Ir
+                        <i onclick="document.getElementById('myform').submit()" class="fa fa-arrow-right" style="color: white; font-weight: bold;"></i></span><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="/forgot/site">
+                            <span style="color: darkorange; font-weight: bold;">(Recuperar senha)  </span><br>
+                        </a>     
+                    </form>
+                                        
+                 </div> 
+                 <?php } ?>   
+
+
                 <!-- botão para expandir itens em navegação em tela pequena -->
-                <button class="navbar-toggler" data-toggle="collapse" data-target="#nav-principal" aria-expanded="false">
+                <button class="navbar-toggler" data-toggle="collapse" data-target="#nav-principal" aria-expanded="false" onclick="loginvisivel()">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="nav-principal">
+
                     <div class="navbar-nav ml-auto" style="text-align: center;">
                         <div class="nav-item">
                             <a class="nav-link" href="/">
@@ -48,7 +95,8 @@
                                 Início
                               </span>
                             </a>
-                        </div>                        
+                        </div>    
+
                         <?php if( checkLogin(false) ){ ?>
                         <div class="nav-item">
                             <a href="/user/profile" class="nav-link">
@@ -60,7 +108,7 @@
                         <div class="nav-item">
                             <a href="/user/profile" class="nav-link">
                               <span class="text-white" style="font-weight: bold">
-                               Minhas inscrições<br>
+                               Inscrições<br>
                                Meus dados
                               </span>
                             </a>
@@ -74,6 +122,7 @@
                         <?php } ?>
                          <?php echo getUserIsAudi(); ?>
                         <?php echo getUserIsAdmin(); ?>
+                        <!--
                         <div class="nav-item">
                             <a href="/cart" class="nav-link">
                               <span class="text-white" style="font-weight: bold">
@@ -81,6 +130,7 @@
                               </span>
                             </a> 
                         </div> 
+                    -->
                         <div class="nav-item">
                             <a href="/pessoa-create" class="nav-link">
                               <span class="text-white" style="font-weight: bold">
@@ -98,6 +148,7 @@
                             </a>
                         </div> 
                         <?php }else{ ?>
+
                         <div class="nav-item" >
                             <a style="" class="nav-link" href="/login" >
                               <span class="text-white" style="font-weight: bold">

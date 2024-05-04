@@ -283,11 +283,11 @@ desired effect
           </ul>
         </li> 
          <li>
-          <a href="/admin/temporada"><i class="fa fa-link"></i><span>Temporadas</span></a>
+          <a href="/admin/temporada"><i class="fa fa-calendar"></i><span>Temporadas</span></a>
         </li> 
         
         <li class="treeview">
-          <a href="/admin"><i class="fa fa-link"></i> <span>TURMAS por temporada</span>
+          <a href="/admin"><i class="fa fa-th-list"></i> <span>TURMAS por temporada</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -298,7 +298,7 @@ desired effect
           </ul>
         </li> 
         <li class="treeview">
-          <a href="/admin"><i class="fa fa-reorder"></i>  <span>Chamadas<span style="color: red; font-size: 10px">(Novo)</span> </span>
+          <a href="/admin"><i class="fa fa-clipboard"></i>  <span>Chamadas<span style="color: red; font-size: 10px">(Novo)</span> </span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -310,7 +310,7 @@ desired effect
         </li> 
         
         <li class="treeview">
-          <a href="/admin"><i class="fa fa-link"></i> <span>Controle de Frequência</span>
+          <a href="/admin"><i class="fa fa-check"></i> <span>Controle de Frequência</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -333,9 +333,28 @@ desired effect
 
         </li>
 
+        <li class="treeview">
+          <a href="/admin"><i class="fa fa-trophy"></i>  <span>Eventos<span style="color: red; font-size: 10px">(Novo)</span> </span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+        
+          <ul class="treeview-menu">
+            <li class="treeview">                 
+              <a href="/admin/evento/create">
+                <i class="fa fa-pencil"></i> 
+                  Criar Evento
+              </a> 
+            </li>
+            <?php require $this->checkTemplate("evento-menu");?>
+
+          </ul>
+        </li> 
+
 
         <li class="treeview">
-          <a href="/admin"><i class="fa fa-link"></i> <span>PROFESSOR</span>
+          <a href="/admin"><i class="fa fa-graduation-cap"></i> <span>PROFESSOR</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -381,6 +400,21 @@ desired effect
 
           </ul>
         </li> 
+        <?php if( getUserId() == 7 OR getUserId() == 1 ){ ?>
+
+        <li class="treeview">
+          <a href="/admin/insc"><i class="fa fa-link"></i> <span>Inscrições vazio</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <?php require $this->checkTemplate("insc-temporada-vazio-menu");?>
+
+          </ul>
+        </li> 
+        <?php } ?>
+
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Natação Espontânea</span>
             <span class="pull-right-container">
@@ -457,7 +491,7 @@ desired effect
                   </li>            
           </ul>
         </li>  
-        <?php if( getUserId() == 7 OR getUserId() == 1 OR getUserId() == 156 ){ ?>
+        <?php if( getUserId() == 7 OR getUserId() == 1 OR getUserId() == 156 OR getUserId() == 19046 ){ ?>
 
         <li>
           <a href="/admin/turma"><i class="fa fa-link"></i> <span>Todas Turmas</span></a>

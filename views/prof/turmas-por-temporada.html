@@ -65,7 +65,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
 <h4>
- Turmas relacionadas à Temporada {$temporada.desctemporada} - {$temporada.descstatustemporada}  
+ Turmas relacionadas à Temporada {$temporada.desctemporada} - {$temporada.descstatustemporada} 
 
 </h4>
 <ol class="breadcrumb">
@@ -102,6 +102,8 @@
             <div class="row">
             <div class="col-md-12">
 
+
+
             {loop="$modalidades"}
 
             
@@ -117,8 +119,14 @@
                 <div style="text-align: center; border-radius: 5px; margin: 5px;" class="btn-primary col-md-12" onclick="closeDiv({$idmodalidade})" >{$value.descmodal}</div> 
                 </div>
 
-
                 <div id="idmodal{$idmodalidade}" hidden >
+                  
+                <div style="text-align: right;">  
+                    <a href="/prof/controle-frequencia-por-modalidade-local/{$temporada.idtemporada}/{$idmodalidade}/{$idlocal}" style="color: red; font-weight: bold;"> 
+                        Controle de frequência da modalidade
+                    </a>
+                </div>
+
                 {loop="$turmas"}
                 
                 {if="$idmodalidade == $value.idmodal"}
@@ -163,58 +171,60 @@
                           </span>
                           {/if}
 
+
+
                        - {$value.diasemana} {$value.horainicio} ás {$value.horatermino} - 
                        <strong>{$value.descrfxetaria}  {$value.initidade} a {$value.fimidade} anos -</strong>   {$value.apelidolocal} - {$value.nomeespaco}&nbsp; <strong> Vagas: ({$value.vagas} Geral)&nbsp; - &nbsp;({$value.vagaslaudo} Laudo)&nbsp; - &nbsp;({$value.vagaspcd} PCD)&nbsp; - &nbsp;({$value.vagaspvs} PVS)</strong>
                        - <strong> Obsevação: </strong>{$value.obs}  
                       </span>
-                    </div>                      
+                    </div>          
 
                     <div class="col-md-4">
                       <h5 style="font-weight: bold; text-align: left; color: green;">
                            <strong style="color: orange;">[{$value.idturma}]</strong> &nbsp;&nbsp; 
                         
                         <a href="/prof/insc-turma-temporada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}"> 
-                         | &nbsp; Consultar {$value.numinscritos} inscritos &nbsp;
+                         | &nbsp; Consultar {$value.numinscritos} inscritos &nbsp; |
                          </a> &nbsp; 
 
                          <a href="/prof/insc-turma-temporada-chamada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: green;"> 
-                         | &nbsp; Imprimir lista chamada ({$value.nummatriculados}) &nbsp; 
+                          &nbsp; Imprimir lista chamada ({$value.nummatriculados}) &nbsp; 
                          </a> &nbsp; 
                          
                          <a href="/prof/calendario-lista-presenca/{$value.idtemporada}/{$value.idturma}" style="color: orangered;">
-                         | &nbsp;Fazer Chamada </a>  &nbsp; 
-                         &nbsp;  
+                         | &nbsp;Fazer Chamada   &nbsp; | 
+                         </a> &nbsp;  
                          
                          <a href="/prof/listapessoasporturma/{$value.idturma}/{$value.idtemporada}" style="color: black;">
-                         | &nbsp; Lista com endereços </a>  &nbsp; 
-                         &nbsp;  
-                         
-                         <!--
-                         <a href="/insc-turma-temporada-classificadas/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: orangered;">
-                         | &nbsp; Classificação </a>  &nbsp; 
-                         -->
-                         <!--
-                         &nbsp;  
-                         &nbsp; <a href="/prof/insc-turma-temporada-matricular/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: darkblue;">
-                         | Lista/Matricular </a>  &nbsp;     
-                         -->
-                      <!--  | &nbsp; <a href="/insc-turma-temporada-para-sorteio/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: orangered;">  Sorteio |</a>  &nbsp;  
-                      -->
+                          &nbsp; Lista com endereços   &nbsp; 
+                          </a> &nbsp;  
 
 
+                          {if="$value.token == 1"}
+                          <a href="/prof/token/{$value.idturma}/{$temporada.idtemporada}" style="color: darkblue;">
+                          | &nbsp; 
+                          <span style="color: darkorange;">
+                               NECESSÁRIO 
+                               <i class="fa fa-info-circle" style="font-size: 14px;"></i> &nbsp;
+                          </span>  Tokens &nbsp; |
+                          </a> &nbsp;
+                          {else}
                         
-                          <a href="/prof/token/{$value.idturma}/{$temporada.idtemporada}" style="color: darkblue;"><i ></i> | Tokens</a>
+                          <a href="/prof/token/{$value.idturma}/{$temporada.idtemporada}" style="color: darkblue;">
+                          | &nbsp; Tokens &nbsp; | 
+                          </a> &nbsp;
+                          {/if}
 
                           <a href="/prof/insc-altera-turma-temporada/{$value.idmodal}/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}"> 
-                         | &nbsp; Mover inscritos &nbsp;
+                          &nbsp; Mover inscritos &nbsp;
                          </a> &nbsp; 
                          
-                            <a href="/prof/crialispersonalizadaautorizacao/{$value.idturma}/{$value.idtemporada}" style="color: purple;">
-                                | &nbsp; Criar uma Lista </a>  
-                                &nbsp;&nbsp;
-                         
+                        <a href="/prof/crialispersonalizadaautorizacao/{$value.idturma}/{$value.idtemporada}" style="color: purple;">
+                                | &nbsp; Criar uma Lista &nbsp; |
+                            </a>   &nbsp;               
                         
                       </h5>
+                       
                     </div>                    
                     <!--
                     <div class="col-md-2">

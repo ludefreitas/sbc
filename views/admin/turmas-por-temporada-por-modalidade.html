@@ -8,8 +8,10 @@
 </h1>
 <ol class="breadcrumb">
   <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+  {if="getUserId() == 1 OR getUserId() == 156"}
   <li><a href="/admin/insc/{$temporada.idtemporada}"> Todas inscrições {$temporada.desctemporada} </a></li>
   <li><a href="/admin/temporada/{$temporada.idtemporada}/turma"> Inserir turma {$temporada.desctemporada}</a></li>
+  {/if}
 </ol>
 </section>
 
@@ -90,23 +92,23 @@
                     </div>      
                    <div class="col-md-6">
 
-                      <h5 style="font-weight: bold; text-align: left; color: green;">
-                         <strong style="color: orange;">[{$value.idturma}]</strong> &nbsp;&nbsp;
+                      <strong style="color: orange;">[{$value.idturma}]</strong> &nbsp;&nbsp;
+                         
                          <a href="/admin/insc-turma-temporada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}"> 
-                         | &nbsp; Consultar {$value.numinscritos} inscritos &nbsp;
+                         | &nbsp; Consultar {$value.numinscritos} inscritos &nbsp; |
                          </a> &nbsp; 
 
                          <a href="/admin/insc-turma-temporada-chamada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: green;"> 
-                         | &nbsp; Imprimir lista chamada ({$value.nummatriculados}) &nbsp; 
+                         &nbsp; Imprimir lista chamada ({$value.nummatriculados}) &nbsp; 
                          </a> &nbsp; 
                          
                          <a href="/admin/calendario-lista-presenca/{$value.idtemporada}/{$value.idturma}" style="color: orangered;">
-                         | &nbsp;Fazer Chamada </a>  &nbsp; 
-                         &nbsp; 
+                         | &nbsp; Fazer Chamada &nbsp; |
+                         </a> &nbsp;  
                          
                          <a href="/admin/listapessoasporturma/{$value.idturma}/{$value.idtemporada}" style="color: black;">
-                         | &nbsp; Lista com endereços </a>  &nbsp; 
-                         &nbsp;  
+                          &nbsp; Lista com endereços &nbsp; 
+                         </a> &nbsp;  
                          
                          <!--
                          <a href="/insc-turma-temporada-classificadas/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: orangered;">
@@ -122,9 +124,15 @@
                       <!--  | &nbsp; <a href="/insc-turma-temporada-para-sorteio/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: orangered;">  Sorteio |</a>  &nbsp;  
                       -->
 
-
-
-                          <a href="/admin/token/{$value.idturma}" style="color: darkblue;"><i ></i> | Tokens</a>
+                        {if="$value.token == 1"}
+                          <a href="/admin/token/{$value.idturma}" style="color: darkblue;"> 
+                          | &nbsp; <span style="color: darkorange;">NECESSÁRIO</span> Tokens &nbsp; |</a>
+                          {else}
+                        
+                          <a href="/admin/token/{$value.idturma}" style="color: darkblue;"> 
+                          | &nbsp;  Tokens  &nbsp; | 
+                          </a> &nbsp;
+                          {/if}    
                       </h5>
                     </div>                    
                     
