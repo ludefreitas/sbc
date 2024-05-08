@@ -7,7 +7,8 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active"><a href="/admin/insc">Inscrições todas temporadas</a></li>
+    <li class="active"><a href="/admin/insc">Inscrições Todas temporadas</a></li><br>
+    
   </ol>
 </section>
 
@@ -67,7 +68,7 @@
 
               <div class="col-md-2" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                    {$value.nomepess} - <strong>{if="$pessoa.pcd == 1"}(PCD){/if}</strong></h3></th>                   
+                    {$value.nomepess} - <strong>{if="$value.pcd == 1"}(PCD){/if}</strong></h3></th>                   
                 </h5>
               </div>
 
@@ -80,18 +81,6 @@
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
                     {$value.descturma}
-                </h5>
-              </div>
-
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    {$value.descespaco} {$value.apelidolocal}
-                </h5>
-              </div>
-
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    {$value.desctemporada}
                 </h5>
               </div>
 

@@ -11,6 +11,6 @@
 									</li><li class="treeview">
 								   		<a href="/admin/insc-pessoa-vazio/84">
 								   			<i class="fa fa-link"></i> 
-								   			Inscrições vazio - 2019
+								   			Inscrições vazio - 2018
 								   		</a>								   		
 									</li>

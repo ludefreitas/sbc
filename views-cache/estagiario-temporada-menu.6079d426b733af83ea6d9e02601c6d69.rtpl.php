@@ -11,6 +11,6 @@
 									   		</li><li class="treeview">
 									   			<a href="/admin/estagiario-temporada/84">
 									   				<i class="fa fa-link"></i>
-									   				Estagiário Temporada 2019
+									   				Estagiário Temporada 2018
 									   			</a>
 									   		</li>

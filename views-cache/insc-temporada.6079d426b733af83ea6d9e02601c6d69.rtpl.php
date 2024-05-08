@@ -7,7 +7,9 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active"><a href="/admin/insc">Inscrições todas temporadas</a></li>
+    <li class="active"><a href="/admin/insc">Inscrições todas temporadas</a></li><br>
+     <li class="active"><a href="/admin/listapessoas-insc-temporada/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>">Imprimir/XLS</a></li>
+      <li class="active"><a href="/admin/listapessoas-insc-temporada-pcd/<?php echo htmlspecialchars( $idtemporada, ENT_COMPAT, 'UTF-8', FALSE ); ?>">Imprimir/XLS(PCD)</a></li>
   </ol>
 </section>
 
@@ -67,7 +69,7 @@
 
               <div class="col-md-2" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                    <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>                    
+                    <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>     <strong><?php if( $value1["pcd"] == 1 ){ ?>(PCD)<?php } ?></strong></h3></th>                                  
                 </h5>
               </div>
 
@@ -80,12 +82,6 @@
               <div class="col-md-2" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
                     <?php echo htmlspecialchars( $value1["descturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-                </h5>
-              </div>
-
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
                 </h5>
               </div>
 

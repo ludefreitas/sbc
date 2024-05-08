@@ -11,6 +11,6 @@
 									</li><li class="treeview">
 								   		<a href="/prof/insc/84">
 								   			<i class="fa fa-link"></i> 
-								   			Inscrições - 2019
+								   			Inscrições - 2018
 								   		</a>								   		
 									</li>

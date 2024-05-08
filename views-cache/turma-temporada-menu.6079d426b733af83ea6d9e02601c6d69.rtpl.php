@@ -47,7 +47,7 @@
 									</li><li class="treeview">
 										<a href="/admin/turma-temporada/84">
 								   			<i class="fa fa-link"></i> 
-								   			Turmas/Temporada 2019
+								   			Turmas/Temporada 2018
 								   		</a>
 
 									   		<ul class="treeview-menu">

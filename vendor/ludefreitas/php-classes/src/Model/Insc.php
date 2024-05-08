@@ -1114,6 +1114,89 @@ class Insc extends Model {
 		];
 
 	}
+
+	public static function getPageInscTemporadaPcd($page = 1, $itemsPerPage = 10, $idtemporada)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_insc a 
+			INNER JOIN tb_inscstatus b USING(idinscstatus) 
+			INNER JOIN tb_carts c USING(idcart)			
+			INNER JOIN tb_pessoa d USING(idpess)
+			INNER JOIN tb_users e ON e.iduser = d.iduser
+			INNER JOIN tb_persons f ON f.idperson = e.idperson
+			INNER JOIN tb_temporada g USING(idtemporada)
+			INNER JOIN tb_turma h USING(idturma)
+			INNER JOIN tb_espaco i ON i.idespaco = h.idespaco
+			INNER JOIN tb_local j ON j.idlocal = i.idlocal
+			WHERE idtemporada = :idtemporada
+			AND a.inscpcd = 1
+			ORDER BY a.dtinsc DESC
+			LIMIT $start, $itemsPerPage;
+		", [
+			":idtemporada"=>$idtemporada
+
+		]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+
+	public static function getPageSearchInscTemporadaPcd($search, $page = 1, $itemsPerPage = 5, $idtemporada)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;		
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_insc a 
+			INNER JOIN tb_inscstatus b USING(idinscstatus) 
+			INNER JOIN tb_carts c USING(idcart)			
+			INNER JOIN tb_pessoa d USING(idpess)
+			INNER JOIN tb_users e ON e.iduser = d.iduser
+			INNER JOIN tb_persons f ON f.idperson = e.idperson
+			INNER JOIN tb_temporada g USING(idtemporada)
+			INNER JOIN tb_turma h USING(idturma)
+			INNER JOIN tb_espaco j ON j.idespaco = h.idespaco
+			INNER JOIN tb_local k ON k.idlocal = j.idlocal
+			INNER JOIN tb_turmatemporada i
+			WHERE idtemporada = :idtemporada 
+			AND (a.idinsc LIKE :search
+			OR f.desperson LIKE :search
+			OR b.descstatus LIKE :search 
+			OR g.desctemporada LIKE :search 
+			OR d.nomepess LIKE :search
+			OR h.descturma LIKE :search) 
+			-- ORDER BY a.dtinsc DESC
+			LIMIT $start, $itemsPerPage;
+		", [
+			'idtemporada'=>$idtemporada,
+			':search'=>'%'.$search.'%',
+			':id'=>$search
+		]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
 	
 	public function getInscByTurmaTemporadaTodas($idturma, $idtemporada){
 
@@ -2597,7 +2680,59 @@ class Insc extends Model {
 		]);		
 		return $results;
 	}
-	
+
+	public function listaPessoasInscPorTemporada($idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a 
+			INNER JOIN tb_inscstatus b USING(idinscstatus) 
+			INNER JOIN tb_carts c USING(idcart)			
+			INNER JOIN tb_pessoa d USING(idpess)
+			INNER JOIN tb_endereco k ON d.idpess = k.idpess 
+			INNER JOIN tb_users e ON e.iduser = d.iduser
+			INNER JOIN tb_persons f ON f.idperson = e.idperson
+			INNER JOIN tb_temporada g USING(idtemporada)
+			INNER JOIN tb_turma h USING(idturma)
+			INNER JOIN tb_espaco i ON i.idespaco = h.idespaco
+			INNER JOIN tb_local j ON j.idlocal = i.idlocal
+			WHERE idtemporada = :idtemporada
+			ORDER BY j.apelidolocal, a.idinscstatus
+		", [
+			':idtemporada'=>$idtemporada
+		]);		
+		return $results;
+	}
+
+
+	public function listaPessoasInscPorTemporadaPcd($idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a 
+			INNER JOIN tb_inscstatus b USING(idinscstatus) 
+			INNER JOIN tb_carts c USING(idcart)			
+			INNER JOIN tb_pessoa d USING(idpess)
+			INNER JOIN tb_endereco k ON d.idpess = k.idpess 
+			INNER JOIN tb_users e ON e.iduser = d.iduser
+			INNER JOIN tb_persons f ON f.idperson = e.idperson
+			INNER JOIN tb_temporada g USING(idtemporada)
+			INNER JOIN tb_turma h USING(idturma)
+			INNER JOIN tb_espaco i ON i.idespaco = h.idespaco
+			INNER JOIN tb_local j ON j.idlocal = i.idlocal
+			WHERE idtemporada = :idtemporada
+			AND a.inscpcd = 1
+			ORDER BY j.apelidolocal, a.idinscstatus
+		", [
+			':idtemporada'=>$idtemporada
+		]);		
+		return $results;
+	}
+
 	public function getNumInscMatriculadaTurmaTemporada($idtemporada, $idturma)
 	{
 

@@ -11,6 +11,6 @@
 									   		</li><li class="treeview">
 									   			<a href="/admin/sorteio/84">
 									   				<i class="fa fa-link"></i>
-									   				Sorteio Temporada 2019
+									   				Sorteio Temporada 2018
 									   			</a>
 									   		</li>

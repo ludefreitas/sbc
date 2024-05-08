@@ -7,7 +7,8 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active"><a href="/admin/insc">Inscrições todas temporadas</a></li>
+    <li class="active"><a href="/admin/insc">Inscrições Todas temporadas</a></li><br>
+    
   </ol>
 </section>
 
@@ -67,7 +68,7 @@
 
               <div class="col-md-2" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                    <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>                    
+                    <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <strong><?php if( $value1["pcd"] == 1 ){ ?>(PCD)<?php } ?></strong></h3></th>                   
                 </h5>
               </div>
 
@@ -85,19 +86,7 @@
 
               <div class="col-md-1" style="margin: 2; padding: 2">
                 <h5 style="font-weight: bold; text-align: left;">                  
-                    <?php echo htmlspecialchars( $value1["descespaco"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-                </h5>
-              </div>
-
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-                </h5>
-              </div>
-
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    <a class="btn btn-primary" href="/admin/profile/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" role="button">Detalhes</a>                   
+                    <a class="btn btn-primary" href="/admin/profile/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" role="button">Detalhes</a>
                 </h5>
               </div>
 

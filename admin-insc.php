@@ -87,7 +87,64 @@ $app->get("/admin/insc/:idtemporada", function($idtemporada) {
 		array_push($pages, [
 			'href'=>"/admin/insc/".$idtemporada."?".http_build_query([
 			'page'=>$x+1,
-			'search'=>$search
+			'search'=>$search,
+			'idtemporada'=>$idtemporada
+			]),
+			'text'=>$x+1
+		]);
+
+	}
+
+	$temporada = new Temporada();
+
+	$temporada->get((int)$idtemporada);
+
+	$desctemporada = $temporada->getdesctemporada();
+	
+	$page = new PageAdmin();
+
+	// envia para a página o array retornado pelo listAll
+	$page->setTpl("insc-temporada", array( // aqui temos um array com muitos arrays
+		"temporada"=>$desctemporada,
+		"insc"=>$pagination['data'],
+		"total"=>$pagination['total'],
+		"search"=>$search,
+		"pages"=>$pages,
+		"idtemporada"=>$idtemporada,
+		"error"=>User::getError()
+	));
+});
+
+$app->get("/admin/insc-pcd/:idtemporada", function($idtemporada) {
+
+	User::verifyLogin();
+	// na linha abaixo retorna um array com todos os dados do usuário
+
+	$search = (isset($_GET['search'])) ? $_GET['search'] : "";
+
+	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
+
+	if ($search != '') {
+
+		$pagination = Insc::getPageSearchInscTemporadaPcd($search, $page, $idtemporada);
+
+
+	} else {
+
+		$pagination = Insc::getPageInscTemporadaPcd($page, $itemsPerPage = 10, $idtemporada);
+
+	}
+
+	$pages = [];
+
+	for ($x = 0; $x < $pagination['pages']; $x++)
+	{
+
+		array_push($pages, [
+			'href'=>"/admin/insc-pcd/".$idtemporada."?".http_build_query([
+			'page'=>$x+1,
+			'search'=>$search,
+			'idtemporada'=>$idtemporada,
 			]),
 			'text'=>$x+1
 		]);
@@ -110,8 +167,65 @@ $app->get("/admin/insc/:idtemporada", function($idtemporada) {
 		"total"=>$pagination['total'],
 		"search"=>$search,
 		"pages"=>$pages,
+		"idtemporada"=>$idtemporada,
 		"error"=>User::getError()
 	));
+});
+
+$app->get("/admin/listapessoas-insc-temporada/:idtemporada", function($idtemporada) {
+
+	User::verifyLogin();
+
+	$temporada = new Temporada();
+
+	$temporada->get((int)$idtemporada);	
+
+
+	$listapessoas = Insc::listaPessoasInscPorTemporada($idtemporada);
+
+	if(!isset($listapessoas) || $listapessoas == NULL){
+		echo "<script>alert('Não há inscritos para esta temporada');";
+		echo "javascript:history.go(-1)</script>";
+	}else{
+
+		$page = new PageAdmin([
+		"header"=>false,
+		"footer"=>false
+		]);
+
+		$page->setTpl("listapessoasinscportemporada", [
+		'listapessoas'=>$listapessoas
+		]);
+	}
+	
+});
+
+$app->get("/admin/listapessoas-insc-temporada-pcd/:idtemporada", function($idtemporada) {
+
+	User::verifyLogin();
+
+	$temporada = new Temporada();
+
+	$temporada->get((int)$idtemporada);	
+
+
+	$listapessoas = Insc::listaPessoasInscPorTemporadaPcd($idtemporada);
+
+	if(!isset($listapessoas) || $listapessoas == NULL){
+		echo "<script>alert('Não há inscritos para esta temporada');";
+		echo "javascript:history.go(-1)</script>";
+	}else{
+
+		$page = new PageAdmin([
+		"header"=>false,
+		"footer"=>false
+		]);
+
+		$page->setTpl("listapessoasinscportemporada", [
+		'listapessoas'=>$listapessoas
+		]);
+	}
+	
 });
 
 $app->get("/admin/insc-pessoa-vazio/:idtemporada", function($idtemporada) {

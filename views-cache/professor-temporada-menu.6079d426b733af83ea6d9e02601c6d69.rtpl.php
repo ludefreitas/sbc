@@ -11,6 +11,6 @@
 									   		</li><li class="treeview">
 									   			<a href="/admin/professor-temporada/84">
 									   				<i class="fa fa-link"></i>
-									   				Profs Temporada 2019
+									   				Profs Temporada 2018
 									   			</a>
 									   		</li>

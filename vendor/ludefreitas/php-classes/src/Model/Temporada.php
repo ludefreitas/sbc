@@ -1134,7 +1134,24 @@
 								   		<a href="/admin/insc/'.$row['idtemporada'].'">
 								   			<i class="fa fa-link"></i> 
 								   			Inscrições - '.$row['desctemporada'].'
-								   		</a>								   		
+								   		</a>	
+								   		<ul class="treeview-menu">
+								   			<li class="treeview">
+	            								
+													<a href="/admin/insc/'.$row['idtemporada'].'">
+									   					<i class="fa fa-link"></i> 
+									   					Todas
+									   				</a>								   		
+												</li>
+	            								<li class="treeview">
+	            								
+													<a href="/admin/insc-pcd/'.$row['idtemporada'].'">
+									   					<i class="fa fa-link"></i> 
+									   					PCD`s
+									   				</a>								   		
+												</li>
+												
+			          						</ul>								   																   		
 									</li>');
 
 			}

@@ -31,7 +31,7 @@
 									</li><li class="treeview">
 										<a href="/admin/turma-temporada-hoje/84">
 								   			<i class="fa fa-reorder"></i> 
-								   			Chamadas/Turmas 2019
+								   			Chamadas/Turmas 2018
 								   		</a>
 
 									   		<ul class="treeview-menu">
