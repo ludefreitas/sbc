@@ -18,12 +18,12 @@ class Turma extends Model {
 	{
 		$sql = new Sql();
 
-		return $sql->select("SELECT * 
+		$results = $sql->select("SELECT * 
 			FROM tb_turma a 
-			INNER JOIN tb_users b
-			using(iduser)
-			INNER JOIN tb_persons c
-			using(idperson)
+			-- INNER JOIN tb_users b
+			-- using(iduser)
+			-- INNER JOIN tb_persons c
+			-- using(idperson)
 			INNER JOIN tb_atividade d
 			using(idativ)
 			INNER JOIN tb_espaco e
@@ -39,6 +39,8 @@ class Turma extends Model {
 			INNER JOIN tb_modalidade J         
 			using(idmodal)            
 			ORDER BY a.descturma");
+
+		return $results;
 	}
 
 	/*
@@ -452,13 +454,15 @@ class Turma extends Model {
 			using(idmodal)
       		WHERE j.idmodal = :idmodal AND f.idlocal = :idlocal 
       		AND (a.idturmastatus = 3 OR a.idturmastatus = 6)
-            AND ( b.iduser != 1 AND (
+            -- AND ( b.iduser != 1 
+            AND (
             k.idstatustemporada = :idStatusTemporadaMatriculasEncerradas 
             OR k.idstatustemporada = :idStatusTemporadaTemporadaIniciada 
             OR k.idstatustemporada = :idStatusTemporadaInscricaoIniciada 
             OR k.idstatustemporada = :idStatusTemporadaMatriculaIniciada 
             OR k.idstatustemporada = :idStatusTemporadaInscricoesEncerradas
-            OR k.idstatustemporada = :idStatusTemporadaTemporadaNaoIniciada))
+            OR k.idstatustemporada = :idStatusTemporadaTemporadaNaoIniciada)
+            -- )
       		ORDER BY a.numinscritos, RAND()", [
       			':idlocal'=>$idlocal,
       			':idmodal'=>$idmodal,
@@ -529,7 +533,6 @@ class Turma extends Model {
 	}
 
 	public static function listAllTurmaTemporadaLocal($idlocal)
-
 	{
 		$idStatusTemporadaTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
 		$idStatusTemporadaInscricaoIniciada = StatusTemporada::INSCRICOES_INICIADAS;
@@ -1001,9 +1004,44 @@ class Turma extends Model {
 			AND d.idmodal = :idmodal", [
 			':desctemporada'=>$desctemporada,
 			':idmodal'=>$idmodal
-		]);		
+		]);	
 
-		return $results[0]['qtdvagas'];
+		$resultsPcd =  $sql->select("SELECT SUM(vagaspcd) as qtdvagas 
+			FROM tb_turmatemporada a
+			INNER JOIN tb_turma b USING(idturma)
+			INNER JOIN tb_temporada c USING(idtemporada)
+            INNER JOIN tb_modalidade d USING(idmodal)			
+			WHERE c.desctemporada = :desctemporada 
+			AND d.idmodal = :idmodal", [
+			':desctemporada'=>$desctemporada,
+			':idmodal'=>$idmodal
+		]);			
+
+
+		$resultsPlm =  $sql->select("SELECT SUM(vagaslaudo) as qtdvagas 
+			FROM tb_turmatemporada a
+			INNER JOIN tb_turma b USING(idturma)
+			INNER JOIN tb_temporada c USING(idtemporada)
+            INNER JOIN tb_modalidade d USING(idmodal)			
+			WHERE c.desctemporada = :desctemporada 
+			AND d.idmodal = :idmodal", [
+			':desctemporada'=>$desctemporada,
+			':idmodal'=>$idmodal
+		]);			
+
+
+		$resultsPvs =  $sql->select("SELECT SUM(vagaspvs) as qtdvagas 
+			FROM tb_turmatemporada a
+			INNER JOIN tb_turma b USING(idturma)
+			INNER JOIN tb_temporada c USING(idtemporada)
+            INNER JOIN tb_modalidade d USING(idmodal)			
+			WHERE c.desctemporada = :desctemporada 
+			AND d.idmodal = :idmodal", [
+			':desctemporada'=>$desctemporada,
+			':idmodal'=>$idmodal
+		]);			
+
+		return $results[0]['qtdvagas'] + $resultsPcd[0]['qtdvagas'] + $resultsPlm[0]['qtdvagas'] + $resultsPvs[0]['qtdvagas'];
 	}
 	
 	public static function getSomaVagasByDescTemporada($desctemporada)
@@ -1019,6 +1057,171 @@ class Turma extends Model {
 			-- AND d.idmodal = :idmodal", [
 			':desctemporada'=>$desctemporada
 			//':idmodal'=>$idmodal
+		]);	
+
+		$resultsPcd =  $sql->select("SELECT SUM(vagaspcd) as qtdvagas 
+			FROM tb_turmatemporada a
+			INNER JOIN tb_turma b USING(idturma)
+			INNER JOIN tb_temporada c USING(idtemporada)
+            -- INNER JOIN tb_modalidade d USING(idmodal)			
+			WHERE c.desctemporada = :desctemporada 
+			-- AND d.idmodal = :idmodal", [
+			':desctemporada'=>$desctemporada
+			//':idmodal'=>$idmodal
+		]);	
+
+		$resultsPlm =  $sql->select("SELECT SUM(vagaslaudo) as qtdvagas 
+			FROM tb_turmatemporada a
+			INNER JOIN tb_turma b USING(idturma)
+			INNER JOIN tb_temporada c USING(idtemporada)
+            -- INNER JOIN tb_modalidade d USING(idmodal)			
+			WHERE c.desctemporada = :desctemporada 
+			-- AND d.idmodal = :idmodal", [
+			':desctemporada'=>$desctemporada
+			//':idmodal'=>$idmodal
+		]);	
+
+		$resultsPvs =  $sql->select("SELECT SUM(vagaspvs) as qtdvagas 
+			FROM tb_turmatemporada a
+			INNER JOIN tb_turma b USING(idturma)
+			INNER JOIN tb_temporada c USING(idtemporada)
+            -- INNER JOIN tb_modalidade d USING(idmodal)			
+			WHERE c.desctemporada = :desctemporada 
+			-- AND d.idmodal = :idmodal", [
+			':desctemporada'=>$desctemporada
+			//':idmodal'=>$idmodal
+		]);		
+
+		return $results[0]['qtdvagas'] + $resultsPcd[0]['qtdvagas'] + $resultsPlm[0]['qtdvagas'] + $resultsPvs[0]['qtdvagas'];
+
+
+	}
+
+	public static function getSomaVagasPcdByDescTemporada($desctemporada)
+	{
+		$sql = new Sql();
+
+		$results =  $sql->select("SELECT SUM(vagaspcd) as qtdvagas 
+			FROM tb_turmatemporada a
+			INNER JOIN tb_turma b USING(idturma)
+			INNER JOIN tb_temporada c USING(idtemporada)
+            -- INNER JOIN tb_modalidade d USING(idmodal)			
+			WHERE c.desctemporada = :desctemporada 
+			-- AND d.idmodal = :idmodal", [
+			':desctemporada'=>$desctemporada
+			//':idmodal'=>$idmodal
+		]);		
+
+		return $results[0]['qtdvagas'];
+	}
+
+	public static function getSomaVagasLaudoByDescTemporada($desctemporada)
+	{
+		$sql = new Sql();
+
+		$results =  $sql->select("SELECT SUM(vagaslaudo) as qtdvagas 
+			FROM tb_turmatemporada a
+			INNER JOIN tb_turma b USING(idturma)
+			INNER JOIN tb_temporada c USING(idtemporada)
+            -- INNER JOIN tb_modalidade d USING(idmodal)			
+			WHERE c.desctemporada = :desctemporada 
+			-- AND d.idmodal = :idmodal", [
+			':desctemporada'=>$desctemporada
+			//':idmodal'=>$idmodal
+		]);		
+
+		return $results[0]['qtdvagas'];
+	}
+
+	public static function getSomaVagasPvsByDescTemporada($desctemporada)
+	{
+		$sql = new Sql();
+
+		$results =  $sql->select("SELECT SUM(vagaspvs) as qtdvagas 
+			FROM tb_turmatemporada a
+			INNER JOIN tb_turma b USING(idturma)
+			INNER JOIN tb_temporada c USING(idtemporada)
+            -- INNER JOIN tb_modalidade d USING(idmodal)			
+			WHERE c.desctemporada = :desctemporada 
+			-- AND d.idmodal = :idmodal", [
+			':desctemporada'=>$desctemporada
+			//':idmodal'=>$idmodal
+		]);		
+
+		return $results[0]['qtdvagas'];
+	}
+		
+	public static function getSomaVagasByLocalDescTemporada($idlocal, $desctemporada)
+	{
+		$sql = new Sql();
+
+		$results =  $sql->select("SELECT SUM(vagas) as qtdvagas 
+			FROM tb_turmatemporada a
+			INNER JOIN tb_turma b USING(idturma)
+			INNER JOIN tb_temporada c USING(idtemporada)
+            INNER JOIN tb_espaco d USING(idespaco)			
+            INNER JOIN tb_local e USING(idlocal)			
+			WHERE c.desctemporada = :desctemporada 
+			AND e.idlocal = :idlocal", [
+			':desctemporada'=>$desctemporada,
+			':idlocal'=>$idlocal
+		]);		
+
+		return $results[0]['qtdvagas'];
+	}
+
+	public static function getSomaVagasPcdByLocalDescTemporada($idlocal, $desctemporada)
+	{
+		$sql = new Sql();
+
+		$results =  $sql->select("SELECT SUM(vagaspcd) as qtdvagas 
+			FROM tb_turmatemporada a
+			INNER JOIN tb_turma b USING(idturma)
+			INNER JOIN tb_temporada c USING(idtemporada)
+            INNER JOIN tb_espaco d USING(idespaco)			
+            INNER JOIN tb_local e USING(idlocal)			
+			WHERE c.desctemporada = :desctemporada 
+			AND e.idlocal = :idlocal", [
+			':desctemporada'=>$desctemporada,
+			':idlocal'=>$idlocal
+		]);		
+
+		return $results[0]['qtdvagas'];
+	}
+
+	public static function getSomaVagasLaudoByLocalDescTemporada($idlocal, $desctemporada)
+	{
+		$sql = new Sql();
+
+		$results =  $sql->select("SELECT SUM(vagaslaudo) as qtdvagas 
+			FROM tb_turmatemporada a
+			INNER JOIN tb_turma b USING(idturma)
+			INNER JOIN tb_temporada c USING(idtemporada)
+            INNER JOIN tb_espaco d USING(idespaco)			
+            INNER JOIN tb_local e USING(idlocal)			
+			WHERE c.desctemporada = :desctemporada 
+			AND e.idlocal = :idlocal", [
+			':desctemporada'=>$desctemporada,
+			':idlocal'=>$idlocal
+		]);		
+
+		return $results[0]['qtdvagas'];
+	}
+
+	public static function getSomaVagasPvsByLocalDescTemporada($idlocal, $desctemporada)
+	{
+		$sql = new Sql();
+
+		$results =  $sql->select("SELECT SUM(vagaspvs) as qtdvagas 
+			FROM tb_turmatemporada a
+			INNER JOIN tb_turma b USING(idturma)
+			INNER JOIN tb_temporada c USING(idtemporada)
+            INNER JOIN tb_espaco d USING(idespaco)			
+            INNER JOIN tb_local e USING(idlocal)			
+			WHERE c.desctemporada = :desctemporada 
+			AND e.idlocal = :idlocal", [
+			':desctemporada'=>$desctemporada,
+			':idlocal'=>$idlocal
 		]);		
 
 		return $results[0]['qtdvagas'];
@@ -1203,9 +1406,10 @@ class Turma extends Model {
 	public function saveToken()
 	{
 		$sql = new Sql();
-		$results = $sql->select("CALL sp_tokenturma_save(:idtoken, :idturma, :numcpf, :token, :isused, :creator, :dtcriacao, :dtuso)", array(
+		$results = $sql->select("CALL sp_tokenturma_save(:idtoken, :idturma, :idtemporada, :numcpf, :token, :isused, :creator, :dtcriacao, :dtuso)", array(
 			":idtoken"=>$this->getidtoken(),			
 			":idturma"=>$this->getidturma(),
+			":idtemporada"=>$this->getidtemporada(),
 			":numcpf"=>$this->getnumcpf(),
 			":token"=>$this->gettoken(),
 			":isused"=>$this->getisused(),
@@ -1217,7 +1421,7 @@ class Turma extends Model {
 		$this->setData($results[0]);
 	}
 
-	public function turmatemToken($idturma){
+	public static function turmatemToken($idturma){
 
 		$temtoken = 1;
 
@@ -1235,7 +1439,7 @@ class Turma extends Model {
 		}
 	}
 	
-	public function temTokenCpf($idturma, $numcpf){
+	public static function temTokenCpf($idturma, $numcpf){
 
 		$isused = 0;
 
@@ -1253,7 +1457,7 @@ class Turma extends Model {
 		}
 	}
 	
-	public function comparaCpfToken($idturma, $token, $numcpf){
+	public static function comparaCpfToken($idturma, $token, $numcpf){
 
 		$isused = 0;
 
@@ -1275,7 +1479,7 @@ class Turma extends Model {
 		}
 	}
 
-	public function tokemValido($token, $idturma){
+	public static function tokemValido($token, $idturma){
 
 		$sql = new Sql();
 
@@ -1315,12 +1519,27 @@ class Turma extends Model {
 		}
 	}
 	
-	public function listAlltokenTurma($idturma){
+	public static function listAlltokenTurma($idturma){
 
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT * FROM tb_tokenturma WHERE idturma = :idturma ORDER BY numcpf", [
+		$results = $sql->select("SELECT * FROM tb_tokenturma WHERE idturma = :idturma ORDER BY numcpf, isused", [
 			':idturma'=>$idturma
+		]);
+
+		return $results;
+	}
+
+	public static function listAlltokenTurmaTemporada($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_tokenturma 
+			WHERE idturma = :idturma 
+			AND idtemporada = :idtemporada 
+			ORDER BY numcpf, isused", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
 		]);
 
 		return $results;
@@ -1339,7 +1558,7 @@ class Turma extends Model {
 
 	}
 	
-	public function setUsedTokenCpf($idturma, $tokencpf){
+	public static function setUsedTokenCpf($idturma, $tokencpf){
 
 		$isused = 1;
 
@@ -1361,7 +1580,6 @@ class Turma extends Model {
 			":tokencpf"=>$tokencpf
 		));
 	}
-
 	
 	public static function listTokenTurma($idturma)
 	{

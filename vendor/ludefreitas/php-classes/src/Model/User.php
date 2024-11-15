@@ -155,7 +155,7 @@ class User extends Model {
 		}
 	}
 
-	public function login($login, $password)
+	public static function login($login, $password)
 	{
 
 		$sql = new Sql();
@@ -185,7 +185,7 @@ class User extends Model {
 			if(isset($_POST['lembrar']) && $_POST['lembrar'] == 'sempre' ){
 
 				User::rememberUser($login);
-				User::rememberPassword($password);				
+				User::rememberPassword($password);	
 
 			}
 
@@ -210,8 +210,7 @@ class User extends Model {
 			}
 			exit;
 			*/
-			echo "<script>window.location.href = '/login'</script>";
-			
+			echo "<script>window.location.href = '/login'</script>";			
 			//header("Location: /login");
 			exit;
 
@@ -383,9 +382,8 @@ class User extends Model {
 			ORDER BY b.desperson");
 	}
 	
-		public static function listAllAudi()
+	public static function listAllAudi()
 	{
-
 		$sql = new Sql();
 
 		return $sql->select("
@@ -395,9 +393,8 @@ class User extends Model {
 			WHERE isaudi = 1
 			ORDER BY b.desperson");
 	}
-
 	
-	public function save()
+	public static function save()
 	{
 		$sql = new Sql();
 
@@ -416,6 +413,27 @@ class User extends Model {
 		));
 
 		$this->setData($results[0]);
+	}
+
+	public static function saveNew($desperson, $apelidoperson, $deslogin, $despassword, $desemail, $nrphone, $inadmin, $isprof, $isestagiario, $isaudi, $statususer)
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("CALL sp_users_save(:desperson, :apelidoperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin, :isprof, :isestagiario, :isaudi, :statususer)", array(
+			":desperson"=>$desperson,
+			":apelidoperson"=>$apelidoperson,
+			":deslogin"=>$deslogin,
+			":despassword"=>User::getPasswordHash($despassword),
+			":desemail"=>$desemail,
+			":nrphone"=>$nrphone,
+			":inadmin"=>$inadmin,
+			":isprof"=>$isprof,
+			":isestagiario"=>$isestagiario,
+			":isaudi"=>$isaudi,
+			":statususer"=>$statususer
+		));
+
+		//$this->setData($results[0]);
 	}
 
 	public function get($iduser)
@@ -636,6 +654,7 @@ class User extends Model {
          }
      }
  }
+
  public static function validForgotDecrypt($result)
  {
      $result = base64_decode($result);
@@ -694,7 +713,7 @@ class User extends Model {
 
 	}
 	
-	public function validaEmail($email){
+	public static function validaEmail($email){
 
 		//$email = test_input($_POST["email"]);
 			if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -1182,24 +1201,22 @@ class User extends Model {
 		]);
 
 		return $results;
-	}
+	}	
 	
-	/*
 	public function getPessoaByIdUser($iduser)	{
 
 		$sql = new Sql();
 
 		$results = $sql->select(
 			"SELECT * FROM tb_pessoa a
-			INNER JOIN 	tb_saude
+			-- INNER JOIN 	tb_saude
 			WHERE statuspessoa = 1 AND
 			iduser = :iduser", [
 			':iduser'=>$iduser
 		]);
 
 		return $results;
-	}
-	*/
+	}	
 
 	public function getFromId($iduser)
 	{
@@ -1273,6 +1290,29 @@ class User extends Model {
 
 		return $results;
 
+	}
+
+	public function getInscNew($iduser)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT * FROM tb_insc a 
+			INNER JOIN tb_inscstatus g USING(idinscstatus) 
+			INNER JOIN tb_pessoa b on b.numcpf = a.numcpf 
+			INNER JOIN tb_users c on c.iduser = b.iduser 
+			INNER JOIN tb_turma d USING(idturma)
+			INNER JOIN tb_atividade e ON e.idativ = d.idativ
+			INNER JOIN tb_espaco f ON f.idespaco = d.idespaco
+			INNER JOIN tb_temporada h ON h.idtemporada = a.idtemporada
+			WHERE c.iduser = :iduser
+			ORDER BY a.idinscstatus, a.idinsc DESC
+		", [
+			':iduser'=>$iduser
+		]);
+
+		return $results;
 	}
 
 	function calcularIdade($dtnasc){
@@ -1754,7 +1794,7 @@ class User extends Model {
 			}
 		}
 
-		function pega_totalUsuariosOnline(){
+		public static function pega_totalUsuariosOnline(){
 
 			$sql = new Sql();
 			$results = $sql->select("SELECT count(*) as useron FROM tb_users_online WHERE sessao IS NOT NULL");
@@ -1762,7 +1802,7 @@ class User extends Model {
 
 		}
 
-		function pega_totalVisitantesOnline(){
+		public static function pega_totalVisitantesOnline(){
 
 			$sql = new Sql();
 			$results = $sql->select("SELECT count(*) as uservis FROM tb_users_online WHERE sessao IS NULL");

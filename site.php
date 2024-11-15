@@ -229,10 +229,11 @@ $app->get('/busca', function() {
 	}		
 });
 
-$app->get("/checkout", function(){
+//$app->get("/checkout", function(){
 
-	User::verifyLogin(false);
+	//User::verifyLogin(false);
 	
+	/*--------------------------------------------------------------------------
 	$cart = Cart::getFromSession();
 	
 	if($_SESSION['User']['iduser'] != 89){
@@ -249,7 +250,7 @@ $app->get("/checkout", function(){
 	    $idmodal = $cart->getTurmaFull()[0]['idmodal'];
 	}				
 
-	$cart = Cart::getFromSession();
+	//$cart = Cart::getFromSession();
 	$user = User::getFromSession();
 	$insc = new Insc();
 
@@ -261,6 +262,8 @@ $app->get("/checkout", function(){
 
 	$token = $_SESSION['token'];
 	$tokencpf = $_SESSION['tokencpf'];
+
+	--------------------------------------------------------------------------*/
 	
 	/*
 	if(Cart::cartIsEmpty((int)$_SESSION[Cart::SESSION]['idcart']) === false){
@@ -270,6 +273,8 @@ $app->get("/checkout", function(){
 		exit();
 	}
 	*/
+
+	/*--------------------------------------------------------------------------
 	
 	$idcart = (int)$cart->getidcart();
 	$idturma = (int)Cart::getIdturmaByCart($idcart);
@@ -335,16 +340,43 @@ $app->get("/checkout", function(){
 	    $tokencpf = 0;
 	    
 	}else{
+
 	    $tokencpf = 1;
 	}
 
+	$desctemporada = (int)$turma[0]['desctemporada'];
+	$initidade = (int)$turma[0]['initidade'];
+	$fimidade = (int)$turma[0]['fimidade'];
+
+	$anoNasc = date('Y',  strtotime($cart->getPessoa()['dtnasc']));
+	$nomepess = $cart->getPessoa()['nomepess'];
+
+	if( (int)date('Y')  == (int)$desctemporada ){
+
+		$anoAtual = (int)date('Y');	
+
+	}else{
+
+		$anoAtual = (int)date('Y') + 1;		
+	}
+
+	$anoFinal = ($anoAtual - $fimidade);
+	$anoInicial = ($anoAtual - $initidade);
+
+	if(($anoNasc < $anoInicial) || ($anoNasc < $anoFinal)){		
+	    Cart::setMsgError('Esta turma é exclusiva para pessoas nascidas entre os anos de '.$anoFinal.' e '.$anoInicial.'. Remova a turma atual e escolha outra turma compatível com o ano de nascimento do(a) '.$nomepess.'. Ele(a) nasceu no ano de '.$anoNasc.'. [checkout]');
+		echo "<script>window.location.href = '/cart'</script>";
+		exit();
+	}
+
+	
 	$page = new Page();
 
 	$page->setTpl("checkout", [
 		'token'=>$token,
 		'tokencpf'=>$tokencpf,
 		'cart'=>$cart->getValues(),
-		'pessoa'=>$cart->getPessoa(),
+		'pessoa'=>$pessoa->getValues(),
 		'turma'=>$turma,
 		'cid'=>$cid = Saude::listAllCid(),
 		'vagasGeral'=>$vagasGeral,
@@ -365,7 +397,8 @@ $app->get("/checkout", function(){
 		'numinscListaEsperaPublicoPvs'=>$numinscListaEsperaPublicoPvs,
 		'error'=>Pessoa::getError()
 	]);
-});
+	--------------------------------------------------------------------------*/
+//});
 
 $app->post("/checkout", function(){
 
@@ -378,13 +411,31 @@ $app->post("/checkout", function(){
 
 	$idcart = (int)$cart->getidcart();
 
-	$idtemporada = $_POST['idtemporada'];
+	$idtemporada = (int)$_POST['idtemporada'];
 	$idturma = $_POST['idturma'];
+	$idpess = $_POST['idpess'];
+
+	$pessoa = new Pessoa();
+
+	$insc = new Insc();
+
+	$numcpf = $pessoa->getnumcpf();
+	$nomepess = $pessoa->getnomepess();
 
 	$temporada = new Temporada();
 
 	$temporada->get((int)$idtemporada);
-	
+
+	if ($insc->getInscExistByCpf($numcpf, $idturma, $idtemporada)){
+
+		Cart::setMsgError($nomepess.' já está inscrito(a) nesta turma para esta temporada!');
+		//header("Location: /cart");
+		//echo "<script>window.location.href = '/modalidade/".$idmodal."/".$idlocal."'</script>";
+		echo "<script>window.location.href = '/cart/".$idturma."/".$idtemporada."/add'</script>";
+		exit();
+
+	}
+
 	if(!isset($_POST['tipoinsc']) || $_POST['tipoinsc'] == NULL){
 
 		Pessoa::setError("A inscrição NÃO foi finalizada!!! Informe se você irá confirmar uma inscrição para PÚBLICO em GERAL ou COM LAUDO ou para PESSOA COM DEFICIÊNCIA ou PARA PESSOA EM VULNERABILIDADE SOCIAL. ");
@@ -514,7 +565,7 @@ $app->post("/checkout", function(){
 
 	$desctemporada = $temporada->getdesctemporada();
 
-	$idpess= $cart->getidpess();
+	$idpess= $_POST['idpess'];
 
 	$pessoa->get((int)$idpess);
 	
@@ -604,8 +655,43 @@ $app->post("/checkout", function(){
 		$pegainscPlm = (int)Insc::pegaInscPlm($idturma, $idtemporada);
 		$pegainscPcd = (int)Insc::pegaInscPcd($idturma, $idtemporada);
 		$pegainscPvs = (int)Insc::pegaInscPvs($idturma, $idtemporada);
-		
-	    $InscStatus = InscStatus::FILA_DE_ESPERA;
+
+		if ($_POST['idturmastatus'] == 6) {
+
+			if($laudo === 0 AND $inscpcd === 0 AND $inscpvs === 0 ){
+				if($pegainscGeral >= $vagasGeral){
+					$InscStatus = InscStatus::FILA_DE_ESPERA;
+				}else{
+					$InscStatus = InscStatus::AGUARDANDO_MATRICULA;
+				}
+			}else{
+				if($laudo === 1 AND $inscpcd === 0 AND $inscpvs === 0 ){
+
+					if($pegainscPlm >= $vagasPlm){
+						$InscStatus = InscStatus::FILA_DE_ESPERA;
+					}else{
+						$InscStatus = InscStatus::AGUARDANDO_MATRICULA;
+					}
+				}elseif($laudo === 0 AND $inscpcd === 1 AND $inscpvs === 0 ){
+
+					if($pegainscPcd >= $vagasPcd){
+						$InscStatus = InscStatus::FILA_DE_ESPERA;
+					}else{
+						$InscStatus = InscStatus::AGUARDANDO_MATRICULA;
+					}
+				}elseif($laudo === 0 AND $inscpcd === 0 AND $inscpvs === 1 ){
+
+					if($pegainscPvs >= $vagasPvs){
+						$InscStatus = InscStatus::FILA_DE_ESPERA;
+					}else{
+						$InscStatus = InscStatus::AGUARDANDO_MATRICULA;
+					}
+				}
+			}			
+		}else{
+
+			$InscStatus = InscStatus::FILA_DE_ESPERA;
+		}	    
 
 		$numOrdemMax = Insc::numMaxNumOrdem($idtemporada, $idturma);
 		$mumMatriculados = Insc::numMatriculados($idtemporada, $idturma);
@@ -622,16 +708,22 @@ $app->post("/checkout", function(){
 
 		$posicao = $numordem - $vagas;
 
+		$idcart = null;
+
+		$idcart = '';
+
 		$insc->setData([
-			'idcart'=>$idcart,
 			'idinscstatus'=>$InscStatus,
+	        'idcart'=>$idcart,
+			'idturma'=>$idturma,
+			'idtemporada'=>$idtemporada,
 			'numordem'=>$numordem,
 			'laudo'=>$laudo,
 			'inscpcd'=>$inscpcd,
 			'inscpvs'=>$inscpvs,
-			'idturma'=>$idturma,
-			'idtemporada'=>$idtemporada	
-		]);
+			'numcpf'=>$numcpf,	
+			'idpessoa'=>$idpess	
+		]);	
 		
 		if(!$cart->getInscExist($numcpf, $idturma, $idtemporada)){
 			$insc->save();
@@ -662,7 +754,7 @@ $app->post("/checkout", function(){
 
 		    Insc::setSuccess("Inscrição EFETUADA COM SUCESSO! Leia atentamente os detalhes da turma e leia também as observações da turma!");
 			//header("Location: /profile/insc/".$insc->getidinsc()."/".$idpess."");
-			echo "<script>window.location.href = '/profile/insc/".$insc->getidinsc()."/".$idpess."'</script>";
+			echo "<script>window.location.href = '/profile/insc/".$insc->getidinsc()."/".$idpess."/".$numcpf."'</script>";
 	        exit;
         }
 
@@ -670,7 +762,7 @@ $app->post("/checkout", function(){
 
 	    	Insc::setSuccess("Inscrição EFETUADA COM SUCESSO! Lembre-se: Se o status desta inscrição é 'Lista de Espera', não há vagas para esta turma. Esta inscrição está em uma lista de espera, aguardando o comunicado de uma eventual vaga. Mantenha atualizado, neste site, seu número de telefone celular, com whatsapp, para receber o comunicado.");        	
 			//header("Location: /profile/insc/".$insc->getidinsc()."/".$idpess."");
-			echo "<script>window.location.href = '/profile/insc/".$insc->getidinsc()."/".$idpess."'</script>";
+			echo "<script>window.location.href = '/profile/insc/".$insc->getidinsc()."/".$idpess."/".$numcpf."'</script>";
         	exit;
 
         }
@@ -732,6 +824,8 @@ $app->post("/checkout", function(){
 		
 		$numordem = 0;	
 
+		$idcart = null;
+
 		$insc->setData([
 			'idcart'=>$idcart,
 			'idinscstatus'=>$InscStatus,
@@ -740,7 +834,9 @@ $app->post("/checkout", function(){
 			'inscpcd'=>$inscpcd,
 			'inscpvs'=>$inscpvs,
 			'idturma'=>$idturma,
-			'idtemporada'=>$idtemporada	
+			'idtemporada'=>$idtemporada,
+			'numcpf'=>$numcpf,
+			'idpessoa'=>$idpess		
 		]);
 		
 		if(!$cart->getInscExist($numcpf, $idturma, $idtemporada)){
@@ -751,7 +847,6 @@ $app->post("/checkout", function(){
 
 		//Turma::setUsedToken($idturma, $token);
 		Turma::setUsedTokenCpf($idturma, $tokencpf);		
-
 		$idinsc = $insc->getidinsc();	
 
 		$numsorte = $insc->getnumsorte();
@@ -763,7 +858,7 @@ $app->post("/checkout", function(){
 
 		$cart->removeTurma($turma, true);
 		Cart::removeFromSession();
-	    session_regenerate_id();
+	    //session_regenerate_id();
 	    
 	    /*
 	     ### Envio de Email desativado
@@ -775,7 +870,7 @@ $app->post("/checkout", function(){
 
 	    	 Insc::setSuccess("Inscrição EFETUADA COM SUCESSO! Leia atentamente os detalhes da turma e leia também as observações da turma!");
 			//header("Location: /profile/insc/".$insc->getidinsc()."/".$idpess."");
-			echo "<script>window.location.href = '/profile/insc/".$insc->getidinsc()."/".$idpess."'</script>";
+			echo "<script>window.location.href = '/profile/insc/".$insc->getidinsc()."/".$idpess."/".$numcpf."'</script>";
         	exit;
 
         }
@@ -784,9 +879,8 @@ $app->post("/checkout", function(){
 
 	    	Insc::setSuccess("Inscrição EFETUADA COM SUCESSO! Lembre-se: Se o status desta inscrição é 'Lista de Espera', não há vagas para esta turma. Esta inscrição está em uma lista de espera, aguardando o comunicado de uma eventual vaga. Mantenha atualizado, neste site, seu número de telefone celular, com whatsapp, para receber o comunicado.");        	
 			//header("Location: /profile/insc/".$insc->getidinsc()."/".$idpess."");
-			echo "<script>window.location.href = '/profile/insc/".$insc->getidinsc()."/".$idpess."'</script>";
+			echo "<script>window.location.href = '/profile/insc/".$insc->getidinsc()."/".$idpess."/".$numcpf."'</script>";
         	exit;
-
         }
 	}	
 });
@@ -913,7 +1007,6 @@ $app->get("/logout", function(){
 
 $app->get("/forgot/site", function() {
 
-
 	$page = new Page([
 		"header"=>false,
 		"footer"=>false
@@ -951,8 +1044,6 @@ $app->post("/forgot-site", function(){
 		echo "location.href='/login'</script>";
 		exit();	
 });
-
-
 
 /*
 
@@ -1055,8 +1146,7 @@ $app->get("/redirecionando", function() {
 		//header('Location: /redirecionando');
 		echo "<script>window.location.href = '/redirecionando'</script>";
 		exit();
-	}
-    
+	}    
     
     if(isset($_SESSION['User']) && (($_SESSION['User']['inadmin'] != 1) || ($_SESSION['User']['isprof'] != 1))) {
 	//if(isset($_SESSION['User']) && $_SESSION['User']['inadmin'] != 1) {
@@ -1070,8 +1160,7 @@ $app->get("/redirecionando", function() {
 			echo "<script>window.location.href = '/login'</script>";
 			//header('Location: /login');
 			exit();
-		}
-		
+		}		
 	}	
 
 	$page = new Page([
@@ -1082,7 +1171,6 @@ $app->get("/redirecionando", function() {
 	$page->setTpl("redirecionando");
 });
 
-
 $app->get("/transparent", function() {
 
 	$page = new Page([
@@ -1092,11 +1180,5 @@ $app->get("/transparent", function() {
 
 	$page->setTpl("transparent");
 });
-
-
-
-
-
-
 
 ?>

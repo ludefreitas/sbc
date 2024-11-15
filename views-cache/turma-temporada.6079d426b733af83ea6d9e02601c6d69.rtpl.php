@@ -87,7 +87,6 @@
 <section class="content-header">
   <h1>
     Turmas para a temporada <?php echo htmlspecialchars( $temporada["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $temporada["descstatustemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
-
   </h1>
   <ol class="breadcrumb">
     <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -102,13 +101,10 @@
 
     <div class="row">
          <?php if( $msgError != '' ){ ?>
-
                 <div class="alert alert-danger" style="margin: 0px 10px 0px 10px">
                     <?php echo htmlspecialchars( $msgError, ENT_COMPAT, 'UTF-8', FALSE ); ?>
-
                 </div>
                 <?php } ?>
-
         <div class="col-md-6">
             <div class="box box-primary">
                
@@ -122,7 +118,6 @@
                         <?php $counter1=-1;  if( isset($locais) && ( is_array($locais) || $locais instanceof Traversable ) && sizeof($locais) ) foreach( $locais as $key1 => $value1 ){ $counter1++; ?>            
 
                         <?php $idlocal = $value1["idlocal"]; ?>
-
                             
                             <div  id="btnLocalOpen<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                             <div style="text-align: center; border-radius: 5px; margin: 5px; height: 30px" class="btn-primary col-md-12" onclick="openDiv(<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>)" ><?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <i class="fa fa-caret-down"></i></div> 
@@ -139,11 +134,9 @@
                                     <tbody>
                                         <?php $counter2=-1;  if( isset($turmaNotRelated) && ( is_array($turmaNotRelated) || $turmaNotRelated instanceof Traversable ) && sizeof($turmaNotRelated) ) foreach( $turmaNotRelated as $key2 => $value2 ){ $counter2++; ?>
 
-
                                         
                                             <div>
                                                 <?php if( $idlocal == $value2["idlocal"] ){ ?>
-
                                                                                 
                                                 <tr id="divTurmaAdicionar<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                                                 <td><?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
@@ -159,9 +152,7 @@
                                 
                                             <?php }else{ ?>
 
-
                                             <?php } ?>
-
                                         </div>
                                         
 
@@ -170,7 +161,6 @@
                                 </table>
                             </div >
                         <?php } ?>
-
                     </div>
             </div>
         </div>
@@ -185,7 +175,6 @@
                     <?php $counter1=-1;  if( isset($locais) && ( is_array($locais) || $locais instanceof Traversable ) && sizeof($locais) ) foreach( $locais as $key1 => $value1 ){ $counter1++; ?>            
 
                     <?php $idlocal = $value1["idlocal"]; ?>
-
 
                         <div  id="btnLocalRedOpen<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                             <div style="text-align: center; border-radius: 5px; margin: 5px; height: 30px" class="btn-danger col-md-12" onclick="openDivRed(<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>)" ><?php echo htmlspecialchars( $value1["apelidolocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <i class="fa fa-caret-down"></i></div> 
@@ -202,9 +191,7 @@
                             <tbody>
                                 <?php $counter2=-1;  if( isset($turmaRelated) && ( is_array($turmaRelated) || $turmaRelated instanceof Traversable ) && sizeof($turmaRelated) ) foreach( $turmaRelated as $key2 => $value2 ){ $counter2++; ?>
 
-
                                 <?php if( $idlocal == $value2["idlocal"] ){ ?>
-
 
                                     <tr id="divTurmaRemover<?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                                     <td><?php echo htmlspecialchars( $value2["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
@@ -216,16 +203,13 @@
                                     </tr>
                                     <?php }else{ ?>
 
-
                                     <?php } ?>
-
 
                                     <?php } ?> 
                                  </tbody>
                             </table>
                         </div >                          
                     <?php } ?>
-
                        
             </div>
         </div>        

@@ -9,17 +9,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   
   <?php if( UserIsProf() ){ ?>
-
   <title>Professor Cursos Esportivos | SBC</title>
   <?php }else{ ?>
-
     <?php if( UserIsEstagiario() ){ ?>
-
     <title>Estagiário Cursos Esportivos | SBC</title>
     <?php } ?>
-
   <?php } ?>
-
 
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -262,18 +257,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
             
             <?php if( UserIsProf() ){ ?>
 
-
               <?php require $this->checkTemplate("turma-temporada-menu");?>
-
 
             <?php }else{ ?>
 
-
-              <?php require $this->checkTemplate("turma-temporada-menu-estagiario");?>
-
+              <?php require $this->checkTemplate("turma-temporada-estagiario-menu");?>
 
             <?php } ?>
-
                 
           </ul>
         </li>         
@@ -286,7 +276,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </a>
           <ul class="treeview-menu">
             <?php require $this->checkTemplate("insc-temporada-menu");?>
-
           </ul>
         </li> 
         -->
@@ -298,7 +287,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </span>
           </a>
           <?php if( UserIsProf() ){ ?>
-
 
               <ul class="treeview-menu">
             <li class="treeview">
@@ -321,7 +309,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
             <?php }else{ ?>
 
-
               <ul class="treeview-menu">
             <li class="treeview">
                       
@@ -342,10 +329,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </ul>
 
             <?php } ?>
-
         </li> 
         <li class="treeview">
-          <a href="#"><i class="fa fa-users"></i> <span>Pessoas</span>
+          <a href="#"><i class="fa fa-users"></i> <span>Pessoas<span style="color: red; font-size: 10px">(Novo)</span> </span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -354,15 +340,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
           
            <?php if( UserIsProf() ){ ?>
 
-
               <ul class="treeview-menu">
                 <li><a href="/prof/users"><i class="fa fa-users"></i>Usuários</a></li>          
               
                 <li><a href="/prof/pessoas"><i class="fa fa-users"></i>Alunos</a></li>          
+
+                <li><a href="/prof/insc-pessoas-temporada-pesquisa"><i class="fa fa-users"></i>Pesquisa<span style="color: red; font-size: 10px">(Novo)</span> </a></li>          
               </ul>
 
             <?php }else{ ?>
-
 
               <ul class="treeview-menu">
                 <li><a href="/estagiario/users"><i class="fa fa-users"></i>Usuários</a></li>          
@@ -370,7 +356,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </ul>
 
             <?php } ?>
-
           
           
         </li> 

@@ -10,6 +10,44 @@ use \Sbc\Model\Agenda;
 use \Sbc\Model\Pessoa;
 use \Sbc\Model\Local;
 
+function listaIdEspacoTurmatemporada($idtemporada, $idlocal){
+
+    $listaespacos = Temporada::listAllEspacoTurmatemporada($idtemporada, $idlocal);
+
+    if(count($listaespacos) == 1){
+
+        for ($i=0; $i < count($listaespacos) ; $i++) { 
+
+            $idespaco = (isset($listaespacos[$i]["idespaco"])) ? $listaespacos[$i]["idespaco"] : '';
+            //print_r($idespaco);
+
+ 
+             print_r('<a style="font-size: 16px; color: blue; font-weight: bold;" href="/admin/gradehorarioespaco/'.$idtemporada.'/'.$idlocal.'/'.$idespaco.'">');
+        }
+    }
+
+}
+
+function listaEspacoTurmaTemporada($idtemporada, $idlocal){
+
+    $listaespacos = Temporada::listAllEspacoTurmatemporada($idtemporada, $idlocal);
+
+    if(count($listaespacos) == 1){
+
+
+        for ($i=0; $i < count($listaespacos) ; $i++) { 
+
+         //$lista =  $listaespacos[$i]["nomeespaco"];
+         $espaco = (isset($listaespacos[$i]["nomeespaco"])) ? $listaespacos[$i]["nomeespaco"] : '' ;
+         $idespaco = (isset($listaespacos[$i]["idespaco"])) ? $listaespacos[$i]["idespaco"] : '';
+
+            //print_r($espaco.', ');
+            echo '<a style="font-size: 16px; color: blue; font-weight: bold;" href="/admin/gradehorarioespaco/'.$idtemporada.'/'.$idlocal.'/'.$idespaco.'">['.$espaco.' ]</a>';
+        }
+    }
+
+}
+
 function numeroNaListaDePresençaByIdturmaData($idturma, $ano, $mes, $dia){
 
     $data = ''.$ano.'-'.$mes.'-'.$dia;
@@ -215,7 +253,7 @@ function getAtestadoDermaExiste($numcpf, $tipoatestado){
     $html = [];
     if($atestado > 0){        
         
-        array_push($html, '<a href="res/site/atestadoderma/'.$atestado[0]['nomearquivo'].'"> <i class="fa fa-file-pdf-o"></i></a>'
+        array_push($html, '<a href="res/site/atestadoderma/'.$atestado[0]['nomearquivo'].'"> <i class="fa fa-file-pdf-o" target="_blank"></i></a>'
             );         
     }else{
         array_push($html, ''
@@ -249,7 +287,7 @@ function getAtestadoDermaProfExiste($numcpf, $tipoatestado){
     $html = [];
     if($atestado > 0){        
         
-        array_push($html, '<a href="/../res/site/atestadoderma/'.$atestado[0]['nomearquivo'].'"> <i class="fa fa-file-pdf-o"></i></a>'
+        array_push($html, '<a href="/../res/site/atestadoderma/'.$atestado[0]['nomearquivo'].'"  target="_blank"> <i class="fa fa-file-pdf-o"></i></a>'
             );         
     }else{
         array_push($html, ''
@@ -363,7 +401,7 @@ function vagasPublicoGeral($idturma, $idtemporada, $idmodal, $idturmastatus, $to
     $numinscPublicoGeral = Insc::getNumInscPublicoGeralValidaTurmaTemporada($idtemporada, $idturma);
     $vagasMenosInscritosPubGeral = ($vagasPubGeral - $numinscPublicoGeral);
 
-    if($tokencpf == 0 ){
+    if($tokencpf != 0 ){
          array_push($html, '<input type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> 
                             &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> 
                             <span style="font-size: 12px; color: red">('.$vagasMenosInscritosPubGeral.' de '.$vagasPubGeral.' vagas para público em geral)</span>   <br>'
@@ -382,7 +420,8 @@ function vagasPublicoGeral($idturma, $idtemporada, $idmodal, $idturmastatus, $to
             if($numinscListaEsperaPublicoGeral >= $vagasListaEsperaPubGeral){
                  array_push($html, '<input disabled="true" type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> 
                      <span style="font-size: 12px; color: red">(Não há mais vagas disponíveis para este público)#</span>  <br> ');
-                 return $html[0]; 
+                 //return $html[0]; 
+                 return $vagasPubGeral;
             }else{                
                 array_push($html, '<input type="radio" name="tipoinsc" id="tipoinsc" value="2" onclick="enormal()" style="height: 20px; width: 20px;"> 
                                     &nbsp; Esta é uma inscrição para <strong>PÚBLICO em GERAL.</strong> 
@@ -420,11 +459,11 @@ function vagasPublicoGeral($idturma, $idtemporada, $idmodal, $idturmastatus, $to
 function vagasPublicoLaudo($idturma, $idtemporada, $idmodal, $idturmastatus, $tokencpf){
 
     $html = [];
-    $vagasPubLaudo = Turma::getVagasLaudoByIdTurma($idturma);
+    $vagasPubLaudo = (int)Turma::getVagasLaudoByIdTurma($idturma);
     $numinscPublicoLaudo = Insc::getNumInscPublicoLaudoValidaTurmaTemporada($idtemporada, $idturma);
     $vagasMenosInscritosPubLaudo = ($vagasPubLaudo - $numinscPublicoLaudo);
 
-    if($tokencpf == 0 ){
+    if($tokencpf != 0 ){
          array_push($html, '<input type="radio" name="tipoinsc" id="tipoinsc" value="3" onclick="comlaudo()" style="height: 20px; width: 20px;">
                             &nbsp; Esta inscrição é para pessoa com <strong>LAUDO MÉDICO.</strong><br> (Indicação Médica com CID) 
                             <span style="font-size: 12px; color: red">('.$vagasMenosInscritosPubLaudo.' de '.$vagasPubLaudo.' vagas para público com laudo)</span>  <br>'
@@ -484,11 +523,11 @@ function vagasPublicoPcd($idturma, $idtemporada, $idmodal, $idturmastatus, $toke
 
     $html = [];
 
-    $vagasPubPcd = Turma::getVagasPcdByIdTurma($idturma);
+    $vagasPubPcd = (int)Turma::getVagasPcdByIdTurma($idturma);
     $numinscPublicoPcd = Insc::getNumInscPublicoPcdValidaTurmaTemporada($idtemporada, $idturma);
     $vagasMenosInscritosPubPcd = ($vagasPubPcd - $numinscPublicoPcd);
 
-    if($tokencpf == 0 ){        
+    if($tokencpf != 0 ){        
         array_push($html, '<input type="radio" name="tipoinsc" id="tipoinsc" value="4" onclick="comdeficiencia()" style="height: 20px; width: 20px;">
                                 &nbsp; Esta inscrição é para <strong>PESSOA COM DEFICIÊNCIA.</strong> 
                                 <span style="font-size: 12px; color: red">('.$vagasMenosInscritosPubPcd.' de '.$vagasPubPcd.' vagas para público PCD)</span>
@@ -560,11 +599,11 @@ function vagasPublicoPvs($idturma, $idtemporada, $idmodal, $idturmastatus, $toke
 
     $html = [];
 
-    $vagasPubPvs = Turma::getVagasPvsByIdTurma($idturma);
+    $vagasPubPvs = (int)Turma::getVagasPvsByIdTurma($idturma);
     $numinscPublicoPvs = Insc::getNumInscPublicoPvsValidaTurmaTemporada($idtemporada, $idturma);
     $vagasMenosInscritosPubPvs = ($vagasPubPvs - $numinscPublicoPvs);
 
-    if($tokencpf == 0 ){        
+    if($tokencpf != 0 ){        
         array_push($html, '<input type="radio" name="tipoinsc" id="tipoinsc" value="5" onclick="comvulnerabilidade()" style="height: 20px; width: 20px;">
             &nbsp; Esta inscrição é para pessoa em <strong>VULNERABILIDADE SOCIAL.</strong> 
             <a href="#" onmousemove="alertTokenVunerabilidade()"><i class="fa fa-info-circle" style="font-size: 18px;"></i></a>
@@ -1012,11 +1051,13 @@ function todosInscricoesValidas($desctemporada){
     return $todosUsuarios;
 }
 
-function MatriculadosDesctemporada($desctemporada){
+function MatriculadosDesctemporada($desctemporada, $idtemporada){
 
     $todosMatriculados = new Insc();
-    $todosMatriculados = (int)Insc::numMatriculadosDescTemporada($desctemporada);
-    return $todosMatriculados;
+    //$todosMatriculados = (int)Insc::numMatriculadosDescTemporada($desctemporada);
+    $todosMatriculados = Insc::GetInscMatriculadasTemporada($idtemporada);
+    //return $todosMatriculados;
+    return $todosMatriculados[0]['count(*)'];
 }
 
 function pegaInscTemporadaModalidade($desctemporada, $idmodal){
@@ -1038,6 +1079,14 @@ function pegaSomaVagasByDescTemporada($desctemporada){
     $SomaVagasByTemporada = new Turma();
     $SomaVagasByTemporada = (int)Turma::getSomaVagasByDescTemporada($desctemporada);
     return $SomaVagasByTemporada;
+}
+
+function pegaSomaVagasByLocalDescTemporada($idlocal, $desctemporada){
+
+    $SomaVagasByLocalTemporada = new Turma();
+    $SomaVagasByLocalTemporada = (int)Turma::getSomaVagasByLocalDescTemporada($idlocal, $desctemporada);
+    return $SomaVagasByLocalTemporada;
+    
 }
 
 function NumAlunosPresentesPorData(){
@@ -1291,21 +1340,23 @@ function formatar_mascara($src, $mascara) {
 
 function colorStatus($idinscstatus){
 
-    if($idinscstatus === '1'){
-       return 'style="background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), transparent);"';
-    }else if($idinscstatus === '2'){
-       return 'style="background: linear-gradient(to bottom, rgba(0, 255, 0, 0.4), transparent);"'; 
-    }else if($idinscstatus === '3'){
-       return 'style="background: linear-gradient(to bottom, rgba( 96, 96, 192, 0.4), transparent);"'; 
-    }else if($idinscstatus === '6'){
-       return 'style="background: linear-gradient(to bottom, rgba(0, 0, 255, 0.4), transparent);"';    
-    }else if($idinscstatus === '7'){       
-       return 'style="background: linear-gradient(to bottom, rgba(0, 192, 255, 0.4), transparent);"';     
-    }else if($idinscstatus === '8'){
-       return 'style="background: linear-gradient(to bottom, rgba(192, 192, 192, 0.4), transparent);"'; 
-    }else if($idinscstatus === '9'){
-       return 'style="background: linear-gradient(to bottom, rgba(255, 0, 0, 0.4), transparent);"'; 
-    }   
+    if($idinscstatus === 1){
+       return 'style="background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), transparent); margin: 5px;"';
+    }else if($idinscstatus === 2){
+       return 'style="background: linear-gradient(to bottom, rgba(0, 255, 0, 0.4), transparent); margin: 5px;"'; 
+    }else if($idinscstatus === 3){
+       return 'style="background: linear-gradient(to bottom, rgba( 96, 96, 192, 0.4), transparent); margin: 5px;"'; 
+    }else if($idinscstatus === 6){
+       return 'style="background: linear-gradient(to bottom, rgba(0, 0, 255, 0.4), transparent); margin: 5px;"';    
+    }else if($idinscstatus === 7){       
+       return 'style="background: linear-gradient(to bottom, rgba(0, 192, 255, 0.4), transparent); margin: 5px;"';     
+    }else if($idinscstatus === 8){
+       return 'style="background: linear-gradient(to bottom, rgba(192, 192, 192, 0.4), transparent); margin: 5px;"'; 
+    }else if($idinscstatus === 9    ){
+       return 'style="background: linear-gradient(to bottom, rgba(255, 0, 0, 0.4), transparent); margin: 5px;"'; 
+    }else if($idinscstatus === 10    ){
+       return 'style="background: linear-gradient(to bottom, rgba(200, 162, 200, 0.4), transparent); margin: 5px;"'; 
+    }  
 }
 
 function formatCpf($cpf){
@@ -1536,6 +1587,13 @@ function calcularIdade($date){
         $apelido = $local->getApelidoLocalById($idlocal);
 
         return $apelido[0]['apelidolocal'];
+
+    }
+
+    function formatAnoNascimento($dtnasc)
+    {
+
+        return date('Y', strtotime($dtnasc));
 
     }
 

@@ -3,8 +3,15 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Lista com {$total} inscrições para a temporada {$temporada}
+    {$total} inscrições para a temporada {$temporada}
   </h1>
+  <h4>
+    <strong>{$totalmatriculados}</strong> matriculados /  
+    <strong>{$somadevagas}</strong> vagas,
+    <strong>{$somadevagaspcd}</strong> pcd, 
+    <strong>{$somadevagaslaudo}</strong> laudo, 
+    <strong>{$somadevagaspvs}</strong> vuln. social
+  </h4>
   <ol class="breadcrumb">
     <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
     <li class="active"><a href="/admin/insc">Inscrições todas temporadas</a></li><br>
@@ -42,60 +49,71 @@
             </div>
 
             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
-              <div class="row">
-              </div>
+                  <div class="row">
+                <div class="col-md-2">
+                    {loop="$locais"}
+                        <a href="/admin/insc-local/{$idtemporada}/{$value.idlocal}"><i class=""></i>{$value.apelidolocal}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    {/loop}
+                    <a style="font-weight: bold" href="/admin/insc/{$idtemporada}"><i class=""></i>TODOS OS LOCAIS</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
 
-            {loop="$insc"}
-            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
-              <div class="row">
+                <div class="col-md-10">             
 
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">
-                  {$value.idinsc}
-                </h5>
-              </div>
+                {loop="$insc"}
+                <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+                  <div class="row">
 
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">
-                  {function="formatDateHour($value.dtinsc)"}
-                </h5>
-              </div>
+                  <div class="col-md-1" style="margin: 2; padding: 2">
+                    <h5 style="font-weight: bold; text-align: left;">
+                      {$value.idinsc}
+                    </h5>
+                  </div>
 
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    {$value.descstatus}                    
-                </h5>
-              </div>
+                  <div class="col-md-1" style="margin: 2; padding: 2">
+                    <h5 style="font-weight: bold; text-align: left;">
+                      {function="formatDateHour($value.dtinsc)"}
+                    </h5>
+                  </div>
 
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    {$value.nomepess}     <strong>{if="$value.pcd == 1"}(PCD){/if}</strong></h3></th>                                  
-                </h5>
-              </div>
+                  <div class="col-md-2" style="margin: 2; padding: 2">
+                    <h5 style="font-weight: bold; text-align: left;">                  
+                        {$value.descstatus}                    
+                    </h5>
+                  </div>
 
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    {$value.desperson}
-                </h5>
-              </div>
+                  <div class="col-md-2" style="margin: 2; padding: 2">
+                    <h5 style="font-weight: bold; text-align: left;">                  
+                        {$value.nomepess}     <strong>{if="$value.pcd == 1"}(PCD){/if}</strong></h3></th>                                  
+                    </h5>
+                  </div>
 
-              <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    {$value.descturma}
-                </h5>
-              </div>
+                  <div class="col-md-2" style="margin: 2; padding: 2">
+                    <h5 style="font-weight: bold; text-align: left;">                  
+                        {$value.desperson}
+                    </h5>
+                  </div>
 
-              <div class="col-md-1" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                    <a class="btn btn-primary" href="/admin/profile/insc/{$value.idinsc}/{$value.idpess}/{$value.idturma}" role="button">Detalhes</a>
-                </h5>
+                  <div class="col-md-2" style="margin: 2; padding: 2">
+                    <h5 style="font-weight: bold; text-align: left;">                  
+                        {$value.descturma}
+                    </h5>
+                  </div>
+
+                  <div class="col-md-1" style="margin: 2; padding: 2">
+                    <h5 style="font-weight: bold; text-align: left;">                  
+                        <a class="btn btn-primary" href="/admin/profile/insc/{$value.idinsc}/{$value.idpess}/{$value.idturma}" role="button">Detalhes</a>
+                    </h5>
+                  </div>
+
+                </div>
               </div>
+              {/loop}
+
+               </div>
+
+               </div>
 
             </div>
-          </div>
-          {/loop}
-
-        </div>
 
             
             <!-- /.box-body -->

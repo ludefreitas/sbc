@@ -242,6 +242,25 @@ class Pessoa extends Model {
 		}
 	}
 
+	public static function getPessoaCpf($numcpf)
+	{
+
+		$sql = new Sql();
+
+		$rows = $sql->select(
+			"SELECT * FROM tb_pessoa a
+			INNER JOIN 	tb_users b USING(iduser)
+			
+			WHERE a.numcpf = :numcpf LIMIT 1", [
+			':numcpf'=>$numcpf
+		]);
+
+		if (count($rows) > 0) {
+
+			return $rows;
+		}
+	}
+
 	public function getPessoaExist()	{
 
 		$sql = new Sql();
@@ -354,7 +373,36 @@ class Pessoa extends Model {
 
 	}
 
-	function validaCPF($cpf) {
+	public static function getInscNumCpf($numcpf)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT * 
+			FROM tb_insc a 
+			INNER JOIN tb_inscstatus b USING(idinscstatus) 
+			-- INNER JOIN tb_carts c USING(idcart)
+			INNER JOIN tb_turma g USING(idturma)
+			INNER JOIN tb_atividade h ON h.idativ = g.idativ
+			INNER JOIN tb_espaco i ON i.idespaco = g.idespaco
+			INNER JOIN tb_pessoa d ON d.idpess = a.idpessoa
+			INNER JOIN tb_users e ON e.iduser = d.iduser
+			INNER JOIN tb_persons f ON f.idperson = e.idperson
+			INNER JOIN tb_temporada j USING(idtemporada)
+			INNER JOIN tb_inscstatus k USING(idinscstatus)
+			INNER JOIN tb_horario l USING(idhorario)
+			INNER JOIN tb_local m USING(idlocal)
+			WHERE a.numcpf = :numcpf ORDER BY a.idinsc DESC
+		", [
+			':numcpf'=>$numcpf
+		]);
+
+		return $results;
+
+	}
+
+	static function validaCPF($cpf) {
  
     // Extrai somente os números
     $cpf = preg_replace( '/[^0-9]/is', '', $cpf );

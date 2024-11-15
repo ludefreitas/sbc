@@ -174,19 +174,37 @@
                         <?php $counter1=-1;  if( isset($insc) && ( is_array($insc) || $insc instanceof Traversable ) && sizeof($insc) ) foreach( $insc as $key1 => $value1 ){ $counter1++; ?>
 
                         <?php $INSC = $value1["idinsc"]; ?>
+                        <?php $INSCSTATUS = $value1["idinscstatus"]; ?>
                         <tr>
-                            <td style="border: solid 1px; text-align: left; font-weight: bold; padding: 2px;"><?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </td>
-
-                            <?php $counter2=-1;  if( isset($dias_do_mes) && ( is_array($dias_do_mes) || $dias_do_mes instanceof Traversable ) && sizeof($dias_do_mes) ) foreach( $dias_do_mes as $key2 => $value2 ){ $counter2++; ?>       
-                            <td style="border: solid 1px; text-align: center; font-weight: bold; padding: 2px;">
-                              <?php echo statusPresenca($value2["dias"], $mes, $INSC, $turma["idturma"], $idtemporada); ?>
-
-                                </td>
+                            <?php if( $value1["idinscstatus"] == 8 ){ ?>
+                            <td style="border: solid 1px; text-align: left; font-weight: bold; padding: 2px; background: rgba(255, 0, 0, 0.15);"><?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <span style="color: red;"> ( Desistente )</span></span> </td>
+                            <?php }else{ ?>
+                                <?php if( $value1["idinscstatus"] == 5 ){ ?>
+                                <td style="border: solid 1px; text-align: left; font-weight: bold; padding: 2px; background: rgba(255, 165, 0, 0.5);"><span><?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <span style="color: red;"> ( Suspensa )</span></span> </td>
+                                <?php }else{ ?>
+                                <td style="border: solid 1px; text-align: left;   font-weight: bold; padding: 2px;"><?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </td>
+                                <?php } ?>
                             <?php } ?>
 
+                            <?php $counter2=-1;  if( isset($dias_do_mes) && ( is_array($dias_do_mes) || $dias_do_mes instanceof Traversable ) && sizeof($dias_do_mes) ) foreach( $dias_do_mes as $key2 => $value2 ){ $counter2++; ?> 
+                                <?php if( $INSCSTATUS == 8 ){ ?>              
+                                    <td style="border: solid 1px; text-align: center; font-weight: bold; padding: 2px; background: rgba(255, 0, 0, 0.15);">
+                                        <?php echo statusPresenca($value2["dias"], $mes, $INSC, $turma["idturma"], $idtemporada); ?>
+                                    </td>
+                                <?php }else{ ?>
+                                    <?php if( $INSCSTATUS == 5 ){ ?>
+                                    <td style="border: solid 1px; text-align: center; font-weight: bold; padding: 2px; background: rgba(255, 165, 0, 0.5);">
+                                        <?php echo statusPresenca($value2["dias"], $mes, $INSC, $turma["idturma"], $idtemporada); ?>
+                                    </td>
+                                    <?php }else{ ?>
+                                    <td style="border: solid 1px; text-align: center; font-weight: bold; padding: 2px;">
+                                        <?php echo statusPresenca($value2["dias"], $mes, $INSC, $turma["idturma"], $idtemporada); ?>
+                                    </td>
+                                    <?php } ?>
+                                <?php } ?>
+                            <?php } ?>
                         </tr>
-                        <?php } ?>
-                                                         
+                        <?php } ?>                                              
                       
                     </table> 
 

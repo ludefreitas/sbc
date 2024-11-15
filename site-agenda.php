@@ -195,6 +195,45 @@ $app->get("/agenda/:idlocal/:data", function($idlocal, $data) {
 	}
 	*/
 
+	$usuario = $user->getPessoa();
+	
+	for ($i=0; $i < count($usuario) ; $i++) { 
+
+			$idpess = $usuario[$i]['idpess'];
+			$numcpf = $usuario[$i]['numcpf'];
+
+			//Inserir na tabela agenda o número do Cpf do usuario
+			$status = $agenda->selectStatusIsPresente($idpess, $numcpf);
+
+			if(!$status){
+				$usuario[$i]['faltou'] = 1;
+			}else{	
+
+				$hoje = date('Y-m-d');
+				$hoje = new DateTime($hoje);
+				$dia = date($status[0]['dia']);
+				$dia = new DateTime($status[0]['dia']);
+
+				$hojeTimestamp =  date_timestamp_get($hoje);
+				$diaTimestamp = date_timestamp_get($dia);
+
+				$diferencaData = $hojeTimestamp - $diaTimestamp ;
+
+				if((int)$status[0]['ispresente'] === 0 AND $diferencaData > 0 AND $diferencaData < 604800){
+
+					$usuario[$i]['faltou'] = 0;
+
+				}else{
+
+					$usuario[$i]['faltou'] = 1;
+				}				
+			}			
+			//echo '<pre>';
+			//var_dump($usuario[$i]['faltou'].' - '.$status[0]['idpess'].' - '.date('Y-m-d').' - '.date($status[0]['dia']).' - ('.$diferencaData.')'.' - '.$numcpf);
+			//echo '</pre>';
+			
+	}	
+
 	$local->get($idlocal);
 
 	$idlocal = $local->getidlocal();
@@ -210,7 +249,7 @@ $app->get("/agenda/:idlocal/:data", function($idlocal, $data) {
 		'dataSemSemana'=>$dataSemSemana,
 		'horariosDiaSemana'=>$horariosDiaSemana,
 		'error'=>Agenda::getMsgError(),
-		'pessoa'=>$user->getPessoa(),
+		'pessoa'=>$usuario,
 	]);	
 });
 
@@ -282,11 +321,11 @@ $app->post("/hora-agenda", function() {
 	    echo "<script>window.location.href = '/agenda/".$_POST['idlocal']."/".$_POST['dataSemSemana']."'</script>";
 	    exit();
 	}
-	
 
 	$idlocal = (int)$_POST['idlocal'];
 	$dataPost = $_POST['data'];
 	$idpess = (int)$_POST['idpess'];
+	$numcpf = $_POST['numcpf'];
 	$ispresente = (int)$_POST['ispresente'];
 
 	$pessoa->get($idpess);
@@ -563,7 +602,6 @@ $app->post("/hora-agenda", function() {
     //var_dump($dataPost." - Dia Semana ".$nomediasemana." - DT limite ".$maisumasemana." - Diferença ".$anoDiferença." - nome ".$nomepess." - DT ".$dtnasc." - Local ".$idlocal." - Presente ".$ispresente." - Horainicial ".$horarioinicial." - Horafinal ".$horariofinal);
 
    //exit;
-	
 
 	$page = new Page();
 	
@@ -573,6 +611,7 @@ $app->post("/hora-agenda", function() {
 		'idhoradiasemana'=>$idhoradiasemana,
 		'nomeDiaSemana'=>$nomediasemana,
 		'idpess'=>$idpess,
+		'numcpf'=>$numcpf,
 		'titulo'=>$titulo,
 		'nomepess'=>$nomepess,
 		'dtnasc'=>$dtnasc,
@@ -595,6 +634,7 @@ $app->post("/horaagendada", function() {
 
 	$idlocal = $_POST['idlocal'];
 	$idpess = $_POST['idpess'];
+	$numcpf = $_POST['numcpf'];
 	$idhoradiasemana = $_POST['idhoradiasemana'];
 	$titulo = $_POST['titulo'];
 	$dia = $_POST['dataSemSemana'];
@@ -615,6 +655,7 @@ $app->post("/horaagendada", function() {
 	$selecionaagendadia = $selecionaagenda[0]['dia'];
 
 	if($selecionaagendadia > $hoje){
+
 	    $qtdAgendamento = Agenda::countAgendaPorPessoaLocalDiaTituloHoje($idpess, $idlocal, $titulo, $hoje);
 
         //$qtdAgendamento = Agenda::countAgendaPorPessoaLocalDia($idpess, $idlocal, $hoje);
@@ -642,6 +683,7 @@ $app->post("/horaagendada", function() {
 	$agenda->setData([
 			'idlocal'=>$idlocal,
 			'idpess'=>$idpess,
+			'numcpf'=>$numcpf,
 			'idhoradiasemana'=>$idhoradiasemana,
 			'titulo'=>$titulo,
 			'dia'=>$dia,
@@ -687,9 +729,11 @@ $app->get("/minhaagenda", function() {
 	
 	$titulo = 'raia';
 	
-	$data = new DateTime();
+	$dataHoje = new DateTime();
 
-	$data = date('Y-m-d');
+	$dataHoje = date('Y-m-d');
+
+	$horaAtual = date('H:i');
 
 	$desctemporada = date('Y');
 	
@@ -697,6 +741,27 @@ $app->get("/minhaagenda", function() {
 	//$agenda = $agenda->getAgendaByIduser($iduser, $titulo);
 	//$agenda = $agenda->getAgendaAll();
 
+	for ($i=0; $i < count($agenda) ; $i++) { 			
+
+		$horaAtual = date('H:i');
+		$horainicial = date($agenda[$i]['horainicial'] );
+
+		$horaAtual = date(strtotime($horaAtual));
+		$horainicial = date(strtotime($horainicial));
+
+		$horario = $horainicial - $horaAtual;
+
+		if( ($agenda[$i]['dia'] > $dataHoje) || (($dataHoje == $agenda[$i]['dia']) && ($horario > 7200 && $horario > 0))){
+
+			$agenda[$i]['excluiAgenda'] = 1;
+
+		}else{
+
+			$agenda[$i]['excluiAgenda'] = 0;
+		}
+
+	}
+	
 	$page = new Page([
 		'header'=>false,
 		'footer'=>false
@@ -704,7 +769,7 @@ $app->get("/minhaagenda", function() {
 
 	$page->setTpl("minhaagenda", [
 		'agenda'=>$agenda,
-		'data'=>$data,
+		'data'=>$dataHoje,
 		'desctemporada'=>$desctemporada,
 		'error'=>Agenda::getMsgError(),
 		'success'=>Agenda::getMsgSuccess()
@@ -723,11 +788,34 @@ $app->get("/minhaagenda/:desctemporada", function($desctemporada) {
 	
 	$titulo = 'raia';
 	
-	$data = new DateTime();
+	$dataHoje = new DateTime();
 
-	$data = date('Y-m-d');
+	$dataHoje = date('Y-m-d');
+
+	$horaAtual = date('H:i');	
 	
 	$agenda = $agenda->getAgendaByIduserTemporada($iduser, $titulo, $desctemporada);
+
+	for ($i=0; $i < count($agenda) ; $i++) { 			
+
+		$horaAtual = date('H:i');
+		$horainicial = date($agenda[$i]['horainicial'] );
+
+		$horaAtual = date(strtotime($horaAtual));
+		$horainicial = date(strtotime($horainicial));
+
+		$horario = $horainicial - $horaAtual;
+
+		if( ($agenda[$i]['dia'] > $dataHoje) || (($dataHoje == $agenda[$i]['dia']) && ($horario > 7200 && $horario > 0))){
+
+			$agenda[$i]['excluiAgenda'] = 1;
+
+		}else{
+
+			$agenda[$i]['excluiAgenda'] = 0;
+		}
+
+	}
 
 	$page = new Page([
 		'header'=>false,
@@ -736,7 +824,7 @@ $app->get("/minhaagenda/:desctemporada", function($desctemporada) {
 
 	$page->setTpl("minhaagenda", [
 		'agenda'=>$agenda,
-		'data'=>$data,
+		'data'=>$dataHoje,
 		'desctemporada'=>$desctemporada,
 		'error'=>Agenda::getMsgError(),
 		'success'=>Agenda::getMsgSuccess()
@@ -853,6 +941,7 @@ $app->post("/hora-agenda-avaliacao", function() {
 	$idlocal = (int)$_POST['idlocal'];
 	$dataPost = $data;
 	$idpess = (int)$_POST['idpess'];
+	$numcpf = $_POST['numcpf'];
 	$ispresente = (int)$_POST['ispresente'];
 
 	$titulo = $_POST['titulo'];
@@ -869,8 +958,16 @@ $app->post("/hora-agenda-avaliacao", function() {
 
 	$anoDiferença = (int)$anoAtual - (int)$anoNasc;
 
-	if($anoDiferença < 10 ){
+	if($idlocal == 21 && $anoDiferença < 10){
+
 		echo "<script>alert('O agendamento para a avaliação só e permitido para maiores de 10 anos');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}
+
+	if($idlocal == 3 && $anoDiferença < 12){
+
+		echo "<script>alert('O agendamento para a avaliação só e permitido para maiores de 12 anos');";
 		echo "javascript:history.go(-1)</script>";
 		exit();
 	}
@@ -955,6 +1052,11 @@ $app->post("/hora-agenda-avaliacao", function() {
 	if($diasemana == "Quinta"){
 		$nomediasemana = "Quinta-feira";
 	}
+
+	if($diasemana == "Quarta"){
+		$nomediasemana = "Quarta-feira";
+	}
+
 	if($diasemana == "Sexta-"){
 		$nomediasemana = "Sexta-feira";
 	}
@@ -1000,6 +1102,7 @@ $app->post("/hora-agenda-avaliacao", function() {
 		'idhoradiasemana'=>$idhoradiasemana,
 		'nomeDiaSemana'=>$nomediasemana,
 		'idpess'=>$idpess,
+		'numcpf'=>$numcpf,
 		'nomepess'=>$nomepess,
 		'dtnasc'=>$dtnasc,
 		'titulo'=>$titulo,

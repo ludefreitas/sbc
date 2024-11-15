@@ -416,6 +416,7 @@ $app->get("/admin/turma/create/token/:idturma/:idtemporada/:numcpf", function($i
 	*/
 
 	$_POST['idturma'] = $idturma;
+	$_POST['idtemporada'] = $idtemporada;
 	$_POST['numcpf'] = $numcpf;
 	$_POST['token'] = $token;
 	$_POST['isused'] = 0;
@@ -441,6 +442,9 @@ $app->post("/admin/turma/create/token", function() {
 
 	$turma = new Turma();
 	$user = new User();
+
+	$idtemporada = $_POST['idtemporada'];
+	$idturma = $_POST['idturma'];
 	
 	$iduserSession = (int)$_SESSION[User::SESSION]['iduser'];
 	
@@ -478,6 +482,7 @@ $app->post("/admin/turma/create/token", function() {
 	}
 
 	$_POST['idturma'] = $_POST['idturma'];
+	$_POST['idtemporada'] = $_POST['idtemporada'];
 	$_POST['numcpf'] = $_POST['numcpf'];
 	$_POST['token'] = $token;
 	$_POST['isused'] = 0;
@@ -539,7 +544,28 @@ $app->get("/admin/token/:idturma/:idtemporada", function($idturma, $idtemporada)
 
 	$turma->get((int)$idturma);	
 
-	$tokens = Turma::listAlltokenTurma($idturma);
+	$temporadatoken = new Temporada();
+
+	$temporadatoken->get((int)$idtemporada);
+
+	$desctemporadatoken = $temporadatoken->getdesctemporada();
+
+	
+	$temporada = Temporada::listAll();
+
+	$anoAtual = date('Y');
+
+	$desctemporada = $anoAtual;
+
+	//var_dump($desctemporadatoken.' - '.$desctemporada);
+	//exit();
+
+	$desctemporada = '2023';
+
+	$idtemporadaAtual = Temporada::getIdTemporadaByDesctemporada($desctemporada);
+
+	//$tokens = Turma::listAlltokenTurma($idturma);
+	$tokens = Turma::listAlltokenTurmaTemporada($idturma, $idtemporada);
 
 	if(!isset($turma) || $turma == NULL){
 
@@ -550,7 +576,9 @@ $app->get("/admin/token/:idturma/:idtemporada", function($idturma, $idtemporada)
 
 	$page->setTpl("token-turma", [
 		'tokens'=>$tokens,
-		'idtemporada'=>$idtemporada,
+		'idtemporada'=>$idtemporadaAtual,
+		'desctemporadatoken'=>$desctemporadatoken,
+		'temporada'=>$temporada,
 		'turma'=>$turma->getValues(),
 		"error"=>Turma::getMsgError()	
 	]);

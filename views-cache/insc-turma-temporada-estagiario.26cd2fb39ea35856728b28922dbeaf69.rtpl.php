@@ -1,5 +1,193 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?><script type="text/javascript">
 
+    function dadosAtestado(idpess){
+
+        let url = '/prof/saude/dadosatestado/'+idpess
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if (window.confirm(' '+ result + 'Para atualizar atestado CLÍNICO clique em "OK"'))
+          {
+              adicionarArtestado(idpess)
+          };
+
+        });
+      }
+
+      function adicionarArtestado(idpess){
+        
+        let confirmaAtestado = confirm('Deseja realmente atualizar atestado CLÍNICO?')
+
+        if(confirmaAtestado == true)
+        {                      
+            var data = prompt("Informe a data da emissão do Atestado CLÍNICO. Ex.: dd-mm-aaaa");     
+
+
+            if (data == null || data == "") {
+
+                alert("As informaçãoes do atestado CLÍNICO não foram atualizadas! Informe a data e faça alguma observação")
+            } else {
+
+                 var traco1 = data.substr(2,1)
+                 var traco2 = data.substr(5,1)
+                 var dia = data.substr(0,2);
+                 var mes = data.substr(3,2);
+                 var ano = data.substr(6,4); 
+                 
+                 if((traco1 != '-') || (traco2 != '-') || (ano.length < 4)){
+                    alert('Formato da data inválida');
+                 }else{
+
+                    if((dia > 31) || (dia == 0) || (mes > 12) || (mes == 0)){
+
+                    alert('data inválida!')
+                    
+                    }else{
+
+                        //alert('Data validada!!! ' + dia + ' ' + mes + ' ' + ano)
+
+                        
+                        var observ = prompt("Digite uma observação");
+                        if (observ == null || observ == "") {
+                                lert("As informaçãoes do atestado CLÍNICO não foram atualizadas! Informe a data e faça alguma observação.");
+                        } else {
+
+                            let url = '/prof/saude/atulizaatestado/'+idpess+'/'+data+'/'+observ+''
+
+                            atualizarAtestado(url) 
+                        }           
+                    }                           
+                }
+            }        
+        } 
+         //let url = '/prof/saude/dadosatestado/'+idpess
+
+        //dadosAtestado(url)  
+    }
+      /*
+      function dadosAtestado(url){
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          alert(result)
+
+        });
+      }
+      */
+
+      function atualizarAtestado(url){
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          alert(result)
+
+        });
+      }
+
+      function atualizarAtestadoDerma(url){
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          alert(result)
+
+        });
+      }
+
+      function dadosAtestadoDerma(idpess){
+
+        let url = '/prof/saude/dadosatestadoderma/'+idpess
+
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'url');        
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if (window.confirm(' '+ result + 'Para atualizar atestado DERMATOLÓGICO clique em "OK"'))
+          {
+              adicionarArtestadoDerma(idpess)
+          };
+
+        });
+      }
+
+      function adicionarArtestadoDerma(idpess){
+        
+        let confirmaAtestado = confirm('Deseja realmente atualizar atestado DERMATOLÓGICO?')
+
+        if(confirmaAtestado == true)
+        {                      
+            var data = prompt("Informe a data da emissão do Atestado DERMATOLÓGICO. Ex.: dd-mm-aaaa");     
+
+
+            if (data == null || data == "") {
+
+                alert("As informaçãoes do atestado DERMATOLÓGICO não foram atualizadas! Informe a data e faça alguma observação")
+            } else {
+
+                 var traco1 = data.substr(2,1)
+                 var traco2 = data.substr(5,1)
+                 var dia = data.substr(0,2);
+                 var mes = data.substr(3,2);
+                 var ano = data.substr(6,4); 
+                 
+                 if((traco1 != '-') || (traco2 != '-') || (ano.length < 4)){
+                    alert('Formato da data inválida');
+                 }else{
+
+                    if((dia > 31) || (dia == 0) || (mes > 12) || (mes == 0)){
+
+                    alert('data inválida!')
+                    
+                    }else{
+
+                        //alert('Data validada!!! ' + dia + ' ' + mes + ' ' + ano)
+
+                        
+                        var observ = prompt("Digite uma observação");
+                        if (observ == null || observ == "") {
+                                lert("As informaçãoes do atestado DERMATOLÓGICO não foram atualizadas! Informe a data e faça alguma observação.");
+                        } else {
+
+                            let url = '/prof/saude/atulizaatestadoderma/'+idpess+'/'+data+'/'+observ+''
+
+                            atualizarAtestadoDerma(url) 
+                        }           
+                    }                           
+                }
+            }        
+        } 
+         //let url = '/prof/saude/dadosatestado/'+idpess
+
+        //dadosAtestado(url)  
+    }
+
       function requisitarPaginaEndereco(url){
 
         let ajax = new XMLHttpRequest();
@@ -63,7 +251,7 @@
           </div>
               
             <?php $counter1=-1;  if( isset($inscPvs) && ( is_array($inscPvs) || $inscPvs instanceof Traversable ) && sizeof($inscPvs) ) foreach( $inscPvs as $key1 => $value1 ){ $counter1++; ?>
-            <?php if( ($value1["idinscstatus"] != 8) && ($value1["idinscstatus"] != 9) ){ ?>
+            <?php if( ($value1["idinscstatus"] != 8) && ($value1["idinscstatus"] != 9) && ($value1["idinscstatus"] != 5) && ($value1["idinscstatus"] != 10) ){ ?>
             <div class="box-body" style=" margin: 5px;">
               <div <?php echo colorStatus($value1["idinscstatus"]); ?> style="margin: 5px" class="row">
               
@@ -80,9 +268,46 @@
                       <?php } ?>                      
                       <strong><?php echo calcularIdade($value1["dtnasc"]); ?> anos</strong>
                       &nbsp;Nascim.: <?php echo formatDate($value1["dtnasc"]); ?>&nbsp;
+                      <strong>CadUnico: <?php if( $value1["cadunico"] ){ ?> <?php echo htmlspecialchars( $value1["cadunico"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php }else{ ?> 0 <?php } ?> </strong>&nbsp;
+                      
+                      <?php if( existeParq($value1["idpess"]) ){ ?>
+
+                        <?php if( repostaSimParq($value1["idpess"]) ){ ?>
+
+                        <strong><a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> <i style="color: orange;" class="fa fa-exclamation-triangle"></i> PAR-Q <i style="color: orange;" class="fa fa-exclamation-triangle"> </i></a> </strong>
+
+                        <?php }else{ ?>
+
+                        <strong><a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> PAR-Q </a> </strong>
+
+                        <?php } ?>
+
+
+                      <?php }else{ ?>
+
+                      <strong><a style="font-weight: bold; color: red;" onclick="alert('Não existe Par-q para este aluno')"> PAR-Q </a> </strong>
+
+                      <?php } ?>   
+                      
+                      <br><br>
+                      <span style="color: black; font-weight: bold">Atestado:  </span>
+                      <span style="color: darkred; font-weight: bold">  
+                        <?php echo getAtestadoClinicoProfExiste($value1["numcpf"], 1); ?>
+                        </span>
+                        &nbsp;
+                         <a style="color: orange; text-align-last: right;"><?php echo getAtestadoIconeByNumCpf($value1["numcpf"]); ?></a>   
+                         
+                          &nbsp;&nbsp;
+                         <span style="color: darkred;">  
+                         <?php echo getAtestadoDermaProfExiste($value1["numcpf"], 2); ?>
+                          </span>
+                        &nbsp;                          
+                         <a style="color: orange; text-align-last: right;"><?php echo getAtestadoDermaIconeByNumCpf($value1["numcpf"]); ?></a>
+                          &nbsp; &nbsp;                      
+                      
                     </h5>
                   </div>
-
+                 
                   <div class="col-md-6" style="margin: 1; padding: 1">
                     <h5 style="text-align: left;">               
                         <strong>Resp: </strong><?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
@@ -263,7 +488,7 @@
           </div>
               
             <?php $counter1=-1;  if( isset($inscPcd) && ( is_array($inscPcd) || $inscPcd instanceof Traversable ) && sizeof($inscPcd) ) foreach( $inscPcd as $key1 => $value1 ){ $counter1++; ?>
-            <?php if( ($value1["idinscstatus"] != 8) && ($value1["idinscstatus"] != 9) ){ ?>
+            <?php if( ($value1["idinscstatus"] != 8) && ($value1["idinscstatus"] != 9) && ($value1["idinscstatus"] != 5) && ($value1["idinscstatus"] != 10) ){ ?>
             <div class="box-body" style=" margin: 5px;">
               <div <?php echo colorStatus($value1["idinscstatus"]); ?> style="margin: 5px" class="row">
               
@@ -280,12 +505,13 @@
                       <?php } ?>                      
                       <strong><?php echo calcularIdade($value1["dtnasc"]); ?> anos</strong>
                       &nbsp;Nascim.: <?php echo formatDate($value1["dtnasc"]); ?>&nbsp;
-
+                      <strong>CadUnico: <?php if( $value1["cadunico"] ){ ?> <?php echo htmlspecialchars( $value1["cadunico"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php }else{ ?> 0 <?php } ?> </strong>&nbsp;
+                      
                       <?php if( existeParq($value1["idpess"]) ){ ?>
 
                         <?php if( repostaSimParq($value1["idpess"]) ){ ?>
 
-                        <strong><a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> <i style="color: orange;" class="fa fa-exclamation-triangle"> </i> PAR-Q <i style="color: orange;" class="fa fa-exclamation-triangle"> </i></a> </strong>
+                        <strong><a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> <i style="color: orange;" class="fa fa-exclamation-triangle"></i> PAR-Q <i style="color: orange;" class="fa fa-exclamation-triangle"> </i></a> </strong>
 
                         <?php }else{ ?>
 
@@ -298,8 +524,24 @@
 
                       <strong><a style="font-weight: bold; color: red;" onclick="alert('Não existe Par-q para este aluno')"> PAR-Q </a> </strong>
 
-                      <?php } ?>   
-
+                      <?php } ?> 
+                      
+                      <br><br>
+                      <span style="color: black; font-weight: bold">Atestado:  </span>
+                      <span style="color: darkred; font-weight: bold">  
+                        <?php echo getAtestadoClinicoProfExiste($value1["numcpf"], 1); ?>
+                        </span>
+                        &nbsp;
+                         <a style="color: orange; text-align-last: right;"><?php echo getAtestadoIconeByNumCpf($value1["numcpf"]); ?></a>   
+                         
+                          &nbsp;&nbsp;
+                         <span style="color: darkred;">  
+                         <?php echo getAtestadoDermaProfExiste($value1["numcpf"], 2); ?>
+                          </span>
+                        &nbsp;                          
+                         <a style="color: orange; text-align-last: right;"><?php echo getAtestadoDermaIconeByNumCpf($value1["numcpf"]); ?></a>
+                          &nbsp; &nbsp;                      
+                      
                     </h5>
                   </div>
 
@@ -488,7 +730,7 @@
             </div>
               
             <?php $counter1=-1;  if( isset($inscPlm) && ( is_array($inscPlm) || $inscPlm instanceof Traversable ) && sizeof($inscPlm) ) foreach( $inscPlm as $key1 => $value1 ){ $counter1++; ?>
-            <?php if( ($value1["idinscstatus"] != 8) && ($value1["idinscstatus"] != 9) ){ ?>
+            <?php if( ($value1["idinscstatus"] != 8) && ($value1["idinscstatus"] != 9) && ($value1["idinscstatus"] != 5) && ($value1["idinscstatus"] != 10) ){ ?>
             <div class="box-body" style=" margin: 5px;">
               <div <?php echo colorStatus($value1["idinscstatus"]); ?> style="margin: 5px" class="row">
               
@@ -505,6 +747,43 @@
                       <?php } ?>                      
                       <strong><?php echo calcularIdade($value1["dtnasc"]); ?> anos</strong>
                       &nbsp;Nascim.: <?php echo formatDate($value1["dtnasc"]); ?>&nbsp;
+                      <strong>CadUnico: <?php if( $value1["cadunico"] ){ ?> <?php echo htmlspecialchars( $value1["cadunico"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php }else{ ?> 0 <?php } ?> </strong>&nbsp;
+                      
+                      <?php if( existeParq($value1["idpess"]) ){ ?>
+
+                        <?php if( repostaSimParq($value1["idpess"]) ){ ?>
+
+                        <strong><a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> <i style="color: orange;" class="fa fa-exclamation-triangle"></i> PAR-Q <i style="color: orange;" class="fa fa-exclamation-triangle"> </i></a> </strong>
+
+                        <?php }else{ ?>
+
+                        <strong><a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> PAR-Q </a> </strong>
+
+                        <?php } ?>
+
+
+                      <?php }else{ ?>
+
+                      <strong><a style="font-weight: bold; color: red;" onclick="alert('Não existe Par-q para este aluno')"> PAR-Q </a> </strong>
+
+                      <?php } ?>   
+                      
+                      <br><br>
+                      <span style="color: black; font-weight: bold">Atestado:  </span>
+                      <span style="color: darkred; font-weight: bold">  
+                        <?php echo getAtestadoClinicoProfExiste($value1["numcpf"], 1); ?>
+                        </span>
+                        &nbsp;
+                         <a style="color: orange; text-align-last: right;"><?php echo getAtestadoIconeByNumCpf($value1["numcpf"]); ?></a>   
+                         
+                          &nbsp;&nbsp;
+                         <span style="color: darkred;">  
+                         <?php echo getAtestadoDermaProfExiste($value1["numcpf"], 2); ?>
+                          </span>
+                        &nbsp;                          
+                         <a style="color: orange; text-align-last: right;"><?php echo getAtestadoDermaIconeByNumCpf($value1["numcpf"]); ?></a>
+                          &nbsp; &nbsp;                      
+                      
                     </h5>
                   </div>
 
@@ -691,7 +970,7 @@
             </div>
               
             <?php $counter1=-1;  if( isset($insc) && ( is_array($insc) || $insc instanceof Traversable ) && sizeof($insc) ) foreach( $insc as $key1 => $value1 ){ $counter1++; ?>
-            <?php if( ($value1["idinscstatus"] != 8) && ($value1["idinscstatus"] != 9) ){ ?>
+            <?php if( ($value1["idinscstatus"] != 8) && ($value1["idinscstatus"] != 9) && ($value1["idinscstatus"] != 5) && ($value1["idinscstatus"] != 10) ){ ?>
             <div class="box-body" style=" margin: 5px;">
               <div <?php echo colorStatus($value1["idinscstatus"]); ?> style="margin: 5px" class="row">
               
@@ -708,6 +987,43 @@
                       <?php } ?>                      
                       <strong><?php echo calcularIdade($value1["dtnasc"]); ?> anos</strong>
                       &nbsp;Nascim.: <?php echo formatDate($value1["dtnasc"]); ?>&nbsp;
+                      <strong>CadUnico: <?php if( $value1["cadunico"] ){ ?> <?php echo htmlspecialchars( $value1["cadunico"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php }else{ ?> 0 <?php } ?> </strong>&nbsp;
+                      
+                      <?php if( existeParq($value1["idpess"]) ){ ?>
+
+                        <?php if( repostaSimParq($value1["idpess"]) ){ ?>
+
+                        <strong><a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> <i style="color: orange;" class="fa fa-exclamation-triangle"></i> PAR-Q <i style="color: orange;" class="fa fa-exclamation-triangle"> </i></a> </strong>
+
+                        <?php }else{ ?>
+
+                        <strong><a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> PAR-Q </a> </strong>
+
+                        <?php } ?>
+
+
+                      <?php }else{ ?>
+
+                      <strong><a style="font-weight: bold; color: red;" onclick="alert('Não existe Par-q para este aluno')"> PAR-Q </a> </strong>
+
+                      <?php } ?>   
+                      
+                      <br><br>
+                      <span style="color: black; font-weight: bold">Atestado:  </span>
+                      <span style="color: darkred; font-weight: bold">  
+                        <?php echo getAtestadoClinicoProfExiste($value1["numcpf"], 1); ?>
+                        </span>
+                        &nbsp;
+                         <a style="color: orange; text-align-last: right;"><?php echo getAtestadoIconeByNumCpf($value1["numcpf"]); ?></a>   
+                         
+                          &nbsp;&nbsp;
+                         <span style="color: darkred;">  
+                         <?php echo getAtestadoDermaProfExiste($value1["numcpf"], 2); ?>
+                          </span>
+                        &nbsp;                          
+                         <a style="color: orange; text-align-last: right;"><?php echo getAtestadoDermaIconeByNumCpf($value1["numcpf"]); ?></a>
+                          &nbsp; &nbsp;                      
+                      
                     </h5>
                   </div>
 
@@ -884,6 +1200,140 @@
            
           <?php } ?>
           </div> 
+
+          <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+            
+        <?php $counter1=-1;  if( isset($inscTodas) && ( is_array($inscTodas) || $inscTodas instanceof Traversable ) && sizeof($inscTodas) ) foreach( $inscTodas as $key1 => $value1 ){ $counter1++; ?>
+            <?php if( ($value1["idinscstatus"] == 5) ){ ?>
+
+            <div class="box-body" style=" margin: 5px;">              
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5 style="text-align: left;">
+                            <?php echo htmlspecialchars( $value1["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?>º -
+                            <strong>[<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>] - <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
+                            &nbsp;<?php echo formatCpf($value1["numcpf"]); ?>&nbsp;
+                            <strong><?php echo calcularIdade($value1["dtnasc"]); ?> anos</strong>
+                            &nbsp;Nascim.: <?php echo formatDate($value1["dtnasc"]); ?>&nbsp;&nbsp;                       
+                            <strong>Resp: <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>&nbsp;
+                            <a href="https://wa.me/+55<?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')">
+                                    <i class="fa fa-whatsapp" style="color: green;"></i>
+                                    <span style="color: black;"> <?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>&nbsp;</span>
+                            </a>&nbsp;&nbsp;
+
+                            <a style="font-weight: bold;" onclick="requisitarPaginaEndereco('/prof/insc-turma-temporada-endereco/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>')"><i class="fas fa-map-marker-alt"></i> 
+                                Endereço 
+                            </a>&nbsp;&nbsp;
+
+                            <strong>Dt Insc.: <?php echo formatDate($value1["dtinsc"]); ?></strong>
+                            &nbsp;Dt Matric.: <?php echo formatDate($value1["dtmatric"]); ?>&nbsp;
+                   
+                            
+                            <span style="font-weight: bold; text-align: left; color: brown;">                  
+                                <?php if( $value1["inscpvs"] == 1 ){ ?> (Vuln. Social) &nbsp;&nbsp;<?php } ?>
+                            </span>                
+                      
+                            <span style="font-weight: bold; text-align: left; color: darkblue;">  
+                                <?php if( $value1["inscpcd"] == 1 ){ ?> PCD &nbsp;&nbsp;<?php } ?>  
+                            </span>        
+                      
+                            <span style="font-weight: bold; text-align: left; color: darkgreen;">                  
+                                <?php if( $value1["laudo"] == 1 ){ ?>LAUDO  &nbsp;&nbsp;<?php } ?>
+                            </span> 
+                            <br>
+                            <?php if( $value1["idinscstatus"] == 5 ){ ?>                      
+                                <span style="font-weight: bold; text-align: left; color: green;">                  
+                                *<?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>*
+                                </span> 
+                                &nbsp;&nbsp;
+                          
+                            <?php } ?>                    
+                        
+                            <a href="/prof/profile/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" role="button">
+                                Detalhes
+                            </a>
+                            &nbsp;&nbsp;
+
+                            
+                        
+                            
+                        </h5>                               
+                    </div>
+                </div>              
+            </div>
+            <?php } ?>           
+        <?php } ?>
+          </div> 
+
+          <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+            <div class="box-body" style="text-align: center; background-color: #C8A2C8
+;">
+              <span style="color: black; font-weight: bold">Excluídas
+              </span>
+            </div>
+          
+           <?php $counter1=-1;  if( isset($inscTodas) && ( is_array($inscTodas) || $inscTodas instanceof Traversable ) && sizeof($inscTodas) ) foreach( $inscTodas as $key1 => $value1 ){ $counter1++; ?>
+            <?php if( ($value1["idinscstatus"] == 10) ){ ?>
+
+            <div class="box-body" style=" margin: 5px;">              
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5 style="text-align: left;">
+                            <?php echo htmlspecialchars( $value1["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?>º -
+                            <strong>[<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>] - <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
+                            &nbsp;<?php echo formatCpf($value1["numcpf"]); ?>&nbsp;
+                            <strong><?php echo calcularIdade($value1["dtnasc"]); ?> anos</strong>
+                            &nbsp;Nascim.: <?php echo formatDate($value1["dtnasc"]); ?>&nbsp;&nbsp;                       
+                            <strong>Resp: <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>&nbsp;
+                            <a href="https://wa.me/+55<?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')">
+                                    <i class="fa fa-whatsapp" style="color: green;"></i>
+                                    <span style="color: black;"> <?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>&nbsp;</span>
+                            </a>&nbsp;&nbsp;
+
+                            <a style="font-weight: bold;" onclick="requisitarPaginaEndereco('/prof/insc-turma-temporada-endereco/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>')"><i class="fas fa-map-marker-alt"></i> 
+                                Endereço 
+                            </a>&nbsp;&nbsp;
+
+                            <strong>Dt Insc.: <?php echo formatDate($value1["dtinsc"]); ?></strong>
+                            &nbsp;Dt Matric.: <?php echo formatDate($value1["dtmatric"]); ?>&nbsp;<strong>Dt Exclusão.: <?php echo formatDate($value1["dtexclusao"]); ?></strong>
+                   
+                            
+                            <span style="font-weight: bold; text-align: left; color: brown;">                  
+                                <?php if( $value1["inscpvs"] == 1 ){ ?> (Vuln. Social) &nbsp;&nbsp;<?php } ?>
+                            </span>                
+                      
+                            <span style="font-weight: bold; text-align: left; color: darkblue;">  
+                                <?php if( $value1["inscpcd"] == 1 ){ ?> PCD &nbsp;&nbsp;<?php } ?>  
+                            </span>        
+                      
+                            <span style="font-weight: bold; text-align: left; color: darkgreen;">                  
+                                <?php if( $value1["laudo"] == 1 ){ ?>LAUDO  &nbsp;&nbsp;<?php } ?>
+                            </span> 
+                            <br>
+                            <?php if( $value1["idinscstatus"] == 10 ){ ?>                      
+                                <span style="font-weight: bold; text-align: left; color: red;">                  
+                                *<?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>*
+                                </span> 
+                                &nbsp;&nbsp;
+                          
+                            <?php } ?>                    
+                        
+                            <a href="/prof/profile/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" role="button">
+                                Detalhes
+                            </a>
+                            &nbsp;&nbsp;
+
+                            
+                        
+                            
+                        </h5>                               
+                    </div>
+                </div>              
+            </div>
+            <?php } ?>
+           
+          <?php } ?>
+          </div>
           
           <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
             <div class="box-body" style="text-align: center; background-color: orangered;">
@@ -905,6 +1355,43 @@
                       &nbsp;<?php echo formatCpf($value1["numcpf"]); ?>&nbsp;
                       <strong><?php echo calcularIdade($value1["dtnasc"]); ?> anos</strong>
                       &nbsp;Nascim.: <?php echo formatDate($value1["dtnasc"]); ?>&nbsp;
+                      <strong>CadUnico: <?php if( $value1["cadunico"] ){ ?> <?php echo htmlspecialchars( $value1["cadunico"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php }else{ ?> 0 <?php } ?> </strong>&nbsp;
+                      
+                      <?php if( existeParq($value1["idpess"]) ){ ?>
+
+                        <?php if( repostaSimParq($value1["idpess"]) ){ ?>
+
+                        <strong><a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> <i style="color: orange;" class="fa fa-exclamation-triangle"></i> PAR-Q <i style="color: orange;" class="fa fa-exclamation-triangle"> </i></a> </strong>
+
+                        <?php }else{ ?>
+
+                        <strong><a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> PAR-Q </a> </strong>
+
+                        <?php } ?>
+
+
+                      <?php }else{ ?>
+
+                      <strong><a style="font-weight: bold; color: red;" onclick="alert('Não existe Par-q para este aluno')"> PAR-Q </a> </strong>
+
+                      <?php } ?> 
+                      
+                      <br><br>
+                      <span style="color: black; font-weight: bold">Atestado:  </span>
+                      <span style="color: darkred; font-weight: bold">  
+                        <?php echo getAtestadoClinicoProfExiste($value1["numcpf"], 1); ?>
+                        </span>
+                        &nbsp;
+                         <a style="color: orange; text-align-last: right;"><?php echo getAtestadoIconeByNumCpf($value1["numcpf"]); ?></a>   
+                         
+                          &nbsp;&nbsp;
+                         <span style="color: darkred;">  
+                         <?php echo getAtestadoDermaProfExiste($value1["numcpf"], 2); ?>
+                          </span>
+                        &nbsp;                          
+                         <a style="color: orange; text-align-last: right;"><?php echo getAtestadoDermaIconeByNumCpf($value1["numcpf"]); ?></a>
+                          &nbsp; &nbsp;                      
+                      
                     </h5>
                   </div>
 
@@ -1111,6 +1598,43 @@
                       &nbsp;<?php echo formatCpf($value1["numcpf"]); ?>&nbsp;
                       <strong><?php echo calcularIdade($value1["dtnasc"]); ?> anos</strong>
                       &nbsp;Nascim.: <?php echo formatDate($value1["dtnasc"]); ?>&nbsp;
+                      <strong>CadUnico: <?php if( $value1["cadunico"] ){ ?> <?php echo htmlspecialchars( $value1["cadunico"], ENT_COMPAT, 'UTF-8', FALSE ); ?> <?php }else{ ?> 0 <?php } ?> </strong>&nbsp;
+                      
+                      <?php if( existeParq($value1["idpess"]) ){ ?>
+
+                        <?php if( repostaSimParq($value1["idpess"]) ){ ?>
+
+                        <strong><a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> <i style="color: orange;" class="fa fa-exclamation-triangle"></i> PAR-Q <i style="color: orange;" class="fa fa-exclamation-triangle"> </i></a> </strong>
+
+                        <?php }else{ ?>
+
+                        <strong><a style="font-weight: bold; color: green;" href="/prof/par-q/pessoa/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> PAR-Q </a> </strong>
+
+                        <?php } ?>
+
+
+                      <?php }else{ ?>
+
+                      <strong><a style="font-weight: bold; color: red;" onclick="alert('Não existe Par-q para este aluno')"> PAR-Q </a> </strong>
+
+                      <?php } ?>   
+                      
+                      <br><br>
+                      <span style="color: black; font-weight: bold">Atestado:  </span>
+                      <span style="color: darkred; font-weight: bold">  
+                        <?php echo getAtestadoClinicoProfExiste($value1["numcpf"], 1); ?>
+                        </span>
+                        &nbsp;
+                         <a style="color: orange; text-align-last: right;"><?php echo getAtestadoIconeByNumCpf($value1["numcpf"]); ?></a>   
+                         
+                          &nbsp;&nbsp;
+                         <span style="color: darkred;">  
+                         <?php echo getAtestadoDermaProfExiste($value1["numcpf"], 2); ?>
+                          </span>
+                        &nbsp;                          
+                         <a style="color: orange; text-align-last: right;"><?php echo getAtestadoDermaIconeByNumCpf($value1["numcpf"]); ?></a>
+                          &nbsp; &nbsp;                      
+                      
                     </h5>
                   </div>
 
@@ -1128,6 +1652,7 @@
 
                       <strong>Dt Insc.: <?php echo formatDate($value1["dtinsc"]); ?></strong>
                       &nbsp;Dt Matric.: <?php echo formatDate($value1["dtmatric"]); ?>&nbsp;
+                      <strong>Dt Desist.: <?php echo formatDate($value1["dtdesist"]); ?></strong>
                     </h5>
                   </div>                   
                 </div>

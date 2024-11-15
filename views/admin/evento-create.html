@@ -1,15 +1,73 @@
 <script type="text/javascript">
-    function openDivToken(){
+
+    function temInscOpenDiv(){
       
         document.getElementById('divtoken').hidden = false  
+        document.getElementById('divDatasInsc').hidden = false  
+    }
+
+    function temInscCloseDiv(){
+      
+        document.getElementById('divtoken').hidden = true
+        document.getElementById('divDatasInsc').hidden = true    
         
     }
 
-    function closeDivToken(){
+    function temDivulgOpenDiv(){
       
-        document.getElementById('divtoken').hidden = true  
+        document.getElementById('divDataDivulgEvento').hidden = false  
+    }
+
+    function temDivulgCloseDiv(){
+      
+        document.getElementById('divDataDivulgEvento').hidden = true
         
     }
+
+    function temTranspOpenDiv(){
+      
+        document.getElementById('divDataTranspEvento').hidden = false  
+    }
+
+    function temTranspCloseDiv(){
+      
+        document.getElementById('divDataTranspEvento').hidden = true
+        
+    }
+
+    function temHoraTerminoOpenDiv(){
+      
+        document.getElementById('divHoraTerminoEvento').hidden = false  
+    }
+
+    function temHoraTerminoCloseDiv(){
+      
+        document.getElementById('divHoraTerminoEvento').hidden = true
+        
+    }
+
+    function terminaNoMesmoDiaOpenDiv(){
+      
+        document.getElementById('divDiaFinalEvento').hidden = false  
+    }
+
+    function terminaNoMesmoDiaCloseDiv(){
+      
+        document.getElementById('divDiaFinalEvento').hidden = true
+        
+    }
+
+    function temEquipamentosOpenDiv(){
+      
+        document.getElementById('divRelacaoEquipam').hidden = false  
+    }
+
+    function temEquipamentosCloseDiv(){
+      
+        document.getElementById('divRelacaoEquipam').hidden = true
+        
+    }   
+
 
 </script>
 <!-- Content Wrapper. Contains page content -->
@@ -28,190 +86,413 @@
 <!-- Main content -->
 <section class="content">
 
-  <div class="row">
-  	<div class="col-md-12">
-  		<div class="box box-success">
+    <div class="row">
+  	    <div class="col-md-12">
+  		    <div class="box box-success">
 
-        {if="$error != ''"}
-            <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
-        {$error}
-            </div>
-        {/if}
-        <!-- /.box-header -->
-        <!-- form start -->
-        <form role="form" action="/admin/evento/create" method="post">
-          <div class="box-body">
+            {if="$error != ''"}
+                <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
+                    {$error}
+                </div>
+            {/if}
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form" action="/admin/evento/create" method="post" enctype="multipart/form-data">
+            <div class="box-body">
 
-            <div class="row">
+                <div class="row">
 
-              <div class="col-md-6">
+                    <div class="col-md-6">
 
-                <div class="box-header">
-                  <label for="desc_evento">Descrição do evento</label>
-                   <input type="text" class="form-control" id="desc_evento" name="desc_evento" placeholder="Descreva o evento" value="{$createEventoValues.desc_evento}">
-                </div>    
-
-
-                <div class="box-header">
-                  <label for="turma">Espaço - Crec</label>
-                  <select class="form-control" name="idespaco">
-                  <option value="{$createEventoValues.idespaco}">Selecione o Crec, o espaço e os horários</option>    
-                  {loop="$espaco"}
-                  <option value="{$value.idespaco}">{$value.apelidolocal} - {$value.nomeespaco}</option>
-                  {/loop}                            
-                  </select>
-                </div>   
-
-                <div class="box-header">
-                  <label for="temporada">Temporada</label>
-                  <select class="form-control" name="idtemporada">
-                  <option value="{$createEventoValues.idtemporada}">Selecione a temporada</option>    
-                  {loop="$temporada"}
-                  <option value="{$value.idtemporada}">{$value.desctemporada}</option>
-                  {/loop}                            
-                  </select>
-                </div>   
-
-                <div class="box-header">
-                  <label for="profestagiario">Responsável</label>
-                  <select class="form-control" name="iduser">
-                  <option value="{$createEventoValues.desperson}">Selecione o responsável pelo Evento</option>    
-                  {loop="$profestagiario"}
-                  <option value="{$value.iduser}">{$value.desperson}</option>
-                  {/loop}                            
-                  </select>
-                </div>   
+                        <div class="box-header">
+                            <label for="desc_evento">Descrição do evento:</label>
+                            <input type="text" class="form-control" id="desc_evento" name="desc_evento" placeholder="Descreva o evento" value="{$createEventoValues.desc_evento}">
+                        </div>    
 
 
-                <div class="box-header">
-                  <label for="statusEvento">Status Evento</label>
-                  <select class="form-control" name="idstatus_evento">
-                  <option value="{$createEventoValues.idstatus_evento}">Selecione o Statsu do Evento</option>    
-                  {loop="$eventoStatsu"}
-                  <option value="{$value.idstatus_evento}">{$value.descstatus_evento}</option>
-                  {/loop}                            
-                  </select>
-                </div>  
+                        <div class="box-header">
+                            <label for="turma">Crec - Espaço:</label>
+                            <select class="form-control" name="idespaco">
+                                <option value="{$createEventoValues.idespaco}">
+                                    Selecione o Crec, o espaço e os horários
+                                </option>    
+                                {loop="$espaco"}
+                                    <option value="{$value.idespaco}">
+                                        {$value.apelidolocal} - {$value.nomeespaco}
+                                    </option>
+                                {/loop}                            
+                            </select>
+                        </div>   
 
-              <div class="box-header">
-                <label for="tipo_evento">Tipo</label>
-                <select class="form-control" name="tipo_evento" id="tipo_evento">  
-                  {if="$createEventoValues.tipo_evento"}
-                  <option selected="selected" value="{$createEventoValues.tipo_evento}">{$createEventoValues.tipo_evento}</option>  
-                  {else}
-                  <option selected="selected" value="">Selecione</option>  
-                  {/if}                 
-                   
-                    <option value="Aquática">Aquática</option>
-                    <option value="Terrestre">Terrestre</option>
-                                            
-                </select>
-                
-              </div>                 
+                        <div class="box-header">
+                            <label for="temporada">Temporada:</label>
+                            <select class="form-control" name="idtemporada">
+                                <option value="{$createEventoValues.idtemporada}">
+                                    Selecione a temporada
+                                </option>    
+                                {loop="$temporada"}
+                                    <option value="{$value.idtemporada}">
+                                        {$value.desctemporada}
+                                    </option>
+                                {/loop}                            
+                            </select>
+                        </div>   
 
-              <div class="box-header">
-                <label for="programa_evento">Programa</label>
-                <select class="form-control" name="programa_evento" id="programa_evento">  
-                  {if="$createEventoValues.programa_evento"}
-                  <option selected="selected" value="{$createEventoValues.programa_evento}">{$createEventoValues.programa_evento}</option>  
-                  {else}
-                  <option selected="selected" value="">Selecione</option>  
-                  {/if}              
+                        <div class="box-header">
+                            <label for="profestagiario">Responsável:</label>
+                            <select class="form-control" name="iduser">
+                                <option value="{$createEventoValues.desperson}">
+                                    Selecione o responsável pelo evento
+                                </option>    
+                                {loop="$profestagiario"}
+                                    <option value="{$value.iduser}">
+                                        {$value.desperson}
+                                    </option>
+                                {/loop}                            
+                            </select>
+                        </div>   
 
-                    <option value="Hora do Treino">Hora do Treino</option>
-                    <option value="Corpo em Ação">Corpo em Ação</option>
-                    <option value="GR São Bernardo">GR São Bernardo</option>
-                    <option value="Campeões da vida">Campeões da vida</option>
-                                            
-                </select>
-              </div> 
+                        <div class="box-header">
+                            <label for="profestagiario">Responsável - 2:</label>
+                            <select class="form-control" name="iduser2">
+                                <option value="{$createEventoValues.desperson2}">
+                                    Selecione um segundo responsável pelo evento
+                                </option>    
+                                {loop="$profestagiario"}
+                                    <option value="{$value.iduser}">
+                                        {$value.desperson}
+                                    </option>
+                                {/loop}                            
+                            </select>
+                        </div>   
 
-              </div>
 
-              <div class="col-md-6">   
+                        <div class="box-header">
+                            <label for="statusEvento">Status evento:</label>
+                            <select class="form-control" name="idstatus_evento">
+                                <option value="{$createEventoValues.idstatus_evento}">
+                                    Selecione o status do evento
+                                </option>    
+                                {loop="$eventoStatsu"}
+                                <option value="{$value.idstatus_evento}">
+                                    {$value.descstatus_evento}
+                                </option>
+                                {/loop}                            
+                            </select>
+                        </div>  
 
-              <div class="box-header">
-                <label for="origem_evento">Origem</label>
-                <select class="form-control" name="origem_evento" id="origem_evento">  
-                  {if="$createEventoValues.origem_evento"}
-                  <option selected="selected" value="{$createEventoValues.origem_evento}">{$createEventoValues.origem_evento}</option>  
-                  {else}
-                  <option selected="selected" value="">Selecione</option>  
-                  {/if}                 
-                   
-                    <option value="SESP">SESP</option>
-                    <option value="PELC">PELC</option>
-                    <option value="Voluntário">Voluntário</option>
-                    <option value="Convênio Esportes">Convênio Esportes</option>
-                                            
-                  </select>
-              </div> 
+                        <div class="box-header">
+                            <label for="tipo_evento">Tipo:</label>
+                            <select class="form-control" name="tipo_evento" id="tipo_evento">  
+                            {if="$createEventoValues.tipo_evento"}
+                                <option selected="selected" value="{$createEventoValues.tipo_evento}">
+                                    {$createEventoValues.tipo_evento}
+                                </option>  
+                            {else}
+                                <option selected="selected" value="">
+                                    Selecione
+                                </option>  
+                            {/if}               
+                                <option value="Aquática">Aquática</option>
+                                <option value="Terrestre">Terrestre</option>
+                            </select>
+                            
+                        </div>   
 
-                  <div class="box-header">
-                    <label for="dt_inicio_divulgacao_evento"> Data de Início das Inscrições</label>
-                    <input type="datetime-local" class="form-control" id="dt_inicio_divulgacao_evento" name="dt_inicio_divulgacao_evento" value="{$createEventoValues.dt_inicio_divulgacao_evento}">
+                        <div class="box-header">
+                            <label for="programa_evento">Programa:</label>
+                            <select class="form-control" name="programa_evento" id="programa_evento">  
+                            {if="$createEventoValues.programa_evento"}
+                                <option selected="selected" value="{$createEventoValues.programa_evento}"> 
+                                    {$createEventoValues.programa_evento}
+                                </option>  
+                            {else}
+                                <option selected="selected" value="">
+                                    Selecione
+                                </option>  
+                            {/if}     
+                                <option value="Hora do Treino">Hora do Treino</option>
+                                <option value="Corpo em Ação">Corpo em Ação</option>
+                                <option value="GR São Bernardo">GR São Bernardo</option>
+                                <option value="Campeões da vida">Campeões da vida</option>  
+                            </select>
+                        </div>              
+
+                        <div class="box-header">
+                            <label for="origem_evento">Origem:</label>
+                            <select class="form-control" name="origem_evento" id="origem_evento">  
+                            {if="$createEventoValues.origem_evento"}
+                                <option selected="selected" value="{$createEventoValues.origem_evento}">
+                                    {$createEventoValues.origem_evento}
+                                </option>  
+                            {else}
+                                <option selected="selected" value="">
+                                    Selecione
+                                </option>  
+                            {/if}             
+                                <option value="SESP">SESP</option>
+                                <option value="PELC">PELC</option>
+                                <option value="Voluntário">Voluntário</option>
+                                <option value="Convênio Esportes">Convênio Esportes</option>                     
+                            </select>
+                        </div> 
+
+                        <div class="box-header">
+                            <label for="tipo_resultado_evento">Tipo de resultado das disputas:</label>
+                            <select class="form-control" name="tipo_resultado_evento" id="tipo_resultado_evento">  
+                            {if="$createEventoValues.tipo_resultado_evento"}
+                                <option selected="selected" value="{$createEventoValues.tipo_resultado_evento}">
+                                    {$createEventoValues.tipo_resultado_evento}
+                                </option>  
+                            {else}
+                                <option selected="selected" value="">
+                                    Selecione
+                                </option>  
+                            {/if}   
+                                <option value="Não haverá disputa">Não haverá disputa</option>          
+                                <option value="Pontos">Pontos</option>
+                                <option value="Volta">Volta</option>                     
+                                <option value="Tempo crescente">Tempo crescente</option>
+                                <option value="Tempo crescente">Tempo decrescente</option>
+                            </select>
+                        </div> 
+
+                        <div class="box-header">
+                            <label style="font-size: 12px; margin: 0px">Telefone Celular (WhatsApp) para informações</label>
+
+                            <input type="text" name="telef_inform_evento" id="telef_inform_evento" pattern="\([0-9]{2}\)[\s][0-9]{5}-[0-9]{5,4}" class="form-control" value="{$createEventoValues.telef_inform_evento}"/>
+                            <script type="text/javascript">$("#telef_inform_evento").mask("(00) 00000-0009");</script>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">   
+
+                    
+                    <div class="box-header">
+
+                        <div class="">
+                            <label for="dia_inicio_evento"> 
+                                Dia de início do evento
+                            </label>
+                            <input type="date" class="form-control" id="dia_inicio_evento" name="dia_inicio_evento" value="{$createEventoValues.dia_inicio_evento}">
+                        </div>
+
+                        <div id="">
+                            <label>
+                                O evento termina no mesmo dia ?
+                            </label>&nbsp;&nbsp;   
+                            <input type="radio" name="termina_mesmo_dia" value="1" onchange="terminaNoMesmoDiaCloseDiv()" >
+                                &nbsp;Sim
+                                &nbsp;&nbsp;
+                            <input type="radio" name="termina_mesmo_dia" value="0" onchange="terminaNoMesmoDiaOpenDiv()" >
+                                &nbsp;Não
+                        </div> 
+
+                        <div id="divDiaFinalEvento" hidden>
+                            <div class="" >
+                                <label for="dia_termino_evento"> 
+                                    Dia final do evento: 
+                                    <span style="font-size: 8px;">(Se for terminar no mesmo dia, informe, neste campo, o dia de início)</span>
+                                </label>
+                                <input type="date" class="form-control" id="dia_final_evento" name="dia_final_evento" value="{$createEventoValues.dia_final_evento}" re>
+                            </div>  
+                        <br>
+                        </div> 
+
+                        <div class="">
+                            <label for="hora_inicio_evento"> 
+                                hora de inicio do evento:
+                            </label>
+                            <input type="time" class="form-control" id="hora_inicio_evento" name="hora_inicio_evento" value="{$createEventoValues.hora_inicio_evento}">
+                        </div>
+
+                        <div id="">
+                            <label>
+                                Tem hora para terminar o evento ?
+                            </label>&nbsp;&nbsp;   
+                            <input type="radio" name="tem_hora_termino" value="1" onchange="temHoraTerminoOpenDiv()" >
+                                &nbsp;Sim
+                                &nbsp;&nbsp;
+                            <input type="radio" name="tem_hora_termino" value="0" onchange="temHoraTerminoCloseDiv()" >
+                                &nbsp;Não
+                        </div>  
+
+                        <div id="divHoraTerminoEvento" hidden>
+                            <div class="" >
+                                <label for="hora_termino_evento"> 
+                                    Hora de término do evento:
+                                </label>
+                                <input type="time" class="form-control" id="hora_termino_evento" name="hora_termino_evento" value="{$createEventoValues.hora_termino_evento}">
+                            </div>  
+                            <br>
+                        </div>
+
+                        <div id="">
+                            <label>
+                                O evento será divulgado na página inicial do site para todos os usuários do site ?
+                            </label>&nbsp;&nbsp;   
+                            <input type="radio" name="tem_divulgacao" value="1" onchange="temDivulgOpenDiv()" >
+                                &nbsp;Sim
+                                &nbsp;&nbsp;
+                            <input type="radio" name="tem_divulgacao" value="0" onchange="temDivulgCloseDiv()" >
+                                &nbsp;Não
+                        </div>  
+
+                        <div id="divDataDivulgEvento" hidden>
+                            <div class="">
+                                <label for="dt_inicio_divulgacao_evento"> 
+                                    Data de início da divulgação do evento:
+                                </label>
+                                <input type="datetime-local" class="form-control" id="dt_inicio_divulgacao_evento" name="dt_inicio_divulgacao_evento" value="{$createEventoValues.dt_inicio_divulgacao_evento}">
+                            </div>
+
+                            <div class="">
+                                <label for="dt_final_divulgacao_evento"> 
+                                    Data de término da divulgação do evento:
+                                </label>
+                                <input type="datetime-local" class="form-control" id="dt_final_divulgacao_evento" name="dt_final_divulgacao_evento" value="{$createEventoValues.dt_final_divulgacao_evento}">
+                            </div>
+                            <br>
+                        </div>
+
+                        <div id="">
+                            <label>
+                                Tem transporte ?
+                            </label>&nbsp;&nbsp;   
+                            <input type="radio" name="tem_transporte" value="1" onchange="temTranspOpenDiv()" >
+                                &nbsp;Sim 
+                                &nbsp;&nbsp;
+                            <input type="radio" name="tem_transporte" value="0" onchange="temTranspCloseDiv()" >
+                                &nbsp;Não
+                        </div>  
+
+                        <div id="divDataTranspEvento" hidden>
+                            <div class="">
+                                <label for="dt_saida_transporte_evento"> 
+                                    Data de saída do transporte:
+                                </label>
+                                <input type="date" class="form-control" id="dt_saida_transporte_evento" name="dt_saida_transporte_evento" value="{$createEventoValues.dt_saida_transporte_evento}">
+                            </div>
+
+                            <div class="">
+                                <label for="dt_retorno_transporte_evento"> 
+                                    Data de retorno do transporte:
+                                </label>
+                                <input type="date" class="form-control" id="dt_retorno_transporte_evento" name="dt_retorno_transporte_evento" value="{$createEventoValues.dt_retorno_transporte_evento}">
+                            </div>
+
+                            <div class="">
+                                <label for="hora_saida_transporte_evento"> 
+                                    Hora de saída do transporte:
+                                </label>
+                                <input type="time" class="form-control" id="hora_saida_transporte_evento" name="hora_saida_transporte_evento" value="{$createEventoValues.hora_saida_transporte_evento}">
+                            </div>
+
+                            <div class="">
+                                <label for="hora_retorno_transporte_evento"> 
+                                    Data de retorno do transporte:
+                                </label>
+                                <input type="time" class="form-control" id="hora_retorno_transporte_evento" name="hora_retorno_transporte_evento" value="{$createEventoValues.hora_retorno_transporte_evento}">
+                            </div>
+
+                            <br>
+                        </div>
+
+                        <div>
+                            <label>
+                                Evento com inscrição prévia ?
+                            </label>&nbsp;&nbsp;
+                            <input type="radio" name="tem_insc" value="1" onchange="temInscOpenDiv()" >
+                                &nbsp; Sim
+                                &nbsp;&nbsp;
+                            <input type="radio" name="tem_insc" value="0" onchange="temInscCloseDiv()" >
+                                &nbsp;Não
+                        </div>
+
+                        <div id="divDatasInsc" hidden>
+                            <div class="">
+                                <label for="dt_comeco_insc_evento"> 
+                                    Data do início das inscrições:
+                                </label>
+                                <input type="datetime-local" class="form-control" id="dt_comeco_insc_evento" name="dt_comeco_insc_evento" value="{$createEventoValues.dt_comeco_insc_evento}">
+                            </div>
+
+                            <div class="" >
+                                <label for="dt_termino_insc_evento"> 
+                                    Data do fim das inscrições:
+                                </label>
+                                <input type="datetime-local" class="form-control" id="dt_termino_insc_evento" name="dt_termino_insc_evento" value="{$createEventoValues.dt_termino_insc_evento}">
+                            </div>    
+                            <br>
+                        </div>
+
+                        <div id="divtoken" hidden>
+                            <label>
+                                Tem token ?
+                            </label>&nbsp;&nbsp;   
+                            <input type="radio" name="tem_token" value="1">
+                                &nbsp;Sim
+                                &nbsp;&nbsp;
+                            <input type="radio" name="tem_token" value="0">
+                                &nbsp;Não
+                        </div>
+
+                        <div id="">
+                            <label>
+                                Evento só para alunos ?
+                            </label>&nbsp;&nbsp;   
+                            <input type="radio" name="so_para_alunos" value="1" >
+                                &nbsp;Sim
+                                &nbsp;&nbsp;
+                            <input type="radio" name="so_para_alunos" value="0" >
+                                &nbsp;Não
+                        </div>
+
+                        <div id="">
+                            <label>
+                                Categoria única ?
+                            </label>&nbsp;&nbsp;   
+                            <input type="radio" name="tem_categoria_unica" value="1" >
+                                &nbsp;Sim
+                                &nbsp;&nbsp;
+                            <input type="radio" name="tem_categoria_unica" value="0" >
+                                &nbsp;Não
+                        </div>
+
+                        <div id="">
+                            <label>
+                                Terá premiação ?
+                            </label>&nbsp;&nbsp;   
+                            <input type="radio" name="tem_premiacao" value="1" >
+                                &nbsp;Sim
+                                &nbsp;&nbsp;
+                            <input type="radio" name="tem_premiacao" value="0">
+                                &nbsp;Não
+                        </div>
+                                
+                        <div id="">
+                            <label>
+                                Evento precisará de equipamentos ?
+                            </label>&nbsp;&nbsp;   
+                            <input type="radio" onchange="temEquipamentosOpenDiv()" name="tem_equipamento" value="1">
+                                &nbsp;Sim
+                                &nbsp;&nbsp;
+                            <input type="radio" onchange="temEquipamentosCloseDiv()" name="tem_equipamento" value="0">
+                                &nbsp;Não
+
+                            <div id="divRelacaoEquipam" hidden> 
+                                <div class="form-group">
+                                    <label for="relac_equip_evento">Relação de equipamentos necessários:</label>
+                                    <textarea type="text" class="form-control" id="relac_equip_evento" name="relac_equip_evento" placeholder="Relação de equipamentos" value=""></textarea> 
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>                  
+                    
                   </div>
-
-                  <div class="box-header">
-                    <label for="dt_final_divulgacao_evento"> Data de Início das Matrículas</label>
-                    <input type="datetime-local" class="form-control" id="dt_final_divulgacao_evento" name="dt_final_divulgacao_evento" value="{$createEventoValues.dt_final_divulgacao_evento}">
-                  </div>
-
-                  <div class="box-header">
-                    <label for="dt_comeco_insc_evento"> Data do Fim das Inscrições</label>
-                    <input type="datetime-local" class="form-control" id="dt_comeco_insc_evento" name="dt_comeco_insc_evento" value="{$createEventoValues.dt_comeco_insc_evento}">
-                  </div>
-
-                  <div class="box-header">
-                    <label for="dt_termino_insc_evento"> Data do Fim das Matrículas</label>
-                    <input type="datetime-local" class="form-control" id="dt_termino_insc_evento" name="dt_termino_insc_evento" value="{$createEventoValues.dt_termino_insc_evento}">
-                  </div>    
-
-                <div id="">
-                 <label>
-                   &nbsp;&nbsp; <input onchange="openDivToken()" oncuechange="closeDivToken()" type="checkbox" name="tem_insc" value="1"> Evento com inscrição prévia ?
-                  </label>
-                </div>  
-                
-                <div id="divtoken" hidden>
-                  <label>
-                   &nbsp;&nbsp; <input type="checkbox" name="token" value="1"> Tem token ?
-                  </label>
-                </div>  
-
-                <div id="">
-                  <label>
-                   &nbsp;&nbsp; <input type="checkbox" name="tem_regras" value="1"> Tem regras ?
-                  </label>
-                </div>  
-
-                <div id="">
-                  <label>
-                   &nbsp;&nbsp; <input type="checkbox" name="tem_categoria" value="1"> Dividido por categoria ?
-                  </label>
-                </div>  
-
-                <div id="">
-                  <label>
-                   &nbsp;&nbsp; <input type="checkbox" name="tem_imagem" value="1"> Terá premiação ?
-                  </label>
-                </div>  
-
-                <div id="">
-                  <label>
-                   &nbsp;&nbsp; <input type="checkbox" name="divulgar_evento" value="1"> Divulgar evento ?
-                  </label>
-                </div>  
-
-                <div id="">
-                  <label>
-                   &nbsp;&nbsp; <input type="checkbox" name="tem_imagem" value="1"> Colocar imagem para divulgar evento ?
-                  </label>
-                </div>  
-
-               
-                
-              </div>
 
             </div>
             

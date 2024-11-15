@@ -1,3 +1,21 @@
+<script type="text/javascript">
+  
+function OpenDivEspaco() {
+
+  document.getElementById('espaco').hidden = false;
+  document.getElementById('projeto').hidden = true;
+  // body...
+}
+
+function OpenDivProjeto() {
+
+  document.getElementById('projeto').hidden = false;
+  document.getElementById('espaco').hidden = true;
+  // body...
+}
+
+</script>
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
@@ -45,17 +63,47 @@
                   <option value="{$value.idmodal}" >{$value.descmodal} </option>
                   {/loop}                            
                   </select>
-                </div>  
-
+                </div>
+                 
                 <div class="box-header">
-                  <label for="turma">Espaço - Crec</label>
+                  <div class="">
+                    <label>
+                     É projeto?
+                    </label>
+
+                    <label>
+                     &nbsp;&nbsp; <input onchange="OpenDivProjeto()"  type="radio" name="selecioneespaco" value="1">Sim
+                    </label>
+                    <label> 
+                     &nbsp;&nbsp; <input onchange="OpenDivEspaco()"  type="radio" name="selecioneespaco" value="1">Não
+                    </label>
+                  </div> 
+
+                <div  id="projeto" hidden>
+                  <label for="turma">Projeto - Crec</label>
                   <select class="form-control" name="idespaco">
-                  <option value="{$createTurmaValues.idespaco}">Selecione o Crec, o espaço e os horários</option>    
-                  {loop="$espaco"}
-                  <option value="{$value.idespaco}">{$value.apelidolocal} - {$value.nomeespaco}</option>
+                  <option value="{$createTurmaValues.idespaco}">Selecione o Crec e o espaço</option>{loop="$espaco"}
+                    {if="$value.nomeespaco === 'Projeto'"}
+                    <option value="{$value.idespaco}">{$value.apelidolocal} - {$value.nomeespaco}</option>                
+                    {/if}
                   {/loop}                            
                   </select>
                 </div>   
+
+                <div  id="espaco" hidden>
+                  <label for="turma">Espaço - Crec</label>
+                  <select class="form-control" name="idespaco">
+                  <option value="{$createTurmaValues.idespaco}">Selecione o Crec e o espaço </option>    
+                  {loop="$espaco"}
+                    {if="$value.nomeespaco !== 'Projeto'"}
+                    <option value="{$value.idespaco}">{$value.apelidolocal} - {$value.nomeespaco}</option>
+                    {/if}
+                 
+                  {/loop}                            
+                  </select>
+                </div> 
+
+                </div>  
                 
                   
                  <div class="box-header">

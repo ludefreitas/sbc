@@ -43,10 +43,11 @@ class Agenda extends Model {
 	{
 		$sql = new Sql();
 
-		$results = $sql->select("CALL sp_agenda_save(:idagen, :idlocal, :idpess, :idhoradiasemana, :titulo, :dia, :horainicial, :horafinal, :observacao, :ispresente, :dtagenda)", array(
+		$results = $sql->select("CALL sp_agenda_save(:idagen, :idlocal, :idpess, :numcpf, :idhoradiasemana, :titulo, :dia, :horainicial, :horafinal, :observacao, :ispresente, :dtagenda)", array(
 			":idagen"=>$this->getidagen(),
 			":idlocal"=>$this->getidlocal(),
-			":idpess"=>$this->getidpess(),			
+			":idpess"=>$this->getidpess(),	
+			":numcpf"=>$this->getnumcpf(),
 			":idhoradiasemana"=>$this->getidhoradiasemana(),			
 			":titulo"=>$this->gettitulo(),
 			":dia"=>$this->getdia(),
@@ -730,6 +731,24 @@ class Agenda extends Model {
 			':statushora'=>$statushora,
 			':idhoradiasemana'=>$idhoradiasemana
 		]);	
+	}
+
+	public static function selectStatusIsPresente($idpess, $numcpf){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * 
+			FROM tb_agenda 
+			WHERE idpess = :idpess
+			OR numcpf = :numcpf
+			AND titulo = 'raia'
+			order by dia desc 
+			limit 1", [
+				':idpess'=>$idpess,
+				':numcpf'=>$numcpf
+			]);
+
+			return $results;
 	}
 
 	public static function setMsgError($msg)

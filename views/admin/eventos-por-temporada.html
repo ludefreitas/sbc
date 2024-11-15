@@ -1,7 +1,31 @@
 
 <script type="text/javascript">
+
+    function regras(id_evento) {
+
+        let idevento = id_evento            
+
+        let confirmacao = confirm('Não há regras para este evento. Deseja inserir regras?');
+
+        if (confirmacao)
+        
+        window.location.href='http://www.cursosesportivos.com.br/admin/evento/regras-update/'+idevento;
+
+    }
+
+    function imagem(id_evento) {
+
+        let idevento = id_evento        
+
+        let confirmacao = confirm('Não há imagem de divulgação do evento. Deseja inserir imagem?');
+
+        if (confirmacao)
+
+        window.location.href='http://www.cursosesportivos.com.br/admin/evento/imagem-update/'+idevento;
+    }
   
-  function atualizaStatus(id_evento, desctemporada, idtemporada){
+  
+    function atualizaStatus(id_evento, desctemporada, idtemporada){
 
         let status = prompt('Para atualizar o status do evento '+ id_evento +' para a temporada '+ desctemporada +' selecionada, digite:\n 1 - para Evento Iniciado\n 2 - para Evento Encerrado\n 3 - para Evento Confirmado\n 4 - para Evento Adiado\n 5 - para Evento Suspenso');   
         
@@ -10,13 +34,13 @@
         let ajax = new XMLHttpRequest();
         ajax.open('GET', 'url'); 
         $.ajax({
-          url: url,
-          method: 'GET'  
+            url: url,
+            method: 'GET'  
         }).done(function(result){ 
                 
-           // alert(result)  
+            // alert(result)  
 
-          if(result){
+            if(result){
 
             let texto = '- '+result
                 let idlink = 'idlinkstatus'+id_evento
@@ -30,306 +54,377 @@
                 if(status == 3){ document.getElementById(idlink).style.color = "red"; }
                 if(status == 4){ document.getElementById(idlink).style.color = 'blue'; }
                 if(status == 5){ document.getElementById(idlink).style.color = 'darkred'; }   
-          }     
+           }    
 
         });
-      }
+    }
 
-      function expandir(id_evento){
+    function expandir(id_evento){
 
         let iddoevento = id_evento;
 
-            document.getElementById('lermais'+iddoevento).hidden = true 
-            document.getElementById('lermenos'+iddoevento).hidden = false 
-            document.getElementById('escondido1'+iddoevento ).hidden = false  
-            document.getElementById('escondido2'+iddoevento ).hidden = false
-            document.getElementById('escondido3'+iddoevento ).hidden = false  
-          
+        document.getElementById('lermais'+iddoevento).hidden = true 
+        document.getElementById('lermenos'+iddoevento).hidden = false 
+        document.getElementById('escondido1'+iddoevento ).hidden = false  
+        document.getElementById('escondido2'+iddoevento ).hidden = false
+        document.getElementById('escondido3'+iddoevento ).hidden = false  
     }
 
     function recolher(id_evento){
 
         let iddoevento = id_evento;
 
-            document.getElementById('lermais'+iddoevento).hidden = false 
-            document.getElementById('lermenos'+iddoevento).hidden = true 
-            document.getElementById('escondido1'+iddoevento ).hidden = true  
-            document.getElementById('escondido2'+iddoevento ).hidden = true 
-            document.getElementById('escondido3'+iddoevento ).hidden = true  
-          
+        document.getElementById('lermais'+iddoevento).hidden = false 
+        document.getElementById('lermenos'+iddoevento).hidden = true 
+        document.getElementById('escondido1'+iddoevento ).hidden = true  
+        document.getElementById('escondido2'+iddoevento ).hidden = true 
+        document.getElementById('escondido3'+iddoevento ).hidden = true         
     }
 
 </script>
 
 <div class="content-wrapper">
-<!-- Content Header (Page header) -->
-<section class="content-header">
-<h1>
- Eventos da Temporada {$temporada.desctemporada}   
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Eventos da Temporada {$temporada.desctemporada}   
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="/admin/evento/create"><i class="fa fa-pencil"></i> Criar evento</a></li>
+            <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+        </ol>
+    </section>
 
-</h1>
-<ol class="breadcrumb">
-  <li><a href="/admin/evento/create"><i class="fa fa-pencil"></i> Criar evento</a></li>
-  <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
-</ol>
-</section>
+    <!-- Main content -->
+    <section class="content">
 
-<!-- Main content -->
-<section class="content">
+    <div class="row">
 
-<div class="row">
-
-  {if="$error != ''"}
-          <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
-      {$error}
-          </div>
-      {/if}
-  <div class="col-md-12">
-
-      <div class="box box-primary"> 
-
+        {if="$error != ''"}
+            <div class="alert alert-danger" style="margin: 10px 10px 0px 10px">
+                {$error}
+            </div>
+        {/if}
         
-      <div class="box-body" style="border: solid 1px lightblue; margin: 5px;"> 
-      <div class="box-body col-md-2">
-          {loop="$locais"}
-                  <a href="/admin/eventos-por-temporada/{$temporada.idtemporada}/local/{$value.idlocal}"><i class=""></i>{$value.apelidolocal}</a>&nbsp;&nbsp;&nbsp;&nbsp;
-          {/loop}
-          <br><br>
-          {loop="$modalidades"}
-                  <a href="/admin/turma-temporada/{$temporada.idtemporada}/modalidade/{$value.idmodal}"><i class=""></i>{$value.descmodal}</a>&nbsp;&nbsp;&nbsp;&nbsp;
-          {/loop}
-          <a style="font-weight: bold" href="/admin/eventos-por-temporada/{$temporada.idtemporada}"><i class=""></i>TODOS OS LOCAIS</a>&nbsp;&nbsp;&nbsp;&nbsp;
-              
-              </div> 
-          <div class="box-body no-padding col-md-10">
-        <div class="box-header">   
+        <div class="col-md-12">
 
-          {if="$local == null"}
+            <div class="box box-primary"> 
 
-          <h3>Todos locais</h3>
-
-          {else}
-
-          <h3>{$local.apelidolocal}</h3>
-
-          {/if}       
-       </div>
             
-                {loop="$eventos"}
-                <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
-        
+                <div class="box-body" style="border: solid 1px lightblue; margin: 5px;"> 
+                    <div class="box-body col-md-2">
+                        {loop="$locais"}
+                            <a href="/admin/eventos-por-temporada/{$temporada.idtemporada}/local/{$value.idlocal}">
+                                <i class=""></i>
+                                {$value.apelidolocal}
+                            </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        {/loop}
+                        <br><br>
+                        {loop="$modalidades"}
+                            <a href="/admin/turma-temporada/{$temporada.idtemporada}/modalidade/{$value.idmodal}">
+                                <i class=""></i>
+                                {$value.descmodal}
+                            </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        {/loop}
+                        <a style="font-weight: bold" href="/admin/eventos-por-temporada/{$temporada.idtemporada}">
+                            <i class=""></i>
+                            TODOS OS LOCAIS
+                        </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                  
+                    </div> 
+                    <div class="box-body no-padding col-md-10">
+                    <div class="box-header">   
 
-                  <div class="row">
-
-                    <div class="col-md-6" >
-                      <span style="text-align: left;">
-                          
-                           <strong>{$value.desc_evento}</strong> 
-                          
-                          {if="$value.idstatus_evento == 1"}
-                          <span>
-                            <a id="idlinkstatus{$value.idturma}" style="color: orange; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.id_evento}, {$value.desctemporada}, {$value.idtemporada})">- Iniciado</a>
-                          </span>
-
-                          {/if}
-                       
-                          {if="$value.idstatus_evento == 2"}
-                          <span>
-                            <a id="idlinkstatus{$value.id_evento}" style="color: darkgreen; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.id_evento}, {$value.desctemporada}, {$value.idtemporada})">- Encerrado</a>
-                          </span>
-
-                          {/if}
-
-                          {if="$value.idstatus_evento == 3"}
-                          <span>
-                            <a id="idlinkstatus{$value.id_evento}" style="color: red; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.id_evento}, {$value.desctemporada}, {$value.idtemporada})"> - Confirmado</a>
-                          </span>
-                          {/if}
-
-                          {if="$value.idstatus_evento == 4"}
-                          <span>
-                            <a id="idlinkstatus{$value.id_evento}" style="color: blue; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.id_evento}, {$value.desctemporada}, {$value.idtemporada})"> - Adiado</a>
-                          </span>
-                          {/if}    
-
-                          {if="$value.idstatus_evento == 5"}
-                          <span>
-                            <a id="idlinkstatus{$value.id_evento}" style="color: darkred; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.id_evento}, {$value.desctemporada}, {$value.idtemporada})"> - Suspenso</a>
-                          </span>
-                          {/if}    
-
-                          {if="$value.divulgar_evento == 1"}
-                          <span>
-                            <a id="idlinkstatus{$value.id_evento}" style="color: darkred; font-weight: bold; text-align-last: right;" onclick="atualizaDivulgacao({$value.id_evento}, {$value.desctemporada}, {$value.idtemporada})"> - Evento em divulgação</a>
-                          </span>
-                          {else}
-                          <span>
-                            <a id="idlinkstatus{$value.id_evento}" style="color: darkred; font-weight: bold; text-align-last: right;" onclick="atualizaDivulgacao({$value.id_evento}, {$value.desctemporada}, {$value.idtemporada})"> - Evento ainda não divulgado</a>
-                          </span>
-                          {/if}    
-                          
-                          {if="$value.dia_inicio_evento != $value.dia_final_evento"}
-                            - Data do evento: {function="formatDate($value.dia_inicio_evento)"}
-                          
-                          {else}
-                            - Data do evento: {function="formatDate($value.dia_inicio_evento)"} a {function="formatDate($value.dia_final_evento)"}
-                        
-                          {/if}
-
-                          {if="$value.dia_inicio_evento != $value.dia_final_evento"}
-                            - Data do evento: {function="formatDate($value.dia_inicio_evento)"}
-                          
-                          {else}
-                            - Data do evento: {function="formatDate($value.dia_inicio_evento)"} a {function="formatDate($value.dia_final_evento)"}
-                        
-                          {/if}
-
-                          <strong>- a partir das {$value.hora_inicio_evento} ás {$value.hora_termino_evento} </strong>
-                          -  {$value.apelidolocal} - {$value.nomeespaco} - 
-                          <strong>Professor: {if="$value.idperson == 1"} Admin Master {else} {$value.apelidoperson} {/if}</strong>
-                          - Assistente: {function="getUserNameById($value.iduser2)"}
-
-                          <strong> - Informações: {$value.telef_inform_evento}</strong>
-
-                          <div id="escondido1{$value.id_evento}" hidden>
-                          
-                          <strong>Programa: </strong>{$value.programa_evento}&nbsp; 
-                          - <strong>Origem: </strong>{$value.origem_evento}&nbsp; 
-
-                          {if="$value.so_alunos == 1"}
-                          - &nbsp;Somente para alunos matriculados&nbsp; 
-                          {else}
-                          - &nbsp;Aberto à toda população&nbsp; 
-                          {/if}
-
-                          {if="$value.tem_insc == 1"}
-                          - &nbsp;É necessário fazer inscrição&nbsp; 
-                          {else}
-                          - &nbsp;Evento aberto, não é necessário fazer inscrição&nbsp; 
-                          {/if}
-
-                          {if="$value.tem_categoria == 1"}
-                          - &nbsp;
-
-                            <a href="admin/categoria/create/{$value.id_evento}">
-                                Disputa dividida por categorias (Criar)
-                            </a>
-
-                          &nbsp; 
-                          {else}
-                          - &nbsp;Não há categorias&nbsp; 
-                          {/if}
-
-                          {if="$value.tem_premiacao == 1"}
-                          - &nbsp;Tem premiação&nbsp; 
-                          {else}
-                          - &nbsp;Não haverá premiação&nbsp; 
-                          {/if}
-
-
-                          </div>
-
-                      </span>
-                    </div>      
-                   <div class="col-md-6">
-
-                      <h5 style="font-weight: bold; text-align: left; color: green;">
-                         <strong style="color: orange;">[{$value.id_evento}]</strong> &nbsp;&nbsp;
-                         
-                         <a href="/admin/insc-evento-temporada/{$value.id_evento}/{$value.idtemporada}/user/{$value.iduser}"> 
-                         | &nbsp; Consultar  inscritos &nbsp; |
-                         </a> &nbsp; 
-
-                         <a href="/admin/insc-evento-temporada-chamada/{$value.id_evento}/{$value.idtemporada}/user/{$value.iduser}" style="color: green;"> 
-                         &nbsp; Imprimir lista chamada  &nbsp; 
-                         </a> &nbsp; 
-                         
-                         <a href="/admin/calendario-lista-presenca/{$value.idtemporada}/{$value.id_evento}" style="color: orangered;">
-                         | &nbsp; Fazer Chamada &nbsp; |
-                         </a> &nbsp;  
-                         
-                         <a href="/admin/listapessoasporevento/{$value.id_evento}/{$value.idtemporada}" style="color: black;">
-                          &nbsp; Lista com endereços &nbsp; 
-                         </a> &nbsp;  
-                        
-
-                        {if="$value.token == 1"}
-                          <a href="/admin/token/evento/{$value.id_evento}/{$value.idtemporada}" style="color: darkorange;"> 
-                          | &nbsp; 
-                          <span style="color: darkorange;">
-                               NECESSÁRIO 
-                               <i class="fa fa-info-circle" style="font-size: 14px;"></i> &nbsp;
-                          </span>  Tokens &nbsp; |
-                          </a> &nbsp;
-                          {else}
-                        
-                          <a href="/admin/token/evento/{$value.id_evento}/{$value.idtemporada}" style="color: darkblue;"> 
-                          | &nbsp;  Tokens  &nbsp; | 
-                          </a> &nbsp;
-                          {/if}
-
-                           <a href="/admin/insc-altera-evento-temporada/{$value.id_evento}/{$value.idtemporada}/user/{$value.iduser}"> 
-                         &nbsp; Mover inscritos &nbsp;
-                         </a> &nbsp; 
-
-                         <a href="/admin/crialispersonalizadaautorizacao/{$value.id_evento}/{$value.idtemporada}" style="color: purple;">
-                          | &nbsp; Criar uma Lista &nbsp; |
-                          </a> &nbsp;
-
-                          <a href="/admin/atualizarcategoria/{$value.id_evento}/{$value.idtemporada}" style="color: darkred;">
-                          &nbsp; Criar/Atualizar Categoria&nbsp;
-                          </a> &nbsp;
-                         <br>
-
-                         <span id="lermais{$value.id_evento}" style="color: darkblue;" onclick="expandir({$value.id_evento})">Ler mais...</span> 
-
-                          <span id="escondido2{$value.id_evento}" hidden>
-                      
-                      
-                      <span style="color: black;" id="escondido3{$value.id_evento}" hidden>
-                         Observação: <span style="font-weight: normal;"> {$value.obs_evento} </span>
-                      </span>
-
-                       <br>
-                      </span>
-                     
-                      
-                     
-                            <span id="lermenos{$value.id_evento}" style="color: darkblue; font-weight: bold;" hidden onclick="recolher({$value.id_evento})">Ler menos...</span>
-                         
-                      </h5>
-                    </div>                    
-                    
-                  </div>
-                </div>
+                        {if="$local == null"}
+                            <h3>Todos locais</h3>
+                        {else}
+                            <h3>{$local.apelidolocal}</h3>
+                        {/if}       
+                    </div>
                 
+                    {loop="$eventos"}
+                    <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+                        <div class="row">
+                        <div class="col-md-6" >
+                            <span style="text-align: left;">
+                              
+                                <strong>{$value.desc_evento}</strong> 
+                              
+                                {if="$value.idstatus_evento == 1"}
+                                    <span>
+                                        <a id="idlinkstatus{$value.id_evento}" style="color: orange; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.id_evento}, {$value.desctemporada}, {$value.idtemporada})">
+                                            - Iniciado
+                                        </a>
+                                    </span>
+                                {/if}
+                           
+                                {if="$value.idstatus_evento == 2"}
+                                    <span>
+                                        <a id="idlinkstatus{$value.id_evento}" style="color: darkgreen; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.id_evento}, {$value.desctemporada}, {$value.idtemporada})">
+                                            - Encerrado
+                                        </a>
+                                    </span>
+                                {/if}
+
+                                {if="$value.idstatus_evento == 3"}
+                                    <span>
+                                        <a id="idlinkstatus{$value.id_evento}" style="color: red; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.id_evento}, {$value.desctemporada}, {$value.idtemporada})">
+                                            - Confirmado
+                                        </a>
+                                    </span>
+                                {/if}
+
+                                {if="$value.idstatus_evento == 4"}
+                                    <span>
+                                        <a id="idlinkstatus{$value.id_evento}" style="color: blue; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.id_evento}, {$value.desctemporada}, {$value.idtemporada})">
+                                           - Adiado
+                                       </a>
+                                    </span>
+                                {/if}    
+
+                                {if="$value.idstatus_evento == 5"}
+                                    <span>
+                                        <a id="idlinkstatus{$value.id_evento}" style="color: darkred; font-weight: bold; text-align-last: right;" onclick="atualizaStatus({$value.id_evento}, {$value.desctemporada}, {$value.idtemporada})"> 
+                                            - Suspenso
+                                        </a>
+                                    </span>
+                                {/if}    
+
+                                {if="$value.tem_divulgacao == 1"}
+                                    <span>
+                                        <a id="idlinkstatus{$value.id_evento}" style="color: darkred; font-weight: bold; text-align-last: right;" onclick="atualizaDivulgacao({$value.id_evento}, {$value.desctemporada}, {$value.idtemporada})">
+                                            - Evento em divulgação
+                                        </a>
+                                    </span>
+                                {else}
+                                    <span>
+                                        <a id="idlinkstatus{$value.id_evento}" style="color: darkred; font-weight: bold; text-align-last: right;" onclick="atualizaDivulgacao({$value.id_evento}, {$value.desctemporada}, {$value.idtemporada})">
+                                        - Evento ainda não divulgado
+                                        </a>
+                                    </span>
+                                {/if}    
+                              
+                                {if="$value.termina_mesmo_dia == 1"}
+
+                                    {if="$value.tem_hora_termino == 1"}
+
+                                        Data do evento: {function="formatDate($value.dia_inicio_evento)"} das {$value.hora_inicio_evento} às {$value.hora_termino_evento}                    
+
+                                    {else}
+
+                                        Data do evento: {function="formatDate($value.dia_inicio_evento)"} às {$value.hora_termino_evento}
+
+                                    {/if}
+                              
+                                {else}
+
+                                    {if="$value.tem_hora_termino == 1"}
+
+                                        - Evento inicia em: {function="formatDate($value.dia_inicio_evento)"} às {$value.hora_termino_evento} e termina no dia {function="formatDate($value.dia_final_evento)"} às {$value.hora_termino_evento}                                    
+                                           
+
+                                    {else}
+
+                                        - Evento inicia em: {function="formatDate($value.dia_inicio_evento)"} às {$value.hora_termino_evento} e termina no dia {function="formatDate($value.dia_final_evento)"} 
+
+                                    {/if}
+                            
+                                {/if}                          
+
+                                <strong>
+                                    -  {$value.apelidolocal} 
+                                </strong>
+
+                                - {$value.nomeespaco} - 
+
+                                <strong>
+                                    Professor: {if="$value.idperson == 1"} Admin Master {else} {$value.apelidoperson} {/if}
+                                </strong>
+                                - Assistente: {function="getUserNameById($value.iduser2)"} -
+
+
+
+                                <strong>
+                                    Informações: {$value.telef_inform_evento}
+                                </strong>
+
+                                {if="$value.tem_transporte == 1"}
+
+                                    {if="$value.termina_mesmo_dia == 1"}
+
+                                        - Saída do transporte: {function="formatDate($value.dt_saida_transporte_evento)"} às {$value.hora_saida_transporte_evento} - Retorno do transporte 
+                                    {else}
+
+                                        - Saída do transporte: {function="formatDate($value.dt_saida_transporte_evento)"} às {$value.hora_saida_transporte_evento} - Retorno do transporte {function="formatDate($value.dt_retorno_transporte_evento)"} às {$value.hora_retorno_transporte_evento}
+
+                                    {/if}
+
+                                {else}
+
+                                    - Não haverá transporte
+
+                                {/if}
+
+                                <div id="escondido1{$value.id_evento}" hidden>
+                              
+                                    <strong>
+                                        Programa: {$value.programa_evento}&nbsp; 
+                                    </strong>       
+
+                                    - Origem: {$value.origem_evento}&nbsp; 
+
+                                    <strong>
+                                      {if="$value.so_para_alunos == 1"}
+                                      - &nbsp;Somente para alunos matriculados&nbsp; 
+                                      {else}
+                                      - &nbsp;Aberto à toda população&nbsp; 
+                                      {/if}
+                                    </strong>
+
+                                        {if="$value.tem_insc == 1"}
+                                            - &nbsp;É necessário fazer inscrição&nbsp; 
+                                        {else}
+                                            - &nbsp;Evento aberto, não é necessário fazer inscrição&nbsp; 
+                                        {/if}
+
+                                        <strong>
+                                            {if="$value.tem_categoria_unica == 1"} - &nbsp;
+                                                <a href="admin/categoria/create/{$value.id_evento}">
+                                                    Disputa dividida por categorias (Criar)
+                                                </a>
+                                                &nbsp; 
+                                            {else}
+                                                - &nbsp;Não há categorias&nbsp; 
+                                            {/if}
+
+                                        </strong>
+
+                                        {if="$value.tem_premiacao == 1"}
+                                            - &nbsp;Tem premiação&nbsp; 
+                                        {else}
+                                            - &nbsp;Não haverá premiação&nbsp; 
+                                        {/if}
+
+                                        <strong>
+                                            &nbsp;Tipo de resultado: {$value.tipo_resultado_evento}
+                                        </strong>
+
+                                        {if="$value.tem_regras == 1"}
+                                            - &nbsp;<a href="/../res/admin/eventos/regras/{$value.pdf_regras_evento}">Regras </a> &nbsp; 
+                                            - &nbsp;<span onclick="regras({$value.id_evento})">Atualizar regras </span> &nbsp; 
+                                        {else}
+                                            - &nbsp;<span onclick="regras({$value.id_evento})">Regras</span>&nbsp; 
+                                        {/if}
+
+                                        {if="$value.tem_imagem == 1"}
+                                            - &nbsp;<a href="/../res/admin/eventos/img/{$value.imagem_arquivo_evento}">Imagem </a> &nbsp; 
+                                            - &nbsp;<span onclick="imagem({$value.id_evento})">Atualizar imagem </span> &nbsp;
+                                        {else}
+                                            - &nbsp;<span onclick="imagem({$value.id_evento})">Imagem</span>&nbsp; 
+                                        {/if}
+
+                                    </div>
+
+                                </span>
+                            </div>      
+                            <div class="col-md-6">
+
+                                <h5 style="font-weight: bold; text-align: left; color: green;">
+                                    <strong style="color: orange;">
+                                        [{$value.id_evento}]
+                                    </strong> &nbsp;&nbsp;
+                             
+                                    <a href="/admin/insc-evento-temporada/{$value.id_evento}/{$value.idtemporada}/user/{$value.iduser}"> 
+                                        | &nbsp; Consultar  inscritos &nbsp; |
+                                    </a> &nbsp; 
+
+                                    <a href="/admin/insc-evento-temporada-chamada/{$value.id_evento}/{$value.idtemporada}/user/{$value.iduser}" style="color: green;">
+                                        &nbsp; Imprimir lista chamada  &nbsp; 
+                                    </a> &nbsp; 
+                             
+                                    <a href="/admin/calendario-evento-lista-presenca/{$value.idtemporada}/{$value.id_evento}" style="color: orangered;">
+                                        | &nbsp; Fazer Chamada &nbsp; |
+                                    </a> &nbsp;  
+                             
+                                    <a href="/admin/listapessoasporevento/{$value.id_evento}/{$value.idtemporada}" style="color: black;">
+                                        &nbsp; Lista com endereços &nbsp; 
+                                    </a> &nbsp;  
+                            
+
+                                    {if="$value.tem_token == 1"}
+                                        <a href="/admin/token/evento/{$value.id_evento}/{$value.idtemporada}" style="color: darkorange;"> 
+                                            | &nbsp; 
+                                            <span style="color: darkorange;">
+                                                NECESSÁRIO 
+                                                <i class="fa fa-info-circle" style="font-size: 14px;"></i> &nbsp;
+                                            </span>  
+                                            Tokens &nbsp; |
+                                        </a> &nbsp;
+                                    {else}                        
+                                        <a href="/admin/token/evento/{$value.id_evento}/{$value.idtemporada}" style="color: darkblue;"> 
+                                            | &nbsp;  Tokens  &nbsp; | 
+                                        </a> &nbsp;
+                                    {/if}
+
+                                    <a href="/admin/insc-altera-evento-temporada/{$value.id_evento}/{$value.idtemporada}/user/{$value.iduser}">
+                                        &nbsp; Mover inscritos &nbsp;
+                                    </a> &nbsp; 
+
+                                    <a href="/admin/crialispersonalizadaautorizacao/{$value.id_evento}/{$value.idtemporada}" style="color: purple;">
+                                        | &nbsp; Criar uma Lista &nbsp; |
+                                    </a> &nbsp;
+
+                                    <a href="/admin/atualizarcategoria/{$value.id_evento}/{$value.idtemporada}" style="color: darkred;">
+                                        &nbsp; Criar/Atualizar Categoria&nbsp;
+                                    </a> &nbsp;
+                                    <br>
+
+                                    <span id="lermais{$value.id_evento}" style="color: darkblue;" onclick="expandir({$value.id_evento})">
+                                        Ler mais...
+                                    </span> 
+
+                                    <span id="escondido2{$value.id_evento}" hidden>
+                                        <span style="color: black;" id="escondido3{$value.id_evento}" hidden>
+                                            Observação: 
+                                            <span style="font-weight: normal;"> 
+                                                {$value.obs_evento} 
+                                            </span>
+                                        </span>
+                                    <br>
+                                    </span>
+                                              
+                                <span id="lermenos{$value.id_evento}" style="color: darkblue; font-weight: bold;" hidden onclick="recolher({$value.id_evento})">
+                                    Ler menos...
+                                </span>                         
+                            </h5>
+                        </div>                  
+                    </div>
+                </div>        
                 {/loop}
-            <!--
-            <button type="button" onclick="window.print()" class="btn btn-primary pull-right" style="margin-right: 5px;">
-                  <i class="fa fa-print"></i> Imprimir
-              </button>
-            -->
-          </div>
-          
-          
-          <!-- /.box-body -->
+                <!--
+                <button type="button" onclick="window.print()" class="btn btn-primary pull-right" style="margin-right: 5px;">
+                    <i class="fa fa-print"></i> Imprimir
+                </button>
+                -->
+                </div>
+                  
+                  
+                <!-- /.box-body -->    
 
-
-           
-            
-
-          <div class="box-footer clearfix">
-            <ul class="pagination pagination-sm no-margin pull-right">
-              {loop="$pages"}
-              <li><a href="{$value.href}">{$value.text}</a></li>
-              {/loop}
-            </ul>
-          </div>
-
+                <div class="box-footer clearfix">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        {loop="$pages"}
+                            <li>
+                                <a href="{$value.href}">
+                                    {$value.text}
+                                </a>
+                            </li>
+                        {/loop}
+                    </ul>
+                </div>
+            </div>
         </div>
-
-  </div>
-</div>
+    </div>
 </div>
 
 </section>

@@ -53,6 +53,7 @@ require_once("audi.php");
 require_once("estagiario.php");
 require_once("prof.php");
 require_once("prof-agenda.php");
+require_once("prof-evento.php");
 require_once("prof-insc.php");
 require_once("prof-pessoa.php");
 require_once("prof-saude.php");

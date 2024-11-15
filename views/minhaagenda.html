@@ -80,7 +80,7 @@
             <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; color: green;" colspan="7">{$success}</th>
           </tr>
           {/if}
-
+          
           <tr>
             <th style="border: solid 1px; padding: 5px;" colspan="7">
               Temporada: &nbsp;
@@ -132,12 +132,13 @@
               {/if}           
               </td>
               <td style="text-align: center; border: solid 1px; padding: 5px;">
-                {if="$data > $value.dia OR $value.ispresente == 1"}
-
+                {if="$value.excluiAgenda == 0"}
+                
                 {else}
                 <a href="/agendadelete/{$value.idagen}" class="btn btn-danger">
-                  <i class="fa fa-trash"></i>
+                <i class="fa fa-trash"></i>
                 </a>
+
                 {/if}
               </td>
               

@@ -16,11 +16,11 @@
                 <?php if( $insc["idinscstatus"] == 2 ){ ?>
                     <?php if( $insc["idmodal"] == 25 ){ ?>
                          <script type="text/javascript">  
-                            alert('Lembre-se: Se o status desta inscrição é 'Aguardando matrícula', então você deve comprarecer com os documentos pessoais, sem falta, a partir do dia 19/02, no Centro Esportivo no dia e horário da aula escolhida para efetuar a matrícula e já para início das aulas. Leia as observações da turma!');
+                            alert('Lembre-se: Se o status desta inscrição é "Aguardando matrícula", então você deve comprarecer com os documentos pessoais, sem falta, no Centro Esportivo no dia e horário da aula escolhida para efetuar a matrícula e já para início das aulas. Leia as observações da turma!');
                         </script> 
                     <?php }else{ ?>
                          <script type="text/javascript">  
-                            alert('Inscrição EFETUADA COM SUCESSO! Lembre-se: Se o status desta inscrição é 'Aguardando matrícula', então você deve comprarecer com os documentos pessoais, sem falta, no período de matrículas de 05 a 09 de fevereiro conforme consta no edital, no Centro Esportivo no dia e horário da aula escolhida. Algumas turmas de natação iniciante, e o projeto "Perca o Medo de Nadar" tem datas diferenciadas. Leia as observações da turma!');
+                            alert('Inscrição EFETUADA COM SUCESSO! Lembre-se: Se o status desta inscrição é "Aguardando matrícula", então você deve comprarecer com os documentos pessoais, no Centro Esportivo no dia e horário da aula escolhida. Algumas turmas de natação iniciante, e o projeto "Perca o Medo de Nadar" tem datas diferenciadas. Leia as observações da turma!');
                         </script>
                     <?php } ?>
 
@@ -51,16 +51,29 @@
                     </div> 
 
                 <?php }else{ ?>
-                    <?php if( $insc["idstatustemporada"] == 5 ){ ?>
+
+                    <?php if( $insc["idinscstatus"] == 5 ){ ?>
+                    <div class="col-md-5 alert alert-success" style="text-align-last: center;">
+                        <p><h5 style="text-align: center"><strong style="color: red; font-size: 20px;">Inscrição <?php echo htmlspecialchars( $insc["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  </strong></h5>
+                        <p>
+                    </div> 
 
                     <?php }else{ ?>
-                      <!--
-                        <div class="col-md-5 alert alert-success" style="text-align-last: center;">
-                                <p><h5 style="text-align: center"> Nº para concorrer no sorteio: </h5>
-                                <p><h3 style="color: red; text-align-last: center"><?php echo htmlspecialchars( $insc["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h3> <p>
-                                <h6 style="text-align: center; font-size: 12px;"> * Caso esta inscrição vá para sorteio</h6><p>
-                        </div> 
-                      -->
+
+
+
+                        <?php if( $insc["idstatustemporada"] == 5 ){ ?>
+
+                        <?php }else{ ?>
+                          <!--
+                            <div class="col-md-5 alert alert-success" style="text-align-last: center;">
+                                    <p><h5 style="text-align: center"> Nº para concorrer no sorteio: </h5>
+                                    <p><h3 style="color: red; text-align-last: center"><?php echo htmlspecialchars( $insc["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?></h3> <p>
+                                    <h6 style="text-align: center; font-size: 12px;"> * Caso esta inscrição vá para sorteio</h6><p>
+                            </div> 
+                          -->
+                        <?php } ?>
+
                     <?php } ?>
                 
                 <?php } ?>
@@ -151,7 +164,20 @@
              As aulas já começaram. Se o status desta inscrição é "Matriculada", então você está matriculado(a) nesta turma. Frequente as aulas e evite faltar sem justificativa para que você não perca sua vaga.
              <?php } ?>
 
-             <?php if( $insc["idinscstatus"] == 2 ){ ?>
+            <?php if( $insc["idinscstatus"] == 2 ){ ?>
+            
+                Lembre-se: Se o status desta inscrição é 'Aguardando matrícula', então você deve comprarecer com os documentos pessoais, sem falta, para efetuar a matrícula, no Centro Esportivo, a patir do dia 19/02, no dia da semana e horário da aula desta aula. Algumas turmas de natação iniciante, e o projeto 'Perca o Medo de Nadar' tem datas diferenciadas. Leia as observações da turma!
+            <?php } ?>
+
+            <?php if( $insc["idinscstatus"] == 5 ){ ?>
+            
+                Se o status desta inscrição é 'Suspensa', então sua inscrição está temporariamente suspensa por tempo determinado, e que você apresentou uma justificativa ao professor. Lembre-se, a justificativa tem validade, se a validade da justificativa venceu, você deve atualizá-la. Fale com o professor!
+
+            <?php } ?>
+             
+            <!--
+            <?php if( $insc["idinscstatus"] == 2 ){ ?>
+            
                 <?php if( $insc["idmodal"] == 25 ){ ?>
                      Lembre-se: Se o status desta inscrição é 'Aguardando matrícula', então você deve comprarecer com os documentos pessoais, sem falta, a partir do dia 19/02, no Centro Esportivo no dia e horário da aula escolhida para efetuar a matrícula e já para início das aulas. Leia as observações da turma! 
                 <?php }else{ ?>
@@ -160,10 +186,13 @@
                         LEMBRAMOS que: O início das aulas e a matrícula para ESTA TURMA e para as outras TURMAS do PELC irão acontecer simultaneamente a partir do dia<span style="color: blue;" > 4 de MARÇO</span>, no dia e no horário da aula. (Para as incrições com status <span style="color: darkblue;" >"Aguardando Matrícula")</span>. Leia as observações da turma!
 
                     <?php }else{ ?>
-                        Lembre-se: Se o status desta inscrição é 'Aguardando matrícula', então você deve comprarecer com os documentos pessoais, sem falta, para efetuar a matrícula, no Centro Esportivo, a patir do dia 19/02, no dia da semana e horário da aula desta aula. Algumas turmas de natação iniciante, e o projeto 'Perca o Medo de Nadar' tem datas diferenciadas. Leia as observações da turma!
+                        Lembre-se: Se o status desta inscrição é 'Aguardando matrícula', então você deve comprarecer com os documentos pessoais, sem falta, para efetuar a matrícula, no Centro Esportivo, a patir do dia 19/02, no dia da semana e horário desta aula. Algumas turmas de natação iniciante, e o projeto 'Perca o Medo de Nadar' tem datas diferenciadas. Leia as observações da turma!
                     <?php } ?>
                 <?php } ?>
-             <?php } ?>
+                
+            <?php } ?>
+            -->           
+            
 
              <?php if( $insc["idinscstatus"] == 7 ){ ?>
              Se o status desta inscrição é "Lista de Espera", não há vagas para esta turma. Esta inscrição está em uma lista de espera, aguardando o comunicado de uma eventual vaga. Mantenha atualizado, neste site, seu número de telefone celular, com whatsapp, para receber o comunicado.
@@ -175,6 +204,10 @@
 
              <?php if( $insc["idinscstatus"] == 9 ){ ?>
              Se o status desta inscrição é "Cancelada", você cancelou esta inscrição.
+             <?php } ?>
+
+             <?php if( $insc["idinscstatus"] == 10 ){ ?>
+             Se o status desta inscrição é "Excluída por falta", você faltou por no mínimo 04(quatro) vezes seguidas nas aulas, ou teve 04(quatro) faltas dentro de um mês, sem justificativa.
              <?php } ?>
                 <strong>Leia a observação abaixo, se existir.</strong>
             <?php if( $insc["obs"] ){ ?>

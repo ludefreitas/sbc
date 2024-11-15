@@ -1,5 +1,4 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?>
-
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -23,18 +22,14 @@
             </div>
 
                 <?php if( $error != '' ){ ?>
-
                 <div class="alert alert-danger" style="margin: 0px 10px 0px 10px">
                     <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
-
                 </div>
                 <?php } ?>
-
 
             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
 
             <?php $counter1=-1;  if( isset($temporada) && ( is_array($temporada) || $temporada instanceof Traversable ) && sizeof($temporada) ) foreach( $temporada as $key1 => $value1 ){ $counter1++; ?>
-
             <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
               <div class="row">
 
@@ -77,7 +72,6 @@
             </div>
           </div>
           <?php } ?>
-
 
             
             <!-- /.box-body -->

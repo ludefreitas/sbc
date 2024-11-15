@@ -12,6 +12,78 @@
                         <strong> Minhas inscrições</strong>
                     </div>
                 </div>
+                <?php $counter1=-1;  if( isset($inscnew) && ( is_array($inscnew) || $inscnew instanceof Traversable ) && sizeof($inscnew) ) foreach( $inscnew as $key1 => $value1 ){ $counter1++; ?>
+                <div class="row alert-info">
+                    <div class="col-md-12">
+                      
+                        <?php if( $value1["idinscstatus"] == 9 ){ ?>
+                        
+                        <strong>INSCRIÇÃO Nº: </strong><span><?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>&nbsp;&nbsp;[
+                        <strong style="color: red; font-size: 18px;"> <?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?> </strong>]
+                        <?php }else{ ?>
+                        
+                            <?php if( $value1["idstatustemporada"] == 5 ){ ?>
+                            
+                            <?php }else{ ?>
+                            <!--
+                                <strong>NÚMERO PARA O SORTEIO: </strong><span style="color: red; font-size: 20px"><?php echo htmlspecialchars( $value1["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span><br>
+                                <strong>INSCRIÇÃO Nº: </strong><span><?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
+                            -->
+                            <?php } ?>
+
+                        <?php } ?>
+                        <strong>NOME DO ALUNO: </strong> <span><?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span><br>
+                        <strong>TURMA: </strong><?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?><br>
+                        <strong>COM LAUDO? </strong> <span><?php if( $value1["laudo"] == 0 ){ ?>Não<?php }else{ ?>Sim<?php } ?></span><br>
+                        <strong>PARA PESSOA COM DEFICIÊNCIA? </strong> <span><?php if( $value1["inscpcd"] == 0 ){ ?>Não<?php }else{ ?>Sim<?php } ?></span><br>
+                        <strong>PESSOA EM SITUAÇÃO DE VULNERABILIDADE SOCIAL? </strong> <span><?php if( $value1["inscpvs"] == 0 ){ ?>Não<?php }else{ ?>Sim<?php } ?></span><br>
+                        
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <?php if( ($value1["idinscstatus"]) === 10 ){ ?>
+                                <div style="color: red; font-weight: bold;">
+                                    <strong >INSCRIÇÃO <?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
+                                </div>
+                                <?php }else{ ?>
+                                <div <?php echo colorStatus($value1["idinscstatus"]); ?>>
+                                <strong >STATUS: <?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
+                                </div>
+                                <?php } ?>
+                            </div>
+
+                            
+                            <div class="col-md-8">
+                                <a class="btn btn-primary" href="/profile/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" role="button">Detalhes</a>
+
+                            <?php if( ($value1["idinscstatus"]) === '2' ){ ?>
+                            <!--
+                            <a href="/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusCancelada" onclick="return confirm('Deseja realmente excluir PERMANENTEMENTE a inscrição <?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?> do(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da turma <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>? Lembramos que se você clicar em OK a inscrição e a matricula se existir, serão definitivamente canceladas.')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                            -->
+                            <?php } ?>
+
+                            <?php if( ($value1["idinscstatus"]) !== '8' && ($value1["idinscstatus"]) !== '9' ){ ?> 
+
+
+                                <?php if( $value1["desctemporada"] >= $anoAtual ){ ?>
+                                    <a href="/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusCancelada" onclick="return confirm('Deseja realmente excluir PERMANENTEMENTE a inscrição <?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?> do(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da turma <?php echo htmlspecialchars( $value1["descativ"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $value1["desctemporada"], ENT_COMPAT, 'UTF-8', FALSE ); ?>? Lembramos que se você clicar em OK a inscrição e a matricula se existir, serão definitivamente canceladas.')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
+                                <?php } ?>                    
+
+                                <?php if( ($value1["idinscstatus"] === '1') && ($value1["desctemporada"] == $anoAtual) ){ ?>
+                                        
+                                    <a href="/declaracao-de-matricula/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"  class="btn btn-success btn-xs"><i class="fa fa-check"></i> Declaração</a>
+
+                                <?php } ?>                    
+
+                            <?php } ?>  
+                            
+                            </div>
+                        </div>        
+
+                        <hr>
+                    </div>
+                </div>           
+            <?php } ?>
                  <?php $counter1=-1;  if( isset($insc) && ( is_array($insc) || $insc instanceof Traversable ) && sizeof($insc) ) foreach( $insc as $key1 => $value1 ){ $counter1++; ?>
                 <div class="row alert-info">
                     <div class="col-md-12">
@@ -41,14 +113,22 @@
 
                         <div class="row">
                             <div class="col-md-4">
-                                <div <?php echo colorStatus($value1["idinscstatus"]); ?>>
-                                <strong >STATUS: <?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
+                                
+                                <?php if( ($value1["idinscstatus"]) === 10 ){ ?>
+                                <div style="color: red; font-weight: bold;">
+                                    <strong >INSCRIÇÃO <?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
                                 </div>
+                                <?php }else{ ?>
+                                <div <?php echo colorStatus($value1["idinscstatus"]); ?>>
+                                    <strong >STATUS: <?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
+                                </div>
+                                <?php } ?>
+                                
                             </div>
 
                             
                             <div class="col-md-8">
-                                <a class="btn btn-primary" href="/profile/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" role="button">Detalhes</a>
+                                <a class="btn btn-primary" href="/profile/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" role="button">Detalhes</a>
 
                             <?php if( ($value1["idinscstatus"]) === '2' ){ ?>
                             <!--
@@ -56,7 +136,7 @@
                             -->
                             <?php } ?>
 
-                            <?php if( ($value1["idinscstatus"]) !== '8' && ($value1["idinscstatus"]) !== '9' ){ ?> 
+                            <?php if( ($value1["idinscstatus"]) !== 8 && ($value1["idinscstatus"]) !== 9 ){ ?> 
 
 
                                 <?php if( $value1["desctemporada"] >= $anoAtual ){ ?>

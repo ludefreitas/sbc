@@ -366,7 +366,53 @@
             alert('Endereço não encontrado!')
           }
         });
-      }   
+      } 
+
+      function alterarStatusSuspender(idinsc, idturma, idpess){
+
+        let ajax = new XMLHttpRequest();
+
+        let url = '/prof/insc/'+idinsc+'/'+idturma+'/'+idpess+'/statusSuspender'              
+        ajax.open('GET', 'url');
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if(result){  
+
+            alert(result)            
+            
+            
+          }else{
+            alert('Não foi possível suspender matricula')
+          }
+        });
+      }  
+
+      function alterarStatusRematricular(idinsc, idturma, idpess){
+
+        let ajax = new XMLHttpRequest();
+
+        let url = '/prof/insc/'+idinsc+'/'+idturma+'/'+idpess+'/statusRematricular'              
+        ajax.open('GET', 'url');
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if(result){  
+
+            alert(result)            
+            
+            
+          }else{
+            alert('Não foi possível suspender matricula')
+          }
+        });
+      }     
 
 </script>
 
@@ -443,7 +489,7 @@
           </div>
               
             <?php $counter1=-1;  if( isset($inscPvs) && ( is_array($inscPvs) || $inscPvs instanceof Traversable ) && sizeof($inscPvs) ) foreach( $inscPvs as $key1 => $value1 ){ $counter1++; ?>
-            <?php if( ($value1["idinscstatus"] != 8) && ($value1["idinscstatus"] != 9) ){ ?>
+            <?php if( ($value1["idinscstatus"] != 8) && ($value1["idinscstatus"] != 9) && ($value1["idinscstatus"] != 5) && ($value1["idinscstatus"] != 10) ){ ?>
             <div class="box-body" style=" margin: 5px;">
               <div <?php echo colorStatus($value1["idinscstatus"]); ?> style="margin: 5px" class="row">
               
@@ -542,7 +588,7 @@
                     <h5 style="text-align: left;">  
 
                       <span style="font-weight: bold; text-align: left; color: brown;">                  
-                        <?php if( $value1["vulnsocial"] == 1 ){ ?> (Vuln. Social) &nbsp;&nbsp;<?php } ?>
+                        <?php if( $value1["inscpvs"] == 1 ){ ?> (Vuln. Social) &nbsp;&nbsp;<?php } ?>
                       </span> 
                       
                       <span style="font-weight: bold; text-align: left; color: darkblue;">  
@@ -623,6 +669,13 @@
                   <a class="btn btn-danger btn-xs" href="/prof/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusDesistente" role="button" onclick="return confirm('Deseja realmente informar como desistente o(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da inscrição <?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')">Marcar como desistente</a>
                 </h5>
                 </div>
+                <div class="col-md-2" style="margin: 1; padding: 1">
+                    <h5 style="font-weight: bold; text-align: left;">                  
+                        <a class="btn btn-default btn-xs" role="button" onclick="alterarStatusSuspender(<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, <?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, <?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)">
+                            Suspender matrícula 
+                        </a>        
+                    </h5>
+                </div> 
               <?php } ?>                    
 
               <?php if( $value1["idinscstatus"] == 2 ){ ?>
@@ -695,7 +748,7 @@
           </div>
               
             <?php $counter1=-1;  if( isset($inscPcd) && ( is_array($inscPcd) || $inscPcd instanceof Traversable ) && sizeof($inscPcd) ) foreach( $inscPcd as $key1 => $value1 ){ $counter1++; ?>
-            <?php if( ($value1["idinscstatus"] != 8) && ($value1["idinscstatus"] != 9) ){ ?>
+            <?php if( ($value1["idinscstatus"] != 8) && ($value1["idinscstatus"] != 9) && ($value1["idinscstatus"] != 5) && ($value1["idinscstatus"] != 10) ){ ?>
             <div class="box-body" style=" margin: 5px;">
               <div <?php echo colorStatus($value1["idinscstatus"]); ?> style="margin: 5px" class="row">
               
@@ -792,7 +845,7 @@
                     <h5 style="text-align: left;">  
 
                       <span style="font-weight: bold; text-align: left; color: brown;">                  
-                        <?php if( $value1["vulnsocial"] == 1 ){ ?> (Vuln. Social) &nbsp;&nbsp;<?php } ?>
+                        <?php if( $value1["inscpvs"] == 1 ){ ?> (Vuln. Social) &nbsp;&nbsp;<?php } ?>
                       </span>               
                       
                       <span style="font-weight: bold; text-align: left; color: darkblue;">  
@@ -874,6 +927,13 @@
                   <a class="btn btn-danger btn-xs" href="/prof/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusDesistente" role="button" onclick="return confirm('Deseja realmente informar como desistente o(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da inscrição <?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')">Marcar como desistente</a>
                 </h5>
                 </div>
+                <div class="col-md-2" style="margin: 1; padding: 1">
+                    <h5 style="font-weight: bold; text-align: left;">                  
+                        <a class="btn btn-default btn-xs" role="button" onclick="alterarStatusSuspender(<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, <?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, <?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)">
+                            Suspender matrícula 
+                        </a>        
+                    </h5>
+                </div> 
               <?php } ?>                   
 
               <?php if( $value1["idinscstatus"] == 2 ){ ?>
@@ -951,7 +1011,7 @@
             </div>
               
             <?php $counter1=-1;  if( isset($inscPlm) && ( is_array($inscPlm) || $inscPlm instanceof Traversable ) && sizeof($inscPlm) ) foreach( $inscPlm as $key1 => $value1 ){ $counter1++; ?>
-            <?php if( ($value1["idinscstatus"] != 8) && ($value1["idinscstatus"] != 9) ){ ?>
+            <?php if( ($value1["idinscstatus"] != 8) && ($value1["idinscstatus"] != 9) && ($value1["idinscstatus"] != 5) && ($value1["idinscstatus"] != 10) ){ ?>
             <div class="box-body" style=" margin: 5px;">
               <div <?php echo colorStatus($value1["idinscstatus"]); ?> style="margin: 5px" class="row">
               
@@ -1048,7 +1108,7 @@
                     <h5 style="text-align: left;">  
 
                       <span style="font-weight: bold; text-align: left; color: brown;">                  
-                        <?php if( $value1["vulnsocial"] == 1 ){ ?> (Vuln. Social) &nbsp;&nbsp;<?php } ?>
+                        <?php if( $value1["inscpvs"] == 1 ){ ?> (Vuln. Social) &nbsp;&nbsp;<?php } ?>
                       </span>               
                       
                       <span style="font-weight: bold; text-align: left; color: darkblue;">  
@@ -1130,6 +1190,13 @@
                   <a class="btn btn-danger btn-xs" href="/prof/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusDesistente" role="button" onclick="return confirm('Deseja realmente informar como desistente o(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da inscrição <?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')">Marcar como desistente</a>
                 </h5>
                 </div>
+                <div class="col-md-2" style="margin: 1; padding: 1">
+                    <h5 style="font-weight: bold; text-align: left;">                  
+                        <a class="btn btn-default btn-xs" role="button" onclick="alterarStatusSuspender(<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, <?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, <?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)">
+                            Suspender matrícula 
+                        </a>        
+                    </h5>
+                </div> 
               <?php } ?>                  
 
               <?php if( $value1["idinscstatus"] == 2 ){ ?>
@@ -1205,7 +1272,7 @@
             </div>
               
             <?php $counter1=-1;  if( isset($insc) && ( is_array($insc) || $insc instanceof Traversable ) && sizeof($insc) ) foreach( $insc as $key1 => $value1 ){ $counter1++; ?>
-            <?php if( ($value1["idinscstatus"] != 8) && ($value1["idinscstatus"] != 9) ){ ?>
+            <?php if( ($value1["idinscstatus"] != 8) && ($value1["idinscstatus"] != 9) && ($value1["idinscstatus"] != 5) && ($value1["idinscstatus"] != 10) ){ ?>
             <div class="box-body" style=" margin: 5px;">
               <div <?php echo colorStatus($value1["idinscstatus"]); ?> style="margin: 5px" class="row">
               
@@ -1213,7 +1280,7 @@
                 <div class="col-md-12">
                   <div class="col-md-6" style="margin: 1; padding: 1">
                     <h5 style="text-align: left;">
-                      <?php echo htmlspecialchars( $value1["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?>º -
+                      <?php echo htmlspecialchars( $value1["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?>º - <?php echo htmlspecialchars( $value1["idinscstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?> 
                       <strong>[<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>] - <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
                       <?php if( UserIsAdmin() ){ ?>
                       &nbsp;<?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>&nbsp;
@@ -1303,7 +1370,7 @@
                     <h5 style="text-align: left;"> 
 
                       <span style="font-weight: bold; text-align: left; color: brown;">                  
-                        <?php if( $value1["vulnsocial"] == 1 ){ ?> (Vuln. Social) &nbsp;&nbsp;<?php } ?>
+                        <?php if( $value1["inscpvs"] == 1 ){ ?> (Vuln. Social) &nbsp;&nbsp;<?php } ?>
                       </span>                
                       
                       <span style="font-weight: bold; text-align: left; color: darkblue;">  
@@ -1449,7 +1516,155 @@
            
           <?php } ?>
           </div> 
+
+        <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+            
+        <?php $counter1=-1;  if( isset($inscTodas) && ( is_array($inscTodas) || $inscTodas instanceof Traversable ) && sizeof($inscTodas) ) foreach( $inscTodas as $key1 => $value1 ){ $counter1++; ?>
+            <?php if( ($value1["idinscstatus"] == 5) ){ ?>
+
+            <div class="box-body" style=" margin: 5px;">              
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5 style="text-align: left;">
+                            <?php echo htmlspecialchars( $value1["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?>º -
+                            <strong>[<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>] - <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
+                            &nbsp;<?php echo formatCpf($value1["numcpf"]); ?>&nbsp;
+                            <strong><?php echo calcularIdade($value1["dtnasc"]); ?> anos</strong>
+                            &nbsp;Nascim.: <?php echo formatDate($value1["dtnasc"]); ?>&nbsp;&nbsp;                       
+                            <strong>Resp: <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>&nbsp;
+                            <a href="https://wa.me/+55<?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')">
+                                    <i class="fa fa-whatsapp" style="color: green;"></i>
+                                    <span style="color: black;"> <?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>&nbsp;</span>
+                            </a>&nbsp;&nbsp;
+
+                            <a style="font-weight: bold;" onclick="requisitarPaginaEndereco('/prof/insc-turma-temporada-endereco/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>')"><i class="fas fa-map-marker-alt"></i> 
+                                Endereço 
+                            </a>&nbsp;&nbsp;
+
+                            <strong>Dt Insc.: <?php echo formatDate($value1["dtinsc"]); ?></strong>
+                            &nbsp;Dt Matric.: <?php echo formatDate($value1["dtmatric"]); ?>&nbsp;
+                   
+                            
+                            <span style="font-weight: bold; text-align: left; color: brown;">                  
+                                <?php if( $value1["inscpvs"] == 1 ){ ?> (Vuln. Social) &nbsp;&nbsp;<?php } ?>
+                            </span>                
+                      
+                            <span style="font-weight: bold; text-align: left; color: darkblue;">  
+                                <?php if( $value1["inscpcd"] == 1 ){ ?> PCD &nbsp;&nbsp;<?php } ?>  
+                            </span>        
+                      
+                            <span style="font-weight: bold; text-align: left; color: darkgreen;">                  
+                                <?php if( $value1["laudo"] == 1 ){ ?>LAUDO  &nbsp;&nbsp;<?php } ?>
+                            </span> 
+                            <br>
+                            <?php if( $value1["idinscstatus"] == 5 ){ ?>                      
+                                <span style="font-weight: bold; text-align: left; color: green;">                  
+                                *<?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>*
+                                </span> 
+                                &nbsp;&nbsp;
+                          
+                            <?php } ?>                    
+                        
+                            <a href="/prof/profile/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" role="button">
+                                Detalhes
+                            </a>
+                            &nbsp;&nbsp;
+
+                            <span style="line-height: 10px; height: 20px; color: darkblue; font-weight: bold;"> 
+                                <a onclick="alterarStatusRematricular(<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, <?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, <?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)">
+                                    Rematricular 
+                                </a>        
+                            </span> &nbsp;&nbsp;
+                        
+                            <span style="line-height: 10px; height: 20px; color: red; right: 0;">       
+                                <a href="/prof/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusSuspensaDesistente" role="button" onclick="return confirm('Deseja realmente informar como desistente o(a) <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da inscrição <?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')" style="color: red;"> 
+                                    Excluir 
+                                </a>  
+                            </span>
+                        </h5>                               
+                    </div>
+                </div>              
+            </div>
+            <?php } ?>           
+        <?php } ?>
+          </div> 
+
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+            <div class="box-body" style="text-align: center; background-color: #C8A2C8
+;">
+              <span style="color: black; font-weight: bold">Excluídas
+              </span>
+            </div>
           
+           <?php $counter1=-1;  if( isset($inscTodas) && ( is_array($inscTodas) || $inscTodas instanceof Traversable ) && sizeof($inscTodas) ) foreach( $inscTodas as $key1 => $value1 ){ $counter1++; ?>
+            <?php if( ($value1["idinscstatus"] == 10) ){ ?>
+
+            <div <?php echo colorStatus($value1["idinscstatus"]); ?> style="margin: 5px" class="row">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5 style="text-align: left;">
+                            <?php echo htmlspecialchars( $value1["numsorte"], ENT_COMPAT, 'UTF-8', FALSE ); ?>º -
+                            <strong>[<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>] - <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>
+                            &nbsp;<?php echo formatCpf($value1["numcpf"]); ?>&nbsp;
+                            <strong><?php echo calcularIdade($value1["dtnasc"]); ?> anos</strong>
+                            &nbsp;Nascim.: <?php echo formatDate($value1["dtnasc"]); ?>&nbsp;&nbsp;                       
+                            <strong>Resp: <?php echo htmlspecialchars( $value1["desperson"], ENT_COMPAT, 'UTF-8', FALSE ); ?></strong>&nbsp;
+                            <a href="https://wa.me/+55<?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')">
+                                    <i class="fa fa-whatsapp" style="color: green;"></i>
+                                    <span style="color: black;"> <?php echo htmlspecialchars( $value1["nrphone"], ENT_COMPAT, 'UTF-8', FALSE ); ?>&nbsp;</span>
+                            </a>&nbsp;&nbsp;
+
+                            <a style="font-weight: bold;" onclick="requisitarPaginaEndereco('/prof/insc-turma-temporada-endereco/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>')"><i class="fas fa-map-marker-alt"></i> 
+                                Endereço 
+                            </a>&nbsp;&nbsp;
+
+                            <strong>Dt Insc.: <?php echo formatDate($value1["dtinsc"]); ?></strong>
+                            &nbsp;Dt Matric.: <?php echo formatDate($value1["dtmatric"]); ?>&nbsp;<strong>Dt Exclusão.: <?php echo formatDate($value1["dtexclusao"]); ?></strong>
+                   
+                            
+                            <span style="font-weight: bold; text-align: left; color: brown;">                  
+                                <?php if( $value1["inscpvs"] == 1 ){ ?> (Vuln. Social) &nbsp;&nbsp;<?php } ?>
+                            </span>                
+                      
+                            <span style="font-weight: bold; text-align: left; color: darkblue;">  
+                                <?php if( $value1["inscpcd"] == 1 ){ ?> PCD &nbsp;&nbsp;<?php } ?>  
+                            </span>        
+                      
+                            <span style="font-weight: bold; text-align: left; color: darkgreen;">                  
+                                <?php if( $value1["laudo"] == 1 ){ ?>LAUDO  &nbsp;&nbsp;<?php } ?>
+                            </span> 
+                            <br>
+                            <?php if( $value1["idinscstatus"] == 10 ){ ?>                      
+                                <span style="font-weight: bold; text-align: left; color: red;">                  
+                                Inscrição <?php echo htmlspecialchars( $value1["descstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+                                </span> 
+                                &nbsp;&nbsp;
+                          
+                            <?php } ?>                    
+                        
+                            <a href="/prof/profile/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" role="button">
+                                Detalhes
+                            </a>
+                            &nbsp;&nbsp;
+
+                            <span style="line-height: 10px; height: 20px; color: darkgreen; font-weight: bold;"> 
+                                <a style="color: green;" onclick="alterarStatusRematricular(<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, <?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, <?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)">
+                                    Rematricular 
+                                </a>        
+                            </span> &nbsp;&nbsp;
+
+                            
+                        
+                            
+                        </h5>                               
+                    </div>
+                </div>              
+            </div>
+            <?php } ?>
+           
+          <?php } ?>
+          </div>      
+
           <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
             <div class="box-body" style="text-align: center; background-color: orangered;">
               <span style="color: black; font-weight: bold">Canceladas
@@ -1493,7 +1708,7 @@
                       
                       <br><br>
                       <span style="color: black; font-weight: bold">Atestado:  </span>
-                      
+
                       <span style="color: darkred; font-weight: bold">  
                             <?php echo getAtestadoClinicoProfExiste($value1["numcpf"], 1); ?>
                         </span>
@@ -1550,7 +1765,7 @@
                     <h5 style="text-align: left;"> 
 
                       <span style="font-weight: bold; text-align: left; color: brown;">                  
-                        <?php if( $value1["vulnsocial"] == 1 ){ ?> (Vuln. Social) &nbsp;&nbsp;<?php } ?>
+                        <?php if( $value1["inscpvs"] == 1 ){ ?> (Vuln. Social) &nbsp;&nbsp;<?php } ?>
                       </span>                
                       
                       <span style="font-weight: bold; text-align: left; color: darkblue;">  
@@ -1627,10 +1842,17 @@
 
               <?php if( $value1["idinscstatus"] == 1 ){ ?>
                 <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                  <a class="btn btn-danger btn-xs" href="/prof/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusDesistente" role="button" onclick="return confirm('Deseja realmente informar como desistente o <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da inscrição <?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')">Marcar como desistente</a>
-                </h5>
+                    <h5 style="font-weight: bold; text-align: left;">                  
+                        <a class="btn btn-danger btn-xs" href="/prof/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusDesistente" role="button" onclick="return confirm('Deseja realmente informar como desistente o <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da inscrição <?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')">Marcar como desistente</a>
+                    </h5>
                 </div>
+                <div class="col-md-2" style="margin: 1; padding: 1">
+                    <h5 style="font-weight: bold; text-align: left;">                  
+                        <a class="btn btn-default btn-xs" role="button" onclick="alterarStatusSuspender(<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, <?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, <?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)">
+                            Suspender matrícula 
+                        </a>        
+                    </h5>
+                </div> 
               <?php } ?>                      
 
               <?php if( $value1["idinscstatus"] == 2 ){ ?>
@@ -1795,6 +2017,7 @@
 
                       <strong>Dt Insc.: <?php echo formatDate($value1["dtinsc"]); ?></strong>
                       &nbsp;Dt Matric.: <?php echo formatDate($value1["dtmatric"]); ?>&nbsp;
+                      <strong>Dt Desist.: <?php echo formatDate($value1["dtdesist"]); ?></strong>
                     </h5>
                   </div>                   
                 </div>
@@ -1807,7 +2030,7 @@
                     <h5 style="text-align: left;"> 
 
                       <span style="font-weight: bold; text-align: left; color: brown;">                  
-                        <?php if( $value1["vulnsocial"] == 1 ){ ?> (Vuln. Social) &nbsp;&nbsp;<?php } ?>
+                        <?php if( $value1["inscpvs"] == 1 ){ ?> (Vuln. Social) &nbsp;&nbsp;<?php } ?>
                       </span>                
                       
                       <span style="font-weight: bold; text-align: left; color: darkblue;">  
@@ -1888,6 +2111,13 @@
                   <a class="btn btn-danger btn-xs" href="/prof/insc/<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/statusDesistente" role="button" onclick="return confirm('Deseja realmente informar como desistente o <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?> da inscrição <?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>?')">Marcar como desistente</a>
                 </h5>
                 </div>
+                <div class="col-md-2" style="margin: 1; padding: 1">
+                    <h5 style="font-weight: bold; text-align: left;">                  
+                        <a class="btn btn-default btn-xs" role="button" onclick="alterarStatusSuspender(<?php echo htmlspecialchars( $value1["idinsc"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, <?php echo htmlspecialchars( $turma["idturma"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, <?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>)">
+                            Suspender matrícula 
+                        </a>        
+                    </h5>
+                </div> 
               <?php } ?>                      
 
               <?php if( $value1["idinscstatus"] == 2 ){ ?>
@@ -2002,7 +2232,7 @@
                         <label style="font-weight: bold; font-size: 10px">Preencha os dados abaixo para atualizar o atestado clínico</label>
                         <br>
                         <input hidden id="conteudoAtestadoId" name="idpess" type="text" required>
-                        <input  id="iduser" name="iduser" type="text" value='<?php echo getUserId(); ?>' required>
+                        <input hidden id="iduser" name="iduser" type="text" value='<?php echo getUserId(); ?>' required>
                         <input id="data" name="data" type="text" required="required" style="height: 30px; margin-bottom: 2px; width: 90%" placeholder="Somente números 00-00-0000">
                         <br> 
                         <input id="observ" type="text" name="observ" required="required" style="height: 30px; margin-bottom: 2px; margin-top: 2px; width: 90%" placeholder="Observação:" >
@@ -2028,7 +2258,7 @@
                     <form id="formAtestadoDerma" method="get" style="height: 100%;"> 
                         <label style="font-weight: bold; font-size: 10px">Preencha os dados abaixo para atualizar o atestado dermatológico</label>
                         <input hidden id="conteudoAtestadoDermaId" name="idpess" type="text" required>
-                        <input  id="iduserderma" name="iduserderma" type="text" value='<?php echo getUserId(); ?>' required>
+                        <input hidden id="iduserderma" name="iduserderma" type="text" value='<?php echo getUserId(); ?>' required>
                         <input id="dataderma" name="data" type="text" required="required" style="height: 30px; margin-bottom: 2px; width: 90%" placeholder="Somente números 00-00-0000">
                         <br> 
                         <input id="observderma" type="text" name="observderma" required="required" style="height: 30px; margin-bottom: 2px; margin-top: 2px; width: 90%;" placeholder="Observação:">

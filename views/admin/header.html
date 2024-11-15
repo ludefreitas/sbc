@@ -276,7 +276,8 @@ desired effect
             
             {/if}
             <li><a href="/admin/users-cliente"><i class="fa fa-users"></i>Clientes</a></li>
-            <li><a href="/admin/pessoas"><i class="fa fa-users"></i>Alunos</a></li>          
+            <li><a href="/admin/pessoas"><i class="fa fa-users"></i>Alunos</a></li>
+            <li><a href="/admin/insc-pessoas-temporada-pesquisa"><i class="fa fa-users"></i>Pesquisa<span style="color: red; font-size: 10px">(Novo)</span> </a></li>
           </ul>
         </li> 
          <li>
@@ -293,8 +294,19 @@ desired effect
             {include="turma-temporada-menu"}
           </ul>
         </li> 
+        
         <li class="treeview">
-          <a href="/admin"><i class="fa fa-clipboard"></i>  <span>Chamadas<span style="color: red; font-size: 10px">(Novo)</span> </span>
+          <a href="/admin/gradehorario/4/21"><i class="fa fa-th-list"></i> <span>Grade de Horários</span><span style="color: red; font-size: 10px">(Novo)</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            {include="grade-temporada-menu"}
+          </ul>
+        </li> 
+        <li class="treeview">
+          <a href="/admin"><i class="fa fa-clipboard"></i>  <span>Chamadas</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>

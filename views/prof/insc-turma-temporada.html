@@ -366,7 +366,53 @@
             alert('Endereço não encontrado!')
           }
         });
-      }   
+      } 
+
+      function alterarStatusSuspender(idinsc, idturma, idpess){
+
+        let ajax = new XMLHttpRequest();
+
+        let url = '/prof/insc/'+idinsc+'/'+idturma+'/'+idpess+'/statusSuspender'              
+        ajax.open('GET', 'url');
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if(result){  
+
+            alert(result)            
+            
+            
+          }else{
+            alert('Não foi possível suspender matricula')
+          }
+        });
+      }  
+
+      function alterarStatusRematricular(idinsc, idturma, idpess){
+
+        let ajax = new XMLHttpRequest();
+
+        let url = '/prof/insc/'+idinsc+'/'+idturma+'/'+idpess+'/statusRematricular'              
+        ajax.open('GET', 'url');
+        
+        $.ajax({
+          url: url,
+          method: 'GET'  
+        }).done(function(result){
+
+          if(result){  
+
+            alert(result)            
+            
+            
+          }else{
+            alert('Não foi possível suspender matricula')
+          }
+        });
+      }     
 
 </script>
 
@@ -443,7 +489,7 @@
           </div>
               
             {loop="$inscPvs"}
-            {if="($value.idinscstatus != 8) && ($value.idinscstatus != 9)"}
+            {if="($value.idinscstatus != 8) && ($value.idinscstatus != 9) && ($value.idinscstatus != 5) && ($value.idinscstatus != 10)"}
             <div class="box-body" style=" margin: 5px;">
               <div {function="colorStatus($value.idinscstatus)"} style="margin: 5px" class="row">
               
@@ -542,7 +588,7 @@
                     <h5 style="text-align: left;">  
 
                       <span style="font-weight: bold; text-align: left; color: brown;">                  
-                        {if="$value.vulnsocial == 1"} (Vuln. Social) &nbsp;&nbsp;{/if}
+                        {if="$value.inscpvs == 1"} (Vuln. Social) &nbsp;&nbsp;{/if}
                       </span> 
                       
                       <span style="font-weight: bold; text-align: left; color: darkblue;">  
@@ -623,6 +669,13 @@
                   <a class="btn btn-danger btn-xs" href="/prof/insc/{$value.idinsc}/{$value.idturma}/{$value.idpess}/statusDesistente" role="button" onclick="return confirm('Deseja realmente informar como desistente o(a) {$value.nomepess} da inscrição {$value.idinsc}?')">Marcar como desistente</a>
                 </h5>
                 </div>
+                <div class="col-md-2" style="margin: 1; padding: 1">
+                    <h5 style="font-weight: bold; text-align: left;">                  
+                        <a class="btn btn-default btn-xs" role="button" onclick="alterarStatusSuspender({$value.idinsc}, {$turma.idturma}, {$value.idpess})">
+                            Suspender matrícula 
+                        </a>        
+                    </h5>
+                </div> 
               {/if}                    
 
               {if="$value.idinscstatus == 2"}
@@ -695,7 +748,7 @@
           </div>
               
             {loop="$inscPcd"}
-            {if="($value.idinscstatus != 8) && ($value.idinscstatus != 9)"}
+            {if="($value.idinscstatus != 8) && ($value.idinscstatus != 9) && ($value.idinscstatus != 5) && ($value.idinscstatus != 10)"}
             <div class="box-body" style=" margin: 5px;">
               <div {function="colorStatus($value.idinscstatus)"} style="margin: 5px" class="row">
               
@@ -792,7 +845,7 @@
                     <h5 style="text-align: left;">  
 
                       <span style="font-weight: bold; text-align: left; color: brown;">                  
-                        {if="$value.vulnsocial == 1"} (Vuln. Social) &nbsp;&nbsp;{/if}
+                        {if="$value.inscpvs == 1"} (Vuln. Social) &nbsp;&nbsp;{/if}
                       </span>               
                       
                       <span style="font-weight: bold; text-align: left; color: darkblue;">  
@@ -874,6 +927,13 @@
                   <a class="btn btn-danger btn-xs" href="/prof/insc/{$value.idinsc}/{$value.idturma}/{$value.idpess}/statusDesistente" role="button" onclick="return confirm('Deseja realmente informar como desistente o(a) {$value.nomepess} da inscrição {$value.idinsc}?')">Marcar como desistente</a>
                 </h5>
                 </div>
+                <div class="col-md-2" style="margin: 1; padding: 1">
+                    <h5 style="font-weight: bold; text-align: left;">                  
+                        <a class="btn btn-default btn-xs" role="button" onclick="alterarStatusSuspender({$value.idinsc}, {$turma.idturma}, {$value.idpess})">
+                            Suspender matrícula 
+                        </a>        
+                    </h5>
+                </div> 
               {/if}                   
 
               {if="$value.idinscstatus == 2"}
@@ -951,7 +1011,7 @@
             </div>
               
             {loop="$inscPlm"}
-            {if="($value.idinscstatus != 8) && ($value.idinscstatus != 9)"}
+            {if="($value.idinscstatus != 8) && ($value.idinscstatus != 9) && ($value.idinscstatus != 5) && ($value.idinscstatus != 10)"}
             <div class="box-body" style=" margin: 5px;">
               <div {function="colorStatus($value.idinscstatus)"} style="margin: 5px" class="row">
               
@@ -1048,7 +1108,7 @@
                     <h5 style="text-align: left;">  
 
                       <span style="font-weight: bold; text-align: left; color: brown;">                  
-                        {if="$value.vulnsocial == 1"} (Vuln. Social) &nbsp;&nbsp;{/if}
+                        {if="$value.inscpvs == 1"} (Vuln. Social) &nbsp;&nbsp;{/if}
                       </span>               
                       
                       <span style="font-weight: bold; text-align: left; color: darkblue;">  
@@ -1130,6 +1190,13 @@
                   <a class="btn btn-danger btn-xs" href="/prof/insc/{$value.idinsc}/{$value.idturma}/{$value.idpess}/statusDesistente" role="button" onclick="return confirm('Deseja realmente informar como desistente o(a) {$value.nomepess} da inscrição {$value.idinsc}?')">Marcar como desistente</a>
                 </h5>
                 </div>
+                <div class="col-md-2" style="margin: 1; padding: 1">
+                    <h5 style="font-weight: bold; text-align: left;">                  
+                        <a class="btn btn-default btn-xs" role="button" onclick="alterarStatusSuspender({$value.idinsc}, {$turma.idturma}, {$value.idpess})">
+                            Suspender matrícula 
+                        </a>        
+                    </h5>
+                </div> 
               {/if}                  
 
               {if="$value.idinscstatus == 2"}
@@ -1205,7 +1272,7 @@
             </div>
               
             {loop="$insc"}
-            {if="($value.idinscstatus != 8) && ($value.idinscstatus != 9)"}
+            {if="($value.idinscstatus != 8) && ($value.idinscstatus != 9) && ($value.idinscstatus != 5) && ($value.idinscstatus != 10)"}
             <div class="box-body" style=" margin: 5px;">
               <div {function="colorStatus($value.idinscstatus)"} style="margin: 5px" class="row">
               
@@ -1213,7 +1280,7 @@
                 <div class="col-md-12">
                   <div class="col-md-6" style="margin: 1; padding: 1">
                     <h5 style="text-align: left;">
-                      {$value.numsorte}º -
+                      {$value.numsorte}º - {$value.idinscstatus} 
                       <strong>[{$value.idinsc}] - {$value.nomepess}</strong>
                       {if="UserIsAdmin()"}
                       &nbsp;{$value.numcpf}&nbsp;
@@ -1303,7 +1370,7 @@
                     <h5 style="text-align: left;"> 
 
                       <span style="font-weight: bold; text-align: left; color: brown;">                  
-                        {if="$value.vulnsocial == 1"} (Vuln. Social) &nbsp;&nbsp;{/if}
+                        {if="$value.inscpvs == 1"} (Vuln. Social) &nbsp;&nbsp;{/if}
                       </span>                
                       
                       <span style="font-weight: bold; text-align: left; color: darkblue;">  
@@ -1449,7 +1516,155 @@
            
           {/loop}
           </div> 
+
+        <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+            
+        {loop="$inscTodas"}
+            {if="($value.idinscstatus == 5)"}
+
+            <div class="box-body" style=" margin: 5px;">              
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5 style="text-align: left;">
+                            {$value.numsorte}º -
+                            <strong>[{$value.idinsc}] - {$value.nomepess}</strong>
+                            &nbsp;{function="formatCpf($value.numcpf)"}&nbsp;
+                            <strong>{function="calcularIdade($value.dtnasc)"} anos</strong>
+                            &nbsp;Nascim.: {function="formatDate($value.dtnasc)"}&nbsp;&nbsp;                       
+                            <strong>Resp: {$value.desperson}</strong>&nbsp;
+                            <a href="https://wa.me/+55{$value.nrphone}?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')">
+                                    <i class="fa fa-whatsapp" style="color: green;"></i>
+                                    <span style="color: black;"> {$value.nrphone}&nbsp;</span>
+                            </a>&nbsp;&nbsp;
+
+                            <a style="font-weight: bold;" onclick="requisitarPaginaEndereco('/prof/insc-turma-temporada-endereco/{$value.idpess}')"><i class="fas fa-map-marker-alt"></i> 
+                                Endereço 
+                            </a>&nbsp;&nbsp;
+
+                            <strong>Dt Insc.: {function="formatDate($value.dtinsc)"}</strong>
+                            &nbsp;Dt Matric.: {function="formatDate($value.dtmatric)"}&nbsp;
+                   
+                            
+                            <span style="font-weight: bold; text-align: left; color: brown;">                  
+                                {if="$value.inscpvs == 1"} (Vuln. Social) &nbsp;&nbsp;{/if}
+                            </span>                
+                      
+                            <span style="font-weight: bold; text-align: left; color: darkblue;">  
+                                {if="$value.inscpcd == 1"} PCD &nbsp;&nbsp;{/if}  
+                            </span>        
+                      
+                            <span style="font-weight: bold; text-align: left; color: darkgreen;">                  
+                                {if="$value.laudo == 1"}LAUDO  &nbsp;&nbsp;{/if}
+                            </span> 
+                            <br>
+                            {if="$value.idinscstatus == 5"}                      
+                                <span style="font-weight: bold; text-align: left; color: green;">                  
+                                *{$value.descstatus}*
+                                </span> 
+                                &nbsp;&nbsp;
+                          
+                            {/if}                    
+                        
+                            <a href="/prof/profile/insc/{$value.idinsc}/{$value.idpess}/{$turma.idturma}" role="button">
+                                Detalhes
+                            </a>
+                            &nbsp;&nbsp;
+
+                            <span style="line-height: 10px; height: 20px; color: darkblue; font-weight: bold;"> 
+                                <a onclick="alterarStatusRematricular({$value.idinsc}, {$turma.idturma}, {$value.idpess})">
+                                    Rematricular 
+                                </a>        
+                            </span> &nbsp;&nbsp;
+                        
+                            <span style="line-height: 10px; height: 20px; color: red; right: 0;">       
+                                <a href="/prof/insc/{$value.idinsc}/{$turma.idturma}/{$value.idpess}/statusSuspensaDesistente" role="button" onclick="return confirm('Deseja realmente informar como desistente o(a) {$value.nomepess} da inscrição {$value.idinsc}?')" style="color: red;"> 
+                                    Excluir 
+                                </a>  
+                            </span>
+                        </h5>                               
+                    </div>
+                </div>              
+            </div>
+            {/if}           
+        {/loop}
+          </div> 
+
+            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
+            <div class="box-body" style="text-align: center; background-color: #C8A2C8
+;">
+              <span style="color: black; font-weight: bold">Excluídas
+              </span>
+            </div>
           
+           {loop="$inscTodas"}
+            {if="($value.idinscstatus == 10)"}
+
+            <div {function="colorStatus($value.idinscstatus)"} style="margin: 5px" class="row">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5 style="text-align: left;">
+                            {$value.numsorte}º -
+                            <strong>[{$value.idinsc}] - {$value.nomepess}</strong>
+                            &nbsp;{function="formatCpf($value.numcpf)"}&nbsp;
+                            <strong>{function="calcularIdade($value.dtnasc)"} anos</strong>
+                            &nbsp;Nascim.: {function="formatDate($value.dtnasc)"}&nbsp;&nbsp;                       
+                            <strong>Resp: {$value.desperson}</strong>&nbsp;
+                            <a href="https://wa.me/+55{$value.nrphone}?text=Olá!" target="_blank" onclick="return confirm('Você será direcionado para o whatsapp do aluno ou responsável. Digite sua mensagem e no app clique em enviar msg.')">
+                                    <i class="fa fa-whatsapp" style="color: green;"></i>
+                                    <span style="color: black;"> {$value.nrphone}&nbsp;</span>
+                            </a>&nbsp;&nbsp;
+
+                            <a style="font-weight: bold;" onclick="requisitarPaginaEndereco('/prof/insc-turma-temporada-endereco/{$value.idpess}')"><i class="fas fa-map-marker-alt"></i> 
+                                Endereço 
+                            </a>&nbsp;&nbsp;
+
+                            <strong>Dt Insc.: {function="formatDate($value.dtinsc)"}</strong>
+                            &nbsp;Dt Matric.: {function="formatDate($value.dtmatric)"}&nbsp;<strong>Dt Exclusão.: {function="formatDate($value.dtexclusao)"}</strong>
+                   
+                            
+                            <span style="font-weight: bold; text-align: left; color: brown;">                  
+                                {if="$value.inscpvs == 1"} (Vuln. Social) &nbsp;&nbsp;{/if}
+                            </span>                
+                      
+                            <span style="font-weight: bold; text-align: left; color: darkblue;">  
+                                {if="$value.inscpcd == 1"} PCD &nbsp;&nbsp;{/if}  
+                            </span>        
+                      
+                            <span style="font-weight: bold; text-align: left; color: darkgreen;">                  
+                                {if="$value.laudo == 1"}LAUDO  &nbsp;&nbsp;{/if}
+                            </span> 
+                            <br>
+                            {if="$value.idinscstatus == 10"}                      
+                                <span style="font-weight: bold; text-align: left; color: red;">                  
+                                Inscrição {$value.descstatus}
+                                </span> 
+                                &nbsp;&nbsp;
+                          
+                            {/if}                    
+                        
+                            <a href="/prof/profile/insc/{$value.idinsc}/{$value.idpess}/{$turma.idturma}" role="button">
+                                Detalhes
+                            </a>
+                            &nbsp;&nbsp;
+
+                            <span style="line-height: 10px; height: 20px; color: darkgreen; font-weight: bold;"> 
+                                <a style="color: green;" onclick="alterarStatusRematricular({$value.idinsc}, {$turma.idturma}, {$value.idpess})">
+                                    Rematricular 
+                                </a>        
+                            </span> &nbsp;&nbsp;
+
+                            
+                        
+                            
+                        </h5>                               
+                    </div>
+                </div>              
+            </div>
+            {/if}
+           
+          {/loop}
+          </div>      
+
           <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
             <div class="box-body" style="text-align: center; background-color: orangered;">
               <span style="color: black; font-weight: bold">Canceladas
@@ -1550,7 +1765,7 @@
                     <h5 style="text-align: left;"> 
 
                       <span style="font-weight: bold; text-align: left; color: brown;">                  
-                        {if="$value.vulnsocial == 1"} (Vuln. Social) &nbsp;&nbsp;{/if}
+                        {if="$value.inscpvs == 1"} (Vuln. Social) &nbsp;&nbsp;{/if}
                       </span>                
                       
                       <span style="font-weight: bold; text-align: left; color: darkblue;">  
@@ -1627,10 +1842,17 @@
 
               {if="$value.idinscstatus == 1"}
                 <div class="col-md-2" style="margin: 2; padding: 2">
-                <h5 style="font-weight: bold; text-align: left;">                  
-                  <a class="btn btn-danger btn-xs" href="/prof/insc/{$value.idinsc}/{$value.idturma}/{$value.idpess}/statusDesistente" role="button" onclick="return confirm('Deseja realmente informar como desistente o {$value.nomepess} da inscrição {$value.idinsc}?')">Marcar como desistente</a>
-                </h5>
+                    <h5 style="font-weight: bold; text-align: left;">                  
+                        <a class="btn btn-danger btn-xs" href="/prof/insc/{$value.idinsc}/{$value.idturma}/{$value.idpess}/statusDesistente" role="button" onclick="return confirm('Deseja realmente informar como desistente o {$value.nomepess} da inscrição {$value.idinsc}?')">Marcar como desistente</a>
+                    </h5>
                 </div>
+                <div class="col-md-2" style="margin: 1; padding: 1">
+                    <h5 style="font-weight: bold; text-align: left;">                  
+                        <a class="btn btn-default btn-xs" role="button" onclick="alterarStatusSuspender({$value.idinsc}, {$turma.idturma}, {$value.idpess})">
+                            Suspender matrícula 
+                        </a>        
+                    </h5>
+                </div> 
               {/if}                      
 
               {if="$value.idinscstatus == 2"}
@@ -1795,6 +2017,7 @@
 
                       <strong>Dt Insc.: {function="formatDate($value.dtinsc)"}</strong>
                       &nbsp;Dt Matric.: {function="formatDate($value.dtmatric)"}&nbsp;
+                      <strong>Dt Desist.: {function="formatDate($value.dtdesist)"}</strong>
                     </h5>
                   </div>                   
                 </div>
@@ -1807,7 +2030,7 @@
                     <h5 style="text-align: left;"> 
 
                       <span style="font-weight: bold; text-align: left; color: brown;">                  
-                        {if="$value.vulnsocial == 1"} (Vuln. Social) &nbsp;&nbsp;{/if}
+                        {if="$value.inscpvs == 1"} (Vuln. Social) &nbsp;&nbsp;{/if}
                       </span>                
                       
                       <span style="font-weight: bold; text-align: left; color: darkblue;">  
@@ -1888,6 +2111,13 @@
                   <a class="btn btn-danger btn-xs" href="/prof/insc/{$value.idinsc}/{$value.idturma}/{$value.idpess}/statusDesistente" role="button" onclick="return confirm('Deseja realmente informar como desistente o {$value.nomepess} da inscrição {$value.idinsc}?')">Marcar como desistente</a>
                 </h5>
                 </div>
+                <div class="col-md-2" style="margin: 1; padding: 1">
+                    <h5 style="font-weight: bold; text-align: left;">                  
+                        <a class="btn btn-default btn-xs" role="button" onclick="alterarStatusSuspender({$value.idinsc}, {$turma.idturma}, {$value.idpess})">
+                            Suspender matrícula 
+                        </a>        
+                    </h5>
+                </div> 
               {/if}                      
 
               {if="$value.idinscstatus == 2"}

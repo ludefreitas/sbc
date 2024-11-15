@@ -15,6 +15,30 @@ class Insc extends Model {
 	public function save()
 	{
 		$sql = new Sql();												        
+		$results = $sql->select("CALL sp_insc_save1(:idinsc, :idinscstatus, :idcart, :idturma, :idtemporada, :idpessoa, :numcpf, :numordem, :numsorte, :laudo, :inscpcd, :inscpvs)", [
+			':idinsc'=>$this->getidinsc(),
+			':idinscstatus'=>$this->getidinscstatus(),
+			':idcart'=>$this->getidcart(),
+			':idturma'=>$this->getidturma(),
+			':idtemporada'=>$this->getidtemporada(),
+			':idpessoa'=>$this->getidpessoa(),
+			':numcpf'=>$this->getnumcpf(),
+			':numordem'=>$this->getnumordem(),
+			':numsorte'=>$this->getnumsorte(),
+			':laudo'=>$this->getlaudo(),
+			':inscpcd'=>$this->getinscpcd(),
+			':inscpvs'=>$this->getinscpvs()
+		]);
+
+		if (count($results) > 0) {
+			$this->setData($results[0]);
+		}
+	}
+
+	/*
+	public function save()
+	{
+		$sql = new Sql();												        
 		$results = $sql->select("CALL sp_insc_save1(:idinsc, :idinscstatus, :idcart, :idturma, :idtemporada, :numordem, :numsorte, :laudo, :inscpcd, :inscpvs)", [
 			':idinsc'=>$this->getidinsc(),
 			':idinscstatus'=>$this->getidinscstatus(),
@@ -32,6 +56,7 @@ class Insc extends Model {
 			$this->setData($results[0]);
 		}
 	}	
+	*/
 
 	public function moveInscSave($idturmadestino, $idturmaorigem, $idinscdestino, $idinscorigem, $idtemporadadestino, $idtemporadaorigem, $tipomove, $observacao, $dtinscorigem, $dtmatricorigem, $dtmovimentacao){
 
@@ -54,16 +79,29 @@ class Insc extends Model {
 		]);
 	}
 
-	public function save_presenca($idinsc, $statuspresenca, $data)
+	public static function save_presenca($idinsc, $statuspresenca, $data)
 	{
 		$idpresenca = 0;
-		$sql = new Sql();							        
+		$sql = new Sql();					        
 
 		$results = $sql->select("CALL sp_presenca_save(:idpresenca, :idinsc, :statuspresenca, :dtpresenca)", [
 			':idpresenca'=>$idpresenca,
 			':idinsc'=>$idinsc,
 			':statuspresenca'=>$statuspresenca,
 			':dtpresenca'=>$data
+		]);
+	}
+
+	public static function save_ausencia($idinsc, $data, $is_ausencia_aula)
+	{
+		$idausencia_aula = 0;
+		$sql = new Sql();					        
+
+		$results = $sql->select("CALL sp_ausencia_aula_save(:idausencia_aula, :idinsc, :dtausencia_aula, :is_ausencia_aula)", [
+			':idausencia_aula'=>$idausencia_aula,
+			':idinsc'=>$idinsc,
+			':dtausencia_aula'=>$data,
+			':is_ausencia_aula'=>$is_ausencia_aula
 		]);
 	}
 
@@ -97,6 +135,78 @@ class Insc extends Model {
 		));
 	}
 
+	public static function existeAusenciaData($idinsc, $data){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT count(*)
+			FROM tb_ausencia_aula
+			WHERE idinsc = :idinsc
+            AND dtausencia_aula = :data ", [			
+			':idinsc'=>$idinsc,	
+			':data'=>$data				
+		]);
+
+		return $results[0]['count(*)'];
+	}
+	
+	public static function update_ausencia_aula($idinsc, $data, $is_ausencia_aula){
+
+		$sql = new Sql();
+
+		$sql->query("UPDATE tb_ausencia_aula SET is_ausencia_aula = :is_ausencia_aula 
+			WHERE idinsc = :idinsc
+			AND dtausencia_aula = :data", array(
+			":is_ausencia_aula"=>$is_ausencia_aula,
+			":idinsc"=>$idinsc,
+			":data"=>$data
+		));
+	}
+
+	public static function  deleteAusencia_aulaMesRetrasado($mesRetrasado)
+	{
+
+		$sql = new Sql();
+
+		$sql->query("SET SQL_SAFE_UPDATES=0;
+			DELETE FROM tb_ausencia_aula WHERE MID(dtausencia_aula, 6, 2) = :mesRetrasado;
+			SET SQL_SAFE_UPDATES=1;", [
+			':mesRetrasado'=>$mesRetrasado
+		]);
+
+	}
+
+	public static function selectIsAusenciaAula($idinsc){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * 
+			FROM tb_ausencia_aula 
+			WHERE idinsc = :idinsc
+			order by dtausencia_aula desc 
+			limit 4", [
+				':idinsc'=>$idinsc
+			]);
+
+		return $results;
+	}
+
+	public static function selectIsStatuspresencaAusente($idinsc){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * 
+			FROM tb_presenca 
+			WHERE idinsc = :idinsc
+			order by dtpresenca desc 
+			limit 4", [
+				':idinsc'=>$idinsc
+			]);
+
+		return $results;
+	}
+
 	public function update_justificar($idinsc, $data){
 
 		$statuspresenca = 2;
@@ -127,7 +237,7 @@ class Insc extends Model {
 		}		
 	}
 	
-	public function getAlunosPresentesPorData($data){
+	public static function getAlunosPresentesPorData($data){
 
 		$statuspresenca = 1;
 
@@ -142,7 +252,7 @@ class Insc extends Model {
 		return $results[0]['count(*)'];
 	}
 
-	public function getAlunosAusentesPorData($data){
+	public static function getAlunosAusentesPorData($data){
 
 		$statuspresenca = 0;
 
@@ -157,7 +267,7 @@ class Insc extends Model {
 		return $results[0]['count(*)'];
 	}
 
-	public function getAlunosJustificadosPorData($data){
+	public static function getAlunosJustificadosPorData($data){
 
 		$statuspresenca = 2;
 
@@ -209,7 +319,7 @@ class Insc extends Model {
 		return $results;		
 	}
 
-	public function getInscByTurmaTemporadaMatriculadosDataListaChamada($idturma, $idtemporada, $data){
+	public static function getInscByTurmaTemporadaMatriculadosDataListaChamada($idturma, $idtemporada, $data){
 
 		$sql = new Sql();
 
@@ -217,8 +327,36 @@ class Insc extends Model {
 			
 			SELECT * FROM tb_insc a
 			INNER JOIN tb_presenca g ON g.idinsc = a.idinsc			
-			INNER JOIN tb_carts b ON b.idcart = a.idcart			
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart			
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus
+			WHERE a.idturma = :idturma 
+			AND a.idtemporada = :idtemporada 
+			AND g.dtpresenca = :data 
+			AND a.dtmatric < g.dtpresenca 
+			AND f.idinscstatus = 1
+			ORDER BY c.nomepess, f.idinscstatus;
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada,
+			':data'=>$data
+		]);
+		
+		return $results;
+	}
+
+	public static function getInscByTurmaTemporadaMatriculadosSuspensoDataListaChamada($idturma, $idtemporada, $data){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			INNER JOIN tb_presenca g ON g.idinsc = a.idinsc			
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart			
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus
@@ -226,10 +364,40 @@ class Insc extends Model {
 			WHERE a.idturma = :idturma 
 			AND a.idtemporada = :idtemporada 
 			AND g.dtpresenca = :data 
-			AND a.dtmatric < g.dtpresenca 
-			AND f.idinscstatus = 1
+			-- AND a.dtmatric < g.dtpresenca 
+			AND f.idinscstatus = 5
 			-- AND h.dataatualizacao = (SELECT  MAX(h.dataatualizacao) FROM tb_atestado h WHERE h.cpf = c.numcpf ) /* esta */
-			ORDER BY c.nomepess;
+			ORDER BY c.nomepess, f.idinscstatus;
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada,
+			':data'=>$data
+		]);
+		
+		return $results;
+	}
+
+	public static function getInscByTurmaTemporadaExcluidoFaltaDataListaChamada($idturma, $idtemporada, $data){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			INNER JOIN tb_presenca g ON g.idinsc = a.idinsc			
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart			
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus
+			-- INNER JOIN tb_atestado h ON h.idpess = c.idpess /* esta */
+			WHERE a.idturma = :idturma 
+			AND a.idtemporada = :idtemporada 
+			AND g.dtpresenca = :data 
+			-- AND a.dtmatric < g.dtpresenca 
+			AND f.idinscstatus = 10
+			-- AND h.dataatualizacao = (SELECT  MAX(h.dataatualizacao) FROM tb_atestado h WHERE h.cpf = c.numcpf ) /* esta */
+			ORDER BY c.nomepess, f.idinscstatus;
 		", [
 			':idturma'=>$idturma,
 			':idtemporada'=>$idtemporada,
@@ -246,9 +414,9 @@ class Insc extends Model {
 		$results = $sql->select("
 			
 			SELECT * FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
 			INNER JOIN tb_presenca g ON g.idinsc = a.idinsc			
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus
@@ -256,7 +424,7 @@ class Insc extends Model {
 			AND a.idtemporada = :idtemporada 
 			-- AND g.dtpresenca = :data
 			AND f.idinscstatus = 1
-			ORDER BY c.nomepess;
+			ORDER BY c.nomepess, f.idinscstatus;
 			-- ORDER BY a.inscpcd DESC, a.laudo DESC, a.inscpvs DESC, a.numordem, a.idinscstatus;
 		", [
 			':idturma'=>$idturma,
@@ -264,18 +432,70 @@ class Insc extends Model {
 			//':data'=>$data
 		]);
 			
-		$this->setData($results);
+		//$this->setData($results);
+		return $results;
 	}
 
-	public function getInscByTurmaTemporadaMatriculados($idturma, $idtemporada){
+	public static function getInscByTurmaTemporadaMatriculados($idturma, $idtemporada){
 
 		$sql = new Sql();
 
 		$results = $sql->select("
 			
 			SELECT * FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus
+			WHERE a.idtemporada = :idtemporada 
+			AND a.idturma = :idturma 
+			AND f.idinscstatus = 1
+			ORDER BY c.nomepess;
+		", [
+			':idtemporada'=>$idtemporada,
+			':idturma'=>$idturma
+		]);
+		
+		return $results;
+	}
+
+	public static function getInscByTurmaTemporadaModalidadeMatriculados($desctemporada, $descmodal){
+
+		$sql = new Sql();
+
+		$results = $sql->select("			
+			SELECT * FROM tb_insc a
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_turma g ON g.idturma = a.idturma
+			INNER JOIN tb_espaco j ON j.idespaco = g.idespaco
+			INNER JOIN tb_local k ON k.idlocal = j.idlocal
+			INNER JOIN tb_modalidade h ON h.idmodal = g.idmodal
+			INNER JOIN tb_temporada i ON i.idtemporada = a.idtemporada
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus
+			WHERE i.desctemporada = :desctemporada 
+			AND h.descmodal = :descmodal 
+			AND f.idinscstatus = 1			
+			ORDER BY c.nomepess;			
+		", [
+			':desctemporada'=>$desctemporada,
+			':descmodal'=>$descmodal
+		]);		
+		return $results;
+	}
+
+	public static function getInscByTurmaTemporadaMatriculadosSuspenso($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus
@@ -283,7 +503,7 @@ class Insc extends Model {
 			-- INNER JOIN tb_presenca g ON g.idinsc = a.idinsc			
 			WHERE a.idtemporada = :idtemporada 
 			AND a.idturma = :idturma 
-			AND f.idinscstatus = 1
+			AND f.idinscstatus = 5
 			-- AND h.dataatualizacao = (SELECT  MAX(h.dataatualizacao) FROM tb_atestado h WHERE h.cpf = c.numcpf ) /* esta */
 			ORDER BY c.nomepess;
 			-- ORDER BY a.inscpcd DESC, a.laudo DESC, a.inscpvs DESC, a.numordem, a.idinscstatus;
@@ -295,7 +515,141 @@ class Insc extends Model {
 		return $results;
 	}
 
-	public function GetDiasDoMesPresenca($idtemporada, $idturma, $mes){
+	public static function getInscByTurmaTemporadaExcluidoFalta($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus
+			-- INNER JOIN tb_atestado h ON h.idpess = c.idpess /* esta */
+			-- INNER JOIN tb_presenca g ON g.idinsc = a.idinsc			
+			WHERE a.idtemporada = :idtemporada 
+			AND a.idturma = :idturma 
+			AND f.idinscstatus = 10
+			-- AND h.dataatualizacao = (SELECT  MAX(h.dataatualizacao) FROM tb_atestado h WHERE h.cpf = c.numcpf ) /* esta */
+			ORDER BY c.nomepess;
+			-- ORDER BY a.inscpcd DESC, a.laudo DESC, a.inscpvs DESC, a.numordem, a.idinscstatus;
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		return $results;
+	}
+
+	public static function getInscByTurmaTemporadaSuspensoMatriculados($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus
+			-- INNER JOIN tb_atestado h ON h.idpess = c.idpess /* esta */
+			-- INNER JOIN tb_presenca g ON g.idinsc = a.idinsc			
+			WHERE a.idtemporada = :idtemporada 
+			AND a.idturma = :idturma 
+			AND f.idinscstatus = 5
+			-- AND h.dataatualizacao = (SELECT  MAX(h.dataatualizacao) FROM tb_atestado h WHERE h.cpf = c.numcpf ) /* esta */
+			ORDER BY c.nomepess;
+			-- ORDER BY a.inscpcd DESC, a.laudo DESC, a.inscpvs DESC, a.numordem, a.idinscstatus;
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		return $results;
+	}
+
+	public function getInscByTurmaTemporadaMatriculadosDesistentes($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus
+			-- INNER JOIN tb_presenca g ON g.idinsc = a.idinsc			
+			WHERE a.idturma = :idturma  
+			AND a.idtemporada = :idtemporada 
+			AND (f.idinscstatus = 1 OR f.idinscstatus = 8)
+			ORDER BY  f.idinscstatus, c.nomepess;
+			-- ORDER BY a.inscpcd DESC, a.laudo DESC, a.inscpvs DESC, a.numordem, a.idinscstatus;
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		return $results;
+	}
+
+	public static function getInscByTurmaTemporadaMatriculadosDesistentesSuspensas($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus
+			-- INNER JOIN tb_presenca g ON g.idinsc = a.idinsc			
+			WHERE a.idturma = :idturma  
+			AND a.idtemporada = :idtemporada 
+			AND (f.idinscstatus = 1 OR f.idinscstatus = 8 OR f.idinscstatus = 5)
+			ORDER BY  f.idinscstatus, c.nomepess;
+			-- ORDER BY a.inscpcd DESC, a.laudo DESC, a.inscpvs DESC, a.numordem, a.idinscstatus;
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		return $results;
+	}
+
+	public static function getInscByTurmaTemporadaMatriculadosDesistentesSuspensasExcPorFalta($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus
+			-- INNER JOIN tb_presenca g ON g.idinsc = a.idinsc			
+			WHERE a.idturma = :idturma  
+			AND a.idtemporada = :idtemporada 
+			AND (f.idinscstatus = 1 OR f.idinscstatus = 8 OR f.idinscstatus = 5 OR f.idinscstatus = 10)
+			ORDER BY  f.idinscstatus, c.nomepess;
+			-- ORDER BY a.inscpcd DESC, a.laudo DESC, a.inscpvs DESC, a.numordem, a.idinscstatus;
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		return $results;
+	}
+
+	public static function GetDiasDoMesPresenca($idtemporada, $idturma, $mes){
 		$sql = new Sql();
 			$results = $sql->select("CALL sp_select_dias_mes_presenca(:idtemporada, :idturma, :mes)", [
 			':idtemporada'=>$idtemporada,
@@ -305,7 +659,7 @@ class Insc extends Model {
 		return $results;
 	}
 
-	public function GetDiasDoMesPresencaDescTemporada($idtemporada, $idturma, $mes, $desctemporada){
+	public static function GetDiasDoMesPresencaDescTemporada($idtemporada, $idturma, $mes, $desctemporada){
 		$sql = new Sql();
 			$results = $sql->select("CALL sp_select_dias_mes_presenca_desctemporada(:idtemporada, :idturma, :mes, :desctemporada)", [
 			':idtemporada'=>$idtemporada,
@@ -323,8 +677,8 @@ class Insc extends Model {
 		$results = $sql->select("
 			
 			SELECT * FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus
@@ -351,8 +705,8 @@ class Insc extends Model {
 		$results = $sql->select("
 			
 			SELECT * FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus
@@ -370,7 +724,7 @@ class Insc extends Model {
 		return $results;
 	}
 
-	public function getStatusPresencaByIdinscIdturmaIdtemporada($dia, $mes, $idinsc, $idturma, $idtemporada){
+	public static function getStatusPresencaByIdinscIdturmaIdtemporada($dia, $mes, $idinsc, $idturma, $idtemporada){
 		$sql = new Sql();
 			$results = $sql->select("CALL sp_select_status_presenca(:dia, :mes, :idinsc, :idturma, :idtemporada)", [
 			':dia'=>$dia,
@@ -778,6 +1132,36 @@ class Insc extends Model {
      	}
 	}	
 
+	public function getComCpf($idinsc)
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT * 
+			FROM tb_insc a 
+			INNER JOIN tb_inscstatus b USING(idinscstatus) 
+			-- INNER JOIN tb_carts c ON c.idcart = a.idcart
+			INNER JOIN tb_turma g ON g.idturma = a.idturma
+			INNER JOIN tb_atividade h ON h.idativ = g.idativ
+			INNER JOIN tb_espaco i ON i.idespaco = g.idespaco
+			INNER JOIN tb_pessoa d ON d.numcpf = a.numcpf
+			INNER JOIN tb_users e ON e.iduser = d.iduser
+			INNER JOIN tb_persons f ON f.idperson = e.idperson
+			INNER JOIN tb_temporada j ON j.idtemporada = a.idtemporada
+			INNER JOIN tb_statustemporada n USING(idstatustemporada)
+			INNER JOIN tb_inscstatus k USING(idinscstatus)
+			INNER JOIN tb_horario l USING(idhorario)
+			INNER JOIN tb_local m USING(idlocal)
+			WHERE a.idinsc = :idinsc
+		", [
+			':idinsc'=>$idinsc
+		]);
+
+		if (count($results) > 0) {
+			$this->setData($results[0]);
+		}
+	}
+
 	public function get($idinsc)
 	{
 		$sql = new Sql();
@@ -786,11 +1170,11 @@ class Insc extends Model {
 			SELECT * 
 			FROM tb_insc a 
 			INNER JOIN tb_inscstatus b USING(idinscstatus) 
-			INNER JOIN tb_carts c USING(idcart)
+			-- INNER JOIN tb_carts c USING(idcart)
 			INNER JOIN tb_turma g USING(idturma)
 			INNER JOIN tb_atividade h ON h.idativ = g.idativ
 			INNER JOIN tb_espaco i ON i.idespaco = g.idespaco
-			INNER JOIN tb_pessoa d ON d.idpess = c.idpess
+			INNER JOIN tb_pessoa d ON d.idpess = a.idpessoa
 			INNER JOIN tb_users e ON e.iduser = d.iduser
 			INNER JOIN tb_persons f ON f.idperson = e.idperson
 			INNER JOIN tb_temporada j USING(idtemporada)
@@ -806,6 +1190,91 @@ class Insc extends Model {
 		if (count($results) > 0) {
 			$this->setData($results[0]);
 		}
+	}
+
+	public static function getInscByIdInscNumcpf($idinsc, $numcpf)
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT * 
+			FROM tb_insc a 
+			INNER JOIN tb_inscstatus b ON b.idinscstatus = a.idinscstatus 
+			INNER JOIN tb_turma g ON g.idturma = a.idturma
+			INNER JOIN tb_turmatemporada p ON p.idturma = a.idturma
+			INNER JOIN tb_atividade h ON h.idativ = g.idativ
+			INNER JOIN tb_espaco i ON i.idespaco = g.idespaco
+			INNER JOIN tb_users e ON e.iduser = p.iduser
+			INNER JOIN tb_persons f ON f.idperson = e.idperson
+			INNER JOIN tb_temporada j ON j.idtemporada = a.idtemporada
+			INNER JOIN tb_statustemporada n ON n.idstatustemporada = j.idstatustemporada
+			INNER JOIN tb_horario l USING(idhorario)
+			INNER JOIN tb_local m USING(idlocal)
+			WHERE a.idinsc = :idinsc
+			AND a.numcpf = :numcpf
+		", [
+			':idinsc'=>$idinsc,
+			':numcpf'=>$numcpf
+		]);
+
+		if (count($results) > 0) {
+			return $results[0];
+		}
+	}
+
+	public static function getInscExistByCpf($numcpf, $idturma, $idtemporada)
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT * FROM tb_insc a 
+			-- INNER JOIN tb_inscstatus b ON b.idinscstatus = a.idinscstatus 
+			WHERE a.numcpf = :numcpf
+			AND a.idturma = :idturma
+			AND a.idtemporada = :idtemporada
+			AND a.idinscstatus != 8 
+            AND a.idinscstatus != 9
+		", [
+			':numcpf'=>$numcpf,
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+
+		return $results;
+
+		//if (count($results) > 0) {
+			//return $results[0];
+		//}
+	}
+
+	public static function getInscByCpf($numcpf)
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT distinct * 
+			FROM tb_insc a 
+			INNER JOIN tb_inscstatus b USING(idinscstatus) 
+			INNER JOIN tb_turmatemporada c ON c.idtemporada = a.idtemporada
+			INNER JOIN tb_temporada d ON d.idtemporada = c.idtemporada		
+			INNER JOIN tb_turma e ON e.idturma = a.idturma
+			INNER JOIN tb_atividade f ON f.idativ = e.idativ
+			INNER JOIN tb_espaco g ON g.idespaco = e.idespaco			
+			INNER JOIN tb_users h ON h.iduser = c.iduser
+			INNER JOIN tb_persons i ON i.idperson = h.idperson
+			INNER JOIN tb_inscstatus k USING(idinscstatus)
+			INNER JOIN tb_horario l USING(idhorario)
+			INNER JOIN tb_local m USING(idlocal)
+			WHERE a.numcpf = :numcpf ORDER BY a.idinsc DESC
+		", [
+			':numcpf'=>$numcpf,		
+		]);
+
+		return $results;
+
+		//if (count($results) > 0) {
+			//return $results[0];
+		//}
 	}
 
 	/*
@@ -1070,6 +1539,46 @@ class Insc extends Model {
 
 	}
 
+	public static function getPageInscTemporadaLocal($page = 1, $itemsPerPage = 10, $idtemporada, $idlocal)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_insc a 
+			INNER JOIN tb_inscstatus b USING(idinscstatus) 
+			-- INNER JOIN tb_carts c USING(idcart)			
+			-- INNER JOIN tb_pessoa d USING(idpess)
+			INNER JOIN tb_pessoa d ON d.idpess = a.idpessoa
+			INNER JOIN tb_users e ON e.iduser = d.iduser
+			INNER JOIN tb_persons f ON f.idperson = e.idperson
+			INNER JOIN tb_temporada g USING(idtemporada)
+			INNER JOIN tb_turma h USING(idturma)
+			INNER JOIN tb_espaco i ON i.idespaco = h.idespaco
+			INNER JOIN tb_local j ON j.idlocal = i.idlocal
+			WHERE idtemporada = :idtemporada
+			AND j.idlocal = :idlocal
+			ORDER BY a.dtinsc DESC
+			LIMIT $start, $itemsPerPage;
+		", [
+			":idtemporada"=>$idtemporada,
+			":idlocal"=>$idlocal
+
+		]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+
 	public static function getPageSearchInscTemporada($search, $page = 1, $itemsPerPage = 5, $idtemporada)
 	{
 
@@ -1081,8 +1590,9 @@ class Insc extends Model {
 			SELECT SQL_CALC_FOUND_ROWS *
 			FROM tb_insc a 
 			INNER JOIN tb_inscstatus b USING(idinscstatus) 
-			INNER JOIN tb_carts c USING(idcart)			
-			INNER JOIN tb_pessoa d USING(idpess)
+			-- INNER JOIN tb_carts c USING(idcart)			
+			-- INNER JOIN tb_pessoa d USING(idpess)
+			INNER JOIN tb_pessoa d ON d.idpess = a.idpessoa
 			INNER JOIN tb_users e ON e.iduser = d.iduser
 			INNER JOIN tb_persons f ON f.idperson = e.idperson
 			INNER JOIN tb_temporada g USING(idtemporada)
@@ -1101,6 +1611,54 @@ class Insc extends Model {
 			LIMIT $start, $itemsPerPage;
 		", [
 			'idtemporada'=>$idtemporada,
+			':search'=>'%'.$search.'%',
+			':id'=>$search
+		]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+
+	public static function getPageSearchInscTemporadaLocal($search, $page = 1, $itemsPerPage = 5, $idtemporada, $idlocal)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;		
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_insc a 
+			INNER JOIN tb_inscstatus b USING(idinscstatus) 
+			-- INNER JOIN tb_carts c USING(idcart)			
+			-- INNER JOIN tb_pessoa d USING(idpess)
+			INNER JOIN tb_pessoa d ON d.idpess = a.idpessoa
+			INNER JOIN tb_users e ON e.iduser = d.iduser
+			INNER JOIN tb_persons f ON f.idperson = e.idperson
+			INNER JOIN tb_temporada g USING(idtemporada)
+			INNER JOIN tb_turma h USING(idturma)
+			INNER JOIN tb_espaco j ON j.idespaco = h.idespaco
+			INNER JOIN tb_local k ON k.idlocal = j.idlocal
+			INNER JOIN tb_turmatemporada i
+			WHERE idtemporada = :idtemporada 
+			AND k.idlocal = :idlocal 
+			AND (a.idinsc LIKE :search
+			OR f.desperson LIKE :search
+			OR b.descstatus LIKE :search 
+			OR g.desctemporada LIKE :search 
+			OR d.nomepess LIKE :search
+			OR h.descturma LIKE :search) 
+			-- ORDER BY a.dtinsc DESC
+			LIMIT $start, $itemsPerPage;
+		", [
+			'idtemporada'=>$idtemporada,
+			'idlocal'=>$idlocal,
 			':search'=>'%'.$search.'%',
 			':id'=>$search
 		]);
@@ -1173,7 +1731,8 @@ class Insc extends Model {
 			INNER JOIN tb_espaco j ON j.idespaco = h.idespaco
 			INNER JOIN tb_local k ON k.idlocal = j.idlocal
 			INNER JOIN tb_turmatemporada i
-			WHERE idtemporada = :idtemporada 
+			WHERE a.idtemporada = :idtemporada 
+			AND a.inscpcd = 1
 			AND (a.idinsc LIKE :search
 			OR f.desperson LIKE :search
 			OR b.descstatus LIKE :search 
@@ -1205,8 +1764,8 @@ class Insc extends Model {
 		$results = $sql->select("
 			
 			SELECT * FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus		
@@ -1220,6 +1779,53 @@ class Insc extends Model {
 		
 		$this->setData($results);
 	}
+
+	public static function getIdinscInscByTurmaTemporadaTodas($idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus		
+			-- INNER JOIN tb_endereco g ON g.idpess = c.idpess				
+			WHERE a.idturma = :idturma AND a.idtemporada = :idtemporada 
+			ORDER BY a.idinsc, a.inscpcd DESC, a.laudo DESC, a.inscpvs DESC, a.numordem, a.idinscstatus;
+		", [
+			':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		return $results;
+	}
+
+	public static function getIdinscInscByTemporadaTodas($idtemporada){
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			
+			SELECT * FROM tb_insc a
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
+			INNER JOIN tb_users d ON d.iduser = c.iduser
+			INNER JOIN tb_persons e ON e.idperson = d.idperson
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus		
+			-- INNER JOIN tb_endereco g ON g.idpess = c.idpess				
+			-- WHERE a.idturma = :idturma 
+			WHERE a.idtemporada = :idtemporada 
+			ORDER BY a.idinsc, a.inscpcd DESC, a.laudo DESC, a.inscpvs DESC, a.numordem, a.idinscstatus;
+		", [
+			//':idturma'=>$idturma,
+			':idtemporada'=>$idtemporada
+		]);
+		
+		return $results;
+	}
 	
 	public function getInscByTurmaTemporada($idturma, $idtemporada){
 
@@ -1228,8 +1834,8 @@ class Insc extends Model {
 		$results = $sql->select("
 			
 			SELECT * FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus		
@@ -1251,8 +1857,8 @@ class Insc extends Model {
 		$results = $sql->select("
 			
 			SELECT * FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus		
@@ -1274,8 +1880,8 @@ class Insc extends Model {
 		$results = $sql->select("
 			
 			SELECT * FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus	
@@ -1297,8 +1903,8 @@ class Insc extends Model {
 		$results = $sql->select("
 			
 			SELECT * FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus	
@@ -1320,11 +1926,11 @@ class Insc extends Model {
 		$results = $sql->select("
 			
 			SELECT * FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
-			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus		
 			WHERE idturma = :idturma AND idtemporada = :idtemporada AND a.idinscstatus = 6
 			ORDER BY a.idinsc
 		", [
@@ -1342,12 +1948,12 @@ class Insc extends Model {
 		$results = $sql->select("
 			
 			SELECT * FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			INNER JOIN tb_endereco g ON g.idpess = b.idpess
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
-			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus		
 			WHERE idturma = :idturma 
 			AND idtemporada = :idtemporada 
 			AND (a.idinscstatus = 3 OR a.idinscstatus = 7)
@@ -1395,12 +2001,12 @@ class Insc extends Model {
 
 		$results = $sql->select("			
 			SELECT c.nomepess, a.idinscstatus FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			-- INNER JOIN tb_endereco g ON g.idpess = b.idpess
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
-			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
+			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus		
 			WHERE idturma = :idturma
 			AND idtemporada = :idtemporada
 			ORDER BY c.nomepess, a.idinscstatus;
@@ -1419,8 +2025,8 @@ class Insc extends Model {
 		$results = $sql->select("
 			
 			SELECT * FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
@@ -1441,8 +2047,8 @@ class Insc extends Model {
 		$results = $sql->select("
 			
 			SELECT * FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
@@ -1463,8 +2069,8 @@ class Insc extends Model {
 		$results = $sql->select("
 			
 			SELECT * FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
@@ -1504,8 +2110,8 @@ class Insc extends Model {
 		$results = $sql->select("
 			
 			SELECT * FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
@@ -1544,8 +2150,8 @@ class Insc extends Model {
 		$results = $sql->select("
 			
 			SELECT * FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
@@ -1585,8 +2191,8 @@ class Insc extends Model {
 		$results = $sql->select("
 			
 			SELECT * FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
@@ -1626,8 +2232,8 @@ class Insc extends Model {
 		$results = $sql->select("
 			
 			SELECT * FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
@@ -1668,8 +2274,8 @@ class Insc extends Model {
 		$results = $sql->select("
 			
 			SELECT * FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
@@ -1709,8 +2315,8 @@ class Insc extends Model {
 		$results = $sql->select("
 			
 			SELECT * FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
@@ -1751,8 +2357,8 @@ class Insc extends Model {
 		$results = $sql->select("
 			
 			SELECT * FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
@@ -1793,13 +2399,14 @@ class Insc extends Model {
 		$results = $sql->select("
 			
 			SELECT * FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart			
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			INNER JOIN tb_turma h ON h.idturma = a.idturma
 			INNER JOIN tb_modalidade i ON i.idmodal = h.idmodal
 			INNER JOIN tb_horario j ON j.idhorario = h.idhorario
 			INNER JOIN tb_espaco k ON k.idespaco = h.idespaco
 			INNER JOIN tb_local l ON l.idlocal = k.idlocal
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_pessoa c ON c.idpess = b.idpess
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
@@ -1840,8 +2447,8 @@ class Insc extends Model {
 
 		$results = $sql->select("
 			SELECT SQL_CALC_FOUND_ROWS * FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_turma h ON h.idturma = a.idturma
@@ -1876,8 +2483,8 @@ class Insc extends Model {
 
 		$results = $sql->select("
 			SELECT SQL_CALC_FOUND_ROWS * FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_turma h ON h.idturma = a.idturma
@@ -1949,8 +2556,8 @@ class Insc extends Model {
 		$results = $sql->select("
 			
 			SELECT f.idinscstatus FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			INNER JOIN tb_users d ON d.iduser = c.iduser
 			INNER JOIN tb_persons e ON e.idperson = d.idperson
 			INNER JOIN tb_inscstatus f ON f.idinscstatus = a.idinscstatus			
@@ -1966,7 +2573,7 @@ class Insc extends Model {
 
 	// Esta função verifica se a temporada está apenas iniciada 
 	// para setar o status da inscrição no site.php
-	public function statusTemporadaIniciada($idtemporada){
+	public static function statusTemporadaIniciada($idtemporada){
 
 		$idStatusTemporadaIniciada = StatusTemporada::TEMPORADA_INICIADA;
 
@@ -1991,7 +2598,7 @@ class Insc extends Model {
 	
 	// Esta função verifica se a temporada está com a matricula iniciada 
 	// para setar o status da inscrição no site.php
-	public function statusTemporadaMatriculaIniciada($idtemporada){
+	public static function statusTemporadaMatriculaIniciada($idtemporada){
 
 		$idStatusTemporadaMatriculaIniciada = StatusTemporada::MATRICULAS_INICIADAS;
 
@@ -2015,7 +2622,7 @@ class Insc extends Model {
 
 	// Esta função verifica se a temporada está com as inscrições encerradas 
 	// para setar o status da inscrição no site.php
-	public function statusTemporadaInscricoesEncerradas($idtemporada){
+	public static function statusTemporadaInscricoesEncerradas($idtemporada){
 
 		$idStatusTemporadaInscricoesEncerradas = StatusTemporada::INSCRICOES_ENCERRADAS;
 
@@ -2040,7 +2647,7 @@ class Insc extends Model {
 
 	// Esta função verifica se a temporada está com a matrículas encerradas 
 	// para setar o status da inscrição no site.php
-	public function statusTemporadaMatriculasEncerradas($idtemporada){
+	public static function statusTemporadaMatriculasEncerradas($idtemporada){
 
 		$idStatusTemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
 
@@ -2077,7 +2684,7 @@ class Insc extends Model {
 		Insc::alteraDataMatriculaInscricao($idinsc);
 	}
 
-	public function alteraDataMatriculaInscricao($idinsc){
+	public static function alteraDataMatriculaInscricao($idinsc){
 
 		$dtmatric = date('Y-m-d H:i:s');
 
@@ -2163,9 +2770,94 @@ class Insc extends Model {
 		));
 
 		Temporada::updateNumMatriculadosMenos($idturma, $idtemporada);
+		Insc::alteraDataDesistenciaInscricao($idinsc);
+	}	
+
+	public function alteraStatusInscricaoSuspensaParaDesistente($idinsc, $idturma, $idtemporada){
+
+		$idStatusMatriculada = 8;
+
+		$sql = new Sql();
+
+		$sql->query("UPDATE tb_insc SET idinscstatus = :idStatusMatriculada WHERE idinsc = :idinsc", array(
+			":idinsc"=>$idinsc,
+			"idStatusMatriculada"=>$idStatusMatriculada
+		));
+
+		//Temporada::updateNumMatriculadosMenos($idturma, $idtemporada);
+		Insc::alteraDataDesistenciaInscricao($idinsc);
 	}
 
-	public function numMaxNumOrdem($idtemporada, $idturma){
+	public function alteraStatusInscricaoSuspender($idinsc, $idturma, $idtemporada){
+
+		$idStatusSuspensa = 5;
+
+		$sql = new Sql();
+
+		$sql->query("UPDATE tb_insc SET idinscstatus = :idStatusSuspensa WHERE idinsc = :idinsc", array(
+			":idinsc"=>$idinsc,
+			"idStatusSuspensa"=>$idStatusSuspensa
+		));
+
+		Temporada::updateNumMatriculadosMenos($idturma, $idtemporada);
+		//Insc::alteraDataDesistenciaInscricao($idinsc);
+	}
+
+	public function alteraStatusInscricaoExcluirPorFalta($idinsc, $idturma, $idtemporada){
+
+		$idStatusExcluirPorFalta = 10;
+
+		$sql = new Sql();
+
+		$sql->query("UPDATE tb_insc SET idinscstatus = :idStatusExcluirPorFalta WHERE idinsc = :idinsc", array(
+			":idinsc"=>$idinsc,
+			"idStatusExcluirPorFalta"=>$idStatusExcluirPorFalta
+		));
+
+		Temporada::updateNumMatriculadosMenos($idturma, $idtemporada);
+		Insc::alteraDataExcluidaPorFaltaInscricao($idinsc);
+	}
+
+	public function alteraStatusInscricaoRematricular($idinsc, $idturma, $idtemporada){
+
+		$idStatusMatriculada = 1;
+
+		$sql = new Sql();
+
+		$sql->query("UPDATE tb_insc SET idinscstatus = :idStatusMatriculada WHERE idinsc = :idinsc", array(
+			":idinsc"=>$idinsc,
+			"idStatusMatriculada"=>$idStatusMatriculada
+		));
+
+		Temporada::updateNumMatriculadosMais($idturma, $idtemporada);
+		//Insc::alteraDataDesistenciaInscricao($idinsc);
+	}
+
+	public static function alteraDataDesistenciaInscricao($idinsc){
+
+		$dtdesist = date('Y-m-d H:i:s');
+
+		$sql = new Sql();
+
+		$sql->query("UPDATE tb_insc SET dtdesist = :dtdesist WHERE idinsc = :idinsc", array(
+			":idinsc"=>$idinsc,
+			"dtdesist"=>$dtdesist
+		));
+	}
+
+	public static function alteraDataExcluidaPorFaltaInscricao($idinsc){
+
+		$dtexclusao = date('Y-m-d H:i:s');
+
+		$sql = new Sql();
+
+		$sql->query("UPDATE tb_insc SET dtexclusao = :dtexclusao WHERE idinsc = :idinsc", array(
+			":idinsc"=>$idinsc,
+			"dtexclusao"=>$dtexclusao
+		));
+	}
+
+	public static function numMaxNumOrdem($idtemporada, $idturma){
 
 			$sql = new Sql();
 			
@@ -2177,7 +2869,7 @@ class Insc extends Model {
 			return $results;			
 	}
 
-	public function numMatriculados($idtemporada, $idturma){
+	public static function numMatriculados($idtemporada, $idturma){
 
 		$sql = new Sql();
 		
@@ -2189,7 +2881,7 @@ class Insc extends Model {
 		return $results;			
 	}
 	
-	public function numMatriculadosTemporada($idtemporada){
+	public static function numMatriculadosTemporada($idtemporada){
 
 		$sql = new Sql();
 		
@@ -2200,7 +2892,7 @@ class Insc extends Model {
 		return $results;			
 	}
 	
-	public function numMatriculadosDescTemporada($desctemporada){
+	public static function numMatriculadosDescTemporada($desctemporada){
 
 		$sql = new Sql();
 		
@@ -2395,7 +3087,7 @@ class Insc extends Model {
 		return $results[0]['count(*)'];
 	}
 	
-	public function getInscGeral($idturma, $idtemporada)
+	public static function getInscGeral($idturma, $idtemporada)
 	{
 
 		$sql = new Sql();
@@ -2431,7 +3123,7 @@ class Insc extends Model {
 		return $results[0]['count(*)'];		
 	}
 
-	public function getInscGeralDesctemporadaValidas($desctemporada)
+	public static function getInscGeralDesctemporadaValidas($desctemporada)
 	{
 
 		$sql = new Sql();
@@ -2447,7 +3139,7 @@ class Insc extends Model {
 		return $results[0]['count(*)'];		
 	}
 	
-	public function getInscTemporadaModalidade($desctemporada, $idmodal)
+	public static function getInscTemporadaModalidade($desctemporada, $idmodal)
 	{
 		$sql = new Sql();
 
@@ -2465,7 +3157,7 @@ class Insc extends Model {
 		return $results[0]['count(*)'];		
 	}
 
-	public function pegaInscGeral($idturma, $idtemporada)
+	public static function pegaInscGeral($idturma, $idtemporada)
 	{
 
 		$sql = new Sql();
@@ -2482,6 +3174,7 @@ class Insc extends Model {
 				":idtemporada"=>$idtemporada,
 				":idturma"=>$idturma
 		]);
+		
 		if($results[0]['count(*)'] <= 0){
 		   return 0; 
 		}else{
@@ -2489,7 +3182,7 @@ class Insc extends Model {
 		}
 	}
 
-	public function pegaInscPlm($idturma, $idtemporada)
+	public static function pegaInscPlm($idturma, $idtemporada)
 	{
 
 		$sql = new Sql();
@@ -2515,7 +3208,7 @@ class Insc extends Model {
 		//return $results[0]['count(*)'];		
 	}
 
-	public function pegaInscPcd($idturma, $idtemporada)
+	public static function pegaInscPcd($idturma, $idtemporada)
 	{
 
 		$sql = new Sql();
@@ -2541,7 +3234,7 @@ class Insc extends Model {
 		//return $results[0]['count(*)'];		
 	}
 
-	public function pegaInscPvs($idturma, $idtemporada)
+	public static function pegaInscPvs($idturma, $idtemporada)
 	{
 
 		$sql = new Sql();
@@ -2659,15 +3352,15 @@ class Insc extends Model {
 		}
 	}
 	
-	public function listaPessoasPorTurmaTemporada($idturma, $idtemporada){
+	public static function listaPessoasPorTurmaTemporada($idturma, $idtemporada){
 
 		$sql = new Sql();
 
 		$results = $sql->select("
 			
 			SELECT * FROM tb_insc a 
-			INNER JOIN tb_carts b ON b.idcart = a.idcart 
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess 
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart
+			INNER JOIN tb_pessoa c ON c.idpess = a.idpessoa
 			INNER JOIN tb_endereco d ON d.idpess = c.idpess 
 			INNER JOIN tb_users e ON e.iduser = c.iduser
 			INNER JOIN tb_persons f ON f.idperson = e.idperson
@@ -2689,8 +3382,9 @@ class Insc extends Model {
 			
 			SELECT * FROM tb_insc a 
 			INNER JOIN tb_inscstatus b USING(idinscstatus) 
-			INNER JOIN tb_carts c USING(idcart)			
-			INNER JOIN tb_pessoa d USING(idpess)
+			-- INNER JOIN tb_carts c USING(idcart)			
+			-- INNER JOIN tb_pessoa d USING(idpess)
+			INNER JOIN tb_pessoa d ON d.idpess = a.idpessoa
 			INNER JOIN tb_endereco k ON d.idpess = k.idpess 
 			INNER JOIN tb_users e ON e.iduser = d.iduser
 			INNER JOIN tb_persons f ON f.idperson = e.idperson
@@ -2707,7 +3401,7 @@ class Insc extends Model {
 	}
 
 
-	public function listaPessoasInscPorTemporadaPcd($idtemporada){
+	public static function listaPessoasInscPorTemporadaPcd($idtemporada){
 
 		$sql = new Sql();
 
@@ -2715,8 +3409,9 @@ class Insc extends Model {
 			
 			SELECT * FROM tb_insc a 
 			INNER JOIN tb_inscstatus b USING(idinscstatus) 
-			INNER JOIN tb_carts c USING(idcart)			
-			INNER JOIN tb_pessoa d USING(idpess)
+			-- INNER JOIN tb_carts c USING(idcart)			
+			-- INNER JOIN tb_pessoa d USING(idpess)
+			INNER JOIN tb_pessoa d ON d.idpess = a.idpessoa
 			INNER JOIN tb_endereco k ON d.idpess = k.idpess 
 			INNER JOIN tb_users e ON e.iduser = d.iduser
 			INNER JOIN tb_persons f ON f.idperson = e.idperson
@@ -2765,7 +3460,7 @@ class Insc extends Model {
 		return $results[0]['count(*)'];		
 	}
 
-	public function getNumInscListaEsperaTurmaTemporada($idtemporada, $idturma)
+	public static function getNumInscListaEsperaTurmaTemporada($idtemporada, $idturma)
 	{
 
 		$sql = new Sql();
@@ -2781,7 +3476,7 @@ class Insc extends Model {
 		return $results[0]['count(*)'];		
 	}
 	
-	public function getNumInscListaEsperaPubGeralTurmaTemporada($idtemporada, $idturma)
+	public static function getNumInscListaEsperaPubGeralTurmaTemporada($idtemporada, $idturma)
 	{
 
 		$sql = new Sql();
@@ -2800,7 +3495,7 @@ class Insc extends Model {
 		return $results[0]['count(*)'];		
 	}
 
-	public function getNumInscListaEsperaPubLaudoTurmaTemporada($idtemporada, $idturma)
+	public static function getNumInscListaEsperaPubLaudoTurmaTemporada($idtemporada, $idturma)
 	{
 
 		$sql = new Sql();
@@ -2820,7 +3515,7 @@ class Insc extends Model {
 		return $results[0]['count(*)'];		
 	}
 
-	public function getNumInscListaEsperaPubPcdTurmaTemporada($idtemporada, $idturma)
+	public static function getNumInscListaEsperaPubPcdTurmaTemporada($idtemporada, $idturma)
 	{
 
 		$sql = new Sql();
@@ -2840,7 +3535,7 @@ class Insc extends Model {
 		return $results[0]['count(*)'];		
 	}
 
-	public function getNumInscListaEsperaPubPvsTurmaTemporada($idtemporada, $idturma)
+	public static function getNumInscListaEsperaPubPvsTurmaTemporada($idtemporada, $idturma)
 	{
 
 		$sql = new Sql();
@@ -2859,7 +3554,7 @@ class Insc extends Model {
 		return $results[0]['count(*)'];		
 	}
 
-	public function getNumInscPublicoGeralValidaTurmaTemporada($idtemporada, $idturma)
+	public static function getNumInscPublicoGeralValidaTurmaTemporada($idtemporada, $idturma)
 	{
 
 		$sql = new Sql();
@@ -2879,7 +3574,7 @@ class Insc extends Model {
 		return $results[0]['count(*)'];		
 	}
 
-	public function getNumInscPublicoLaudoValidaTurmaTemporada($idtemporada, $idturma)
+	public static function getNumInscPublicoLaudoValidaTurmaTemporada($idtemporada, $idturma)
 	{
 
 		$sql = new Sql();
@@ -2899,7 +3594,7 @@ class Insc extends Model {
 		return $results[0]['count(*)'];		
 	}
 
-	public function getNumInscPublicoPcdValidaTurmaTemporada($idtemporada, $idturma)
+	public static function getNumInscPublicoPcdValidaTurmaTemporada($idtemporada, $idturma)
 	{
 
 		$sql = new Sql();
@@ -2919,7 +3614,7 @@ class Insc extends Model {
 		return $results[0]['count(*)'];		
 	}
 
-	public function getNumInscPublicoPvsValidaTurmaTemporada($idtemporada, $idturma)
+	public static function getNumInscPublicoPvsValidaTurmaTemporada($idtemporada, $idturma)
 	{
 
 		$sql = new Sql();
@@ -2939,15 +3634,18 @@ class Insc extends Model {
 		return $results[0]['count(*)'];		
 	}
 
-	public function InscByModalidadeByCpf($numcpf, $idtemporada, $idmodal, $idlocal)
+
+
+	public static function InscByModalidadeByCpf($numcpf, $idtemporada, $idmodal, $idlocal)
 	{
 
 		$sql = new Sql();
 		
 		$results = $sql->select("
 			SELECT  * FROM tb_insc a
-			INNER JOIN tb_carts b ON b.idcart = a.idcart 
-			INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			-- INNER JOIN tb_carts b ON b.idcart = a.idcart 
+			-- INNER JOIN tb_pessoa c ON c.idpess = b.idpess
+			INNER JOIN tb_pessoa d ON d.idpess = a.idpessoa
 			INNER JOIN tb_turma d ON d.idturma = a.idturma 
             INNER JOIN tb_espaco e ON e.idespaco = d.idespaco
             INNER JOIN tb_local f ON f.idlocal = e.idlocal 
@@ -2988,6 +3686,102 @@ class Insc extends Model {
 		]);
 		return $results;		
 	}
+
+	public static function updateCpfByIdinscIdturmaIdtemporada($idinsc, $idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$sql->query("CALL sp_insc_update_numcpf(:idinsc, :idturma, :idtemporada)", 
+			[			
+				":idinsc"=>$idinsc,
+				":idturma"=>$idturma,
+				":idtemporada"=>$idtemporada
+			]);
+	}
+
+	public static function updateIdpessoaByIdinscIdturmaIdtemporada($idinsc, $idturma, $idtemporada){
+
+		$sql = new Sql();
+
+		$sql->query("CALL sp_insc_update_idpess(:idinsc, :idturma, :idtemporada)", 
+			[			
+				":idinsc"=>$idinsc,
+				":idturma"=>$idturma,
+				":idtemporada"=>$idtemporada
+			]);
+	}
+
+	public static function updateIdpessoaByIdinscIdturmaIdtemporadaComCpf($idinsc, $idturma, $idtemporada, $numcpf){
+
+		$sql = new Sql();
+
+		$sql->query("CALL sp_insc_update_idpessComCpf(:idinsc, :idturma, :idtemporada, :numcpf)", 
+			[			
+				":idinsc"=>$idinsc,
+				":idturma"=>$idturma,
+				":idtemporada"=>$idtemporada,
+				":numcpf"=>$numcpf
+			]);
+	}
+
+	public static function GetInscMatriculadasTemporadaLocal($idtemporada, $idlocal){
+
+		$sql = new Sql();
+		
+		$results = $sql->select("
+			SELECT  count(*) FROM tb_insc a
+			INNER JOIN tb_turma d ON d.idturma = a.idturma 
+            INNER JOIN tb_espaco e ON e.idespaco = d.idespaco
+            INNER JOIN tb_local f ON f.idlocal = e.idlocal 
+			WHERE a.idtemporada = :idtemporada 
+			AND f.idlocal = :idlocal
+			AND a.idinscstatus = 1
+			", [
+				":idtemporada"=>$idtemporada,
+				":idlocal"=>$idlocal
+		]);		
+
+			return $results;
+	}
+
+	public static function GetInscMatriculadasTemporada($idtemporada){
+
+		$sql = new Sql();
+		
+		$results = $sql->select("
+			SELECT  count(*) FROM tb_insc a
+			INNER JOIN tb_turma d ON d.idturma = a.idturma 
+            INNER JOIN tb_espaco e ON e.idespaco = d.idespaco
+            INNER JOIN tb_local f ON f.idlocal = e.idlocal 
+			WHERE a.idtemporada = :idtemporada 
+			AND a.idinscstatus = 1
+			", [
+				":idtemporada"=>$idtemporada
+		]);		
+
+			return $results;
+	}
+
+	public static function GetInscPcdMatriculadasTemporada($idtemporada){
+
+		$sql = new Sql();
+		
+		$results = $sql->select("
+			SELECT  count(*) FROM tb_insc a
+			INNER JOIN tb_turma d ON d.idturma = a.idturma 
+            INNER JOIN tb_espaco e ON e.idespaco = d.idespaco
+            INNER JOIN tb_local f ON f.idlocal = e.idlocal 
+			WHERE a.idtemporada = :idtemporada 
+			AND a.idinscstatus = 1
+			AND a.inscpcd = 1
+			", [
+				":idtemporada"=>$idtemporada
+		]);		
+
+			return $results;
+	}
+
+
 }
 
 

@@ -45,7 +45,8 @@
             let terceirodiasemana = document.getElementById('terceirodiasemana').value;          
             let quartodiasemana = document.getElementById('quartodiasemana').value;          
             let quintodiasemana = document.getElementById('quintodiasemana').value;          
-            let unicodiasemana = document.getElementById('unicodiasemana').value;    
+            let unicodiasemana = document.getElementById('unicodiasemana').value;
+            let iduser = document.getElementById('iduser').value;        
 
             let datasemanas = new Date(info.dateStr);
             let data = info.dateStr;
@@ -82,7 +83,7 @@
               }
             }            
 
-            window.location.href=`http://www.cursosesportivos.com.br/admin/insc-turma-temporada-fazer-chamada/` + idtemporada + '/' + idturma + '/' + info.dateStr;          
+            window.location.href=`http://www.cursosesportivos.com.br/admin/insc-turma-temporada-fazer-chamada/` + idtemporada + '/' + idturma + '/' + info.dateStr + '/' + strDiaSemana + '/' + iduser;          
           
           },
 
@@ -153,6 +154,7 @@
      <input type="text" name="quartodiasemana" id="quartodiasemana" value="<?php echo htmlspecialchars( $quartodiasemana, ENT_COMPAT, 'UTF-8', FALSE ); ?>" hidden="true">
      <input type="text" name="quintodiasemana" id="quintodiasemana" value="<?php echo htmlspecialchars( $quintodiasemana, ENT_COMPAT, 'UTF-8', FALSE ); ?>" hidden="true">
      <input type="text" name="unicodiasemana" id="unicodiasemana" value="<?php echo htmlspecialchars( $unicodiasemana, ENT_COMPAT, 'UTF-8', FALSE ); ?>" hidden="true">
+     <input type="text" name="iduser" id="iduser" value='<?php echo getUserId(); ?>' hidden>
 
     <!-- Main content -->
     <section class="content">

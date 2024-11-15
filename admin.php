@@ -43,10 +43,12 @@ $app->get("/admin", function() {
 	$todosAlunos = Pessoa::getPage($pagina);
 	$todosProfessores = User::getPageProf($pagina);
 	$todasInscrições = Insc::getPageInsc($pagina);
-	
-	$matriculadosTemporada = Insc::numMatriculadosTemporada($idtemporada);
 
-	$matriculadosTemporada = $matriculadosTemporada[0]['matriculados'];
+	$matriculadosTemporada = Insc::GetInscMatriculadasTemporada($idtemporada);
+	//$matriculadosTemporada = Insc::numMatriculadosTemporada($idtemporada);
+
+	//$matriculadosTemporada = $matriculadosTemporada[0]['matriculados'];
+	$matriculadosTemporada = $matriculadosTemporada[0]['count(*)'];
 
 	//var_dump($pagination['total']);
 	//exit();
@@ -139,6 +141,7 @@ $app->get("/admin/dadostemporada/:desctemporada", function($desctemporada) {
 		'useronline'=>$userOnline,
 		'visitante'=>$visitOnline,
 		'temporada'=>$temporada,
+		'idtemporada'=>$idtemporada,
 		'desctemporada'=>$desctemporada,
 		'totalUsuarios'=>$todosUsuarios['total'],
 		'totalAlunos'=>$todosAlunos['total'],

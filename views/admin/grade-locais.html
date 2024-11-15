@@ -1,0 +1,50 @@
+<script type="text/javascript">
+
+
+</script>
+
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Cursos Esportivos SBC <br>
+      </h1>
+      <h3>
+        Lista de locais para listar grades de horários &nbsp; - &nbsp;{$desctemporada}      </h3>
+      <ol class="breadcrumb">
+        <li><a href="/admin"><i class="fa fa-dashboard"></i> Level</a></li>
+        <li class="active">Here</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <div class="container">
+
+        <div class="row" style="margin-right: 70px; padding: 10px;">
+            
+            
+              <div class="col-md-12" style="display: inline;">
+                {loop="$locais"}
+                    <span style="font-size: 24px; color: black; font-weight: bold;">{$value.apelidolocal}[</span>
+
+                    {function="listaEspacoTurmaTemporada($idtemporada, $value.idlocal)"}
+
+                    
+                    <span style="font-size: 24px; color: black; font-weight: bold;">]</span>
+                 &nbsp;&nbsp;
+                {/loop}
+ 
+              </div>
+              
+            
+        </div>            
+        
+      </div>
+
+    </section>
+    <!-- /.content -->
+  </div>
+ 

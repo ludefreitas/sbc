@@ -12,6 +12,78 @@
                         <strong> Minhas inscrições</strong>
                     </div>
                 </div>
+                {loop="$inscnew"}
+                <div class="row alert-info">
+                    <div class="col-md-12">
+                      
+                        {if="$value.idinscstatus == 9"}
+                        
+                        <strong>INSCRIÇÃO Nº: </strong><span>{$value.idinsc}</span>&nbsp;&nbsp;[
+                        <strong style="color: red; font-size: 18px;"> {$value.descstatus} </strong>]
+                        {else}
+                        
+                            {if="$value.idstatustemporada == 5"}
+                            
+                            {else}
+                            <!--
+                                <strong>NÚMERO PARA O SORTEIO: </strong><span style="color: red; font-size: 20px">{$value.numsorte}</span><br>
+                                <strong>INSCRIÇÃO Nº: </strong><span>{$value.idinsc}</span>
+                            -->
+                            {/if}
+
+                        {/if}
+                        <strong>NOME DO ALUNO: </strong> <span>{$value.nomepess}</span><br>
+                        <strong>TURMA: </strong>{$value.idturma} - {$value.descativ} - {$value.desctemporada}<br>
+                        <strong>COM LAUDO? </strong> <span>{if="$value.laudo == 0"}Não{else}Sim{/if}</span><br>
+                        <strong>PARA PESSOA COM DEFICIÊNCIA? </strong> <span>{if="$value.inscpcd == 0"}Não{else}Sim{/if}</span><br>
+                        <strong>PESSOA EM SITUAÇÃO DE VULNERABILIDADE SOCIAL? </strong> <span>{if="$value.inscpvs == 0"}Não{else}Sim{/if}</span><br>
+                        
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                {if="($value.idinscstatus) === 10"}
+                                <div style="color: red; font-weight: bold;">
+                                    <strong >INSCRIÇÃO {$value.descstatus}</strong>
+                                </div>
+                                {else}
+                                <div {function="colorStatus($value.idinscstatus)"}>
+                                <strong >STATUS: {$value.descstatus}</strong>
+                                </div>
+                                {/if}
+                            </div>
+
+                            
+                            <div class="col-md-8">
+                                <a class="btn btn-primary" href="/profile/insc/{$value.idinsc}/{$value.idpess}/{$value.numcpf}" role="button">Detalhes</a>
+
+                            {if="($value.idinscstatus) === '2'"}
+                            <!--
+                            <a href="/insc/{$value.idinsc}/statusCancelada" onclick="return confirm('Deseja realmente excluir PERMANENTEMENTE a inscrição {$value.idinsc} do(a) {$value.nomepess} da turma {$value.descativ} - {$value.desctemporada}? Lembramos que se você clicar em OK a inscrição e a matricula se existir, serão definitivamente canceladas.')" class="btn btn-success btn-xs"><i></i> Matricular</a>
+                            -->
+                            {/if}
+
+                            {if="($value.idinscstatus) !== '8' && ($value.idinscstatus) !== '9'"} 
+
+
+                                {if="$value.desctemporada >= $anoAtual"}
+                                    <a href="/insc/{$value.idinsc}/statusCancelada" onclick="return confirm('Deseja realmente excluir PERMANENTEMENTE a inscrição {$value.idinsc} do(a) {$value.nomepess} da turma {$value.descativ} - {$value.desctemporada}? Lembramos que se você clicar em OK a inscrição e a matricula se existir, serão definitivamente canceladas.')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
+                                {/if}                    
+
+                                {if="($value.idinscstatus === '1') && ($value.desctemporada == $anoAtual)"}
+                                        
+                                    <a href="/declaracao-de-matricula/{$value.idpess}/{$value.idinsc}"  class="btn btn-success btn-xs"><i class="fa fa-check"></i> Declaração</a>
+
+                                {/if}                    
+
+                            {/if}  
+                            
+                            </div>
+                        </div>        
+
+                        <hr>
+                    </div>
+                </div>           
+            {/loop}
                  {loop="$insc"}
                 <div class="row alert-info">
                     <div class="col-md-12">
@@ -41,14 +113,22 @@
 
                         <div class="row">
                             <div class="col-md-4">
-                                <div {function="colorStatus($value.idinscstatus)"}>
-                                <strong >STATUS: {$value.descstatus}</strong>
+                                
+                                {if="($value.idinscstatus) === 10"}
+                                <div style="color: red; font-weight: bold;">
+                                    <strong >INSCRIÇÃO {$value.descstatus}</strong>
                                 </div>
+                                {else}
+                                <div {function="colorStatus($value.idinscstatus)"}>
+                                    <strong >STATUS: {$value.descstatus}</strong>
+                                </div>
+                                {/if}
+                                
                             </div>
 
                             
                             <div class="col-md-8">
-                                <a class="btn btn-primary" href="/profile/insc/{$value.idinsc}/{$value.idpess}" role="button">Detalhes</a>
+                                <a class="btn btn-primary" href="/profile/insc/{$value.idinsc}/{$value.idpess}/{$value.numcpf}" role="button">Detalhes</a>
 
                             {if="($value.idinscstatus) === '2'"}
                             <!--
@@ -56,7 +136,7 @@
                             -->
                             {/if}
 
-                            {if="($value.idinscstatus) !== '8' && ($value.idinscstatus) !== '9'"} 
+                            {if="($value.idinscstatus) !== 8 && ($value.idinscstatus) !== 9"} 
 
 
                                 {if="$value.desctemporada >= $anoAtual"}

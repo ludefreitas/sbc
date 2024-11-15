@@ -101,7 +101,7 @@ class Saude extends Model {
 		return false;
 	}
 
-	public function getSaudeExist($idpess)	{
+	public static function getSaudeExist($idpess)	{
 
 		$sql = new Sql();
 
@@ -197,7 +197,7 @@ class Saude extends Model {
 		
 	}
 	
-	public function getCountParqByIdPess($idpess){
+	public static function getCountParqByIdPess($idpess){
 
 		$sql = new Sql();
 		
@@ -392,7 +392,7 @@ class Saude extends Model {
 			":idpess"=>$idpess			
 		));
 		
-		return $results['count(*)'];
+		return $results[0]['count(*)'];
 		
 		//if (count($results) > 0) {
 			//$this->setData($results[0]);

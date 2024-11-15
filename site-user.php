@@ -589,8 +589,6 @@ $app->post("/register", function(){
 		//header("Location: /user-create");
 			exit;
 	}
-	
-	/*
 
 	if(calcularIdade($_POST['dtnasc']) < 18){
 
@@ -669,7 +667,6 @@ $app->post("/register", function(){
 
 		}	
 	}	
-	*/
 
 	$cepMenor = '09600000';
 	$cepMaior = '09899999';	
@@ -783,7 +780,21 @@ $app->post("/register", function(){
 		'statususer'=>$_POST["statususer"]		
 	]);
 
-	$user->save();
+	$desperson = $_POST['name'];
+	$apelidoperson = '';
+	$deslogin = $_POST['email'];
+	$despassword = $_POST['password'];
+	$desemail = $_POST['email'];		
+	$nrphone = $_POST['phone'];
+	$inadmin = $_POST["inadmin"];
+	$isprof = $_POST["isprof"];
+	$isestagiario = $_POST["isestagiario"];
+	$isaudi = $_POST["isaudi"];
+	$statususer = $_POST["statususer"];
+
+	$user->saveNew($desperson, $apelidoperson, $deslogin, $despassword, $desemail, $nrphone, $inadmin, $isprof, $isestagiario, $isaudi, $statususer);
+
+	//$user->save();
 
 	User::login($_POST['email'], $_POST['password']);
 

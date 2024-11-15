@@ -109,7 +109,7 @@
                             <?php } ?>
                             <tr>
                                 <th></th>
-                                <td class="product-name"> <a style="font-weight: bold;" href="/admin/insc/pessoa/<?php echo htmlspecialchars( $insc["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> Mais inscrições de <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  </a></td>
+                                <td class="product-name"> <a style="font-weight: bold;" href="/admin/insc/pessoa/<?php echo htmlspecialchars( $insc["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $insc["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> Mais inscrições de <?php echo htmlspecialchars( $pessoa["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>  </a></td>
                             </tr>
 
 

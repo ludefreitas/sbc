@@ -55,7 +55,7 @@
            <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
 
           {loop="$inscTodas"}
-            {if="($value.idinscstatus != 8) AND ($value.idinscstatus != 9)"}
+            {if="($value.idinscstatus != 8) AND ($value.idinscstatus != 9) AND ($value.idinscstatus != 10) AND ($value.idinscstatus != 5)"}
             <div class="box-body" style=" margin: 5px;">
               <div {function="colorStatus($value.idinscstatus)"} style="margin: 5px" class="row">
               

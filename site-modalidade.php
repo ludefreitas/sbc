@@ -10,6 +10,7 @@ use \Sbc\Model\Insc;
 
 $app->get("/modalidade/:idmodal", function($idmodal) {
 
+	/*
 	$cart = new Cart();
 	
 	if (!isset($_SESSION['Cart']['idturma']) || $_SESSION['Cart']['idturma'] == NULL){
@@ -27,6 +28,7 @@ $app->get("/modalidade/:idmodal", function($idmodal) {
 		$cart->removeTurma($turma, true);
 
 	}
+	*/
 
 	$modalidade = new Modalidade();
 
@@ -79,11 +81,9 @@ $app->get("/modalidades", function() {
 	//$modalidades = Modalidade::getModalidadesTemporadaByIdTemporada();
 	
 	
-	    $modalidades = Modalidade::getModalidadesTemporadaByIdTemporada();
+	$modalidades = Modalidade::getModalidadesTemporadaByIdTemporada();	
 	
-	
-	/*
-	
+	/*	
 	if($_SESSION['User']['iduser'] != 89){
 	    $modalidades = Modalidade::getModalidadesTemporadaByIdTemporada();
 	}else{
@@ -106,6 +106,7 @@ $app->get("/modalidades", function() {
 
 $app->get("/modalidade/:idmodal/:local", function($idmodal, $local) {
 
+	/*
 	$cart = new Cart();
 	
 	if (!isset($_SESSION['Cart']['idturma']) || $_SESSION['Cart']['idturma'] == NULL){
@@ -123,12 +124,13 @@ $app->get("/modalidade/:idmodal/:local", function($idmodal, $local) {
 		$cart->removeTurma($turma, true);
 
 	}
+	*/
 
 	$modalidade = new Modalidade();
 
 	$modalidade->get((int)$idmodal);	
 	
-	$turma = Turma::listAllTurmaTemporadaModalidadeLocal($idmodal, $local);	
+	$turma = Turma::listAllTurmaTemporadaModalidadeLocalFull($idmodal, $local);	
 	
 	/*
 	
@@ -138,6 +140,8 @@ $app->get("/modalidade/:idmodal/:local", function($idmodal, $local) {
 	    $turma = Turma::listAllTurmaTemporadaModalidadeLocalFull($idmodal, $local);
 	}
 	*/
+
+	
 
 	if(!isset($turma) || $turma == NULL){
 
@@ -155,7 +159,12 @@ $app->get("/modalidade/:idmodal/:local", function($idmodal, $local) {
 	}else{
 
 		$anoAtual = (int)date('Y') + 1;		
-	}		
+	}
+
+	//$anoAtual = 2022;	
+
+	//var_dump($anoAtual);
+	//exit();	
 	
 	$page = new Page();    
 
@@ -169,11 +178,8 @@ $app->get("/modalidade/:idmodal/:local", function($idmodal, $local) {
 
 $app->get("/modalidades/local/:idlocal", function($idlocal) {
 
-	
-	
-	    $modalidades = Modalidade::listAllToLocal($idlocal);
-	
-	
+	$modalidades = Modalidade::listAllToLocal($idlocal);
+		
 	/*
 	
 	if($_SESSION['User']['iduser'] != 89){

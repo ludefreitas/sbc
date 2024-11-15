@@ -329,6 +329,7 @@
                          
                          <br>
                     -->
+                    <!--
                          <span style="font-weight: bold;">04/04/2024 - Quinta-feira </span><br>
                          <input type="radio" name="datahoramarcada" value="Quinta-2024-04-04-10:00-10:30-vagas20">
                          &nbsp;10:00 às 10:30 <br>
@@ -383,8 +384,39 @@
                          <input type="radio" name="datahoramarcada" value="Sexta--2024-06-21-16:30-17:00-vagas20">
                          &nbsp;16:30 às 17:00 <br>
                     
+                         <br> 
+                     -->
+                         <span style="font-weight: bold;">18/09/2024 - Quarta-feira </span><br>
+                         <input type="radio" name="datahoramarcada" value="Quarta-2024-09-18-10:00-10:30-vagas20">
+                         &nbsp;10:00 às 10:30 <br>
+                         <input type="radio" name="datahoramarcada" value="Quarta-2024-09-18-10:30-11:00-vagas20">
+                         &nbsp;10:30 às 11:00 <br>
+                         <input type="radio" name="datahoramarcada" value="Quarta-2024-09-18-16:00-16:30-vagas20">
+                         &nbsp;16:00 às 16:30 <br>
+                         <input type="radio" name="datahoramarcada" value="Quarta-2024-09-18-16:30-17:00-vagas20">
+                         &nbsp;16:30 às 17:00 <br>
+                         <input type="radio" name="datahoramarcada" value="Quarta-2024-09-18-18:00-18:30-vagas20">
+                         &nbsp;18:00 às 18:30 <br>
+                         <input type="radio" name="datahoramarcada" value="Quarta-2024-09-18-18:30-19:00-vagas20">
+                         &nbsp;18:30 às 19:00 <br>
+
                          <br>
-                        
+
+                         <span style="font-weight: bold;">19/09/2024 - Quinta-feira </span><br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2024-09-19-10:00-10:30-vagas20">
+                         &nbsp;10:00 às 10:30 <br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2024-09-19-10:30-11:00-vagas20">
+                         &nbsp;10:30 às 11:00 <br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2024-09-19-16:00-16:30-vagas20">
+                         &nbsp;16:00 às 16:30 <br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2024-09-19-16:30-17:00-vagas20">
+                         &nbsp;16:30 às 17:00 <br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2024-09-19-18:00-18:30-vagas20">
+                         &nbsp;18:00 às 18:30 <br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2024-09-19-18:30-19:00-vagas20">
+                         &nbsp;18:30 às 19:00 <br>
+
+                         <br>
                          
                          {/if}                      
 
@@ -510,7 +542,7 @@
                          <br>
                        
                        -->
-
+                       <!--
                         <span style="font-weight: bold;">04/04/2024 - Quinta-feira </span><br>
                          <input type="radio" name="datahoramarcada" value="Quinta-2024-04-04-09:00-09:30-vagas12">
                          &nbsp;09:00 às 09:30 <br>
@@ -522,7 +554,6 @@
                          <span style="font-weight: bold;">05/04/2024 - Sexta-feira </span><br>
                          <input type="radio" name="datahoramarcada" value="Sexta--2024-04-05-09:00-09:30-vagas12">
                          &nbsp;09:00 às 09:30 <br>
-
 
                          <br>
 
@@ -536,14 +567,28 @@
 
                          <span style="font-weight: bold;">21/06/2024 - Sexta-feira </span><br>
                          <input type="radio" name="datahoramarcada" value="Sexta--2024-06-21-09:00-09:30-vagas12">
-                         &nbsp;09:00 às 09:30 <br>
-                         
+                         &nbsp;09:00 às 09:30 <br>                         
 
                          <br>
+
+                     -->
+                         <span style="font-weight: bold;">18/09/2024 - Quarta-feira </span><br>
+                         <input type="radio" name="datahoramarcada" value="Quarta-2024-09-18-09:00-09:30-vagas12">
+                         &nbsp;09:00 às 09:30 <br>
+                         <input type="radio" name="datahoramarcada" value="Quarta-2024-09-18-18:30-19:00-vagas12">
+                         &nbsp;18:30 às 19:00 <br>
                          
+                         <br>
+
+                         <span style="font-weight: bold;">19/09/2024 - Quinta-feira </span><br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2024-09-19-09:00-09:30-vagas12">
+                         &nbsp;09:00 às 09:30 <br>
+                         <input type="radio" name="datahoramarcada" value="Quinta-2024-09-19-18:30-19:00-vagas12">
+                         &nbsp;18:30 às 19:00 <br>
+                         
+                         <br>                         
                          
                          {/if}                      
-                        
 
                         <label style="color: blue;">
                             SELECIONE UMA PESSOA<br>
@@ -552,12 +597,13 @@
                         {loop="$pessoa"}
                         <p>
                         <input type="radio" name="idpess" value="{$value.idpess}"> 
+                        <input hidden  type="text" name="numcpf" value="{$value.numcpf}"> 
                         {$value.nomepess}; {function="calcularIdade($value.dtnasc)"} anos;                  
                         </p>                                
                         {else}
                         <p>
                              Não há pessoas inseridas
-                        </p>                                   
+                        </p>                                        
                            
                         {/loop}
                         

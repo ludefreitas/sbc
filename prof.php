@@ -73,6 +73,7 @@ $app->get("/prof/dadostemporada/:desctemporada", function($desctemporada) {
 		'useronline'=>$userOnline,
 		'visitante'=>$visitOnline,
 		'temporada'=>$temporada,
+		'idtemporada'=>$idtemporada,
 		'desctemporada'=>$desctemporada,
 		'totalUsuarios'=>$todosUsuarios['total'],
 		'totalAlunos'=>$todosAlunos['total'],

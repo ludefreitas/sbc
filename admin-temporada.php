@@ -10,6 +10,7 @@ use \Sbc\Model\Sorteio;
 use \Sbc\Model\Local;
 use \Sbc\Model\Modalidade;
 use \Sbc\Model\Insc;
+use \Sbc\Model\Espaco;
 
 $app->get("/admin/temporada", function() {
 
@@ -1266,6 +1267,9 @@ $app->get("/admin/temporada/:idtemporada/turma/:idturma/remove", function($idtem
 
 	}
 
+	var_dump($idturma);
+	exit();
+
 	$temporada->removeTurma($turma);
 
 	//header("Location: /admin/temporada/".$idtemporada."/turma");
@@ -1317,9 +1321,14 @@ $app->get("/admin/turmatemporada/:iduser/turma/:idtemporada/:idlocal", function(
 	$local->get((int)$idlocal);
 
 	$temporada = new Temporada();
-	$temporada->get((int)$idtemporada);		
+	$temporada->get((int)$idtemporada);	
 
-	$page = new PageAdmin();	
+	//var_dump($user->getTurmaTemporadaLocal(false, $idtemporada, $iduser, $idlocal))	;
+	//exit();	
+
+	$page = new PageAdmin();
+
+
 
 	$page->setTpl("turma-temporada-local-professor", [
 		'locais'=>Local::listAll(),
@@ -1479,10 +1488,10 @@ $app->get("/admin/turmatemporada/:idtemporada/turma/:idturma/user/:iduser/remove
 	$user = new User();
 
 	$user->get((int)$iduser);
-	/*
-	var_dump($iduser." - ".$idturma." - ".$idtemporada);
-	exit;
-	*/
+	
+	//var_dump($iduser." - ".$idturma." - ".$idtemporada);
+	//exit;
+	
 
 	$temporada->removeTurmaTemporadaUser($idtemporada, $idturma, $iduser);
 
@@ -1706,6 +1715,120 @@ $app->get("/admin/controle-frequencia-por-modalidade-local/:idtemporada/:idmodal
 		//'countIncricoesJan'=>$countIncricoesJan,
 		'error'=>User::getError()
 	]);	
+});
+
+$app->get("/admin/locaisgradehorario/:idtemporada", function($idtemporada) {
+
+	User::verifyLogin();
+
+	$temporada = new Temporada();
+	$temporada->get((int)$idtemporada);
+
+	$desctemporada = $temporada->getdesctemporada();
+
+	$page = new PageAdmin();	
+
+	$page->setTpl("grade-locais", [
+		'idtemporada'=>$idtemporada,
+		'desctemporada'=>$desctemporada,
+		'locais'=>Local::listAll(),
+		'error'=>User::getError()
+	]);	
+
+});
+
+$app->get("/admin/gradehorario/:idtemporada/:idlocal", function($idtemporada, $idlocal) {
+
+	User::verifyLogin();
+
+	$temporada = new Temporada();
+	$turma = new Turma();
+	$local = new Local();
+	$temporada->get((int)$idtemporada);
+
+	$local->get((int)$idlocal);
+
+	$nomelocal = $local->getnomelocal();
+	$rua = $local->getrua();
+	$numero = $local->getnumero();
+	$bairro = $local->getbairro();
+	$telefone = $local->gettelefone();
+
+	//var_dump(Local::listAll());
+	//exit;
+
+	$page = new PageAdmin([
+		'header'=>false,
+		'footer'=>false
+	]);	
+
+	$page->setTpl("grade", [
+		'idtemporada'=>$idtemporada,
+		'idlocal'=>$idlocal,
+		'nomelocal'=>$nomelocal,
+		'rua'=>$rua,
+		'numero'=>$numero,
+		'bairro'=>$bairro,
+		'telefone'=>$telefone,
+		'locais'=>Local::listAll(),
+		'espacos'=>Temporada::listAllEspacoTurmatemporada($idtemporada, $idlocal),
+		'modalidades'=>Modalidade::listAll(),
+		'temporada'=>$temporada->getValues(),
+		'turmas'=>Temporada::listAllPorOrdemHorarioTurmaTemporada($idtemporada),
+		'error'=>User::getError()
+	]);	
+
+});
+
+$app->get("/admin/gradehorarioespaco/:idtemporada/:idlocal/:idespaco", function($idtemporada, $idlocal, $idespaco) {
+
+	User::verifyLogin();
+
+	$temporada = new Temporada();
+	$turma = new Turma();
+	$local = new Local();
+	$espaco = new Espaco();
+
+	$temporada->get((int)$idtemporada);
+	$espaco->get((int)$idespaco);
+
+	$local->get((int)$idlocal);
+	$apelidolocal = $local->getapelidolocal();
+
+	$nomelocal = $local->getnomelocal();
+	$rua = $local->getrua();
+	$numero = $local->getnumero();
+	$bairro = $local->getbairro();
+	$telefone = $local->gettelefone();
+
+	$nomeespaco = $espaco->getnomeespaco();
+
+	$turmas = $temporada->listAllPorOrdemHorarioEspacoTurmaTemporada($idtemporada, $idespaco);
+
+	$page = new PageAdmin([
+		'header'=>false,
+		'footer'=>false
+	]);	
+
+	$page->setTpl("gradeespaco", [
+		'apelidolocal'=>$apelidolocal,
+		'nomelocal'=>$nomelocal,
+		'rua'=>$rua,
+		'numero'=>$numero,
+		'bairro'=>$bairro,
+		'telefone'=>$telefone,
+		'nomeespaco'=>$nomeespaco,
+		'idtemporada'=>$idtemporada,
+		'idlocal'=>$idlocal,
+		'locais'=>Local::listAll(),
+		'espacos'=>Temporada::listAllEspacoTurmatemporada($idtemporada, $idlocal),
+		'modalidades'=>Modalidade::listAll(),
+		'temporada'=>$temporada->getValues(),
+		'turmas'=>$turmas,
+		//'turmas'=>Temporada::listAllPorOrdemHorarioEspacoTurmaTemporada($idtemporada, $idespaco),
+		'error'=>User::getError()
+	]);	
+
 });
 
 

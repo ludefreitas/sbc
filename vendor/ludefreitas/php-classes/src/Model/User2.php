@@ -1,0 +1,1739 @@
+<?php
+
+namespace Sbc\Model;
+
+use \Sbc\DB\Sql;
+use \Sbc\Model;
+use \Sbc\Mailer;
+
+class User extends Model {
+
+	const SESSION = "User";
+	const SECRET = "Cursos_2020_Sbc1"; //Colocar nas "" secret com 16 caracters;
+	const SECRET_IV = "Cursos_2020_Sbc1_IV"; //Colocar nas "" secret com 16 caracters + _IV;
+	const ERROR = "UserError";
+	const ERROR_REGISTER = "UserErrorRegister";
+	const ERROR_REGISTER_SENDMAIL = "UserErrorRegisterSendmail";
+	const SUCCESS = "UserSucesss";	
+
+	public static function getFromSession()
+	{
+
+		$user = new User();
+
+		if (isset($_SESSION[User::SESSION]) && (int)$_SESSION[User::SESSION]['iduser'] > 0) {
+
+			$user->setData($_SESSION[User::SESSION]);
+
+		}
+
+		return $user;
+
+	}
+
+	public static function checkLogin($inadmin = true)
+	{
+
+		if (
+			!isset($_SESSION[User::SESSION])
+			||
+			!$_SESSION[User::SESSION]
+			||
+			!(int)$_SESSION[User::SESSION]["iduser"] > 0
+		) {
+			//Não está logado
+			return false;
+
+		} else {
+
+			if ($inadmin === true && (bool)$_SESSION[User::SESSION]['inadmin'] === true) {
+
+				return true;
+
+			} else if ($inadmin === false) {
+
+				return true;
+
+			} else {
+
+				return false;
+
+			}
+		}
+	}
+
+	public static function checkLoginProf($isprof = true)
+	{
+
+		if (
+			!isset($_SESSION[User::SESSION])
+			||
+			!$_SESSION[User::SESSION]
+			||
+			!(int)$_SESSION[User::SESSION]["iduser"] > 0
+		) {
+			//Não está logado
+			return false;
+
+		} else {
+
+			if ($isprof === true && (bool)$_SESSION[User::SESSION]['isprof'] === true) {
+
+				return true;
+
+			} else if ($isprof === false) {
+
+				return true;
+
+			} else {
+
+				return false;
+
+			}
+		}
+	}
+	
+	public static function checkLoginEstagiario($isestagiario = true)
+	{
+
+		if (
+			!isset($_SESSION[User::SESSION])
+			||
+			!$_SESSION[User::SESSION]
+			||
+			!(int)$_SESSION[User::SESSION]["iduser"] > 0
+		) {
+			//Não está logado
+			return false;
+
+		} else {
+
+			if ($isestagiario === true && (bool)$_SESSION[User::SESSION]['isestagiario'] === true) {
+
+				return true;
+
+			} else if ($isestagiario === false) {
+
+				return true;
+
+			} else {
+
+				return false;
+
+			}
+		}
+	}
+	
+	public static function checkLoginAudi($isaudi = true)
+	{
+
+		if (
+			!isset($_SESSION[User::SESSION])
+			||
+			!$_SESSION[User::SESSION]
+			||
+			!(int)$_SESSION[User::SESSION]["iduser"] > 0
+		) {
+			//Não está logado
+			return false;
+
+		} else {
+
+			if ($isaudi === true && (bool)$_SESSION[User::SESSION]['isaudi'] === true) {
+
+				return true;
+
+			} else if ($isaudi === false) {
+
+				return true;
+
+			} else {
+
+				return false;
+
+			}
+		}
+	}
+
+	public function login($login, $password)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_users INNER JOIN tb_persons using(idperson) where deslogin = :LOGIN", array(
+			":LOGIN"=>$login
+		));
+
+		if(count($results) === 0)
+		{
+			throw new \Exception("Usuário inexistente ou senha inválida!!! Caso você tenha esquecido a sua senha clique em: (RECUPERAR SENHA) logo abaixo", 1);
+		}
+
+		$data = $results[0];
+
+		if(password_verify($password, $data["despassword"]) === true)
+		{
+
+			$user = new User();
+
+			$data['desperson'] = utf8_encode($data['desperson']);
+
+			$user->setData($data);
+
+			$_SESSION[User::SESSION] = $user->getValues();
+			
+			if(isset($_POST['lembrar']) && $_POST['lembrar'] == 'sempre' ){
+
+				User::rememberUser($login);
+				User::rememberPassword($password);	
+
+			}
+
+			return $user;
+
+		}else {
+			throw new \Exception("Usuário inexistente ou senha inválida!!! Caso você tenha esquecido a sua senha clique em: (RECUPERAR SENHA) logo abaixo");			
+		}
+
+	}
+	
+	public static function verifyLogin($inadmin = true)
+	{
+
+		if (!User::checkLogin($inadmin)) {
+
+		    /*
+			if ($inadmin) {
+				header("Location: /login");
+			} else {
+				header("Location: /login");
+			}
+			exit;
+			*/
+			echo "<script>window.location.href = '/login'</script>";
+			//header("Location: /login");
+			exit;
+
+		}
+
+	}
+	
+	public static function verifyLoginCursos($inadmin = true)
+	{
+
+		if (!User::checkLogin($inadmin)) {
+			
+			/*
+			if ($inadmin) {
+				header("Location: /login");
+			} else {
+				header("Location: /login");
+			}
+			exit;
+			*/
+			echo "<script>window.location.href = '/cursos/login'</script>";
+			//header("Location: /cursos/login");
+			exit;
+		}
+
+	}
+
+	public static function verifyLoginProf($isprof = true)
+	{
+
+		if (!User::checkLoginProf($isprof)) {
+
+			/*
+			if ($isprof) {
+				header("Location: /login");
+			} else {
+				header("Location: /login");
+			}
+			exit;
+			*/
+			echo "<script>window.location.href = '/login'</script>";
+			//header("Location: /login");
+			//exit;
+		}
+
+	}
+	
+	public static function verifyLoginEstagiario($isestagiario = true)
+	{
+
+		if (!User::checkLoginEstagiario($isestagiario)) {
+
+			/*
+			if ($isprof) {
+				header("Location: /login");
+			} else {
+				header("Location: /login");
+			}
+			exit;
+			*/
+			echo "<script>window.location.href = '/login'</script>";
+			//header("Location: /login");
+			exit;
+		}
+
+	}
+	
+	public static function verifyLoginAudi($isaudi = true)
+	{
+
+		if (!User::checkLoginAudi($isaudi)) {
+			/*
+			if ($isaudi) {
+				header("Location: /login");
+			} else {
+				header("Location: /login");
+			}
+			exit;
+			*/
+			echo "<script>window.location.href = '/login'</script>";
+			//header("Location: /login");
+			exit;
+		}
+
+	}
+
+	public static function logout()
+	{
+
+		$_SESSION[User::SESSION] = NULL;
+
+	}
+	
+	private function rememberUser($user){
+
+		$validade = strtotime("+1 month");
+
+		$user = base64_encode($user);
+
+		setcookie("sisgen_user", $user, $validade, "/", "", false, true);
+	}
+
+	private function rememberPassword($pass){
+
+		$validade = strtotime("+1 month");
+
+		$pass = base64_encode($pass);
+
+		setcookie("sisgen_pass", $pass, $validade, "/", "", false, true);
+	}
+
+	public function forgotUserPass(){
+
+		$validade = time() - 3600;
+
+		setcookie("sisgen_user", '', $validade, "/", "", false, true);
+		setcookie("sisgen_pass", '', $validade, "/", "", false, true);
+	}
+	
+	/*
+	public static function listAll()
+	{
+
+		$sql = new Sql();
+
+		return $sql->select("SELECT * FROM tb_users a 	INNER JOIN tb_persons b using(idperson) ORDER BY b.desperson");
+	
+	}
+	*/
+
+	
+	public static function listAllProf()
+	{
+
+		$sql = new Sql();
+
+		return $sql->select("
+			SELECT * FROM tb_users a 
+			INNER JOIN tb_persons b 
+			using(idperson) 
+			WHERE isprof = 1
+			ORDER BY b.desperson");
+	}
+	
+	public static function listAllEstagiario()
+	{
+
+		$sql = new Sql();
+
+		return $sql->select("
+			SELECT * FROM tb_users a 
+			INNER JOIN tb_persons b 
+			using(idperson) 
+			WHERE isestagiario = 1
+			ORDER BY b.desperson");
+	}
+	
+		public static function listAllAudi()
+	{
+
+		$sql = new Sql();
+
+		return $sql->select("
+			SELECT * FROM tb_users a 
+			INNER JOIN tb_persons b 
+			using(idperson) 
+			WHERE isaudi = 1
+			ORDER BY b.desperson");
+	}
+
+	
+	public function save()
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("CALL sp_users_save(:desperson, :apelidoperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin, :isprof, :isestagiario, :isaudi, :statususer)", array(
+			":desperson"=>$this->getdesperson(),
+			":apelidoperson"=>$this->getapelidoperson(),
+			":deslogin"=>$this->getdeslogin(),
+			":despassword"=>User::getPasswordHash($this->getdespassword()),
+			":desemail"=>$this->getdesemail(),
+			":nrphone"=>$this->getnrphone(),
+			":inadmin"=>$this->getinadmin(),
+			":isprof"=>$this->getisprof(),
+			":isestagiario"=>$this->getisestagiario(),
+			":isaudi"=>$this->getisaudi(),
+			":statususer"=>$this->getstatususer()
+		));
+
+		$this->setData($results[0]);
+	}
+
+	public function get($iduser)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_users a INNER JOIN tb_persons b USING(idperson) WHERE a.iduser = :iduser", array(
+			":iduser"=>$iduser
+		));
+
+		if($results){
+
+			$data = $results[0];
+
+			$data['desperson'] = utf8_encode($data['desperson']);
+
+			$this->setData($data);			
+
+		}else{
+
+			User::setError("Usuário selecionado não existe!");
+			echo "<script>window.location.href = '/admin/users'</script>";
+			//header("Location: /admin/users");
+			exit();			
+		}
+		
+	}
+
+	public function update()
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("CALL sp_usersupdate_save(:iduser, :desperson, :apelidoperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin, :isprof, :isestagiario, :isaudi, :statususer)", array(
+			":iduser"=>$this->getiduser(),
+			":desperson"=>$this->getdesperson(),
+			":apelidoperson"=>$this->getapelidoperson(),
+			":deslogin"=>$this->getdeslogin(),
+			":despassword"=>$this->getdespassword(),
+			//":despassword"=>User::getPasswordHash($this->getdespassword()),
+			":desemail"=>$this->getdesemail(),
+			":nrphone"=>$this->getnrphone(),
+			":inadmin"=>$this->getinadmin(),
+			":isprof"=>$this->getisprof(),
+			":isestagiario"=>$this->getisestagiario(),
+			":isaudi"=>$this->getisaudi(),
+			":statususer"=>$this->getstatususer()
+		));
+
+		$this->setData($results[0]);
+	}
+
+	public function updatePassword()
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("CALL sp_usersupdate_save(:iduser, :desperson, :apelidoperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin, :isprof, :isestagiario, :isaudi, :statususer)", array(
+			":iduser"=>$this->getiduser(),
+			":desperson"=>$this->getdesperson(),
+			":apelidoperson"=>$this->getapelidoperson(),
+			":deslogin"=>$this->getdeslogin(),
+			//":despassword"=>$this->getdespassword(),
+			":despassword"=>User::getPasswordHash($this->getdespassword()),
+			":desemail"=>$this->getdesemail(),
+			":nrphone"=>$this->getnrphone(),
+			":inadmin"=>$this->getinadmin(),
+			":isprof"=>$this->getisprof(),
+			":isestagiario"=>$this->getisestagiario(),
+			":isaudi"=>$this->getisaudi(),
+			":statususer"=>$this->getstatususer()
+		));
+
+		$this->setData($results[0]);
+	}
+
+	public function delete()
+	{
+		$sql = new Sql();
+
+		$results = $sql->select("CALL sp_users_delete(:iduser)", array(
+			":iduser"=>$this->getiduser()
+		));
+	}
+
+	public static function getPasswordHash($password)
+	{
+
+		return password_hash($password, PASSWORD_DEFAULT, [
+			'cost'=>12
+		]);
+
+	}
+	
+	public static function getForgotSite($email, $inadmin = true)
+	{
+         $sql = new Sql();
+         $results = $sql->select("
+             SELECT *
+             FROM tb_persons a
+             INNER JOIN tb_users b USING(idperson)
+             WHERE a.desemail = :email;
+         ", array(
+             ":email"=>$email
+         ));
+    
+         if (count($results) === 0)
+         {         
+    		echo "<script>alert('Não foi possível recuperar a senha!! Usuário ou email não cadastrado!');";
+    		echo "javascript:history.go(-1)</script>";
+    		exit();
+    
+         }
+ 	}
+ 	
+ 	public static function getForgotSiteEmailCpf($email, $numcpf, $inadmin = true)
+	{
+         $sql = new Sql();
+         $results = $sql->select("
+             SELECT *
+             FROM tb_persons a
+             INNER JOIN tb_users b ON b.idperson = a.idperson
+             INNER JOIN tb_pessoa c ON c.iduser = b.iduser
+             WHERE a.desemail = :email
+             AND c.numcpf = :numcpf;
+         ", array(
+             ":email"=>$email,
+             ":numcpf"=>$numcpf
+         ));
+    
+         if (count($results) === 0)
+         {         
+    		echo "<script>alert('Não foi possível recuperar a senha!! Usuário ou email não cadastrado!');";
+    		echo "javascript:history.go(-1)</script>";
+    		exit();
+    
+         }
+ 	}
+
+ 	public function setPasswordSite($password, $desemail)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->query("UPDATE tb_users SET despassword = :password WHERE deslogin = :desemail", array(
+			":password"=>$password,
+			":password"=>User::getPasswordHash($password),
+			":desemail"=>$desemail
+		));
+	}
+
+	public static function getForgot($email, $inadmin = true)
+	{
+     $sql = new Sql();
+     $results = $sql->select("
+         SELECT *
+         FROM tb_persons a
+         INNER JOIN tb_users b USING(idperson)
+         WHERE a.desemail = :email;
+     ", array(
+         ":email"=>$email
+     ));
+
+     if (count($results) === 0)
+     {
+
+         //throw new \Exception("Não foi possível recuperar a senha.");
+         
+         User::setError("Não foi possível recuperar a senha!! Usuário ou email não cadastrado!");
+         echo "<script>window.location.href = '/login'</script>";
+		 //header("Location: /login");
+			exit();			
+
+     }
+     else
+     {
+         $data = $results[0];
+
+         $results2 = $sql->select("CALL sp_userspasswordsrecoveries_create(:iduser, :desip)", array(
+             ":iduser"=>$data['iduser'],
+             ":desip"=>$_SERVER['REMOTE_ADDR']
+         ));
+         if (count($results2) === 0)
+         {
+             //throw new \Exception("Não foi possível recuperar a senha.");
+
+             User::setError("Não foi possível recuperar a senha!! Código expirado!");
+             echo "<script>window.location.href = '/login'</script>";
+		 	//header("Location: /login");
+			exit();			
+         }
+         else
+         {
+             $dataRecovery = $results2[0];
+             $iv = random_bytes(openssl_cipher_iv_length('aes-256-cbc'));
+             $code = openssl_encrypt($dataRecovery['idrecovery'], 'aes-256-cbc', User::SECRET, 0, $iv);
+             $result = base64_encode($iv.$code);
+             if ($inadmin === true) {
+                 $link = "https://www.cursosesportivossbc.com/admin/forgot/reset?code=$result";
+             } else {
+                 $link = "https://www.cursosesportivossbc.com/forgot/reset?code=$result";
+             } 
+             $mailer = new Mailer($data['desemail'], $data['desperson'], "Redefinir senha do Cursos Esportivos SBC", "forgot", array(
+                 "name"=>$data['desperson'],
+                 "link"=>$link
+             )); 
+             $mailer->send();
+             
+             if (!$emailEnviado)
+     		{
+
+        		User::setError("Não foi possivel enviar o email para recuperar senha. Verifique se o email foi digitado corretamente ou entre em contato conosco.");   
+        		echo "<script>window.location.href = '/login'</script>";        	
+        		//header("Location: /login");
+				exit();			
+     		}
+     		
+             return $link;
+         }
+     }
+ }
+ public static function validForgotDecrypt($result)
+ {
+     $result = base64_decode($result);
+     $code = mb_substr($result, openssl_cipher_iv_length('aes-256-cbc'), null, '8bit');
+     $iv = mb_substr($result, 0, openssl_cipher_iv_length('aes-256-cbc'), '8bit');;
+     $idrecovery = openssl_decrypt($code, 'aes-256-cbc', User::SECRET, 0, $iv);
+     $sql = new Sql();
+     $results = $sql->select("
+         SELECT *
+         FROM tb_userspasswordsrecoveries a
+         INNER JOIN tb_users b USING(iduser)
+         INNER JOIN tb_persons c USING(idperson)
+         WHERE
+         a.idrecovery = :idrecovery
+         AND
+         a.dtrecovery IS NULL
+         AND
+         DATE_ADD(a.dtregister, INTERVAL 1 HOUR) >= NOW();
+     ", array(
+         ":idrecovery"=>$idrecovery
+     ));
+     if (count($results) === 0)
+     {
+         User::setError("Não foi possível recuperar a senha!! Código expirado!");
+         echo "<script>window.location.href = '/login'</script>";
+		 	//header("Location: /login");
+			exit();			
+     }
+     else
+     {
+         return $results[0];
+     }
+ }
+
+ 	public static function setForgotUsed($idrecovery)
+	{
+
+		$sql = new Sql();
+
+		$sql->query("UPDATE tb_userspasswordsrecoveries SET dtrecovery = NOW() WHERE idrecovery = :idrecovery", array(
+			":idrecovery"=>$idrecovery
+		));
+
+	}
+
+	public function setPassword($password)
+	{
+
+		$sql = new Sql();
+
+		$sql->query("UPDATE tb_users SET despassword = :password WHERE iduser = :iduser", array(
+			":password"=>$password,
+			":password"=>User::getPasswordHash($password),
+			":iduser"=>$this->getiduser()
+		));
+
+	}
+	
+	public function validaEmail($email){
+
+		//$email = test_input($_POST["email"]);
+			if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+  			//$emailErr = "Invalid email format";
+  			return false; // Retorno false para indicar que o e-mail é invalido	
+		}else{
+			return true; // Retorno true para indicar que o e-mail é valido	
+		}
+		
+	}
+
+	public static function getPage($page = 1, $itemsPerPage = 10)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_users a 
+			INNER JOIN tb_persons b USING(idperson) 
+			ORDER BY b.desperson
+			LIMIT $start, $itemsPerPage;
+		");
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+
+	public static function getPageProf($page = 1, $itemsPerPage = 10)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_users a 
+			INNER JOIN tb_persons b USING(idperson) 
+			WHERE isprof = 1
+			ORDER BY b.desperson
+			LIMIT $start, $itemsPerPage;
+		");
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+	
+	public static function getPageEstagiarios($page = 1, $itemsPerPage = 10)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_users a 
+			INNER JOIN tb_persons b USING(idperson) 
+			WHERE isestagiario = 1
+			ORDER BY b.desperson
+			LIMIT $start, $itemsPerPage;
+		");
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+	
+	public static function getPageAudi($page = 1, $itemsPerPage = 10)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_users a 
+			INNER JOIN tb_persons b USING(idperson) 
+			WHERE isaudi = 1
+			ORDER BY b.desperson
+			LIMIT $start, $itemsPerPage;
+		");
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+	
+	public static function getPageAdmins($page = 1, $itemsPerPage = 10)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_users a 
+			INNER JOIN tb_persons b USING(idperson) 
+			WHERE inadmin = 1
+			ORDER BY b.desperson
+			LIMIT $start, $itemsPerPage;
+		");
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+
+	
+	public static function getPageSearch($search, $page = 1, $itemsPerPage = 10)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_users a 
+			INNER JOIN tb_persons b USING(idperson)
+			WHERE b.desperson LIKE :search OR b.desemail = :search OR a.deslogin LIKE :search
+			ORDER BY b.desperson
+			LIMIT $start, $itemsPerPage;
+		", [
+			':search'=>'%'.$search.'%'
+		]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+
+	public static function getPageSearchProf($search, $page = 1, $itemsPerPage = 10)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_users a 
+			INNER JOIN tb_persons b USING(idperson)
+
+			WHERE (a.isprof = 1) AND (b.desperson LIKE :search OR b.desemail = :search OR a.deslogin LIKE :search)
+			ORDER BY b.desperson
+			LIMIT $start, $itemsPerPage;
+		", [
+			':search'=>'%'.$search.'%'
+		]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+	
+	public static function getPageSearchEstagiarios($search, $page = 1, $itemsPerPage = 10)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_users a 
+			INNER JOIN tb_persons b USING(idperson)
+
+			WHERE isestagiarios = 1 AND b.desperson LIKE :search OR b.desemail = :search OR a.deslogin LIKE :search
+			ORDER BY b.desperson
+			LIMIT $start, $itemsPerPage;
+		", [
+			':search'=>'%'.$search.'%'
+		]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+	
+	public static function getPageSearchAudi($search, $page = 1, $itemsPerPage = 10)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_users a 
+			INNER JOIN tb_persons b USING(idperson)
+
+			WHERE isaudi = 1 AND b.desperson LIKE :search OR b.desemail = :search OR a.deslogin LIKE :search
+			ORDER BY b.desperson
+			LIMIT $start, $itemsPerPage;
+		", [
+			':search'=>'%'.$search.'%'
+		]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+	
+	public static function getPageSearchAdmins($search, $page = 1, $itemsPerPage = 10)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_users a 
+			INNER JOIN tb_persons b USING(idperson)
+
+			WHERE inadmin = 1 AND b.desperson LIKE :search OR b.desemail = :search OR a.deslogin LIKE :search
+			ORDER BY b.desperson
+			LIMIT $start, $itemsPerPage;
+		", [
+			':search'=>'%'.$search.'%'
+		]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+
+	public static function getPageCliente($page = 1, $itemsPerPage = 10)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_users a 
+			INNER JOIN tb_persons b USING(idperson) 
+			WHERE isprof = 0 AND inadmin = 0 AND isaudi = 0
+			ORDER BY b.desperson
+			LIMIT $start, $itemsPerPage;
+		");
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+
+	public static function getPageSearchCliente($search, $page = 1, $itemsPerPage = 10)
+	{
+
+		$start = ($page - 1) * $itemsPerPage;
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM tb_users a 
+			INNER JOIN tb_persons b USING(idperson)
+			WHERE (a.isprof = 0 OR a.inadmin = 0 OR a.isaudi = 0) AND (b.desperson LIKE :search OR b.desemail = :search OR a.deslogin LIKE :search)
+			ORDER BY b.desperson
+			LIMIT $start, $itemsPerPage;
+		", [
+			':search'=>'%'.$search.'%'
+		]);
+
+		$resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+		return [
+			'data'=>$results,
+			'total'=>(int)$resultTotal[0]["nrtotal"],
+			'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
+		];
+
+	}
+
+	public static function setError($msg)
+	{
+
+		$_SESSION[User::ERROR] = $msg;
+
+	}
+
+	public static function getError()
+	{
+
+		$msg = (isset($_SESSION[User::ERROR]) && $_SESSION[User::ERROR]) ? $_SESSION[User::ERROR] : '';
+
+		User::clearError();
+
+		return $msg;
+
+	}
+
+	public static function clearError()
+	{
+
+		$_SESSION[User::ERROR] = NULL;
+
+	}
+
+	public static function setSuccess($msg)
+	{
+
+		$_SESSION[User::SUCCESS] = $msg;
+
+	}
+
+	public static function getSuccess()
+	{
+
+		$msg = (isset($_SESSION[User::SUCCESS]) && $_SESSION[User::SUCCESS]) ? $_SESSION[User::SUCCESS] : '';
+
+		User::clearSuccess();
+
+		return $msg;
+
+	}
+
+	public static function clearSuccess()
+	{
+
+		$_SESSION[User::SUCCESS] = NULL;
+
+	}
+
+	public static function setErrorRegister($msg)
+	{
+
+		$_SESSION[User::ERROR_REGISTER] = $msg;
+
+	}
+
+	public static function getErrorRegister()
+	{
+
+		$msg = (isset($_SESSION[User::ERROR_REGISTER]) && $_SESSION[User::ERROR_REGISTER]) ? $_SESSION[User::ERROR_REGISTER] : '';
+
+		User::clearErrorRegister();
+
+		return $msg;
+
+	}
+
+	public static function clearErrorRegister()
+	{
+
+		$_SESSION[User::ERROR_REGISTER] = NULL;
+
+	}
+
+	public static function setErrorRegisterSendmail($msg)
+	{
+
+		$_SESSION[User::ERROR_REGISTER_SENDMAIL] = $msg;
+
+	}
+
+	public static function getErrorRegisterSendmail()
+	{
+
+		$msg = (isset($_SESSION[User::ERROR_REGISTER_SENDMAIL]) && $_SESSION[User::ERROR_REGISTER_SENDMAIL]) ? $_SESSION[User::ERROR_REGISTER_SENDMAIL] : '';
+
+		User::clearErrorRegisterSendmail();
+
+		return $msg;
+
+	}
+
+	public static function clearErrorRegisterSendmail()
+	{
+
+		$_SESSION[User::ERROR_REGISTER_SENDMAIL] = NULL;
+
+	}
+
+
+	public static function checkLoginExist($login)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_users WHERE deslogin = :deslogin", [
+			':deslogin'=>$login
+		]);
+
+		return (count($results) > 0);
+
+	}
+
+	public function getPessoa()	{
+
+		$sql = new Sql();
+
+		$results = $sql->select(
+			"SELECT * FROM tb_pessoa a
+			-- INNER JOIN tb_saude b 
+            -- ON b.idpess = a.idpess
+            -- LEFT JOIN tb_cid c
+			-- ON c.idcid = b.idcid
+			WHERE statuspessoa = 1 AND
+			a.iduser = :iduser", [
+			':iduser'=>$this->getiduser()
+		]);
+
+		return $results;
+	}
+	
+	public function getPessoaSaude()	{
+
+		$sql = new Sql();
+
+		$results = $sql->select(
+			"SELECT * FROM tb_pessoa a
+			LEFT JOIN tb_saude b 
+            ON b.idpess = a.idpess
+            LEFT JOIN tb_cid c
+			ON c.idcid = b.idcid
+			WHERE statuspessoa = 1 AND
+			a.iduser = :iduser", [
+			':iduser'=>$this->getiduser()
+		]);
+
+		return $results;
+	}
+	
+	/*
+	public function getPessoaByIdUser($iduser)	{
+
+		$sql = new Sql();
+
+		$results = $sql->select(
+			"SELECT * FROM tb_pessoa a
+			INNER JOIN 	tb_saude
+			WHERE statuspessoa = 1 AND
+			iduser = :iduser", [
+			':iduser'=>$iduser
+		]);
+
+		return $results;
+	}
+	*/
+
+	public function getFromId($iduser)
+	{
+
+		$sql = new Sql();
+
+		$rows = $sql->select(
+			"SELECT * FROM tb_pessoa 
+			INNER JOIN 	tb_users USING(iduser)
+			
+			WHERE iduser = :iduser ", [
+			':iduser'=>$iduser
+		]);
+
+		$this->setData($rows[0]);
+	}
+	
+	public static function getUserIdPess($idpess)
+	{
+
+		$sql = new Sql();
+
+		$result = $sql->select(
+			"SELECT  desperson, desemail FROM tb_pessoa 
+			INNER JOIN 	tb_users USING(iduser)
+			INNER JOIN 	tb_persons USING(idperson)			
+			WHERE idpess = :idpess", [
+			':idpess'=>$idpess
+		]);
+
+		return $result;
+	}
+	
+	public static function getUserNameById($iduser)
+	{
+
+		$sql = new Sql();
+
+		$result = $sql->select(
+			"SELECT  * FROM tb_users a
+			INNER JOIN 	tb_persons b USING(idperson)			
+			WHERE a.iduser = :iduser", [
+			':iduser'=>$iduser
+		]);
+		
+		return $result;	
+	}
+
+	public function getInsc()
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("
+			SELECT * 
+			FROM tb_insc a 
+			INNER JOIN tb_inscstatus b USING(idinscstatus) 
+			INNER JOIN tb_carts c USING(idcart)
+			INNER JOIN tb_turma g USING(idturma)
+			INNER JOIN tb_atividade h ON h.idativ = g.idativ
+			INNER JOIN tb_espaco i ON i.idespaco = g.idespaco
+			INNER JOIN tb_pessoa d ON d.idpess = c.idpess
+			INNER JOIN tb_users e ON e.iduser = d.iduser
+			INNER JOIN tb_persons f ON f.idperson = e.idperson
+			INNER JOIN tb_temporada j ON j.idtemporada = a.idtemporada
+			WHERE e.iduser = :iduser -- AND a.idinscstatus != 7
+			ORDER BY a.idinscstatus, a.idinsc DESC 
+		", [
+			':iduser'=>$this->getiduser()
+		]);
+
+		return $results;
+
+	}
+
+	function calcularIdade($dtnasc){
+    $time = strtotime($dtnasc);
+    if($time === false){
+      return '';
+    }
+ 
+    $year_diff = '';
+    $dtnasc = date('Y-m-d', $time);
+    list($year,$month,$day) = explode('-',$dtnasc);
+    $year_diff = date('Y') - $year;
+    $month_diff = date('m') - $month;
+    $day_diff = date('d') - $day;
+    if ($day_diff < 0 || $month_diff < 0){
+    	$year_diff;
+    } 
+ 
+    return $year_diff;
+
+   }
+
+   public function getTurmaTemporada($related = true, $idtemporada, $iduser)
+		{
+			$sql = new Sql();
+
+			if ($related === true) {
+
+				return $sql->select("
+					SELECT * FROM tb_turmatemporada a
+					INNER JOIN tb_turma 
+					using(idturma)
+					INNER JOIN tb_users 
+					using(iduser)
+					INNER JOIN tb_persons 
+					using(idperson)
+					INNER JOIN tb_atividade 
+					using(idativ)
+					INNER JOIN tb_modalidade
+					using(idmodal)   
+					INNER JOIN tb_fxetaria
+					using(idfxetaria)             
+	                INNER JOIN tb_espaco 
+					using(idespaco)
+					INNER JOIN tb_local 
+					using(idlocal)
+					INNER JOIN tb_horario 
+					using(idhorario)
+					-- INNER JOIN tb_turmastatus 
+					-- using(idturmastatus) 				
+					WHERE a.iduser = :iduser 
+					AND a.idtemporada = :idtemporada
+				", [
+					':iduser'=>$iduser,
+					':idtemporada'=>$idtemporada
+				]);
+
+			} else {
+			    
+                /*
+				return $sql->select("
+					SELECT * FROM tb_turmatemporada a
+					INNER JOIN tb_turma 
+					using(idturma)
+					INNER JOIN tb_users 
+					using(iduser)
+					-- INNER JOIN tb_persons 
+					-- using(idperson)
+					INNER JOIN tb_atividade 
+					using(idativ)
+					INNER JOIN tb_modalidade
+					using(idmodal)   
+					INNER JOIN tb_fxetaria
+					using(idfxetaria)             
+	                INNER JOIN tb_espaco 
+					using(idespaco)
+					INNER JOIN tb_local 
+					using(idlocal)
+					INNER JOIN tb_horario 
+					using(idhorario)
+					-- INNER JOIN tb_turmastatus 
+					-- using(idturmastatus) 	
+					-- WHERE a.iduser = 0 OR a.iduser is null 			
+					WHERE a.iduser != :iduser  AND a.iduser = 1
+					AND a.idtemporada = :idtemporada
+				", [
+					':iduser'=>$iduser,
+					':idtemporada'=>$idtemporada
+				]);
+				*/
+				
+				return $sql->select("
+					SELECT * FROM tb_turmatemporada a
+					INNER JOIN tb_turma 
+					using(idturma)
+					INNER JOIN tb_users 
+					using(iduser)
+					-- INNER JOIN tb_persons 
+					-- using(idperson)
+					INNER JOIN tb_atividade 
+					using(idativ)
+					INNER JOIN tb_modalidade
+					using(idmodal)   
+					INNER JOIN tb_fxetaria
+					using(idfxetaria)             
+	                INNER JOIN tb_espaco 
+					using(idespaco)
+					INNER JOIN tb_local 
+					using(idlocal)
+					INNER JOIN tb_horario 
+					using(idhorario)
+					WHERE a.iduser != :iduser  
+					AND a.iduser = 1
+					AND a.idtemporada = :idtemporada
+				", [
+				    ':iduser'=>$iduser,
+					':idtemporada'=>$idtemporada
+				]);
+			}		
+		}
+		
+		public function getTurmaTemporadaEstagiario($related = true, $idtemporada, $idestagiario)
+		{
+			$sql = new Sql();
+
+			if ($related === true) {
+
+				return $sql->select("
+					SELECT * FROM tb_turmatemporada a
+					INNER JOIN tb_turma 
+					using(idturma)
+					INNER JOIN tb_users 
+					using(iduser)
+					INNER JOIN tb_persons 
+					using(idperson)
+					INNER JOIN tb_atividade 
+					using(idativ)
+					INNER JOIN tb_modalidade
+					using(idmodal)   
+					INNER JOIN tb_fxetaria
+					using(idfxetaria)             
+	                INNER JOIN tb_espaco 
+					using(idespaco)
+					INNER JOIN tb_local 
+					using(idlocal)
+					INNER JOIN tb_horario 
+					using(idhorario)
+					-- INNER JOIN tb_turmastatus 
+					-- using(idturmastatus) 				
+					WHERE a.idestagiario = :idestagiario 
+					AND a.idtemporada = :idtemporada
+				", [
+					':idestagiario'=>$idestagiario,
+					':idtemporada'=>$idtemporada
+				]);
+
+			} else {
+
+				return $sql->select("
+					SELECT * FROM tb_turmatemporada a
+					INNER JOIN tb_turma 
+					using(idturma)
+					INNER JOIN tb_users 
+					using(iduser)
+					-- INNER JOIN tb_persons 
+					-- using(idperson)
+					INNER JOIN tb_atividade 
+					using(idativ)
+					INNER JOIN tb_modalidade
+					using(idmodal)   
+					INNER JOIN tb_fxetaria
+					using(idfxetaria)             
+	                INNER JOIN tb_espaco 
+					using(idespaco)
+					INNER JOIN tb_local 
+					using(idlocal)
+					INNER JOIN tb_horario 
+					using(idhorario)
+					-- INNER JOIN tb_turmastatus 
+					-- using(idturmastatus) 	
+					-- WHERE a.iduser = 0 OR a.iduser is null 			
+					WHERE a.idestagiario != :idestagiario AND a.idestagiario = 1
+					AND a.idtemporada = :idtemporada
+				", [
+					':idestagiario'=>$idestagiario,
+					':idtemporada'=>$idtemporada
+				]);
+			}		
+		}
+
+		public function getTurmaTemporadaLocal($related = true, $idtemporada, $iduser, $idlocal)
+		{
+			$sql = new Sql();
+
+			if ($related === true) {
+
+				return $sql->select("
+					SELECT * FROM tb_turmatemporada a
+					INNER JOIN tb_turma 
+					using(idturma)
+					INNER JOIN tb_users 
+					using(iduser)
+					INNER JOIN tb_persons 
+					using(idperson)
+					INNER JOIN tb_atividade 
+					using(idativ)
+					INNER JOIN tb_modalidade
+					using(idmodal)   
+					INNER JOIN tb_fxetaria
+					using(idfxetaria)             
+	                INNER JOIN tb_espaco d
+					using(idespaco)
+					INNER JOIN tb_local e
+					ON e.idlocal = d.idlocal
+					INNER JOIN tb_horario 
+					using(idhorario)
+					-- INNER JOIN tb_turmastatus 
+					-- using(idturmastatus) 				
+					WHERE a.iduser = :iduser 
+					AND a.idtemporada = :idtemporada
+					AND e.idlocal = :idlocal
+				", [
+					':iduser'=>$iduser,
+					':idtemporada'=>$idtemporada,
+					':idlocal'=>$idlocal
+				]);
+
+			} else {
+
+				return $sql->select("
+					SELECT * FROM tb_turmatemporada a
+					INNER JOIN tb_turma 
+					using(idturma)
+					INNER JOIN tb_users 
+					using(iduser)
+					-- INNER JOIN tb_persons 
+					-- using(idperson)
+					INNER JOIN tb_atividade 
+					using(idativ)
+					INNER JOIN tb_modalidade
+					using(idmodal)   
+					INNER JOIN tb_fxetaria
+					using(idfxetaria)             
+	                INNER JOIN tb_espaco d
+					using(idespaco)
+					INNER JOIN tb_local e
+					ON e.idlocal = d.idlocal
+					INNER JOIN tb_horario 
+					using(idhorario)
+					-- INNER JOIN tb_turmastatus 
+					-- using(idturmastatus) 	
+					-- WHERE a.iduser = 0 OR a.iduser is null 			
+					WHERE a.iduser != :iduser  
+					AND a.idtemporada = :idtemporada
+					AND e.idlocal = :idlocal
+				", [
+					':iduser'=>$iduser,
+					':idtemporada'=>$idtemporada,
+					':idlocal'=>$idlocal
+				]);
+			}		
+		}
+		
+		public function getTurmaTemporadaLocalEstagiario($related = true, $idtemporada, $iduser, $idlocal)
+		{
+			$sql = new Sql();
+
+			if ($related === true) {
+
+				return $sql->select("
+					SELECT * FROM tb_turmatemporada a
+					INNER JOIN tb_turma 
+					using(idturma)
+					INNER JOIN tb_users 
+					using(iduser)
+					INNER JOIN tb_persons 
+					using(idperson)
+					INNER JOIN tb_atividade 
+					using(idativ)
+					INNER JOIN tb_modalidade
+					using(idmodal)   
+					INNER JOIN tb_fxetaria
+					using(idfxetaria)             
+	                INNER JOIN tb_espaco d
+					using(idespaco)
+					INNER JOIN tb_local e
+					ON e.idlocal = d.idlocal
+					INNER JOIN tb_horario 
+					using(idhorario)
+					-- INNER JOIN tb_turmastatus 
+					-- using(idturmastatus) 				
+					WHERE a.idestagiario = :iduser 
+					AND a.idtemporada = :idtemporada
+					AND e.idlocal = :idlocal
+				", [
+					':iduser'=>$iduser,
+					':idtemporada'=>$idtemporada,
+					':idlocal'=>$idlocal
+				]);
+
+			} else {
+
+				return $sql->select("
+					SELECT * FROM tb_turmatemporada a
+					INNER JOIN tb_turma 
+					using(idturma)
+					INNER JOIN tb_users 
+					using(iduser)
+					-- INNER JOIN tb_persons 
+					-- using(idperson)
+					INNER JOIN tb_atividade 
+					using(idativ)
+					INNER JOIN tb_modalidade
+					using(idmodal)   
+					INNER JOIN tb_fxetaria
+					using(idfxetaria)             
+	                INNER JOIN tb_espaco d
+					using(idespaco)
+					INNER JOIN tb_local e
+					ON e.idlocal = d.idlocal
+					INNER JOIN tb_horario 
+					using(idhorario)
+					-- INNER JOIN tb_turmastatus 
+					-- using(idturmastatus) 	
+					-- WHERE a.iduser = 0 OR a.iduser is null 			
+					WHERE a.idestagiario != :iduser  
+					AND a.idtemporada = :idtemporada
+					AND e.idlocal = :idlocal
+				", [
+					':iduser'=>$iduser,
+					':idtemporada'=>$idtemporada,
+					':idlocal'=>$idlocal
+				]);
+			}		
+		}
+
+		/*
+		public function getUserInTurmaTemporada($idturma, $idtemporada){
+
+			$sql = new Sql();
+
+			$rows = $sql->select(
+				"SELECT * FROM tb_turmatemporada 
+				INNER JOIN tb_users USING(iduser)
+				INNER JOIN tb_persons USING(idperson)			
+				WHERE idturma = :idturma
+				AND idtemporada = :idtemporada ", [
+				':idturma'=>$idturma,
+				':idtemporada'=>$idtemporada
+			]);
+
+			return $rows;
+		}
+		*/
+		
+		public static function getIdUseInTurmaTemporada($idturma, $idtemporada){
+
+			$sql = new Sql();
+
+			$rows = $sql->select(
+				"SELECT iduser FROM tb_turmatemporada 			
+				WHERE idturma = :idturma
+				AND idtemporada = :idtemporada
+				-- AND iduser = :iduser ", [
+				':idturma'=>$idturma,
+				':idtemporada'=>$idtemporada
+				//':iduser'=>$iduser
+			]);
+
+			return $rows[0];
+			
+		}
+		
+		/*
+		public static function getTime(){
+			date_default_timezone_set('America/Sao_Paulo');
+
+			return time() + (60 * 10);
+		}
+		*/
+		
+		
+		public static function verifica_ip_online($ip){	
+
+		$sql = new Sql();
+
+		$results = $sql->select(
+			"SELECT count(*) as linha FROM tb_users_online
+			WHERE ip = :ip", [
+			':ip'=>$ip
+			]);
+
+			return (int)$results[0]['linha'];
+		}
+
+		public static function deleta_linhas(){
+			date_default_timezone_set('America/Sao_Paulo');
+			$time = time();			
+			$tempo  = $time - (60 * 20);
+			$sql = new Sql();
+			$results = $sql->select("DELETE FROM tb_users_online 
+				WHERE tempo < :tempo", [
+				':tempo'=>$tempo
+			]);	
+		}
+
+		public static function grava_ip_online($ip, $tempo, $sessao){
+
+			User::deleta_linhas();		
+			User::verifica_ip_online($ip);
+
+			$sql = new Sql();
+
+			if(User::verifica_ip_online($ip) <= 0){
+
+				if(!$sessao){
+					$results = $sql->query("INSERT INTO tb_users_online (tempo, ip) VALUES(:tempo, :ip)", array(
+						":tempo"=>$tempo,
+						":ip"=>$ip			
+					));
+				}else{						
+					$results = $sql->query("INSERT INTO tb_users_online (tempo, ip, sessao) VALUES(:tempo, :ip, :sessao)", array(
+						":tempo"=>$tempo,
+						":ip"=>$ip,
+						":sessao"=>$sessao
+					));					
+				}
+
+			}else{ 
+
+				if(!$sessao){					
+					$results = $sql->query("SET SQL_SAFE_UPDATES=0; UPDATE tb_users_online SET tempo = :tempo, ip = :ip WHERE ip = :ip; SET SQL_SAFE_UPDATES=1;", array(
+						":tempo"=>$tempo,
+						":ip"=>$ip			
+					));
+				}else{					
+					$results = $sql->query("SET SQL_SAFE_UPDATES=0; UPDATE tb_users_online SET tempo = :tempo, ip = :ip, sessao = :sessao WHERE ip = :ip; SET SQL_SAFE_UPDATES=1;", [
+						":tempo"=>$tempo,
+						":ip"=>$ip,			
+						":sessao"=>$sessao
+					]);
+				}
+			}
+		}
+
+		function pega_totalUsuariosOnline(){
+
+			$sql = new Sql();
+			$results = $sql->select("SELECT count(*) as useron FROM tb_users_online WHERE sessao IS NOT NULL");
+			return $results[0]['useron'];
+
+		}
+
+		function pega_totalVisitantesOnline(){
+
+			$sql = new Sql();
+			$results = $sql->select("SELECT count(*) as uservis FROM tb_users_online WHERE sessao IS NULL");
+			return $results[0]['uservis'];
+		}
+		
+		public static function getApelidopersonTelefoneByIduser($iduser){
+
+			$sql = new Sql();
+
+			$results = $sql->select("SELECT *
+			 	FROM tb_users a 
+			 	INNER JOIN tb_persons b ON a.idperson = b.idperson
+			 	WHERE iduser = :iduser", [
+			':iduser'=>$iduser
+			]);
+
+			return $results[0];			
+		}
+
+
+}
+
+
+?>

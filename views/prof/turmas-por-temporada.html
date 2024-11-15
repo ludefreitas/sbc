@@ -58,8 +58,163 @@
           
   }
 
+  $(document).ready(function(){
+            $('#data').mask('00-00-0000');
+        });
+
+  function popupData(turma, temporada, tipodata) {
+
+            let idturma = turma
+            let idtemporada = temporada
+            let iddata = tipodata
+
+            document.getElementById('divPopupData').hidden = false 
+            document.getElementById('idturma').value = idturma
+            document.getElementById('idtemporada').value = idtemporada
+            document.getElementById('iddata').value = iddata 
+
+            if(iddata == 1){
+                document.getElementById('NomeTipoData').innerHTML = "início das inscrições" 
+            }
+            if(iddata == 2){
+                document.getElementById('NomeTipoData').innerHTML = "fim das inscrições" 
+            }
+            if(iddata == 3){
+                document.getElementById('NomeTipoData').innerHTML = "início das matrículas" 
+            }
+            if(iddata == 4){
+                document.getElementById('NomeTipoData').innerHTML = "fim das matrículas" 
+            }
+            if(iddata == 5){
+                document.getElementById('NomeTipoData').innerHTML = "início das aulas" 
+            }
+            if(iddata == 6){
+                document.getElementById('NomeTipoData').innerHTML = "fim das aulas" 
+            }
+
+            
+
+        }
+
+        function AtualizaData(){
+
+            let turma = document.getElementById('idturma').value
+            let temporada = document.getElementById('idtemporada').value
+            let data = document.getElementById('data').value
+            let time = document.getElementById('time').value
+            let iddata = document.getElementById('iddata').value
+
+
+
+            let hora = time.substr(0,2)
+            let minuto = time.substr(3,2)
+            let ano = data.substr(0,4);
+            let mes = data.substr(5,2);
+            let dia = data.substr(8,2); 
+
+            if((dia == '') || (mes == '') || (ano == '') || (hora == '') || (minuto == '')){
+
+                alert('Preencha todos os dados')
+            }
+
+            let novadataView = dia+'/'+mes+'/'+ano+' '+hora+':'+minuto
+            let novadata = ano+'-'+mes+'-'+dia+' '+hora+':'+minuto
+
+            let url = '/prof/turmatemporada/datas-inicio-fim/'+turma+'/'+temporada+'/'+iddata+'/'+novadata
+
+            let ajax = new XMLHttpRequest();
+            ajax.open('GET', 'url');        
+            
+            $.ajax({
+              url: url,
+              method: 'GET'  
+            }).done(function(result){
+
+              if (!result)
+              {
+                  alert('Não foi possível atualizar data!')
+              };
+
+            });
+
+
+            document.getElementById('idSpanTipo'+turma+'-'+iddata).innerHTML = novadataView
+
+            document.getElementById('divPopupData').hidden = true 
+
+        }
+
+        function fecharPopupData() {
+
+          document.getElementById('divPopupData').hidden = true;
+        }
+
+    function expandir(idturma){
+
+        let iddaturma = idturma;
+
+            document.getElementById('lermais'+iddaturma).hidden = true 
+            document.getElementById('lermenos'+iddaturma).hidden = false 
+            document.getElementById('escondido1'+iddaturma ).hidden = false  
+            document.getElementById('escondido2'+iddaturma ).hidden = false
+            document.getElementById('escondido3'+iddaturma ).hidden = false  
+          
+        }
+
+    function recolher(idturma){
+
+        let iddaturma = idturma;
+
+            document.getElementById('lermais'+iddaturma).hidden = false 
+            document.getElementById('lermenos'+iddaturma).hidden = true 
+            document.getElementById('escondido1'+iddaturma ).hidden = true  
+            document.getElementById('escondido2'+iddaturma ).hidden = true 
+            document.getElementById('escondido3'+iddaturma ).hidden = true  
+          
+    }
+
+    function expandirSpan(idturma){
+
+        let iddaturma = idturma;
+
+            document.getElementById('opcoes'+iddaturma).hidden = false 
+            document.getElementById('lerMaisSpan'+iddaturma).hidden = true 
+            document.getElementById('lerMenosSpan'+iddaturma).hidden = false 
+          
+        }
+
+    function recolherSpan(idturma){
+
+        let iddaturma = idturma;
+
+            document.getElementById('opcoes'+iddaturma).hidden = true 
+            document.getElementById('lerMaisSpan'+iddaturma).hidden = false
+            document.getElementById('lerMenosSpan'+iddaturma).hidden = true  
+          
+    }
+
 
 </script>
+
+<style type="text/css">
+    
+    #divPopupData{
+        position: fixed;
+        top: 0; 
+        bottom: 0;
+        left: 0; 
+        right: 0;
+        margin: auto;
+        width: 50%;
+        min-height: 100px;
+        max-height: 150px;
+        padding: 5px; 
+        background-color: rgba(255, 165, 0, 1);
+    }  
+
+    
+
+</style>
 
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
@@ -112,11 +267,11 @@
 
 
                 <div  id="btnModalOpen{$idmodalidade}">
-                <div style="text-align: center; border-radius: 5px; margin: 5px;" class="btn-primary col-md-12" onclick="openDiv({$idmodalidade})" >{$value.descmodal}</div> 
+                <div style="text-align: center; border-radius: 5px; margin: 5px;" class="btn-primary col-md-12" onclick="openDiv({$idmodalidade})" >{$value.descmodal} <i class="fa fa-caret-down"> </i></div> 
                 </div>
 
                 <div  id="btnModalClose{$idmodalidade}" hidden>
-                <div style="text-align: center; border-radius: 5px; margin: 5px;" class="btn-primary col-md-12" onclick="closeDiv({$idmodalidade})" >{$value.descmodal}</div> 
+                <div style="text-align: center; border-radius: 5px; margin: 5px;" class="btn-primary col-md-12" onclick="closeDiv({$idmodalidade})" >{$value.descmodal} <i class="fa fa-caret-up"> </i></div> 
                 </div>
 
                 <div id="idmodal{$idmodalidade}" hidden >
@@ -174,8 +329,116 @@
 
 
                        - {$value.diasemana} {$value.horainicio} ás {$value.horatermino} - 
-                       <strong>{$value.descrfxetaria}  {$value.initidade} a {$value.fimidade} anos -</strong>   {$value.apelidolocal} - {$value.nomeespaco}&nbsp; <strong> Vagas: ({$value.vagas} Geral)&nbsp; - &nbsp;({$value.vagaslaudo} Laudo)&nbsp; - &nbsp;({$value.vagaspcd} PCD)&nbsp; - &nbsp;({$value.vagaspvs} PVS)</strong>
-                       - <strong> Obsevação: </strong>{$value.obs}  
+                       <strong>{$value.descrfxetaria}  {$value.initidade} a {$value.fimidade} anos -</strong>   {$value.apelidolocal} - {$value.nomeespaco}&nbsp; <span id="lermais{$value.idturma}" style="color: darkblue; font-weight: bold;" onclick="expandir({$value.idturma})">Mais...</span> 
+
+                       <div id="escondido1{$value.idturma}" hidden>
+
+                       <strong> Vagas: ({$value.vagas} Geral)&nbsp; - &nbsp;({$value.vagaslaudo} Laudo)&nbsp; - &nbsp;({$value.vagaspcd} PCD)&nbsp; - &nbsp;({$value.vagaspvs} PVS)</strong>
+                       <br>
+
+                         Início inscrições:
+
+                         {if="$value.data_insc_inicial == null"} 
+                         <span id="idSpanTipo{$value.idturma}-1">
+                                ___/___/___ 00:00:00
+                         </span>
+
+                         &nbsp; <a onclick="popupData({$value.idturma}, {$value.idtemporada}, 1)"> [alterar] </a><br>
+                         {else}
+                         <span id="idSpanTipo{$value.idturma}-1">
+                            {function="formatDateHour($value.data_insc_inicial)"} 
+                         </span>
+
+                         &nbsp; <a onclick="popupData({$value.idturma}, {$value.idtemporada}, 1)"> [alterar] </a><br>
+                         {/if}   
+
+                         Fim inscrições: 
+
+                         {if="$value.data_insc_final == null"} 
+                         <span id="idSpanTipo{$value.idturma}-2">
+                                ___/___/___ 00:00:00
+                         </span>
+
+                         &nbsp; <a onclick="popupData({$value.idturma}, {$value.idtemporada}, 2)"> [alterar] </a><br>
+                         {else}
+                         <span id="idSpanTipo{$value.idturma}-2">
+                            {function="formatDateHour($value.data_insc_final)"} 
+                         </span>
+
+                         &nbsp; <a onclick="popupData({$value.idturma}, {$value.idtemporada}, 2)"> [alterar] </a><br>
+                         {/if}   
+
+                         Inicio matrículas: 
+
+                         {if="$value.data_matr_inicial == null"} 
+                         <span id="idSpanTipo{$value.idturma}-3">
+                                ___/___/___ 00:00:00
+                         </span>
+
+                         &nbsp; <a onclick="popupData({$value.idturma}, {$value.idtemporada}, 3)"> [alterar] </a><br>
+                         {else}
+                         <span id="idSpanTipo{$value.idturma}-3">
+                            {function="formatDateHour($value.data_matr_inicial)"} 
+                         </span>
+
+                         &nbsp; <a onclick="popupData({$value.idturma}, {$value.idtemporada}, 3)"> [alterar] </a><br>
+                         {/if}
+
+                         Fim matrículas: 
+
+                         {if="$value.data_matr_final == null"} 
+                         <span id="idSpanTipo{$value.idturma}-4">
+                                ___/___/___ 00:00:00
+                         </span>
+
+                         &nbsp; <a onclick="popupData({$value.idturma}, {$value.idtemporada}, 4)"> [alterar] </a><br>
+                         {else}
+                         <span id="idSpanTipo{$value.idturma}-4">
+                            {function="formatDateHour($value.data_matr_final)"} 
+                         </span>
+
+                         &nbsp; <a onclick="popupData({$value.idturma}, {$value.idtemporada}, 4)"> [alterar] </a><br>
+                         {/if}
+
+
+                         Início das aulas: 
+
+                         {if="$value.data_aula_inicial == null"} 
+                         <span id="idSpanTipo{$value.idturma}-5">
+                                ___/___/___ 00:00:00
+                         </span>
+
+                         &nbsp; <a onclick="popupData({$value.idturma}, {$value.idtemporada}, 5)"> [alterar] </a><br>
+                         {else}
+                         <span id="idSpanTipo{$value.idturma}-5">
+                            {function="formatDateHour($value.data_aula_inicial)"} 
+                         </span>
+
+                         &nbsp; <a onclick="popupData({$value.idturma}, {$value.idtemporada}, 5)"> [alterar] </a><br>
+                         {/if}
+
+                         
+                         Fim das aulas: 
+
+                         {if="$value.data_aula_final == null"} 
+                         <span id="idSpanTipo{$value.idturma}-6">
+                                ___/___/___ 00:00:00
+                         </span>
+
+                         &nbsp; <a onclick="popupData({$value.idturma}, {$value.idtemporada}, 6)"> [alterar] </a><br>
+                         {else}
+                         <span id="idSpanTipo{$value.idturma}-6">
+                            {function="formatDateHour($value.data_aula_final)"} 
+                         </span>
+
+                         &nbsp; <a onclick="popupData({$value.idturma}, {$value.idtemporada}, 6)"> [alterar] </a><br>
+                         {/if}
+
+                         <strong> Obsevação: </strong>{$value.obs} <br>
+
+                            </div>
+                         <span id="lermenos{$value.idturma}" style="color: red; font-weight: bold;" hidden onclick="recolher({$value.idturma})">...Menos</span>
+
                       </span>
                     </div>          
 
@@ -183,17 +446,22 @@
                       <h5 style="font-weight: bold; text-align: left; color: green;">
                            <strong style="color: orange;">[{$value.idturma}]</strong> &nbsp;&nbsp; 
                         
-                        <a href="/prof/insc-turma-temporada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}"> 
-                         | &nbsp; Consultar {$value.numinscritos} inscritos &nbsp; |
+                        <a href="/prof/calendario-lista-presenca/{$value.idtemporada}/{$value.idturma}" style="color: orangered;">
+                          &nbsp;Fazer Chamada   &nbsp; &nbsp;
                          </a> &nbsp; 
+
+                         <span id="lerMaisSpan{$value.idturma}" style="color: darkblue; font-weight: bold;" onclick="expandirSpan({$value.idturma})">Mais...</span>
+                         <br>
+                         
+                         <a href="/prof/insc-turma-temporada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}"> 
+                          &nbsp; Consultar {$value.numinscritos} inscritos &nbsp; &nbsp;
+                         </a> &nbsp; 
+
+                        <span id="opcoes{$value.idturma}" hidden>
 
                          <a href="/prof/insc-turma-temporada-chamada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}" style="color: green;"> 
                           &nbsp; Imprimir lista chamada ({$value.nummatriculados}) &nbsp; 
                          </a> &nbsp; 
-                         
-                         <a href="/prof/calendario-lista-presenca/{$value.idtemporada}/{$value.idturma}" style="color: orangered;">
-                         | &nbsp;Fazer Chamada   &nbsp; | 
-                         </a> &nbsp;  
                          
                          <a href="/prof/listapessoasporturma/{$value.idturma}/{$value.idtemporada}" style="color: black;">
                           &nbsp; Lista com endereços   &nbsp; 
@@ -202,16 +470,16 @@
 
                           {if="$value.token == 1"}
                           <a href="/prof/token/{$value.idturma}/{$temporada.idtemporada}" style="color: darkblue;">
-                          | &nbsp; 
+                           &nbsp;&nbsp;
                           <span style="color: darkorange;">
                                NECESSÁRIO 
-                               <i class="fa fa-info-circle" style="font-size: 14px;"></i> &nbsp;
-                          </span>  Tokens &nbsp; |
+                               <i class="fa fa-info-circle" style="font-size: 14px;"></i> &nbsp; &nbsp;
+                          </span>  Tokens &nbsp; &nbsp;
                           </a> &nbsp;
                           {else}
                         
                           <a href="/prof/token/{$value.idturma}/{$temporada.idtemporada}" style="color: darkblue;">
-                          | &nbsp; Tokens &nbsp; | 
+                           &nbsp; Tokens &nbsp; &nbsp; 
                           </a> &nbsp;
                           {/if}
 
@@ -220,9 +488,16 @@
                          </a> &nbsp; 
                          
                         <a href="/prof/crialispersonalizadaautorizacao/{$value.idturma}/{$value.idtemporada}" style="color: purple;">
-                                | &nbsp; Criar uma Lista &nbsp; |
-                            </a>   &nbsp;               
-                        
+                                 &nbsp; Criar uma Lista &nbsp; &nbsp;
+                            </a>   &nbsp; &nbsp;
+
+                            <span hidden id="lerMenosSpan{$value.idturma}" style="color: red; font-weight: bold;" onclick="recolherSpan({$value.idturma})">...Menos</span>  
+
+                            <br>
+
+                        </span>
+
+                                                    
                       </h5>
                        
                     </div>                    
@@ -267,6 +542,43 @@
 </div>
 </div>
 </div>
+
+<div hidden id="divPopupData" style="text-align-last: center; border-radius: 15px 15px 15px 15px"> 
+
+
+                <div style="text-align: center; padding: 0px; font-size: 20px; font-weight: bold; border-radius: 15px 15px 15px 15px; width: 100%;">
+                    <div style="text-align-last: right; font-weight: bold; color: red; " onclick="fecharPopupData()"> ( x ) &nbsp;&nbsp;
+                    </div>  
+                </div>               
+
+                <div style="text-align: center; padding: 5; width: 100%;">
+                    <form id="formAtestado" method="get" style="height: 100%;"> 
+                        <label style="font-weight: bold; font-size: 14px">
+
+                            Informe a data e o horário do 
+                            <span id='NomeTipoData'></span>
+
+                        </label>
+                        <br>
+                        <input hidden id="idturma" name="idturma" type="text" required>
+                        <input hidden id="idtemporada" name="idtemporada" type="text" required>
+                        <input hidden id="iddata" name="iddata" type="text" required>
+
+
+                        <input id="data" type="date" name="data" style="width: 59%">
+                        <input id="time" type="time" name="time" style="width: 29%">
+
+                        <br> 
+                        
+                        <span class="btn btn-success"  name="enviar" style="margin-top: 2px; width: 44%; font-size: 60%" onclick="AtualizaData()"> Atualizar </span>
+                    
+                        <span class="btn btn-danger" style="margin-top: 2px; width: 44%; font-size: 60%" onclick="fecharPopupData()" > Cancelar</span>
+                    
+                        
+                    </form>        
+                </div> 
+                
+            </div>
 
 </section>
 <!-- /.content -->

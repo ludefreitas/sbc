@@ -10,8 +10,9 @@ use \Sbc\Model\Insc;
 use \Sbc\Model\Saude;
 use \Sbc\Model\Modalidade;
 
-$app->get("/cart", function(){
+//$app->get("/cart", function(){
     
+    /*
     $httpResponse = http_response_code();
     
     //if($httpResponse == 200 || $httpResponse == 200){
@@ -22,13 +23,16 @@ $app->get("/cart", function(){
 		//header('Location: /redirecionando');
 		exit();
 	}
+	*/
     
+    /*
 	$cart = Cart::getFromSession();
 	$user = User::getFromSession();
 	
 	$idcartcart = $cart->getidcart();
 	$sessionidcart = $cart->getdessessionid();
 	$idpesscart = $cart->getidpess();
+	*/
 	
 	/*
 	echo '<pre>';
@@ -39,7 +43,8 @@ $app->get("/cart", function(){
 	exit();
 	*/
 	
-	
+
+	/*
 	if(isset($_SESSION['Cart']['idturma'])){
 		$idturma = $_SESSION['Cart']['idturma'];
 	}else{
@@ -50,7 +55,8 @@ $app->get("/cart", function(){
 	    $turma = $cart->getTurmaByIdturma($idturma);
 	}else{
 	    $turma = $cart->getTurmaFullByIdturma($idturma);
-	}	
+	}
+	*/	
 	/*
 	if($_SESSION['User']['iduser'] != 89){
 	    $turma = $cart->getTurma();
@@ -59,6 +65,7 @@ $app->get("/cart", function(){
 	}
 	*/
 	
+	/*
 	if(!$turma){
 		echo "<script>alert('Não há inscrições a confirmar! Selecione um local; uma modalidade; em seguida selecione uma turma!');";
 		echo "javascript:history.go(-1)</script>";
@@ -84,7 +91,7 @@ $app->get("/cart", function(){
 	}else{
 		$temtoken = 0;
 	}
-	
+
 	$_SESSION['Cart']['oldturma'] = $turma;
 
 	$_SESSION['Cart']['idturma'] = $idturma;
@@ -104,12 +111,15 @@ $app->get("/cart", function(){
 		'msgError'=>Cart::getMsgError(),
 		'msgSuccess'=>Cart::getMsgSuccess()
 	]);
+
+	*/
 	
-});
+//});		
 
 $app->post("/cart", function() {
 
 	User::verifyLogin(false);
+
 	/*
 	if($_SESSION['User']['inadmin'] != 1){
 	    
@@ -174,15 +184,14 @@ $app->post("/cart", function() {
 		
 		$idturma = $_POST['idturma'];
 		$idtemporada = $_POST['idtemporada'];		
-		$initidade = $_POST['initidade'];
-		$fimidade = $_POST['fimidade']; 
+		$initidade = (int)$_POST['initidade'];
+		$fimidade = (int)$_POST['fimidade']; 
 		$idlocal = $_POST['idlocal']; 
 		$local = $_POST['apelidolocal']; 
 		$sexoTurma = $_POST['sexo'];
 		$tipoativ = $_POST['tipoativ'];
 		$idmodal = (int)$_POST['idmodal'];
-		
-		
+
 		$modalidade = new Modalidade();
 
 		$modalidade->get((int)$idmodal);
@@ -192,6 +201,10 @@ $app->post("/cart", function() {
 		$temporada = new Temporada();
 
 		$temporada->get((int)$idtemporada);
+
+		$turma = new Turma();
+
+		$turma->get((int)$idturma);
 
 		$desctemporada = $temporada->getdesctemporada();
 		//$inicioInscTemporada = formatDate($temporada->getdtinicinscricao());
@@ -207,7 +220,7 @@ $app->post("/cart", function() {
 
 		if(Insc::statusTemporadaIniciada($idtemporada)){
 
-        
+      
 			Cart::setMsgError("As inscrições para os Cursos Esportivos para a temporada ".$desctemporada." não estão disponíveis no momento. Para a temporada ".$desctemporada." o período de inscrições será a partir do dia ".$inicioInscTemporada." até o dia ".$terminoInscTemporada.", conforme resolução SESP Nº ".$numeroResolucao." publicada no jornal Notícias do Município de São Bernardo do Campo de ".$dataEdital.". A partir do dia ".$inicioMatriculaTemporada." iniciar-se-á a etapa de matrículas (PRESENCIAL) nos Centros Esportivos.");
 			echo "<script>window.location.href = '/cart'</script>";
 			//header("Location: /cart");
@@ -219,8 +232,7 @@ $app->post("/cart", function() {
 		if(Insc::statusTemporadaMatriculaIniciada($idtemporada)){
 		    
 			if($idmodal == 25){
-			    
-			  
+
 			
 			}else{
 
@@ -317,8 +329,8 @@ $app->post("/cart", function() {
 			$anoAtual = (int)date('Y') + 1;		
 		}
 		
-		$anoFinal = $anoAtual - $fimidade;
-		$anoInicial = $anoAtual - $initidade;
+		$anoFinal = ($anoAtual - $fimidade);
+		$anoInicial = ($anoAtual - $initidade);
 		
 		if(isset($_POST['tokencpf'])){
 
@@ -337,15 +349,22 @@ $app->post("/cart", function() {
 					echo "javascript:history.go(-1)</script>";
 					exit();
 				}			
+			}else{
+
+				if(!Turma::temTokenCpf($idturma, $numcpf)){	
+			        
+			    }else{
+
+    				if(!Turma::comparaCpfToken($idturma, $_POST['tokencpf'], $numcpf)){
+    
+    				echo "<script>alert('Este TOKEN não pertence ao CPF da pessoa selecionada');";
+    				echo "javascript:history.go(-1)</script>";
+    				exit();
+    				}
+			    }
+
 			}	
-
-
-			if(!Turma::comparaCpfToken($idturma, $_POST['tokencpf'], $numcpf)){
-
-				echo "<script>alert('Este TOKEN não pertence ao CPF da pessoa selecionada');";
-				echo "javascript:history.go(-1)</script>";
-				exit();
-			}			
+			
 
 			$_SESSION['tokencpf'] = $_POST['tokencpf'];		
 
@@ -362,10 +381,14 @@ $app->post("/cart", function() {
 		    
 		    $insc = new Insc();	
 		    
+		    /*
 		    $idcart = $_POST['idcart'];
 			$cart->get((int)$idcart);
+			*/
+
 			$idturma = $_POST['idturma'];
-			$idtemporada = $cart->getTurma()[0]['idtemporada'];
+			//$idtemporada = $cart->getTurma()[0]['idtemporada'];
+			$idtemporada = $_POST['idtemporada'];
 			$vagas = $_POST['vagas'];
 
 			$inscGeral = (int)Insc::getInscGeral($idturma, $idtemporada);
@@ -382,20 +405,7 @@ $app->post("/cart", function() {
 			$maxListaEsperaPlm = round($vagasPlm * 1.2);
 			$maxListaEsperaPcd = round($vagasPcd * 1.2);
 			$maxListaEsperaPvs = round($vagasPvs * 1.2);			
-
-            /*
-			if(($inscGeral >= $maxListaEsperaGeral) 
-				&& ($inscPlm >= $maxListaEsperaPlm) 
-				&& ($inscPcd >= $maxListaEsperaPcd) 
-				&& ($inscPvs >= $maxListaEsperaPvs)){
-
-				 echo "<script>alert('Não há mais vagas para a lista de espera desta turma! Fique atento(a) e continue acompanhando aqui no nosso site para ver se aparecem novas vagas.');";
-		    	echo "javascript:history.go(-1)</script>";
-		    	exit();
-
-			}
-			*/
-			
+	
 			if($idmodal == 14 || $idmodal == 56 || $idmodal == 57 || $idmodal == 58 || $idmodal == 59 || $idmodal == 60 || $idmodal == 64){
 			
     			if ($cart->getInscDesistenteExist($numcpf, $idpess, $idturma, $idtemporada)){
@@ -404,36 +414,37 @@ $app->post("/cart", function() {
     				echo "javascript:history.go(-1)</script>";
     				exit();
     		    }
-			}
-		    
-		    /*
-	    
-    	    $porcentVagas = $_POST['vagas'] * 1.20;
-    
-    		if($insc->countInscTurma($idtemporada, $idturma) >= $porcentVagas){
-    
-    			 echo "<script>alert('Não há mais vagas para para a lista de espera desta turma! Fique atento(a) e continue acompanhando aqui no nosso site para ver se aparecem novas vagas.');";
-    	    	echo "javascript:history.go(-1)</script>";
-    	    	exit();
-    		}
-    		
-    		*/
-    		
+			}		    
+
     		$inscmodalidadeexiste = $cart->getInscModalidadeExist($numcpf, $idmodal, $idtemporada);
 
 		    if ($inscmodalidadeexiste > 0){
 
 			    Cart::setMsgError($nomepess.' já está inscrito(a) em turma da modalidade '.$descmodal.' para esta temporada! Só é permitido uma inscrição por modalidade!');
-			    echo "<script>window.location.href = '/cart'</script>";
+			    //echo "<script>window.location.href = '/cart'</script>";
+			    echo "<script>window.location.href = '/cart/".$idturma."/".$idtemporada."/add'</script>";
+			exit();
 			    //header("Location: /cart");
+			    //exit();
+	    	}
+
+	    	$inscmodalidadeexiste = $cart->getInscModalidadeExistNew($numcpf, $idmodal, $idtemporada);
+
+		    if ($inscmodalidadeexiste > 0){
+
+			    Cart::setMsgError($nomepess.' já está inscrito(a) em turma da modalidade '.$descmodal.' para esta temporada! Só é permitido uma inscrição por modalidade! [2]');
+			    //echo "<script>window.location.href = '/cart'</script>";
+			    echo "<script>window.location.href = '/cart/".$idturma."/".$idtemporada."/add'</script>";
 			    exit();
+			    //header("Location: /cart");
+			    //exit();
 	    	}
 		}
 		
 		if($sexodeclarado != $sexoTurma && $sexoTurma != ''){		
 
 			Cart::setMsgError('Esta turma é exclusiva para pessoas do sexo '.$sexoTurma.'. Verifique, no perfil do(a) '.$nomepess.', em "Minha Família" o sexo declarado dele(a). Se for necessário faça a alteração.');
-			echo "<script>window.location.href = '/cart'</script>";
+			echo "<script>window.location.href = '/cart/".$idturma."/".$idtemporada."/add'</script>";
 			//header("Location: /cart");
 			exit();
 		}
@@ -462,20 +473,54 @@ $app->post("/cart", function() {
 		    
 		    if ($cart->getInscExistAquaticLocal($numcpf, $idpess, $idturma, $idtemporada, $idlocal, $tipoativ)){
 
-			    Cart::setMsgError($nomepess.' já está inscrito(a) para uma turma do tipo '.$tipoativ.' no '.$local.'!');
-			    echo "<script>window.location.href = '/cart'</script>";
-			    //header("Location: /cart");
-			    exit();
+			    $getinscexistaquaticlocal = $cart->getInscExistAquaticLocal($numcpf, $idpess, $idturma, $idtemporada, $idlocal, $tipoativ);
 
+		    	if(!isset($getinscexistaquaticlocal) || $getinscexistaquaticlocal == NULL || $getinscexistaquaticlocal == 0 ){
+		    		$getidmodainscexistaquaticlocal = 0;	
+		    	}else{
+		    		$getidmodainscexistaquaticlocal = (int)$getinscexistaquaticlocal[0]['idmodal'];
+		    	}
+
+				// Aqui verifica se a inscrição é para o projeto Perdendo o Medo de Nadar
+				// e se existe inscrição válida para hidroginástica, libera mesmo assim
+				if($getidmodainscexistaquaticlocal == 6 && $idmodal == 60) {
+
+				}else{
+
+					Cart::setMsgError($nomepess.' já está inscrito(a) para uma turma do tipo '.$tipoativ.' no '.$local.'!');
+			    	echo "<script>window.location.href = '/cart/".$idturma."/".$idtemporada."/add'</script>";
+			    	//header("Location: /cart");
+			    	exit();
+				}					    
+		    }
+
+		    if ($cart->getInscExistAquaticLocalNew($numcpf, $idpess, $idturma, $idtemporada, $idlocal, $tipoativ)){
+
+			    $getinscexistaquaticlocalnew = $cart->getInscExistAquaticLocalNew($numcpf, $idpess, $idturma, $idtemporada, $idlocal, $tipoativ);
+
+		    	if(!isset($getinscexistaquaticlocalnew) || $getinscexistaquaticlocalnew == NULL || $getinscexistaquaticlocalnew == 0 ){
+		    		$getidmodainscexistaquaticlocalnew = 0;	
+		    	}else{
+		    		$getidmodainscexistaquaticlocalnew = (int)$getinscexistaquaticlocalnew[0]['idmodal'];
+		    	}
+
+				// Aqui verifica se a inscrição é para o projeto Perdendo o Medo de Nadar
+				// e se existe inscrição válida para hidroginástica, libera mesmo assim
+				if($getidmodainscexistaquaticlocalnew == 6 && $idmodal == 60) {
+
+				}else{
+
+					Cart::setMsgError($nomepess.' já está inscrito(a) para uma turma do tipo '.$tipoativ.' no '.$local.'!');
+			    	echo "<script>window.location.href = '/cart/".$idturma."/".$idtemporada."/add'</script>";
+			    	//header("Location: /cart");
+			    	exit();
+				}					    
 		    }
 		}
 		
 		$mesCorrente = (int)date('m', strtotime('now'));
 		$diaAtual = (int)date('d', strtotime('now'));
 		$horaAtual = (int)date('H', strtotime('now'));
-		
-		
-
 		
 		if( ($mesCorrente === 1) || ($mesCorrente === 2 && $diaAtual < 15) || ($diaAtual === 15 && $horaAtual < 10) ){
 
@@ -484,6 +529,15 @@ $app->post("/cart", function() {
 			if($inscPorTemporada === 1){
 
 				echo "<script>alert(' ".$nomepess." já tem uma inscrição válida para a temporada ".$desctemporada."! A partir de 15 de fevereiro de ".$desctemporada.", a partir das 10:00h, você poderá fazer mais uma inscrição.');";
+				echo "javascript:history.go(-1)</script>";
+				exit();
+			}
+
+			$inscPorTemporada = (int)$cart->getCountInscExistTemporadaNew($numcpf, $idtemporada);
+
+			if($inscPorTemporada === 1){
+
+				echo "<script>alert(' ".$nomepess." já tem uma inscrição válida para a temporada ".$desctemporada."! A partir de 15 de fevereiro de ".$desctemporada.", a partir das 10:00h, você poderá fazer mais uma inscrição.[2]');";
 				echo "javascript:history.go(-1)</script>";
 				exit();
 			}
@@ -499,54 +553,168 @@ $app->post("/cart", function() {
 				echo "javascript:history.go(-1)</script>";
 				exit();
 			}
-		}
-		
 
-		if ($cart->getInscExist($numcpf, $idturma, $idtemporada)){
+			$inscPorTemporada = (int)$cart->getCountInscExistTemporadaNew($numcpf, $idtemporada);
+			
+			if($inscPorTemporada >= 2){
+
+				echo "<script>alert(' ".$nomepess." já tem 02 inscrições válidas para a temporada ".$desctemporada."! A partir de 15 de março de ".$desctemporada.", a partir das 10:00h, você poderá fazer mais uma inscrição.[2]');";
+				echo "javascript:history.go(-1)</script>";
+				exit();
+			}
+		}
+
+		/*
+		if ($insc->getInscExistByCpf($numcpf, $idturma, $idtemporada)){
+
+			$descturma = $turma->getdescturma();
+
+			Cart::setMsgError($nomepess.' já está inscrito(a) nesta '.$descturma.' para a temporada de '.$desctemporada.' Clique acima em "Inscrições" e confira!');
+			//header("Location: /cart");
+			echo "<script>window.location.href = 'http://www.cursosesportivos.com.br'</script>";
+			exit();
+
+		}
+		*/
+		
+		$insc = new Insc();
+
+		//if ($cart->getInscExist($numcpf, $idturma, $idtemporada)){
+		//if ($cart->getInscExist($numcpf, $idturma, $idtemporada) || $insc->getInscExistByCpf($numcpf, $idturma, $idtemporada)){
+		if ($insc->getInscExistByCpf($numcpf, $idturma, $idtemporada)){
 
 			Cart::setMsgError($nomepess.' já está inscrito(a) nesta turma para esta temporada!');
 			//header("Location: /cart");
-			echo "<script>window.location.href = '/cart'</script>";
+			//echo "<script>window.location.href = '/modalidade/".$idmodal."/".$idlocal."'</script>";
+			echo "<script>window.location.href = '/cart/".$idturma."/".$idtemporada."/add'</script>";
 			exit();
 
 		}else{	
-		    
-		    //$_POST['dessessionid'] = $_POST['dessessionid'];
-		    //$_POST['idcart'] = $_POST['idcart'];
-		    //$_POST['idpess'] = $_POST['idpess'];
-		    
-		    
-		    //$_POST['dessessionid'] = 	$_POST['idcart'].'-'.+time();
-		    
-		    /*
-		    var_dump($_POST['idpesscart']);
-            var_dump($_POST['idcartcart']);
-			var_dump($_POST['sessionidcart']);
-			exit();
-			*/
-			
-			
-			
 
-			$cart->setData($_POST);
-			
-			/*
-			echo '<pre>';
-			var_dump($cart);
-			echo '</pre>';
-			exit();
-			*/
+			if(!isset($_POST['dessessionid']) || $_POST['dessessionid'] == NULL ){
+				$_POST['dessessionid'] = NULL;
+			}else{
+				$_POST['dessessionid'] = $_POST['dessessionid'];
+			}
 
+			
+		    
+		    $cart->setData($_POST);
+			
 			$cart->save([
-				'idcart'=>$_POST['idcart'],
+				//'idcart'=>$_POST['idcart'],
 				//':iduser'=>$_POST['iduser'],		
-				':idpess'=>$_POST['idpess'],
+				':idpess'=>$idpess,
 				':dessessionid'=>$_POST['dessessionid']
 			]);
+
+			//--------------------------------------------------------------
+
+			$turma = new Turma();
+
+			$idturma = $cart->getidturma();
+
+			if($_SESSION['User']['iduser'] != 89){
+	    		$turma = $cart->getTurmaByIdturma($idturma);
+			}else{
+	    		$turma = $cart->getTurmaFullByIdturma($idturma);
+			}
+
+			$_SESSION['token'] = isset($_SESSION['token']) ? $_SESSION['token'] : '';
+			$_SESSION['tokencpf'] = isset($_SESSION['tokencpf']) ? $_SESSION['tokencpf'] : 0;
+
+			$token = $_SESSION['token'];
+			$tokencpf = $_SESSION['tokencpf'];
+			//$tokencpf = $_POST['tokencpf'];
+
+			//var_dump($_POST);
+			//exit();
+
+			$vagasGeral = (int)Turma::getVagasByIdTurma($idturma);
+			$vagasPlm = (int)Turma::getVagasLaudoByIdTurma($idturma);
+			$vagasPcd = (int)Turma::getVagasPcdByIdTurma($idturma);
+			$vagasPvs = (int)Turma::getVagasPvsByIdTurma($idturma);
+			$pegainscGeral = Insc::getNumInscPublicoGeralValidaTurmaTemporada($idtemporada, $idturma);
+			//$pegainscGeral = (int)$insc->pegaInscGeral($idturma, $idtemporada);
+			$pegainscPlm = Insc::getNumInscPublicoLaudoValidaTurmaTemporada($idtemporada, $idturma);
+			//$pegainscPlm = (int)$insc->pegaInscPlm($idturma, $idtemporada);
+			$pegainscPcd = Insc::getNumInscPublicoPcdValidaTurmaTemporada($idtemporada, $idturma);
+			//$pegainscPcd = (int)$insc->pegaInscPcd($idturma, $idtemporada);
+			$pegainscPvs = Insc::getNumInscPublicoPvsValidaTurmaTemporada($idtemporada, $idturma);
+			//$pegainscPvs = (int)$insc->pegaInscPvs($idturma, $idtemporada);
+
+			$vagasListaEsperaGeral = (int)ceil($vagasGeral * 0.2);
+			$vagasListaEsperaPlm = (int)ceil($vagasPlm * 0.2);
+			$vagasListaEsperaPcd = (int)ceil($vagasPcd * 0.2);
+			$vagasListaEsperaPvs = (int)ceil($vagasPvs * 0.2);
+
+			$vagasMenosInscritosGeral = $vagasGeral - $pegainscGeral + $vagasListaEsperaGeral;
+			$vagasMenosInscritosPlm = $vagasPlm - $pegainscPlm + $vagasListaEsperaPlm;
+			$vagasMenosInscritosPcd = $vagasPcd - $pegainscPcd + $vagasListaEsperaPcd;
+			$vagasMenosInscritosPvs = $vagasPvs - $pegainscPvs + $vagasListaEsperaPvs;
+
+			$idturmastatus = $turma[0]['idturmastatus'];
+			
+			if($idturmastatus == 3){			
+				$vagasListaEsperaGeral = $vagasMenosInscritosGeral;
+				$vagasListaEsperaPlm = $vagasMenosInscritosPlm;
+				$vagasListaEsperaPcd = $vagasMenosInscritosPcd;
+				$vagasListaEsperaPvs = $vagasMenosInscritosPvs;			
+			}else{
+				if($idmodal == 25){
+						$vagasListaEsperaGeral = (int)ceil($vagasGeral * 0.5);
+						$vagasListaEsperaPlm = (int)ceil($vagasPlm * 0.5);
+						$vagasListaEsperaPcd = (int)ceil($vagasPcd * 0.5);
+						$vagasListaEsperaPvs = (int)ceil($vagasPvs * 0.5);	
+					}else{
+						$vagasListaEsperaGeral = (int)ceil($vagasGeral * 0.2);
+						$vagasListaEsperaPlm = (int)ceil($vagasPlm * 0.2);
+						$vagasListaEsperaPcd = (int)ceil($vagasPcd * 0.2);
+						$vagasListaEsperaPvs = (int)ceil($vagasPvs * 0.2);		
+					}			
+			}		
+			
+			$numinscListaEsperaPublicoGeral = Insc::getNumInscListaEsperaPubGeralTurmaTemporada($idtemporada, $idturma);
+			$numinscListaEsperaPublicoLaudo = Insc::getNumInscListaEsperaPubLaudoTurmaTemporada($idtemporada, $idturma);
+			$numinscListaEsperaPublicoPcd = Insc::getNumInscListaEsperaPubPcdTurmaTemporada($idtemporada, $idturma);
+			$numinscListaEsperaPublicoPvs = Insc::getNumInscListaEsperaPubPvsTurmaTemporada($idtemporada, $idturma);
+
+
+			//var_dump($turma->getValues());
+			//exit;
+
+			$page = new Page();
+
+			$page->setTpl("checkout", [
+			'token'=>$token,
+			'tokencpf'=>$tokencpf,
+			//'cart'=>$cart->getValues(),
+			'pessoa'=>$pessoa->getValues(),
+			'turma'=>$turma,
+			//'cid'=>$cid = Saude::listAllCid(),
+			'vagasGeral'=>$vagasGeral,
+			'inscGeral'=>$pegainscGeral,
+			'vagasPlm'=>$vagasPlm,
+			'inscPlm'=>$pegainscPlm,
+			'vagasPcd'=>$vagasPcd,
+			'inscPcd'=>$pegainscPcd,
+			'vagasPvs'=>$vagasPvs,
+			'inscPvs'=>$pegainscPvs,
+			'vagasListaEsperaGeral'=>$vagasListaEsperaGeral,
+			'vagasListaEsperaPlm'=>$vagasListaEsperaPlm,
+			'vagasListaEsperaPcd'=>$vagasListaEsperaPcd,
+			'vagasListaEsperaPvs'=>$vagasListaEsperaPvs,
+			'numinscListaEsperaPublicoGeral'=>$numinscListaEsperaPublicoGeral,
+			'numinscListaEsperaPublicoLaudo'=>$numinscListaEsperaPublicoLaudo,
+			'numinscListaEsperaPublicoPcd'=>$numinscListaEsperaPublicoPcd,
+			'numinscListaEsperaPublicoPvs'=>$numinscListaEsperaPublicoPvs,
+			'error'=>Pessoa::getError()
+			]);
+
+			//------------------------------------------------------------
             
-            echo "<script>window.location.href = '/checkout'</script>";
-			//header("Location: /checkout");
-			exit();
+            //echo "<script>window.location.href = '/checkout'</script>";
+			//exit();
 		}
 	}
 });
@@ -557,6 +725,22 @@ $app->get("/cart/:idturma/:idtemporada/add", function($idturma, $idtemporada){
 
 	$turma->get((int)$idturma);
 
+	$user = User::getFromSession();
+
+	/*
+	$cart = new Cart();
+
+	$sessionid = 1;
+
+	$cart->save2($sessionid);
+
+	$idcart = $cart->getidcart();
+
+	//var_dump($idcart);
+	//exit;
+	*/
+
+	/*
 	$cart = Cart::getFromSession();
 	
 	$_SESSION[Cart::SESSION]["idturma"] = $idturma;
@@ -573,11 +757,71 @@ $app->get("/cart/:idturma/:idtemporada/add", function($idturma, $idtemporada){
 	}else{
 				
 		$cart->addTurma($turma);
-	}		
+	}	
+	*/	
+
+	$cart = new Cart();
+	$user = new User();
+
+	if( !isset($_SESSION['User']['iduser']) || $_SESSION['User']['iduser'] != 89){
+	    $turma = $cart->getTurmaByIdturma($idturma);
+	}else{
+	    $turma = $cart->getTurmaFullByIdturma($idturma);
+	}	
+
+	//var_dump($turma);
+	//exit();
+
+	//$idturma  = isset($turma[0]['idturma']) ? $turma[0]['idturma'] : '';
+	$desctemporada  = isset($turma[0]['desctemporada']) ? $turma[0]['desctemporada'] : '';
+	
+	// Aqui verifica se a temporada é igual ao ano atual
+	// Se não for acrescenta (1). Supondo que a inscrição está sendo feita no ano anterior
+	if( (int)date('Y')  == (int)$desctemporada ){
+
+		$anoAtual = (int)date('Y');	
+
+	}else{
+
+		$anoAtual = (int)date('Y') + 1;		
+	}
+
+	if(Turma::turmatemToken($idturma)){
+		$temtoken = 1;
+	}else{
+		$temtoken = 0;
+	}
+
+	$iduser = $_SESSION['User']['iduser'];
+
+	$pessoas = $user->getPessoaByIdUser($iduser);
+
+	//var_dump($pessoas);
+	//exit();
+
+	$page = new Page();
+
+	$page->setTpl("cart", [
+	    //'idcartcart'=>$idcartcart,
+	    //'sessionidcart'=>$sessionidcart,
+	    //'idpesscart'=>$idpesscart,
+		//'cart'=>$cart->getValues(),
+		'temtoken'=>$temtoken,
+		'anoAtual'=>$anoAtual,
+		'turma'=>$turma,
+		'pessoa'=>$pessoas,
+		'error'=>Cart::getMsgError(),
+		'msgError'=>Cart::getMsgError(),
+		'msgSuccess'=>Cart::getMsgSuccess()
+	]);
+
+	/*
 	
 	echo "<script>window.location.href = '/cart'</script>";
 	//header("Location: /cart");
 	exit;
+
+	*/
 });
 
 $app->get("/cart/:idturma/remove", function($idturma){

@@ -1,12 +1,18 @@
+
+
 <script type="text/javascript">
 
-      $(document).ready(function(){
-            $('#data').mask('00-00-0000');
-        });
+    function formatar(mascara, documento){
+        var i = documento.value.length;
+        var saida = mascara.substring(0,1);
+        var texto = mascara.substring(i)
 
-    $(document).ready(function(){
-            $('#dataderma').mask('00-00-0000');
-        });
+        if (texto.substring(0,1) != saida){
+            documento.value += texto.substring(0,1);
+        }
+
+    }
+
 
     function popupAtestado(idpess) {
 
@@ -126,6 +132,10 @@
 
         }
 
+        $(document).ready(function(){
+            $('#data').mask('00-00-0000');
+        });
+
         function AtualizaAtestadoDerma() {
 
             let idpess = document.getElementById('conteudoAtestadoDermaId').value
@@ -160,6 +170,10 @@
             });
             
         }
+
+        $(document).ready(function(){
+            $('#dataderma').mask('00-00-0000');
+        });
 
       function dadosAtestado(idpess){
 
@@ -500,8 +514,10 @@
               </div>                
               
               <div class="col-md-2" >
-                   <a href="/prof/insc/pessoa/{$value.idpess}" class="btn btn-primary btn-xs"><i class="fa fa-search"></i>&nbsp;Consulta inscrições</a>
+                   <a href="/prof/insc/pessoa/{$value.idpess}/{$value.numcpf}" class="btn btn-primary btn-xs"><i class="fa fa-search"></i>&nbsp;Consulta inscrições</a>
               </div>
+
+             
             </div>           
             </div>
             {/loop}
@@ -542,7 +558,7 @@
                         <br>
                         <input hidden id="conteudoAtestadoId" name="idpess" type="text" required>
                         <input hidden id="iduser" name="iduser" type="text" value='{function="getUserId()"}' required>
-                        <input id="data" name="data" type="text" required="required" style="height: 30px; margin-bottom: 2px; width: 90%" placeholder="Somente números 00-00-0000">
+                        <input id="data" name="data" type="text" required="required" style="height: 30px; margin-bottom: 2px; width: 90%" placeholder="Somente números 00-00-0000" onkeypress="formatar('##-##-####', this)" maxlength="10">
                         <br> 
                         <input id="observ" type="text" name="observ" required="required" style="height: 30px; margin-bottom: 2px; margin-top: 2px; width: 90%" placeholder="Observação:" >
                         <br> 
@@ -568,7 +584,7 @@
                         <label style="font-weight: bold; font-size: 10px">Preencha os dados abaixo para atualizar o atestado dermatológico</label>
                         <input hidden id="conteudoAtestadoDermaId" name="idpess" type="text" required>
                         <input hidden id="iduserderma" name="iduserderma" type="text" value='{function="getUserId()"}' required>
-                        <input id="dataderma" name="data" type="text" required="required" style="height: 30px; margin-bottom: 2px; width: 90%" placeholder="Somente números 00-00-0000">
+                        <input id="dataderma" name="data" type="text" required="required" style="height: 30px; margin-bottom: 2px; width: 90%" placeholder="Somente números 00-00-0000" onkeypress="formatar('##-##-####', this)" maxlength="10">
                         <br> 
                         <input id="observderma" type="text" name="observderma" required="required" style="height: 30px; margin-bottom: 2px; margin-top: 2px; width: 90%;" placeholder="Observação:">
                         <br> 

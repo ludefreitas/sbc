@@ -2,6 +2,8 @@
 
     <script>
         alert('Lembramos que ao fazer seu agendamento, você está ciente da necessidade de se apresentar em nossas piscinas, no dia agendado para nadar, com sunga (para os homens) maiô (para as mulheres) e touca de natação')
+
+        alert('LEMBRAMOS AINDA, que você, no dia e hora agendado para nadar em nossas piscinas, deverá apresentar o ATESTADO CLÍNICO e o ATESTADO DERMATOLÓGICO. Caso contrário não poderá acessar as piscinas!')
     </script>
      <div class="container"> <!-- container 1 -->
                 <div class="row"> <!-- row 2 -->
@@ -49,6 +51,7 @@
                         <input type="text" name="dataPost" value="<?php echo htmlspecialchars( $dataPost, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;">    
                         <input type="text" name="titulo" value="<?php echo htmlspecialchars( $titulo, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;">
                         <input type="text" name="idpess" value="<?php echo htmlspecialchars( $idpess, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;"> 
+                        <input type="text" name="numcpf" value="<?php echo htmlspecialchars( $numcpf, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;"> 
                         <input type="text" name="ispresente" value="<?php echo htmlspecialchars( $ispresente, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;">
                         <input type="text" name="idlocal" value="<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;"> 
                          <input type="text" name="nomediasemana" value="<?php echo htmlspecialchars( $nomeDiaSemana, ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="display: none;"> 

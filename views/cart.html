@@ -148,9 +148,11 @@ $(document).ready(function(){
                </span> 
                <span class="amount">
                  {if="$value.fimidade == 99"} 
-               Para nascidos somente até {$anoAtual - $value.initidade} <br>
+               <strong>Para nascidos somente até {$anoAtual - $value.initidade}</strong> <br>
               {else}
-              Para nascidos somente entre: {$anoAtual - $value.fimidade} à {$anoAtual - $value.initidade}<br>
+              <strong>Para nascidos somente entre: {$anoAtual - $value.fimidade} à {$anoAtual - $value.initidade}</strong>
+                <br>
+
               {/if}
               
               {if="$value.obs"}
@@ -163,7 +165,6 @@ $(document).ready(function(){
                    <br> <span style="color: red; font-weight: bold;">Se esta não é a turma que você quer fazer a inscrição clique aqui <a title="Remove this item" class="remove" href="/cart/{$value.idturma}/remove"> <i class="fa fa-arrow-right" style="color: green;"></i> <i class="fa fa-trash" style="color: green;"></i> <i class="fa fa-arrow-left" style="color: green;"></i></span><p style="color: green;">(Selecionar uma outra turma)</p></a>
                </span>
               -->
-
 
                <span class="amount">
                    <br> <span style="color: red; font-weight: bold;">Se esta não é a turma que você quer fazer a inscrição clique aqui <a title="Remove this item" class="remove" onclick="voltar()" href="#void"> <i class="fa fa-arrow-right" style="color: green;"></i> <i class="fa fa-trash" style="color: green;"></i> <i class="fa fa-arrow-left" style="color: green;"></i><p style="color: green;">(Selecionar uma outra turma)</p></a>
@@ -180,9 +181,9 @@ $(document).ready(function(){
                <input type="text" name="idmodal" hidden="" value="{$value.idmodal}">
                <input type="text" name="vagas" hidden="" value="{$value.vagas}">
                <input type="text" name="temtoken" hidden="" value="{$temtoken}">
-               <input type="text" name="idcart" hidden value="{$idcartcart}">
-               <input type="text" name="dessessionid" hidden value="{$sessionidcart}">
-               <input type="text" name="idpess" hidden value="{$idpesscart}">
+               <!-- <input type="text" name="idcart" hidden value="{idcartcart}"> -->
+               <!-- <input type="text" name="dessessionid" hidden value="{sessionidcart}"> -->
+               <!-- <input type="text" name="idpess" hidden value="{idpesscart}"> -->
             </div>
             
             <div class="col-md-6">
@@ -237,12 +238,42 @@ $(document).ready(function(){
                                 <div class="box-body">
 
                                 {$idturma = $value.idturma}
+                                {$initidade = $value.initidade}
+                                {$fimidade = $value.fimidade}
+
                                     {loop="$pessoa"}
                                     <p>
-                                    <input type="radio" name="idpess" value="{$value.idpess}" style="height: 20px; width: 20px;"> {$value.nomepess}; {function="calcularIdade($value.dtnasc)"} anos
+                                    {if="calcularIdade($value.dtnasc) >= $initidade && calcularIdade($value.dtnasc) <= $fimidade"}
+
+                                        <input type="radio" name="idpess" value="{$value.idpess}" style="height: 20px; width: 20px;"> 
+                                        {$value.nomepess}; 
+                                        {function="formatAnoNascimento($value.dtnasc)"};
+                                        {function="calcularIdade($value.dtnasc)"} anos
                                         <br>
                                         {function="temTokenPorTurmaCpf($idturma, $value.numcpf)"}
+
+                                    {else}
+
+                                        {if="temTokenPorTurmaCpf($idturma, $value.numcpf)"}
+                                            <input type="radio" name="idpess" value="{$value.idpess}" style="height: 20px; width: 20px;"> 
+                                                {$value.nomepess}; 
+                                                {function="formatAnoNascimento($value.dtnasc)"};
+                                                {function="calcularIdade($value.dtnasc)"} anos
+                                                <br>
+                                                {function="temTokenPorTurmaCpf($idturma, $value.numcpf)"}
+
+                                        {else}
+
+                                        <span style="font-size: 12px">
+                                            <strong>{$value.nomepess}</strong>, nascido em {function="formatAnoNascimento($value.dtnasc)"}, não tem idade compatível para se inscrever nesta turma 
+                                        </span>
                                         
+
+                                        {/if}
+
+
+                                    {/if}
+                                                                                
                                     </p>                                
                                     {else}
                                     <p>

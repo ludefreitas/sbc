@@ -6,9 +6,9 @@
 								   		<ul class="treeview-menu">
 								   			<li class="treeview">
 	            								
-													<a href="/admin/insc/4">
+													<a href="/admin/insc-local/4/6">
 									   					<i class="fa fa-link"></i> 
-									   					Todas
+									   					Por locais
 									   				</a>								   		
 												</li>
 	            								<li class="treeview">
@@ -28,9 +28,9 @@
 								   		<ul class="treeview-menu">
 								   			<li class="treeview">
 	            								
-													<a href="/admin/insc/83">
+													<a href="/admin/insc-local/83/6">
 									   					<i class="fa fa-link"></i> 
-									   					Todas
+									   					Por locais
 									   				</a>								   		
 												</li>
 	            								<li class="treeview">
@@ -50,9 +50,9 @@
 								   		<ul class="treeview-menu">
 								   			<li class="treeview">
 	            								
-													<a href="/admin/insc/84">
+													<a href="/admin/insc-local/84/6">
 									   					<i class="fa fa-link"></i> 
-									   					Todas
+									   					Por locais
 									   				</a>								   		
 												</li>
 	            								<li class="treeview">

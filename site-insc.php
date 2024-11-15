@@ -12,6 +12,8 @@ $app->get("/profile/insc", function(){
 
 	User::verifyLogin(false);
 
+	$iduser = $_SESSION['User']['iduser'];
+
 	$user = User::getFromSession();
 	$anoAtual = (int)date('Y');
 
@@ -19,12 +21,13 @@ $app->get("/profile/insc", function(){
 
 	$page->setTpl("profile-insc", [
 		'anoAtual'=>$anoAtual,
-		'insc'=>$user->getInsc()
+		'insc'=>$user->getInsc(),
+		'inscnew'=>$user->getInscNew($iduser)
 	]);
 
 });
 
-$app->get("/profile/insc/:idinsc/:idepess", function($idinsc, $idpess){
+$app->get("/profile/insc/:idinsc/:idepess/:numcpf", function($idinsc, $idpess, $numcpf){
 
 	User::verifyLogin(false);
 
@@ -34,12 +37,14 @@ $app->get("/profile/insc/:idinsc/:idepess", function($idinsc, $idpess){
 
 	$pessoa->get((int)$idpess); 
 
-	$insc->get((int)$idinsc);
+	//$numcpf = $pessoa->getnumcpf();
 
+	//$insc->get((int)$idinsc);
+	$insc = $insc->getInscByIdInscNumcpf($idinsc, $numcpf);
 	$page = new Page();
 
 	$page->setTpl("profile-insc-detail", [
-		'insc'=>$insc->getValues(),
+		'insc'=>$insc,
 		'pessoa'=>$pessoa->getValues(),
 		'erroInsc'=>Insc::getError(),
 		'success'=>Insc::getSuccess()
@@ -51,7 +56,7 @@ $app->get("/insc/:idinsc/statusCancelada", function($idinsc){
 	$insc = new Insc();
 	$temporada = new Temporada();
 
-	$insc->get((int)$idinsc);
+	$insc->getComCpf((int)$idinsc);
 	$idtemporada = $insc->getidtemporada();
 	$temporada->get((int)$idtemporada);
 	$desctemporada = (int)$temporada->getdesctemporada();
@@ -326,7 +331,6 @@ $app->get("/insc-turma-temporada-listaespera/:idturma/:idtemporada/user/:iduser"
 		'success'=>User::getSuccess()
 	]);	
 });
-
 
 $app->get("/insc-turma-temporada-crec-valida/:idlocal/:idtemporada", function($idlocal, $idtemporada) {
 

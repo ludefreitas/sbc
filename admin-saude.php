@@ -66,15 +66,11 @@ $app->get("/admin/cid", function() {
 	));
 });
 
-$app->get("/admin/saude/atulizaatestado/:idpess/:data/:observ", function($idpess, $data, $observ) {
-
-	//User::verifyLogin();
+$app->get("/admin/saude/atualizaatestado/:idpess/:data/:observ/:iduser", function($idpess, $data, $observ, $iduser) {
 	
 	$pessoa = new Pessoa();
 
 	$saude = new Saude();
-
-	$iduser = $_SESSION['User']['iduser'];
 
 	$data = strtotime($data);
 
@@ -99,7 +95,7 @@ $app->get("/admin/saude/atulizaatestado/:idpess/:data/:observ", function($idpess
 
 	$saude->saveatestado();
 
-	echo 'Atestado atualizado com sucesso!!!';
+	echo 'Atestado Clínico atualizado com sucesso!!!';
 	
 });
 
@@ -171,15 +167,11 @@ $app->get("/admin/saude/dadosatestado/:idpess", function($idpess) {
 	
 });
 
-$app->get("/admin/saude/atulizaatestadoderma/:idpess/:data/:observ", function($idpess, $data, $observ) {
-
-	//User::verifyLogin();
+$app->get("/admin/saude/atualizaatestadoderma/:idpess/:data/:observ/:iduser", function($idpess, $data, $observ, $iduser) {
 	
 	$pessoa = new Pessoa();
 
 	$saude = new Saude();
-
-	$iduser = $_SESSION['User']['iduser'];
 
 	$data = strtotime($data);
 

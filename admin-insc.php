@@ -10,7 +10,7 @@ use \Sbc\Model\InscStatus;
 use \Sbc\Model\Sorteio;
 use \Sbc\Model\Agenda;
 use \Sbc\Model\Modalidade;
-
+use \Sbc\Model\Local;
 
 $app->get("/admin/insc", function() {
 
@@ -79,6 +79,8 @@ $app->get("/admin/insc/:idtemporada", function($idtemporada) {
 
 	}
 
+	$locais = Local::listAll();
+
 	$pages = [];
 
 	for ($x = 0; $x < $pagination['pages']; $x++)
@@ -88,18 +90,28 @@ $app->get("/admin/insc/:idtemporada", function($idtemporada) {
 			'href'=>"/admin/insc/".$idtemporada."?".http_build_query([
 			'page'=>$x+1,
 			'search'=>$search,
-			'idtemporada'=>$idtemporada
+			'idtemporada'=>$idtemporada,
+			'locais'=>$locais
 			]),
 			'text'=>$x+1
 		]);
-
 	}
 
 	$temporada = new Temporada();
 
 	$temporada->get((int)$idtemporada);
 
+	$insc = new Insc();
+
+	//$totalinscmatriculadastemporada = $insc->GetInscMatriculadasTemporada($idtemporada);
+	$totalinscmatriculadastemporada = Insc::GetInscMatriculadasTemporada($idtemporada);
+
 	$desctemporada = $temporada->getdesctemporada();
+
+	$SomaDeVagasByTemporada = (int)Turma::getSomaVagasByDescTemporada($desctemporada);	
+	$SomaDeVagasPcdByTemporada = (int)Turma::getSomaVagasPcdByDescTemporada($desctemporada);	
+	$SomaDeVagasLaudoByTemporada = (int)Turma::getSomaVagasLaudoByDescTemporada($desctemporada);
+	$SomaDeVagasPvsByTemporada = (int)Turma::getSomaVagasPvsByDescTemporada($desctemporada);
 	
 	$page = new PageAdmin();
 
@@ -108,12 +120,97 @@ $app->get("/admin/insc/:idtemporada", function($idtemporada) {
 		"temporada"=>$desctemporada,
 		"insc"=>$pagination['data'],
 		"total"=>$pagination['total'],
+		"totalmatriculados"=>$totalinscmatriculadastemporada[0]['count(*)'],
+		"somadevagas"=>$SomaDeVagasByTemporada,
+		"somadevagaspcd"=>$SomaDeVagasPcdByTemporada,
+		"somadevagaslaudo"=>$SomaDeVagasLaudoByTemporada,
+		"somadevagaspvs"=>$SomaDeVagasPvsByTemporada,
 		"search"=>$search,
 		"pages"=>$pages,
 		"idtemporada"=>$idtemporada,
+		"locais"=>$locais,
 		"error"=>User::getError()
 	));
 });
+
+	$app->get("/admin/insc-local/:idtemporada/:idlocal", function($idtemporada, $idlocal) {
+
+		User::verifyLogin();
+		// na linha abaixo retorna um array com todos os dados do usuário
+
+		$search = (isset($_GET['search'])) ? $_GET['search'] : "";
+
+		$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
+
+		if ($search != '') {
+
+			$pagination = Insc::getPageSearchInscTemporadaLocal($search, $page, $idtemporada, $idlocal);
+
+
+		} else {
+
+			$pagination = Insc::getPageInscTemporadaLocal($page, $itemsPerPage = 10, $idtemporada, $idlocal);
+
+		}
+
+		$locais = Local::listAll();
+
+		$pages = [];
+
+		for ($x = 0; $x < $pagination['pages']; $x++)
+		{
+
+			array_push($pages, [
+				'href'=>"/admin/insc-local/".$idtemporada."/".$idlocal."?".http_build_query([
+				'page'=>$x+1,
+				'search'=>$search,
+				'idtemporada'=>$idtemporada,
+				'locais'=>$locais,
+				]),
+				'text'=>$x+1
+			]);
+		}
+
+		$temporada = new Temporada();
+		$local = new Local();
+
+		$temporada->get((int)$idtemporada);
+		$local->get((int)$idlocal);
+
+		$insc = new Insc();
+		$totalinscmatriculadaslocal = $insc->GetInscMatriculadasTemporadaLocal($idtemporada, $idlocal);
+
+		//var_dump($totalinscmatriculadaslocal[0]['count(*)']);
+
+		$desctemporada = $temporada->getdesctemporada();
+		$apelidolocal = $local->getapelidolocal();
+
+		$SomaDeVagasByLocalTemporada = (int)Turma::getSomaVagasByLocalDescTemporada($idlocal, $desctemporada);
+		$SomaDeVagasPcdByLocalTemporada = (int)Turma::getSomaVagasPcdByLocalDescTemporada($idlocal, $desctemporada);	
+		$SomaDeVagasLaudoByLocalTemporada = (int)Turma::getSomaVagasLaudoByLocalDescTemporada($idlocal, $desctemporada);
+		$SomaDeVagasPvsByLocalTemporada = (int)Turma::getSomaVagasPvsByLocalDescTemporada($idlocal, $desctemporada);
+		
+		$page = new PageAdmin();
+
+		// envia para a página o array retornado pelo listAll
+		$page->setTpl("insc-temporada-local", array( // aqui temos um array com muitos arrays
+			"temporada"=>$desctemporada,
+			"local"=>$apelidolocal,
+			"idlocal"=>$idlocal,
+			"insc"=>$pagination['data'],
+			"total"=>$pagination['total'],
+			"totalmatriculados"=>$totalinscmatriculadaslocal[0]['count(*)'],
+			"somadevagas"=>$SomaDeVagasByLocalTemporada,
+			"somadevagaspcd"=>$SomaDeVagasPcdByLocalTemporada,
+			"somadevagaslaudo"=>$SomaDeVagasLaudoByLocalTemporada,
+			"somadevagaspvs"=>$SomaDeVagasPvsByLocalTemporada,
+			"search"=>$search,
+			"pages"=>$pages,
+			"idtemporada"=>$idtemporada,
+			"locais"=>$locais,
+			"error"=>User::getError()
+		));
+	});
 
 $app->get("/admin/insc-pcd/:idtemporada", function($idtemporada) {
 
@@ -155,16 +252,26 @@ $app->get("/admin/insc-pcd/:idtemporada", function($idtemporada) {
 
 	$temporada->get((int)$idtemporada);
 
+	$insc = new Insc();
+
+	//$totalinscmatriculadastemporada = $insc->GetInscMatriculadasTemporada($idtemporada);
+	$totalinscmatriculadastemporada = Insc::GetInscPcdMatriculadasTemporada($idtemporada);
+
 	$desctemporada = $temporada->getdesctemporada();
 
+	//$SomaDeVagasByTemporada = new Turma();
+
+	$SomaDeVagasPcdByTemporada = (int)Turma::getSomaVagasPcdByDescTemporada($desctemporada);
 	
 	$page = new PageAdmin();
 
 	// envia para a página o array retornado pelo listAll
-	$page->setTpl("insc-temporada", array( // aqui temos um array com muitos arrays
+	$page->setTpl("insc-temporada-pcd", array( // aqui temos um array com muitos arrays
 		"temporada"=>$desctemporada,
 		"insc"=>$pagination['data'],
 		"total"=>$pagination['total'],
+		"totalmatriculados"=>$totalinscmatriculadastemporada[0]['count(*)'],
+		"somadevagaspcd"=>$SomaDeVagasPcdByTemporada,
 		"search"=>$search,
 		"pages"=>$pages,
 		"idtemporada"=>$idtemporada,
@@ -444,7 +551,7 @@ $app->get("/admin/insc/pessoa/:idpess", function($idpess){
 
 */
 
-$app->get("/admin/insc/pessoa/:idepess", function($idpess){
+$app->get("/admin/insc/pessoa/:idepess/:numcpf", function($idpess, $numcpf){
 
 	User::verifyLogin();
 
@@ -452,7 +559,8 @@ $app->get("/admin/insc/pessoa/:idepess", function($idpess){
 
 	$pessoa->get((int)$idpess);
 
-	$inscricoes = $pessoa->getInsc();
+	//$inscricoes = $pessoa->getInsc();
+	$inscricoes = $pessoa->getInscNumCpf($numcpf);
 
     /*
 	if(!$inscricoes){
@@ -520,7 +628,33 @@ $app->get("/admin/insc-turma-temporada/:idturma/:idtemporada/user/:iduser", func
 	$insc->getInscByTurmaTemporada($idturma, $idtemporada);
 	$inscPcd->getInscByTurmaTemporadaPcd($idturma, $idtemporada);
 	$inscPlm->getInscByTurmaTemporadaPlm($idturma, $idtemporada);
-	$inscPvs->getInscByTurmaTemporadaPvs($idturma, $idtemporada); 
+	$inscPvs->getInscByTurmaTemporadaPvs($idturma, $idtemporada);
+
+	/*
+	$idinscInscTodas = Insc::getIdinscInscByTurmaTemporadaTodas($idturma, $idtemporada); 
+
+	//$idinscInscTodas = Insc::getIdinscInscByTemporadaTodas($idtemporada); 
+
+	//var_dump(count($idinscInscTodas));
+	//exit();
+
+	for ($x = 0; $x < count($idinscInscTodas); $x++){
+
+		$idinsc = $idinscInscTodas[''.$x.'']['idinsc'];
+			$idturma = $idinscInscTodas[''.$x.'']['idturma'];
+			$idtemporada = $idinscInscTodas[''.$x.'']['idtemporada'];
+			$numcpf = $idinscInscTodas[''.$x.'']['numcpf'];
+
+			//var_dump($numcpf);
+	        //exit();
+			
+			//Insc::updateCpfByIdinscIdturmaIdtemporada($idinsc, $idturma, $idtemporada);
+			//Insc::updateIdpessoaByIdinscIdturmaIdtemporada($idinsc, $idturma, $idtemporada);
+			Insc::updateIdpessoaByIdinscIdturmaIdtemporadaComCpf($idinsc, $idturma, $idtemporada, $numcpf);
+		    
+	}
+	*/
+	
 	
 	$vagas = (int)$turma->getvagas();
 
@@ -612,6 +746,8 @@ $app->get("/admin/insc/:idinsc/:iduserprof/:idturma/statusMatriculada", function
 
 	$turma->get((int)$idturma);
 
+	$idturmastatus = $temporada->getStatusTurmaTemporada($idturma, $idtemporada);
+
 	if($idturmastatus == 6){
 		echo "<script>alert('Você precisa alterar o status da turma, nesta temporada, para ( 3 - Inscrições abertas ) e assim alterar o status da inscrição.');";
 		echo "javascript:history.go(-1)</script>";	
@@ -620,6 +756,16 @@ $app->get("/admin/insc/:idinsc/:iduserprof/:idturma/statusMatriculada", function
 	
 	$dtInicmatricula = $insc->getdtinicmatricula();
 	$hoje = date('Y-m-d H:i:s');
+
+	$temporada->get((int)$idtemporada);
+	$desctemporada = (int)$temporada->getdesctemporada();
+	$desctemporadaAtual = (int)date('Y');
+
+	if($desctemporada < $desctemporadaAtual){
+		echo "<script>alert('Não é permitido fazer a matrícua desta inscrição. Turma e temporada encerradas!!');";
+        echo "javascript:history.go(-1)</script>";	
+        exit;	
+	}
 
 	if($hoje < $dtInicmatricula){
 	    
@@ -694,6 +840,15 @@ $app->get("/admin/insc/:idinsc/:iduserprof/:idturma/statusAguardandoMatricula", 
 	$desctemporada = $insc->getdesctemporada();
 	$iduser = (int)$iduserprof;
 	$turma->get((int)$idturma);
+
+	$temporada->get((int)$idtemporada);
+	$desctemporadaAtual = (int)date('Y');
+
+	if($desctemporada < $desctemporadaAtual){
+		echo "<script>alert('Não é permitido altrar o stautus desta inscrição. Turma e temporada encerradas!!');";
+        echo "javascript:history.go(-1)</script>";	
+        exit;	
+	}
 	
 	$idturmastatus = $temporada->getStatusTurmaTemporada($idturma, $idtemporada);
 	
@@ -787,10 +942,110 @@ $app->get("/admin/insc/:idinsc/:idturma/:idpess/statusDesistente", function($idi
 	$idtemporada = $insc->getidtemporada();
 	$idpess = (int)$idpess;
 
+	$temporada->get((int)$idtemporada);
+	$desctemporada = (int)$temporada->getdesctemporada();
+	$desctemporadaAtual = (int)date('Y');
+
+	if($desctemporada != $desctemporadaAtual){
+		echo "<script>alert('Não é permitido marcar como desistente uma inscrição que não seja da temporada atual.');";
+        echo "javascript:history.go(-1)</script>";	
+        exit;	
+	}	
+
 	$insc->alteraStatusInscricaoDesistente($idinsc, $idturma, $idtemporada);
     echo '<script>javascript:history.go(-1)</script>';
 	//header("Location: /admin/profile/insc/".$idinsc."/".$idpess."/".$idturma."");
 	//exit();
+
+});
+
+$app->get("/admin/insc/:idinsc/:idturma/:idpess/statusSuspensaDesistente", function($idinsc, $idturma, $idpess){
+
+	$insc = new Insc();
+	$turma = new Turma();
+	$temporada = new Temporada();
+	$user = new User();
+	$pessoa = new Pessoa();
+	
+	$insc->get((int)$idinsc);
+
+	$idturma = (int)$idturma;
+	$idtemporada = $insc->getidtemporada();
+	$idpess = (int)$idpess;
+
+	$temporada->get((int)$idtemporada);
+	$desctemporada = (int)$temporada->getdesctemporada();
+	$desctemporadaAtual = (int)date('Y');
+
+	if($desctemporada != $desctemporadaAtual){
+		echo "<script>alert('Não é permitido marcar como desistente uma inscrição que não seja da temporada atual.');";
+        echo "javascript:history.go(-1)</script>";	
+        exit;	
+	}	
+
+	$insc->alteraStatusInscricaoSuspensaParaDesistente($idinsc, $idturma, $idtemporada);
+	
+	echo '<script>javascript:history.go(-1)</script>';
+
+});
+
+$app->get("/admin/insc/:idinsc/:idturma/:idpess/statusSuspender", function($idinsc, $idturma, $idpess){
+
+	$insc = new Insc();
+	$turma = new Turma();
+	$temporada = new Temporada();
+	$user = new User();
+	$pessoa = new Pessoa();
+	
+	$insc->get((int)$idinsc);
+
+	$idturma = (int)$idturma;
+	$idtemporada = $insc->getidtemporada();
+	$idpess = (int)$idpess;
+
+	$temporada->get((int)$idtemporada);
+	$desctemporada = (int)$temporada->getdesctemporada();
+	$desctemporadaAtual = (int)date('Y');
+
+	if($desctemporada != $desctemporadaAtual){
+        echo "Não é permitido suspender uma inscrição que não seja da temporada atual!";
+        exit;        	
+	}	
+
+	//Atualizar arquivos do admin e do estagiário com a função suspender matricula e rematricular
+
+	$insc->alteraStatusInscricaoSuspender($idinsc, $idturma, $idtemporada);
+	
+	echo 'Inscrição '.$idinsc.' suspensa! Atualize a lista.';
+
+});
+
+$app->get("/admin/insc/:idinsc/:idturma/:idpess/statusRematricular", function($idinsc, $idturma, $idpess){
+
+	$insc = new Insc();
+	$turma = new Turma();
+	$temporada = new Temporada();
+	$user = new User();
+	$pessoa = new Pessoa();
+	
+	$insc->get((int)$idinsc);
+
+	$idturma = (int)$idturma;
+	$idtemporada = $insc->getidtemporada();
+	$idpess = (int)$idpess;
+
+	$temporada->get((int)$idtemporada);
+	$desctemporada = (int)$temporada->getdesctemporada();
+	$desctemporadaAtual = (int)date('Y');
+
+	if($desctemporada != $desctemporadaAtual){
+        echo "Não é permitido rematricular uma inscrição que não seja da temporada atual!";
+        exit;        	
+	}	
+
+	$insc->alteraStatusInscricaoRematricular($idinsc, $idturma, $idtemporada);
+	
+	echo '['.$idinsc.']Rematricula efetuada com sucesso! Atualize a lista.';
 
 });
 
@@ -1051,13 +1306,18 @@ $app->get("/admin/calendario-lista-presenca/:idtemporada/:idturma", function($id
 	]);	
 });
 
-$app->get("/admin/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/:data/:diasemana", function($idtemporada, $idturma, $data, $diasemana) {
+$app->get("/admin/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/:data/:diasemana/:iduser", function($idtemporada, $idturma, $data, $diasemana, $iduser) {
 
 	User::verifyLogin(false);
 	$turma = new Turma();
 	$turma->get((int)$idturma);
 	$insc = new Insc();
 	$temporada = new Temporada;
+
+	$mesRetrasado = date('m', strtotime('-2 month'));
+
+	Insc::deleteAusencia_aulaMesRetrasado($mesRetrasado);
+
 	$temporada->get((int)$idtemporada);
 	$desctemporada = $temporada->getdesctemporada();	
 
@@ -1069,6 +1329,24 @@ $app->get("/admin/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/:data
 
 		$insc = Insc::getInscByTurmaTemporadaMatriculados($idturma, $idtemporada);	
 	}	
+
+	if( Insc::getInscByTurmaTemporadaMatriculadosSuspensoDataListaChamada($idturma, $idtemporada, $data) != NULL ){
+
+		$inscMatrSusp = Insc::getInscByTurmaTemporadaMatriculadosSuspensoDataListaChamada($idturma, $idtemporada, $data);
+
+	}else{
+
+		$inscMatrSusp = Insc::getInscByTurmaTemporadaMatriculadosSuspenso($idturma, $idtemporada);	
+	}
+
+	if( Insc::getInscByTurmaTemporadaExcluidoFaltaDataListaChamada($idturma, $idtemporada, $data) != NULL ){
+
+		$inscExclFalta = Insc::getInscByTurmaTemporadaExcluidoFaltaDataListaChamada($idturma, $idtemporada, $data);
+
+	}else{
+
+		$inscExclFalta = Insc::getInscByTurmaTemporadaExcluidoFalta($idturma, $idtemporada);	
+	}
 
 	$statuspresenca = 4;
 
@@ -1085,6 +1363,20 @@ $app->get("/admin/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/:data
 		}	
 
 		$insc = Insc::getInscByTurmaTemporadaMatriculadosDataListaChamada($idturma, $idtemporada, $data);
+
+		for($x = 0; $x < count($inscMatrSusp); $x++){				
+    		$idinsc = (int)$inscMatrSusp[$x]['idinsc'];
+    		Insc::save_presenca($idinsc, $statuspresenca, $data);
+    	}    	
+
+    	$inscMatrSusp = Insc::getInscByTurmaTemporadaMatriculadosSuspensoDataListaChamada($idturma, $idtemporada, $data);
+
+    	for($x = 0; $x < count($inscExclFalta); $x++){				
+    		$idinsc = (int)$inscExclFalta[$x]['idinsc'];
+    		Insc::save_presenca($idinsc, $statuspresenca, $data);
+    	}    	
+
+    	$inscExclFalta = Insc::getInscByTurmaTemporadaExcluidoFaltaDataListaChamada($idturma, $idtemporada, $data);
 
 		$mes = date('m', strtotime($data));
 		$dias_do_mes = new Insc();
@@ -1147,12 +1439,25 @@ $app->get("/admin/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/:data
 			$nomediasemana = 'Domingo';
 		}
 
+		for ($i=0; $i < count($insc) ; $i++) { 
+			//$insc[$i]['hoje_mes_dia'] = date('m-d');
+
+			$insc[$i]['data_mes_dia'] = substr($data, 5);
+
+			$mesDiaNiver = $insc[$i]['dtnasc'];
+
+			$insc[$i]['mes_dia_niver'] = substr($mesDiaNiver, 5);
+		}
+
 		$page->setTpl("insc-turma-temporada-fazer-chamada", [
+			'iduser'=>$iduser,
 			'turma'=>$turma->getValues(),
 			'data'=>$data,
 			'idtemporada'=>$idtemporada,
 			'desctemporada'=>$desctemporada,
 			'insc'=>$insc,
+			'inscMatrSusp'=>$inscMatrSusp,
+    		'inscExclFalta'=>$inscExclFalta,
 			'diasemana'=>$diasemana,
 			'nomediasemana'=>$nomediasemana,
 			'dias_do_mes'=>$dias_do_mes,
@@ -1224,13 +1529,26 @@ $app->get("/admin/insc-turma-temporada-fazer-chamada/:idtemporada/:idturma/:data
 		if($diasemana == '6'){
 			$nomediasemana = 'Domingo';
 		}
+
+		for ($i=0; $i < count($insc) ; $i++) { 
+			//$insc[$i]['hoje_mes_dia'] = date('m-d');
+
+			$insc[$i]['data_mes_dia'] = substr($data, 5);
+
+			$mesDiaNiver = $insc[$i]['dtnasc'];
+
+			$insc[$i]['mes_dia_niver'] = substr($mesDiaNiver, 5);
+		}
 	
 		$page->setTpl("insc-turma-temporada-fazer-chamada", [
+			'iduser'=>$iduser,
 			'turma'=>$turma->getValues(),
 			'data'=>$data,
 			'idtemporada'=>$idtemporada,
 			'desctemporada'=>$desctemporada,
 			'insc'=>$insc,
+			'inscMatrSusp'=>$inscMatrSusp,
+    		'inscExclFalta'=>$inscExclFalta,
 			'diasemana'=>$diasemana,
 			'nomediasemana'=>$nomediasemana,
 			'dias_do_mes'=>$dias_do_mes,
@@ -1250,7 +1568,11 @@ $app->get("/admin/insc-turma-temporada-mes-chamada-atualizada/:idtemporada/:idtu
 	$temporada = new Temporada;
 	$temporada->get((int)$idtemporada);
 	$desctemporada = $temporada->getdesctemporada();	
-	$insc = Insc::getInscByTurmaTemporadaMatriculados($idturma, $idtemporada);		
+	//$insc = Insc::getInscByTurmaTemporadaMatriculados($idturma, $idtemporada);
+	//$insc = Insc::getInscByTurmaTemporadaMatriculadosDesistentes($idturma, $idtemporada);	
+	//$insc = Insc::getInscByTurmaTemporadaMatriculadosDesistentesSuspensas($idturma, $idtemporada);	
+	$insc = Insc::getInscByTurmaTemporadaMatriculadosDesistentesSuspensasExcPorFalta($idturma, $idtemporada);
+	
 	$page = new PageAdmin([
 		'header'=>false,
 		'footer'=>false
@@ -1437,6 +1759,21 @@ $app->get("/admin/insc-turma-temporada-presente/:idtemporada/:idturma/:data/:idi
 	$insc = new Insc();	
 	$insc->update_presente($idinsc, $data);
 
+	/*
+	if(Insc::existeAusenciaData($idinsc, $data) > 0){
+
+		$is_ausencia_aula = 1;
+
+		Insc::update_ausencia_aula($idinsc, $data, $is_ausencia_aula);
+
+	}else{
+		$is_ausencia_aula = 1;
+
+		Insc::save_ausencia($idinsc, $data, $is_ausencia_aula);
+
+	}
+	*/
+
 	//$fallback = "/prof/insc-turma-temporada-fazer-chamada/".$idtemporada."/".$idturma."/".$data."";
 
 	//$anterior = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $fallback;
@@ -1452,6 +1789,62 @@ $app->get("/admin/insc-turma-temporada-ausente/:idtemporada/:idturma/:data/:idin
 	//User::checkLoginProf();
 	$insc = new Insc();
 	$insc->update_ausente($idinsc, $data);
+
+	/*
+	if(Insc::existeAusenciaData($idinsc, $data) > 0){
+
+		$is_ausencia_aula = 0;
+
+		Insc::update_ausencia_aula($idinsc, $data, $is_ausencia_aula);
+
+	}else{
+		$is_ausencia_aula = 0;
+
+		Insc::save_ausencia($idinsc, $data, $is_ausencia_aula);
+
+	}
+	*/	
+
+	$isAusenciaAula = Insc::selectIsStatuspresencaAusente($idinsc);
+
+	for ($i=0; $i < count($isAusenciaAula) ; $i++) { 
+		
+		if($isAusenciaAula[$i]['statuspresenca'] == 0){
+
+			$AusenciaSim[] = array($isAusenciaAula[$i]['statuspresenca']);
+
+		}
+		
+	}
+
+	$countAusenciaSim = (int)count($AusenciaSim);
+
+	if($countAusenciaSim === 4){
+		
+		$insc->alteraStatusInscricaoExcluirPorFalta($idinsc, $idturma, $idtemporada);
+	}
+
+	/*
+	$isAusenciaAula = Insc::selectIsAusenciaAula($idinsc);
+
+	for ($i=0; $i < count($isAusenciaAula) ; $i++) { 
+		
+		if($isAusenciaAula[$i]['is_ausencia_aula'] == 0){
+
+			$AusenciaSim[] = array($isAusenciaAula[$i]['is_ausencia_aula']);
+
+		}
+		
+	}
+
+	$countAusenciaSim = (int)count($AusenciaSim);
+
+	if($countAusenciaSim === 4){
+
+		$insc->alteraStatusInscricaoExcluirPorFalta($idinsc, $idturma, $idtemporada);
+		
+	}
+	*/
 
 	echo '<script>javascript:history.go(-1)</script>';
 
@@ -1587,6 +1980,7 @@ $app->post("/admin/insc/altera/turma", function(){
 	    	$idinscorigem = $insc['idinsc'];
 	    	$idinscstatus = $insc['idinscstatus'];
 	    	$idcart = $insc['idcart'];
+	    	$idpessoa = $insc['idpessoa'];
 	    	$numsorte = $insc['numsorte'];
 	    	$laudo = $insc['laudo'];
 	    	$inscpcd = $insc['inscpcd'];
@@ -1597,6 +1991,7 @@ $app->post("/admin/insc/altera/turma", function(){
 	    	$idmodalorigem = $insc['idmodal'];
 	    	$dtinscorigem = $insc['dtinsc'];
 	    	$dtmatricorigem = $insc['dtmatric'];
+	    	$numcpf = (isset($insc['numcpf'])) ? $insc['numcpf'] : '';
 
 	    	$inscPresencaExiste = Insc::getPresencaExisteByIdinsc($idinscorigem);
 
@@ -1641,7 +2036,9 @@ $app->post("/admin/insc/altera/turma", function(){
 				'inscpcd'=>$inscpcd,
 				'inscpvs'=>$inscpvs,
 				'idturma'=>$idturmadestino,
-				'idtemporada'=>$idtemporadadestino	
+				'idtemporada'=>$idtemporadadestino,
+				'numcpf'=>$numcpf,	
+				'idpessoa'=>$idpessoa
 			]);	
 
 			$insc->save();	
@@ -1687,5 +2084,84 @@ $app->get("/admin/insc/delete/:idinsc/:idturma/:idtemporada/:idcart", function($
 	 echo "javascript:history.go(-1)</script>";
 	
 });	
+
+$app->get("/admin/insc-pessoas-temporada-pesquisa", function() {
+
+	User::verifyLogin();
+
+	$modalidade = Modalidade::listAll();
+	$temporada = Temporada::listAll();
+
+	$page = new PageAdmin();
+
+	$page->setTpl("insc-pessoas-temporada-pesquisa", [
+		'modalidade'=>$modalidade,
+		'temporada'=>$temporada
+	]);
+});
+
+$app->post("/admin/lista-pessoas-pesquisa", function() {
+
+	User::verifyLogin();
+
+	$initidade = $_POST['idadeinicial'];
+	$fimidade = $_POST['idadefinal'];
+	$descmodal = $_POST['descmodal'];
+	$desctemporada = $_POST['desctemporada'];
+
+	if (!isset($_POST['idadeinicial']) || $_POST['idadeinicial'] == '') {
+		echo "<script>alert('informe a idade inicial');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}
+
+	if (!isset($_POST['idadefinal']) || $_POST['idadefinal'] == '') {
+		echo "<script>alert('Informe a idade final');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}
+
+	if (!isset($_POST['descmodal']) || $_POST['descmodal'] == '') {
+		echo "<script>alert('Informe a modalidade');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}
+
+	if (!isset($_POST['desctemporada']) || $_POST['desctemporada'] == '') {
+		echo "<script>alert('Informe a temporada');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}
+
+	if ($initidade > $fimidade) {
+		echo "<script>alert('A idade inicial não pode ser maior do que a idade final');";
+		echo "javascript:history.go(-1)</script>";
+		exit();
+	}
+	
+	$insc = new Insc();
+
+	$listapessoas = Insc::getInscByTurmaTemporadaModalidadeMatriculados($desctemporada, $descmodal, $initidade, $fimidade);
+
+	if(!isset($listapessoas) || $listapessoas == NULL){
+		echo "<script>alert('Não há pessoas com relacionadas com os dados informados');";
+		echo "javascript:history.go(-1)</script>";
+	}else{
+
+		$page = new PageAdmin([
+		"header"=>false,
+		"footer"=>false
+		]);
+
+		$page->setTpl("listapessoaspesquisa", [
+		'listapessoas'=>$listapessoas,
+		'idadeinicial'=>$initidade,
+		'idadefinal'=>$fimidade,
+		'descmodal'=>$descmodal,
+		'desctemporada'=>$desctemporada
+		]);
+	}
+	
+});
 
 ?>

@@ -60,6 +60,81 @@
 				':idtemporada'=>$idtemporada 
 			]);
 		}
+
+		public static function listAllPorOrdemHorarioTurmaTemporada($idtemporada)
+		{
+			$sql = new Sql();
+
+			return $sql->select("SELECT * 
+				FROM tb_turmatemporada a 
+				INNER JOIN tb_turma i            
+				using(idturma)
+				INNER JOIN tb_users b
+				using(iduser)
+				INNER JOIN tb_atividade c
+				using(idativ)
+				INNER JOIN tb_espaco d
+				using(idespaco)
+				INNER JOIN tb_local e
+				using(idlocal)
+				-- INNER JOIN tb_turmastatus f
+				-- using(idturmastatus)
+				INNER JOIN tb_horario g
+				using(idhorario)
+				INNER JOIN tb_fxetaria h
+				using(idfxetaria)	            
+	            INNER JOIN tb_temporada j           
+				using(idtemporada)   
+	            INNER JOIN tb_statustemporada k          
+				using(idstatustemporada)
+				INNER JOIN tb_modalidade l
+				using(idmodal)
+	            INNER JOIN tb_persons m
+				using(idperson)            
+				WHERE idtemporada = :idtemporada
+				ORDER BY g.horainicio", [
+				':idtemporada'=>$idtemporada 
+			]);
+		}
+
+		public static function listAllPorOrdemHorarioEspacoTurmaTemporada($idtemporada, $idespaco)
+		{
+			$sql = new Sql();
+
+			return $sql->select("SELECT * 
+				FROM tb_turmatemporada a 
+				INNER JOIN tb_turma i            
+				using(idturma)
+				INNER JOIN tb_users b
+				using(iduser)
+				INNER JOIN tb_atividade c
+				using(idativ)
+				INNER JOIN tb_espaco d
+				using(idespaco)
+				INNER JOIN tb_local e
+				using(idlocal)
+				INNER JOIN tb_turmastatus f
+				using(idturmastatus)
+				INNER JOIN tb_horario g
+				using(idhorario)
+				INNER JOIN tb_fxetaria h
+				using(idfxetaria)	            
+	            INNER JOIN tb_temporada j           
+				using(idtemporada)   
+	            INNER JOIN tb_statustemporada k          
+				using(idstatustemporada)
+				INNER JOIN tb_modalidade l
+				using(idmodal)
+	            INNER JOIN tb_persons m
+				using(idperson)            
+				WHERE idtemporada = :idtemporada
+				AND d.idespaco = :idespaco
+				AND (f.idturmastatus = 3 OR f.idturmastatus = 6)
+				ORDER BY g.horainicio", [
+				':idtemporada'=>$idtemporada,
+				':idespaco'=>$idespaco 
+			]);
+		}
 		
 		public static function listAllTurmaTemporadaControleFrequencia($idtemporada)
 		{
@@ -885,7 +960,7 @@
 			}
 		}
 
-		public function temporadaStatusIniciadaExiste(){
+		public static function temporadaStatusIniciadaExiste(){
 
 			$idstatustemporadaMatriculasIniciadas = StatusTemporada::MATRICULAS_INICIADAS;
 			$idstatustemporadaMatriculasEncerradas = StatusTemporada::MATRICULAS_ENCERRADAS;
@@ -1019,6 +1094,7 @@
 
 			//Temporada::updateFile();
 			//Temporada::updateFileAdminTemporada();
+			Temporada::updateFileAdminGradeTemporada();
 			Temporada::updateFileEventoTemporada();
 			Temporada::updateFileAgendaMinhaTemporada();
 			Temporada::updateFileAdminInscricoesVazio();	
@@ -1070,6 +1146,7 @@
 
 			//Temporada::updateFile();
 			//Temporada::updateFileAdminTemporada();
+			Temporada::updateFileAdminGradeTemporada();
 			Temporada::updateFileEventoTemporada();
 			Temporada::updateFileAgendaMinhaTemporada();
 			Temporada::updateFileAdminInscricoesVazio();
@@ -1138,9 +1215,9 @@
 								   		<ul class="treeview-menu">
 								   			<li class="treeview">
 	            								
-													<a href="/admin/insc/'.$row['idtemporada'].'">
+													<a href="/admin/insc-local/'.$row['idtemporada'].'/6">
 									   					<i class="fa fa-link"></i> 
-									   					Todas
+									   					Por locais
 									   				</a>								   		
 												</li>
 	            								<li class="treeview">
@@ -1221,6 +1298,35 @@
 
 			}
 			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."turma-temporada-menu-hoje.html", implode('', $html));
+		}
+
+		public static function updateFileAdminGradeTemporada()	
+		{
+			$temporada = Temporada::listAll();
+
+			$html = [];
+
+			foreach ($temporada as $row) {
+				array_push($html, '<li class="treeview">
+										<a href="/admin">
+								   			<i class="fa fa-link"></i> 
+								   			Grades/ Temporada '.$row['desctemporada'].'
+								   		</a>
+
+									   		<ul class="treeview-menu">
+	            								<li class="treeview">
+	            								
+													<a href="/admin/locaisgradehorario/'.$row['idtemporada'].'">
+									   					<i class="fa fa-link"></i> 
+									   					Grade Locais
+									   				</a>								   		
+												</li>
+			          						</ul>								   		
+									</li>'
+								);
+
+			}
+			file_put_contents($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."grade-temporada-menu.html", implode('', $html));
 		}
 
 		public static function updateFileAdminTurmaTemporada()	
@@ -1707,7 +1813,7 @@
 			return $results;			
 		}
 
-		public function updateNumMatriculadosMais($idturma, $idtemporada){
+		public static function updateNumMatriculadosMais($idturma, $idtemporada){
 
 			$sql = new Sql();
 			
@@ -1717,7 +1823,7 @@
 			));
 		}
 		
-		public function updateNumMatriculadosMenos($idturma, $idtemporada){
+		public static function updateNumMatriculadosMenos($idturma, $idtemporada){
 
 			$sql = new Sql();
 			
@@ -1727,7 +1833,7 @@
 			));
 		}
 
-		public function updateNumInscritosMais($idturma, $idtemporada){
+		public static function updateNumInscritosMais($idturma, $idtemporada){
 
 			$sql = new Sql();
 			
@@ -1791,7 +1897,7 @@
 		}
 		
 
-		public function removeTurma(Turma $turma)
+		public static function removeTurma(Turma $turma)
 		{
 			$sql = new Sql();
 
@@ -1905,7 +2011,7 @@
 
 		}
 		
-		public function selecionaTemporadaMatriEncerrada(){
+		public static function selecionaTemporadaMatriEncerrada(){
 
 			$idstatustemporada = 5;
 
@@ -1991,6 +2097,91 @@
 			}else{
 				return 0;
 			}
+		}
+
+		public static function listAllEspacoTurmaTemporada($idtemporada, $idlocal)
+		{
+			$sql = new Sql();
+
+			return $sql->select("
+				SELECT distinct idespaco, nomeespaco, apelidolocal
+				FROM tb_turmatemporada a 
+				INNER JOIN tb_turma i            
+				using(idturma)
+				INNER JOIN tb_users b
+				using(iduser)
+				INNER JOIN tb_atividade c
+				using(idativ)
+				INNER JOIN tb_espaco d
+				using(idespaco)
+				INNER JOIN tb_local e
+				using(idlocal)
+				WHERE idtemporada = :idtemporada
+                AND idlocal = :idlocal
+				", [
+				':idtemporada'=>$idtemporada,
+				':idlocal'=>$idlocal 
+			]);
+		}
+
+		public static function AlteraDataInicioInsc($idturma, $idtemporada, $novadata)
+		{
+			$sql = new Sql();			
+			$sql->query("UPDATE tb_turmatemporada SET data_insc_inicial = :novadata WHERE idturma = :idturma AND idtemporada = :idtemporada", [
+				':idturma'=>$idturma,
+				':idtemporada'=>$idtemporada,
+				':novadata'=>$novadata
+			]);
+		}
+
+		public static function AlteraDataFimInsc($idturma, $idtemporada, $novadata)
+		{
+			$sql = new Sql();			
+			$sql->query("UPDATE tb_turmatemporada SET data_insc_final = :novadata WHERE idturma = :idturma AND idtemporada = :idtemporada", [
+				':idturma'=>$idturma,
+				':idtemporada'=>$idtemporada,
+				':novadata'=>$novadata
+			]);
+		}
+
+		public static function AlteraDataInicioMatr($idturma, $idtemporada, $novadata)
+		{
+			$sql = new Sql();			
+			$sql->query("UPDATE tb_turmatemporada SET data_matr_inicial = :novadata WHERE idturma = :idturma AND idtemporada = :idtemporada", [
+				':idturma'=>$idturma,
+				':idtemporada'=>$idtemporada,
+				':novadata'=>$novadata
+			]);
+		}
+
+		public static function AlteraDataFimMatr($idturma, $idtemporada, $novadata)
+		{
+			$sql = new Sql();			
+			$sql->query("UPDATE tb_turmatemporada SET data_matr_final = :novadata WHERE idturma = :idturma AND idtemporada = :idtemporada", [
+				':idturma'=>$idturma,
+				':idtemporada'=>$idtemporada,
+				':novadata'=>$novadata
+			]);
+		}
+
+		public static function AlteraDataInicioAula($idturma, $idtemporada, $novadata)
+		{
+			$sql = new Sql();			
+			$sql->query("UPDATE tb_turmatemporada SET data_aula_inicial = :novadata WHERE idturma = :idturma AND idtemporada = :idtemporada", [
+				':idturma'=>$idturma,
+				':idtemporada'=>$idtemporada,
+				':novadata'=>$novadata
+			]);
+		}
+
+		public static function AlteraDataFimAula($idturma, $idtemporada, $novadata)
+		{
+			$sql = new Sql();			
+			$sql->query("UPDATE tb_turmatemporada SET data_aula_final = :novadata WHERE idturma = :idturma AND idtemporada = :idtemporada", [
+				':idturma'=>$idturma,
+				':idtemporada'=>$idtemporada,
+				':novadata'=>$novadata
+			]);
 		}
 
 		public static function setError($msg)

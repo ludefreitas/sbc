@@ -67,7 +67,7 @@
           <div class="col-md-2" style="border: solid 1px black;">
              <span style="color: green;">&nbsp;Inscrições</span>: <?php echo todosInscricoesValidas(2022); ?>            
           </div>
-           <div class="col-md-2" style="border: solid 1px black;">&nbsp;Matriculados: <?php echo MatriculadosDesctemporada(2022); ?></div>
+           <div class="col-md-2" style="border: solid 1px black;">&nbsp;Matriculados: <?php echo MatriculadosDesctemporada(2022, 4); ?></div>
           
         </div> 
         
@@ -86,73 +86,352 @@
         <div class="col-md-2" style="border: solid 1px black;">
           <span style="color: green;">&nbsp;Inscrições</span>: <?php echo todosInscricoesValidas(2023); ?>
           </div>
-           <div class="col-md-2" style="border: solid 1px black;">&nbsp;Matriculados: 0</div>
+           <div class="col-md-2" style="border: solid 1px black;">&nbsp;Matriculados: <?php echo MatriculadosDesctemporada(2023, 5); ?></div>
+          
+        </div>   
+        
+         <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Vagas / Inscrições / Matriculados 2023</div>
+          
+        </div>       
+        
+        
+        <div class="row">
+          
+          <div class="col-md-2" style="border: solid 1px black;">         
+          &nbsp;V a g a s :&nbsp; <?php echo pegaSomaVagasByDescTemporada(2024); ?>
+          </div>
+          
+        <div class="col-md-2" style="border: solid 1px black;">
+          <span style="color: green;">&nbsp;Inscrições</span>: <?php echo todosInscricoesValidas(2024); ?>
+          </div>
+           <div class="col-md-2" style="border: solid 1px black;">&nbsp;Matriculados: <?php echo MatriculadosDesctemporada(2024, 6); ?></div>
           
         </div>         
 
+
         <div class="row">
-          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Hidroginástica 2023</div>
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Hidroginástica 2024</div>
           
         </div>           
 
         <div class="row">
 
-          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s :&nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2023, 6); ?></div>
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s :&nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2024, 6); ?></div>
 
-          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2023, 6); ?></div>
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2024, 6); ?></div>
           
         </div>    
 
         <div class="row">
-          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Natação 2023</div>
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Natação 2024</div>
           
         </div>           
 
         <div class="row">
 
-          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2023, 14); ?></div>
-          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2023, 14); ?></div>
-          
-        </div>  
-        
-        <div class="row">
-          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Ginástica 2023</div>
-          
-        </div>           
-
-        <div class="row">
-
-          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2023, 5); ?></div>
-
-          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2023, 5); ?></div>
-          
-        </div>  
-
-        <div class="row">
-          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Pilates 2023</div>
-          
-        </div>           
-
-        <div class="row">
-
-          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2023, 24); ?></div>
-          
-          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2023, 24); ?></div>
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2024, 14); ?></div>
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2024, 14); ?></div>
           
         </div> 
 
         <div class="row">
-          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Alongamento 2023</div>
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Natação Iniciante 2024</div>
           
         </div>           
 
         <div class="row">
 
-          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp;<?php echo pegaSomaVagasByTurmaIdmodal(2023, 23); ?></div>
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2024, 56); ?></div>
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2024, 14); ?></div>
           
-          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2023, 23); ?></div>
+        </div> 
+
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Natação Intermediário 2024</div>
           
         </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2024, 57); ?></div>
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2024, 14); ?></div>
+          
+        </div>  
+
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Natação Avançado 2024</div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2024, 59); ?></div>
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2024, 14); ?></div>
+          
+        </div>   
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Ginástica 2024</div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2024, 5); ?></div>
+
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2024, 5); ?></div>
+          
+        </div>  
+
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Pilates 2024</div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2024, 24); ?></div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2024, 24); ?></div>
+          
+        </div> 
+
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Alongamento 2024</div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2024, 23); ?></div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2024, 23); ?></div>
+          
+        </div> 
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Futsal 2024</div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2024, 4); ?></div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2024, 4); ?></div>
+          
+        </div>   
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Voleibol 2024</div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2024, 7); ?></div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2024, 7); ?></div>
+          
+        </div>  
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Oficina 2024</div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2024, 16); ?></div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2024, 16); ?></div>
+          
+        </div> 
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Dança 2024</div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2024, 2); ?></div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2024, 2); ?></div>
+          
+        </div> 
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Yoga 2024</div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2024, 20); ?></div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2024, 20); ?></div>
+          
+        </div>  
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Aiki Do 2024</div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2024, 32); ?></div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2024, 32); ?></div>
+          
+        </div> 
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Tai Chi Chuan 2024</div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2024, 31); ?></div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2024, 31); ?></div>
+          
+        </div> 
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Basquetebol 2024</div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2024, 10); ?></div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2024, 10); ?></div>
+          
+        </div> 
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Canto 2024</div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2024, 22); ?></div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2024, 22); ?></div>
+          
+        </div>  
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Chi Kung 2024</div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2024, 29); ?></div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2024, 29); ?></div>
+          
+        </div> 
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Chi Kung ou Meditação 2024</div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2024, 34); ?></div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2024, 34); ?></div>
+          
+        </div> 
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Musculação / Academia 2024</div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2024, 26); ?></div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2024, 26); ?></div>
+          
+        </div>           
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Pilates ou Yoga 2024</div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2024, 33); ?></div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2024, 33); ?></div>
+          
+        </div>   
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Poliesportivo 2024</div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2024, 28); ?></div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2024, 28); ?></div>
+          
+        </div>        
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Recreação e Lazer 2024</div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2024, 21); ?></div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2024, 21); ?></div>
+          
+        </div>   
+        
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Yoga / Chi Kung / Meditalção 2024</div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2024, 36); ?></div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2024, 36); ?></div>
+          
+        </div>
+    
+        <div class="row">
+          <div class="col-md-6" style="border: solid 1px black; text-align: center; font-weight: bold; background-color: #ccc;">Yoga ou Meditação 2024</div>
+          
+        </div>           
+
+        <div class="row">
+
+          <div class="col-md-3" style="border: solid 1px black;"> &nbsp;V a g a s : &nbsp; <?php echo pegaSomaVagasByTurmaIdmodal(2024, 35); ?></div>
+          
+          <div class="col-md-3" style="border: solid 1px black;"><span style="color: green;">&nbsp;Inscrições</span>: <?php echo pegaInscTemporadaModalidade(2024, 35); ?></div>
+          
+        </div>           
+        
+        
                   
       </div>
 

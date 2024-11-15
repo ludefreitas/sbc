@@ -112,6 +112,22 @@ class Cart extends Model {
 		$this->setData($results[0]);
 
 	}
+
+	//nova function 17/07	
+	public function save2($sessionid)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("CALL sp_cart_save(:idcart, :dessessionid, :idpess)", [
+			':idcart'=>$this->getidcart(),
+			':dessessionid'=>$sessionid,
+			':idpess'=>$this->getidpess()
+		]);
+
+		$this->setData($results[0]);
+
+	}
 	/*
 	public function save()
 	{
@@ -274,7 +290,6 @@ class Cart extends Model {
 		]);
 
 		return Turma::checkList($rows);
-
 	}
 
 	public function getTurmaFullByIdturma($idturma)
@@ -289,7 +304,7 @@ class Cart extends Model {
 		$rows = $sql->select("
 			SELECT * 
 			FROM tb_turmatemporada a 
-			INNER JOIN tb_cartsturmas b ON b.idturma = a.idturma
+			-- INNER JOIN tb_cartsturmas b ON b.idturma = a.idturma
 			INNER JOIN tb_turma c ON c.idturma = a.idturma 
             INNER JOIN tb_espaco d ON d.idespaco = c.idespaco
             INNER JOIN tb_atividade e ON e.idativ = c.idativ
@@ -302,8 +317,8 @@ class Cart extends Model {
             INNER JOIN tb_statustemporada l ON l.idstatustemporada = k.idstatustemporada
             -- INNER JOIN tb_tokenturma m ON m.idturma = a.idturma
             WHERE b.idcart = :idcart 
-            AND b.idturma = :idturma
-            AND b.dtremoved IS NULL
+            AND c.idturma = :idturma
+            -- AND b.dtremoved IS NULL
             AND (k.idstatustemporada = :idStatustemporadaTemporadaIniciada 
             OR k.idstatustemporada = :idStatustemporadaInscricaoIniciada 
             OR k.idstatustemporada = :statusTemporadaInscricoesEncerradas 
@@ -323,7 +338,6 @@ class Cart extends Model {
 		]);
 
 		return Turma::checkList($rows);
-
 	}
 
 	public function getTurmaByIdturma($idturma)
@@ -338,7 +352,7 @@ class Cart extends Model {
 		$rows = $sql->select("
 			SELECT * 
 			FROM tb_turmatemporada a 
-			INNER JOIN tb_cartsturmas b ON b.idturma = a.idturma
+			-- INNER JOIN tb_cartsturmas b ON b.idturma = a.idturma
 			INNER JOIN tb_turma c ON c.idturma = a.idturma 
             INNER JOIN tb_espaco d ON d.idespaco = c.idespaco
             INNER JOIN tb_atividade e ON e.idativ = c.idativ
@@ -350,9 +364,9 @@ class Cart extends Model {
 			INNER JOIN tb_temporada k ON k.idtemporada = a.idtemporada
             INNER JOIN tb_statustemporada l ON l.idstatustemporada = k.idstatustemporada
             -- INNER JOIN tb_tokenturma m ON m.idturma = a.idturma
-            WHERE b.idcart = :idcart 
-            AND b.idturma = :idturma
-            AND b.dtremoved IS NULL
+            -- WHERE b.idcart = :idcart 
+            WHERE c.idturma = :idturma
+            -- AND b.dtremoved IS NULL
             AND (k.idstatustemporada = :idStatustemporadaTemporadaIniciada 
             OR k.idstatustemporada = :idStatustemporadaInscricaoIniciada 
             OR k.idstatustemporada = :statusTemporadaInscricoesEncerradas 
@@ -361,7 +375,7 @@ class Cart extends Model {
 			-- GROUP BY b.idturma, b.descturma
 			-- ORDER BY b.descturma
 		", [
-			':idcart'=>$this->getidcart(),
+			//':idcart'=>$this->getidcart(),
 			'idturma'=>$idturma,
 			'idStatustemporadaTemporadaIniciada'=>$idStatustemporadaTemporadaIniciada,
 			'idStatustemporadaInscricaoIniciada'=>$idStatustemporadaInscricaoIniciada,
@@ -371,7 +385,6 @@ class Cart extends Model {
 		]);
 
 		return Turma::checkList($rows);
-
 	}
 	
 	public static function getIdturmaByCart($idcart){
@@ -451,7 +464,6 @@ class Cart extends Model {
 		$_SESSION[Cart::SUCCESS] = NULL;
 
 	}
-
 
 	public static function setMsgError($msg)
 	{
@@ -547,14 +559,37 @@ class Cart extends Model {
 		}
 	}
 
+	//nova function 16/07
+	public function getCountInscExistTemporadaNew($numcpf, $idtemporada) {
+
+		$sql = new Sql();
+
+		$results = $sql->select(
+			"SELECT count(*) FROM tb_insc a
+            WHERE a.idinscstatus != 8 
+            AND a.idinscstatus != 9
+			AND a.numcpf = :numcpf 
+            AND a.idtemporada = :idtemporada 
+			", [
+			':numcpf'=>$numcpf,
+			':idtemporada'=>$idtemporada
+		]);
+		return $results[0]['count(*)'];
+
+		if(count($results) === 0)
+		{
+			throw new \Exception("Esta pessoa já tem mais de uma inscrição para esta temporada!", 1);	
+		}
+	}
+
 	public function getInscExist($numcpf, $idturma, $idtemporada) {
 
 		$sql = new Sql();
 
 		$results = $sql->select(
 			"SELECT * FROM tb_insc a
-			INNER JOIN tb_carts b USING(idcart)
-			INNER JOIN tb_pessoa c USING(idpess)
+			-- INNER JOIN tb_carts b USING(idcart)
+			-- INNER JOIN tb_pessoa c USING(idpess)
 			INNER JOIN tb_turma d USING(idturma)  
 			INNER JOIN tb_espaco e USING(idespaco)  
 			INNER JOIN tb_local f USING(idlocal)  
@@ -562,7 +597,7 @@ class Cart extends Model {
 			INNER JOIN tb_temporada h USING(idtemporada)  
             WHERE a.idinscstatus != 8 
             AND a.idinscstatus != 9
-			AND c.numcpf = :numcpf 
+			AND a.numcpf = :numcpf 
             -- AND c.idpess = :idpess
             AND d.idturma = :idturma      
             AND h.idtemporada = :idtemporada            
@@ -587,16 +622,75 @@ class Cart extends Model {
 		$sql = new Sql();
 
 		$results = $sql->select(
-			"SELECT count(*) FROM tb_insc a
-			INNER JOIN tb_carts b USING(idcart)
-			INNER JOIN tb_pessoa c USING(idpess)
-			INNER JOIN tb_turma d USING(idturma)  
-			INNER JOIN tb_temporada h USING(idtemporada)  
-            WHERE a.idinscstatus != 8 
-            AND a.idinscstatus != 9
-			AND c.numcpf = :numcpf 
-            AND d.idmodal = :idmodal
-            AND h.idtemporada = :idtemporada            
+				"SELECT count(*) FROM tb_insc a
+				-- INNER JOIN tb_carts b USING(idcart)
+				-- INNER JOIN tb_pessoa c USING(idpess)
+				INNER JOIN tb_turma d USING(idturma)  
+				INNER JOIN tb_temporada h USING(idtemporada)  
+	            WHERE a.idinscstatus != 8 
+	            AND a.idinscstatus != 9
+				AND a.numcpf = :numcpf 
+	            AND d.idmodal = :idmodal
+	            AND h.idtemporada = :idtemporada            
+			", [
+			':numcpf'=>$numcpf,
+			':idmodal'=>$idmodal,
+			':idtemporada'=>$idtemporada
+		]);
+
+		if($results){
+			$results = (int)$results[0]['count(*)'];
+		}else{
+			$results = 0;
+		}
+
+		return $results;		
+	}
+
+	public function getInscComCpfModalidadeExist($numcpf, $idmodal, $idtemporada) {
+
+		$sql = new Sql();
+
+		$results = $sql->select(
+				"SELECT count(*) FROM tb_insc a 
+				-- INNER JOIN tb_carts b USING(idcart) 
+				-- INNER JOIN tb_pessoa c USING(idpess) 
+				INNER JOIN tb_turma d USING(idturma) 
+				INNER JOIN tb_temporada h USING(idtemporada) 
+				WHERE a.numcpf = :numcpf
+				AND d.idmodal = :idmodal 
+				AND h.idtemporada = :idtemporada
+				AND a.idinscstatus != 8 
+			    AND a.idinscstatus != 9 
+			", [
+			':numcpf'=>$numcpf,
+			':idmodal'=>$idmodal,
+			':idtemporada'=>$idtemporada
+		]);
+
+		if($results){
+			$results = (int)$results[0]['count(*)'];
+		}else{
+			$results = 0;
+		}
+
+		return $results;		
+	}
+
+	//nova function 16/07
+	public function getInscModalidadeExistNew($numcpf, $idmodal, $idtemporada) {
+
+		$sql = new Sql();
+
+		$results = $sql->select(
+				"SELECT count(*) FROM tb_insc a
+				INNER JOIN tb_turma d USING(idturma)  
+				INNER JOIN tb_temporada h USING(idtemporada)  
+	            WHERE a.idinscstatus != 8 
+	            AND a.idinscstatus != 9
+				AND a.numcpf = :numcpf 
+	            AND d.idmodal = :idmodal
+	            AND h.idtemporada = :idtemporada          
 			", [
 			':numcpf'=>$numcpf,
 			':idmodal'=>$idmodal,
@@ -618,15 +712,15 @@ class Cart extends Model {
 
 		$results = $sql->select(
 			"SELECT * FROM tb_insc a
-			INNER JOIN tb_carts b USING(idcart)
-			INNER JOIN tb_pessoa c USING(idpess)
+			-- INNER JOIN tb_carts b USING(idcart)
+			-- INNER JOIN tb_pessoa c USING(idpess)
 			INNER JOIN tb_turma d USING(idturma)  
 			INNER JOIN tb_espaco e USING(idespaco)  
 			INNER JOIN tb_local f USING(idlocal)  
 			INNER JOIN tb_atividade g USING(idativ)    
 			INNER JOIN tb_temporada h USING(idtemporada)  
             WHERE a.idinscstatus = 8 
-			AND c.numcpf = :numcpf 
+			AND a.numcpf = :numcpf 
             -- AND c.idpess = :idpess
             AND d.idturma = :idturma      
             AND h.idtemporada = :idtemporada            
@@ -663,6 +757,40 @@ class Cart extends Model {
             AND a.idinscstatus != 9
 			AND c.numcpf = :numcpf
 			-- AND c.idpess = :idpess
+			AND f.idlocal = :idlocal 
+            AND g.tipoativ = :tipoativ
+            AND h.idtemporada = :idtemporada
+            ", [
+			':numcpf'=>$numcpf,
+			// ':idpess'=>$idpess,
+			':idlocal'=>$idlocal,
+			':tipoativ'=>$tipoativ,
+			':idtemporada'=>$idtemporada
+		]);
+
+		return $results;
+
+		if(count($results) === 0)
+		{
+			throw new \Exception("Esta pessoa já está inscrita para uma turma do tipo AQUÁTICA neste local", 1);			
+		}
+	}
+
+	//nova function 16/07
+	public function getInscExistAquaticLocalNew($numcpf, $idpess, $idturma, $idtemporada, $idlocal, $tipoativ) {
+	    
+		$sql = new Sql();
+
+		$results = $sql->select(
+			"SELECT * FROM tb_insc a
+			INNER JOIN tb_turma d USING(idturma)  
+			INNER JOIN tb_espaco e USING(idespaco)  
+			INNER JOIN tb_local f USING(idlocal)  
+			INNER JOIN tb_atividade g USING(idativ)    
+			INNER JOIN tb_temporada h USING(idtemporada)  
+            WHERE a.idinscstatus != 8 
+            AND a.idinscstatus != 9
+			AND a.numcpf = :numcpf
 			AND f.idlocal = :idlocal 
             AND g.tipoativ = :tipoativ
             AND h.idtemporada = :idtemporada

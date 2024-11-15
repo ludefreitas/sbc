@@ -174,14 +174,37 @@
                         {loop="$insc"}
 
                         {$INSC = $value.idinsc}
+                        {$INSCSTATUS = $value.idinscstatus}
                         <tr>
-                            <td style="border: solid 1px; text-align: left; font-weight: bold; padding: 2px;">{$value.idinsc} - {$value.nomepess} </td>
+                            {if="$value.idinscstatus == 8"}
+                            <td style="border: solid 1px; text-align: left; font-weight: bold; padding: 2px; background: rgba(255, 0, 0, 0.15);">{$value.idinsc} - {$value.nomepess} <span style="color: red;"> ( Desistente )</span></span> </td>
+                            {else}
+                                {if="$value.idinscstatus == 5"}
+                                <td style="border: solid 1px; text-align: left; font-weight: bold; padding: 2px; background: rgba(255, 165, 0, 0.5);"><span>{$value.idinsc} - {$value.nomepess} <span style="color: red;"> ( Suspensa )</span></span> </td>
+                                {else}
+                                <td style="border: solid 1px; text-align: left;   font-weight: bold; padding: 2px;">{$value.idinsc} - {$value.nomepess} </td>
 
-                            {loop="$dias_do_mes"}       
-                            <td style="border: solid 1px; text-align: center; font-weight: bold; padding: 2px;">
-                              {function="statusPresenca($value.dias, $mes, $INSC, $turma.idturma, $idtemporada)"}
+                                {/if}
 
-                                </td>
+                            {/if}
+
+                            {loop="$dias_do_mes"} 
+                                {if="$INSCSTATUS == 8"}
+              
+                                    <td style="border: solid 1px; text-align: center; font-weight: bold; padding: 2px; background: rgba(255, 0, 0, 0.15);">
+                                        {function="statusPresenca($value.dias, $mes, $INSC, $turma.idturma, $idtemporada)"}
+                                    </td>
+                                {else}
+                                    {if="$INSCSTATUS == 5"}
+                                    <td style="border: solid 1px; text-align: center; font-weight: bold; padding: 2px; background: rgba(255, 165, 0, 0.5);">
+                                        {function="statusPresenca($value.dias, $mes, $INSC, $turma.idturma, $idtemporada)"}
+                                    </td>
+                                    {else}
+                                    <td style="border: solid 1px; text-align: center; font-weight: bold; padding: 2px;">
+                                        {function="statusPresenca($value.dias, $mes, $INSC, $turma.idturma, $idtemporada)"}
+                                    </td>
+                                    {/if}
+                                {/if}
                             {/loop}
 
                         </tr>

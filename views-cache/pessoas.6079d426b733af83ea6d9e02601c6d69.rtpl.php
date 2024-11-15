@@ -1,4 +1,17 @@
 <?php if(!class_exists('Rain\Tpl')){exit;}?><script type="text/javascript">
+    
+    function formatar(mascara, documento){
+        var i = documento.value.length;
+        var saida = mascara.substring(0,1);
+        var texto = mascara.substring(i)
+
+        if (texto.substring(0,1) != saida){
+            documento.value += texto.substring(0,1);
+        }
+
+    }
+
+    /*
     $(document).ready(function(){
             $('#data').mask('00-00-0000');
         });
@@ -6,6 +19,7 @@
     $(document).ready(function(){
             $('#dataderma').mask('00-00-0000');
         });
+    */
 
     function popupAtestado(idpess) {
 
@@ -498,7 +512,7 @@
               </div>                
               
               <div class="col-md-2" >
-                   <a href="/admin/insc/pessoa/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-search"></i>&nbsp;Consulta inscrições</a>
+                   <a href="/admin/insc/pessoa/<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-search"></i>&nbsp;Consulta inscrições</a>
               </div>
             </div>           
             </div>
@@ -539,7 +553,7 @@
                         <br>
                         <input hidden id="conteudoAtestadoId" name="idpess" type="text" required>
                         <input hidden id="iduser" name="iduser" type="text" value='<?php echo getUserId(); ?>' required>
-                        <input id="data" name="data" type="text" required="required" style="height: 30px; margin-bottom: 2px; width: 90%" placeholder="00-00-0000">
+                        <input id="data" name="data" type="text" required="required" style="height: 30px; margin-bottom: 2px; width: 90%" placeholder="00-00-0000" onkeypress="formatar('##-##-####', this)" maxlength="10">
                         <br> 
                         <input id="observ" type="text" name="observ" required="required" style="height: 30px; margin-bottom: 2px; margin-top: 2px; width: 90%" placeholder="Observação:" >
                         <br> 
@@ -565,7 +579,7 @@
                         <label style="font-weight: bold; font-size: 10px">Preencha os dados abaixo para atualizar o atestado dermatológico</label>
                         <input hidden id="conteudoAtestadoDermaId" name="idpess" type="text" required>
                         <input hidden id="iduserderma" name="iduserderma" type="text" value='<?php echo getUserId(); ?>' required>
-                        <input id="dataderma" name="data" type="text" required="required" style="height: 30px; margin-bottom: 2px; width: 90%" placeholder="00-00-0000">
+                        <input id="dataderma" name="data" type="text" required="required" style="height: 30px; margin-bottom: 2px; width: 90%" placeholder="00-00-0000" onkeypress="formatar('##-##-####', this)" maxlength="10">
                         <br> 
                         <input id="observderma" type="text" name="observderma" required="required" style="height: 30px; margin-bottom: 2px; margin-top: 2px; width: 90%;" placeholder="Observação:">
                         <br> 

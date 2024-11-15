@@ -125,7 +125,7 @@ class Endereco extends Model {
 	}
 
 
-	public function seEnderecoExiste($idperson)	{
+	public static function seEnderecoExiste($idperson)	{
 
 		$sql = new Sql();
 
@@ -161,7 +161,7 @@ class Endereco extends Model {
 			return $results[0];		
 	}
 	
-	public function getEnderecoPessoa($idpess)	{
+	public static function getEnderecoPessoa($idpess)	{
 
 		$sql = new Sql();
 

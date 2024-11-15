@@ -52,12 +52,7 @@
 
       <div class="box box-primary"> 
 
-        <div class="box-header"> 
-
-
-          <h3>{$localdaaula}</h3>
-
-         
+        <div class="box-header">          
 
        </div>
       </div>
@@ -67,9 +62,7 @@
             <div class="row">
             <div class="col-md-12">
 
-            {loop="$modalidades"}
-
-            
+            {loop="$modalidades"}       
 
             {$idmodalidade = $value.idmodal}
 
@@ -122,7 +115,7 @@
                     </div>                      
 
                     <div class="col-md-4">
-                      <h5 style="font-weight: bold; text-align: left; color: green;">
+                      <h4 style="font-weight: bold; text-align: left; color: green;">
                            <strong style="color: orange;">[{$value.idturma}]</strong> &nbsp;&nbsp; 
                         
                         <a href="/estagiario/insc-turma-temporada/{$value.idturma}/{$value.idtemporada}/user/{$value.iduser}"> 
@@ -157,7 +150,7 @@
                         
                           
                         
-                      </h5>
+                      </h4>
                     </div>                    
                     <!--
                     <div class="col-md-2">

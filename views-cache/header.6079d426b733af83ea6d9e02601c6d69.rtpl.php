@@ -256,7 +256,6 @@ desired effect
 
       <!-- Sidebar Menu -->
       <?php if( UserIsAdmin() ){ ?>
-
       <ul class="sidebar-menu">
         <!-- <li class="header">LISTAR / CRIAR / EDITAR </li> -->
         <!-- Optionally, you can add icons to the links -->
@@ -271,15 +270,14 @@ desired effect
             
             <?php if( getUserId() == 7 OR getUserId() == 1 OR getUserId() == 156 ){ ?>
 
-
             <li><a href="/admin/admins"><i class="fa fa-users"></i>Administradores</a></li>            
             <li><a href="/admin/prof"><i class="fa fa-users"></i>Professores</a></li>
             <li><a href="/admin/estagiarios"><i class="fa fa-users"></i>Estagiários</a></li>
             
             <?php } ?>
-
             <li><a href="/admin/users-cliente"><i class="fa fa-users"></i>Clientes</a></li>
-            <li><a href="/admin/pessoas"><i class="fa fa-users"></i>Alunos</a></li>          
+            <li><a href="/admin/pessoas"><i class="fa fa-users"></i>Alunos</a></li>
+            <li><a href="/admin/insc-pessoas-temporada-pesquisa"><i class="fa fa-users"></i>Pesquisa<span style="color: red; font-size: 10px">(Novo)</span> </a></li>
           </ul>
         </li> 
          <li>
@@ -294,18 +292,27 @@ desired effect
           </a>
           <ul class="treeview-menu">
             <?php require $this->checkTemplate("turma-temporada-menu");?>
-
+          </ul>
+        </li> 
+        
+        <li class="treeview">
+          <a href="/admin/gradehorario/4/21"><i class="fa fa-th-list"></i> <span>Grade de Horários</span><span style="color: red; font-size: 10px">(Novo)</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <?php require $this->checkTemplate("grade-temporada-menu");?>
           </ul>
         </li> 
         <li class="treeview">
-          <a href="/admin"><i class="fa fa-clipboard"></i>  <span>Chamadas<span style="color: red; font-size: 10px">(Novo)</span> </span>
+          <a href="/admin"><i class="fa fa-clipboard"></i>  <span>Chamadas</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
             <?php require $this->checkTemplate("turma-temporada-menu-hoje");?>
-
           </ul>
         </li> 
         
@@ -317,7 +324,6 @@ desired effect
           </a>
           <ul class="treeview-menu">
             <?php require $this->checkTemplate("controle-frequencia-menu");?>
-
           </ul>
           <!--
           <ul class="treeview-menu">
@@ -348,7 +354,6 @@ desired effect
               </a> 
             </li>
             <?php require $this->checkTemplate("evento-menu");?>
-
           </ul>
         </li> 
 
@@ -361,7 +366,6 @@ desired effect
           </a>
           <ul class="treeview-menu">
             <?php require $this->checkTemplate("professor-temporada-menu");?>
-
           </ul>
         </li>  
         
@@ -373,7 +377,6 @@ desired effect
           </a>
           <ul class="treeview-menu">
             <?php require $this->checkTemplate("estagiario-temporada-menu");?>
-
           </ul>
         </li> 
         
@@ -385,7 +388,6 @@ desired effect
           </a>
           <ul class="treeview-menu">
             <?php require $this->checkTemplate("sorteio-temporada-menu");?>
-
           </ul>
         </li>                       
 
@@ -397,11 +399,9 @@ desired effect
           </a>
           <ul class="treeview-menu">
             <?php require $this->checkTemplate("insc-temporada-menu");?>
-
           </ul>
         </li> 
         <?php if( getUserId() == 7 OR getUserId() == 1 ){ ?>
-
         <li class="treeview">
           <a href="/admin/insc"><i class="fa fa-link"></i> <span>Inscrições vazio</span>
             <span class="pull-right-container">
@@ -410,11 +410,9 @@ desired effect
           </a>
           <ul class="treeview-menu">
             <?php require $this->checkTemplate("insc-temporada-vazio-menu");?>
-
           </ul>
         </li> 
         <?php } ?>
-
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Natação Espontânea</span>
             <span class="pull-right-container">
@@ -492,7 +490,6 @@ desired effect
           </ul>
         </li>  
         <?php if( getUserId() == 7 OR getUserId() == 1 OR getUserId() == 156 OR getUserId() == 19046 ){ ?>
-
         <li>
           <a href="/admin/turma"><i class="fa fa-link"></i> <span>Todas Turmas</span></a>
         </li>                        
@@ -516,10 +513,8 @@ desired effect
           <a href="/admin/horario"><i class="fa fa-link"></i> <span>Horários</span></a>
         </li>
         <?php } ?>
-
       </ul>
       <?php }else{ ?>
-
       
          <ul class="sidebar-menu">
       
@@ -543,7 +538,6 @@ desired effect
               </a>
               <ul class="treeview-menu">
                 <?php require $this->checkTemplate("turma-temporada-menu-audi");?>
-
               </ul>
             </li>
 
@@ -555,7 +549,6 @@ desired effect
               </a>
               <ul class="treeview-menu">
                 <?php require $this->checkTemplate("controle-frequencia-menu-audi");?>
-
               </ul>
             </li>
             <li>
@@ -567,7 +560,6 @@ desired effect
 
         </ul>
       <?php } ?>
-
       <!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->

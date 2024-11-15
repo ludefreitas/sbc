@@ -58,12 +58,16 @@
                     <div class="alert alert-info" style="font-size: 12px">
                         Agora você já pode agendar dois horário seguidos de <STRONG>30 minutos</STRONG> para praticar a natação espontânea no Baetão, de <STRONG>SEGUNDA</STRONG> a <STRONG>DOMINGO</STRONG>, se o horário estiver diponível. Aproveite!!
                     </div>
+                    
                 <?php } ?>
                 <?php if( $idlocal == 21 ){ ?>
                     <div class="alert alert-info" style="font-size: 12px">
                         Agora você já pode agendar para nadar na piscina do Paulicéia de <STRONG>SEGUNDA</STRONG> à <STRONG>SEXTA-FEIRA.</STRONG> Confira e aproveite!
                     </div>
                 <?php } ?>
+                    <div class="alert alert-danger" style="font-size: 12px">
+                        Lembramos ainda, que se você agendar a natação e não comparecer, você ficará impossibilitado(a) de agendar novamente a natação espontânea por até <strong>02 semanas !!! </strong>Se não for comparecer, <strong>cancele</strong> o agendamento.
+                    </div>
             </div>
 
             <div class="col-md-12" style="font-weight: bold; color: darkgreen;">
@@ -114,12 +118,9 @@
                         <?php } ?>   
 
                         <br>
-                        <p>
-                           
+                        <p> 
                         <a style="color: lightgreen;" href="/minhaagenda"> Minha agenda de natação </a>
                         </p>                
-
-
                         
                         <p style="color: red;">
                            Atualizar ATESTADO?
@@ -132,8 +133,20 @@
                         
                         <?php $counter1=-1;  if( isset($pessoa) && ( is_array($pessoa) || $pessoa instanceof Traversable ) && sizeof($pessoa) ) foreach( $pessoa as $key1 => $value1 ){ $counter1++; ?>
                         <p>
-                        <input type="radio" name="idpess" value="<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> 
-                        <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>; <?php echo calcularIdade($value1["dtnasc"]); ?> anos;                  
+                            <?php if( $value1["faltou"] === 0 ){ ?>
+
+                            <input disabled type="radio" name="idpess" value="<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> 
+                            <input hidden type="text" name="numcpf" value="<?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                            * <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>; <?php echo calcularIdade($value1["dtnasc"]); ?> anos;  <br>
+                            <span style="color: red; font-size: 12px" >* está impedido(a) de fazer novo agendamento,<br> por uma semana, por ter faltado na última natação agendada!!  </span>
+
+                            <?php }else{ ?> 
+
+                            <input hidden type="radio" name="idpess" value="<?php echo htmlspecialchars( $value1["idpess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"> 
+                            <input type="text" name="numcpf" value="<?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                            <?php echo htmlspecialchars( $value1["nomepess"], ENT_COMPAT, 'UTF-8', FALSE ); ?>; <?php echo calcularIdade($value1["dtnasc"]); ?> anos; 
+
+                            <?php } ?>            
                         </p>                                
                         <?php }else{ ?>
                         <p>

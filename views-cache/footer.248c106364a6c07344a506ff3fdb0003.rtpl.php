@@ -72,7 +72,7 @@
 
               <div class="col-md-8" col-sm-1 style="text-align-last: center; background-color: #0f71b3;">
                 <div style="text-align-last: center; font-weight: 600; font-size: 14px; color: white; margin: 5px;"> 
-                  <p> Secretaria de Esportes - Prefeitura de São Bernardo do Campo<br> Secretário: ALEX MOGNON<br> Av. Kennedy, 1155 - Bairro Anchieta - 09726-263 - Tel.: 11 2630-7466 </p> 
+                  <p> Secretaria de Esportes - Prefeitura de São Bernardo do Campo<br> Secretário: SERGIO PASIN<br> Av. Kennedy, 1155 - Bairro Anchieta - 09726-263 - Tel.: 11 2630-7466 </p> 
                 </div> 
 
               </div>   

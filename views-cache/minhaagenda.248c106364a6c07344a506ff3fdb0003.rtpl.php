@@ -80,7 +80,7 @@
             <th style="border: solid 1px; text-align: center; font-weight: bold; padding: 5px; color: green;" colspan="7"><?php echo htmlspecialchars( $success, ENT_COMPAT, 'UTF-8', FALSE ); ?></th>
           </tr>
           <?php } ?>
-
+          
           <tr>
             <th style="border: solid 1px; padding: 5px;" colspan="7">
               Temporada: &nbsp;
@@ -132,12 +132,13 @@
               <?php } ?>           
               </td>
               <td style="text-align: center; border: solid 1px; padding: 5px;">
-                <?php if( $data > $value1["dia"] OR $value1["ispresente"] == 1 ){ ?>
-
+                <?php if( $value1["excluiAgenda"] == 0 ){ ?>
+                
                 <?php }else{ ?>
                 <a href="/agendadelete/<?php echo htmlspecialchars( $value1["idagen"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-danger">
-                  <i class="fa fa-trash"></i>
+                <i class="fa fa-trash"></i>
                 </a>
+
                 <?php } ?>
               </td>
               
@@ -146,7 +147,7 @@
           <?php }else{ ?>
           <tr style="font-weight: bold; color: red; font-size: 22px; text-align: center; padding: 5px;">
             <td colspan="7">
-              Não há horário agendado para natação espontânea nesta temporada!
+              Não há horário agendado para natação espontânea!
             </td>
           </tr>
           <?php } ?>

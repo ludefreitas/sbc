@@ -1,0 +1,93 @@
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h3>
+          Lista pessoas por idade na modalidade
+        </h3>
+        <ol class="breadcrumb">
+          <li><a href="/prof-estagiario"><i class="fa fa-dashboard"></i> Home</a></li>
+          
+        </ol>
+      </section>
+      <section>
+
+      <!-- Main content -->
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box box-success">
+            
+            <!-- /.box-header -->
+            <!-- form start -->
+
+            <div class="box-body">
+              <form role="form" action="/prof/lista-pessoas-pesquisa" method="post">
+                <div class="row">
+                  <div class="col-md-12">
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="box-header">
+                                <label for="idadeinicial"> Idade inicial</label>
+                                <input style="width: 60px;" type="text" class="form-control" id="" name="idadeinicial">
+                            </div>                    
+                        </div>
+                        <div class="col-md-2">
+                            <div class="box-header">
+                                <label for="idadefinal"> Idade inicial</label>
+                                <input style="width: 60px;" type="text" class="form-control" id="" name="idadefinal">
+                            </div>                        
+                        </div>
+                        <div class="col-md-2">
+                            <div class="box-header">
+                                <label for="turma">Modalidade</label>
+                                    <select class="form-control" name="descmodal">
+                                        <option value="">
+                                            Selecione
+                                        </option>                     
+                                        {loop="$modalidade"}
+                                            <option value="{$value.descmodal}" >
+                                                {$value.descmodal} 
+                                            </option>
+                                        {/loop}                            
+                                    </select>
+                            </div>                              
+                        </div>
+                        <div class="col-md-2">
+                            <div class="box-header">
+                                <label for="turma">Temporada</label>
+                                    <select class="form-control" name="desctemporada">
+                                        <option value="">
+                                            Selecione
+                                        </option>                     
+                                        {loop="$temporada"}
+                                            <option value="{$value.desctemporada}" >
+                                                {$value.desctemporada} 
+                                            </option>
+                                        {/loop}                            
+                                    </select>
+                            </div>                        
+                        </div>
+                    </div>                     
+
+                </div>
+                </div>
+                
+              <div class="box-footer">
+                <button type="submit" class="btn btn-success">Enviar</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a type="button" class="btn btn-danger" href="javascript:window.history.go(-1)">Cancelar</a>
+              </div>
+
+              <!-- /.box-body -->
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</section>
+<!-- /.content -->
+</div>
+    <!-- /.content-wrapper -->

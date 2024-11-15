@@ -372,15 +372,23 @@
       tr:nth-child(even){
           background: lightgray;
       }
+      
+            #divcenterAtestado{
+              
+          }
 
           #divPopupAtestado{
-            position: relative;
+            position: absolute;
+            align-items: center; 
+            justify-content: center; 
+            top: 50%; 
+            left: 50%; 
             top: 0; 
             bottom: 0;
             left: 0; 
             right: 0;
-            margin: auto;
-            width: 50%;
+            margin-left: 150px;
+            width: 80%;
             min-height: 200px;
             max-height: 350px;
             padding: 5px; 
@@ -388,13 +396,17 @@
         }  
 
         #divPopupAtestadoDerma{
-            position: relative;
+            position: absolute;
+            align-items: center; 
+            justify-content: center; 
+            top: 50%; 
+            left: 50%; 
             top: 0; 
             bottom: 0;
             left: 0; 
             right: 0;
-            margin: auto;
-            width: 50%;
+            margin-left: 150px;
+            width: 80%;
             min-height: 200px;
             max-height: 350px;
             padding: 5px; 
@@ -430,7 +442,7 @@
                         <label style="font-weight: bold; font-size: 10px">Preencha os dados abaixo para atualizar o atestado clínico</label>
                         <br>
                         <input hidden id="conteudoAtestadoId" name="idpess" type="text" required>
-                        <input  id="iduser" name="iduser" type="text" value="<?php echo htmlspecialchars( $iduser, ENT_COMPAT, 'UTF-8', FALSE ); ?>" required>
+                        <input hidden id="iduser" name="iduser" type="text" value="<?php echo htmlspecialchars( $iduser, ENT_COMPAT, 'UTF-8', FALSE ); ?>" required>
                         <input id="data" name="data" type="text" required="required" style="height: 30px; margin-bottom: 2px; width: 90%" placeholder="Somente números 00-00-0000">
                         <br> 
                         <input id="observ" type="text" name="observ" required="required" style="height: 30px; margin-bottom: 2px; margin-top: 2px; width: 90%" placeholder="Observação:" >
@@ -456,7 +468,7 @@
                     <form id="formAtestadoDerma" method="get" style="height: 100%;"> 
                         <label style="font-weight: bold; font-size: 10px">Preencha os dados abaixo para atualizar o atestado dermatológico</label>
                         <input hidden id="conteudoAtestadoDermaId" name="idpess" type="text" required>
-                        <input  id="iduserderma" name="iduserderma" type="text" value="<?php echo htmlspecialchars( $iduser, ENT_COMPAT, 'UTF-8', FALSE ); ?>" required>
+                        <input hidden id="iduserderma" name="iduserderma" type="text" value="<?php echo htmlspecialchars( $iduser, ENT_COMPAT, 'UTF-8', FALSE ); ?>" required>
                         <input id="dataderma" name="data" type="text" required="required" style="height: 30px; margin-bottom: 2px; width: 90%" placeholder="Somente números 00-00-0000">
                         <br> 
                         <input id="observderma" type="text" name="observderma" required="required" style="height: 30px; margin-bottom: 2px; margin-top: 2px; width: 90%;" placeholder="Observação:">
@@ -589,7 +601,7 @@
                 <?php if( $data > $value1["dia"] OR $value1["ispresente"] == 1 ){ ?>
 
                 <?php }else{ ?>
-                <a href="/prof/agendamarcarpresenca/<?php echo htmlspecialchars( $value1["idagen"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-success">
+                <a href="/prof/agendamarcarpresenca/<?php echo htmlspecialchars( $value1["idagen"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $idlocal, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $data, ENT_COMPAT, 'UTF-8', FALSE ); ?>/<?php echo htmlspecialchars( $value1["numcpf"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-success">
                 <i class="fa fa-check"></i>
                 </a>
 

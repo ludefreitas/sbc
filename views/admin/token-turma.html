@@ -22,8 +22,14 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Tokens da turma: {$turma.idturma} -  {$turma.descturma} - {$turma.periodo} {$turma.diasemana} {$turma.horainicio} ás {$turma.horatermino} 
+   Tokens da turma: {$turma.idturma} - [{$desctemporadatoken} ] <br> {$turma.descturma} - {$turma.periodo} {$turma.diasemana} {$turma.horainicio} ás {$turma.horatermino} 
   </h1>
+  <h5>
+      <span style="color: red">Tokens da temporada: </span> &nbsp;&nbsp;
+            {loop="$temporada"}
+                <a href="/admin/token/{$turma.idturma}/{$value.idtemporada}"> {$value.desctemporada}</a> &nbsp;&nbsp;
+            {/loop}
+  </h5>
   <ol class="breadcrumb">
     <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
     <li class="active"><a style="color: red" href="javascript: history.go(-1)">Voltar</a>
@@ -51,6 +57,7 @@
 
             <input hidden type="text" name="idturma" value="{$turma.idturma}">
              <input hidden type="text" name="iduser" value="{$turma.iduser}">
+             <input hidden type="text" name="idtemporada" value="{$idtemporada}"/>
             <!--<input type="text" name="numcpf" placeholder="000.000.000-00">-->
 
             <label>Digite o CPF (somente números)</label><br>
@@ -65,7 +72,7 @@
              <div class="box-body" style="border: solid 1px lightblue; margin: 5px;">
             <div class="row" style="margin: 5px;">
               {loop="$tokens"}
-                <div class="col-md-2" style="border: solid 1px; text-align: center;">
+                <div class="col-sm-2" style="border: solid 1px; text-align: center; width: 170px; height: 120px;">
 
                     {if="$value.isused == 0"}
                     <span style="font-weight: bold; color: darkblue;">                  
@@ -87,7 +94,12 @@
                             NULL
                         {/if}               
                     {/if}
-                    <br>   
+                    <br> 
+                      {$value.dtcriacao}
+                    <br> 
+                    Gerado em: {function="formatDate($value.dtcriacao)"}
+
+                    <br> 
 
                     Criado por: {function="getUserNameById($value.creator)"}
             </div>     

@@ -28,7 +28,7 @@ class CartsTurmas extends Model {
 		
 	}
 
-	public function getCartsTurmasFromId($idcart)
+	public static function getCartsTurmasFromId($idcart)
 	{
 
 		$sql = new Sql();

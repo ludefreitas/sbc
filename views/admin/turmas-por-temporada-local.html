@@ -179,7 +179,7 @@
                       -->
 
                         {if="$value.token == 1"}
-                          <a href="/admin/token/{$value.idturma}" style="color: darkblue;"> 
+                          <a href="/admin/token/{$value.idturma}/{$temporada.idtemporada}" style="color: darkblue;"> 
                           | &nbsp; 
                           <span style="color: darkorange;">
                                NECESSÁRIO 
@@ -188,7 +188,7 @@
                           </a> &nbsp;
                           {else}
                         
-                          <a href="/admin/token/{$value.idturma}" style="color: darkblue;"> 
+                          <a href="/admin/token/{$value.idturma}/{$temporada.idtemporada}" style="color: darkblue;"> 
                           | &nbsp;  Tokens  &nbsp; | 
                           </a> &nbsp;
                           {/if}

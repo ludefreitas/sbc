@@ -402,6 +402,44 @@ $app->get("/prof/controle-frequencia-coordenador-por-modalidade-local/:idtempora
 	]);	
 });
 
+$app->get("/prof/turmatemporada/datas-inicio-fim/:idturma/:idtemporada/:iddata/:novadata", function($idturma, $idtemporada, $iddata, $novadata){
+
+
+		if($iddata == 1){
+			Temporada::AlteraDataInicioInsc($idturma, $idtemporada, $novadata);
+				$texto = "Data Inicio das Inscrições alterado!";
+		}
+
+		if($iddata == 2){
+			Temporada::AlteraDataFimInsc($idturma, $idtemporada, $novadata);
+				$texto = "Data Inicio das Inscrições alterado!";
+		}
+
+		if($iddata == 3){
+			Temporada::AlteraDataInicioMatr($idturma, $idtemporada, $novadata);
+				$texto = "Data Inicio das Inscrições alterado!";
+		}
+
+		if($iddata == 4){
+			Temporada::AlteraDataFimMatr($idturma, $idtemporada, $novadata);
+				$texto = "Data Inicio das Inscrições alterado!";
+		}
+
+		if($iddata == 5){
+			Temporada::AlteraDataInicioAula($idturma, $idtemporada, $novadata);
+				$texto = "Data Inicio das Inscrições alterado!";
+		}
+
+		if($iddata == 6){
+			Temporada::AlteraDataFimAula($idturma, $idtemporada, $novadata);
+				$texto = "Data Inicio das Inscrições alterado!";
+		}
+
+
+
+		
+});
+
 
 
 
